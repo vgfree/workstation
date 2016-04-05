@@ -1,0 +1,45 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/3.4.html
+Date Downloaded: 2016/4/5 19:55:28 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>3.4 - C Closure - Lua 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>3.4 -  <a name="3.4">C Closure </a></h2>
+
+ <p />
+当 C 函数被创建出来，我们有可能会把一些值关联在一起，
+也就是创建一个 C _______ ；
+这些被关联起来的值被叫做 upvalue ，
+它们可以在函数被调用的时候访问的到。
+（参见  <a href="#lua_pushcclosure"><code>lua_pushcclosure </code></a>）。
+
+
+ <p />
+无论何时去调用 C 函数，函数的 upvalue ___________。
+_____  <a name="lua_upvalueindex"><code>lua_upvalueindex </code></a> 这个宏来生成这些伪索引。
+第一个关联到函数的值放在  <code>lua_upvalueindex(1) </code> 位置处，依次类推。
+任何情况下都可以用  <code>lua_upvalueindex( <em>n </em>) </code> 产生一个 upvalue 的索引，
+即使　n _____ upvalue 数量也可以。它都可以产生一个可接受但不一定有效的索引。
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

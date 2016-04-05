@@ -1,0 +1,64 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.10.html
+Date Downloaded: 2016/4/5 19:55:27 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.10 - 垃圾收集 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.10 -  <a name="2.10">垃圾收集 </a></h2>
+
+ <p />
+Lua 提供了一个自动的内存管理。
+这就是说你不需要关心创建新对象的分配内存操作，也不需要在这些对象不再需要时的主动释放内存。
+Lua 通过运行一个垃圾收集器来自动管理内存，以此一遍又一遍的回收死掉的对象
+（这是指 Lua __________）_____。
+___ 中所有对象都被自动管理，包括：
+table, userdata、 函数、线程、和字符串。
+
+
+ <p />
+Lua 实现了一个增量标记清除的收集器。
+它用两个数字来控制垃圾收集周期：
+ <em>garbage-collector pause </em> 和  <em>garbage-collector step multiplier </em> 。
+
+
+ <p />
+garbage-collector pause 控制了收集器在开始一个新的收集周期之前要等待多久。
+随着数字的增大就导致收集器工作工作的不那么主动。
+小于 1 ____________________。
+___ 2 的时候意味着在总使用内存数量达到原来的两倍时再开启新的周期。
+
+ <p />
+step multiplier 控制了收集器相对内存分配的速度。
+更大的数字将导致收集器工作的更主动的同时，也使每步收集的尺寸增加。
+小于 1 _____________，__________________。
+____ 2 ，这意味着收集器将以内存分配器的两倍速运行。
+
+
+ <p />
+你可以通过在 C 中调用  <a href="#lua_gc"><code>lua_gc </code></a> 或是在 Lua 中调用 
+ <a href="#pdf-collectgarbage"><code>collectgarbage </code></a> 来改变这些数字。
+两者都接受百分比数值（因此传入参数 100 意味着实际值 1 ）。
+通过这些函数，你也可以直接控制收集器（例如，停止或是重启）。
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

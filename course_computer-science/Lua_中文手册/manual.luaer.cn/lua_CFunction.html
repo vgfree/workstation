@@ -1,0 +1,78 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_CFunction.html
+Date Downloaded: 2016/4/5 19:55:29 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_CFunction - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_CFunction"><code>lua_CFunction </code></a></h3>
+ <pre>typedef int (*lua_CFunction) (lua_State *_); </pre>
+
+ <p />
+Type for C&nbsp;functions.
+
+
+ <p />
+In order to communicate ________ with Lua,
+a C&nbsp;function must ___ the following protocol,
+which defines ___ way parameters and results ___ passed:
+a C&nbsp;function receives its _________ from Lua in its _____
+__ direct order (the first ________ is pushed first).
+So, when ___ function starts,
+ <code>lua_gettop(L) </code> returns the number __ arguments received by the ________.
+___ first argument (if any) __ at index 1
+and its ____ argument is at index  <code>lua_gettop(L) </code>.
+To return values to ___, a C&nbsp;function just pushes ____ onto the stack,
+in direct _____ (the first result is ______ first),
+and returns the number __ results.
+Any other value in ___ stack below the results ____ be properly
+discarded by Lua.
+Like _ Lua function, a C&nbsp;function ______ by Lua can also ______
+____ results.
+
+
+ <p />
+As an example, the _________ function receives a variable ______
+__ numerical arguments and returns _____ average and sum:
+
+ <pre>
+     static int foo (lua_State *_) {
+       int n = lua_gettop(L);    /* number of arguments */
+       lua_Number sum = 0;
+       int i;
+       for (_ = 1; i &lt;= _; i++) {
+         if (!lua_isnumber(L, i)) {
+           ______________(_, "incorrect argument to function '_______'");
+           lua_error(L);
+         }
+         sum += lua_tonumber(L, i);
+       }
+       lua_pushnumber(L, sum/n);        /* first result */
+       ______________(_, sum);         /* second result */
+       ______ 2;                   /* number of results */
+     }
+ </pre>
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

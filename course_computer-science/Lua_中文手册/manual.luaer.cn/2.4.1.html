@@ -1,0 +1,56 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.4.1.html
+Date Downloaded: 2016/4/5 19:55:24 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.4.1 - Chunk（语句组） - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.4.1 -  <a name="2.4.1">Chunk（语句组） </a></h3>
+
+ <p />
+Lua 的一个执行单元被称作  <em>chunk </em>。
+一个 chunk 就是一串语句段，它们会被循序的执行。
+每个语句段可以以一个分号结束：
+
+ <pre>
+	chunk ::= {stat [` <b>; </b>&acute;]}
+ </pre><p />
+这儿不允许有空的语句段，所以 ' <code>;; </code>' 是非法的。
+
+ <p />
+lua 把一个 chunk 当作一个拥有不定参数的匿名函数
+（参见  <a href="#2.5.9">&sect;2.5.9 </a>）处理。
+正是这样，chunk 内可以定义局部变量，接收参数，并且返回值。
+
+ <p />
+chunk 可以被保存在一个文件中，也可以保存在宿主程序的一个字符串中。
+当一个 chunk 被执行，首先它会被预编译成虚拟机中的指令序列，
+然后被虚拟机解释运行这些指令。
+
+
+ <p />
+chunk 也可以被预编译成二进制形式；细节参考程序  <code>luac </code>。
+用源码形式提供的程序和被编译过的二进制形式的程序是可以相互替换的；
+Lua 会自动识别文件类型并做正确的处理。
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

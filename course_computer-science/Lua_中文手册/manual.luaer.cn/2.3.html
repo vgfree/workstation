@@ -1,0 +1,103 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.3.html
+Date Downloaded: 2016/4/5 19:55:24 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.3 - 变量 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.3 -  <a name="2.3">变量 </a></h2>
+
+ <p />
+写上变量的地方意味着当以其保存的值来替代之。
+
+Lua 中有三类变量：全局变量，局部变量，还有 table 的域。
+
+ <p />
+一个单一的名字可以表示一个全局变量，也可以表示一个局部变量 （或者是一个函数的参数，这是一种特殊形式的局部变量）：
+
+ <pre>
+	var ::= Name
+ </pre><p />
+Name 就是  <a href="#2.1">&sect;2.1 </a> 中所定义的标识符。
+
+ <p />
+任何变量都被假定为全局变量，除非显式的以 local 修饰定义 
+（参见  <a href="#2.4.7">&sect;2.4.7 </a>）。
+局部变量有其作用范围：
+局部变量可以被定义在它作用范围中的函数自由使用
+（参见  <a href="#2.6">&sect;2.6 </a>）。
+
+
+ <p />
+在变量的首次赋值之前，变量的值均为  <b>nil </b>。
+
+
+ <p />
+方括号被用来对 table 作索引：
+
+ <pre>
+	var ::= prefixexp ` <b>[ </b>&acute; exp ` <b>] </b>&acute;
+ </pre><p />
+对全局变量以及 table 域之访问的含义可以通过 metatable ___。
+____________  <code>t[i] </code> 等价于调用  <code>gettable_event(t,i) </code>。
+（参见  <a href="#2.8">&sect;2.8 </a> ，有一份完整的关于
+ <code>gettable_event </code> 函数的说明。
+这个函数并没有在 lua 中定义出来，也不能在 ___ 中调用。
+这里我们把它列出来只是方便说明。）
+
+ <p />
+ <code>var.Name </code> 这种语法只是一个语法糖，用来表示
+ <code>var["Name"] </code>：
+
+ <pre>
+	var ::= prefixexp ` <b>. </b>&acute; Name
+ </pre>
+
+ <p />
+所有的全局变量都是放在一个特定 lua table 的诸个域中，这个特定的 _____
+__  <em>environment （环境）table </em> 或者简称为
+ <em>环境 </em> （参见  <a href="#2.9">&sect;2.9 </a>）。
+每个函数都有对一个环境的引用，
+所以一个函数中可见的所有全局变量都放在这个函数所引用的环境表（environment table）中。
+当一个函数被创建出来，它会从创建它的函数中继承其环境，你可以调用
+ <a href="#pdf-getfenv"><code>getfenv </code></a> 取得其环境。
+如果想改变环境，可以调用  <a href="#pdf-setfenv"><code>setfenv </code></a>。
+（对于 C 函数，你只能通过 debug _______；
+__  <a href="#5.9">&sect;5.9 </a>）。
+
+ <p />
+对一个全局变量  <code>x </code> 的访问
+等价于  <code>_env.x </code>，而这又可以等价于
+
+ <pre>
+     gettable_event(_env, "x")
+ </pre>
+
+ <p />
+这里， <code>_env </code> 是当前运行的函数的环境。
+（函数  <code>gettable_event </code> 的完整说明参见  <a href="#2.8">&sect;2.8 </a>。
+这个函数并没有在 lua 中定义出来，也不能调用。
+当然， <code>_env </code> 这个变量也同样没有在 Lua 中定义出来。
+我们在这里使用它们，仅仅只是方便解释而已。）
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

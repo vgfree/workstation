@@ -1,0 +1,148 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.4.5.html
+Date Downloaded: 2016/4/5 19:55:25 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.4.5 - For 语句 - Lua 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.4.5 -  <a name="2.4.5">For 语句 </a></h3>
+
+ <p />
+
+ <b>for </b> 有两种形式：一种是数字形式，另一种是一般形式。
+
+ <p />
+数字形式的  <b>for </b> 循环，通过一个数学运算不断的运行内部的代码块。
+下面是它的语法：
+
+ <pre>
+	stat ::=  <b>for </b> Name ` <b>= </b>&acute; exp ` <b>, </b>&acute; exp [` <b>, </b>&acute; exp]  <b>do </b> block  <b>end </b>
+ </pre><p />
+ <em>block </em> 将把  <em>name </em> 作循环变量。从第一个  <em>exp </em> 开始起，直到第二个  <em>exp </em> 的值为止，其步长为
+第三个  <em>exp </em> 。
+更确切的说，一个  <b>for </b> 循环看起来是这个样子
+
+ <pre>
+     for v =  <em>e1 </em>,  <em>e2 </em>,  <em>e3 </em> do  <em>block </em> end
+ </pre><p />
+这等价于代码：
+
+ <pre>
+     do
+       local  <em>var </em>,  <em>limit </em>,  <em>step </em> = tonumber( <em>e1 </em>), tonumber( <em>e2 </em>), tonumber( <em>e3 </em>)
+       if not ( <em>var </em> and  <em>limit </em> and  <em>step </em>) then error() end
+       while ( <em>step </em> &gt; 0 and  <em>var </em> &lt;=  <em>limit </em>) or ( <em>step </em> &lt;= 0 and  <em>var </em> &gt;=  <em>limit </em>) do
+         local v =  <em>var </em>
+          <em>block </em>
+          <em>var </em> =  <em>var </em> +  <em>step </em>
+       end
+     end
+ </pre><p />
+
+注意下面这几点：
+
+ <ul>
+
+ <li>
+所有三个控制表达式都只被运算一次，表达式的计算在循环开始之前。
+这些表达式的结果必须是数字。
+ </li>
+
+ <li>
+ <code><em>var </em></code> 、 <code><em>limit </em></code> 、以及  <code><em>step </em></code> 都是一些不可见的变量。
+这里给它们起的名字都仅仅用于解释方便。
+ </li>
+
+ <li>
+如果第三个表达式（步长）没有给出，会把步长设为 1 。
+ </li>
+
+ <li>
+你可以用  <b>break </b> 来退出  <b>for </b> 循环。
+ </li>
+
+ <li>
+循环变量  <code>v </code> 是一个循环内部的局部变量；
+当  <b>for </b> 循环结束后，你就不能在使用它。
+如果你需要这个值，在退出循环前把它赋给另一个变量。
+ </li>
+
+ </ul>
+
+ <p />
+一般形式的  <b>for </b> 通过一个叫作叠代器（ <em>iterators </em>）的函数工作。
+每次叠代，叠代器函数都会被调用以产生一个新的值，
+当这个值为  <b>nil </b> 时，循环停止。
+一般形式的  <b>for </b> 循环的语法如下：
+
+ <pre>
+	stat ::=  <b>for </b> namelist  <b>in </b> explist1  <b>do </b> block  <b>end </b>
+	namelist ::= Name {` <b>, </b>&acute; Name}
+ </pre><p />
+ <b>for </b> 语句好似这样
+
+ <pre>
+     for  <em>var_1 </em>, &middot;&middot;&middot;,  <em>var_n </em> in  <em>explist </em> do  <em>block </em> end
+ </pre><p />
+它等价于这样一段代码：
+
+ <pre>
+     do
+       local  <em>f </em>,  <em>s </em>,  <em>var </em> =  <em>explist </em>
+       while true __
+         local  <em>var_1 </em>, &middot;&middot;&middot;,  <em>var_n </em> =  <em>f </em>( <em>s </em>,  <em>var </em>)
+          <em>var </em> =  <em>var_1 </em>
+         __  <em>var </em> == nil then _____ end
+          <em>block </em>
+       end
+     end
+ </pre><p />
+注意以下几点：
+
+ <ul>
+
+ <li>
+ <code><em>explist </em></code> 只会被计算一次。
+它返回三个值， 一个叠代器函数，一个状态，一个叠代器的初始值。
+ </li>
+
+ <li>
+ <code><em>f </em></code>、  <code><em>s </em></code>、 以及  <code><em>var </em></code> 都是不可见的变量。
+这里给它们起的名字都只是为了解说方便。
+ </li>
+
+ <li>
+你可以使用  <b>break </b> 来跳出  <b>for </b> 循环。
+ </li>
+
+ <li>
+循环变量  <code><em>var_i </em></code> 对于循环来说是一个局部变量；
+你不可以在  <b>for </b> 循环结束后继续使用。
+如果你需要保留这些值，那么就在循环结束前赋值到别的变量里去。
+ </li>
+
+ </ul>
+
+
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

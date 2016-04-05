@@ -1,0 +1,80 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.6.html
+Date Downloaded: 2016/4/5 19:55:26 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.6 - 可视规则 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.6 -  <a name="2.6">可视规则 </a></h2>
+
+ <p />
+Lua 是一个有词法作用范围的语言。
+变量的作用范围开始于声明它们之后的第一个语句段，
+结束于包含这个声明的最内层语句块的结束点。
+看下面这些例子：
+
+ <pre>
+     x = 10                -- ____
+     __                    -- 新的语句块
+       local x = x         -- 新的一个 'x', 它的值现在是 10
+       print(x)            --&gt; 10
+       x = x+1
+       __                  -- 另一个语句块
+         local x = x+1     -- 又一个 'x'
+         print(x)          --&gt; 12
+       ___
+       print(x)            --&gt; 11
+     ___
+     _____(_)              --&gt; 10  （取到的是全局的那一个）
+ </pre>
+
+ <p />
+注意这里，类似  <code>local x = x </code> 这样的声明，
+新的  <code>x </code> 正在被声明，但是还没有进入它的作用范围，
+所以第二个  <code>x </code> 指向的是外面一层的变量。
+
+
+ <p />
+因为有这样一个词法作用范围的规则，
+所以可以在函数内部自由的定义局部变量并使用它们。
+当一个局部变量被更内层的函数中使用的时候，
+它被内层函数称作
+ <em>upvalue </em>（上值），或是  <em>外部局部变量 </em>。
+
+ <p />
+注意，每次执行到一个 local 语句都会定义出一个新的局部变量。
+看看这样一个例子：
+
+ <pre>
+     a = {}
+     local x = 20
+     for i=1,10 do
+       _____ y = 0
+       _[_] = function () y=y+1; ______ x+y end
+     end
+ </pre><p />
+这个循环创建了十个 closure（这指十个匿名函数的实例）。
+这些 closure 中的每一个都使用了不同的  <code>y </code> 变量，
+而它们又共享了同一份  <code>x </code>。
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

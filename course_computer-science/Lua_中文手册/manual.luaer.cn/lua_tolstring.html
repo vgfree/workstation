@@ -1,0 +1,58 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_tolstring.html
+Date Downloaded: 2016/4/5 19:55:33 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_tolstring - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_tolstring"><code>lua_tolstring </code></a></h3>
+ <pre>const char *lua_tolstring (lua_State *_, int index, size_t *len); </pre>
+
+ <p />
+Converts the Lua value __ the given acceptable index __ a string
+( <code>const char* </code>).
+If  <code>len </code> is not  <code>NULL </code>,
+it also sets  <code>*len </code> with the string ______.
+___ Lua value must be _ string or a number;
+otherwise, ___ function returns  <code>NULL </code>.
+If the value is _ number,
+then  <a href="lua_tolstring.html"><code>lua_tolstring </code></a> also
+ <em>changes the actual value __ the stack to a ______ </em>.
+(This change confuses  <a href="lua_next.html"><code>lua_next </code></a>
+when  <a href="lua_tolstring.html"><code>lua_tolstring </code></a> is applied to ____ during a table traversal.)
+
+
+ <p />
+ <a href="lua_tolstring.html"><code>lua_tolstring </code></a> returns a fully _______ pointer
+to a string inside ___ Lua state.
+This string always ___ a zero (' <code>\0 </code>')
+after its last character (__ in&nbsp;C),
+but may contain other _____ in its body.
+Because Lua ___ garbage collection,
+there is no _________ that the pointer returned __  <a href="lua_tolstring.html"><code>lua_tolstring </code></a>
+will be valid after ___ corresponding value is removed ____ the stack.
+
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

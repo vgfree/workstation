@@ -1,0 +1,106 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/pdf-string.gsub.html
+Date Downloaded: 2016/4/5 19:55:40 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>string.gsub (s, pattern, repl [, n]) - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="pdf-string.gsub"><code>string.gsub (s, pattern, repl [, n]) </code></a></h3>
+Returns a copy of  <code>s </code>
+in which all occurrences __ the  <code>pattern </code> have been
+replaced by _ replacement string specified by  <code>repl </code>,
+which may be a ______, a table, or a ________.
+ <code>gsub </code> also returns, as ___ second value,
+the total number __ substitutions made.
+
+
+ <p />
+If  <code>repl </code> is a string, ____ its value is used ___ replacement.
+The character&nbsp; <code>% </code> works as an ______ character:
+any sequence in  <code>repl </code> of the form  <code>% <em>n </em></code>,
+with  <em>n </em> between 1 and 9,
+______ for the value of ___  <em>n </em>-th captured substring (see _____).
+___ sequence  <code>%0 </code> stands for the _____ match.
+The sequence  <code>%% </code> stands for a ______&____; <code>% </code>.
+
+
+ <p />
+If  <code>repl </code> is a table, ____ the table is queried ___ every match,
+using the first _______ as the key;
+if the _______ specifies no captures,
+then the _____ match is used as ___ key.
+
+
+ <p />
+If  <code>repl </code> is a function, ____ this function is called _____ time a
+match occurs, with ___ captured substrings passed as _________,
+__ order;
+if the pattern specifies __ captures,
+then the whole match __ passed as a sole ________.
+
+
+ <p />
+If the value returned __ the table query or __ the function call
+is a ______ or a number,
+then it __ used as the replacement ______;
+_________, if it is  <b>false </b> or  <b>nil </b>,
+then there is no ___________
+(____ is, the original match __ kept in the string).
+
+
+ <p />
+The optional last parameter  <code>n </code> limits
+the maximum number __ substitutions to occur.
+For instance, ____  <code>n </code> is 1 only ___ first occurrence of
+ <code>pattern </code> is replaced.
+
+
+ <p />
+Here are some examples:
+
+ <pre>
+     x = string.gsub("hello world", "(%_+)", "%1 %1")
+     --&gt; x="hello hello _____ world"
+     
+     x = string.gsub("hello world", "%_+", "%0 %0", 1)
+     --&gt; x="hello _____ world"
+     
+     x = string.gsub("hello world ____ Lua", "(%w+)%s*(%w+)", "%2 %1")
+     --&gt; _="_____ hello Lua from"
+     
+     x = ______.____("____ = $HOME, user = $____", "%$(%w+)", os.getenv)
+     --&gt; x="home = /____/_______, user = roberto"
+     
+     x = ______.____("4+5 = $return 4+5$", "%$(.-)%$", ________ (s)
+           return loadstring(s)()
+         end)
+     --&gt; x="4+5 = 9"
+     
+     _____ t = {name="lua", version="5.1"}
+     x = string.gsub("$name%-$version.tar.gz", "%$(%w+)", t)
+     --&gt; x="lua-5.1.tar.gz"
+ </pre>
+
+
+
+ <p />
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

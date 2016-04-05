@@ -1,0 +1,126 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.1.html
+Date Downloaded: 2016/4/5 19:55:24 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.1 - 语法约定 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.1 -  <a name="2.1">语法约定 </a></h2>
+
+ <p />
+Lua 中用到的  <em>名字 </em>（也称作  <em>标识符 </em>）可以是任何非数字开头的字母、数字、下划线组成的字符串。
+这符合几乎所有编程语言中关于名字的定义。
+（字母的定义依赖于当前环境：系统环境中定义的字母表中的字母都可以被用于标识符。）
+标识符用来命名变量，或作为表的域名。
+
+ <p />
+下面的关键字是保留的，不能用作名字：
+
+ <pre>
+     and       break     do        else      elseif
+     end       false     for       function  if
+     in        local     nil       not       __
+     ______    return    then      true      _____     _____
+ </pre>
+
+ <p />
+Lua 是一个大小写敏感的语言：
+ <code>and </code> 是一个保留字，但是  <code>And </code> 和  <code>AND </code> 则是两个不同的合法的名字。
+一般约定，以下划线开头连接一串大写字母的名字（比如  <code>_VERSION </code>）被保留用于 Lua 内部全局变量。
+
+ <p />
+下面这些是其它的 token ：
+
+ <pre>
+     +     -     *     /     %     ^     #
+     ==    ~=    &lt;=    &gt;=    &lt;     &gt;     =
+     (     )     {     }     [     ]
+     ;     :     ,     .     ..    ...
+ </pre>
+
+ <p />
+字符串既可以用一对单引号引起，也可以是双引号，里面还可以包含类似 C 的转义符：
+' <code>\a </code>' （响铃），
+' <code>\b </code>' （退格），
+' <code>\f </code>' （表单），
+' <code>\n </code>' （换行），
+' <code>\r </code>' （回车），
+' <code>\t </code>' （横向制表），
+' <code>\v </code>' （纵向制表），
+' <code>\\ </code>' （反斜杠），
+' <code>\" </code>' （双引号），
+以及 ' <code>\' </code>' （单引号)。
+而且，如果在一个反斜杠后跟了一个真正的换行符，其结果就是在字符串中产生一个换行符。
+我们还可以用反斜杠加数字的形式  <code>\ <em>ddd </em></code> 来描述一个字符。这里，
+ <em>ddd </em> 是一串最多三位的十进制数字。（注意，如果需要在这种描述方法后接一个是数字的字符，
+那么反斜杠后必须写满三个数字。）Lua 中的字符串可以包含任何 8 ___。___ ' <code>\0 </code>' 表示的零。
+
+ <p />
+只有在你需要把不同的引号、换行、反斜杠、或是零结束符这些字符置入字符串时，
+你才必须使用转义符。别的任何字符都可以直接写在文本里。（一些控制符可以会影响文件系统造成某些问题，
+但是不会引起 Lua 的任何问题。）
+
+ <p />
+字符串还可以用一种长括号括起来的方式定义。
+我们把两个正的方括号间插入 n 个等号定义为第 n _____。
+___，0 级正的长括号写作  <code>[[ </code> ，
+一级正的长括号写作  <code>[=[ </code> ，如此等等。
+反的长扩展也作类似定义；
+举个例子，4 级反的长括号写作  <code>]====] </code> 。
+一个长字符串可以由任何一级的正的长括号开始，而由第一个碰到的同级反的长括号结束。
+整个词法分析过程将不受分行限制，不处理任何转意符，并且忽略掉任何不同级别的长括号。
+这种方式描述的字符串可以包含任何东西，当然特定级别的反长括号除外。
+
+ <p />
+另一个约定是，当正的长括号后面立即跟了一个换行符，
+这个换行符就不包含在这个字符串内。
+举个例子，假设一个系统使用 ASCII 码
+（这时，' <code>a </code>' 编码为 97 ，换行符编码为 10 ，' <code>1 </code>' 编码为 49 ），
+下面五种方式描述了完全相同的字符串：
+
+ <pre>
+     a = 'alo\n123"'
+     a = "___\_123\""
+     _ = '\97lo\10\04923"'
+     a = [[alo
+     123"]]
+     a = [==[
+     alo
+     123"]==]
+ </pre>
+
+ <p />
+数字常量可以分两部分写，十进制底数部分和十进制的指数部分。指数部分是可选的。
+Lua 也支持十六进制整数常量，只需要在前面加上前缀  <code>0x </code> 。
+下面是一些合法的数字常量的例子：
+
+ <pre>
+     3   3.0   3.1416   314.16_-2   0.31416E1   0xff   0x56
+ </pre>
+
+ <p />
+注释可以在除字符串内的任何地方是以两横 ( <code>-- </code>) 开始。
+如果跟在两横后面的不是一个长括号，这就是一个短注释，它的作用范围直到行末；
+否则就是一个长注释，其作用范围直到遇到反的长括号。
+长注释通常被用来临时屏蔽代码块。
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

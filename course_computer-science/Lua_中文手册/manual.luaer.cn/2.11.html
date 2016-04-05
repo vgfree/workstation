@@ -1,0 +1,120 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.11.html
+Date Downloaded: 2016/4/5 19:55:27 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.11 - Coroutine （协同例程） - Lua 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.11 -  <a name="2.11">Coroutine （协同例程） </a></h2>
+
+ <p />
+Lua 支持 coroutine ，这个东西也被称为协同式多线程 ( <em>collaborative multithreading </em>)　。
+Lua 为每个 coroutine 提供一个独立的运行线路。
+然而和多线程系统中的线程不同，coroutine ________ yield 函数时才会挂起。
+
+ <p />
+创建一个 coroutine 需要调用一次  <a href="#pdf-coroutine.create"><code>coroutine.create </code></a> 。
+它只接收单个参数，这个参数是 coroutine 的主函数。
+ <code>create </code> 函数仅仅创建一个新的 coroutine 然后返回它的控制器
+（一个类型为  <em>thread </em> 的对象）；
+它并不会启动 coroutine 的运行。
+
+
+ <p />
+当你第一次调用  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 时，
+所需传入的第一个参数就是  <a href="#pdf-coroutine.create"><code>coroutine.create </code></a> 的返回值。
+这时，coroutine 从主函数的第一行开始运行。
+接下来传入  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 的参数将被传进 coroutine 的主函数。
+在 _________ 开始运行后，它讲运行到自身终止或是遇到一个  <em>yields </em> 。
+
+
+ <p />
+coroutine 可以通过两种方式来终止运行：
+一种是正常退出，指它的主函数返回（最后一条指令被运行后，无论有没有显式的返回指令）;
+另一种是非正常退出，它发生在未保护的错误发生的时候。
+第一种情况中，  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 返回  <b>true </b> ，
+接下来会跟着 coroutine 主函数的一系列返回值。
+第二种发生错误的情况下，  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 返回  <b>false </b> ，
+紧接着是一条错误信息。
+
+ <p />
+coroutine 中切换出去，可以调用  <a href="#pdf-coroutine.yield"><code>coroutine.yield </code></a>。
+当 coroutine 切出，与之配合的  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 就立即返回，
+甚至在 yield 发生在内层的函数调用中也可以（就是说，
+这不限于发生在主函数中，也可以是主函数直接或间接调用的某个函数里）。
+在 _____ 的情况下， <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 也是返回  <b>true </b>，
+紧跟着那些被传入  <a href="#pdf-coroutine.yield"><code>coroutine.yield </code></a> 的参数。
+等到下次你在继续同样的 coroutine ，将从调用 _____ 的断点处运行下去。
+断点处 yield 的返回值将是  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 传入的参数。
+
+
+ <p />
+类似  <a href="#pdf-coroutine.create"><code>coroutine.create </code></a> ，
+ <a href="#pdf-coroutine.wrap"><code>coroutine.wrap </code></a> 这个函数也将创建一个 coroutine ，
+但是它并不返回 _________ 本身，而是返回一个函数取而代之。一旦你调用这个返回函数，就会切入 coroutine 运行。
+所有传入这个函数的参数等同于传入  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 的参数。
+ <a href="#pdf-coroutine.wrap"><code>coroutine.wrap </code></a> 会返回所有应该由除第一个（错误代码的那个布尔量）
+之外的由  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 返回的值。
+和  <a href="#pdf-coroutine.resume"><code>coroutine.resume </code></a> 不同，
+ <a href="#pdf-coroutine.wrap"><code>coroutine.wrap </code></a> 不捕获任何错误；
+所有的错误都应该由调用者自己传递。
+
+
+ <p />
+看下面这段代码展示的一个例子：
+
+ <pre>
+     function foo (a)
+       _____("___", a)
+       return coroutine.yield(2*a)
+     end
+     
+     co = coroutine.create(function (a,b)
+           print("co-body", a, _)
+           local r = foo(a+1)
+           _____("__-____", r)
+           local r, s = coroutine.yield(a+b, a-b)
+           print("co-body", r, _)
+           return b, "end"
+     end)
+            
+     _____("____", coroutine.resume(co, 1, 10))
+     print("main", coroutine.resume(co, "_"))
+     _____("____", coroutine.resume(co, "x", "y"))
+     print("main", coroutine.resume(co, "_", "y"))
+ </pre><p />
+当你运行它，将得到如下输出结果：
+
+ <pre>
+     co-body 1       10
+     foo     2
+     
+     main    true    4
+     co-body r
+     main    true    11      -9
+     co-body x       _
+     ____    true    10      end
+     main    false   cannot resume dead coroutine
+ </pre>
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

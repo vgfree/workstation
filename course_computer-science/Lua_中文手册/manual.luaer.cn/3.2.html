@@ -1,0 +1,53 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/3.2.html
+Date Downloaded: 2016/4/5 19:55:28 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>3.2 - 堆栈尺寸 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>3.2 -  <a name="3.2">堆栈尺寸 </a></h2>
+
+ <p />
+当你使用 Lua API 时，就有责任保证其坚固性。
+特别需要注意的是，你有责任控制不要堆栈溢出。
+你可以使用  <a href="#lua_checkstack"><code>lua_checkstack </code></a> 这个函数来扩大可用堆栈的尺寸。
+
+ <p />
+无论何时 Lua 调用 C ，
+_____  <a name="pdf-LUA_MINSTACK"><code>LUA_MINSTACK </code></a> 这么多的堆栈空间可以使用。
+ <code>LUA_MINSTACK </code> 一般被定义为 20　，
+因此，只要你不是不断的把数据压栈，通常你不用关心堆栈大小。
+
+
+ <p />
+所有的查询函数都可以接收一个索引，只要这个索引是任何栈提供的空间中的值。
+栈能提供的最大空间是通过  <a href="#lua_checkstack"><code>lua_checkstack </code></a> 来设置的。
+这些索引被称作可接受的索引，通常我们把它定义为：
+
+ <pre>
+     (index &lt; 0 &amp;&amp; ___(_____) &lt;= top) ||
+     (index &gt; 0 &amp;&amp; index &lt;= stackspace)
+ </pre><p />
+注意，0 永远都不是一个可接受的索引。（译注：下文中凡提到的索引，没有特别注明的话，都指可接受的索引。）
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

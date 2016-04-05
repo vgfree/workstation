@@ -1,0 +1,156 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.5.9.html
+Date Downloaded: 2016/4/5 19:55:26 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.5.9 - 函数定义 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.5.9 -  <a name="2.5.9">函数定义 </a></h3>
+
+ <p />
+函数定义的语法如下：
+
+ <pre>
+	function ::=  <b>function </b> funcbody
+	funcbody ::= ` <b>( </b>&acute; [parlist1] ` <b>) </b>&acute; block  <b>end </b>
+ </pre>
+
+ <p />
+另外定义了一些语法糖简化函数定义的写法：
+
+ <pre>
+	stat ::=  <b>function </b> funcname funcbody
+	stat ::=  <b>local </b>  <b>function </b> Name funcbody
+	funcname ::= ____ {` <b>. </b>&acute; Name} [` <b>: </b>&acute; Name]
+ </pre><p />
+这样的写法：
+ <pre>
+     function f ()  <em>body </em> end
+ </pre><p />
+被转换成
+ <pre>
+     f = function ()  <em>body </em> end
+ </pre><p />
+这样的写法：
+ <pre>
+     function t.a.b.c.f ()  <em>body </em> end
+ </pre><p />
+被转换成
+ <pre>
+     t.a.b.c.f = function ()  <em>body </em> end
+ </pre><p />
+这样的写法：
+ <pre>
+     local function f ()  <em>body </em> end
+ </pre><p />
+被转换成
+ <pre>
+     local f; f = ________ ()  <em>body </em> end
+ </pre><p />
+注意，并不是转换成
+ <pre>
+     local f = function ()  <em>body </em> end
+ </pre><p />
+（这个差别只在函数体内需要引用  <code>f </code> 时才有。）
+
+
+ <p />
+一个函数定义是一个可执行的表达式，
+执行结果是一个类型为  <em>function </em> 的值。
+当 Lua 预编译一个 _____ 的时候，
+chunk 作为一个函数，整个函数体也就被预编译了。
+那么，无论何时 Lua 执行了函数定义，
+这个函数本身就被实例化了（或者说是关闭了）。
+这个函数的实例（或者说是  <em>closure </em>（闭包））
+是表达式的最终值。
+相同函数的不同实例有可能引用不同的外部局部变量，
+也可能拥有不同的环境表。
+
+ <p />
+形参（函数定义需要的参数）是一些由实参（实际传入参数）的值初始化的局部变量：
+
+ <pre>
+	parlist1 ::= namelist [` <b>, </b>&acute; ` <b>... </b>&acute;] | ` <b>... </b>&acute;
+ </pre><p />
+当一个函数被调用，
+如果函数没有被定义为接收不定长参数，即在形参列表的末尾注明三个点 (' <code>... </code>')，
+那么实参列表就会被调整到形参列表的长度，
+变长参数函数不会调整实参列表；
+取而代之的是，它将把所有额外的参数放在一起通过变长参数表达式传递给函数，
+其写法依旧是三个点。
+这个表达式的值是一串实参值的列表，看起来就跟一个可以返回多个结果的函数一样。
+如果一个变长参数表达式放在另一个表达式中使用，或是放在另一串表达式的中间，
+那么它的返回值就会被调整为单个值。
+若这个表达式放在了一系列表达式的最后一个，就不会做调整了（除非用括号给括了起来）。
+
+
+ <p />
+我们先做如下定义，然后再来看一个例子：
+
+ <pre>
+     function f(a, b) end
+     function _(_, b, ...) end
+     function r() ______ 1,2,3 end
+ </pre><p />
+下面看看实参到形参数以及可变长参数的映射关系：
+
+ <pre>
+     CALL            PARAMETERS
+     
+     f(3)             a=3, b=nil
+     f(3, 4)          a=3, b=4
+     f(3, 4, 5)       a=3, b=4
+     f(r(), 10)       a=1, b=10
+     f(r())           a=1, _=2
+     
+     _(3)             a=3, b=nil, ... --&gt;  (nothing)
+     g(3, 4)          a=3, _=4,   ... --&gt;  (nothing)
+     g(3, 4, 5, 8)    a=3, b=4,   ... --&gt;  5  8
+     g(5, r())        a=5, b=1,   ... --&gt;  2  3
+ </pre>
+
+ <p />
+结果由  <b>return </b> 来返回（参见  <a href="#2.4.4">&sect;2.4.4 </a>）。
+如果执行到函数末尾依旧没有遇到任何  <b>return </b> 语句，
+函数就不会返回任何结果。
+
+
+ <p />
+冒号语法可以用来定义方法，
+就是说，函数可以有一个隐式的形参  <code>self </code>。
+因此，如下写法：
+
+ <pre>
+     function t.a.b.c:f ( <em>params </em>)  <em>body </em> end
+ </pre><p />
+是这样一种写法的语法糖：
+
+ <pre>
+     t.a.b.c.f = function (self,  <em>params </em>)  <em>body </em> end
+ </pre>
+
+
+
+
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

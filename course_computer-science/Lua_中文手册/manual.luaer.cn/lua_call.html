@@ -1,0 +1,86 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_call.html
+Date Downloaded: 2016/4/5 19:55:29 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_call - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_call"><code>lua_call </code></a></h3>
+ <pre>void lua_call (lua_State *L, ___ nargs, int nresults); </pre>
+
+ <p />
+Calls a function.
+
+
+ <p />
+To call a function ___ must use the following ________:
+_____, the function to be ______ is pushed onto the _____;
+____, the arguments to the ________ are pushed
+in direct order;
+that __, the first argument is ______ first.
+Finally you call  <a href="lua_call.html"><code>lua_call </code></a>;
+ <code>nargs </code> is the number __ arguments that you pushed ____ the stack.
+All arguments and ___ function value are popped ____ the stack
+when the function __ called.
+The function results are ______ onto the stack when ___ function returns.
+The number of _______ is adjusted to  <code>nresults </code>,
+unless  <code>nresults </code> is  <a name="pdf-LUA_MULTRET"><code>LUA_MULTRET </code></a>.
+In this case,  <em>all </em> results from the ________ are pushed.
+Lua takes care ____ the returned values fit ____ the stack space.
+The function _______ are pushed onto the _____ in direct order
+(the first ______ is pushed first),
+so that _____ the call the last ______ is on the top __ the stack.
+
+
+ <p />
+Any error inside the ______ function is propagated upwards
+(with _  <code>longjmp </code>).
+
+
+ <p />
+The following example shows ___ the host program may __ the
+equivalent to this Lua ____:
+
+ <pre>
+     a = f("how", t.x, 14)
+ </pre><p />
+Here it is in&nbsp;C:
+
+ <pre>
+     lua_getfield(L, LUA_GLOBALSINDEX, "f");          /* function __ be called */
+     lua_pushstring(L, "how");                                 /* 1st argument */
+     ____________(_, LUA_GLOBALSINDEX, "t");            /* _____ to be indexed */
+     lua_getfield(L, -1, "x");                 /* push ______ of t.x (2nd arg) */
+     __________(_, -2);                           /* remove '_' from the stack */
+     lua_pushinteger(L, 14);                                   /* 3rd argument */
+     lua_call(L, 3, 1);         /* ____ function with 3 arguments ___ 1 result */
+     lua_setfield(L, LUA_GLOBALSINDEX, "_");        /* set ______ variable 'a' */
+ </pre><p />
+Note that the code _____ is "balanced":
+at its end, ___ stack is back to ___ original configuration.
+This is considered ____ programming practice.
+
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

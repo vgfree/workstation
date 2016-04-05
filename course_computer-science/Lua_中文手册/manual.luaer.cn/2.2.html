@@ -1,0 +1,98 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.2.html
+Date Downloaded: 2016/4/5 19:55:24 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.2 - 值与类型 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.2 -  <a name="2.2">值与类型 </a></h2>
+
+ <p />
+Lua 是一种  <em>动态类型语言 </em>。
+这意味着变量没有类型，只有值才有类型。
+语言中不存在类型定义。而所有的值本身携带它们自己的类型信息。
+
+ <p />
+Lua 中的所有值都是一致 (first-class) 的。
+这意味着所有的值都可以被放在变量里，当作参数传递到另一个函数中，并被函数作为结果返回。
+
+ <p />
+Lua 中有八种基本类型：
+ <em>nil </em>,  <em>boolean </em>,  <em>number </em>,
+ <em>string </em>,  <em>function </em>,  <em>userdata </em>,
+ <em>thread </em>, and  <em>table </em>.
+ <em>Nil </em> 类型只有一种值  <b>nil </b> ，它的主要用途用于标表识和别的任何值的差异；
+通常，当需要描述一个无意义的值时会用到它。
+ <em>Boolean </em> 类型只有两种值： <b>false </b> 和  <b>true </b>。
+ <b>nil </b> 和  <b>false </b> 都能导致条件为假；而另外所有的值都被当作真。
+ <em>Number </em> 表示实数（双精度浮点数）。
+（编译一个其它内部数字类型的 Lua 解释器是件很容易的事；比如把内部数字类型改作
+单精度浮点数或长整型。参见文件  <code>luaconf.h </code> 。）
+ <em>String </em> 表示一串字符的数组。
+
+Lua 是 8-bit _____ 的：
+字符串可以包含任何 8 位字符，
+包括零结束符 (' <code>\0 </code>') （参见  <a href="#2.1">&sect;2.1 </a>）。
+
+
+ <p />
+Lua 可以调用（和处理）用 Lua 写的函数以及用 _ 写的函数（参见  <a href="#2.5.8">&sect;2.5.8 </a>）.
+
+
+ <p />
+ <em>userdata </em> 类型用来将任意 C 数据保存在 ___ 变量中。
+这个类型相当于一块原生的内存，除了赋值和相同性判断，Lua 没有为之预定义任何操作。
+然而，通过使用  <em>metatable （元表） </em> ，程序员可以为 userdata 自定义一组操作
+（参见  <a href="#2.8">&sect;2.8 </a>）。
+userdata 不能在 Lua 中创建出来，也不能在 ___ 中修改。这样的操作只能通过 C API。
+这一点保证了宿主程序完全掌管其中的数据。
+
+ <p />
+ <em>thread </em> 类型用来区别独立的执行线程，它被用来实现 coroutine （协同例程）（参见  <a href="#2.11">&sect;2.11 </a>）。
+不要把 Lua 线程跟操作系统的线程搞混。
+Lua 可以在所有的系统上提供对 _________ 的支持，即使系统并不支持线程。
+
+ <p />
+ <em>table </em> 类型实现了一个关联数组。也就是说，
+数组可以用任何东西（除了 <b>nil </b>）做索引，而不限于数字。
+table 可以以不同类型的值构成；它可以包含所有的类型的值（除  <b>nil </b> 外）。
+table 是 lua __________；____________、___、__、
+__、_、_、__。
+_______，___ 使用域名作为索引。
+语言本身采用一种语法糖，支持以  <code>a.name </code> 的形式表示  <code>a["name"] </code>。
+有很多形式用于在 lua 中创建一个 table （__  <a href="#2.5.7">&sect;2.5.7 </a>）。
+
+ <p />
+跟索引一样， table 每个域中的值也可以是任何类型（除  <b>nil </b>外）。
+特别的，因为函数本身也是值，所以 table 的域中也可以放函数。
+这样 table _______  <em>methods </em> 了 （参见see  <a href="#2.5.9">&sect;2.5.9 </a>）。
+
+ <p />
+table， function ，thread ，和 (____) userdata 这些类型的值是所谓的对象：
+变量本身并不会真正的存放它们的值，而只是放了一个对对象的引用。
+赋值，参数传递，函数返回，都是对这些对象的引用进行操作；
+这些操作不会做暗地里做任何性质的拷贝。
+
+ <p />
+库函数  <a href="#pdf-type"><code>type </code></a> 可以返回一个描述给定值的类型的字符串。
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

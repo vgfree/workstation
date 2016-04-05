@@ -1,0 +1,92 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_pcall.html
+Date Downloaded: 2016/4/5 19:55:31 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_pcall - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_pcall"><code>lua_pcall </code></a></h3>
+ <pre>lua_pcall (lua_State *L, int _____, int nresults, int errfunc); </pre>
+
+ <p />
+Calls a function in _________ mode.
+
+
+ <p />
+Both  <code>nargs </code> and  <code>nresults </code> have the same _______ as
+in  <a href="lua_call.html"><code>lua_call </code></a>.
+If there are no ______ during the call,
+ <a href="lua_pcall.html"><code>lua_pcall </code></a> behaves exactly like  <a href="lua_call.html"><code>lua_call </code></a>.
+However, if there is ___ error,
+ <a href="lua_pcall.html"><code>lua_pcall </code></a> catches it,
+pushes a ______ value on the stack (___ error message),
+and returns an _____ code.
+Like  <a href="lua_call.html"><code>lua_call </code></a>,
+ <a href="lua_pcall.html"><code>lua_pcall </code></a> always removes the ________
+___ its arguments from the _____.
+
+
+ <p />
+If  <code>errfunc </code> is 0,
+then the _____ message returned on the _____
+__ exactly the original error _______.
+_________,  <code>errfunc </code> is the stack _____ of an
+ <em>error handler function </em>.
+(In the current implementation, ____ index cannot be a ______-_____.)
+__ case of runtime errors,
+this ________ will be called with ___ error message
+and its return _____ will be the message ________ on the stack by  <a href="lua_pcall.html"><code>lua_pcall </code></a>.
+
+
+ <p />
+Typically, the error handler ________ is used to add ____ debug
+information to the error _______, such as a stack _________.
+____ information cannot be gathered _____ the return of  <a href="lua_pcall.html"><code>lua_pcall </code></a>,
+since by then the _____ has unwound.
+
+
+ <p />
+The  <a href="lua_pcall.html"><code>lua_pcall </code></a> function returns 0 __ case of success
+or one __ the following error codes
+(defined __  <code>lua.h </code>):
+
+ <ul>
+
+ <li><b><a name="pdf-LUA_ERRRUN"><code>LUA_ERRRUN </code></a>: </b>
+a runtime error.
+ </li>
+
+ <li><b><a name="pdf-LUA_ERRMEM"><code>LUA_ERRMEM </code></a>: </b>
+memory allocation error.
+For such ______, Lua does not call ___ error handler function.
+ </li>
+
+ <li><b><a name="pdf-LUA_ERRERR"><code>LUA_ERRERR </code></a>: </b>
+error while running the _____ handler function.
+ </li>
+
+ </ul>
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

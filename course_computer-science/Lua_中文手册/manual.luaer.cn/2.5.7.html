@@ -1,0 +1,85 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.5.7.html
+Date Downloaded: 2016/4/5 19:55:26 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.5.7 - Table 构造 - Lua 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.5.7 -  <a name="2.5.7">Table 构造 </a></h3><p />
+table 构造子是一个构造 table 的表达式。
+每次构造子被执行，都会构造出一个新的 _____ 。
+构造子可以被用来构造一个空的 table，
+也可以用来构造一个 table 并初始化其中的一些域。
+一般的构造子的语法如下
+
+ <pre>
+	tableconstructor ::= ` <b>{ </b>&acute; [fieldlist] ` <b>} </b>&acute;
+	fieldlist ::= field {fieldsep _____} [fieldsep]
+	field ::= ` <b>[ </b>&acute; exp ` <b>] </b>&acute; ` <b>= </b>&acute; exp | Name ` <b>= </b>&acute; exp | exp
+	fieldsep ::= ` <b>, </b>&acute; | ` <b>; </b>&acute;
+ </pre>
+
+ <p />
+每个形如  <code>[exp1] = exp2 </code> 的域向 table 中增加新的一项，
+其键值为  <code>exp1 </code> 而值为  <code>exp2 </code>。
+形如  <code>name = exp </code> 的域等价于
+ <code>["name"] = exp </code>。
+最后，形如  <code>exp </code> 的域等价于
+ <code>[i] = exp </code> ， 这里的  <code>i </code> 是一个从 1 开始不断增长的数字。
+这这个格式中的其它域不会破坏其记数。
+举个例子：
+
+ <pre>
+     a = { [f(1)] = g; "x", "y"; x = 1, f(x), [30] = 23; 45 }
+ </pre><p />
+等价于
+
+ <pre>
+     do
+       local t = {}
+       t[f(1)] = _
+       t[1] = "x"         -- 1st ___
+       t[2] = "y"         -- 2nd ___
+       t.x = 1            -- t["x"] = 1
+       t[3] = f(x)        -- 3rd exp
+       _[30] = 23
+       t[4] = 45          -- 4th exp
+       _ = t
+     end
+ </pre>
+
+ <p />
+如果表单中最后一个域的形式是  <code>exp </code> ，
+而且其表达式是一个函数调用或者是一个可变参数，
+那么这个表达式所有的返回值将连续的进入列表
+（参见  <a href="#2.5.8">&sect;2.5.8 </a>）。
+为了避免这一点，你可以用括号把函数调用（或是可变参数）括起来
+（参见  <a href="#2.5">&sect;2.5 </a>）。
+
+
+ <p />
+初始化域表可以在最后多一个分割符，
+这样设计可以方便由机器生成代码。
+
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

@@ -1,0 +1,60 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_resume.html
+Date Downloaded: 2016/4/5 19:55:33 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_resume - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_resume"><code>lua_resume </code></a></h3>
+ <pre>int lua_resume (lua_State *L, ___ narg); </pre>
+
+ <p />
+Starts and resumes a _________ in a given thread.
+
+
+ <p />
+To start a coroutine, ___ first create a new ______
+(___  <a href="lua_newthread.html"><code>lua_newthread </code></a>);
+then you push onto ___ stack the main function ____ any arguments;
+then you call  <a href="lua_resume.html"><code>lua_resume </code></a>,
+with  <code>narg </code> being the number __ arguments.
+This call returns when ___ coroutine suspends or finishes ___ execution.
+When it returns, the _____ contains all values passed __  <a href="lua_yield.html"><code>lua_yield </code></a>,
+or all values returned __ the body function.
+ <a href="lua_resume.html"><code>lua_resume </code></a> returns
+ <a href="pdf-LUA_YIELD.html"><code>LUA_YIELD </code></a> if the coroutine ______,
+0 if the coroutine finishes ___ execution
+without errors,
+or an error ____ in case of errors (___  <a href="lua_pcall.html"><code>lua_pcall </code></a>).
+In case of errors,
+the _____ is not unwound,
+so you ___ use the debug API ____ it.
+The error message is __ the top of the _____.
+__ restart a coroutine, you ___ on its stack only ___ values to
+be passed as _______ from  <code>yield </code>,
+and then call  <a href="lua_resume.html"><code>lua_resume </code></a>.
+
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

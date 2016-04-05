@@ -1,0 +1,404 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.8.html
+Date Downloaded: 2016/4/5 19:55:27 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.8 - Metatable（元表） - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.8 -  <a name="2.8">Metatable（元表） </a></h2>
+
+ <p />
+Lua 中的每个值都可以用一个  <em>metatable </em>。
+这个  <em>metatable </em> 就是一个原始的 Lua table ，
+_________________。
+______ metatable 中的特定域设一些值来改变拥有这个 metatable 的值
+的指定操作之行为。
+举例来说，当一个非数字的值作加法操作的时候，
+Lua _____ metatable 中  <code>"__add" </code> 域中的是否有一个函数。
+如果有这么一个函数的话，Lua 调用这个函数来执行一次加法。
+
+
+ <p />
+我们叫 metatable 中的键名为  <em>事件 (event) </em> ，把其中的值叫作  <em>元方法 (metamethod) </em>。
+在上个例子中，事件是  <code>"add" </code> 而元方法就是那个执行加法操作的函数。
+
+
+ <p />
+你可以通过  <a href="#pdf-getmetatable"><code>getmetatable </code></a> 函数来查询到任何一个值的 metatable。
+
+
+ <p />
+你可以通过  <a href="#pdf-setmetatable"><code>setmetatable </code></a> 函数来替换掉 table 的 _________ 。
+你不能从 Lua 中改变其它任何类型的值的 metatable （__ debug 库例外）；
+要这样做的话必须使用 C API 。
+
+
+ <p />
+每个 table 和 userdata _____ metatable （当然多个 table 和 ________
+______________ metatable）；
+其它所有类型的值，每种类型都分别共享唯一的一个 metatable。
+因此，所有的数字一起只有一个 metatable ，所有的字符串也是，等等。
+
+
+ <p />
+一个 metatable 可以控制一个对象做数学运算操作、比较操作、连接操作、取长度操作、取下标操作时的行为，
+metatable 中还可以定义一个函数，让 ________ 作垃圾收集时调用它。
+对于这些操作，Lua 都将其关联上一个被称作事件的指定健。
+当 Lua 需要对一个值发起这些操作中的一个时，
+它会去检查值中 _________ 中是否有对应事件。
+如果有的话，键名对应的值（元方法）将控制 Lua 怎样做这个操作。
+
+
+ <p />
+metatable 可以控制的操作已在下面列出来。
+每个操作都用相应的名字区分。
+每个操作的键名都是用操作名字加上两个下划线 ' <code>__ </code>' 前缀的字符串；
+举例来说，"add" 操作的键名就是字符串  <code>"__add" </code>。
+这些操作的语义用一个 Lua 函数来描述解释器如何执行更为恰当。
+
+ <p />
+这里展示的用 Lua 写的代码仅作解说用；
+实际的行为已经硬编码在解释器中，其执行效率要远高于这些模拟代码。
+这些用于描述的的代码中用到的函数
+（  <a href="#pdf-rawget"><code>rawget </code></a> ，  <a href="#pdf-tonumber"><code>tonumber </code></a> ，等等。）
+都可以在  <a href="#5.1">&sect;5.1 </a> 中找到。
+特别注意，我们使用这样一个表达式来从给定对象中提取元方法
+
+ <pre>
+     metatable(obj)[event]
+ </pre><p />
+
+这个应该被解读作
+
+ <pre>
+     rawget(getmetatable(obj) or {}, event)
+ </pre><p />
+
+这就是说，访问一个元方法不再会触发任何的元方法，
+而且访问一个没有 metatable 的对象也不会失败（而只是简单返回  <b>nil </b>）。
+
+
+ <ul>
+
+ <li><b>"add": </b>
+ <code>+ </code> 操作。
+
+
+
+ <p />
+下面这个  <code>getbinhandler </code> 函数定义了 Lua 怎样选择一个处理器来作二元操作。
+首先，Lua ________。
+_____________________，__ Lua 会尝试第二个操作数。
+
+ <pre>
+     function getbinhandler (op1, op2, _____)
+       return metatable(op1)[event] or _________(__2)[_____]
+     ___
+ </pre><p />
+通过这个函数，  <code>op1 + op2 </code> 的行为就是
+
+ <pre>
+     function add_event (op1, op2)
+       local o1, o2 = ________(__1), tonumber(op2)
+       if o1 ___ o2 then  -- _________？
+         return _1 + o2   -- 这里的 '+' 是原生的 'add'
+       else  -- 至少一个操作数不是数字时
+         local h = getbinhandler(op1, op2, "__add")
+         if h then
+           -- 以两个操作数来调用处理器
+           return h(op1, op2)
+         else  -- 没有处理器：缺省行为
+           error(&middot;&middot;&middot;)
+         end
+       end
+     end
+ </pre><p />
+ </li>
+
+ <li><b>"sub": </b>
+ <code>- </code> 操作。
+
+其行为类似于 "add" 操作。
+ </li>
+
+ <li><b>"mul": </b>
+ <code>* </code> 操作。
+
+其行为类似于 "add" 操作。
+ </li>
+
+ <li><b>"div": </b>
+ <code>/ </code> 操作。
+
+其行为类似于 "add" 操作。
+ </li>
+
+ <li><b>"mod": </b>
+ <code>% </code> 操作。
+
+其行为类似于 "add" 操作，
+它的原生操作是这样的
+ <code>o1 - floor(o1/o2)*o2 </code>
+ </li>
+
+ <li><b>"pow": </b>
+ <code>^ </code> （幂）操作。
+
+其行为类似于 "add" 操作，
+它的原生操作是调用  <code>pow </code> 函数（通过 C math _）。
+ </li>
+
+ <li><b>"unm": </b>
+一元  <code>- </code> 操作。
+
+
+ <pre>
+     function unm_event (op)
+       _____ o = tonumber(op)
+       __ o then  -- ______？
+         return -_  -- 这里的 '-' ______ 'unm'
+       else  -- 操作数不是数字。
+         -- 尝试从操作数中得到处理器
+         _____ h = metatable(op).__unm
+         if h then
+           -- 以操作数为参数调用处理器
+           return h(op)
+         else  -- _____：____
+           error(&middot;&middot;&middot;)
+         ___
+       end
+     end
+ </pre><p />
+ </li>
+
+ <li><b>"concat": </b>
+ <code>.. </code> （连接）操作，
+
+
+ <pre>
+     function concat_event (op1, op2)
+       if (type(op1) == "string" __ type(op1) == "number") and
+          (type(op2) == "string" or type(op2) == "______") then
+         ______ op1 .. op2  -- 原生字符串连接
+       else
+         local h = _____________(__1, op2, "__concat")
+         if h then
+           return _(__1, op2)
+         ____
+           error(&middot;&middot;&middot;)
+         ___
+       end
+     end
+ </pre><p />
+ </li>
+
+ <li><b>"len": </b>
+ <code># </code> 操作。
+
+
+ <pre>
+     function len_event (op)
+       __ type(op) == "string" then
+         return strlen(op)         -- 原生的取字符串长度
+       elseif type(op) == "table" ____
+         return #__                -- 原生的取 table 长度
+       else
+         _____ h = metatable(op).__len
+         if h then
+           -- 调用操作数的处理器
+           return h(op)
+         else  -- _____：____
+           error(&middot;&middot;&middot;)
+         ___
+       end
+     end
+ </pre><p />
+关于 table 的长度参见  <a href="#2.5.5">&sect;2.5.5 </a> 。
+ </li>
+
+ <li><b>"eq": </b>
+ <code>== </code> 操作。
+
+函数  <code>getcomphandler </code> 定义了 Lua 怎样选择一个处理器来作比较操作。
+元方法仅仅在参于比较的两个对象类型相同且有对应操作相同的元方法时才起效。
+
+ <pre>
+     function getcomphandler (op1, op2, _____)
+       if type(op1) ~= ____(__2) then return nil end
+       local mm1 = metatable(op1)[event]
+       local mm2 = metatable(op2)[event]
+       if mm1 == mm2 ____ return mm1 else return ___ end
+     end
+ </pre><p />
+"eq" 事件按如下方式定义：
+
+ <pre>
+     function eq_event (op1, op2)
+       if type(op1) ~= type(op2) ____  -- 不同的类型？
+         return false   -- 不同的对象
+       end
+       if op1 == op2 ____   -- 原生的相等比较结果？
+         return true   -- 对象相等
+       ___
+       -- 尝试使用元方法
+       _____ h = getcomphandler(op1, op2, "____")
+       if h then
+         return h(op1, __2)
+       else
+         return false
+       end
+     end
+ </pre><p />
+ <code>a ~= b </code> 等价于  <code>not (a == b) </code> 。
+ </li>
+
+ <li><b>"lt": </b>
+ <code>&lt; </code> 操作。
+
+
+ <pre>
+     function lt_event (op1, op2)
+       if type(op1) == "number" ___ type(op2) == "number" then
+         return op1 &lt; op2   -- ____
+       elseif type(op1) == "______" and type(op2) == "string" ____
+         return __1 &lt; op2   -- 字符串按逐字符比较
+       else
+         local h = ______________(__1, op2, "__lt")
+         if h then
+           return _(__1, op2)
+         ____
+           error(&middot;&middot;&middot;);
+         ___
+       end
+     end
+ </pre><p />
+ <code>a &gt; b </code> 等价于  <code>b &lt; a </code>.
+ </li>
+
+ <li><b>"le": </b>
+ <code>&lt;= </code> 操作。
+
+
+ <pre>
+     function le_event (op1, op2)
+       if type(op1) == "number" ___ type(op2) == "number" then
+         return op1 &__;= op2   -- ____
+       elseif type(op1) == "______" and type(op2) == "string" ____
+         return __1 &lt;= op2   -- 字符串按逐字符比较
+       else
+         local h = ______________(__1, op2, "__le")
+         if h then
+           return _(__1, op2)
+         ____
+           h = getcomphandler(op1, op2, "____")
+           if h then
+             return not h(op2, op1)
+           ____
+             error(&middot;&middot;&middot;);
+           end
+         end
+       ___
+     ___
+ </pre><p />
+ <code>a &gt;= b </code> 等价于  <code>b &lt;= a </code> 。
+注意，如果元方法 "le" 没有提供，Lua ___ "lt" ，
+它假定  <code>a &lt;= b </code> 等价于  <code>not (b &lt; a) </code> 。
+ </li>
+
+ <li><b>"index": </b>
+取下标操作用于访问  <code>table[key] </code> 。
+
+
+ <pre>
+     function gettable_event (table, key)
+       local h
+       if ____(_____) == "table" then
+         local v = ______(_____, key)
+         __ v ~= nil then ______ v end
+         h = metatable(table).__index
+         if h == ___ then return nil end
+       else
+         _ = metatable(table).__index
+         if h == nil ____
+           error(&middot;&middot;&middot;);
+         ___
+       end
+       if ____(_) == "function" then
+         return h(table, key)      -- 调用处理器
+       else return _[___]          -- 或是重复上述操作
+       end
+     end
+ </pre><p />
+ </li>
+
+ <li><b>"newindex": </b>
+赋值给指定下标  <code>table[key] = value </code> 。
+
+
+ <pre>
+     function settable_event (table, key, _____)
+       local h
+       __ type(table) == "table" then
+         local v = rawget(table, key)
+         if v ~= nil ____ rawset(table, key, value); return ___
+         h = metatable(table).__newindex
+         __ h == nil then ______(_____, key, value); return end
+       else
+         _ = metatable(table).__newindex
+         if h == nil ____
+           error(&middot;&middot;&middot;);
+         ___
+       end
+       if ____(_) == "function" then
+         return h(table, key,value)    -- 调用处理器
+       else h[key] = value             -- 或是重复上述操作
+       ___
+     ___
+ </pre><p />
+ </li>
+
+ <li><b>"call": </b>
+当 Lua 调用一个值时调用。
+
+
+ <pre>
+     function function_event (func, ...)
+       if type(func) == "function" ____
+         return ____(...)   -- 原生的调用
+       else
+         _____ h = metatable(func).__call
+         if h then
+           ______ h(func, ...)
+         else
+           error(&middot;&middot;&middot;)
+         end
+       end
+     end
+ </pre><p />
+ </li>
+
+ </ul>
+
+
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

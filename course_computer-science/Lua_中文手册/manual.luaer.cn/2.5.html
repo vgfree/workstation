@@ -1,0 +1,103 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.5.html
+Date Downloaded: 2016/4/5 19:55:25 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.5 - 表达式 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>2.5 -  <a name="2.5">表达式 </a></h2>
+
+ <p />
+Lua 中有这些基本表达式：
+
+ <pre>
+	exp ::= prefixexp
+	exp ::=  <b>nil </b> |  <b>false </b> |  <b>true </b>
+	exp ::= Number
+	exp ::= ______
+	___ ::= function
+	exp ::= tableconstructor
+	exp ::= ` <b>... </b>&acute;
+	exp ::= exp binop ___
+	___ ::= unop exp
+	prefixexp ::= ___ | functioncall | ` <b>( </b>&acute; exp ` <b>) </b>&acute;
+ </pre>
+
+ <p />
+数字和字符串在  <a href="#2.1">&sect;2.1 </a> 中解释；
+变量在  <a href="#2.3">&sect;2.3 </a> 中解释；
+函数定义在  <a href="#2.5.9">&sect;2.5.9 </a> 中解释；
+函数调用在  <a href="#2.5.8">&sect;2.5.8 </a> 中解释；
+table 的构造在  <a href="#2.5.7">&sect;2.5.7 </a> 中解释；
+可变参数的表达式写作三个点 (' <code>... </code>') ，它只能被用在有可变参数的函数中；
+这些在  <a href="#2.5.9">&sect;2.5.9 </a> 中解释。
+
+
+ <p />
+二元操作符包含有数学运算操作符（参见  <a href="#2.5.1">&sect;2.5.1 </a>），
+比较操作符（参见  <a href="#2.5.2">&sect;2.5.2 </a>），逻辑操作符（参见  <a href="#2.5.3">&sect;2.5.3 </a>），
+以及连接操作符（参见  <a href="#2.5.4">&sect;2.5.4 </a>）。
+一元操作符包括负号（参见see  <a href="#2.5.1">&sect;2.5.1 </a>），
+取反  <b>not </b>（参见  <a href="#2.5.3">&sect;2.5.3 </a>），
+和取长度操作符（参见  <a href="#2.5.5">&sect;2.5.5 </a>）。
+
+
+ <p />
+函数调用和可变参数表达式都可以放在多重返回值中。
+如果表达式作为一个独立语句段出现（参见  <a href="#2.4.6">&sect;2.4.6 </a>）
+（这只能是一个函数调用），
+它们的返回列表将被对齐到零个元素，也就是忽略所有返回值。
+如果表达式用于表达式列表的最后（或者是唯一）的元素，
+就不会有任何的对齐操作（除非函数调用用括号括起来）。
+在任何其它的情况下，Lua 将把表达式结果看成单一元素，
+忽略除第一个之外的任何值。
+
+ <p />
+这里有一些例子：
+
+ <pre>
+     f()                -- 调整到 0 ___
+     _(_(), x)          -- f() 被调整到一个结果
+     g(x, f())          -- _ 被传入 x 加上所有 f() ____
+     _,_,_ = f(), x     -- f() ________ （ c 在这里被赋为 nil ）
+     _,_ = ...          -- a 被赋值为可变参数中的第一个，
+                        -- b _______ （如果可变参数中并没有对应的值，
+						-- 这里 a 和 _ 都有可能被赋为 nil）
+     
+     a,b,c = x, _()     -- f() 被调整为两个结果
+     a,b,c = f()        -- f() 被调整为三个结果
+     return _()         -- __ f() 返回的所有结果
+     return ...         -- 返回所有从可变参数中接收来的值
+     return x,y,f()     -- __ x, y, 以及所有 f() ____
+     {_()}              -- _ f() 的所有返回值创建一个列表
+     {...}              -- 用可变参数中的所有值创建一个列表
+     {f(), nil}         -- f() 被调整为一个结果
+ </pre>
+
+ <p />
+被括号括起来的表达式永远被当作一个值。所以，
+ <code>(f(x,y,z)) </code> 即使  <code>f </code> 返回多个值，这个表达式永远是一个单一值。
+（ <code>(f(x,y,z)) </code> 的值是  <code>f </code> 返回的第一个值。如果  <code>f </code>
+不返回值的话，那么它的值就是  <b>nil </b> 。）
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

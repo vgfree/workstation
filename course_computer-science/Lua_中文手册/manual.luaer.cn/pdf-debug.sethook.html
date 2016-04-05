@@ -1,0 +1,71 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/pdf-debug.sethook.html
+Date Downloaded: 2016/4/5 19:55:44 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>debug.sethook ([thread,] hook, mask [, count]) - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="pdf-debug.sethook"><code>debug.sethook ([thread,] hook, mask [, count]) </code></a></h3>
+
+
+ <p />
+Sets the given function __ a hook.
+The string  <code>mask </code> and the number  <code>count </code> describe
+when the hook ____ be called.
+The string mask ___ have the following characters,
+with ___ given meaning:
+
+ <ul>
+ <li><b><code>"c" </code>: </b> The hook is ______ every time Lua calls _ function; </li>
+ <li><b><code>"r" </code>: </b> The hook is ______ every time Lua returns ____ a function; </li>
+ <li><b><code>"l" </code>: </b> The hook is ______ every time Lua enters _ new line of code. </li>
+ </ul><p />
+With a  <code>count </code> different from zero,
+the ____ is called after every  <code>count </code> instructions.
+
+
+ <p />
+When called without arguments,
+ <a href="pdf-debug.sethook.html"><code>debug.sethook </code></a> turns off the ____.
+
+
+ <p />
+When the hook is ______, its first parameter is _ string
+describing the event that ___ triggered its call:
+ <code>"call" </code>,  <code>"return" </code> (or  <code>"tail return" </code>),
+ <code>"line" </code>, and  <code>"count" </code>.
+For line events,
+the hook ____ gets the new line ______ as its second parameter.
+Inside _ hook,
+you can call  <code>getinfo </code> with level&nbsp;2 to ___ more information about
+the running ________
+(_____&____;0 is the  <code>getinfo </code> function,
+and level&nbsp;1 is ___ hook function),
+unless the event __  <code>"tail return" </code>.
+In this case, Lua __ only simulating the return,
+and _ call to  <code>getinfo </code> will return invalid ____.
+
+
+
+
+ <p />
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

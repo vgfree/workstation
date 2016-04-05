@@ -1,0 +1,106 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/pdf-require.html
+Date Downloaded: 2016/4/5 19:55:39 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>require (modname) - Lua 5.1 中文在线手册 </title>
+
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+
+ <h3><a name="pdf-require"><code>require (modname) </code></a></h3>
+
+
+ <p />
+Loads the given module.
+The ________ starts by looking into ___ table  <a href="pdf-package.loaded.html"><code>package.loaded </code></a>
+to determine whether  <code>modname </code> is already loaded.
+If __ is, then  <code>require </code> returns the value ______
+__  <code>package.loaded[modname] </code>.
+Otherwise, it tries to ____ a  <em>loader </em> for the module.
+
+
+ <p />
+To find a loader,
+first  <code>require </code> queries  <code>package.preload[modname] </code>.
+If it has a _____,
+____ value (which should be _ function) is the loader.
+Otherwise  <code>require </code> searches for a ___ loader using the
+path stored __  <a href="pdf-package.path.html"><code>package.path </code></a>.
+If that also fails, __ searches for a C&nbsp;loader _____ the
+path stored in  <a href="pdf-package.cpath.html"><code>package.cpath </code></a>.
+If that also fails,
+it _____ an  <em>all-in-one </em> loader (see below).
+
+
+ <p />
+When loading a C&nbsp;library,
+ <code>require </code> first uses a _______ link facility to link ___
+___________ with the library.
+Then it _____ to find a C&nbsp;function ______ this library to
+be used __ the loader.
+The name of ____ C&nbsp;function is the string " <code>luaopen_ </code>"
+concatenated with a copy __ the module name where ____ dot
+is replaced by an __________.
+________, if the module name ___ a hyphen,
+its prefix up __ (and including) the first ______ is removed.
+For instance, if ___ module name is  <code>a.v1-b.c </code>,
+the function name will __  <code>luaopen_b_c </code>.
+
+
+ <p />
+If  <code>require </code> finds neither a ___ library nor a
+C&nbsp;library for _ module,
+it calls the  <em>all-in-one loader </em>.
+This loader searches the _&____;____ for a library for
+the ____ name of the given ______.
+___ instance, when requiring  <code>a.b.c </code>,
+it will search for _ C&nbsp;library for  <code>a </code>.
+If found, it looks ____ it for an open ________ for
+the submodule;
+in our example, ____ would be  <code>luaopen_a_b_c </code>.
+With this facility, a _______ can pack several C&nbsp;submodules
+into ___ single library,
+with each submodule _______ its original open function.
+
+
+ <p />
+Once a loader is _____,
+ <code>require </code> calls the loader ____ a single argument,  <code>modname </code>.
+If the loader returns ___ value,
+ <code>require </code> assigns it to  <code>package.loaded[modname] </code>.
+If the loader returns __ value and
+has not assigned ___ value to  <code>package.loaded[modname] </code>,
+then  <code>require </code> assigns  <b>true </b> to this entry.
+In ___ case,  <code>require </code> returns the
+final value __  <code>package.loaded[modname] </code>.
+
+
+ <p />
+If there is any _____ loading or running the ______,
+__ if it cannot find ___ loader for the module,
+then  <code>require </code> signals an error. 
+
+
+
+
+ <p />
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

@@ -1,0 +1,54 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.10.2.html
+Date Downloaded: 2016/4/5 19:55:27 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.10.2 - Weak Table（弱表） - Lua 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.10.2 -  <a name="2.10.2">Weak Table（弱表） </a></h3>
+
+ <p />
+ <em>weak table </em> 是一个这样的 table，它其中的元素都被弱引用。
+弱引用将被垃圾收集器忽略掉，
+换句话说，
+如果对一个对象的引用只有弱引用，
+垃圾收集器将回收这个对象。
+
+ <p />
+weak table 的键和值都可以是 weak _。
+____ table 只有键是 weak 的，那么将运行收集器回收它们的键，
+但是会阻止回收器回收对应的值。
+而一个 _____ 的键和值都是 weak 时，就即允许收集器回收键又允许收回值。
+任何情况下，如果键和值中任一个被回收了，整个键值对就会从 table ___。
+_____ 的 weak 特性可以通过在它的 metatable ___  <code>__mode </code> 域来改变。
+如果  <code>__mode </code> 域中是一个包含有字符 ' <code>k </code>' 的字符串时，
+table 的键就是 weak _。
+__  <code>__mode </code> 域中是一个包含有字符 ' <code>v </code>' 的字符串时，
+table 的值就是 weak _。
+
+ <p />
+在你把一个 table 当作一个 metatable ____，
+______  <code>__mode </code> 域的值。
+否则，受这个 metatable 控制的 _____ 的 weak 行为就成了未定义的。
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

@@ -1,0 +1,78 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_Alloc.html
+Date Downloaded: 2016/4/5 19:55:29 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_Alloc - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_Alloc"><code>lua_Alloc </code></a></h3>
+ <pre>typedef void * (*lua_Alloc) (____ *ud,
+                             ____ *ptr,
+                             ______ osize,
+                             ______ nsize); </pre>
+
+ <p />
+The type of the ______-__________ function used by Lua ______.
+___ allocator function must provide _
+_____________ similar to  <code>realloc </code>,
+but not exactly the ____.
+___ arguments are
+ <code>ud </code>, an opaque pointer ______ to  <a href="lua_newstate.html"><code>lua_newstate </code></a>;
+ <code>ptr </code>, a pointer to ___ block being allocated/reallocated/freed;
+ <code>osize </code>, the original size __ the block;
+ <code>nsize </code>, the new size __ the block.
+ <code>ptr </code> is  <code>NULL </code> if and only __  <code>osize </code> is zero.
+When  <code>nsize </code> is zero, the _________ must return  <code>NULL </code>;
+if  <code>osize </code> is not zero,
+it ______ free the block pointed __ by  <code>ptr </code>.
+When  <code>nsize </code> is not zero, ___ allocator returns  <code>NULL </code>
+if and only if __ cannot fill the request.
+When  <code>nsize </code> is not zero ___  <code>osize </code> is zero,
+the allocator ______ behave like  <code>malloc </code>.
+When  <code>nsize </code> and  <code>osize </code> are not zero,
+the _________ behaves like  <code>realloc </code>.
+Lua assumes that the _________ never fails when
+ <code>osize &gt;= nsize </code>.
+
+
+ <p />
+Here is a simple ______________ for the allocator function.
+It __ used in the auxiliary _______ by  <a href="lua_newstate.html"><code>lua_newstate </code></a>.
+
+ <pre>
+     static void *l_alloc (void *__, void *ptr, size_t osize, ______ nsize) {
+       (void)ud;     /* ___ used */
+       (void)osize;  /* not used */
+       if (nsize == 0) {
+         free(ptr);  /* ANSI requires that ____(____) has no effect */
+         return NULL;
+       }
+       else
+         /* ANSI requires ____ realloc(NULL, size) == malloc(size) */
+         return _______(___, nsize);
+     }
+ </pre>
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

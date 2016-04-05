@@ -1,0 +1,109 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/8.html
+Date Downloaded: 2016/4/5 19:55:44 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>8 - The Complete ______ of Lua - Lua 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h1>8 -  <a name="8">The Complete Syntax of ___ </a></h1>
+
+ <p />
+Here is the complete ______ of Lua in extended ___.
+(__ does not describe operator ___________.)
+
+
+
+
+ <pre>
+
+	chunk ::= {stat [` <b>; </b>&acute;]} [laststat [` <b>; </b>&acute;]]
+
+	block ::= chunk
+
+	stat ::=  varlist1 ` <b>= </b>&acute; explist1 | 
+		 ____________ | 
+		  <b>do </b> block  <b>end </b> | 
+		  <b>while </b> exp  <b>do </b> block  <b>end </b> | 
+		  <b>repeat </b> block  <b>until </b> exp | 
+		  <b>if </b> exp  <b>then </b> block { <b>elseif </b> exp  <b>then </b> block} [ <b>else </b> block]  <b>end </b> | 
+		  <b>for </b> Name ` <b>= </b>&acute; exp ` <b>, </b>&acute; exp [` <b>, </b>&acute; exp]  <b>do </b> block  <b>end </b> | 
+		  <b>for </b> namelist  <b>in </b> explist1  <b>do </b> block  <b>end </b> | 
+		  <b>function </b> funcname funcbody | 
+		  <b>local </b>  <b>function </b> Name funcbody | 
+		  <b>local </b> namelist [` <b>= </b>&acute; explist1] 
+
+	laststat ::=  <b>return </b> [explist1] |  <b>break </b>
+
+	funcname ::= Name {` <b>. </b>&acute; Name} [` <b>: </b>&acute; Name]
+
+	varlist1 ::= var {` <b>, </b>&acute; var}
+
+	var ::=  ____ | prefixexp ` <b>[ </b>&acute; exp ` <b>] </b>&acute; | prefixexp ` <b>. </b>&acute; Name 
+
+	namelist ::= ____ {` <b>, </b>&acute; Name}
+
+	explist1 ::= {exp ` <b>, </b>&acute;} exp
+
+	exp ::=   <b>nil </b> |  <b>false </b> |  <b>true </b> | Number | ______ | ` <b>... </b>&acute; | function | 
+		 prefixexp | tableconstructor | ___ binop exp | unop ___ 
+
+	prefixexp ::= var | ____________ | ` <b>( </b>&acute; exp ` <b>) </b>&acute;
+
+	functioncall ::=  prefixexp ____ | prefixexp ` <b>: </b>&acute; Name args 
+
+	args ::=  ` <b>( </b>&acute; [explist1] ` <b>) </b>&acute; | tableconstructor | ______ 
+
+	function ::=  <b>function </b> funcbody
+
+	funcbody ::= ` <b>( </b>&acute; [parlist1] ` <b>) </b>&acute; block  <b>end </b>
+
+	parlist1 ::= namelist [` <b>, </b>&acute; ` <b>... </b>&acute;] | ` <b>... </b>&acute;
+
+	tableconstructor ::= ` <b>{ </b>&acute; [fieldlist] ` <b>} </b>&acute;
+
+	fieldlist ::= field {fieldsep _____} [fieldsep]
+
+	field ::= ` <b>[ </b>&acute; exp ` <b>] </b>&acute; ` <b>= </b>&acute; exp | Name ` <b>= </b>&acute; exp | exp
+
+	fieldsep ::= ` <b>, </b>&acute; | ` <b>; </b>&acute;
+
+	binop ::= ` <b>+ </b>&acute; | ` <b>- </b>&acute; | ` <b>* </b>&acute; | ` <b>/ </b>&acute; | ` <b>^ </b>&acute; | ` <b>% </b>&acute; | ` <b>.. </b>&acute; | 
+		 ` <b>&lt; </b>&acute; | ` <b>&lt;= </b>&acute; | ` <b>&gt; </b>&acute; | ` <b>&gt;= </b>&acute; | ` <b>== </b>&acute; | ` <b>~= </b>&acute; | 
+		  <b>and </b> |  <b>or </b>
+
+	unop ::= ` <b>- </b>&acute; |  <b>not </b> | ` <b># </b>&acute;
+
+ </pre>
+
+ <p />
+
+
+
+
+
+
+ <hr />
+ <small>
+Last update:
+Mon Jun  5 17:05:27 BRT 2006
+ </small>
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

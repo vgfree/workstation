@@ -1,0 +1,52 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/3.3.html
+Date Downloaded: 2016/4/5 19:55:28 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>3.3 - 伪索引 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h2>3.3 -  <a name="3.3">伪索引 </a></h2>
+
+ <p />
+除了特别声明外，任何一个函数都可以接受另一种有效的索引，它们被称作“伪索引”。
+这个可以帮助 C 代码访问一些并不在栈上的 Lua _。
+_____________，_____，___，__ C 函数的 upvalue
+（参见  <a href="#3.4">&sect;3.4 </a>）。
+
+
+ <p />
+线程的环境（也就是全局变量放的地方）通常在伪索引  <a name="pdf-LUA_GLOBALSINDEX"><code>LUA_GLOBALSINDEX </code></a> 处。
+正在运行的 C 函数的环境则放在伪索引  <a name="pdf-LUA_ENVIRONINDEX"><code>LUA_ENVIRONINDEX </code></a> 之处。
+
+
+ <p />
+你可以用常规的 table 操作来访问和改变全局变量的值，只需要指定环境表的位置。
+举例而言，要访问全局变量的值，这样做：
+
+ <pre>
+     lua_getfield(L, LUA_GLOBALSINDEX, varname);
+ </pre>
+
+
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

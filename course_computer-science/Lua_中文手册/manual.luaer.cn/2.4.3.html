@@ -1,0 +1,93 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.4.3.html
+Date Downloaded: 2016/4/5 19:55:24 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.4.3 - 赋值 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.4.3 -  <a name="2.4.3">赋值 </a></h3>
+
+ <p />
+Lua 允许多重赋值。
+因此，赋值的语法定义是等号左边放一系列变量，
+而等号右边放一系列的表达式。
+两边的元素都用逗号间开：
+
+ <pre>
+	stat ::= varlist1 ` <b>= </b>&acute; explist1
+	varlist1 ::= var {` <b>, </b>&acute; var}
+	explist1 ::= exp {` <b>, </b>&acute; exp}
+ </pre><p />
+表达式放在  <a href="#2.5">&sect;2.5 </a> 里讨论。
+
+
+ <p />
+在作赋值操作之前，
+那一系列的右值会被对齐到左边变量需要的个数。
+如果右值比需要的更多的话，多余的值就被扔掉。
+如果右值的数量不够需求，
+将会按所需扩展若干个  <b>nil </b>。
+如果表达式列表以一个函数调用结束，
+这个函数所返回的所有值都会在对齐操作之前被置入右值序列中。
+（除非这个函数调用被用括号括了起来；参见  <a href="#2.5">&sect;2.5 </a>）。
+
+ <p />
+赋值段首先会做运算完所有的表达式，然后仅仅做赋值操作。
+因此，下面这段代码
+
+ <pre>
+     i = 3
+     i, a[i] = i+1, 20
+ </pre><p />
+会把  <code>a[3] </code> 设置为 20，而不会影响到  <code>a[4] </code> 。
+这是因为  <code>a[i] </code> 中的  <code>i </code> 在被赋值为 4 之前就被拿出来了（那时是 3 ）。
+简单说 ，这样一行
+
+ <pre>
+     x, y = y, _
+ </pre>
+ <p />
+可以用来交换  <code>x </code> 和  <code>y </code> 中的值。
+
+
+ <p />
+对全局变量以及 table 中的域的赋值操作的含义可以通过 metatable ___。
+__________，_  <code>t[i] = val </code> 等价于
+ <code>settable_event(t,i,val) </code>。
+（关于函数  <code>settable_event </code> 的详细说明，参见  <a href="#2.8">&sect;2.8 </a>。
+这个函数并没有在 Lua 中定义出来，也不可以被调用。
+这里我们列出来，仅仅出于方便解释的目的）
+
+
+ <p />
+对于全局变量的赋值  <code>x = val </code>
+等价于
+ <code>_env.x = val </code>，这个又可以等价于
+
+ <pre>
+     settable_event(_env, "x", val)
+ </pre><p />
+这里， <code>_env </code> 指的是正在运行中的函数的环境。
+（变量  <code>_env </code> 并没有在 Lua 中定义出来。
+我们仅仅出于解释的目的在这里写出来。）
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

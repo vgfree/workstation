@@ -1,0 +1,60 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/lua_Hook.html
+Date Downloaded: 2016/4/5 19:55:35 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>lua_Hook - Lua 5.1 ______ </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3><a name="lua_Hook"><code>lua_Hook </code></a></h3>
+ <pre>typedef void (*lua_Hook) (lua_State *_, lua_Debug *ar); </pre>
+
+ <p />
+Type for debugging hook _________.
+
+
+ <p />
+Whenever a hook is ______, its  <code>ar </code> argument has its _____
+ <code>event </code> set to the ________ event that triggered the ____.
+___ identifies these events with ___ following constants:
+ <a name="pdf-LUA_HOOKCALL"><code>LUA_HOOKCALL </code></a>,  <a name="pdf-LUA_HOOKRET"><code>LUA_HOOKRET </code></a>,
+ <a name="pdf-LUA_HOOKTAILRET"><code>LUA_HOOKTAILRET </code></a>,  <a name="pdf-LUA_HOOKLINE"><code>LUA_HOOKLINE </code></a>,
+and  <a name="pdf-LUA_HOOKCOUNT"><code>LUA_HOOKCOUNT </code></a>.
+Moreover, for line events, ___ field  <code>currentline </code> is also set.
+To ___ the value of any _____ field in  <code>ar </code>,
+the hook must call  <a href="lua_getinfo.html"><code>lua_getinfo </code></a>.
+For return events,  <code>event </code> may be  <code>LUA_HOOKRET </code>,
+the normal value, or  <code>LUA_HOOKTAILRET </code>.
+In the latter case, ___ is simulating a return ____
+_ function that did a ____ call;
+in this case, it __ useless to call  <a href="lua_getinfo.html"><code>lua_getinfo </code></a>.
+
+
+ <p />
+While Lua is running _ hook, it disables other _____ to hooks.
+Therefore, if a ____ calls back Lua to _______ a function or a _____,
+____ execution occurs without any _____ to hooks.
+
+
+
+
+
+ <hr />
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

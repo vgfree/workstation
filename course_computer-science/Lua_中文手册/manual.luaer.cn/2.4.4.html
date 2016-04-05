@@ -1,0 +1,83 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.4.4.html
+Date Downloaded: 2016/4/5 19:55:25 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.4.4 - 控制结构 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.4.4 -  <a name="2.4.4">控制结构 </a></h3><p />
+ <b>if </b>、  <b>while </b>、以及  <b>repeat </b> 这些控制结构符合通常的意义，而且也有类似的语法：
+
+ <pre>
+	stat ::=  <b>while </b> exp  <b>do </b> block  <b>end </b>
+	stat ::=  <b>repeat </b> block  <b>until </b> exp
+	stat ::=  <b>if </b> exp  <b>then </b> block { <b>elseif </b> exp  <b>then </b> block} [ <b>else </b> block]  <b>end </b>
+ </pre><p />
+
+Lua 也有一个  <b>for </b> 语句，它有两种形式（参见  <a href="#2.4.5">&sect;2.4.5 </a>）。
+
+
+ <p />
+控制结构中的条件表达式可以返回任何值。
+ <b>false </b> 和  <b>nil </b> 两者都被认为是假条件。
+所有不同于  <b>nil </b> 和  <b>false </b> 的其它值都被认为是真
+（特别需要注意的是，数字 0 和空字符串也被认为是真）。
+
+
+ <p />
+在  <b>repeat </b>&ndash; <b>until </b> 循环中，
+内部语句块的结束点不是在  <b>until </b> 这个关键字处，
+它还包括了其后的条件表达式。
+因此，条件表达式中可以使用循环内部语句块中的定义的局部变量。
+
+ <p />
+ <b>return </b> 被用于从函数或是 chunk（其实它就是一个函数）中
+返回值。
+
+函数和 chunk _________，
+__  <b>return </b> 的语法为
+
+ <pre>
+	stat ::=  <b>return </b> [explist1]
+ </pre>
+
+ <p />
+ <b>break </b> 被用来结束
+ <b>while </b>、  <b>repeat </b>、或  <b>for </b> 循环，
+它将忽略掉循环中下面的语句段的运行：
+
+ <pre>
+	stat ::=  <b>break </b>
+ </pre><p />
+
+ <b>break </b> 跳出最内层的循环。
+
+
+ <p />
+ <b>return </b> 和  <b>break </b> 只能被写在一个语句块的最后一句。
+如果你真的需要从语句块的中间  <b>return </b> 或是  <b>break </b> ，
+你可以使用显式的声名一个内部语句块。
+一般写作  <code>do return end </code> 或是  <code>do break end </code>，
+可以这样写是因为现在  <b>return </b> 或  <b>break </b> 都成了一个语句块的最后一句了。
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 

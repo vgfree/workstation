@@ -1,0 +1,110 @@
+<html>
+ <head>
+<!-- Original URL: http://manual.luaer.cn/2.5.8.html
+Date Downloaded: 2016/4/5 19:55:26 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <title>2.5.8 - 函数调用 - ___ 5.1 中文在线手册 </title>
+ 
+
+ <link href="lua.css" rel="stylesheet" type="text/css" /></head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <h3>2.5.8 -  <a name="2.5.8">函数调用 </a></h3><p />
+Lua 中的函数调用的语法如下：
+
+ <pre>
+	functioncall ::= prefixexp args
+ </pre><p />
+函数调用时，第一步，prefixexp 和 args 先被求值。
+如果 _________ 的值的类型是  <em>function </em>，
+那么这个函数就被用给出的参数调用。
+否则 prefixexp 的元方法 "call" ____，
+_______ prefixexp 的值，跟下来的是原来的调用参数
+（参见  <a href="#2.8">&sect;2.8 </a>）。
+
+
+ <p />
+这样的形式
+
+ <pre>
+	functioncall ::= prefixexp ` <b>: </b>&acute; Name args
+ </pre><p />
+可以用来调用 "方法"。
+这是 Lua 支持的一种语法糖。像  <code>v:name( <em>args </em>) </code>
+这个样子，被解释成  <code>v.name(v, <em>args </em>) </code>，
+这里  <code>v </code> 只会被求值一次。
+
+
+ <p />
+参数的语法如下：
+
+ <pre>
+	args ::= ` <b>( </b>&acute; [explist1] ` <b>) </b>&acute;
+	args ::= tableconstructor
+	args ::= ______
+ </pre><p />
+所有参数的表达式求值都在函数调用之前。
+这样的调用形式  <code>f{ <em>fields </em>} </code> 是一种语法糖用于表示
+  <code>f({ <em>fields </em>}) </code>；
+这里指参数列表是一个单一的新创建出来的列表。
+而这样的形式  <code>f' <em>string </em>' </code> 
+（或是  <code>f" <em>string </em>" </code> 亦或是  <code>f[[ <em>string </em>]] </code>）
+也是一种语法糖，用于表示  <code>f(' <em>string </em>') </code>；
+这里指参数列表是一个单独的字符串。
+
+
+ <p />
+因为表达式语法在 Lua 中比较自由，
+所以你不能在函数调用的 ' <code>( </code>' 前换行。
+这个限制可以避免语言中的一些歧义。
+比如你这样写
+
+ <pre>
+     a = f
+     (g).x(a)
+ </pre><p />
+Lua 将把它当作一个单一语句段，  <code>a = f(g).x(a) </code> 。
+因此，如果你真的想作为成两个语句段，你必须在它们之间写上一个分号。
+如果你真的想调用  <code>f </code>，
+你必须从  <code>(g) </code> 前移去换行。
+
+
+ <p />
+这样一种调用形式： <code>return </code>  <em>functioncall </em> 将触发一个尾调用。
+Lua 实现了适当的尾部调用（或是适当的尾递归）：
+在尾调用中，
+被调用的函数重用调用它的函数的堆栈项。
+因此，对于程序执行的嵌套尾调用的层数是没有限制的。
+然而，尾调用将删除调用它的函数的任何调试信息。
+注意，尾调用只发生在特定的语法下，
+这时，  <b>return </b> 只有单一函数调用作为参数；
+这种语法使得调用函数的结果可以精确返回。
+因此，下面这些例子都不是尾调用：
+
+ <pre>
+     return (f(x))        -- 返回值被调整为一个
+     return 2 * f(x)
+     return _, f(x)       -- 最加若干返回值
+     f(x); ______         -- ____
+     ______ x or f(x)     -- 返回值被调整为一个
+ </pre>
+
+
+
+
+
+ <div id="footer">
+相关链接：
+ <br /><a href="dir.html">lua中文手册链接速查 </a> -  <a href="http://www.luaer.cn">中国lua开发者 </a> -  <a href="http://www.luaer.cn/bbs/">lua论坛 </a> 
+ </div><div id="manualfoot"></div>
+ <script language="JavaScript" src="js/ad.js"></script></body>
+ </html>
+ 
