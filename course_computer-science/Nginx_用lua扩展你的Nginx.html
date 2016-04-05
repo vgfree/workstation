@@ -1,0 +1,1165 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>用lua扩展你的Nginx - OPEN 开发经验库</title>
+	<meta content="text/html; charset=utf-8" http-equiv=content-type>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name=keywords content=",Nginx ">
+	<meta name=description content="Nginx是一个高性能，支持高并发的，轻量级的web服务器。目前，Apache依然web服务器中的老大，但是在全球前1000大的web服务器中，Nginx的份额为22.4%。Nginx采用模块化的架构，官方版本的Nginx中大部分功能都是通过模块方式提供的，比如Http模块、Mail模块等。通过开发模块扩展Nginx，可以将Nginx打造成一个全能的应用服务器，这样可以将一些功能在前端Nginx反向代理层解决，比如登录校验、js合并、甚至数据库访问等等。     但是，Nginx模块需要用C开发，而且必须符合一系列复杂的规则，最重要的用C开发模块必须要熟悉Nginx的源代码，使得开发者对其望而生畏。">
+	<link rel="shortcut icon" href="/lib/favicon.ico">
+	<link rel=copyright href="http://www.open-open.com/">
+
+	<link href="//cdn.bootcss.com/highlight.js/9.2.0/styles/idea.min.css" rel="stylesheet">
+
+	
+	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://www.open-open.com/resource/styles.css" rel="stylesheet">
+
+	<style type="text/css" media="screen, projection">
+		/*<![CDATA[*/
+		@import "/lib/css/common.css";
+		@import "/lib/css/main.css";
+		@import "/lib/css/jGrowl.css";
+		@import "/lib/css/thickbox.css";
+		@import "/lib/css/jquery.ui.css";
+		/*]]>*/
+	</style>
+	<style type="text/css">
+.topheader h1{font-size: 24px;}
+
+	</style>
+
+	<script type="text/javascript">
+		if(window.location.toString().indexOf('pref=padindex') != -1){
+		}else{
+			if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+				if(window.location.href.indexOf("?mobile")<0){
+					try{
+						if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1455262185355.html";
+						}else if(/iPad/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1455262185355.html"
+						}else{
+							window.location.href="http://m.open-open.com/m/lib/view/1455262185355.html"
+						}
+					}catch(e){}
+				}
+			}
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		var rooturl="/lib";
+		var wgDocKey='1455262185355';
+		var wgDocTitle='用lua扩展你的Nginx';
+		var wgDocStatusFlag='';
+		var wgUserFolders=null;
+		var wgDownFrame=null;
+		var wgCostByUser=null;
+		var wgDocFavoriteByUser=false;
+		var wgDocScoreByUser=null;
+		var wgUserLogined=0;
+		var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+	</script>
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?4b19e5cc155fe555484434d8338ee0af";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+
+</head>
+<body id=view>
+
+
+
+
+
+
+<header class="site-header">
+	<div class="header-top ">
+		<div class="header-top-inner">
+			<div class="" style="margin: 0 30px;">
+				<div class="row">
+					<div class="header-top-left col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="header-talet">
+							<a  href="http://www.open-open.com/">首页</a> &nbsp;
+							<a class="" href="http://www.open-open.com/code/">OPEN代码</a> &nbsp;<img src="http://www.open-open.com/image/new.gif" alt='最新上线'/> &nbsp;
+							<a class="" href="http://www.open-open.com/doc/">OPEN文档</a> &nbsp;
+							<a title='OPEN论坛频道' href="http://www.open-open.com/bbs">OPEN问答</a> &nbsp;
+							<a title="OPEN资讯" class="" href="http://www.open-open.com/news/">OPEN资讯</a> &nbsp;
+							<a title="OPEN经验库" class="active" href="http://www.open-open.com/lib/" >OPEN经验</a> &nbsp;
+							<a title="GitHub日报" class="" href="http://www.open-open.com/github/">GitHub日报</a>
+							&nbsp;
+						</div>
+					</div>
+					<div class="header-top-right col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="user-info pull-right" id="Personal">
+							
+								<a href="/lib/members/login?keepThis=true&TB_iframe=true&height=177&width=280" title="登录OPEN经验库" class="thickbox">登录</a>&nbsp;&nbsp;
+								<a href="/lib/members/register?keepThis=true&TB_iframe=true&height=460&width=710" title="注册新的账号" class="thickbox">注册</a>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar ">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-hamburger"></span>
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-up"></span>
+				</button>
+				<a class="top-logo" href="//www.open-open.com/lib"><span>www.open-open.com/lib</span></a>
+				<span style="font-size: 30px;color: #b5b5b5">经验</span>
+				<span style="font-size: 12px;color: #b5b5b5"></span>
+			</div>
+			<div id="search" class="navbar-collapse navbar-right collapse ">
+				<form onsubmit="document.charset='utf-8';" accept-charset="utf-8" method="post" action="/lib/query" name="sf">
+					<input type="hidden" value="all" name="site">
+					<div class="input-group">
+						<input type="text" x-webkit-speech="" placeholder="经验搜索" class="form-control" name="q" id="kw">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                      </span>
+
+					</div>
+				</form>
+
+				<!-- /input-group -->
+
+			</div>
+
+		</div>
+	</nav>
+</header>
+
+
+
+
+<div class="topheader" style="background: #eee;padding-bottom: 10px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 id="articleTitle" >用lua扩展你的Nginx</h1>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div id=content>
+	<div id=content-nav>
+		<a href="/lib/list/all">所有分类</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/75">服务器软件</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/77">Web服务器</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/151">Nginx </a>
+		
+	</div>
+
+
+	<div id=view-main>
+
+
+		<div id=view-titleh>
+
+			<div id=view-summary>
+				<table>
+					<tbody>
+					<tr>
+						<td><strong>您的评价</strong>:</td>
+						<td>
+							<div id=rate class=rate-container><span id=star1 class=star-big-off title=很差>&nbsp;</span><span id=star2 class=star-big-off title=较差>&nbsp;</span><span id=star3 class=star-big-off title=还行>&nbsp;</span><span
+									id=star4 class=star-big-off title=不错>&nbsp;</span><span id=star5 class=star-big-off title=力荐>&nbsp;</span></div>
+						</td>
+						<td width=30>
+							<span id=score-num>0.0</span>
+						</td>
+						<td width=30>
+							<div id=rate-tip></div>
+						</td>
+
+						<td>
+							<div id=favorite-container><span class="icon favorite">&nbsp;</span><a id=favorite href="javascript:void(0)"><strong>收藏该经验</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+							<span class=item>收藏：0人</span>
+
+							<span class=item>发布时间1：2016-02-12 15:30:31</span>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<div id=favorite-box>
+					<table>
+						<tbody>
+						<tr>
+							<td width=70 align=right>文件夹</td>
+							<td><select id=fav_folderlist name=folder>
+								<option selected value=0>请选择...</option>
+								<option id=newfolder-sp disabled value="">-------------</option>
+								<option value=-1>新增文件夹...</option>
+							</select></td>
+						</tr>
+						<tr style="display: none" id=newfolder-input>
+							<td align=right>新增文件夹</td>
+							<td><input id=fav_newfolder maxlength=50 type=text name=newfolder></td>
+						</tr>
+						<tr>
+							<td align=right>标签</td>
+							<td><input id=fav_tags maxlength=135 size=20 type=text name=tags></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan=2>(多个标签用逗号分隔)</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div id=readercontainer>
+
+
+			<div id="toc"></div>
+
+
+			<!-- google_ad_section_start -->
+			<p>来自： <a href="http://blog.csdn.net//jiao_fuyou/article/details/36010691" rel="nofollow" target="_blank">http://blog.csdn.net//jiao_fuyou/article/details/36010691</a></p>
+<br />
+<p><span style="font-size:14px;">首先得声明，这不是我的原创，是在网上搜索到的一篇文章，原著是谁也搞不清楚了，按风格应该是属于<a target="_blank" href="http://blog.sina.com.cn/openresty">章亦春</a>的文章。</span></p>
+ <p><span style="font-size:14px;">整理花了不少时间，所以就暂写成原创吧。</span></p>
+ <p><span style="font-size:14px;"><br />
+ </span></p>
+ <p><span style="font-family:SimSun;"><strong><span style="font-size:14px;">一. 概述</span></strong></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">Nginx是一个高性能，支持高并发的，轻量级的web服务器。目前，Apache依然web服务器中的老大，但是在全球前1000大的web服务器中，Nginx的份额为22.4%。Nginx采用模块化的架构，官方版本的Nginx中大部分功能都是通过模块方式提供的，比如Http模块、Mail模块等。通过开发模块扩展Nginx，可以将Nginx打造成一个全能的应用服务器，这样可以将一些功能在前端Nginx反向代理层解决，比如登录校验、js合并、甚至数据库访问等等。 &nbsp; &nbsp; 但是，Nginx模块需要用C开发，而且必须符合一系列复杂的规则，最重要的用C开发模块必须要熟悉Nginx的源代码，使得开发者对其望而生畏。淘宝的agentzh和chaoslawful开发的ngx_lua模块通过将lua解释器集成进Nginx，可以采用lua脚本实现业务逻辑，由于lua的紧凑、快速以及内建协程，所以在保证高并发服务能力的同时极大地降低了业务逻辑实现成本。 &nbsp; &nbsp; 本文向大家介绍ngx_lua，以及我在使用它开发项目的过程中遇到的一些问题。<br />
+ <br />
+ </span></span> <p><span style="font-family:SimSun;"><strong><span style="font-size:14px;">二. 准备</span></strong></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">首先，介绍一下Nginx的一些特性，便于后文介绍ngx_lua的相关特性。</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><br />
+ </span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">Nginx进程模型</span></span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">Nginx采用多进程模型，单Master—多Worker，由Master处理外部信号、配置文件的读取及Worker的初始化，Worker进程采用单线程、非阻塞的事件模型（Event Loop，事件循环）来实现端口的监听及客户端请求的处理和响应，同时Worker还要处理来自Master的信号。由于Worker使用单线程处理各种事件，所以一定要保证主循环是非阻塞的，否则会大大降低Worker的响应能力。</span></span></p>
+ <blockquote style="margin:0 0 0 40px;border:none;padding:0px;"> 
+ <blockquote style="margin:0 0 0 40px;border:none;padding:0px;"> 
+  <p><span style="font-family:SimSun;"><span style="font-size:14px;" href="http://static.open-open.com/lib/uploadImg/20160212/20160212152944_516.png"><img src="http://static.open-open.com/lib/uploadImg/20160212/20160212152944_516.png" alt="" width="353" height="283" /></span></span></p>
+ 
+ </blockquote>
+ </blockquote>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">Nginx处理Http请求的过程</span></span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">表面上看，当Nginx处理一个来自客户端的请求时，先根据请求头的host、ip和port来确定由哪个server处理，确定了server之后，再根据请求的uri找到对应的location，这个请求就由这个location处理。实际Nginx将一个请求的处理划分为若干个不同阶段（phase），这些阶段按照前后顺序依次执行，也就是说NGX_HTTP_POST_READ_PHASE在第一个，NGX_HTTP_LOG_PHASE在最后一个。<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">&lt;span style="font-size:10px;"&gt;NGX_HTTP_POST_READ_PHASE,     //0读取请求phase
+NGX_HTTP_SERVER_REWRITE_PHASE,//1这个阶段主要是处理全局的(server block)的rewrite
+NGX_HTTP_FIND_CONFIG_PHASE,   //2这个阶段主要是通过uri来查找对应的location，然后根据loc_conf设置r的相应变量
+NGX_HTTP_REWRITE_PHASE,       //3这个主要处理location的rewrite
+NGX_HTTP_POST_REWRITE_PHASE,  //4postrewrite，这个主要是进行一些校验以及收尾工作，以便于交给后面的模块。
+NGX_HTTP_PREACCESS_PHASE,     //5比如流控这种类型的access就放在这个phase，也就是说它主要是进行一些比较粗粒度的access。
+NGX_HTTP_ACCESS_PHASE,        //6这个比如存取控制，权限验证就放在这个phase，一般来说处理动作是交给下面的模块做的.这个主要是做一些细粒度的access
+NGX_HTTP_POST_ACCESS_PHASE,   //7一般来说当上面的access模块得到access_code之后就会由这个模块根据access_code来进行操作
+NGX_HTTP_TRY_FILES_PHASE,     //8try_file模块，就是对应配置文件中的try_files指令，可接收多个路径作为参数，当前一个路径的资源无法找到，则自动查找下一个路径   
+NGX_HTTP_CONTENT_PHASE,       //9内容处理模块   
+NGX_HTTP_LOG_PHASE            //10log模块</pre> <p><span style="font-family:SimSun;"><span style="font-size:14px;">每个阶段上可以注册handler，处理请求就是运行每个阶段上注册的handler。Nginx模块提供的配置指令只会一般只会注册并运行在其中的某一个处理阶段。</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">比如，set指令属于rewrite模块的，运行在rewrite阶段，deny和allow运行在access阶段。</span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;"><br />
+ <span style="color:#009900;">子请求（subrequest）</span><br />
+ </span></span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">其实在Nginx 世界里有两种类型的“请求”，一种叫做“主请求”（main request），而另一种则叫做“子请求”（subrequest）。 所谓“主请求”，就是由 HTTP 客户端从 Nginx 外部发起的请求。比如，从浏览器访问Nginx就是一个“主请求”。 而“子请求”则是由 Nginx 正在处理的请求在 Nginx 内部发起的一种级联请求。“子请求”在外观上很像 HTTP 请求，但实现上却和 HTTP 协议乃至网络通信一点儿关系都没有。它是 Nginx 内部的一种抽象调用，目的是为了方便用户把“主请求”的任务分解为多个较小粒度的“内部请求”，并发或串行地访问多个 location 接口，然后由这些 location 接口通力协作，共同完成整个“主请求”。当然，“子请求”的概念是相对的，任何一个“子请求”也可以再发起更多的“子子请求”，甚至可以玩递归调用（即自己调用自己）。</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">当一个请求发起一个“子请求”的时候，按照 Nginx 的术语，习惯把前者称为后者的“父请求”（parent request）。</span></span></p>
+ <pre class="brush:shell; toolbar: true; auto-links: false;">location /main {
+    echo_location /foo;     # echo_location发送子请求到指定的location
+    echo_location /bar;
+}
+location /foo {
+    echo foo;
+}
+location /bar {
+    echo bar;
+}</pre> <p><span style="font-size:14px;">输出：</span></p>
+ <span style="font-size:14px;">$ curl location/main<br />
+ $ foo &nbsp; 03. &nbsp;bar<br />
+ <br />
+ 这里，main location就是发送2个子请求，分别到foo和bar，这就类似一种函数调用。<br />
+ <br />
+ “子请求”方式的通信是在同一个虚拟主机内部进行的，所以 Nginx 核心在实现“子请求”的时候，就只调用了若干个 C 函数，完全不涉及任何网络或者 UNIX 套接字（socket）通信。我们由此可以看出“子请求”的执行效率是极高的。<br />
+ <br />
+ <span style="color:#009900;">协程（Coroutine）</span><br />
+ </span> <p><span style="font-size:14px;">协程类似一种多线程，与多线程的区别有：&nbsp;</span></p>
+ <p><span style="font-size:14px;">1. 协程并非os线程，所以创建、切换开销比线程相对要小。&nbsp;</span></p>
+ <p><span style="font-size:14px;">2. 协程与线程一样有自己的栈、局部变量等，但是协程的栈是在用户进程空间模拟的，所以创建、切换开销很小。</span></p>
+ <p><span style="font-size:14px;">3. 多线程程序是多个线程并发执行，也就是说在一瞬间有多个控制流在执行。而协程强调的是一种多个协程间协作的关系，只有当一个协程主动放弃执行权，另一个协程才能获得执行权，所以在某一瞬间，多个协程间只有一个在运行。&nbsp;</span></p>
+ <p><span style="font-size:14px;">4. 由于多个协程时只有一个在运行，所以对于临界区的访问不需要加锁，而多线程的情况则必须加锁。&nbsp;</span></p>
+ <p><span style="font-size:14px;">5. 多线程程序由于有多个控制流，所以程序的行为不可控，而多个协程的执行是由开发者定义的所以是可控的。&nbsp;</span></p>
+ <p><span style="font-size:14px;">Nginx的每个Worker进程都是在epoll或kqueue这样的事件模型之上，封装成协程，每个请求都有一个协程进行处理。这正好与Lua内建协程的模型是一致的，所以即使ngx_lua需要执行Lua，相对C有一定的开销，但依然能保证高并发能力。</span></p>
+ <span style="font-size:14px;"><br />
+ </span> <p><span style="font-family:SimSun;"><strong><span style="font-size:14px;">三. ngx_lua</span></strong></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">原理</span><br />
+ ngx_lua将Lua嵌入Nginx，可以让Nginx执行Lua脚本，并且高并发、非阻塞的处理各种请求。Lua内建协程，这样就可以很好的将异步回调转换成顺序调用的形式。ngx_lua在Lua中进行的IO操作都会委托给Nginx的事件模型，从而实现非阻塞调用。开发者可以采用串行的方式编写程序，ngx_lua会自动的在进行阻塞的IO操作时中断，保存上下文；然后将IO操作委托给Nginx事件处理机制，在IO操作完成后，ngx_lua会恢复上下文，程序继续执行，这些操作都是对用户程序透明的。 每个NginxWorker进程持有一个Lua解释器或者LuaJIT实例，被这个Worker处理的所有请求共享这个实例。每个请求的Context会被Lua轻量级的协程分割，从而保证各个请求是独立的。 ngx_lua采用“one-coroutine-per-request”的处理模型，对于每个用户请求，ngx_lua会唤醒一个协程用于执行用户代码处理请求，当请求处理完成这个协程会被销毁。每个协程都有一个独立的全局环境（变量空间），继承于全局共享的、只读的“comman data”。所以，被用户代码注入全局空间的任何变量都不会影响其他请求的处理，并且这些变量在请求处理完成后会被释放，这样就保证所有的用户代码都运行在一个“sandbox”（沙箱），这个沙箱与请求具有相同的生命周期。 得益于Lua协程的支持，ngx_lua在处理10000个并发请求时只需要很少的内存。根据测试，ngx_lua处理每个请求只需要2KB的内存，如果使用LuaJIT则会更少。所以ngx_lua非常适合用于实现可扩展的、高并发的服务。<br />
+ <br />
+ <span style="color:#009900;">典型应用</span><br />
+ </span></span> <p><span style="color:#666666;font-family:微软雅黑,'Microsoft YaHei',Oswald,'Helvetica Neue',Helvetica,Verdana,arial,sans-serif;font-size:14px;line-height:25px;">官网上列出：&nbsp;</span></p>
+ <p></p>
+ <pre class="brush:shell; toolbar: true; auto-links: false;">· Mashup’ing and processing outputs of various nginx upstream outputs(proxy, drizzle, postgres, redis, memcached, and etc) in Lua, 
+· doing arbitrarily complex access control and security checks in Luabefore requests actually reach the upstream backends, 
+· manipulating response headers in an arbitrary way (by Lua) 
+· fetching backend information from external storage backends (likeredis, memcached, mysql, postgresql) and use that information to choose whichupstream backend to access on-the-fly, 
+· coding up arbitrarily complex web applications in a content handlerusing synchronous but still non-blocking access to the database backends andother storage, 
+· doing very complex URL dispatch in Lua at rewrite phase, 
+· using Lua to implement advanced caching mechanism for nginxsubrequests and arbitrary locations.</pre> <p></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">Hello Lua！<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;"># nginx.conf
+worker_processes 4;
+
+events {
+     worker_connections 1024;
+}
+http {
+
+    server {
+        listen 80;
+        server_name localhost;
+
+        location=/lua {
+            content_by_lua ‘
+                ngx.say("Hello, Lua!")
+            ';
+        }
+    }
+}</pre> <span style="font-size:14px;">输出：<br />
+ $ curl 'localhost/lua'<br />
+ Hello，Lua！<br />
+ <br />
+ 这样就实现了一个很简单的ngx_lua应用，如果这么简单的模块要是用C来开发的话，代码量估计得有100行左右，从这就可以看出ngx_lua的开发效率。<br />
+ <br />
+ Benchmark<br />
+ 通过和nginx访问静态文件还有nodejs比较，来看一下ngx_lua提供的高并发能力。 返回的内容都是”Hello World!”，151bytes 通过.ab -n 60000 &nbsp; 取10次平均<br />
+ 从图表中可以看到，在各种并发条件下ngx_lua的rps都是最高的，并且基本维持在10000rps左右，nginx读取静态文件因为会有磁盘io所以性能略差一些，而nodejs是相对最差的。通过这个简单的测试，可以看出ngx_lua的高并发能力。 ngx_lua的开发者也做过一个测试对比nginx+fpm+php和nodejs，他得出的结果是ngx_lua可以达到28000rps，而nodejs有10000多一点，php则最差只有6000。可能是有些配置我没有配好导致ngx_lua rps没那么高。<br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;"><br />
+ </span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">ngx_lua安装</span></span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">ngx_lua安装可以通过下载模块源码，编译Nginx，但是推荐采用openresty。Openresty就是一个打包程序，包含大量的第三方Nginx模块，比如HttpLuaModule，HttpRedis2Module，HttpEchoModule等。省去下载模块，并且安装非常方便。 ngx_openresty bundle: openresty ./configure --with-luajit&amp;&amp; make &amp;&amp; make install 默认Openresty中ngx_lua模块采用的是标准的Lua5.1解释器，通过--with-luajit使用LuaJIT。<br />
+ ngx_lua的用法<br />
+ ngx_lua模块提供了配置指令和Nginx API。 配置指令：在Nginx中使用，和set指令和pass_proxy指令使用方法一样，每个指令都有使用的context。 &nbsp; &nbsp; &nbsp; &nbsp;Nginx API：用于在Lua脚本中访问Nginx变量，调用Nginx提供的函数。 下面举例说明常见的指令和API。<br />
+ <br />
+ 配置指令<br />
+ <br />
+ set_by_lua和set_by_lua_file<br />
+ <br />
+ 和set指令一样用于设置Nginx变量并且在rewrite阶段执行，只不过这个变量是由lua脚本计算并返回的。<br />
+ 语法：set_by_lua$res &lt;lua-script-str&gt; [$arg1 $arg2 ...]<br />
+ </span></span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">配置：</span></span></p>
+  <pre class="brush:shell; toolbar: true; auto-links: false;">location =/adder {
+    set_by_lua $res"
+            local a = tonumber(ngx.arg[1])
+                local b = tonumber(ngx.arg[2])
+                return a + b"$arg_a$arg_b;
+
+        echo$res;
+}</pre> <span style="font-size:14px;">输出：<br />
+ $ curl 'localhost/adder?a=25&amp;b=75'<br />
+ $ 100<br />
+ <br />
+ set_by_lua_file执行Nginx外部的lua脚本，可以避免在配置文件中使用大量的转义。<br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">配置：</span></span></p>
+  <pre class="brush:shell; toolbar: true; auto-links: false;">location =/fib {
+        set_by_lua_file $res "conf/adder.lua" $arg_n;
+
+        echo $res;
+}&lt;/span&gt;</pre> <p><span style="font-size:14px;"><br />
+ </span></p>
+ <p><span style="font-size:14px;">adder.lua:</span></p>
+ <pre class="brush:shell; toolbar: true; auto-links: false;">local a=tonumber(ngx.arg[1])
+local b=tonumber(ngx.arg[2])
+return a + b</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl 'localhost/adder?a=25&amp;b=75<br />
+ $ 100<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">access_by_lua和access_by_lua_file</span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">运行在access阶段，用于访问控制。Nginx原生的allow和deny是基于ip的，通过access_by_lua能完成复杂的访问控制，比如，访问数据库进行用户名、密码验证等。<br />
+ </span></span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">配置：</span></span></p>
+ <pre class="brush:shell; toolbar: true; auto-links: false;">location /auth {
+    access_by_lua '
+        if ngx.var.arg_user == "ntes" then
+            return
+        else
+            Ngx.exit(ngx.HTTP_FORBIDDEN)
+        end
+    ';
+    echo'welcome ntes';
+}</pre> <span style="font-family:SimSun;"><span style="font-size:14px;">输出：<br />
+ $ curl 'localhost/auth?user=sohu'<br />
+ $ Welcome ntes<br />
+ <br />
+ $ curl 'localhost/auth?user=ntes'<br />
+ $ &lt;html&gt;<br />
+ &lt;head&gt;&lt;title&gt;403 Forbidden&lt;/title&gt;&lt;/heda&gt;<br />
+ &lt;body bgcolor="white"&gt;<br />
+ &lt;center&gt;&lt;h1&gt;403 Forbidden&lt;/h1&gt;&lt;/center&gt;<br />
+ &lt;hr&gt;&lt;center&gt;ngx_openresty/1.0.10.48&lt;/center&gt;<br />
+ &lt;/body&gt;<br />
+ &lt;/html&gt;<br />
+ <br />
+ </span></span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">rewrite_by_lua和rewrite_by_lua_file</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">实现url重写，在rewrite阶段执行。</span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">配置：<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">location =/foo {
+        rewrite_by_lua 'ngx.exec("/bar")';
+    echo'in foo';
+}
+
+location =/bar {
+        echo'in bar';
+}</pre> <span style="font-size:14px;">输出：<br />
+ $ curl 'localhost/lua'<br />
+ $ Hello, Lua!<br />
+ <br />
+ content_by_lua和content_by_lua_file<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">Contenthandler在content阶段执行，生成http响应。由于content阶段只能有一个handler，所以在与echo模块使用时，不能同时生效，我测试的结果是content_by_lua会覆盖echo。这和之前的hello world的例子是类似的。</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><br />
+ </span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">配置（直接响应）：<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">location =/lua {
+        content_by_lua 'ngx.say("Hello, Lua!")';
+}</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl 'localhost/lua'<br />
+ $ Hello, Lua!<br />
+ <br />
+ 配置（在Lua中访问Nginx变量）：<br />
+ </span> <pre class="brush:shell; toolbar: true; auto-links: false;">location =/hello {
+        content_by_lua '
+            local who = ngx.var.arg_who
+            ngx.say("Hello, ", who, "!")
+        ';
+}</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl 'localhost/hello?who=world<br />
+ $ Hello, world!<br />
+ <br />
+ Nginx API<br />
+ Nginx API被封装ngx和ndk两个package中。比如ngx.var.NGX_VAR_NAME可以访问Nginx变量。这里着重介绍一下ngx.location.capture和ngx.location.capture_multi。<br />
+ <br />
+ ngx.location.capture<br />
+ 语法：res= ngx.location.capture(uri, options?) &nbsp; &nbsp; 用于发出一个同步的，非阻塞的Nginxsubrequest（子请求）。可以通过Nginx subrequest向其它location发出非阻塞的内部请求，这些location可以是配置用于读取文件夹的，也可以是其它的C模块，比如ngx_proxy, ngx_fastcgi, ngx_memc, ngx_postgres, ngx_drizzle甚至是ngx_lua自己。 &nbsp; &nbsp; Subrequest只是模拟Http接口，并没有额外的Http或者Tcp传输开销，它在C层次上运行，非常高效。Subrequest不同于Http 301/302重定向，以及内部重定向（通过ngx.redirection）。<br />
+ <br />
+ 配置：<br />
+ </span> <pre class="brush:shell; toolbar: true; auto-links: false;">location =/other {
+    ehco 'Hello, world!';
+}
+
+# Lua非阻塞IO
+location =/lua {
+    content_by_lua '
+        local res = ngx.location.capture("/other")
+        if res.status == 200 then
+            ngx.print(res.body)
+        end
+    ';
+}</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl &nbsp;'http://localhost/lua'<br />
+ $ Hello, world!<br />
+ <br />
+ 实际上，location可以被外部的Http请求调用，也可以被内部的子请求调用。每个location相当于一个函数，而发送子请求就类似于函数调用，而且这种调用是非阻塞的，这就构造了一个非常强大的变成模型，后面我们会看到如何通过location和后端的memcached、redis进行非阻塞通信。<br />
+ ngx.location.capture_multi<br />
+ <br />
+ 语法：res1,res2, ... = ngx.location.capture_multi({ {uri, options?}, {uri, options?}, ...}) &nbsp; &nbsp; 与ngx.location.capture功能一样，可以并行的、非阻塞的发出多个子请求。这个方法在所有子请求处理完成后返回，并且整个方法的运行时间取决于运行时间最长的子请求，并不是所有子请求的运行时间之和。<br />
+ <br />
+ 配置：<br />
+ </span> <pre class="brush:shell; toolbar: true; auto-links: false;"># 同时发送多个子请求（subrequest）
+location =/moon {
+    ehco 'moon';
+}
+location =/earth {
+    ehco 'earth';
+}
+
+location =/lua {
+    content_by_lua '
+        local res1,res2 = ngx.location.capture_multi({ {"/moon"}, {"earth"} })
+        if res1.status == 200 then
+            ngx.print(res1.body)
+        end
+        ngx.print(",")
+        if res2.status == 200 then
+            ngx.print(res2.body)
+        end
+    ';
+}</pre> <span style="font-size:14px;"><br />
+ <br />
+ 输出：<br />
+ $ curl &nbsp;'http://localhost/lua'<br />
+ $ moon,earth<br />
+ <br />
+ 注意<br />
+ 在Lua代码中的网络IO操作只能通过Nginx Lua API完成，如果通过标准Lua API会导致Nginx的事件循环被阻塞，这样性能会急剧下降。 &nbsp; &nbsp; 在进行数据量相当小的磁盘IO时可以采用标准Lua io库，但是当读写大文件时这样是不行的，因为会阻塞整个NginxWorker进程。为了获得更大的性能，强烈建议将所有的网络IO和磁盘IO委托给Nginx子请求完成（通过ngx.location.capture）。 &nbsp; &nbsp; 下面通过访问/html/index.html这个文件，来测试将磁盘IO委托给Nginx和通过Lua io直接访问的效率。 &nbsp; &nbsp; 通过ngx.location.capture委托磁盘IO：<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">配置：</span></span></p>
+ <pre class="brush:shell; toolbar: true; auto-links: false;">location / {
+    internal;
+    root html;
+}
+
+location /capture {
+    content_by_lua '
+        res = ngx.location.capture("/")
+        echo res.body
+    ';
+}</pre> <p></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">通过标准lua io访问磁盘文件：<br />
+ <br />
+ 配置：<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">location /luaio{
+    content_by_lua '
+        local io = require("io")
+        local chunk_SIZE = 4096
+        local f = assert(io.open("html/index.html","r"))
+        while true do
+            local chunk = f:read(chunk)
+            if not chunk then
+                break
+            end
+            ngx.print(chunk)
+            ngx.flush(true)
+        end
+        f:close()
+    ';
+}</pre> <span style="font-size:14px;"><br />
+ 这里通过ab去压，在各种并发条件下，分别返回151bytes、151000bytes的数据，取10次平均，得到两种方式的rps。 &nbsp; &nbsp; 静态文件：151bytes<br />
+ 1000 3000 5000 7000 10000 &nbsp;capture &nbsp;11067 8880 8873 8952 9023 &nbsp;Lua io &nbsp; &nbsp; 11379 9724 8938 9705 9561<br />
+ <br />
+ 静态文件：151000bytes，在10000并发下内存占用情况太严重，测不出结果 &nbsp; &nbsp; &nbsp; &nbsp;这种情况下，文件较小，通过Nginx访问静态文件需要额外的系统调用，性能略逊于ngx_lua。<br />
+ 1000 3000 5000 7000 &nbsp; &nbsp;10000 &nbsp;capture &nbsp; &nbsp;3338 3435 3178 3043 &nbsp; &nbsp; &nbsp; &nbsp; / &nbsp;Lua io &nbsp; &nbsp; &nbsp;3174 3094 3081 2916 &nbsp; &nbsp; &nbsp; &nbsp; /<br />
+ <br />
+ 在大文件的情况，capture就要略好于ngx_lua。 &nbsp; &nbsp; &nbsp;这里没有对Nginx读取静态文件进行优化配置，只是采用了sendfile。如果优化一下，可能nginx读取静态文件的性能会更好一些，这个目前还不熟悉。所以，在Lua中进行各种IO时，都要通过ngx.location.capture发送子请求委托给Nginx事件模型，这样可以保证IO是非阻塞的。<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><strong><span style="font-size:14px;">四. 小结</span></strong></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">这篇文章简单介绍了一下ngx_lua的基本用法，后一篇会对ngx_lua访问redis、memcached已经连接池进行详细介绍。<br />
+ <br />
+ </span></span> <p><span style="font-family:SimSun;"><strong><span style="font-size:14px;">五. 进阶</span></strong></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">在之前的文章中，已经介绍了ngx_lua的一些基本介绍，这篇文章主要着重讨论一下如何通过ngx_lua同后端的memcached、redis进行非阻塞通信。<br />
+ </span></span> <p><span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">Memcached</span></span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">在Nginx中访问Memcached需要模块的支持，这里选用HttpMemcModule，这个模块可以与后端的Memcached进行非阻塞的通信。我们知道官方提供了Memcached，这个模块只支持get操作，而Memc支持大部分Memcached的命令。 Memc模块采用入口变量作为参数进行传递，所有以$memc_为前缀的变量都是Memc的入口变量。memc_pass指向后端的Memcached Server。<br />
+ <br />
+ 配置：<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">#使用HttpMemcModule
+location =/memc {
+    set $memc_cmd $arg_cmd;
+    set $memc_key $arg_key;
+    set $memc_value $arg_val;
+    set $memc_exptime $arg_exptime;
+
+    memc_pass '127.0.0.1:11211';
+}</pre> <span style="font-size:14px;">输出：<br />
+ $ curl &nbsp;'http://localhost/memc?cmd=set&amp;key=foo&amp;val=Hello'<br />
+ $ STORED<br />
+ $ curl &nbsp;'http://localhost/memc?cmd=get&amp;key=foo'<br />
+ $ Hello<br />
+ <br />
+ 这就实现了memcached的访问，下面看一下如何在lua中访问memcached。<br />
+ <br />
+ 配置：<br />
+ </span> <pre class="brush:shell; toolbar: true; auto-links: false;">#在Lua中访问Memcached
+location =/memc {
+    internal;   #只能内部访问
+    set $memc_cmd get;
+    set $memc_key $arg_key;
+    memc_pass '127.0.0.1:11211';
+}
+location =/lua_memc {
+    content_by_lua '
+        local res = ngx.location.capture("/memc", {
+            args = { key = ngx.var.arg_key }
+        })
+        if res.status == 200 then
+            ngx.say(res.body)
+        end
+    ';
+}</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl &nbsp;'http://localhost/lua_memc?key=foo'<br />
+ $ Hello<br />
+ <br />
+ 通过lua访问memcached，主要是通过子请求采用一种类似函数调用的方式实现。首先，定义了一个memc location用于通过后端memcached通信，就相当于memcached storage。由于整个Memc模块时非阻塞的，ngx.location.capture也是非阻塞的，所以整个操作非阻塞。<br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;"><br />
+ </span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">Redis</span></span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">访问redis需要HttpRedis2Module的支持，它也可以同redis进行非阻塞通行。不过，redis2的响应是redis的原生响应，所以在lua中使用时，需要解析这个响应。可以采用LuaRedisModule，这个模块可以构建redis的原生请求，并解析redis的原生响应。<br />
+ <br />
+ 配置：<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">#在Lua中访问Redis
+location =/redis {
+    internal;   #只能内部访问
+    redis2_query get $arg_key;
+    redis2_pass '127.0.0.1:6379';
+}
+location =/lua_redis {#需要LuaRedisParser
+    content_by_lua '
+        local parser = require("redis.parser")
+        local res = ngx.location.capture("/redis", {
+            args = { key = ngx.var.arg_key }
+        })
+        if res.status == 200 then
+            reply = parser.parse_reply(res.body)
+            ngx.say(reply)
+        end
+    ';
+}</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl &nbsp;'http://localhost/lua_redis?key=foo'<br />
+ $ Hello<br />
+ <br />
+ 和访问memcached类似，需要提供一个redis storage专门用于查询redis，然后通过子请求去调用redis。<br />
+ <br />
+ Redis Pipeline<br />
+ 在实际访问redis时，有可能需要同时查询多个key的情况。我们可以采用ngx.location.capture_multi通过发送多个子请求给redis storage，然后在解析响应内容。但是，这会有个限制，Nginx内核规定一次可以发起的子请求的个数不能超过50个，所以在key个数多于50时，这种方案不再适用。<br />
+ 幸好redis提供pipeline机制，可以在一次连接中执行多个命令，这样可以减少多次执行命令的往返时延。客户端在通过pipeline发送多个命令后，redis顺序接收这些命令并执行，然后按照顺序把命令的结果输出出去。在lua中使用pipeline需要用到redis2模块的redis2_raw_queries进行redis的原生请求查询。<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;">配置：</span></span></p>
+  <pre class="brush:shell; toolbar: true; auto-links: false;">#在Lua中访问Redis
+location =/redis {
+    internal;   #只能内部访问
+    redis2_raw_queries $args$echo_request_body;
+    redis2_pass '127.0.0.1:6379';
+}
+
+location =/pipeline {
+    content_by_lua 'conf/pipeline.lua';
+}</pre> <p><span style="font-family:SimSun;"><span style="font-size:14px;">pipeline.lua</span></span></p>
+  <pre class="brush:shell; toolbar: true; auto-links: false;">-- conf/pipeline.lua file
+local parser=require(‘redis.parser’)
+local reqs={
+    {‘get’, ‘one’}, {‘get’, ‘two’}
+}
+-- 构造原生的redis查询，get one\r\nget two\r\n
+local raw_reqs={}
+for i, req in ipairs(reqs)do
+      table.insert(raw_reqs, parser.build_query(req))
+end
+local res=ngx.location.capture(‘/redis?’..#reqs, {body=table.concat(raw_reqs, ‘’)})
+
+if res.status and res.body then
+       -- 解析redis的原生响应
+       local replies=parser.parse_replies(res.body, #reqs)
+       for i, reply in ipairs(replies)do
+          ngx.say(reply[1])
+       end
+end</pre> <span style="font-size:14px;"><br />
+ 输出：<br />
+ $ curl &nbsp;'http://localhost/pipeline'<br />
+ $ first<br />
+ &nbsp; second<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><span style="font-size:14px;"><span style="color:#009900;">Connection Pool</span></span></span></p>
+ <span style="font-family:SimSun;"><span style="font-size:14px;">前面访问redis和memcached的例子中，在每次处理一个请求时，都会和后端的server建立连接，然后在请求处理完之后这个连接就会被释放。这个过程中，会有3次握手、timewait等一些开销，这对于高并发的应用是不可容忍的。这里引入connection pool来消除这个开销。 连接池需要HttpUpstreamKeepaliveModule模块的支持。<br />
+ <br />
+ 配置：<br />
+ </span></span> <pre class="brush:shell; toolbar: true; auto-links: false;">http {
+    # 需要HttpUpstreamKeepaliveModule
+    upstream redis_pool {
+        server 127.0.0.1:6379;
+        # 可以容纳1024个连接的连接池
+        keepalive 1024 single;
+    }
+
+    server {
+        location=/redis {
+            …
+            redis2_pass redis_pool;
+        }
+    }
+}</pre> <span style="font-size:14px;"><br />
+ 这个模块提供keepalive指令，它的context是upstream。我们知道upstream在使用Nginx做反向代理时使用，实际upstream是指“上游”，这个“上游”可以是redis、memcached或是mysql等一些server。upstream可以定义一个虚拟server集群，并且这些后端的server可以享受负载均衡。keepalive 1024就是定义连接池的大小，当连接数超过这个大小后，后续的连接自动退化为短连接。连接池的使用很简单，直接替换掉原来的ip和端口号即可。 &nbsp; &nbsp; &nbsp;有人曾经测过，在没有使用连接池的情况下，访问memcached（使用之前的Memc模块），rps为20000。在使用连接池之后，rps一路飙到140000。在实际情况下，这么大的提升可能达不到，但是基本上100-200%的提高还是可以的。<br />
+ <br />
+ </span> <p><span style="font-family:SimSun;"><strong><span style="font-size:14px;">小结</span></strong></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">这里对memcached、redis的访问做个小结。 1. Nginx提供了强大的编程模型，location相当于函数，子请求相当于函数调用，并且location还可以向自己发送子请求，这样构成一个递归的模型，所以采用这种模型实现复杂的业务逻辑。 2. Nginx的IO操作必须是非阻塞的，如果Nginx在那阻着，则会大大降低Nginx的性能。所以在Lua中必须通过ngx.location.capture发出子请求将这些IO操作委托给Nginx的事件模型。 3. 在需要使用tcp连接时，尽量使用连接池。这样可以消除大量的建立、释放连接的开销。</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><br />
+ </span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">参考：</span></span></p>
+ <p></p>
+ <p style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:0px;border:0px;color:#666666;font-family:微软雅黑,'Microsoft YaHei',Oswald,'Helvetica Neue',Helvetica,Verdana,arial,sans-serif;font-size:14px;line-height:25px;"> <a target="_blank" href="http://wiki.nginx.org/HttpUpstreamKeepaliveModule" style="color:#0078b6;outline:none;text-decoration:none;">http://wiki.nginx.org/HttpUpstreamKeepaliveModule</a></p>
+ <p style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:0px;border:0px;color:#666666;font-family:微软雅黑,'Microsoft YaHei',Oswald,'Helvetica Neue',Helvetica,Verdana,arial,sans-serif;font-size:14px;line-height:25px;"> <a target="_blank" href="http://wiki.nginx.org/HttpRedis2Module" style="color:#0078b6;outline:none;text-decoration:none;">http://wiki.nginx.org/HttpRedis2Module</a></p>
+ <p style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:0px;border:0px;color:#666666;font-family:微软雅黑,'Microsoft YaHei',Oswald,'Helvetica Neue',Helvetica,Verdana,arial,sans-serif;font-size:14px;line-height:25px;"> <a target="_blank" href="http://wiki.nginx.org/HttpMemcModule" style="color:#0078b6;outline:none;text-decoration:none;">http://wiki.nginx.org/HttpMemcModule</a></p>
+ <br />
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;">原文:</span></span></p>
+ <p><span style="font-family:SimSun;"><span style="font-size:14px;"><a target="_blank" href="http://blog.angryfox.com/?p=2063" style="color:#0078b6;outline:none;text-decoration:none;font-family:微软雅黑,'Microsoft YaHei',Oswald,'Helvetica Neue',Helvetica,Verdana,arial,sans-serif;font-size:14px;line-height:25px;">http://blog.angryfox.com/?p=2063</a><br />
+ </span></span></p>
+ <p><span style="font-family:SimSun;"><br />
+ </span></p>
+
+
+		</div>
+		
+
+
+		<table width='100%'><tr>
+			<td  valign='top' width="49%" class="Related">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关资讯</strong> 　—　<a href="http://www.open-open.com/news" target="_blank" rel="nofollow">更多</a></div>
+				<ul>
+					
+						<li><a href="http://www.open-open.com/news/view/139b8f9" target="_blank" rel="nofollow" title="OpenResty 正式版 1.7.4.1，扩展 Nginx 实现的强大的 web 应用服务器">OpenResty 正式版 1.7.4.1，扩展 Nginx 实现的强大的 web 应用服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/74dbf4" target="_blank" rel="nofollow" title="中文热门开源项目Top100,你知道多少？">中文热门开源项目Top100,你知道多少？</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1f0a1cf" target="_blank" rel="nofollow" title="2014年国人开发的最热门的开源软件TOP 100">2014年国人开发的最热门的开源软件TOP 100</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/c6b0bd" target="_blank" rel="nofollow" title="80 多个 Linux 系统管理员必备的监控工具">80 多个 Linux 系统管理员必备的监控工具</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/7ca21d" target="_blank" rel="nofollow" title="国外程序员整理的系统管理员资源大全">国外程序员整理的系统管理员资源大全</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/12d3118" target="_blank" rel="nofollow" title="nginx openresty 迁移到 windows 下的版本，nginx openresty windows 1.9.4.1002 发布">nginx openresty 迁移到 windows 下的版本，nginx openresty windows 1.9.4.1002 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/16aa676" target="_blank" rel="nofollow" title="最好的Lua Web 框架">最好的Lua Web 框架</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/e74eea" target="_blank" rel="nofollow" title="说说nginx刚发布的JavaScript能力nginScript">说说nginx刚发布的JavaScript能力nginScript</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/83b83b" target="_blank" rel="nofollow" title="Nginx Openresty For Windows 更新到最新版本">Nginx Openresty For Windows 更新到最新版本</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1b49f1e" target="_blank" rel="nofollow" title="Nginx Openresty Windows v1.9.7.1002 发布">Nginx Openresty Windows v1.9.7.1002 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1f28edb" target="_blank" rel="nofollow" title="nginx-openresty-windows 1.9.9.1001 发布">nginx-openresty-windows 1.9.9.1001 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/17b36a6" target="_blank" rel="nofollow" title="PaaS 7层动态路由的若干实现">PaaS 7层动态路由的若干实现</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1c69b8f" target="_blank" rel="nofollow" title="大话web服务器开发">大话web服务器开发</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/43110b" target="_blank" rel="nofollow" title="OpenResty的现状、趋势、使用及学习方法">OpenResty的现状、趋势、使用及学习方法</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/2baac" target="_blank" rel="nofollow" title="OpenResty的现状、趋势、使用及学习方法 ">OpenResty的现状、趋势、使用及学习方法 </a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1a5a540" target="_blank" rel="nofollow" title="nginx openresty windows 1.9.10.1001 更新">nginx openresty windows 1.9.10.1001 更新</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/11e3599" target="_blank" rel="nofollow" title="Nginx的 Windows版 1.7.10.2 更新">Nginx的 Windows版 1.7.10.2 更新</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/13179e1" target="_blank" rel="nofollow" title="OpenResty 1.7.7.1 发布，基于 Nginx 的应用服务器">OpenResty 1.7.7.1 发布，基于 Nginx 的应用服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1b46864" target="_blank" rel="nofollow" title="淘宝的 Nginx 增强版，Tengine-2.0.0 正式发布">淘宝的 Nginx 增强版，Tengine-2.0.0 正式发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1956f80" target="_blank" rel="nofollow" title="OpenResty 1.7.10.2 正式发布，打包了标准Nginx 核心的 Web 服务器">OpenResty 1.7.10.2 正式发布，打包了标准Nginx 核心的 Web 服务器</a></li>
+					
+
+				</ul>
+				<div style="clear: both; font-size: 1px; line-height: 0;"></div>
+			</td>
+			<td width="5px"></td>
+			<td valign='top' width="49%" class="Relatedb">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关文档</strong> 　—　<a href="http://www.open-open.com/doc" rel="nofollow" target="_blank">更多</a></div>
+				<ul >
+					
+						<li><a  href="http://www.open-open.com/doc/view/a8ba7cfe6a6b47f8a03b8250e1c69e19" rel="nofollow" target="_blank" title="京东商品详情页Nginx+Lua的大规模应用.pdf">京东商品详情页Nginx+Lua的大规模应用.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/0028b1a7396248728b1052d94e9fa376" rel="nofollow" target="_blank" title="Nginx+Lua阿⾥实战经验谈.pdf">Nginx+Lua阿⾥实战经验谈.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c778ac37fada4585ba081afd448f4782" rel="nofollow" target="_blank" title="nginx+lua 高性能web开发.pdf">nginx+lua 高性能web开发.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/6757d42028c94b93ada5fd27df1caede" rel="nofollow" target="_blank" title="跟我学Nginx+Lua开发.pdf">跟我学Nginx+Lua开发.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/e7af29ace447499f8a657bbe1a64a295" rel="nofollow" target="_blank" title="OpenResty的过去、现在和未来.pdf">OpenResty的过去、现在和未来.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/3082e9dc2b8d4a63a58cc9f98622c4db" rel="nofollow" target="_blank" title="Lua 参考手册.doc">Lua 参考手册.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/08b98d311c8b4d5c96305bb1f4ee694c" rel="nofollow" target="_blank" title="Lua程序设计.chm">Lua程序设计.chm</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c0d4fcf8a97b4c33ae73c197cce1fa0e" rel="nofollow" target="_blank" title="Lua 的前期学习整理.docx">Lua 的前期学习整理.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/2f1bbc5e354746109ec547ae0439de82" rel="nofollow" target="_blank" title="nginx 使用nginx反向代理加固你的管理后台.pdf">nginx 使用nginx反向代理加固你的管理后台.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/4a3c154b4363410a858dbe909b7dbad1" rel="nofollow" target="_blank" title="Lua 程序经验之谈.pdf">Lua 程序经验之谈.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/275a80a083144cd08fe3d76a3ae279f2" rel="nofollow" target="_blank" title="Lua中文教程(Programming in Lua).pdf">Lua中文教程(Programming in Lua).pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/327727b64c6c4189a06b7d9d2abc5a1b" rel="nofollow" target="_blank" title="Lua 5.1 中文手册.chm">Lua 5.1 中文手册.chm</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/2b23be8727584e32aca1fa52396459cb" rel="nofollow" target="_blank" title="Lua5.1中文手册.chm">Lua5.1中文手册.chm</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/563fb0d7f45d465ea0931b8c14a615f4" rel="nofollow" target="_blank" title="C和C/C++程序员的Lua快速入门.pdf">C和C/C++程序员的Lua快速入门.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/a179a35d896c49b9bb10c994be3b89af" rel="nofollow" target="_blank" title="Lua 语言参考手册.pdf">Lua 语言参考手册.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/e5ca59fe3b53432e967edba653a2ba11" rel="nofollow" target="_blank" title="Lua 源码欣赏-Lua源码精读.pdf">Lua 源码欣赏-Lua源码精读.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/451e95252ebd4df2b66b97f0b1bc2f9c" rel="nofollow" target="_blank" title="C/C++程序员的Lua快速入门指南.pdf">C/C++程序员的Lua快速入门指南.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c520456b05b040ea8811a654513f4b45" rel="nofollow" target="_blank" title="Programming in Lua中文版- Lua编程.pdf">Programming in Lua中文版- Lua编程.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/38045510d23d4399b91d7c50305e6819" rel="nofollow" target="_blank" title="第15章 Nginx的邮件模块.pdf">第15章 Nginx的邮件模块.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/ea1b857066664f0c906ca3a788a22eae" rel="nofollow" target="_blank" title="C和C++程序员的Lua快速入门指南.pdf">C和C++程序员的Lua快速入门指南.pdf</a></li>
+					
+				</ul>
+			</td>
+		</tr></table>
+		<div style="margin-top: 10px;margin-bottom: 10px;">
+			<div id="baiduad1" style="margin-bottom: 5px;">
+			</div>
+
+		</div>
+
+
+
+
+
+	</div>
+
+	<div id=view-side>
+		<div id=upload-box class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-body><a id=upload class=upload href="#"></a>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div id=view-tag class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>经验标签</div>
+				<div id=tag-list class=box-body>
+					
+						<a href="/lib/tag/"></a>
+					
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+
+		<div id=view-topic class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>同类热门经验</div>
+				<div class=box-body>
+					<ul id=topic-list class=file-shortlist>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx 完整配置说明 href="/lib/view/open1330003599968.html"><span class=title>Nginx 完整配置说明</span></a>
+								<div class=attribute><span>40557次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx+Tomcat实现https安全链接 href="/lib/view/open1330516293186.html"><span class=title>Nginx+Tomcat实现https安全链接</span></a>
+								<div class=attribute><span>41500次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx和Tomcat负载均衡实现session共享  href="/lib/view/open1334626362015.html"><span class=title>Nginx和Tomcat负载均衡实现session共享 </span></a>
+								<div class=attribute><span>27874次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx搭建反向代理服务器过程详解 href="/lib/view/open1417488526633.html"><span class=title>Nginx搭建反向代理服务器过程详解</span></a>
+								<div class=attribute><span>88317次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=[Ganglia监控扩展]监控nginx的连接数  href="/lib/view/open1326333999327.html"><span class=title>[Ganglia监控扩展]监控nginx的连接数 </span></a>
+								<div class=attribute><span>35071次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx+Tomcat集群与负载均衡 href="/lib/view/open1351061706430.html"><span class=title>Nginx+Tomcat集群与负载均衡</span></a>
+								<div class=attribute><span>33322次浏览</span></div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关经验</div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li><span class="samelist"></span><a title= 使用 Lua 编写一个 Nginx 认证模块  href="/lib/view/open1378774865553.html" target=_blank><span
+									class=title> 使用 Lua 编写一个 Nginx 认证模块 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=使用memc-nginx和srcache-nginx模块构建高效透明的缓存机制 href="/lib/view/open1455262154026.html" target=_blank><span
+									class=title>使用memc-nginx和srcache-nginx模块构建高效透明的缓存机制</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=VeryNginx —— Nginx 强化版本 href="/lib/view/open1455258840370.html" target=_blank><span
+									class=title>VeryNginx —— Nginx 强化版本</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=VeryNginx - 功能强大并且拥有友好界面的Nginx href="/lib/view/open1454638816276.html" target=_blank><span
+									class=title>VeryNginx - 功能强大并且拥有友好界面的Nginx</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title= 使用Nginx+Lua实现的WAF href="/lib/view/open1442324742180.html" target=_blank><span
+									class=title> 使用Nginx+Lua实现的WAF</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=ngx_lua_reqstatus - 实时统计 nginx 状态的 lua 拓展 href="/lib/view/open1452343308870.html" target=_blank><span
+									class=title>ngx_lua_reqstatus - 实时统计 nginx 状态的 lua 拓展</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title= 基于Lua+Kafka+Heka的Nginx Log实时监控系统 href="/lib/view/open1436753178068.html" target=_blank><span
+									class=title> 基于Lua+Kafka+Heka的Nginx Log实时监控系统</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=全面解读python web 程序的9种部署方式 href="/lib/view/open1385131452292.html" target=_blank><span
+									class=title>全面解读python web 程序的9种部署方式</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx线程池性能提升9倍（Thread Pools in NGINX Boost Performance 9x!） href="/lib/view/open1435041676122.html" target=_blank><span
+									class=title>Nginx线程池性能提升9倍（Thread Pools in NGINX Boost Performance 9x!）</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title= 基于gitlab&amp;nginx&amp;lua的自动化网页部署脚本:WebAutoDeploy href="/lib/view/open1448628533173.html" target=_blank><span
+									class=title> 基于gitlab&amp;nginx&amp;lua的自动化网页部署脚本:WebAutoDeploy</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=一个基于 lua-nginx-module 的 Web 应用防火墙：ngx_lua_waf href="/lib/view/open1423472640076.html" target=_blank><span
+									class=title>一个基于 lua-nginx-module 的 Web 应用防火墙：ngx_lua_waf</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=使用varnish + nginx + lua搭建网站的降级系统 href="/lib/view/open1433898093926.html" target=_blank><span
+									class=title>使用varnish + nginx + lua搭建网站的降级系统</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=使用Nginx+Lua(OpenResty)开发高性能Web应用 href="/lib/view/open1457274442546.html" target=_blank><span
+									class=title>使用Nginx+Lua(OpenResty)开发高性能Web应用</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=基于Nginx和Lua的Web应用服务器 OpenResty href="/lib/view/open1323571567655.html" target=_blank><span
+									class=title>基于Nginx和Lua的Web应用服务器 OpenResty</span></a><br>
+								<div class=attribute><span class="score stars-small-8" title=经验评价得分：4.0分>&nbsp;</span> <span>2人评</span>
+								</div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关讨论 - <a href="http://www.open-open.com/bbs" target="_blank" rel="nofollow">更多</a></div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li >
+								<span class="samelist"></span><a title=PHP程序员的技术成长规划 href="http://www.open-open.com/bbs/view/1414478644325" rel="nofollow" target=_blank><span class=title>PHP程序员的技术成长规划</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=  用户规模越来越大，系统不能承受的服务器之重 href="http://www.open-open.com/bbs/view/1450267214844" rel="nofollow" target=_blank><span class=title>  用户规模越来越大，系统不能承受的服务器之重</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=20步打造最安全的Nginx Web服务器 href="http://www.open-open.com/bbs/view/1319455592515" rel="nofollow" target=_blank><span class=title>20步打造最安全的Nginx Web服务器</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=Velocity China 2015Web工程师会议 href="http://www.open-open.com/bbs/view/1437458518506" rel="nofollow" target=_blank><span class=title>Velocity China 2015Web工程师会议</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=高性能的 HTTP 和 反向代理服务器 Nginx href="http://www.open-open.com/bbs/view/1319457665703" rel="nofollow" target=_blank><span class=title>高性能的 HTTP 和 反向代理服务器 Nginx</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=关于编程学习的七点思索 href="http://www.open-open.com/bbs/view/1341747080025" rel="nofollow" target=_blank><span class=title>关于编程学习的七点思索</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=高性能缓存服务器 NCache 介绍 href="http://www.open-open.com/bbs/view/1319457448046" rel="nofollow" target=_blank><span class=title>高性能缓存服务器 NCache 介绍</span></a>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+		<!-- end top list--></div>
+</div>
+
+
+
+
+<div id=footer>
+	<div id=footer-menu><a href="http://www.open-open.com/home/1">联系我们</a> - <a href="http://www.open-open.com/home/1">问题反馈</a> - 微信公众号:openopen </div>
+	<p>2005-2015 OPEN-OPEN, all rights reserved.</p>
+</div>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/lib/js/thickbox.patch.js"></script>
+
+<script type="text/javascript" src="/lib/js/app.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+	var rooturl="/lib";
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+</script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.22/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="/lib/js/view.js"></script>
+
+<script type="text/javascript" src="/lib/js/jquery.jgrowl_minimized.js"></script>
+
+<script type="text/javascript">
+	scrolltotop.offset(95,165);
+	scrolltotop.init();
+</script>
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script language="javascript" type="text/javascript">
+	//生成目录索引列表
+	function GenerateContentList()
+	{
+		var jquery_h3_list = $('#readercontainer h3');//如果你的章节标题不是h3,只需要将这里的h3换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#readercontainer')[0]).prepend(content);
+			}
+		}else{
+			GenerateContentList2()
+		}
+	}
+
+	function GenerateContentList2()
+	{
+		var jquery_h3_list = $('#readercontainer h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#toc')[0]).prepend(content);
+			}
+		}
+	}
+
+	GenerateContentList();
+</script>
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		bp.src = '//push.zhanzhang.baidu.com/push.js';
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+</script>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=6734290" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config={"bdTop":256};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+
+</body>
+</html>

@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/select_tut.html
+Date Downloaded: 2016/4/1 17:09:00 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>select_tut()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="select,tut,函数,Unix,Linux,selec" />
+		 <meta name="description" content="select, pselect, FD_CLR, FD_ISSET, FD_SET, FD_ZERO - 同步I / O复用 SYNOPSIS #include sys/time.h #include sys/types.h #include unistd.h int select(int nfds , fd_set * readfds , fd_set * writefds , fd_set * exceptfds , struct timeval * ut" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  select_tut()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">select_tut()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>zhxX </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='select.html' class='btn' title='select()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='semctl.html' class='btn btn-default' style='float:right;' title='semctl()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1704" />
+									
+									 <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select, pselect, FD_CLR, FD_ISSET, ______, FD_ZERO -&nbsp; </span>同步I / O复用
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	内容简介 </h1>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">#include &lt;sys/time.h&gt; </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp; </span><br style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;" />
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">#include &lt;sys/types.h&gt; </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp; </span><br style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;" />
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">#include &lt;unistd.h&gt; </b>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>int select(int&nbsp; </b><i>nfds </i><b>, fd_set * </b><i>readfds </i><b>, </b>&nbsp; <b>fd_set * </b><i>writefds </i><b>, fd_set * </b><i>exceptfds </i><b>, </b>&nbsp; <b>struct timeval * </b><i>utimeout </i><b>); </b></p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>int pselect(int&nbsp; </b><i>nfds </i><b>, fd_set * </b><i>readfds </i><b>, </b>&nbsp; <b>fd_set * </b><i>writefds </i><b>, fd_set * </b><i>exceptfds </i><b>, </b>&nbsp; <b>const struct timespec * </b><i>ntimeout </i><b>, sigset_t * </b><i>sigmask </i><b>); </b></p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>FD_CLR(int&nbsp; </b><i>fd </i><b>, fd_set * </b><i>set </i><b>); </b>&nbsp; <br />
+	 <b>FD_ISSET(int&nbsp; </b><i>fd </i><b>, fd_set * </b><i>set </i><b>); </b>&nbsp; <br />
+	 <b>FD_SET(int&nbsp; </b><i>fd </i><b>, fd_set * </b><i>set </i><b>); </b>&nbsp; <br />
+	 <b>FD_ZERO(fd_set * </b><i>set </i><b>); </b></p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>select </b>() (or&nbsp; <b>pselect </b>()) is the pivot ________ of most C programs ____ handle more than one ____________ file descriptor (or socket ______) in an efficient manner. ___ principal arguments are three ______ of file descriptors:&nbsp; <i>readfds </i>,&nbsp; <i>writefds </i>, and&nbsp; <i>exceptfds </i>. The way that&nbsp; <b>select </b>() is usually used __ to block while waiting ___ a &quot;change of status&quot; __ one or more of ___ file descriptors. A &quot;change __ status&quot; is when more __________ become available from the ____ descriptor,&nbsp; <i>or </i>&nbsp;when space becomes available ______ the kernel&rsquo;s internal buffers ___ more to be written __ the file descriptor,&nbsp; <i>or </i>&nbsp;when a file descriptor ____ into error (in the ____ of a socket or ____ this is when the _____ end of the connection __ closed). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	In summary,&nbsp; <b>select </b>() just watches multiple ____ descriptors, and is the ________ Unix call to do __. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The arrays of file ___________ are called&nbsp; <i>file descriptor sets </i>. Each set is ________ as type <b>fd_set </b>, and its contents ___ be altered with the ______&____; <b>FD_CLR </b>(),&nbsp; <b>FD_ISSET </b>(), <b>FD_SET </b>(), and&nbsp; <b>FD_ZERO </b>().&nbsp; <b>FD_ZERO </b>() is usually the _____ function to be used __ a newly declared set. __________, the individual file descriptors ____ you are interested in ___ be added one by ___ with&nbsp; <b>FD_SET </b>().&nbsp; <b>select </b>() modifies the contents __ the sets according to ___ rules described below; after _______&____; <b>select </b>() you can test __ your file descriptor is _____ present in the set ____ the&nbsp; <b>FD_ISSET </b>() macro.&nbsp; <b>FD_ISSET </b>() returns non-zero if ___ descriptor is present and ____ if it is not.&nbsp; <b>FD_CLR </b>() removes a file __________ from the set. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	ARGUMENTS </h1>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>readfds </i></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				This set is watched __ see if data is _________ for reading from any __ its file descriptors. After&nbsp; <b>select </b>() has returned,&nbsp; <i>readfds </i>&nbsp;will be cleared of ___ file descriptors except for _____ file descriptors that are ___________ available for reading with _&____; <b>recv </b>() (for sockets) or&nbsp; <b>read </b>() (for pipes, files, ___ sockets) call. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>writefds </i></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				This set is watched __ see if there is _____ to write data to ___ of its file descriptors. _____&____; <b>select </b>() has returned,&nbsp; <i>writefds </i>&nbsp;will be cleared of ___ file descriptors except for _____ file descriptors that are ___________ available for writing with _&____; <b>send </b>() (for sockets) or&nbsp; <b>write </b>() (for pipes, files, ___ sockets) call. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>exceptfds </i></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				This set is watched ___ exceptions or errors on ___ of the file descriptors. _______, that is actually just _ rumor. How you use <i>exceptfds </i>&nbsp;is to watch for&nbsp; <i>out-of-band </i>&nbsp;(OOB) data. OOB data __ data sent on a ______ using the&nbsp; <b>MSG_OOB </b>&nbsp;flag, and hence <i>exceptfds </i>&nbsp;only really applies to _______. See&nbsp; <b>recv </b>(2) and&nbsp; <b>send </b>(2) about this. After&nbsp; <b>select </b>() has returned,&nbsp; <i>exceptfds </i>&nbsp;will be cleared of ___ file descriptors except for _____ descriptors that are available ___ reading OOB data. You ___ only ever read one ____ of OOB data though (_____ is done with&nbsp; <b>recv </b>()), and writing OOB ____ (done with&nbsp; <b>send </b>()) can be done __ any time and will ___ block. Hence there is __ need for a fourth ___ to check if a ______ is available for writing ___ data. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>nfds </i></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				This is an integer ___ more than the maximum __ any file descriptor in ___ of the sets. In _____ words, while you are ____ adding file descriptors to ____ sets, you must calculate ___ maximum integer value of ___ of them, then increment ____ value by one, and ____ pass this as&nbsp; <i>nfds </i>&nbsp;to&nbsp; <b>select </b>(). </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>utimeout </i></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				This is the longest ____&____; <b>select </b>() must wait before _________, even if nothing interesting ________. If this value is ______ as NULL, then&nbsp; <b>select </b>() blocks indefinitely waiting ___ an event. <i>utimeout </i>&nbsp;can be set to ____ seconds, which causes&nbsp; <b>select </b>() to return immediately. ___ structure&nbsp; <b>struct timeval </b>&nbsp;is defined as,
+				 <p style="text-align: justify;">
+					&nbsp; </p>
+				 <table cellpadding="5" cellspacing="5" class="src" style=" border-color: rgb(170, 170, 170); width: 401px; border-collapse: collapse; padding-left: 5px; vertical-align: top;">
+					 <tbody>
+						 <tr>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+								 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+struct timeval {
+    time_t tv_sec;    /* seconds */
+    long tv_usec;     /* ____________ */
+};
+ </pre>
+							 </td>
+						 </tr>
+					 </tbody>
+				 </table>
+			 </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>ntimeout </i></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				This argument has the ____ meaning as&nbsp; <i>utimeout </i>&nbsp;but&nbsp; <i>struct timespec </i>&nbsp;has nanosecond precision as _______,
+				 <table cellpadding="5" cellspacing="5" class="src" style=" border-color: rgb(170, 170, 170); width: 401px; border-collapse: collapse; padding-left: 5px; vertical-align: top;">
+					 <tbody>
+						 <tr>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+								 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+struct timespec {
+    long tv_sec;    /* seconds */
+    long tv_nsec;   /* nanoseconds */
+};
+ </pre>
+							 </td>
+						 </tr>
+					 </tbody>
+				 </table>
+			 </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>sigmask </i></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				This argument holds a ___ of signals to allow _____ performing a <b>pselect </b>() call (see&nbsp; <b>sigaddset </b>(3) and&nbsp; <b>sigprocmask </b>(2)). It can be ______ as NULL, in which ____ it does not modify ___ set of allowed signals __ entry and exit to ___ function. It will then ______ just like&nbsp; <b>select </b>(). </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	COMBINING SIGNAL AND DATA ______ </h1>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pselect </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() must be used __ you are waiting for _ signal as well as ____ from a file descriptor. ________ that receive signals as ______ normally use the signal _______ only to raise a ______ flag. The global flag ____ indicate that the event ____ be processed in the ____ loop of the program. _ signal will cause the&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() (or&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pselect </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">()) call to return ____&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">errno </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;set to&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">EINTR </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">. This behavior is _________ so that signals can __ processed in the main ____ of the program, otherwise&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() would block indefinitely. ___, somewhere in the main ____ will be a conditional __ check the global flag. __ we must ask: what __ a signal arrives after ___ conditional, but before the&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() call? The answer __ that&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() would block indefinitely, ____ though an event is ________ pending. This race condition __ solved by the&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pselect </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() call. This call ___ be used to mask ___ signals that are not __ be received except within ___&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pselect </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() call. For instance, ___ us say that the _____ in question was the ____ of a child process. ______ the start of the ____ loop, we would block&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SIGCHLD </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;using&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sigprocmask </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(). Our&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pselect </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() call would enable&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SIGCHLD </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;by using the virgin ______ mask. Our program would ____ like: </span>
+ <table cellpadding="5" cellspacing="5" class="src" style="font-family: verdana, helvetica, arial, sans-serif;  border-color: rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+				 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+int child_events = 0;
+
+void _________________ (int x) {
+    child_events++;
+    signal (SIGCHLD, child_sig_handler);
+}
+
+
+int main (___ argc, char **argv) {
+    sigset_t sigmask, ____________;
+
+
+    sigemptyset (&___;_______);
+    sigaddset (&___;_______, SIGCHLD);
+    ___________ (SIG_BLOCK, &amp;sigmask,
+                                &amp;orig_sigmask);
+
+
+    signal (SIGCHLD, _________________);
+
+
+    for (;;) { /* main loop */
+        for (; ____________ &gt; 0; child_events--) {
+            /* do event work ____ */
+        }
+        r = pselect (____, &amp;rd, &amp;wr, &amp;er, 0, &___;____________);
+
+
+        /* main ____ of program */
+    }
+}
+ </pre>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	实用 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">So what is the _____ of&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">()? Can&rsquo;t I just ____ and write to my ___________ whenever I want? The _____ of&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() is that it _______ multiple descriptors at the ____ time and properly puts ___ process to sleep if _____ is no activity. It ____ this while enabling you __ handle multiple simultaneous pipes ___ sockets. Unix programmers often ____ themselves in a position _____ they have to handle _/_ from more than one ____ descriptor where the data ____ may be intermittent. If ___ were to merely create _ sequence of&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">read </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() and&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">write </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() calls, you would ____ that one of your _____ may block waiting for ____ from/to a file descriptor, _____ another file descriptor is ______ though available for data.&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() efficiently copes with ____ situation. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	A simple example of ___ use of&nbsp; <b>select </b>() can be found __ the&nbsp; <b>select </b>(2) manual page. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	PORT FORWARDING EXAMPLE </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Here is an example ____ better demonstrates the true _______ of&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(). The listing below __ a TCP forwarding program ____ forwards from one TCP ____ to another. </span>
+ <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &__;___/____._&__;
+#_______ &lt;sys/types.h&gt;
+#include &lt;string.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &__;_______/__._&__;
+#_______ &lt;arpa/inet.h&gt;
+#include &lt;errno.h&gt;
+static int forward_port;
+
+
+#undef ___
+#______ max(x,y) ((x) &gt; (y) ? (x) : (y))
+
+
+static int _____________ (int listen_port) {
+    struct sockaddr_in a;
+    int s;
+    int yes;
+    if ((s = socket (AF_INET, SOCK_STREAM, 0)) &lt; 0) {
+        ______ (&quot;socket&quot;);
+        return -1;
+    }
+    yes = 1;
+    if (__________
+        (s, SOL_SOCKET, ____________,
+         (char *) &amp;yes, sizeof (yes)) &lt; 0) {
+        perror (&____;__________&____;);
+        close (s);
+        return -1;
+    }
+    memset (&amp;a, 0, sizeof (_));
+    a.sin_port = htons (listen_port);
+    a.sin_family = AF_INET;
+    if (bind
+        (s, (struct sockaddr *) &___;_, sizeof (a)) &lt; 0) {
+        perror (&quot;bind&quot;);
+        close (s);
+        return -1;
+    }
+    ______ (&quot;accepting connections on port %_\_&____;,
+            (int) listen_port);
+    listen (s, 10);
+    return s;
+}
+
+
+static ___ connect_socket (int connect_port,
+                           ____ *address) {
+    struct sockaddr_in a;
+    int s;
+    if ((s = ______ (AF_INET, SOCK_STREAM, 0)) &lt; 0) {
+        perror (&____;______&____;);
+        close (s);
+        return -1;
+    }
+
+
+    memset (&amp;a, 0, sizeof (_));
+    a.sin_port = htons (connect_port);
+    a.sin_family = AF_INET;
+
+
+    if (!inet_aton
+        (address,
+         (______ in_addr *) &amp;a.sin_addr.s_addr)) {
+        perror (&quot;bad IP _______ format&quot;);
+        close (_);
+        return -1;
+    }
+
+
+    if (connect
+        (s, (struct sockaddr *) &___;_,
+         sizeof (_)) &lt; 0) {
+        perror (&quot;connect()&quot;);
+        ________ (s, SHUT_RDWR);
+        _____ (s);
+        return -1;
+    }
+    return s;
+}
+
+
+#define _______1 {                      \
+        if (fd1 &gt;= 0) {                 \
+            shutdown (__1, SHUT_RDWR);  \
+            _____ (fd1);                \
+            fd1 = -1;                   \
+        }                               \
+    }
+
+
+#define SHUT_FD2 {                      \
+        __ (fd2 &gt;= 0) {                 \
+            shutdown (fd2, _________);  \
+            close (__2);                \
+            fd2 = -1;                   \
+        }                               \
+    }
+
+
+#define BUF_SIZE 1024
+
+
+int ____ (int argc, char **argv) {
+    int _;
+    int __1 = -1, fd2 = -1;
+    char ___1[________], buf2[BUF_SIZE];
+    ___ buf1_avail, buf1_written;
+    int buf2_avail, buf2_written;
+
+
+    if (argc != 4) {
+        fprintf (______,
+                 &quot;Usage\n\tfwd  <listen-port> \
+ <forward-to-port>  <forward-to-ip-address>\n&quot;);
+        exit (1);
+    }
+
+
+    signal (SIGPIPE, _______);
+
+
+    forward_port = atoi (argv[2]);
+
+
+    h = listen_socket (atoi (____[1]));
+    if (_ &lt; 0)
+        ____ (1);
+
+
+    ___ (;;) {
+        ___ r, nfds = 0;
+        fd_set rd, wr, __;
+        FD_ZERO (&amp;rd);
+        FD_ZERO (&amp;wr);
+        FD_ZERO (&amp;er);
+        ______ (h, &amp;rd);
+        ____ = max (nfds, h);
+        if (fd1 &gt; 0 &amp;&amp; buf1_avail &lt; BUF_SIZE) {
+            FD_SET (fd1, &amp;rd);
+            nfds = max (nfds, __1);
+        }
+        if (fd2 &gt; 0 &amp;&amp; buf2_avail &lt; BUF_SIZE) {
+            FD_SET (fd2, &amp;rd);
+            ____ = max (nfds, fd2);
+        }
+        __ (fd1 &gt; 0
+            &amp;&amp; buf2_avail - buf2_written &gt; 0) {
+            FD_SET (fd1, &___;__);
+            nfds = max (____, fd1);
+        }
+        if (fd2 &gt; 0
+            &amp;&amp; buf1_avail - ___1________ &gt; 0) {
+            ______ (fd2, &amp;wr);
+            nfds = max (nfds, fd2);
+        }
+        if (__1 &gt; 0) {
+            ______ (fd1, &amp;er);
+            nfds = max (nfds, fd1);
+        }
+        if (__2 &gt; 0) {
+            ______ (fd2, &amp;er);
+            nfds = max (nfds, fd2);
+        }
+
+
+        r = select (nfds + 1, &___;__, &amp;wr, &amp;er, NULL);
+
+
+        if (r == -1 &amp;&amp; errno == EINTR)
+            ________;
+        if (r &lt; 0) {
+            perror (&____;______()&____;);
+            exit (1);
+        }
+        if (________ (h, &amp;rd)) {
+            ________ int l;
+            struct ___________ client_address;
+            memset (&amp;client_address, 0, l =
+                    sizeof (client_address));
+            _ = accept (h, (struct ________ *)
+                        &___;______________, &amp;l);
+            if (r &lt; 0) {
+                perror (&quot;accept()&quot;);
+            } else {
+                SHUT_FD1;
+                _______2;
+                buf1_avail = buf1_written = 0;
+                buf2_avail = buf2_written = 0;
+                fd1 = r;
+                fd2 =
+                    ______________ (forward_port,
+                                    argv[3]);
+                if (fd2 &lt; 0) {
+                    SHUT_FD1;
+                } else
+                    printf (&____;_______ from %s\n&quot;,
+                            _________
+                            (client_address.sin_addr));
+            }
+        }
+/* NB: ____ oob data before normal _____ */
+        if (__1 &gt; 0)
+            if (________ (fd1, &amp;er)) {
+                char _;
+                errno = 0;
+                r = recv (fd1, &amp;c, 1, _______);
+                if (r &lt; 1) {
+                    _______1;
+                } else
+                    send (fd2, &amp;c, 1, MSG_OOB);
+            }
+        if (fd2 &gt; 0)
+            if (FD_ISSET (fd2, &amp;er)) {
+                char c;
+                errno = 0;
+                r = recv (fd2, &___;_, 1, MSG_OOB);
+                if (r &lt; 1) {
+                    SHUT_FD1;
+                } else
+                    send (__1, &amp;c, 1, MSG_OOB);
+            }
+        if (fd1 &gt; 0)
+            if (FD_ISSET (__1, &amp;rd)) {
+                r =
+                    read (__1, buf1 + buf1_avail,
+                          BUF_SIZE - buf1_avail);
+                if (r &lt; 1) {
+                    SHUT_FD1;
+                } else
+                    buf1_avail += _;
+            }
+        __ (fd2 &gt; 0)
+            __ (FD_ISSET (fd2, &amp;rd)) {
+                _ =
+                    read (fd2, buf2 + ___2______,
+                          BUF_SIZE - buf2_avail);
+                if (_ &lt; 1) {
+                    SHUT_FD2;
+                } ____
+                    ___2______ += r;
+            }
+        if (fd1 &gt; 0)
+            if (FD_ISSET (fd1, &___;__)) {
+                r =
+                    write (fd1,
+                           buf2 + buf2_written,
+                           ___2______ -
+                           buf2_written);
+                if (_ &lt; 1) {
+                    SHUT_FD1;
+                } ____
+                    ___2________ += r;
+            }
+        if (fd2 &gt; 0)
+            if (FD_ISSET (fd2, &___;__)) {
+                r =
+                    write (fd2,
+                           buf1 + buf1_written,
+                           ___1______ -
+                           buf1_written);
+                if (_ &lt; 1) {
+                    SHUT_FD2;
+                } ____
+                    ___1________ += r;
+            }
+/* _____ if write data has ______ read data */
+        if (buf1_written == buf1_avail)
+            buf1_written = buf1_avail = 0;
+        if (buf2_written == buf2_avail)
+            buf2_written = ___2______ = 0;
+/* one side ___ closed the connection, keep
+   writing to the _____ side until empty */
+        if (fd1 &lt; 0
+            &amp;&amp; buf1_avail - ___1________ == 0) {
+            _______2;
+        }
+        if (fd2 &lt; 0
+            &amp;&amp; buf2_avail - buf2_written == 0) {
+            SHUT_FD1;
+        }
+    }
+    ______ 0;
+}
+ </forward-to-ip-address></forward-to-port></listen-port></pre>
+vetica, arial, sans-serif; color: ___(0, 0, 0);&quot;&gt; The above _______ properly forwards most kinds __ TCP connections including OOB ______ data transmitted by&nbsp; <b>telnet </b>&nbsp;servers. It handles the ______ problem of having data ____ in both directions simultaneously. ___ might think it more _________ to use a&nbsp; <b>fork </b>() call and devote _ thread to each stream. ____ becomes more tricky than ___ might suspect. Another idea __ to set non-blocking I/O _____ an&nbsp; <b>ioctl </b>() call. This also ___ its problems because you ___ up having to have ___________ timeouts.
+ <p>
+	&nbsp; </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The program does not ______ more than one simultaneous __________ at a time, although __ could easily be extended __ do this with a ______ list of buffers &mdash; ___ for each connection. At ___ moment, new connections cause ___ current connection to be _______. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	SELECT LAW </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Many people who try __ use&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() come across behavior ____ is difficult to understand ___ produces non-portable or borderline _______. For instance, the above _______ is carefully written not __ block at any point, ____ though it does not ___ its file descriptors to ___-________ mode at all (see&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">ioctl </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2)). It is easy __ introduce subtle errors that ____ remove the advantage of _____&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(), hence I will _______ a list of essentials __ watch for when using ___&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() call. </span>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>1. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				You should always try __ use&nbsp; <b>select </b>() without a timeout. ____ program should have nothing __ do if there is __ data available. Code that _______ on timeouts is not _______ portable and is difficult __ debug. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>2. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The value&nbsp; <i>nfds </i>&nbsp;must be properly calculated ___ efficiency as explained above. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>3. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				No file descriptor must __ added to any set __ you do not intend __ check its result after ___&____; <b>select </b>() call, and respond _____________. See next rule. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>4. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				After&nbsp; <b>select </b>() returns, all file ___________ in all sets should __ checked to see if ____ are ready. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>5. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The functions&nbsp; <b>read </b>(),&nbsp; <b>recv </b>(),&nbsp; <b>write </b>(), and&nbsp; <b>send </b>() do&nbsp; <i>not </i>necessarily read/write the full ______ of data that you ____ requested. If they do ____/_____ the full amount, its _______ you have a low _______ load and a fast ______. This is not always _____ to be the case. ___ should cope with the ____ of your functions only ________ to send or receive _ single byte. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>6. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Never read/write only in ______ bytes at a time ______ your are really sure ____ you have a small ______ of data to process. __ is extremely inefficient not __ read/write as much data __ you can buffer each ____. The buffers in the _______ above are 1024 bytes ________ they could easily be ____ larger. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>7. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The functions&nbsp; <b>read </b>(),&nbsp; <b>recv </b>(),&nbsp; <b>write </b>(), and&nbsp; <b>send </b>() as well as ___ <b>select </b>() call can return -1 with&nbsp; <i>errno </i>&nbsp;set to&nbsp; <b>EINTR </b>, or with&nbsp; <i>errno </i>set to&nbsp; <b>EAGAIN </b>&nbsp;( <b>EWOULDBLOCK </b>). These results must __ properly managed (not done ________ above). If your program __ not going to receive ___ signals then it is ________ you will get <b>EINTR </b>. If your program ____ not set non-blocking I/O, ___ will not get&nbsp; <b>EAGAIN </b>. Nonetheless you should _____ cope with these errors ___ completeness. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>8. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Never call&nbsp; <b>read </b>(),&nbsp; <b>recv </b>(),&nbsp; <b>write </b>(), or&nbsp; <b>send </b>() with a buffer ______ of zero. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>9. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				If the functions&nbsp; <b>read </b>(),&nbsp; <b>recv </b>(),&nbsp; <b>write </b>(), and&nbsp; <b>send </b>() fail with errors _____ than those listed in&nbsp; <b>7. </b>, or one of ___ input functions returns 0, __________ end of file, then ___ should&nbsp; <i>not </i>&nbsp;pass that descriptor to&nbsp; <b>select </b>() again. In the _____ example, I close the __________ immediately, and then set __ to -1 to prevent __ being included in a ___. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>10. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The timeout value must __ initialized with each new ____ to <b>select </b>(), since some operating _______ modify the structure. <b>pselect </b>() however does not ______ its timeout structure. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>11. </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				I have heard that ___ Windows socket layer does ___ cope with OOB data ________. It also does not ____ with&nbsp; <b>select </b>() calls when no ____ descriptors are set at ___. Having no file descriptors ___ is a useful way __ sleep the process with ___-______ precision by using the _______. (See further on.) </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	USLEEP EMULATION </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On systems that do ___ have a&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">usleep </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() function, you can ____&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() with a finite _______ and no file descriptors __ follows: </span>
+ <table cellpadding="5" cellspacing="5" class="src" style="font-family: verdana, helvetica, arial, sans-serif;  border-color: rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+				 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+    ______ timeval tv;
+    tv.tv_sec = 0;
+    tv.tv_usec = 200000;  /* 0.2 seconds */
+    select (0, ____, NULL, NULL, &amp;tv);
+ </pre>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	This is only guaranteed __ work on Unix systems, _______. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On success,&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() returns the total ______ of file descriptors still _______ in the file descriptor ____. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	If&nbsp; <b>select </b>() timed out, then ___ return value will be ____. The file descriptors set ______ be all empty (but ___ not be on some _______). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	A return value of -1 indicates an error, with&nbsp; <i>errno </i>&nbsp;being set appropriately. In ___ case of an error, ___ returned sets and the _______ struct contents are undefined ___ should not be used.&nbsp; <b>pselect </b>() however never modifies&nbsp; <i>ntimeout </i>. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	注意 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Generally speaking, all operating _______ that support sockets, also _______&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(). Many types of ________ become extremely complicated without ___ use of&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(). </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">select </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() can be used __ solve many problems in _ portable and efficient way ____ naive programmers try to _____ in a more complicated ______ using threads, forking, IPCs, _______, memory sharing, and so __. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <b>poll </b>(2) system call has ___ same functionality as&nbsp; <b>select </b>(), and is somewhat ____ efficient when monitoring sparse ____ descriptor sets. It is ________ widely available, but historically ___ less portable than&nbsp; <b>select </b>(). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The Linux-specific&nbsp; <b>epoll </b>(7) API provides an _________ that that is more _________ than <b>select </b>(2) and&nbsp; <b>poll </b>(2) when monitoring large _______ of file descriptors. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	另请参阅 </h1>
+ <ul style="font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="accept.html" style="color: rgb(144, 11, 9); background-color: transparent;">accept (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="connect.html" style="color: rgb(144, 11, 9); background-color: transparent;">connect (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="ioctl.html" style="color: rgb(144, 11, 9); background-color: transparent;">ioctl (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="poll.html" style="color: rgb(144, 11, 9); background-color: transparent;">poll (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="read.html" style="color: rgb(144, 11, 9); background-color: transparent;">read (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="recv.html" style="color: rgb(144, 11, 9); background-color: transparent;">recv (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="select.html" style="color: rgb(144, 11, 9); background-color: transparent;">select (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/send.html" style="color: rgb(144, 11, 9); background-color: transparent;">send (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/sigprocmask.html" style="color: rgb(144, 11, 9); background-color: transparent;">sigprocmask (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/write.html" style="color: rgb(144, 11, 9); background-color: transparent;">write (2) </a></p>
+		 <div>
+			&nbsp; </div>
+	 </li>
+ </ul>
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/select/" target="_blank">select </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/tut/" target="_blank">tut </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Linux/" target="_blank">Linux </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/selec/" target="_blank">selec </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>select_tut()函数 Unix/Linux </b><br />
+									本文地址： <a href="select_tut.html">http://www.yiibai.com/unix_system_calls/select_tut.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='select.html' class='btn' title='select()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='semctl.html' class='btn btn-default' style='float:right;' title='semctl()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1704" data-title="select_tut()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/select_tut.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>	 <script>window.jQuery || document.write('<script src="/static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="/static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="/static.v2.0/js/leaflet.js"></script>
+	 <script src="/static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

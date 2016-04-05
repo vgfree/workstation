@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/cprogramming/c_pointers.html
+Date Downloaded: 2016/4/1 16:50:05 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>C语言指针 - C语言教程 </title>
+		 <meta name="keywords" content="C语言,指针" />
+		 <meta name="description" content="C语言指针是很容易学习和。某些C语言编程任务的指针进行更容易和其它任务，如动态存储器分配，不能离开使用指针来执行。所以有必要学习指针成为一个完善的C程序员。让我们开始" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/hightlang/'>高级语言 </a> >  <a href='index.html'>C语言教程 </a> >  C语言指针
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">C语言教程 </a>
+							 <a class="list-group-item" href="c_environment_setup.html" title="C语言环境设置">C语言环境设置 </a><a class="list-group-item" href="c_program_structure.html" title="C语言程序结构">C语言程序结构 </a><a class="list-group-item" href="c_basic_syntax.html" title="C语言基本语法">C语言基本语法 </a><a class="list-group-item" href="c_data_types.html" title="C语言数据类型">C语言数据类型 </a><a class="list-group-item" href="c_variables.html" title="C语言变量">C语言变量 </a><a class="list-group-item" href="c_constants.html" title="C语言常量和文字">C语言常量和文字 </a><a class="list-group-item" href="c_storage_classes.html" title="C语言存储分类">C语言存储分类 </a><a class="list-group-item" href="c_operators.html" title="C语言运算符">C语言运算符 </a><a class="list-group-item" href="c_decision_making.html" title="C语言决策">C语言决策 </a><a class="list-group-item" href="c_loops.html" title="C语言循环">C语言循环 </a><a class="list-group-item" href="c_functions.html" title="C语言函数">C语言函数 </a><a class="list-group-item" href="c_scope_rules.html" title="C语言范围规则">C语言范围规则 </a><a class="list-group-item" href="c_arrays.html" title="C语言数组">C语言数组 </a><a class="list-group-item" href="c_pointers.html" title="C语言指针">C语言指针 </a><a class="list-group-item" href="c_strings.html" title="C语言字符串">C语言字符串 </a><a class="list-group-item" href="c_structures.html" title="C语言结构体">C语言结构体 </a><a class="list-group-item" href="c_unions.html" title="C语言联合体">C语言联合体 </a><a class="list-group-item" href="c_bit_fields.html" title="C语言位段">C语言位段 </a><a class="list-group-item" href="c_typedef.html" title="C语言typedef">C语言typedef </a><a class="list-group-item" href="c_input_output.html" title="C语言输入输出">C语言输入输出 </a><a class="list-group-item" href="c_file_io.html" title="C语言文件读写I/O">C语言文件读写I/O </a><a class="list-group-item" href="c_preprocessors.html" title="C语言预处理器">C语言预处理器 </a><a class="list-group-item" href="c_header_files.html" title="C语言头文件">C语言头文件 </a><a class="list-group-item" href="c_type_casting.html" title="C语言类型转换">C语言类型转换 </a><a class="list-group-item" href="c_recursion.html" title="C语言递归">C语言递归 </a><a class="list-group-item" href="c_variable_arguments.html" title="C语言可变参数">C语言可变参数 </a><a class="list-group-item" href="c_memory_management.html" title="C语言内存管理">C语言内存管理 </a><a class="list-group-item" href="c_command_line_arguments.html" title="C语言命令行参数">C语言命令行参数 </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">C语言指针 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>一一无念 </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='c_pointer_to_an_array.html' class='btn' title='C语言数组指针' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='c_pointer_arithmetic.html' class='btn btn-default' style='float:right;' title='C语言指针运算'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="6447" />
+									
+									 <p>
+	C语言指针是很容易学习和。某些C语言编程任务的指针进行更容易和其它任务，如动态存储器分配，不能离开使用指针来执行。所以有必要学习指针成为一个完善的C程序员。让我们开始学习指针的简单和容易的步骤。 </p>
+ <p>
+	每一个变量是一个内存地址位置，每个存储单元都有其定义的地址，可以用符号(＆)运算符，它表示一个内存地址进行访问。考虑下面的例子，这将打印中定义的变量的地址。 </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;">  var1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">char </span><span class="pln" style="margin: 0px; padding: 0px;"> var2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">10 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Address of var1 variable: %_
+&____; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">&amp; </span><span class="pln" style="margin: 0px; padding: 0px;">var1   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Address of var2 variable: %_
+&____; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">&amp; </span><span class="pln" style="margin: 0px; padding: 0px;">var2   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	当上述代码被编译和执行时，它会产生一些输出如下： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+Address of var1 variable: ___5_400
+_______ of var2 variable: bff5a3f6 </pre>
+ <p>
+	所以，明白了什么是内存地址以及如何访问它，所以这个概念的基础上。现在，让我们来看看什么是指针。 </p>
+ <h2>
+	什么是指针？ </h2>
+ <p>
+	指针是一个变量，其值是另一个变量的地址，所述存储器位置，即，直接地址。像任何变量或常量，必须声明指针之前，你可以用它来存储任何变量的地址。一个指针变量声明的一般形式是： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="pln" style="margin: 0px; padding: 0px;">type  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	在这里，指针类型为基本类型;它必须是一个有效的C语言数据类型，var-name是指针变量的名称。 星号*用来声明指针。然而，在语句中的星号被用来指定一个变量作为一个指针。以下是有效的指针声明： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">ip </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* yiibaier to an _______ */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">double </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">dp </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* yiibaier to a ______ */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">float </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">fp </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* yiibaier to a _____ */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">char </span><span class="pln" style="margin: 0px; padding: 0px;">    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">ch      </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* yiibaier to a _________ */ </span></pre>
+ <p>
+	所有的指针的值的实际数据的类型可以是整数，浮点数，字符，或以其他方式，代表存储器地址的长十六进制数。不同数据类型的指针之间的唯一区别是变量的数据类型或常数的指针指向。 </p>
+ <h2>
+	如何使用指针？ </h2>
+ <p>
+	有一些重要的操作，使用指针的帮助。 （a）定义一个指针变量（b）分配一个变量的指针（c）地址终于在指针变量的可用地址来访问的值。这是通过使用一元运算符*返回位于其操作数所指定的地址的变量的值完成。下面的例子利用这些操作： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">20 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* actual variable declaration */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">ip </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">         </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* yiibaier variable declaration */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+   ip  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">&amp; </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* store address of ___ in yiibaier variable*/ </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Address of var variable: %_
+&____; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">&amp; </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* address stored in ________ variable */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Address stored in ip ________: %x
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> ip  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* access the value _____ the yiibaier */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Value of *ip variable: %_
+&____; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">ip  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	当上述代码被编译和执行时，它会产生一些输出如下： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+Address of var variable: ____8_3_
+_______ stored in ip variable: ____8_3_
+_____ of *ip variable: 20 </pre>
+ <h2>
+	C语言 NULL指针 </h2>
+ <p>
+	它始终是一个很好的做法，以一个NULL值赋给如果没有确切的地址将被分配一个指针变量。这样做是在变量声明时分配NULL指针被称为空指针。 </p>
+ <p>
+	NULL指针是一个常数为零在几个标准库中定义的值。考虑下面的程序： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">ptr  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> NULL </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;The value of ptr __ : %x
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> ptr   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+ 
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	当上述代码被编译和执行时，它产生了以下结果： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+The value of ptr __ 0 </pre>
+ <p>
+	在大多数操作系统中，程序不允许在地址0来访问存储器，因为该存储器是由操作系统保留。然而，存储器地址0具有特别重要的意义;它表明，该指针不指向一个访问的存储器位置。但按照惯例，如果一个指针包含空（null/零）值，则假定为不指向什么。 </p>
+ <p>
+	要检查一个空指针，可以使用if语句如下： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">ptr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">      </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* succeeds if p __ not null */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(! </span><span class="pln" style="margin: 0px; padding: 0px;">ptr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* succeeds if p __ null */ </span></pre>
+ <h2>
+	C语言指针详述： </h2>
+ <p>
+	指针有很多概念，它们对C语言编程非常重要。有以下几个重要指针概念，一个C程序员应该明确： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); width: 185px; background-color: rgb(238, 238, 238);">
+				概念 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td>
+				 <a href="http://www.yiibai.com/cprogramming/c_yiibaier_arithmetic.html" target="_blank" title="C语言指针运算">C语言指针运算 </a></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				有迹象表明，可以对指针使用四则运算符：++, --, +, - </td>
+		 </tr>
+		 <tr>
+			 <td>
+				 <a href="http://www.yiibai.com/cprogramming/c_array_of_yiibaiers.html" target="_blank" title="C语言指针数组">C语言指针数组 </a></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				可以定义数组持有一些指针 </td>
+		 </tr>
+		 <tr>
+			 <td>
+				 <a href="http://www.yiibai.com/cprogramming/c_yiibaier_to_yiibaier.html" target="_blank" title="C语言指针的指针">C语言指针的指针 </a></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				C语言允许指针的指针 </td>
+		 </tr>
+		 <tr>
+			 <td>
+				 <a href="http://www.yiibai.com/cprogramming/c_passing_yiibaiers_to_functions.html" target="_blank" title="C语言传递函数指针">C语言传递函数指针 </a></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				通过引用或地址传递参数均使传递的参数将在调用函数被调用函数变化 </td>
+		 </tr>
+		 <tr>
+			 <td>
+				 <a href="http://www.yiibai.com/cprogramming/c_return_yiibaier_from_functions.html" target="_blank" title="C语言从函数返回指针">C语言从函数返回指针 </a></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				C语言允许函数返回一个指向局部变量，静态变量和动态分配的存储器 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <br />
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/C语言/" target="_blank">C语言 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/指针/" target="_blank">指针 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>C语言指针 </b><br />
+									本文地址： <a href="c_pointers.html">http://www.yiibai.com/cprogramming/c_pointers.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='c_pointer_to_an_array.html' class='btn' title='C语言数组指针' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='c_pointer_arithmetic.html' class='btn btn-default' style='float:right;' title='C语言指针运算'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="6447" data-title="C语言指针" data-url="http://www.yiibai.com/cprogramming/c_pointers.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

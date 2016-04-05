@@ -1,0 +1,800 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>nginx+lua+redis构建高并发应用 - OPEN 开发经验库</title>
+	<meta content="text/html; charset=utf-8" http-equiv=content-type>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name=keywords content=",Nginx ">
+	<meta name=description content="url请求nginx服务器，然后lua查询redis，返回json数据。">
+	<link rel="shortcut icon" href="/lib/favicon.ico">
+	<link rel=copyright href="http://www.open-open.com/">
+
+	<link href="//cdn.bootcss.com/highlight.js/9.2.0/styles/idea.min.css" rel="stylesheet">
+
+	
+	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://www.open-open.com/resource/styles.css" rel="stylesheet">
+
+	<style type="text/css" media="screen, projection">
+		/*<![CDATA[*/
+		@import "/lib/css/common.css";
+		@import "/lib/css/main.css";
+		@import "/lib/css/jGrowl.css";
+		@import "/lib/css/thickbox.css";
+		@import "/lib/css/jquery.ui.css";
+		/*]]>*/
+	</style>
+	<style type="text/css">
+.topheader h1{font-size: 24px;}
+
+	</style>
+
+	<script type="text/javascript">
+		if(window.location.toString().indexOf('pref=padindex') != -1){
+		}else{
+			if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+				if(window.location.href.indexOf("?mobile")<0){
+					try{
+						if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1455261799808.html";
+						}else if(/iPad/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1455261799808.html"
+						}else{
+							window.location.href="http://m.open-open.com/m/lib/view/1455261799808.html"
+						}
+					}catch(e){}
+				}
+			}
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		var rooturl="/lib";
+		var wgDocKey='1455261799808';
+		var wgDocTitle='nginx+lua+redis构建高并发应用';
+		var wgDocStatusFlag='';
+		var wgUserFolders=null;
+		var wgDownFrame=null;
+		var wgCostByUser=null;
+		var wgDocFavoriteByUser=false;
+		var wgDocScoreByUser=null;
+		var wgUserLogined=0;
+		var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+	</script>
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?4b19e5cc155fe555484434d8338ee0af";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+
+</head>
+<body id=view>
+
+
+
+
+
+
+<header class="site-header">
+	<div class="header-top ">
+		<div class="header-top-inner">
+			<div class="" style="margin: 0 30px;">
+				<div class="row">
+					<div class="header-top-left col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="header-talet">
+							<a  href="http://www.open-open.com/">首页</a> &nbsp;
+							<a class="" href="http://www.open-open.com/code/">OPEN代码</a> &nbsp;<img src="http://www.open-open.com/image/new.gif" alt='最新上线'/> &nbsp;
+							<a class="" href="http://www.open-open.com/doc/">OPEN文档</a> &nbsp;
+							<a title='OPEN论坛频道' href="http://www.open-open.com/bbs">OPEN问答</a> &nbsp;
+							<a title="OPEN资讯" class="" href="http://www.open-open.com/news/">OPEN资讯</a> &nbsp;
+							<a title="OPEN经验库" class="active" href="http://www.open-open.com/lib/" >OPEN经验</a> &nbsp;
+							<a title="GitHub日报" class="" href="http://www.open-open.com/github/">GitHub日报</a>
+							&nbsp;
+						</div>
+					</div>
+					<div class="header-top-right col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="user-info pull-right" id="Personal">
+							
+								<a href="/lib/members/login?keepThis=true&TB_iframe=true&height=177&width=280" title="登录OPEN经验库" class="thickbox">登录</a>&nbsp;&nbsp;
+								<a href="/lib/members/register?keepThis=true&TB_iframe=true&height=460&width=710" title="注册新的账号" class="thickbox">注册</a>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar ">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-hamburger"></span>
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-up"></span>
+				</button>
+				<a class="top-logo" href="//www.open-open.com/lib"><span>www.open-open.com/lib</span></a>
+				<span style="font-size: 30px;color: #b5b5b5">经验</span>
+				<span style="font-size: 12px;color: #b5b5b5"></span>
+			</div>
+			<div id="search" class="navbar-collapse navbar-right collapse ">
+				<form onsubmit="document.charset='utf-8';" accept-charset="utf-8" method="post" action="/lib/query" name="sf">
+					<input type="hidden" value="all" name="site">
+					<div class="input-group">
+						<input type="text" x-webkit-speech="" placeholder="经验搜索" class="form-control" name="q" id="kw">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                      </span>
+
+					</div>
+				</form>
+
+				<!-- /input-group -->
+
+			</div>
+
+		</div>
+	</nav>
+</header>
+
+
+
+
+<div class="topheader" style="background: #eee;padding-bottom: 10px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 id="articleTitle" >nginx+lua+redis构建高并发应用</h1>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div id=content>
+	<div id=content-nav>
+		<a href="/lib/list/all">所有分类</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/75">服务器软件</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/77">Web服务器</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/151">Nginx </a>
+		
+	</div>
+
+
+	<div id=view-main>
+
+
+		<div id=view-titleh>
+
+			<div id=view-summary>
+				<table>
+					<tbody>
+					<tr>
+						<td><strong>您的评价</strong>:</td>
+						<td>
+							<div id=rate class=rate-container><span id=star1 class=star-big-off title=很差>&nbsp;</span><span id=star2 class=star-big-off title=较差>&nbsp;</span><span id=star3 class=star-big-off title=还行>&nbsp;</span><span
+									id=star4 class=star-big-off title=不错>&nbsp;</span><span id=star5 class=star-big-off title=力荐>&nbsp;</span></div>
+						</td>
+						<td width=30>
+							<span id=score-num>0.0</span>
+						</td>
+						<td width=30>
+							<div id=rate-tip></div>
+						</td>
+
+						<td>
+							<div id=favorite-container><span class="icon favorite">&nbsp;</span><a id=favorite href="javascript:void(0)"><strong>收藏该经验</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+							<span class=item>收藏：0人</span>
+
+							<span class=item>发布时间1：2016-02-12 15:23:24</span>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<div id=favorite-box>
+					<table>
+						<tbody>
+						<tr>
+							<td width=70 align=right>文件夹</td>
+							<td><select id=fav_folderlist name=folder>
+								<option selected value=0>请选择...</option>
+								<option id=newfolder-sp disabled value="">-------------</option>
+								<option value=-1>新增文件夹...</option>
+							</select></td>
+						</tr>
+						<tr style="display: none" id=newfolder-input>
+							<td align=right>新增文件夹</td>
+							<td><input id=fav_newfolder maxlength=50 type=text name=newfolder></td>
+						</tr>
+						<tr>
+							<td align=right>标签</td>
+							<td><input id=fav_tags maxlength=135 size=20 type=text name=tags></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan=2>(多个标签用逗号分隔)</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div id=readercontainer>
+
+
+			<div id="toc"></div>
+
+
+			<!-- google_ad_section_start -->
+			<p>来自： <a href="http://blog.csdn.net//jiao_fuyou/article/details/36186485" rel="nofollow" target="_blank">http://blog.csdn.net//jiao_fuyou/article/details/36186485</a></p>
+<br />
+<p><span style="font-size:14px;">ngx_lua将lua嵌入到nginx，让nginx执行lua脚本，高并发，非阻塞的处理各种请求。</span></p>
+ <p><span style="font-size:14px;">url请求nginx服务器，然后lua查询redis，返回json数据。</span></p>
+ <span style="font-size:14px;"><br />
+ <span style="color:#009900;">一.安装lua-nginx-module</span><br />
+ </span> <p><span style="font-size:14px;">参见《<a target="_blank" href="http://blog.csdn.net/jiao_fuyou/article/details/35985843">LNMLGC</a>》架构</span></p>
+ <p><span style="font-size:14px;"><br />
+ </span></p>
+ <p><span style="font-size:14px;color:#009900;">二.安装redis2-nginx-module模块</span></p>
+ <span style="font-size:14px;">get https://github.com/openresty/echo-nginx-module<br />
+ get https://github.com/openresty/redis2-nginx-module<br />
+ get https://github.com/agentzh/set-misc-nginx-module.git<br />
+ <br />
+ #<br />
+ </span> <span style="font-family:SimSun;">./configure --prefix=/usr/local/nginx &nbsp; \<br />
+ --with-debug &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\<br />
+ --with-http_stub_status_module &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\<br />
+ --with-http_ssl_module &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\<br />
+ --with-pcre=../pcre-8.21 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\<br />
+ --add-module=../ngx_devel_kit-0.2.19 &nbsp; &nbsp;\<br />
+ --add-module=../lua-nginx-module-0.9.8 &nbsp;\<br />
+ --add-module=../echo-nginx-module &nbsp; &nbsp; &nbsp; \<br />
+ --add-module=../redis2-nginx-module &nbsp; &nbsp; \<br />
+ --add-module=../set-misc-nginx-module</span> <span style="font-size:14px;"><br />
+ <br />
+ # make<br />
+ # make install<br />
+ <br />
+ <span style="color:#009900;">三.安装lua-redis-parser</span><br />
+ # git clone https:<br />
+ //github.com/agentzh/lua-redis-parser.git<br />
+ # export LUA_INCLUDE_DIR=/usr/local/include/luajit-2.0<br />
+ # make CC=gcc<br />
+ # make install CC=gcc<br />
+ <br />
+ <span style="color:#009900;">四.安装json</span><br />
+ # wget http:<br />
+ //files.luaforge.net/releases/json/json/0.9.50/json4lua-0.9.50.zip<br />
+ # unzip json4lua-0.9.50.zip<br />
+ # cp json4lua-0.9.50/json/json.lua /usr/local/lua/lib/<br />
+ <br />
+ <span style="color:#009900;">五.安装redis-lua</span><br />
+ # git clone https:<br />
+ //github.com/nrk/redis-lua.git<br />
+ # cp redis-lua/src/redis.lua /usr/local/lua/lib/<br />
+ <br />
+ <span style="color:#009900;">六.配置</span><br />
+ </span> <pre class="brush:java; toolbar: true; auto-links: false;">...
+http {
+    ...
+    upstream redis_pool {
+        server localhost:6379;
+        keepalive 1024 single;
+        //定义连接池大小，当连接数达到此数后，后续的连接为短连接
+    }
+    server {
+        ...
+        location /get_redis{
+            #internal;
+            set_unescape_uri $key $arg_key;
+            redis2_query hgetall $key;
+            redis2_pass redis_pool;
+        }
+        location /json {
+            content_by_lua_file conf/test.lua;
+        }
+    }
+}</pre> <br />
+ # vi test.lua，放在nginx.conf同目录下<br />
+ <pre class="brush:java; toolbar: true; auto-links: false;">local json = require("json")
+local parser = require("redis.parser")
+local res = ngx.location.capture("/get_redis",{
+  args = { key = ngx.var.arg_key }
+})
+if res.status == 200 then
+  reply = parser.parse_reply(res.body)
+  value = json.encode(reply)
+  ngx.say(value)
+  a = json.decode(value)
+  ngx.say(a[2])
+end</pre> <br />
+ <span style="color:#009900;">七.测试</span> <br />
+ # redis-cli<br />
+ 127.0.0.1:6379&gt; HMSET ttlsa www www.ttlsa.com mail mail.ttlsa.com<br />
+ OK<br />
+ 127.0.0.1:6379&gt; hgetall ttlsa<br />
+ 1) "www"<br />
+ 2) "www.ttlsa.com"<br />
+ 3) "mail"<br />
+ 4) "mail.ttlsa.com"<br />
+ <br />
+ # curl http://localhost/json?key=ttlsa<br />
+ <p><span style="font-size:14px;">["www","www.ttlsa.com","mail","mail.ttlsa.com"]</span></p>
+ <p><span style="font-size:14px;">www.ttlsa.com<br />
+ </span></p>
+
+
+		</div>
+		
+
+
+		<table width='100%'><tr>
+			<td  valign='top' width="49%" class="Related">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关资讯</strong> 　—　<a href="http://www.open-open.com/news" target="_blank" rel="nofollow">更多</a></div>
+				<ul>
+					
+						<li><a href="http://www.open-open.com/news/view/1956f80" target="_blank" rel="nofollow" title="OpenResty 1.7.10.2 正式发布，打包了标准Nginx 核心的 Web 服务器">OpenResty 1.7.10.2 正式发布，打包了标准Nginx 核心的 Web 服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1709564" target="_blank" rel="nofollow" title="解密微博红包：架构、防刷、监控和资源调度">解密微博红包：架构、防刷、监控和资源调度</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1bab905" target="_blank" rel="nofollow" title="OpenResty 1.9.3.1 RC1 发布，Web 应用服务器">OpenResty 1.9.3.1 RC1 发布，Web 应用服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/31aa78" target="_blank" rel="nofollow" title="电商网站的初期技术选型">电商网站的初期技术选型</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1f0a1cf" target="_blank" rel="nofollow" title="2014年国人开发的最热门的开源软件TOP 100">2014年国人开发的最热门的开源软件TOP 100</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/74dbf4" target="_blank" rel="nofollow" title="中文热门开源项目Top100,你知道多少？">中文热门开源项目Top100,你知道多少？</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/139b8f9" target="_blank" rel="nofollow" title="OpenResty 正式版 1.7.4.1，扩展 Nginx 实现的强大的 web 应用服务器">OpenResty 正式版 1.7.4.1，扩展 Nginx 实现的强大的 web 应用服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1b49f1e" target="_blank" rel="nofollow" title="Nginx Openresty Windows v1.9.7.1002 发布">Nginx Openresty Windows v1.9.7.1002 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1f28edb" target="_blank" rel="nofollow" title="nginx-openresty-windows 1.9.9.1001 发布">nginx-openresty-windows 1.9.9.1001 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/2baac" target="_blank" rel="nofollow" title="OpenResty的现状、趋势、使用及学习方法 ">OpenResty的现状、趋势、使用及学习方法 </a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/43110b" target="_blank" rel="nofollow" title="OpenResty的现状、趋势、使用及学习方法">OpenResty的现状、趋势、使用及学习方法</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/12edb93" target="_blank" rel="nofollow" title="构建亿级前端读服务">构建亿级前端读服务</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/11e3599" target="_blank" rel="nofollow" title="Nginx的 Windows版 1.7.10.2 更新">Nginx的 Windows版 1.7.10.2 更新</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1c86235" target="_blank" rel="nofollow" title="OpenResty 1.7.4.1 RC2 发布测试">OpenResty 1.7.4.1 RC2 发布测试</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1acd105" target="_blank" rel="nofollow" title="京东商品详情页应对“双11”大流量的技术实践">京东商品详情页应对“双11”大流量的技术实践</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/17b36a6" target="_blank" rel="nofollow" title="PaaS 7层动态路由的若干实现">PaaS 7层动态路由的若干实现</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/f7f9d1" target="_blank" rel="nofollow" title="OpenResty 1.9.7.1 发布，Web 应用服务器">OpenResty 1.9.7.1 发布，Web 应用服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/254972" target="_blank" rel="nofollow" title="唯品会11.11：峰值系统应对实践">唯品会11.11：峰值系统应对实践</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/f42882" target="_blank" rel="nofollow" title="以业务驱动型的美丽说HIGO架构演变">以业务驱动型的美丽说HIGO架构演变</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/62b369" target="_blank" rel="nofollow" title="Java工程师成神之路~">Java工程师成神之路~</a></li>
+					
+
+				</ul>
+				<div style="clear: both; font-size: 1px; line-height: 0;"></div>
+			</td>
+			<td width="5px"></td>
+			<td valign='top' width="49%" class="Relatedb">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关文档</strong> 　—　<a href="http://www.open-open.com/doc" rel="nofollow" target="_blank">更多</a></div>
+				<ul >
+					
+						<li><a  href="http://www.open-open.com/doc/view/6757d42028c94b93ada5fd27df1caede" rel="nofollow" target="_blank" title="跟我学Nginx+Lua开发.pdf">跟我学Nginx+Lua开发.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/12d6483876b141c3a7b12156426b9bc3" rel="nofollow" target="_blank" title="Lua 在 Nginx 中的应用.pdf">Lua 在 Nginx 中的应用.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c778ac37fada4585ba081afd448f4782" rel="nofollow" target="_blank" title="nginx+lua 高性能web开发.pdf">nginx+lua 高性能web开发.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/e7af29ace447499f8a657bbe1a64a295" rel="nofollow" target="_blank" title="OpenResty的过去、现在和未来.pdf">OpenResty的过去、现在和未来.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/0028b1a7396248728b1052d94e9fa376" rel="nofollow" target="_blank" title="Nginx+Lua阿⾥实战经验谈.pdf">Nginx+Lua阿⾥实战经验谈.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/ded7890d7a64480091e8d5c6b2d2064e" rel="nofollow" target="_blank" title="Nginx+Tomcat+Redis实现负载均衡、资源分离、session共享.doc">Nginx+Tomcat+Redis实现负载均衡、资源分离、session共享.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/2a0c8ef43e7c486f911f50dfe2d99df3" rel="nofollow" target="_blank" title="Redis学习笔记.pdf">Redis学习笔记.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/cf21497e5346445cac9799b082ae48ac" rel="nofollow" target="_blank" title="Redis学习笔记.pdf">Redis学习笔记.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c4ed42e1728546dc8e0e95fefa3bd1a9" rel="nofollow" target="_blank" title="Redis设计与实现.pdf">Redis设计与实现.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/0fbc9f8d62f5428b9558016f6be73fc2" rel="nofollow" target="_blank" title="LUA 函数库.doc">LUA 函数库.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/275a80a083144cd08fe3d76a3ae279f2" rel="nofollow" target="_blank" title="Lua中文教程(Programming in Lua).pdf">Lua中文教程(Programming in Lua).pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c17498f926a543eaae2f2e0c3e83f174" rel="nofollow" target="_blank" title="走近Lua - 嵌入式脚本在项目中的应用.ppt">走近Lua - 嵌入式脚本在项目中的应用.ppt</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/e5ca59fe3b53432e967edba653a2ba11" rel="nofollow" target="_blank" title="Lua 源码欣赏-Lua源码精读.pdf">Lua 源码欣赏-Lua源码精读.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/43f837c0b8884f98a9f2ed7e8fb86c06" rel="nofollow" target="_blank" title="Lua编程(Programming in Lua).pdf">Lua编程(Programming in Lua).pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c520456b05b040ea8811a654513f4b45" rel="nofollow" target="_blank" title="Programming in Lua中文版- Lua编程.pdf">Programming in Lua中文版- Lua编程.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/926e7be4b79a49eb9f13fa94ac598c59" rel="nofollow" target="_blank" title="Lua游戏开发实践指南.pdf">Lua游戏开发实践指南.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/98d6d464776c41f5b9a58ed44a7ec954" rel="nofollow" target="_blank" title="Lua 高级教程.pdf">Lua 高级教程.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/08b98d311c8b4d5c96305bb1f4ee694c" rel="nofollow" target="_blank" title="Lua程序设计.chm">Lua程序设计.chm</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c0d4fcf8a97b4c33ae73c197cce1fa0e" rel="nofollow" target="_blank" title="Lua 的前期学习整理.docx">Lua 的前期学习整理.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/d02c009cd17742bf8b37ae34f992d710" rel="nofollow" target="_blank" title="Game Programming with Python, Lua, and Ruby.pdf">Game Programming with Python, Lua, and Ruby.pdf</a></li>
+					
+				</ul>
+			</td>
+		</tr></table>
+		<div style="margin-top: 10px;margin-bottom: 10px;">
+			<div id="baiduad1" style="margin-bottom: 5px;">
+			</div>
+
+		</div>
+
+
+
+
+
+	</div>
+
+	<div id=view-side>
+		<div id=upload-box class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-body><a id=upload class=upload href="#"></a>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div id=view-tag class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>经验标签</div>
+				<div id=tag-list class=box-body>
+					
+						<a href="/lib/tag/"></a>
+					
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+
+		<div id=view-topic class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>同类热门经验</div>
+				<div class=box-body>
+					<ul id=topic-list class=file-shortlist>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx 完整配置说明 href="/lib/view/open1330003599968.html"><span class=title>Nginx 完整配置说明</span></a>
+								<div class=attribute><span>40557次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx+Tomcat实现https安全链接 href="/lib/view/open1330516293186.html"><span class=title>Nginx+Tomcat实现https安全链接</span></a>
+								<div class=attribute><span>41500次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx和Tomcat负载均衡实现session共享  href="/lib/view/open1334626362015.html"><span class=title>Nginx和Tomcat负载均衡实现session共享 </span></a>
+								<div class=attribute><span>27874次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx搭建反向代理服务器过程详解 href="/lib/view/open1417488526633.html"><span class=title>Nginx搭建反向代理服务器过程详解</span></a>
+								<div class=attribute><span>88317次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=[Ganglia监控扩展]监控nginx的连接数  href="/lib/view/open1326333999327.html"><span class=title>[Ganglia监控扩展]监控nginx的连接数 </span></a>
+								<div class=attribute><span>35071次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx+Tomcat集群与负载均衡 href="/lib/view/open1351061706430.html"><span class=title>Nginx+Tomcat集群与负载均衡</span></a>
+								<div class=attribute><span>33322次浏览</span></div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关经验</div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li><span class="samelist"></span><a title=用lua扩展你的Nginx href="/lib/view/open1455262185355.html" target=_blank><span
+									class=title>用lua扩展你的Nginx</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=使用Nginx+Lua(OpenResty)开发高性能Web应用 href="/lib/view/open1457274442546.html" target=_blank><span
+									class=title>使用Nginx+Lua(OpenResty)开发高性能Web应用</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=双十一大型电商统一服务架构实战 href="/lib/view/open1450276497375.html" target=_blank><span
+									class=title>双十一大型电商统一服务架构实战</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=基于Nginx和Lua的Web应用服务器 OpenResty href="/lib/view/open1323571567655.html" target=_blank><span
+									class=title>基于Nginx和Lua的Web应用服务器 OpenResty</span></a><br>
+								<div class=attribute><span class="score stars-small-8" title=经验评价得分：4.0分>&nbsp;</span> <span>2人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=扩展 Nginx 实现的强大的 web 应用服务器： OpenResty href="/lib/view/open1363251085812.html" target=_blank><span
+									class=title>扩展 Nginx 实现的强大的 web 应用服务器： OpenResty</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Web应用服务器 OpenResty href="/lib/view/open1341839860572.html" target=_blank><span
+									class=title>Web应用服务器 OpenResty</span></a><br>
+								<div class=attribute><span class="score stars-small-6" title=经验评价得分：3.0分>&nbsp;</span> <span>1人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=nginx+lua+redis实现反向代理 href="/lib/view/open1453948267761.html" target=_blank><span
+									class=title>nginx+lua+redis实现反向代理</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=码农周刊分类整理 href="/lib/view/open1416282051852.html" target=_blank><span
+									class=title>码农周刊分类整理</span></a><br>
+								<div class=attribute><span class="score stars-small-8" title=经验评价得分：4.3分>&nbsp;</span> <span>8人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=网络服务器开发总结  href="/lib/view/open1451868033276.html" target=_blank><span
+									class=title>网络服务器开发总结 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=agentzh 的 Nginx 教程 href="/lib/view/open1441601170774.html" target=_blank><span
+									class=title>agentzh 的 Nginx 教程</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=一个用lua实现的基于openresty的接口(api)开发框架 href="/lib/view/open1451630700901.html" target=_blank><span
+									class=title>一个用lua实现的基于openresty的接口(api)开发框架</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=一个基于 lua-nginx-module 的 Web 应用防火墙：ngx_lua_waf href="/lib/view/open1423472640076.html" target=_blank><span
+									class=title>一个基于 lua-nginx-module 的 Web 应用防火墙：ngx_lua_waf</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Redis 横向扩展案例 href="/lib/view/open1447123345678.html" target=_blank><span
+									class=title>Redis 横向扩展案例</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=利用redis + lua解决抢红包高并发的问题  href="/lib/view/open1392943300455.html" target=_blank><span
+									class=title>利用redis + lua解决抢红包高并发的问题 </span></a><br>
+								<div class=attribute><span class="score stars-small-8" title=经验评价得分：4.0分>&nbsp;</span> <span>1人评</span>
+								</div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关讨论 - <a href="http://www.open-open.com/bbs" target="_blank" rel="nofollow">更多</a></div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li >
+								<span class="samelist"></span><a title=PHP程序员的技术成长规划 href="http://www.open-open.com/bbs/view/1414478644325" rel="nofollow" target=_blank><span class=title>PHP程序员的技术成长规划</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=  用户规模越来越大，系统不能承受的服务器之重 href="http://www.open-open.com/bbs/view/1450267214844" rel="nofollow" target=_blank><span class=title>  用户规模越来越大，系统不能承受的服务器之重</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=程序员技术练级攻略 href="http://www.open-open.com/bbs/view/1319276210452" rel="nofollow" target=_blank><span class=title>程序员技术练级攻略</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=工作机会感兴趣的可联系哈 href="http://www.open-open.com/bbs/view/1392014162660" rel="nofollow" target=_blank><span class=title>工作机会感兴趣的可联系哈</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=Velocity China 2015Web工程师会议 href="http://www.open-open.com/bbs/view/1437458518506" rel="nofollow" target=_blank><span class=title>Velocity China 2015Web工程师会议</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=Redis应用实践 href="http://www.open-open.com/bbs/view/1320542856780" rel="nofollow" target=_blank><span class=title>Redis应用实践</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=百万级PHP网站架构工具箱 href="http://www.open-open.com/bbs/view/1325163722374" rel="nofollow" target=_blank><span class=title>百万级PHP网站架构工具箱</span></a>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+		<!-- end top list--></div>
+</div>
+
+
+
+
+<div id=footer>
+	<div id=footer-menu><a href="http://www.open-open.com/home/1">联系我们</a> - <a href="http://www.open-open.com/home/1">问题反馈</a> - 微信公众号:openopen </div>
+	<p>2005-2015 OPEN-OPEN, all rights reserved.</p>
+</div>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/lib/js/thickbox.patch.js"></script>
+
+<script type="text/javascript" src="/lib/js/app.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+	var rooturl="/lib";
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+</script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.22/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="/lib/js/view.js"></script>
+
+<script type="text/javascript" src="/lib/js/jquery.jgrowl_minimized.js"></script>
+
+<script type="text/javascript">
+	scrolltotop.offset(95,165);
+	scrolltotop.init();
+</script>
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script language="javascript" type="text/javascript">
+	//生成目录索引列表
+	function GenerateContentList()
+	{
+		var jquery_h3_list = $('#readercontainer h3');//如果你的章节标题不是h3,只需要将这里的h3换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#readercontainer')[0]).prepend(content);
+			}
+		}else{
+			GenerateContentList2()
+		}
+	}
+
+	function GenerateContentList2()
+	{
+		var jquery_h3_list = $('#readercontainer h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#toc')[0]).prepend(content);
+			}
+		}
+	}
+
+	GenerateContentList();
+</script>
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		bp.src = '//push.zhanzhang.baidu.com/push.js';
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+</script>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=6734290" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config={"bdTop":256};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+
+</body>
+</html>

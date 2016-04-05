@@ -1,0 +1,362 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<title>使用Nginx搭建WEB服务器_服务器应用_Linux公社-Linux系统门户网站</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon"/>
+<meta name="description" content="nginx和Apache类似都通过各种模块可以对服务器的功能进行丰富的扩展，同样都是通过conf配置文件对各种选项进行配置。对于PHP等，"/>
+<meta name="keywords" content="Nginx搭建WEB服务器,Nginx服务器,使用Nginx搭建WEB服务器,服务器,Linux服务器,Apache,Hadoop,集群,分布式,Nginx,Tomcat,分布式系统"/>
+<link rel="canonical" href="http://www.linuxidc.com/Linux/2013-09/89768.htm"/>
+<meta name="generator" content="Linux公社"/>
+<meta name="generator" content="Linux"/>
+<link rel="stylesheet" href="../../style/systems/style.css" type="text/css"/>
+<meta name="generator" content="专业的Linux网站"/>
+<script type="text/javascript" src="../../inc/jquery.js"></script>
+<script type="text/javascript" src="../../inc/iwms.js"></script>
+<script type="text/javascript">iwms.urlPrefix="../../";</script>
+
+<script type="text/javascript" src="../../inc/show.js"></script>
+</head>
+<body>
+<div class="topBar">
+	<div class="twidth">
+	
+	<div style="float:right">
+		<script type="text/javascript" src="../../inc/language.js"></script>
+	</div>
+	
+	<div id="topUser">你好，游客 <a href="#" onclick="iwms.logPop()">登录</a>
+	<a href="../../memberreg.aspx" rel="nofollow">注册</a>
+	<a href="../../search.aspx" rel="nofollow">搜索</a>
+	</div>
+	</div>
+</div>
+<div class="twidth">
+<div id="sitehead">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<table width="100%">
+	<tr align="center"><td width="160">
+	<a href="http://www.linuxidc.com/"><img style="filter: chroma(color=#FFFFFF);" src="../../pic/logo.jpg" alt="Linux公社" width="155" height="53" border="0" /></a>
+	</td><td>
+	<div align="center"><script src="/linuxfile/linux.js" type="text/javascript" language="javaScript"></script></div>
+	</td>
+	</tr></table>
+</div>
+</div>
+<div id="navbar">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm" class="first">首页</a><a href="../../it/">Linux新闻</a><a href="../../Linuxit/">Linux教程</a><a href="../../MySql/">数据库技术</a><a href="../../RedLinux/">Linux编程</a><a href="../../Apache/" class="thisclass">服务器应用</a><a href="../../Unix/">Linux安全</a><a href="../../download/">Linux下载</a><a href="../../Linuxrz/">Linux认证</a><a href="../../theme/">Linux主题</a><a href="../../Linuxwallpaper/">Linux壁纸</a><a href="../../linuxsoft/">Linux软件</a><a href="../../digi/">数码</a><a href="../../mobile/">手机</a><a href="../../diannao/">电脑</a>
+
+</div>
+</div>
+
+<div id="navsub">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm">首页</a> → <a href="../../Apache/">服务器应用</a>
+</div>
+</div>
+<div class="linuxe1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxe1.js"></script></div>
+<div class="linux1"><script type="text/javascript" language="javaScript" src="/linuxfile/linux1.js"></script></div>
+<div class="linuxa"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa.js"></script></div>
+<div class="linuxa1"><script type="text/javascript" language="javaScript" src="/linuxfile/linuxa1.js"></script></div>
+<table id="middle" width="100%" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+<tr valign="top"><td>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<div class="moreR">
+			背景：<script type="text/javascript">WriteBg()</script>
+		</div>
+		<span class="tt">阅读新闻</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm" id="bodyTd">
+		<div id="printBody" style="word-break:break-all;">
+			<div style="text-align:center"><h1 class="aTitle">使用Nginx搭建WEB服务器</h1></div>
+			
+			<table width="97%" align="center">
+				<tr>
+				<td width="140">[日期：2013-09-07]</td>
+				<td align="center">来源：51cto&nbsp;
+				作者：cshbk</td>
+				<td width="160" align="right">[字体：<a href="javascript:ContentSize(16)">大</a> <a href="javascript:ContentSize(0)">中</a> <a href="javascript:ContentSize(12)">小</a>]
+				</td></tr>
+			</table>
+<div id="li_all">
+<div id="li_1"><script type="text/javascript" src="/linuxfile/linux201.js"></script></div>
+<div id="li_2"><script type="text/javascript" src="/linuxfile/linux2.js"></script></div>
+</div>
+			<div id="content"><div class="linux19"><script type="text/javascript" language="javaScript" src="/linuxfile/linux19.js"></script></div> <p>一、Nginx概述：</p>
+<p>Nginx (发音为[engine x])专为性能优化而开发，其最知名的优点是它的稳定性和低系统资源消耗，以及对并发连接的高处理能力(单台物理服务器可支持30000～50000个并发连接)， 是一个高性能的 HTTP 和反向代理服务器，也是一个IMAP/POP3/SMTP 代理服。</p>
+<p>二、Apache服务器和nginx的优缺点：</p>
+<p>我们之前大量使用Apache来作为HTTPServer。Apache具有很优秀的性能，而且通过模块可以提供各种丰富的功能。</p>
+<p>1)首先Apache对客户端的响应是支持并发的，运行httpd这个daemon进程之后，它会同时产生多个子进程/线程，每个子进程/线程分别对客户端的请求进行响应；</p>
+<p>Apache两种工作模式:是prefork模式与worker模式</p>
+<p>prefork每个子进程只有一个线程，效率高但消耗内存大，是lunix下默认的模式；worker模式每个子进程有多个线程，内存消耗低，但一个线程崩溃会牵连其它同子进程的线程。</p>
+<p>2)另外，Apache可以提供静态和动态的服务，例如对于PHP的解析不是通过性能较差的CGI实现的而是通过支持PHP的模块来实现的(通常为mod_php5，或者叫做apxs2)。</p>
+<p>3)缺点:</p>
+<p>因此通常称为Apache的这种Server为process-based server，也就是基于多进程的HTTPServer，因为它需要对每个用户请求创建一个子进程/线程进行响应；</p>
+<p>这样的缺点是，如果并发的请求非常多(这在大型门户网站是很常见的)就会需要非常多的线程，从而占用极多的系统资源CPU和内存。因此对于并发处理不是Apache的强项。</p>
+<p>4)解决方法：</p>
+<p>目前来说出现了另一种WebServer，在并发方面表现更加优越，叫做asynchronousservers异步服务器。最有名的为Nginx和Lighttpd。所谓的异步服务器是事件驱动程序模式的event-driven，除了用户的并发请求通常只需要一个单一的或者几个线程。因此占用系统资源就非常少。这几种又被称为lightweight web server。举例，对于10,000的并发连接请求，nginx可能仅仅使用几M的内存；而Apache可能需要使用几百M的内存资源。</p>
+<p>使用Apache来作为HTTPServer的情况我这里不再多做介绍；上面我们介绍到Apache对于PHP等服务器端脚本的支持是通过自己的模块来实现的，而且性能优越。</p>
+<p>我们同样可以使用nginx或者lighttpd来作为HTTPServer来使用。</p>
+<p>nginx和Apache类似都通过各种模块可以对服务器的功能进行丰富的扩展，同样都是通过conf配置文件对各种选项进行配置。对于PHP等，nginx没有内置的模块来对PHP进行支持，而是通过FastCGI来支持的。</p>
+<p>nginx则没有自己提供处理PHP的功能，需要通过第三方的模块来提供对PHP进行FastCGI方式的集成。</p>
+<p><strong>相关阅读：</strong></p>
+<p>搭建基于Linux6.3+Nginx1.2+PHP5+MySQL5.5的Web服务器全过程 <a href="../../Linux/2013-09/89692.htm">http://www.linuxidc.com/Linux/2013-09/89692.htm</a></p>
+<p>LNMP 全功能编译安装 for <a href="http://www.linuxidc.com/topicnews.aspx?tid=14" target="_blank" title="CentOS">CentOS</a> 6.3笔记 <a href="../../Linux/2013-05/83788.htm">http://www.linuxidc.com/Linux/2013-05/83788.htm</a></p>
+<p>CentOS 6.3 安装LNMP (PHP 5.4,MyySQL5.6) <a href="../../Linux/2013-04/82069.htm">http://www.linuxidc.com/Linux/2013-04/82069.htm</a></p>
+<p>在部署LNMP的时候遇到Nginx启动失败的2个问题 <a href="../../Linux/2013-03/81120.htm">http://www.linuxidc.com/Linux/2013-03/81120.htm</a></p>
+<p><a href="http://www.linuxidc.com/topicnews.aspx?tid=2" target="_blank" title="Ubuntu">Ubuntu</a>安装Nginx php5-fpm MySQL(LNMP环境搭建) <a href="../../Linux/2012-10/72458.htm">http://www.linuxidc.com/Linux/2012-10/72458.htm</a></p>
+<p>三、编译安装Nginx软件</p>
+<p>目前Nginx的最新稳定版本为1.0.8,开发版本为1.1.6，其安装文件可以从官方网站http://www.nginx.org下载，下面以稳定版为例，介绍nginx的安装步骤。</p>
+<p><span style="color: #ff0000;"><strong>Nginx 的详细介绍</strong></span>：<a title="Nginx" href="../../Linux/2012-03/56786.htm">请点这里</a><br /><span style="color: #ff0000;"><strong>Nginx 的下载地址</strong></span>：<a href="../../down.aspx?id=342" target="_blank">请点这里</a></p>
+<p>1、安装支持软件：</p>
+<p>Nginx的配置及运行需要pcre、zlib等软件包的支持，因此应预先安装这些软件的开发包（devel），以便提供相应的库和头文件，确保Nginx的安装顺利完成。</p>
+<p>[root@localhost /]#yum -y install pcre-devel zlib-devel</p>
+<p>2、创建运行用户、组：</p>
+<p>Nginx服务程序默认以nobody身份运行，建议为其创建专门的用户账号，以便更准确地控制其访问权限，增加灵活性、降低安全风险。如：创建一个名为nginx的用户，不建立宿主目录，也禁止登录到shell环境。</p>
+<p>[root@localhost /]#useradd -M -s /sbin/nologin nginx</p>
+<p>3、编译安装nginx</p>
+<p>[root@localhost /]#tar zxf nginx-1.0.8.tar.gz -C /usr/src/</p>
+<p>[root@localhost /]#cd /usr/src/nginx-1.0.8</p>
+<p>[root@localhost nginx-1.0.8]#./config --prefix=/usr/local/nginx --user=nginx --group=nginx --with-http_stub_status_module</p>
+<p>[root@localhost nginx-1.0.8]#make &amp;&amp; make install</p>
+<p>[root@localhost /]#ln -s /usr/local/nginx/sbin/* /usr/local/sbin</p>
+<p>注：配置前可以参考：./configure --help给出说明</p>
+<p>--prefix:设定Nginx的安装目录</p>
+<p>--user和&mdash;group:指定Nginx运行用户和组</p>
+<p>--with-http_stub_status_module:启用http_stub_status_module模块以支持状态统计</p>
+<p>四、编写nginx启动脚本</p>
+<p>1、检查配置文件</p>
+<p>与apache的主程序httpd类似，Nginx的主程序也提供了&rdquo;-t&rdquo;选项用来对配置文件进行检查，以便找出不当或错误的配置。配置文件nginx.conf默认位于安装目录下的conf/子目录中。若要检查位于其他位置的配置文件，可使用&rdquo;-c&rdquo;选项来指定路径。</p>
+<p><img src="../../upload/2013_09/130907071881521.jpg" alt="使用Nginx搭建WEB服务器L" /></p>
+<p>2、启动、停止nginx</p>
+<p>直接运行nginx即可启动Nginx服务器，这种方式将使用默认的配置文件，若要改用其他配置文件，需添加&rdquo;-c 配置文件路径&rdquo;选项来指定路径。需要注意的是，若服务器中已安装有httpd等其他WEB服务软件，应采取措施避免部突。</p>
+<p><img src="../../upload/2013_09/130907071881522.jpg" alt="使用Nginx搭建WEB服务器L" /></p>
+<p><img src="../../upload/2013_09/130907071881523.jpg" alt="使用Nginx搭建WEB服务器L" /></p>
+<p>当Nginx进程运行时，PID号默认存放在logs/目录下的nginx.pid文件中，因此若改用kill命令，也可以根据nginx.pid文件中的PID号来进行控制。</p>
+<p>[root@localhost /]#killall -9 nginx</p>
+<p>3、编写nginx启动脚本</p>
+<p>为了使Nginx服务的启动、停止、重载等操作更加方便，可以编写Nginx服务脚本，并使用chkconfig和service工具来进行管理，也更加符合RHEL系统的管理习惯。</p>
+<p>[root@localhost /]#vim /etc/init.d/nginx</p>
+<p><img src="../../upload/2013_09/130907071945231.jpg" alt="使用Nginx搭建WEB服务器L" /></p>
+<p>[root@localhost /]#chmod +x /etc/init.d/nginx</p>
+<p>[root@localhost /]#chkconfig --add nginx</p>
+<p>这样一来，就可以通过nginx脚本来启动、停止、重启、重载Nginx服务器了。</p><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
+<div class="linux301"><script type="text/javascript" src="/linuxfile/linux301.js"></script></div>
+<div class="linux3"><script type="text/javascript" src="/linuxfile/linux3.js"></script></div>
+<div class="linux302"><script type="text/javascript" src="/linuxfile/linux302.js"></script></div>		
+			<table align="center"><tr><td><div class="pager"><ul><li class="p_current">1</li><li><a href="../../Linux/2013-09/89768p2.htm">2</a></li><li><a href="../../Linux/2013-09/89768p3.htm">3</a></li><li><a href="../../Linux/2013-09/89768p2.htm" title="下一页">下一页</a></li><li><div><input type="text" value="2" onkeydown="pager.Jump(event,this)"/></div><script type="text/javascript" src="../../inc/pager.js"></script><script type="text/javascript">var pager=new iwmsPager(1,3,true);</script></li></ul></div></td></tr></table>
+			
+		</div>
+		<div style="padding:0 15px">
+			<ul id="digg" class="digg">
+				<li class="digg1">0</li>
+				<li class="digg2"><a href="###" onclick="iwms.diggIt(this,iwms.aId)">顶一下</a></li>
+			</ul>	
+		</div>
+<div class="linuxfx"><script type="text/javascript" language="javaScript" src="/linuxfile/fx.js"></script></div>	
+<div class="linux8"><script type="text/javascript" language="javaScript" src="/linuxfile/linux8.js"></script></div>
+<div class="linux801"><script type="text/javascript" language="javaScript" src="/linuxfile/linux801.js"></script></div>
+		<div class="nearNews">
+			<div class="prevNews"><a href="../../Linux/2013-09/89767.htm">安装Nagios的WEB管理工具NagiosQL</a></div>
+			<div class="nextNews"><a href="../../Linux/2013-09/89770.htm">部署Nagios监控系统</a></div>
+		</div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">相关资讯</span> &nbsp; &nbsp; &nbsp;
+		<a href="../../search.aspx?where=nkey&amp;keyword=12794" target="_blank">Nginx服务器</a>&nbsp; <a href="../../search.aspx?where=nkey&amp;keyword=24209" target="_blank">Nginx搭建WEB服务器</a>&nbsp; 
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width='100%'><tr><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2016-01/127789.htm"  target="_blank" >Nginx服务器中的安全配置</a>&nbsp; <span class="gray">(<span class="time">今 10:39</span>)</span></li>
+<li><a href="../../Linux/2015-05/117840.htm"  target="_blank"  title="Linux系统入门学习：Nginx网络服务器上如何阻止特定用户代理（UA）">Linux系统入门学习：Nginx网络服务</a>&nbsp; <span class="gray">(05/22/2015 09:54:48)</span></li>
+<li><a href="../../Linux/2014-05/102261.htm"  target="_blank" >CentOS 6.5 Nginx搭建Web服务器</a>&nbsp; <span class="gray">(05/25/2014 10:30:06)</span></li>
+</ul></td><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2015-08/121994.htm"  target="_blank" >使用Nginx搭建PHP服务器</a>&nbsp; <span class="gray">(08/20/2015 19:31:33)</span></li>
+<li><a href="../../Linux/2015-01/111182.htm"  target="_blank"  title="使用Nginx+FFmpeg搭建HLS直播转码服务器">使用Nginx+FFmpeg搭建HLS直播转码</a>&nbsp; <span class="gray">(01/03/2015 11:09:44)</span></li>
+<li><a href="../../Linux/2014-05/102219.htm"  target="_blank" >RHEL6.4 搭建Nginx反向代理服务器</a>&nbsp; <span class="gray">(05/24/2014 22:19:10)</span></li>
+</ul></td></tr></table>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">图片资讯</span> &nbsp; &nbsp; &nbsp;
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+<div class="imgList"><ul><li style="width:50%"><a href="../../Linux/2015-05/117840.htm"  target="_blank"  title="Linux系统入门学习：Nginx网络服务器上如何阻止特定用户代理（UA）"><img src="../../upload/2015_05/150522095686121t.jpg" alt="Linux系统入门学习：Nginx网络服务器上如何阻止特定用户代理（UA）" width="120" height="90"/>Linux系统入门学习：</a></li><li style="width:50%"><a href="../../Linux/2013-07/87549.htm"  target="_blank" ><img src="../../upload/2013_07/130718171678733t.jpg" alt="Nginx服务器架构" width="120" height="90"/>Nginx服务器架构</a></li></ul></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本文评论</span>
+		 	　　<a href="../../remark.aspx?id=89768" target="_blank">查看全部评论</a> <span class="gray">(0)</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width="100%" style="margin:6px">		
+		<tr><td width="100%">
+			<form action="" name="fmRemarkSt" onsubmit="return remark.post(this);">
+			<input type="hidden" value="1" name="face"/>
+			表情： <img src="../../pic/b.gif" alt="表情" class="face1" style="cursor:pointer;vertical-align:middle" onclick="remark.dispFace(this)" onmouseout="remark.hideFace()"/>
+			姓名： <input type="text" name="username" value="" maxlength="15" style="width:60px" class="inputbg"/>
+			<input type="checkbox" id="rmAnonymitySt" onclick="remark.anony(this)"/><label for="rmAnonymitySt">匿名</label>
+			字数 <input type="text" id="bodyLen" size="3" readonly="readonly" style="border-width:0;background:transparent;vertical-align:middle" value="0"/>
+			<br/>
+			<textarea name="body" cols="40" rows="4" onkeydown="remark.dispLen(this)" onkeyup="remark.handle(event,this);remark.dispLen(this)" style="width:40em;height:100px;margin:3px 0;overflow-y:auto"></textarea>
+				<br/>
+		　　　<input type="checkbox" checked="checked" id="rmAgreeSt"/><label for="rmAgreeSt">同意评论声明</label>
+		　　　<button type="submit" style="width:50px">发表</button>
+			</form>
+		</td></tr>
+		<tr><td width="100%">
+			评论声明
+			<ul style="list-style-type:square;margin:5px 0 0 1em;padding:0">
+			<li>尊重网上道德，遵守中华人民共和国的各项有关法律法规</li>
+			<li>承担一切因您的行为而直接或间接导致的民事或刑事法律责任</li>
+			<li>本站管理人员有权保留或删除其管辖留言中的任意内容</li>
+			<li>本站有权在网站内转载或引用您的评论</li>
+			<li>参与本评论即表明您已经阅读并接受上述条款</li>
+			</ul>
+		</td></tr>
+		</table>
+		<script type="text/javascript" src="../../inc/remark.js"></script>
+		<script type="text/javascript">
+			remark.maxSize=500;
+			remark.minSize=2;
+			remark.sourceEle=$(document.fmRemarkSt).find("button").get(0);
+			iwms.vCode="D2BDA41E";
+			iwms.user.name.length==0 ? $i("rmAnonymitySt").click() : $i("rmAnonymitySt").form.username.value=iwms.user.name;
+		</script>
+		
+		<div class="reCont" id="reContainer"></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+</td><td width="300" valign="top">
+<div class="linux901"><script type="text/javascript" language="javaScript" src="/linuxfile/linux901.js"></script></div>
+<div class="linux902"><script type="text/javascript" language="javaScript" src="/linuxfile/linux902.js"></script></div>
+<div class="linux903"><script type="text/javascript" language="javaScript" src="/linuxfile/linux903.js"></script></div>
+<div class="linux905"><script type="text/javascript" language="javaScript" src="/linuxfile/linux905.js"></script></div>
+	
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">最新资讯</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2016-01/127789.htm" target="_blank">Nginx服务器中的安全配置</a></li>
+<li><a href="../../Linux/2016-01/127788.htm" target="_blank">Linux模块机制浅析</a></li>
+<li><a href="../../Linux/2016-01/127787.htm" target="_blank">Linux的原子操作与同步机制</a></li>
+<li><a href="../../Linux/2016-01/127786.htm" target="_blank">ARM的常数表达式</a></li>
+<li><a href="../../Linux/2016-01/127785.htm" target="_blank">PyCharm中文乱码问题的解决</a></li>
+<li><a href="../../Linux/2016-01/127784.htm" target="_blank">Kubernetes(k8s)环境搭建实战</a></li>
+<li><a href="../../Linux/2016-01/127783.htm" target="_blank">CPU-Z 1.75发布下载：完全支持Skylake</a></li>
+<li><a href="../../Linux/2016-01/127782.htm" target="_blank">PulseAudio 8.0 发布下载，跨平台声音服务</a></li>
+<li><a href="../../Linux/2016-01/127781.htm" target="_blank">Android-x86 4.4-r4 发布下载</a></li>
+<li><a href="../../Linux/2016-01/127780.htm" target="_blank" title="FileZilla Client 3.15.0-rc1 发布下载，文件传输工具">FileZilla Client 3.15.0-rc1 发布下载，文件传</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本周热门</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2013-01/77681.htm" target="_blank" title="Ubuntu上搭建Hadoop环境（单机模式+伪分布模式）">Ubuntu上搭建Hadoop环境（单机模式+伪分布模式</a></li>
+<li><a href="../../Linux/2012-01/51612.htm" target="_blank">分析Hadoop自带WordCount例子的执行过程</a></li>
+<li><a href="../../Linux/2014-07/104304.htm" target="_blank">Spark1.0.0部署指南</a></li>
+<li><a href="../../Linux/2013-08/88186.htm" target="_blank">OpenStack云计算快速入门教程</a></li>
+<li><a href="../../Linux/2014-12/110046.htm" target="_blank">[翻译]CentOS 7.0 上安装ProFTPD</a></li>
+<li><a href="../../Linux/2014-07/104470.htm" target="_blank">Kafka使用入门教程</a></li>
+<li><a href="../../Linux/2012-02/53927.htm" target="_blank">单机版搭建Hadoop环境图文教程详解</a></li>
+<li><a href="../../Linux/2015-06/118878.htm" target="_blank" title="建立企业内部Maven服务器并使用Android Studio发布公共项目">建立企业内部Maven服务器并使用Android Studio</a></li>
+<li><a href="../../Linux/2013-05/85189.htm" target="_blank" title="Windows下SVN服务器搭建和使用 + 客户端重新设置密码">Windows下SVN服务器搭建和使用 + 客户端重新设</a></li>
+<li><a href="../../Linux/2013-04/82075.htm" target="_blank" title="502 bad gateway是什么意思？502 bad gateway怎么解决！">502 bad gateway是什么意思？502 bad gateway怎</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	<div class="linuxy9"><script type="text/javascript" language="javaScript" src="/linuxfile/y9.js"></script></div>	
+</td></tr>
+</table>
+<div class="linux906"><script type="text/javascript" language="javaScript" src="/linuxfile/linux906.js"></script></div>
+<div id="footer">
+<a href="http://www.linuxidc.com/aboutus.htm">Linux公社简介</a> - <a href="http://www.linuxidc.com/adsense.htm">广告服务</a> - <a href="http://www.linuxidc.com/sitemap.aspx">网站地图</a> - <a href="http://www.linuxidc.com/help.htm">帮助信息</a> - <a href="http://www.linuxidc.com/contactus.htm">联系我们</a><br />本站（LinuxIDC）所刊载文章不代表同意其说法或描述，仅为提供更多信息，也不构成任何建议。<br /><script type="text/javascript" language="javaScript" src="/linuxfile/qq.js"></script><br />
+<script type="text/javascript" language="javaScript" src="/linuxfile/foot.js"></script><br />Copyright &copy; 2006-2015　<a href="http://www.linuxidc.com/">Linux公社</a>　All rights reserved 沪ICP备15008072号-1号
+	<script type="text/javascript">iwms.aId=89768;$(function(){iwms.imgCont=$i('content');iwms.imgResize();InitContStyle();iwms.getVars();})</script>
+	
+</div>
+</div>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren1.js"></script>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren2.js"></script>
+<script type="text/javascript" language="javaScript" src="/linuxren/linuxren3.js"></script>
+</body>
+</html>

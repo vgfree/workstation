@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/cprogramming/c_preprocessors.html
+Date Downloaded: 2016/4/1 16:50:07 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>C语言预处理器 - C语言教程 </title>
+		 <meta name="keywords" content="C语言,预处理" />
+		 <meta name="description" content="C语言预处理程序是不是编译器的一部分，只不过在编译过程中的一个单独的步骤。在简单来说，C语言预处理器只是一个文本替换工具，它们指示编译器实际编译之前需要做预处理。我" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/hightlang/'>高级语言 </a> >  <a href='index.html'>C语言教程 </a> >  C语言预处理器
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">C语言教程 </a>
+							 <a class="list-group-item" href="c_environment_setup.html" title="C语言环境设置">C语言环境设置 </a><a class="list-group-item" href="c_program_structure.html" title="C语言程序结构">C语言程序结构 </a><a class="list-group-item" href="c_basic_syntax.html" title="C语言基本语法">C语言基本语法 </a><a class="list-group-item" href="c_data_types.html" title="C语言数据类型">C语言数据类型 </a><a class="list-group-item" href="c_variables.html" title="C语言变量">C语言变量 </a><a class="list-group-item" href="c_constants.html" title="C语言常量和文字">C语言常量和文字 </a><a class="list-group-item" href="c_storage_classes.html" title="C语言存储分类">C语言存储分类 </a><a class="list-group-item" href="c_operators.html" title="C语言运算符">C语言运算符 </a><a class="list-group-item" href="c_decision_making.html" title="C语言决策">C语言决策 </a><a class="list-group-item" href="c_loops.html" title="C语言循环">C语言循环 </a><a class="list-group-item" href="c_functions.html" title="C语言函数">C语言函数 </a><a class="list-group-item" href="c_scope_rules.html" title="C语言范围规则">C语言范围规则 </a><a class="list-group-item" href="c_arrays.html" title="C语言数组">C语言数组 </a><a class="list-group-item" href="c_pointers.html" title="C语言指针">C语言指针 </a><a class="list-group-item" href="c_strings.html" title="C语言字符串">C语言字符串 </a><a class="list-group-item" href="c_structures.html" title="C语言结构体">C语言结构体 </a><a class="list-group-item" href="c_unions.html" title="C语言联合体">C语言联合体 </a><a class="list-group-item" href="c_bit_fields.html" title="C语言位段">C语言位段 </a><a class="list-group-item" href="c_typedef.html" title="C语言typedef">C语言typedef </a><a class="list-group-item" href="c_input_output.html" title="C语言输入输出">C语言输入输出 </a><a class="list-group-item" href="c_file_io.html" title="C语言文件读写I/O">C语言文件读写I/O </a><a class="list-group-item" href="c_preprocessors.html" title="C语言预处理器">C语言预处理器 </a><a class="list-group-item" href="c_header_files.html" title="C语言头文件">C语言头文件 </a><a class="list-group-item" href="c_type_casting.html" title="C语言类型转换">C语言类型转换 </a><a class="list-group-item" href="c_recursion.html" title="C语言递归">C语言递归 </a><a class="list-group-item" href="c_variable_arguments.html" title="C语言可变参数">C语言可变参数 </a><a class="list-group-item" href="c_memory_management.html" title="C语言内存管理">C语言内存管理 </a><a class="list-group-item" href="c_command_line_arguments.html" title="C语言命令行参数">C语言命令行参数 </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">C语言预处理器 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>joln </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='c_file_io.html' class='btn' title='C语言文件读写I/O' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='c_header_files.html' class='btn btn-default' style='float:right;' title='C语言头文件'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="6460" />
+									
+									 <p>
+	C语言预处理程序是不是编译器的一部分，只不过在编译过程中的一个单独的步骤。在简单来说，C语言预处理器只是一个文本替换工具，它们指示编译器实际编译之前需要做预处理。我们参考C语言预处理器如CPP。 </p>
+ <p>
+	所有的预处理命令以一个井号(＃)。它必须是第一个非空字符，并且为便于阅读，一个预处理指令应该开始第一列。以下部分列出了所有重要的预处理指令： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); width: 101px; background-color: rgb(238, 238, 238);">
+				指令 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#define </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				替代预处理宏 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#include </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				从另一个文件中插入一个特殊的头 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#undef </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				取消定义预处理宏 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#ifdef </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				返回true，如果这个宏定义 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#ifndef </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				返回true，如果该宏没有被定义 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#if </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				测试是否编译时条件为true </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#else </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				用于可选#if </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#elif </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#else 一个 #if 在一条语句 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#endif </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				结束预处理条件 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#error </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				stderr上打印错误信息 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				#pragma </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				问题特殊命令给编译器，使用一个标准化的方法 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	预处理程序示例 </h2>
+ <p>
+	分析下面的实施例来理解各种指令。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> MAX_ARRAY_LENGTH  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">20 </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	这个指令告诉CPP更换MAX_ARRAY_LENGTH实例使用值为20，使用#define定义的常量以增加可读性。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;myheader.h&quot; </span></pre>
+ <p>
+	这些指令告诉CPP从系统库得到stdio.h中的文本添加到当前的源文件。下一行告诉CPP获得myheader.h从本地目录和内容添加到当前的源文件。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#undef </span><span class="pln" style="margin: 0px; padding: 0px;">  FILE_SIZE
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> FILE_SIZE  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">42 </span></pre>
+ <p>
+	这告诉CPP取消现有FILE_SIZE定义，并把它定义为42。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#ifndef </span><span class="pln" style="margin: 0px; padding: 0px;"> MESSAGE
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> MESSAGE  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;You wish!&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#endif </span></pre>
+ <p>
+	这告诉CPP定义只有在MESSAGE尚未定义时，定义MESSAGE。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#ifdef </span><span class="pln" style="margin: 0px; padding: 0px;"> DEBUG
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">/* Your debugging statements ____ */ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#endif </span></pre>
+ <p>
+	这告诉CPP执行过程中，DEBUG是否被定义在语句包围内。如果通过-DDEBUG标志gcc编译器在编译的时候是非常有用的。这将定义DEBUG，这样就可以在编译过程中打开和关闭调试。 </p>
+ <h2>
+	预定义宏 </h2>
+ <p>
+	ANSI C定义了许多宏。虽然每一个都可以在编程的使用中，预定义的宏不应直接修改。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); width: 101px; background-color: rgb(238, 238, 238);">
+				宏 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				__DATE__ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				当前日期作为字符文字&ldquo;MMM DD YYYY&rdquo;格式 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				__TIME__ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				当前时间作为一个字符文字的&ldquo;HH：MM：SS&rdquo;格式 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				__FILE__ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				这包含了当前的文件名作为一个字符串 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				__LINE__ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				这包含当前行号为十进制常数 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				__STDC__ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				定义为1时，编译器符合ANSI标准 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	让我们来试试下面的例子： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+main </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;File :%s
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> __FILE__  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Date :%s
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> __DATE__  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Time :%s
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> __TIME__  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Line :%d
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> __LINE__  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;ANSI :%d
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> __STDC__  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	当在一个文件test.c的上述代码被编译和执行时，它产生了以下结果： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+File :test.c
+Date :Jun 2 2012
+____ :03:36:24
+Line :8
+ANSI :1 </pre>
+ <h2>
+	预处理器运算符 </h2>
+ <p>
+	C预处理器提供以下运算符，以帮助创建宏： </p>
+ <h5>
+	宏延续 () </h5>
+ <p>
+	宏通常必须包含在一行。宏延续运算符用于继续宏太长了的一行。例如： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;">  message_for </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">a </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> b </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  
+    printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(# </span><span class="pln" style="margin: 0px; padding: 0px;">a  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot; and &quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#b &quot;: We love ___!
+&____;) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span></pre>
+ <h5>
+	字符串大小 (#) </h5>
+ <p>
+	字符串大小或数字符号运算符（&#39;＃&#39;），当在宏定义中使用，将一个宏参数字符串常量。此运算符可使用仅在具有特定的参数或参数列表的宏。例如： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;">  message_for </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">a </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> b </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  
+    printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(# </span><span class="pln" style="margin: 0px; padding: 0px;">a  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot; and &quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#b &quot;: We love ___!
+&____;) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">void </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+   message_for </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Carole </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Debra </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	让我们编译和运行上面的程序，这将产生以下结果： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+Carole and Debra: We ____ you! </pre>
+ <h5>
+	 <br />
+	令牌粘贴 (##) </h5>
+ <p>
+	令牌粘贴运算符（##）中的宏定义结合了两个参数。它允许在宏定义两个独立的令牌被加入到一个单一的令牌。例如： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> tokenpaster </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">n </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;"> printf  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;token&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#n &quot; = %d&quot;, _____##_) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">void </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> token34  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">40 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+   
+   tokenpaster </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	让我们编译和运行上面的程序，这将产生以下结果： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+token34 = 40 </pre>
+ <p>
+	它是如何发生的，因为这个例子将从预处理器的实际输出结果如下： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="pln" style="margin: 0px; padding: 0px;">printf  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;token34 = %d&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> token34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span></pre>
+ <p>
+	这个例子显示了令牌 ##n为进令牌34，在这里我们使用了两个字符串和令牌粘贴拼接。 </p>
+ <h5>
+	defined() 操作符 </h5>
+ <p>
+	预处理器定义的运算符采用的是常量表达式，以确定是否一个标识符使用#define定义。如果指定的标识符被定义，则该值是真（非零）。如果符号没有定义，值为false（零）。定义的运算符规定如下： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#if !defined (MESSAGE) </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> MESSAGE  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;You wish!&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#endif </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">void </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Here is the message: %_
+&____; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> MESSAGE </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">  
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	让我们编译和运行上面的程序，这将产生以下结果： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+Here is the message: ___ wish! </pre>
+ <h2>
+	参数宏 </h2>
+ <p>
+	CPP其中的一个强大的功能是模拟使用参数化的宏功能的能力。例如，我们可能有一些代码方数如下： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> square </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;"> x  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;"> x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p>
+	我们可以使用宏如下改写上面的代码： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> square </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(( </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">* </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">)) </span></pre>
+ <p>
+	宏带参数必须使用#define指令可以在使用之前进行定义。参数列表被括号括起来，而且必须紧跟在宏名。空格在宏观名和左括号之间不允许的。例如： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#include </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&lt;stdio.h&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#define </span><span class="pln" style="margin: 0px; padding: 0px;"> MAX </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">y </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(( </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">y </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">? </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">y </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">)) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pln" style="margin: 0px; padding: 0px;"> main </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">void </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">
+   printf </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Max between 20 and 10 is %d
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> MAX </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">10 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">20 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">)); </span><span class="pln" style="margin: 0px; padding: 0px;">  
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	让我们编译和运行上面的程序，这将产生以下结果： </p>
+ <pre class="result" style="margin-bottom: 0px; font-size: 12px; overflow: auto; background-color: rgb(241, 241, 241);">
+Max between 20 and 10 is 20 </pre>
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/C语言/" target="_blank">C语言 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/预处理/" target="_blank">预处理 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>C语言预处理器 </b><br />
+									本文地址： <a href="c_preprocessors.html">http://www.yiibai.com/cprogramming/c_preprocessors.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='c_file_io.html' class='btn' title='C语言文件读写I/O' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='c_header_files.html' class='btn btn-default' style='float:right;' title='C语言头文件'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="6460" data-title="C语言预处理器" data-url="http://www.yiibai.com/cprogramming/c_preprocessors.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

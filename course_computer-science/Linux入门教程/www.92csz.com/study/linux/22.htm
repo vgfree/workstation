@@ -1,0 +1,265 @@
+<html><head>
+<!-- Original URL: http://www.92csz.com/study/linux/22.htm
+Date Downloaded: 2016/3/26 13:56:56 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+ <meta name="description" content="配置tomcat" />
+ <meta name="keywords" content="nginx,freebsd,linux,mysql,shell,apache,centos,redhat,rhel,windows,sql,系统运维,IT运维,开源系统,开源系统运维" />
+ <title> 配置tomcat  </title>
+ <!-- base href="http://www.92csz.com/" -->
+ <style>
+<!--
+/* Font Definitions */
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{mso-style-link:"页眉 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:center;
+	layout-grid-mode:char;
+	border:none;
+	padding:0cm;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{mso-style-link:"页脚 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	layout-grid-mode:char;
+	font-size:9.0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+span.Char
+	{mso-style-name:"页眉 Char";
+	mso-style-link:页眉;}
+span.Char0
+	{mso-style-name:"页脚 Char";
+	mso-style-link:页脚;}
+span.ttag
+	{mso-style-name:t_tag;}
+ /* Page Definitions */
+ @page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+ </head>
+ <body style="" lang="ZH-CN" link="blue" vlink="purple"><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="menu">
+	 <ul>
+		 <span style="FONT-SIZE: 10.5pt">
+			 <li style="float:right;list-style-type:none;"><a href="http://www.92csz.com/" hidefocus="true" id="mn_list">返回网站首页 </a></li>
+			 <li><a href="index.html" hidefocus="true" id="mn_list">linux入门教程 </a></li>
+			 <li><a href="http://www.92csz.com/search" hidefocus="true" id="mn_search">搜索 </a></li>
+		 </span>
+	 </ul>
+ </div>
+ <div class="Section1" style="layout-grid:15.6pt">
+ <p class="MsoNormal" style="text-align:center" align="center"><b><span style="font-size:15.0pt;font-family:宋体">第二十二章 </span></b><b><span style="font-size:15.0pt">  </span></b><b><span style="font-size:15.0pt;
+font-family:宋体">配置 </span></b><b><span style="font-size:15.0pt" lang="EN-US">Tomcat </span></b></p>
+ <p class="MsoNormal"><span style="font-family:宋体">【 <b>关于 </b></span><b><span lang="EN-US">Tomcat </span></b><span style="font-family:宋体">】 </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">目前有很多网站使用 </span><span lang="EN-US">jsp </span><span style="font-family:宋体">的程序编写，所以解析 </span><span lang="EN-US">jsp </span><span style="font-family:宋体">的程序就必须要有相关的软件来完成。 </span><span lang="EN-US">Tomcat </span><span style="font-family:宋体">就是用来解析 </span><span lang="EN-US">jsp </span><span style="font-family:宋体">程序的一个软件， </span><span lang="EN-US"> Tomcat </span><span style="font-family:宋体">是 </span><span lang="EN-US">Apache
+ </span><span style="font-family:宋体">软件基金会（ </span><span lang="EN-US">Apache
+Software Foundation </span><span style="font-family:宋体">）的 </span><span lang="EN-US">Jakarta  </span><span style="font-family:宋体">项目中的一个核心项目，由 </span><span lang="EN-US">Apache </span><span style="font-family:宋体">、 </span><span lang="EN-US">Sun
+ </span><span style="font-family:宋体">和其他一些公司及个人共同开发而成。因为 </span><span lang="EN-US">Tomcat
+ </span><span style="font-family:宋体">技术先进、性能稳定，而且免费，因而深受 </span><span lang="EN-US">Java
+ </span><span style="font-family:宋体">爱好者的喜爱并得到了部分软件开发商的认可，成为目前比较流行的 </span><span lang="EN-US">Web  </span><span style="font-family:宋体">应用服务器。 </span></p>
+ <p class="MsoNormal"><span style="letter-spacing:.4pt" lang="EN-US">Tomcat  </span><span style="font-family:宋体;letter-spacing:.4pt">是一个轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试 </span><span style="letter-spacing:.4pt" lang="EN-US">JSP  </span><span style="font-family:
+宋体;letter-spacing:.4pt">程序的首选。对于一个初学者来说，可以这样认为，当在一台机器上配置好 </span><span style="letter-spacing:.4pt" lang="EN-US">Apache  </span><span style="font-family:
+宋体;letter-spacing:.4pt">服务器，可利用它响应对 </span><span style="letter-spacing:
+.4pt" lang="EN-US">HTML  </span><span style="font-family:宋体;letter-spacing:.4pt">页面的访问请求。实际上 </span><span style="letter-spacing:.4pt" lang="EN-US">Tomcat  </span><span style="font-family:
+宋体;letter-spacing:.4pt">部分是 </span><span style="letter-spacing:.4pt" lang="EN-US">Apache
+ </span><span style="font-family:宋体;letter-spacing:.4pt">服务器的扩展，但它是独立运行的，所以当你运行 </span><span style="letter-spacing:.4pt" lang="EN-US">tomcat  </span><span style="font-family:
+宋体;letter-spacing:.4pt">时，它实际上作为一个与 </span><span style="letter-spacing:
+.4pt" lang="EN-US">Apache  </span><span style="font-family:宋体;letter-spacing:.4pt">独立的进程单独运行的。 </span></p>
+ <br />
+ <script async="" src="../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+ <!-- study_zsy -->
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5865024608655371" data-ad-slot="4214051509" data-ad-format="auto"></ins>
+ <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ <p class="MsoNormal"><span style="font-family:宋体">【 <b>安装 </b></span><b><span lang="EN-US">Tomcat </span></b><span style="font-family:宋体">】 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">Tomcat </span><span style="font-family:宋体">的安装分为两个步骤：安装 </span><span lang="EN-US">JDK </span><span style="font-family:宋体">；安装 </span><span lang="EN-US">Tomcat </span><span style="font-family:宋体">。 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">JDK(Java Development Kit) </span><span style="font-family:宋体">是 </span><span lang="EN-US">Sun Microsystems </span><span style="font-family:宋体">针对 </span><span lang="EN-US">Java </span><span style="font-family:宋体">开发员的产品。自从 </span><span lang="EN-US">Java </span><span style="font-family:宋体">推出以来， </span><span lang="EN-US">JDK </span><span style="font-family:宋体">已经成为使用最广泛的 </span><span lang="EN-US">Java SDK </span><span style="font-family:宋体">。 </span><span lang="EN-US">JDK  </span><span style="font-family:宋体">是整个 </span><span lang="EN-US">Java </span><span style="font-family:宋体">的核心，包括了 </span><span lang="EN-US">Java </span><span style="font-family:宋体">运行环境， </span><span lang="EN-US">Java </span><span style="font-family:宋体">工具和 </span><span lang="EN-US">Java </span><span style="font-family:宋体">基础的类库。所以要想运行 </span><span lang="EN-US">jsp </span><span style="font-family:宋体">的程序必须要有 </span><span lang="EN-US">JDK </span><span style="font-family:宋体">的支持，理所当然安装 </span><span lang="EN-US">Tomcat </span><span style="font-family:宋体">的前提是安装好 </span><span lang="EN-US">JDK </span><span style="font-family:宋体">。 </span></p>
+ <p class="MsoNormal"><b><span lang="EN-US">&nbsp; </span></b></p>
+ <p class="MsoNormal"><b><span lang="EN-US">1.  </span></b><b><span style="font-family:
+宋体">安装 </span></b><b><span lang="EN-US">JDK </span></b></p>
+ <p class="MsoNormal"><span style="font-family:宋体">下载 </span><span lang="EN-US">jdk-6u23-linux-i586.bin
+ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">cd /usr/local/src/ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">wget http://dl.dropbox.com/u/182853/jdk-6u23-linux-i586.bin </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">（如果该版本不合适请到下面的官方网站下载适合你的版本）： </span></p>
+ <p class="MsoNormal"><span lang="EN-US">https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jdk-6u23-oth-JPR@CDS-CDS_Developer </span></p>
+ <p class="MsoNormal"><span lang="EN-US">chmod a+x jdk-6u23-linux-i586.bin </span></p>
+ <p class="MsoNormal"><span lang="EN-US">sh jdk-6u23-linux-i586.bin </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">此时会出现 </span><span lang="EN-US">JDK
+ </span><span style="font-family:宋体">安装授权协议。可以一路按 </span><span lang="EN-US">Enter </span><span style="font-family:宋体">浏览，当出现 </span><span lang="EN-US">Do you agree to ___ above
+license terms? [yes or __]  </span><span style="font-family:宋体">的字样 </span><span lang="EN-US">, </span><span style="font-family:宋体">输入 </span><span lang="EN-US">yes </span><span style="font-family:宋体">即可。 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">mv &nbsp;jdk1.6.0_23 &nbsp;/usr/local/ </span></p>
+ <p class="MsoNormal"><b><span lang="EN-US">&nbsp; </span></b></p>
+ <p class="MsoNormal"><b><span lang="EN-US">2.  </span></b><b><span style="font-family:
+宋体">设置环境变量 </span></b></p>
+ <p class="MsoNormal"><span lang="EN-US">vim /etc/profile </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">在末尾输入以下内容 </span><span lang="EN-US"><br />
+#set java environment </span></p>
+ <p class="MsoNormal"><span lang="EN-US">JAVA_HOME=/usr/local/jdk1.6.0_23/ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">JAVA_BIN=/usr/local/jdk1.6.0_23/bin </span></p>
+ <p class="MsoNormal"><span lang="EN-US">JRE_HOME=/usr/local/jdk1.6.0_23/jre </span></p>
+ <p class="MsoNormal"><span lang="EN-US">PATH=$PATH:/usr/local/jdk1.6.0_23/bin:/usr/local/jdk1.6.0_23/jre/bin </span></p>
+ <p class="MsoNormal"><span lang="EN-US">CLASSPATH=/usr/local/jdk1.6.0_23/jre/lib:/usr/local/jdk1.6.0_23/lib:/usr/local/jdk1.6.0_23/jre/lib/charsets.jar </span></p>
+ <p class="MsoNormal"><span lang="EN-US">export &nbsp;JAVA_HOME &nbsp;JAVA_BIN
+JRE_HOME&nbsp; PATH &____;_________ <br />
+ </span><span style="font-family:宋体">执行 <span class="ttag">命令 </span></span><span lang="EN-US">source /etc/profile </span><span style="font-family:宋体">，使配置立即生效 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">source /etc/profile </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">检测是否设置正确： </span></p>
+ <p class="MsoNormal"><span lang="EN-US">java –version </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">如果显示如下内容，则配置正确。 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">java version "1.4.2" </span></p>
+ <p class="MsoNormal"><span lang="EN-US">gij (GNU libgcj) version 4.1.2 20080704
+(Red Hat 4.1.2-46) </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">Copyright (C) 2006 Free ________
+__________, Inc. </span></p>
+ <p class="MsoNormal"><span lang="EN-US">This is free software; ___ the source for
+copying conditions.&nbsp; _____ is NO warranty; not ____ for MERCHANTABILITY or
+FITNESS FOR _ PARTICULAR PURPOSE. </span></p>
+ <p class="MsoNormal"><b><span lang="EN-US">&nbsp; </span></b></p>
+ <p class="MsoNormal"><b><span lang="EN-US">3. </span></b><b><span style="font-family:
+宋体">安装 </span></b><b><span lang="EN-US">Tomcat </span></b></p>
+ <p class="MsoNormal"><span lang="EN-US">cd /usr/local/src/ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.14/bin/apache-tomcat-7.0.14.tar.gz </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">如果觉得这个版本不适合你，请到 </span><span lang="EN-US"><a href="http://tomcat.apache.org/">tomcat <span style="font-family:宋体" lang="EN-US"><span lang="EN-US">官方网站 </span></span></a></span><span style="font-family:宋体">下载适合你的版本。 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">tar zxvf apache-tomcat-7.0.14.tar.gz </span></p>
+ <p class="MsoNormal"><span lang="EN-US">mv apache-tomcat-7.0.14 /usr/local/tomcat </span></p>
+ <p class="MsoNormal"><span lang="EN-US">cp -p /usr/local/tomcat/bin/catalina.sh
+/etc/init.d/tomcat </span></p>
+ <p class="MsoNormal"><span lang="EN-US">vim /etc/init.d/tomcat  </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">在第二行加入以下内容： </span></p>
+ <p class="MsoNormal"><span lang="EN-US"># chkconfig: 2345 63 37 </span></p>
+ <p class="MsoNormal"><span lang="EN-US"># description: tomcat server ____ script </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">JAVA_HOME=/usr/local/jdk1.6.0_23/ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">CATALINA_HOME=/usr/local/tomcat </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">chmod 755 /etc/init.d/tomcat </span></p>
+ <p class="MsoNormal"><span lang="EN-US">chkconfig --add tomcat </span></p>
+ <p class="MsoNormal"><span lang="EN-US">chkconfig tomcat on </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp; </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">启动 </span><span lang="EN-US">tomcat </span><span style="font-family:宋体">： </span></p>
+ <p class="MsoNormal"><span lang="EN-US">service tomcat start </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">查看是否启动成功： </span></p>
+ <p class="MsoNormal"><span lang="EN-US">ps aux |grep tomcat </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">如果有进程的话，请在浏览器中输入 </span><span lang="EN-US">http://IP:8080/  </span><span style="font-family:宋体">你会看到 </span><span lang="EN-US">tomcat </span><span style="font-family:宋体">的主界面。 </span></p>
+ <br />
+ <p class="MsoNormal"><span style="font-family:宋体">【 <b>配置 </b></span><b><span lang="EN-US">tomcat </span></b><span style="font-family:宋体">】 </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">在配置 </span><span lang="EN-US">tomcat </span><span style="font-family:宋体">前，先来看看 </span><span lang="EN-US">tomcat </span><span style="font-family:宋体">的几个目录： </span></p>
+ <p class="MsoNormal"><b><span lang="EN-US">find /usr/local/tomcat/ -maxdepth 1
+-type _  </span></b><b><span style="font-family:宋体">（ </span></b><span lang="EN-US">-maxdepth </span><span style="font-family:宋体">的作用指定目录级数，后边跟 </span><span lang="EN-US">1 </span><span style="font-family:宋体">代表只查找 </span><span lang="EN-US">1 </span><span style="font-family:宋体">级目录 <b>） </b></span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/lib&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+tomcat </span><span style="font-family:宋体">的库文件目录 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/temp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+ </span><span style="font-family:宋体">临时文件存放目录 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/webapps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+web </span><span style="font-family:宋体">应用目录，也就是我们访问的 </span><span lang="EN-US">web </span><span style="font-family:宋体">程序文件所在目录 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/conf&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+ </span><span style="font-family:宋体">配置文件目录 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/logs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+ </span><span style="font-family:宋体">日志文件所在目录 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/work&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+ </span><span style="font-family:宋体">存放 </span><span lang="EN-US">JSP </span><span style="font-family:宋体">编译后产生的 </span><span lang="EN-US">class </span><span style="font-family:宋体">文件 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">/usr/local/tomcat/bin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #
+tomcat </span><span style="font-family:宋体">的脚本文件 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">Tomcat </span><span style="font-family:宋体">的主配置文件为 </span><span lang="EN-US">/usr/local/tomcat/conf/server.xml </span></p>
+ <br />
+ <p class="MsoNormal"><b><span lang="EN-US">1.  </span></b><b><span style="font-family:
+宋体">配置 </span></b><b><span lang="EN-US">tomcat </span></b><b><span style="font-family:宋体">服务的访问端口。 </span></b></p>
+ <p class="MsoNormal"><span style="font-family:宋体">默认是 </span><span lang="EN-US">8080 </span><span style="font-family:宋体">，如果你想修改为 </span><span lang="EN-US">80 </span><span style="font-family:宋体">，则需要修改 </span><span lang="EN-US">server.xml </span><span style="font-family:宋体">文件。 </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">找到 </span>  <span lang="EN-US">&lt;Connector
+port="8080" protocol="HTTP/1.1" </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">修改为： </span><span lang="EN-US">&lt;Connector
+port="80" protocol="HTTP/1.1" </span></p>
+ <br />
+ <p class="MsoNormal"><b><span lang="EN-US">2.  </span></b><b><span style="font-family:
+宋体">配置新的虚拟主机 </span></b></p>
+ <p class="MsoNormal"><span lang="EN-US">cd /usr/local/tomcat/conf/ </span></p>
+ <p class="MsoNormal"><span lang="EN-US">vim server.xml </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">找到 </span><span lang="EN-US">&lt;/Host&gt; </span><span style="font-family:宋体">，下一行插入新的 </span><span lang="EN-US">&lt;Host&gt; </span><span style="font-family:宋体">，内容如下： </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Host
+name="www.example.cn" appBase="/data/tomcatweb" </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+unpackWARs="false" autoDeploy="true" </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+xmlValidation="false" xmlNamespaceAware="false"&gt; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;Context
+path="" docBase="./" debug="0"
+reloadable="true" ____________="____"/&__; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/Host&gt; </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">完成后，重启 </span><span lang="EN-US">tomcat </span></p>
+ <p class="MsoNormal"><span lang="EN-US">service tomcat stop; service ______ start </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">测试新建的虚拟主机，首先需要修改你电脑的 </span><span lang="EN-US">hosts </span><span style="font-family:宋体">文件 </span></p>
+ <p class="MsoNormal"><span lang="EN-US">vim /data/tomcatweb/test.jsp  </span><span style="font-family:宋体">加入以下内容： </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&lt;html&gt;&lt;body&gt;&lt;center&gt; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">Now time is: &lt;%=new
+java.util.Date()%&gt; </span></p>
+ <p class="MsoNormal"><span lang="EN-US">&lt;/center&gt;&lt;/body&gt;&lt;/html&gt; </span></p>
+ <p class="MsoNormal"><span style="font-family:宋体">保存后，在你的浏览器里输入 </span>  <span lang="EN-US">http://www.example.cn/test.jsp  </span><span style="font-family:宋体">看是否访问到如下内容： </span></p>
+ <br />
+ <p class="MsoNormal" style="text-align:left11:42 2011-6-10" align="center"><span style="font-size:10.5pt;font-family:宋体" lang="EN-US">Now time is: Thu ___ 02 14:32:34 CST
+2011  </span></p>
+ <br />
+ <p class="MsoNormal"><span style="font-family:宋体">上面的 </span><span lang="EN-US">test.jsp </span><span style="font-family:宋体">就是要显示当前系统的时间。 </span></p>
+ </div>
+ <div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5865024608655371";
+google_ad_slot = "3514991827";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+ <script type="text/javascript" src="../../../pagead2.googlesyndication.com/pagead/f.txt.js">
+</script></div>
+ <p><span style="FONT-SIZE: 10.5pt;">上一页&nbsp; <a title="" href="21.htm">配置Squid服务 </a></span><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">下一页&nbsp; <a title="" href="23.htm">配置Samba服务器 </a></span><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><a title="" href="index.html">回到主目录 </a></span></p>
+ <script src="../../../s20.cnzz.com/stat_a61bedf.php.js" language="JavaScript"></script>
+ </body></html>an></p>
+ <script src="http://s20.cnzz.com/stat.php?id=3037570&web_id=3037570&show=pic" language="JavaScript"></script>
+ </body></html>

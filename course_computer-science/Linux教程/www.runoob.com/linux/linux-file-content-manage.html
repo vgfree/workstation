@@ -1,0 +1,766 @@
+<!Doctype html>
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+<!-- Original URL: http://www.runoob.com/linux/linux-file-content-manage.html
+Date Downloaded: 2016/4/3 23:16:04 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	 
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+	 <title>Linux 文件与目录管理 | 菜鸟教程 </title>
+
+   <link rel="canonical" href="linux-file-content-manage.html" />
+ <meta name="keywords" content="Linux 文件与目录管理" />
+ <meta name="description" content="Linux  文件与目录管理 我们知道Linux的目录结构为树状结构，最顶级的目录为根目录 /。 其他目录通过挂载可以将它们添加到树中，通过解除挂载可以移除它们。 在开始本教程前我们需要先知道什么是绝对路径与相对路径。  绝对路径：路径的写法，由根目录 / 写起，例如： /usr/share/doc 这个目录。  相对路径：路径的写法，不是由 / 写起，例如由 /usr/share/doc 要到 /usr/share/man 底下时，可.." />
+		
+	 <link rel="shortcut icon" href="../favicon.ico" mce_href="http://www.runoob.com/favicon.ico" type="image/x-icon" />
+	 <link rel="stylesheet" href="../wp-content/themes/runoob/style_b7408605.css" type="text/css" media="all" />	
+	 <link rel="stylesheet" href="../../apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css" media="all" />	
+   <script src="../../apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
+   <!--[if lt IE 9]>
+     <script src="../../apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+  <![endif]-->
+   <link rel="apple-touch-icon" href="../../static.runoob.com/images/icon/mobile-icon.png" />
+   <meta name="apple-mobile-web-app-title" content="菜鸟教程" />
+ </head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <!--  头部 -->
+ <div class="container logo-search">
+
+   <div class="col search row-search-mobile">
+     <form action="index.php">
+       <input class="placeholder" value="搜索……" name="s" autocomplete="off" />
+     </form>
+   </div>
+
+   <div class="row">
+     <div class="col logo">
+       <h1><a href="/">菜鸟教程 -- 学的不仅是技术，更是梦想！ </a></h1>
+     </div>
+         <div class="col right-list"> 
+     <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull" style="">  <i class="fa fa-navicon"></i>  </button>
+     </div>
+         <div class="col search search-desktop last">
+       <form action="http://www.runoob.com/" target="_blank">
+         <input class="placeholder" id="s" name="s" value="搜索……" autocomplete="off" />
+       </form>
+     </div>
+   </div>
+ </div>
+
+
+ <!-- 导航栏 -->
+ <!-- 导航栏 -->
+ <div class="container navigation">
+	 <div class="row">
+		 <div class="col nav">
+			 <ul class="pc-nav">
+				 <li><a href="http://www.runoob.com/">首页 </a></li>
+				 <li><a href="/html/html-tutorial.html">HTML </a></li>
+				 <li><a href="/css/css-tutorial.html">CSS </a></li>
+				 <li><a href="/js/js-tutorial.html">JavaScript </a></li>
+				 <li><a href="/jquery/jquery-tutorial.html">jQuery </a></li>
+				 <li><a href="/bootstrap/bootstrap-tutorial.html">Bootstrap </a></li>
+				 <li><a href="/sql/sql-tutorial.html">SQL </a></li>
+				 <li><a href="/mysql/mysql-tutorial.html">MySQL </a></li>
+				 <li><a href="/php/php-tutorial.html">PHP </a></li>
+				 <li><a href="/python/python-tutorial.html">Python </a></li>
+				 <li><a href="/cprogramming/c-tutorial.html">C </a></li>
+				 <li><a href="/cplusplus/cpp-tutorial.html">C++ </a></li>
+				 <li><a href="/csharp/csharp-tutorial.html">C# </a></li>
+				 <li><a href="/java/java-tutorial.html">Java </a></li>
+				 <li><a href="/ruby/ruby-tutorial.html">Ruby </a></li>
+				
+				 <li><a href="/sitemap">更多…… </a></li>
+      		 </ul>
+			 <ul class="mobile-nav">
+				 <li><a href="http://www.runoob.com/">首页 </a></li>
+				 <li><a href="/html/html-tutorial.html">HTML </a></li>
+				 <li><a href="/css/css-tutorial.html">CSS </a></li>
+				 <li><a href="/js/js-tutorial.html">JavaScript </a></li>
+				 <a href="javascript:void(0)" class="search-reveal">Search </a> 
+			 </ul>
+			
+		 </div>
+	 </div>
+ </div><!--  内容  -->
+ <div class="container main">
+	 <!-- 中间 -->
+	 <div class="row">
+	
+ <div class="col left-column">
+	 <div class="tab">Linux 教程 </div>
+	 <div class="sidebar-box gallery-list">
+		 <div class="design" id="leftcolumn">
+						 <a target="_top" title="Linux 教程" href="linux-tutorial.html">
+			Linux 教程			 </a>
+						 <a target="_top" title="Linux 简介" href="linux-intro.html">
+			Linux 简介			 </a>
+						 <a target="_top" title="Linux 安装" href="linux-install.html">
+			Linux 安装			 </a>
+						 <a target="_top" title="Linux 系统启动过程" href="linux-system-boot.html">
+			Linux 系统启动过程			 </a>
+						 <a target="_top" title="Linux 系统目录结构" href="linux-system-contents.html">
+			Linux 系统目录结构			 </a>
+						 <a target="_top" title="Linux 忘记密码解决方法" href="linux-forget-password.html">
+			Linux 忘记密码解决方法			 </a>
+						 <a target="_top" title="Linux 远程登录" href="linux-remote-login.html">
+			Linux 远程登录			 </a>
+						 <a target="_top" title="Linux 文件基本属性" href="linux-file-attr-permission.html">
+			Linux 文件基本属性			 </a>
+						 <a target="_top" title="Linux 文件与目录管理" href="linux-file-content-manage.html">
+			Linux 文件与目录管理			 </a>
+						 <a target="_top" title="Linux 用户和用户组管理" href="linux-user-manage.html">
+			Linux 用户和用户组管理			 </a>
+						 <a target="_top" title="Linux 磁盘管理" href="linux-filesystem.html">
+			Linux 磁盘管理			 </a>
+						 <a target="_top" title="Linux vi/vim" href="linux-vim.html">
+			Linux vi/vim			 </a>
+						 <a target="_top" title="linux yum 命令" href="linux-yum.html">
+			linux yum 命令			 </a>
+			 <br /><h2 class="left"><span class="left_h2">Shell </span>  教程 </h2>			 <a target="_top" title="Shell 教程" href="linux-shell.html">
+			Shell 教程			 </a>
+						 <a target="_top" title="Shell 变量" href="linux-shell-variable.html">
+			Shell 变量			 </a>
+			 <a target="_top" title="Shell 传递参数" href="linux-shell-passing-arguments.html"> Shell 传递参数  </a>
+ <a target="_top" title="Shell 数组" href="linux-shell-array.html"> Shell 数组  </a>
+ <a target="_top" title="Shell 运算符" href="linux-shell-basic-operators.html"> Shell 运算符 </a>			 <a target="_top" title="Shell echo命令" href="linux-shell-echo.html">
+			Shell echo命令			 </a>
+			 <a target="_top" title="Shell printf命令" href="linux-shell-printf.html"> Shell printf命令  </a>			 <a target="_top" title="Shell test命令" href="linux-shell-test.html">
+			Shell test命令			 </a>
+						 <a target="_top" title="Shell 流程控制" href="linux-shell-process-control.html">
+			Shell 流程控制			 </a>
+						 <a target="_top" title="Shell 函数" href="linux-shell-func.html">
+			Shell 函数			 </a>
+			 <a target="_top" title="Shell 输入/输出重定向" href="linux-shell-io-redirections.html"> Shell 输入/输出重定向  </a>
+ <a target="_top" title="Shell 文件包含" href="linux-shell-include-file.html"> Shell 文件包含  </a>
+ <br /><h2 class="left"><span class="left_h2">Linux </span> 参考手册 </h2>			 <a target="_top" title="Linux 命令大全" href="linux-command-manual.html">
+			Linux 命令大全			 </a>
+						 <a target="_top" title="Nginx 安装配置" href="nginx-install-setup.html">
+			Nginx 安装配置			 </a>
+						 <a target="_top" title="MySQL 安装配置" href="mysql-install-setup.html">
+			MySQL 安装配置			 </a>
+				
+		 </div>
+	 </div>	
+ </div>	 <div class="col middle-column">
+		
+	
+	 <div class="article">
+			 <div class="article-heading-ad">
+		 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 移动版 自动调整 -->
+		 <ins class="adsbygoogle" style="display:inline-block;min-width:300px;max-width:970px;width:100%;height:90px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="1691338467" data-ad-format="horizontal"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		 </div>
+		 <div class="previous-next-links">
+			 <div class="previous-design-link">←  <a href="linux-file-attr-permission.html" rel="prev"> Linux 文件基本属性 </a>  </div>
+			 <div class="next-design-link"><a href="linux-user-manage.html" rel="next"> Linux 用户和用户组管理 </a> → </div>
+		 </div>
+		 <div class="article-body">
+		
+			 <div class="article-intro" id="content">
+			
+			 <h1><span class="color_h1">Linux  </span> 文件与目录管理 </h1>
+ <p>我们知道Linux的目录结构为树状结构，最顶级的目录为根目录 /。 </p><p>
+其他目录通过挂载可以将它们添加到树中，通过解除挂载可以移除它们。 </p>
+ <p>在开始本教程前我们需要先知道什么是绝对路径与相对路径。 </p>
+ <ul><li><strong>
+绝对路径： </strong><br />路径的写法，由根目录 / 写起，例如： /usr/share/doc ____。 </li>
+ <li><strong>
+相对路径： </strong><br />路径的写法，不是由 / 写起，例如由 /usr/share/doc __ /usr/share/man 底下时，可以写成： cd ../man ___________！ </li></ul>
+
+ <hr />
+ <h2>处理目录的常用命令 </h2>
+ <p>接下来我们就来看几个常见的处理目录的命令吧： </p>
+ <ul>
+		 <li>ls: 列出目录 </li>
+		 <li>cd：切换目录 </li>
+		 <li>pwd：显示目前的目录 </li>
+		 <li>mkdir：创建一个新的目录 </li>
+		 <li>rmdir：删除一个空的目录 </li>
+		 <li>cp: 复制文件或目录 </li>
+		 <li>rm: 移除文件或目录 </li>
+		
+		 </ul>
+ <p>你可以使用  <em>man [命令] </em> 来查看各个命令的使用文档，如 ：man cp。 </p>
+ <h3>ls (列出目录) </h3>
+ <p>在Linux系统当中， ls 命令可能是最常被运行的。 </p>
+ <p>语法： </p>
+ <pre>
+[root@www ~]# ls [-aAdfFhilnrRSt] ____
+[____@___ ~]# ls [--color={never,auto,always}] 目录名称
+[root@www ~]# ls [--full-time] 目录名称
+ </pre>
+ <p>选项与参数： </p>
+ <ul><li>-a  ：全部的文件，连同隐藏档( 开头为 . 的文件) 一起列出来(常用) </li><li>
+-d  ：仅列出目录本身，而不是列出目录内的文件数据(常用) </li><li>
+-l  ：长数据串列出，包含文件的属性与权限等等数据；(常用) </li></ul>
+ <p>
+将家目录下的所有文件列出来(含属性与隐藏档)
+ </p>
+ <pre>
+[root@www ~]# ls -al ~
+ </pre>
+ <h3>cd (切换目录) </h3>
+ <p>cd是Change Directory的缩写，这是用来变换工作目录的命令。 </p>
+ <p>语法： </p>
+ <pre>
+ cd [相对路径或绝对路径]
+ </pre>
+ <pre>
+#使用 mkdir 命令创建w3cschool.cc目录
+[root@www ~]# _____ w3cschool.cc
+
+#使用绝对路径切换到w3cschool.cc目录
+[root@www ~]# cd /root/w3cschool.cc/
+
+#使用相对路径切换到w3cschool.cc目录
+[root@www ~]# cd ./w3cschool.cc/
+
+# 表示回到自己的家目录，亦即是 /root ____
+[____@___ w3cschool.cc]# cd ~
+
+# 表示去到目前的上一级目录，亦即是 /____ 的上一级目录的意思；
+[root@www ~]# cd ..
+ </pre>
+ <p>接下来大家多操作几次应该就可以很好的理解 cd 命令的。 </p>
+
+ <h3>pwd (显示目前所在的目录) </h3>
+ <p>pwd是Print Working Directory的缩写，也就是显示目前所在目录的命令。 </p>
+ <pre>
+[root@www ~]# pwd [-P]
+选项与参数：
+-P  ：显示出确实的路径，而非使用连结 (link) 路径。
+
+范例：单纯显示出目前的工作目录：
+[root@www ~]# ___
+/____   &lt;== 显示出目录啦～
+
+范例：显示出实际的工作目录，而非连结档本身的目录名而已
+[root@www ~]# cd /var/mail   &__;==__，/___/__________
+[____@___ mail]# pwd
+/var/mail         &lt;==列出目前的工作目录
+[root@www mail]# pwd -P
+/var/spool/mail   &lt;==怎么回事？有没有加 -P 差很多～
+[root@www ____]# ls -ld /var/mail
+lrwxrwxrwx 1 ____ root 10 Sep  4 17:54 /var/mail -&gt; spool/mail
+# ____________？__ /var/mail 是连结档，连结到 /var/spool/mail 
+# __，__ pwd -P 的选项后，会不以连结档的数据显示，而是显示正确的完整路径啊！
+ </pre>
+ <h3>mkdir (创建新目录) </h3>
+ <p>如果想要创建新的目录的话，那么就使用mkdir (make directory)吧。 </p>
+ <p>语法： </p>
+ <pre>
+mkdir [-mp] 目录名称
+ </pre>
+ <p>
+选项与参数： </p>
+ <ul><li>
+-m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～ </li><li>
+-p ：帮助你直接将所需要的目录(包含上一级目录)递回创建起来！ </li></ul>
+ <p>
+范例：请到/tmp底下尝试创建数个新目录看看：
+ </p>
+ <pre>
+[root@www ~]# cd /tmp
+[root@www ___]# mkdir test    &lt;==创建一名为 test 的新目录
+[root@www tmp]# _____ test1/test2/test3/test4
+mkdir: cannot create directory `____1/____2/____3/____4': 
+No such file or _________       &lt;== 没办法直接创建此目录啊！
+[root@www tmp]# _____ -p test1/test2/test3/test4
+ </pre>
+ <p>加了这个 -p 的选项，可以自行帮你创建多层目录！ </p>
+ <p>
+范例：创建权限为rwx--x--x的目录 </p>
+ <pre>
+[root@www tmp]# mkdir -m 711 test2
+[root@www tmp]# ls -l
+drwxr-xr-x  3 root  root 4096 Jul 18 12:50 test
+drwxr-xr-x  3 root  root 4096 Jul 18 12:53 test1
+drwx--x--x  2 root  root 4096 Jul 18 12:54 test2
+ </pre>
+ <p>
+上面的权限部分，如果没有加上 -m 来强制配置属性，系统会使用默认属性。 </p><p>
+如果我们使用 -m ，如上例我们给予 -m 711 来给予新的目录 drwx--x--x 的权限。 </p>
+ 
+
+ <h3>rmdir (删除空的目录) </h3>
+ <p>语法： </p>
+ <pre>
+ rmdir [-p] 目录名称
+ </pre>
+ <p>
+ 选项与参数： </p><ul><li>
+ <strong>-p ： </strong>连同上一级『空的』目录也一起删除
+ </li></ul>
+ <p>删除 w3cschool.cc 目录 </p>
+ <pre>
+[root@www tmp]# rmdir w3cschool.cc/
+ </pre>
+ <p>范例：将於mkdir范例中创建的目录(/tmp底下)删除掉！ </p>
+ <pre>
+[root@www tmp]# ls -l   &lt;==看看有多少目录存在？
+drwxr-xr-x  3 ____  root 4096 Jul 18 12:50 test
+drwxr-xr-x  3 ____  root 4096 Jul 18 12:53 test1
+drwx--x--x  2 ____  root 4096 Jul 18 12:54 test2
+[root@www tmp]# rmdir ____   &lt;==可直接删除掉，没问题
+[root@www tmp]# _____ test1  &lt;==因为尚有内容，所以无法删除！
+rmdir: `test1': _________ not empty
+[root@www tmp]# rmdir -_ test1/test2/test3/test4
+[root@www tmp]# ls -l        &lt;==您看看，底下的输出中test与test1不见了！
+drwx--x--x  2 ____  root 4096 Jul 18 12:54 test2
+ </pre>
+ <p>利用 -p 这个选项，立刻就可以将 test1/test2/test3/test4 ____。 </p>
+ <p>不过要注意的是，这个 rmdir 仅能删除空的目录，你可以使用 rm  命令来删除非空目录。 </p>
+ <h3>cp (复制文件或目录) </h3>
+ <p>cp 即拷贝文件和目录。 </p>
+ <p>语法: </p>
+ <pre>
+[root@www ~]# cp [-adfilprsu] ___(______) 目标档(destination)
+[root@www ~]# cp [options] ______1 source2 source3 .... directory
+ </pre>
+ <p>选项与参数： </p>
+ <li>-a  ：相当於 -pdr ___，__ pdr 请参考下列说明；(常用) </li><li>
+
+-d  ：若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身； </li><li>
+-f  ：为强制(force)的意思，若目标文件已经存在且无法开启，则移除后再尝试一次； </li><li>
+-i  ：若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用) </li><li>
+-l  ：进行硬式连结(hard link)的连结档创建，而非复制文件本身； </li><li>
+-p  ：连同文件的属性一起复制过去，而非使用默认属性(备份常用)； </li><li>
+-r  ：递回持续复制，用於目录的复制行为；(常用) </li><li>
+-s  ：复制成为符号连结档 (symbolic ____)，__『__』__； </li><li>
+-u  ：若 destination _ source 旧才升级 destination ！ </li>
+ <p>用root身份，将家目录下的 .bashrc 复制到 /tmp _，____ bashr </p>
+ <pre>
+[root@www ~]# cp ~/.bashrc /___/______
+[____@___ ~]# cp -i ~/.bashrc /___/______
+__: overwrite `/tmp/bashrc'? n  &__;==____，____
+ </pre>
+
+ <h3>rm (移除文件或目录) </h3>
+ <p>语法： </p>
+ <pre>
+ rm [-fir] 文件或目录
+ </pre>
+ <p>
+选项与参数： </p>
+ <ul><li>
+-f  ：就是 force ___，________，________； </li><li>
+-i  ：互动模式，在删除前会询问使用者是否动作 </li><li>
+-r  ：递回删除啊！最常用在目录的删除了！这是非常危险的选项！！！ </li><li>
+ </li></ul>
+ <p>将刚刚在 cp 的范例中创建的 bashrc ___！ </p>
+ <pre>
+[root@www tmp]# rm -i ______
+__: remove regular file `bashrc'? _
+ </pre>
+ <p>如果加上 -i 的选项就会主动询问喔，避免你删除到错误的档名！ </p>
+ <h3>mv (移动文件与目录，或修改名称) </h3>
+ <p>语法： </p>
+ <pre>
+[root@www ~]# mv [-fiu] ______ destination
+[root@www ~]# mv [options] ______1 source2 source3 .... directory
+ </pre><p>
+选项与参数： </p>
+ <ul><li>
+-f  ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖； </li><li>
+-i  ：若目标文件 (destination) _____，________！ </li><li>
+-u  ：若目标文件已经存在，且 source ___，____ (update) </li></ul>
+ <p>复制一文件，创建一目录，将文件移动到目录中 </p>
+ <pre>
+[root@www ~]# cd /tmp
+[root@www ___]# cp ~/.bashrc bashrc
+[root@www tmp]# _____ mvtest
+[root@www tmp]# mv bashrc ______
+ </pre>
+ <p>
+将某个文件移动到某个目录去，就是这样做！
+ </p>
+ <p>将刚刚的目录名称更名为 mvtest2 </p>
+ <pre>
+[root@www tmp]# mv mvtest ______2
+ </pre>
+ <hr />
+ <h2>Linux 文件内容查看 </h2>
+ <p>Linux系统中使用以下命令来查看文件的内容： </p>
+ <ul>
+	 <li>cat&nbsp;  由第一行开始显示文件内容 </li>
+	 <li>tac&nbsp;  从最后一行开始显示，可以看出 tac _ cat 的倒著写！ </li>
+	 <li>nl &nbsp;&nbsp;显示的时候，顺道输出行号！ </li>
+	 <li>more 一页一页的显示文件内容 </li>
+	 <li>less 与 more 类似，但是比 ____ 更好的是，他可以往前翻页！ </li>
+	 <li>head 只看头几行 </li>
+	 <li>tail 只看尾巴几行 </li></ul>
+	
+ <p>你可以使用  <em>man [命令] </em>来查看各个命令的使用文档，如 ：man cp。 </p>
+ <h3>cat </h3>
+ <p>由第一行开始显示文件内容 </p>
+ <p>语法： </p>
+ <pre>
+cat [-AbEnTv]
+ </pre>
+ <p>选项与参数： </p>
+ <ul><li>
+-A  ：相当於 -vET _____，________________； </li><li>
+-b  ：列出行号，仅针对非空白行做行号显示，空白行不标行号！ </li><li>
+-E  ：将结尾的断行字节 $ ____； </li><li>
+-n  ：列印出行号，连同空白行也会有行号，与 -b _____； </li><li>
+-T  ：将 [tab] ___ ^I 显示出来； </li><li>
+-v  ：列出一些看不出来的特殊字符 </li></ul>
+ <p>检看 /etc/issue 这个文件的内容： </p>
+ <pre>
+[root@www ~]# cat /etc/issue
+CentOS _______ 6.4 (Final)
+Kernel \r on __ \m
+ </pre>
+ <h3>tac </h3>
+ <p>tac与cat命令刚好相反，文件内容从最后一行开始显示，可以看出 tac 是 cat ____！_： </p>
+
+ <pre>
+
+[root@www ~]# tac /etc/issue
+
+Kernel \_ on an \m
+CentOS release 6.4 (Final)
+ </pre>
+ <h3>nl </h3>
+ <p>显示行号 </p>
+ <p>语法： </p>
+ <pre>
+nl [-bnw] 文件
+ </pre>
+ <p>选项与参数： </p>
+ <ul><li>
+-b  ：指定行号指定的方式，主要有两种： <br />
+      -b a ：表示不论是否为空行，也同样列出行号(类似 ___ -n)； <br />
+      -b t ：如果有空行，空的那一行不要列出行号(默认值)； </li><li>
+-n  ：列出行号表示的方法，主要有三种： <br />
+      -n ln ：行号在萤幕的最左方显示； <br />
+      -n rn ：行号在自己栏位的最右方显示，且不加 0 ； <br />
+      -n rz ：行号在自己栏位的最右方显示，且加 0 ； </li><li>
+-w  ：行号栏位的占用的位数。 </li></ul>
+ <p>范例一：用 nl 列出 /etc/issue ___  </p>
+ <pre>
+[root@www ~]# nl /etc/issue
+     1  CentOS release 6.4 (Final)
+     2  Kernel \r on an \_
+ </pre>
+ <h3>more </h3>
+ <p>一页一页翻动 </p>
+ <pre>
+[root@www ~]# more /etc/man.config
+#
+# _________ automatically from man.conf.in by ___
+# configure script.
+#
+# man.conf from ___-1.6_
+....(____)....
+--____--(28%)  &lt;== 重点在这一行喔！你的光标也会在这里等待你的命令
+ </pre>
+ <p>在 more 这个程序的运行过程中，你有几个按键可以按的： </p>
+ <ul>
+		 <li>空白键 (space)：代表向下翻一页； </li>
+		 <li>Enter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：代表向下翻『一行』； </li>
+		 <li>/字串&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：代表在这个显示的内容当中，向下搜寻『字串』这个关键字； </li>
+		 <li>:f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ：立刻显示出档名以及目前显示的行数； </li>
+		 <li>q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：代表立刻离开 more ，不再显示该文件内容。 </li>
+		 <li>b 或 [ctrl]-b ：代表往回翻页，不过这动作只对文件有用，对管线无用。 </li>
+		 </ul>
+ <h3>less </h3>
+ <p>一页一页翻动，以下实例输出/etc/man.config文件的内容： </p>
+ <pre>
+[root@www ~]# less /etc/man.config
+#
+# _________ automatically from man.conf.in by ___
+# configure script.
+#
+# man.conf from ___-1.6_
+....(____)....
+:   &lt;== 这里可以等待你输入命令！
+ </pre>
+ <p>less运行时可以输入的命令有： </p>
+ <ul>
+		 <li>空白键&nbsp;&nbsp;&nbsp;&nbsp;：向下翻动一页； </li>
+		 <li>[pagedown]：向下翻动一页； </li>
+		 <li>[pageup]&nbsp;&nbsp;：向上翻动一页； </li>
+		 <li>/字串&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：向下搜寻『字串』的功能； </li>
+		 <li>?字串&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：向上搜寻『字串』的功能； </li>
+		 <li>n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：重复前一个搜寻 (与 / _ ? 有关！) </li>
+		 <li>N&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：反向的重复前一个搜寻 (与 / _ ? 有关！) </li>
+		 <li>q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：离开 less 这个程序； </li></ul>
+ <h3>head  </h3>
+ <p>取出文件前面几行 </p>
+ <p>语法： </p>
+ <pre>
+head [-n number] 文件 
+ </pre><p>
+选项与参数： </p>
+ <ul><li>
+-n  ：后面接数字，代表显示几行的意思
+ </li></ul>
+ <pre>
+[root@www ~]# head /etc/man.config
+ </pre>
+ <p>默认的情况中，显示前面 10 行！若要显示前 20 _，_____： </p>
+ <pre>
+[root@www ~]# head -n 20 /etc/man.config
+ </pre>
+ <h3>tail  </h3>
+ <p>取出文件后面几行 </p>
+ <p>语法： </p>
+ <pre>
+tail [-n number] 文件 
+ </pre><p>
+选项与参数： </p><ul>
+ <li>-n  ：后面接数字，代表显示几行的意思 </li><li>
+-f  ：表示持续侦测后面所接的档名，要等到按下[ctrl]-c才会结束tail的侦测
+ </li></ul>
+ <pre>
+[root@www ~]# tail /etc/man.config
+# ______，_______！_______ 20 行，就得要这样：
+[root@www ~]# tail -_ 20 /etc/man.config
+ </pre>
+
+			
+			
+			 </div>
+		 </div>
+		
+		 <div class="previous-next-links">
+			 <div class="previous-design-link">←  <a href="linux-file-attr-permission.html" rel="prev"> Linux 文件基本属性 </a>  </div>
+			 <div class="next-design-link"><a href="linux-user-manage.html" rel="next"> Linux 用户和用户组管理 </a> → </div>
+		 </div>
+		
+		 <div class="sidebar-box ad-box ad-box-large">
+		 <div class="ad-336280">
+			 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+			 <!-- 移动版 自动调整 -->
+			 <ins class="adsbygoogle" style="display:inline-block;min-width:200px;max-width:360px;width:100%;height:100%px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="1691338467" data-ad-format="rectangle"></ins>
+			 <script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		 </div>
+		 </div>
+		
+	 </div>
+ </div>
+	
+
+ <!-- 右边栏 -->
+ <div class="fivecol last right-column">
+	 <div class="tab tab-light-blue" style="text-align: center;">关注微信 </div>
+	 <div class="sidebar-box">
+		 <a href="http://m.runoob.com/" target="_blank">  <img src="../wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" alt="移动版" />  </a>
+		 <div class="qqinfo">
+		 <!-- <a target="_blank" href="http://jq.qq.com/?_wv=1027&k=dOwwKN" id="qqhref">
+		<img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="菜鸟家族" title="菜鸟家族"></a>
+		<span>(群号：<span id="qqid">365967760</span>)</span>-->
+		 </div>
+		
+	 </div>
+	
+
+	
+	 <div class="tab tab-light-blue">分类导航 </div>
+	 <div class="sidebar-box sidebar-cate">
+		
+		 <div class="sidebar-tree">
+			 <ul><li><a href="javascript:void(0);" class="tit">HTML / CSS </a><ul><li><a title="HTML 教程" href="http://www.runoob.com/html/html-tutorial.html">HTML 教程 </a></li><li><a title="HTML5 教程" href="http://www.runoob.com/html/html5-intro.html">HTML5 教程 </a></li><li><a title="CSS 教程" href="http://www.runoob.com/css/css-tutorial.html">CSS 教程 </a></li><li><a title="CSS3 教程" href="http://www.runoob.com/css3/css3-tutorial.html">CSS3 教程 </a></li><li><a title="Bootstrap 教程" href="http://www.runoob.com/bootstrap/bootstrap-tutorial.html">Bootstrap 教程 </a></li><li><a title="Foundation 教程" href="http://www.runoob.com/foundation/foundation-tutorial.html">Foundation 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">JavaScript </a><ul><li><a title="JavaScript 教程" href="http://www.runoob.com/js/js-tutorial.html">JavaScript 教程 </a></li><li><a title="HTML DOM 教程" href="http://www.runoob.com/htmldom/htmldom-tutorial.html">HTML DOM 教程 </a></li><li><a title="jQuery 教程" href="http://www.runoob.com/jquery/jquery-tutorial.html">jQuery 教程 </a></li><li><a title="AngularJS 教程" href="http://www.runoob.com/angularjs/angularjs-tutorial.html">AngularJS 教程 </a></li><li><a title="React 教程" href="http://www.runoob.com/react/react-tutorial.html">React 教程 </a></li><li><a title="jQuery UI 教程" href="http://www.runoob.com/jqueryui/jqueryui-tutorial.html">jQuery UI 教程 </a></li><li><a title="jQuery EasyUI 教程" href="http://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html">jQuery EasyUI 教程 </a></li><li><a title="Node.js 教程" href="http://www.runoob.com/nodejs/nodejs-tutorial.html">Node.js 教程 </a></li><li><a title="AJAX 教程" href="http://www.runoob.com/ajax/ajax-tutorial.html">AJAX 教程 </a></li><li><a title="JSON 教程" href="http://www.runoob.com/json/json-tutorial.html">JSON 教程 </a></li><li><a title="Highcharts 教程" href="http://www.runoob.com/highcharts/highcharts-tutorial.html">Highcharts 教程 </a></li><li><a title="Google 地图 教程" href="http://www.runoob.com/googleapi/google-maps-basic.html">Google 地图 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">服务端 </a><ul><li><a title="PHP 教程" href="http://www.runoob.com/php/php-tutorial.html">PHP 教程 </a></li><li><a title="Python 教程" href="http://www.runoob.com/python/python-tutorial.html">Python 教程 </a></li><li><a title="Python3 教程" href="http://www.runoob.com/python3/python3-tutorial.html">Python3 教程 </a></li><li><a title="Django 教程" href="http://www.runoob.com/django/django-tutorial.html">Django 教程 </a></li><li><a title="Linux 教程" href="linux-tutorial.html">Linux 教程 </a></li><li><a title="Ruby 教程" href="http://www.runoob.com/ruby/ruby-tutorial.html">Ruby 教程 </a></li><li><a title="Java 教程" href="http://www.runoob.com/java/java-tutorial.html">Java 教程 </a></li><li><a title="C 教程" href="http://www.runoob.com/c/c-tutorial.html">C 教程 </a></li><li><a title="C++ 教程" href="http://www.runoob.com/cplusplus/cpp-tutorial.html">C++ 教程 </a></li><li><a title="Servlet 教程" href="http://www.runoob.com/servlet/servlet-tutorial.html">Servlet 教程 </a></li><li><a title="JSP 教程" href="http://www.runoob.com/jsp/jsp-tutorial.html">JSP 教程 </a></li><li><a title="Lua 教程" href="http://www.runoob.com/lua/lua-tutorial.html">Lua 教程 </a></li><li><a title="Scala 教程" href="http://www.runoob.com/scala/scala-tutorial.html">Scala 教程 </a></li><li><a title="Go 教程" href="http://www.runoob.com/go/go-tutorial.html">Go 教程 </a></li><li><a title="设计模式" href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html">设计模式 </a></li><li><a title="正则表达式" href="http://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 </a></li><li><a title="ASP 教程" href="http://www.runoob.com/asp/asp-tutorial.html">ASP 教程 </a></li><li><a title="AppML 教程" href="http://www.runoob.com/appml/appml-tutorial.html">AppML 教程 </a></li><li><a title="VBScript 教程" href="http://www.runoob.com/vbscript/vbscript-tutorial.html">VBScript 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">数据库 </a><ul><li><a title="SQL 教程" href="http://www.runoob.com/sql/sql-tutorial.html">SQL 教程 </a></li><li><a title="Mysql 教程" href="http://www.runoob.com/mysql/mysql-tutorial.html">Mysql 教程 </a></li><li><a title="SQLite 教程" href="http://www.runoob.com/sqlite/sqlite-tutorial.html">SQLite 教程 </a></li><li><a title="MongoDB 教程" href="http://www.runoob.com/mongodb/mongodb-tutorial.html">MongoDB 教程 </a></li><li><a title="Redis 教程" href="http://www.runoob.com/redis/redis-tutorial.html">Redis 教程 </a></li><li><a title="Memcached 教程" href="http://www.runoob.com/Memcached/Memcached-tutorial.html">Memcached 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">移动端 </a><ul><li><a title="Android 教程" href="http://www.runoob.com/w3cnote/android-tutorial-intro.html">Android 教程 </a></li><li><a title="Swift 教程" href="http://www.runoob.com/swift/swift-tutorial.html">Swift 教程 </a></li><li><a title="jQuery Mobile 教程" href="http://www.runoob.com/jquerymobile/jquerymobile-tutorial.html">jQuery Mobile 教程 </a></li><li><a title="ionic 教程" href="http://www.runoob.com/ionic/ionic-tutorial.html">ionic 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">XML 教程 </a><ul><li><a title="XML 教程" href="http://www.runoob.com/xml/xml-tutorial.html">XML 教程 </a></li><li><a title="DTD 教程" href="http://www.runoob.com/dtd/dtd-tutorial.html">DTD 教程 </a></li><li><a title="XML DOM 教程" href="http://www.runoob.com/dom/dom-tutorial.html">XML DOM 教程 </a></li><li><a title="XSLT 教程" href="http://www.runoob.com/xsl/xsl-tutorial.html">XSLT 教程 </a></li><li><a title="XPath 教程" href="http://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程 </a></li><li><a title="XQuery 教程" href="http://www.runoob.com/xquery/xquery-tutorial.html">XQuery 教程 </a></li><li><a title="XLink 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XLink 教程 </a></li><li><a title="XPointer 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XPointer 教程 </a></li><li><a title="XML Schema 教程" href="http://www.runoob.com/schema/schema-tutorial.html">XML Schema 教程 </a></li><li><a title="XSL-FO 教程" href="http://www.runoob.com/xslfo/xslfo-tutorial.html">XSL-FO 教程 </a></li><li><a title="SVG 教程" href="http://www.runoob.com/svg/svg-tutorial.html">SVG 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">ASP.NET </a><ul><li><a title="ASP.NET 教程" href="http://www.runoob.com/aspnet/aspnet-tutorial.html">ASP.NET 教程 </a></li><li><a title="C# 教程" href="http://www.runoob.com/csharp/csharp-tutorial.html">C# 教程 </a></li><li><a title="Web Pages 教程" href="http://www.runoob.com/aspnet/webpages-intro.html">Web Pages 教程 </a></li><li><a title="Razor 教程" href="http://www.runoob.com/aspnet/razor-intro.html">Razor 教程 </a></li><li><a title="MVC 教程" href="http://www.runoob.com/aspnet/mvc-intro.html">MVC 教程 </a></li><li><a title="Web Forms 教程" href="http://www.runoob.com/aspnet/aspnet-intro.html">Web Forms 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">Web Services </a><ul><li><a title="Web Services 教程" href="http://www.runoob.com/webservices/webservices-tutorial.html">Web Services 教程 </a></li><li><a title="WSDL 教程" href="http://www.runoob.com/wsdl/wsdl-tutorial.html">WSDL 教程 </a></li><li><a title="SOAP 教程" href="http://www.runoob.com/soap/soap-tutorial.html">SOAP 教程 </a></li><li><a title="RSS 教程" href="http://www.runoob.com/rss/rss-tutorial.html">RSS 教程 </a></li><li><a title="RDF 教程" href="http://www.runoob.com/rdf/rdf-tutorial.html">RDF 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">开发工具 </a><ul><li><a title="Eclipse 教程" href="http://www.runoob.com/eclipse/eclipse-tutorial.html">Eclipse 教程 </a></li><li><a title="Git 教程" href="http://www.runoob.com/git/git-tutorial.html">Git 教程 </a></li><li><a title="Firebug 教程" href="http://www.runoob.com/firebug/firebug-tutorial.html">Firebug 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">网站建设 </a><ul><li><a title="HTTP 教程" href="http://www.runoob.com/http/http-tutorial.html">HTTP 教程 </a></li><li><a title="网站建设指南" href="http://www.runoob.com/web/web-buildingprimer.html">网站建设指南 </a></li><li><a title="浏览器信息" href="http://www.runoob.com/browsers/browser-information.html">浏览器信息 </a></li><li><a title="网站主机教程" href="http://www.runoob.com/hosting/hosting-tutorial.html">网站主机教程 </a></li><li><a title="TCP/IP 教程" href="http://www.runoob.com/tcpip/tcpip-tutorial.html">TCP/IP 教程 </a></li><li><a title="W3C 教程" href="http://www.runoob.com/w3c/w3c-tutorial.html">W3C 教程 </a></li><li><a title="网站品质" href="http://www.runoob.com/quality/quality-tutorial.html">网站品质 </a></li></ul></li></ul>			 </div>
+	
+	 </div>
+	
+	 <br />
+	
+	 <div class="sidebar-box ad-box ad-box-large">
+		 <div class="sidebar-box advertise-here">
+			 <a href="javascript:void(0);">Advertisement </a>
+		 </div>
+		 <div class="ad-600160">
+		 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 侧栏1 -->
+		 <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="4106274865"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		 </div>
+	 </div>
+ </div></div>
+
+ </div>
+ <!-- 底部 -->
+
+
+ <div id="footer" class="mar-t50">
+    <div class="w3cschoolcc-block">
+     <div class="w3cschoolcc cf">
+      <dl>
+       <dt>
+       在线实例
+       </dt>
+       <dd>
+       &middot; <a href="/html/html-examples.html">HTML 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/css/css-examples.html">CSS 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/js/js-examples.html">JavaScript 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/ajx/ajax-examples.html">Ajax 实例 </a>
+       </dd>
+        <dd>
+       &middot; <a href="/jquery/jquery-examples.html">jQuery 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/xml/xml-examples.html">XML 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/java/java-examples.html">Java 实例 </a>
+       </dd>
+     
+      </dl>
+      <dl>
+       <dt>
+      字符集&工具
+       </dt>
+       <dd>
+       &middot;  <a href="/charsets/html-charsets.html">HTML 字符集设置 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/tags/html-ascii.html">HTML ASCII 字符集 </a>
+       </dd>
+      <dd>
+       &middot;  <a href="/tags/ref-entities.html">HTML ISO-8859-1 </a>
+       </dd> 
+       <dd>
+       &middot;  <a href="/tags/ref-symbols.html">HTML 实体符号 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/tags/html-colorpicker.html">HTML 拾色器 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/jsontool">JSON 格式化工具 </a>
+       </dd>
+      </dl>
+      <dl>
+       <dt>
+       最新更新
+       </dt>
+                    <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-iterator-generator.html" title="Python3 迭代器与生成器">Python3 迭代器... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-copy.html" title="Python3 List copy()方法">Python3 List co... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-clear.html" title="Python3 List clear()方法">Python3 List cl... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-sort.html" title="Python3 List sort()方法">Python3 List so... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-reverse.html" title="Python3 List reverse()方法">Python3 List re... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-remove.html" title="Python3 List remove()方法">Python3 List re... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-pop.html" title="Python3 List pop()方法">Python3 List po... </a>
+       </dd>
+              </dl>
+      <dl>
+       <dt>
+       站点信息
+       </dt>
+       <dd>
+       &middot;
+        <a target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" rel="external nofollow">意见反馈 </a>
+       </dd>
+       <dd>
+       &middot;
+       <a href="/disclaimer">免责声明 </a>
+        </dd>
+       <dd>
+       &middot;
+        <a href="/aboutus">关于我们 </a>
+        </dd>
+       <dd>
+       &middot;
+       <a href="/archives">文章归档 </a>
+       </dd>
+      
+      </dl>
+      <div class="search-share">
+       <div class="app-download">
+         <div>
+          <strong>关注微信 </strong>
+         </div>
+       </div>
+       <div class="share">
+       <img width="150" height="150" src="../wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" />
+        </div>
+      </div>
+     </div>
+    </div>
+    <div class="w-1000 copyright">
+     Copyright &copy; 2013-2016     <strong><a href="http://www.runoob.com/" target="_blank">菜鸟教程 </a></strong>&nbsp;
+     <strong><a href="http://www.runoob.com/" target="_blank">runoob.com </a></strong> All Rights Reserved. ___：_____15012807_-1
+    </div>
+   </div>
+   <div class="fixed-btn">
+     <a class="go-top" href="javascript:void(0)" title="返回顶部">  <i class="fa fa-angle-up"></i></a>
+     <a class="qrcode" href="javascript:void(0)" title="关注我们"><i class="fa fa-qrcode"></i></a>
+     <a class="writer" target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" style="font-size: 12px;" title="Bug 反馈">反馈 </a>
+     <!-- qrcode modal -->
+     <div id="bottom-qrcode" class="modal panel-modal hide fade in">
+       <h4>微信关注 </h4>
+       <div class="panel-body"><img alt="微信关注" width="128" height="128" src="../wp-content/themes/runoob/assets/img/qrcode.jpg" /></div>
+     </div>
+   </div>
+ <div style="display:none;">
+   <script src="../../s11.cnzz.com/stat_b852c18.php.js" language="JavaScript"></script>
+   <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "../../hm.baidu.com/hm_90fc5fac.js";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+ </div>
+ <script src="../wp-content/themes/runoob/assets/js/main_b7408605.js"></script>
+ <script src="../wp-content/themes/runoob/assets/js/hl/run_prettify_b7408605.js"></script>
+ </body>
+ </html>mt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?8e2a116daf0104a78d601f40a45c75b4";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+ </div>
+ <script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/main.js?v=1.02"></script>
+ <script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/hl/run_prettify.js?v=1.02"></script>
+ </body>
+ </html>

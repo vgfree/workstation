@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+ <html><head>
+<!-- Original URL: http://www.92csz.com/study/linux/9.htm
+Date Downloaded: 2016/3/26 13:56:54 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+ <meta name="description" content="文本编辑工具vim" />
+ <meta name="keywords" content="nginx,freebsd,linux,mysql,shell,apache,centos,redhat,rhel,windows,sql,系统运维,IT运维,开源系统,开源系统运维" />
+ <title> 文本编辑工具vim  </title>
+ <!-- base href="http://www.92csz.com/" -->
+ </head>
+ <body bgcolor="#FFFFFF" text="#000000"><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="menu">
+	 <ul>
+		 <span style="FONT-SIZE: 10.5pt">
+			 <li style="float:right;list-style-type:none;"><a href="http://www.92csz.com/" hidefocus="true" id="mn_list">返回网站首页 </a></li>
+			 <li><a href="index.html" hidefocus="true" id="mn_list">linux入门教程 </a></li>
+			 <li><a href="http://www.92csz.com/search" hidefocus="true" id="mn_search">搜索 </a></li>
+		 </span>
+	 </ul>
+ </div>
+ <p style="text-align: center;"><span style="font-family:'宋体';font-size:15pt;"><b>第九章 </b></span><span style="font-family:'Calibri';font-size:15pt;"><b>	 </b></span><span style="font-family:'宋体';font-size:15pt;"><b>文本编辑工具 </b></span><span style="font-family:'Calibri';font-size:15pt;"><b>vim </b></span></p><p><span style="font-family:'Calibri';font-size:10.5pt;">	 </span><span style="font-family:'宋体';font-size:10.5pt;">前面多次提到过 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">这个东西，它是 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">中必不可少的一个工具 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">没有它很多工作都无法完成 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">早期的 </span><span style="font-family:'Calibri';font-size:10.5pt;">Unix </span><span style="font-family:'宋体';font-size:10.5pt;">都是使用的 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">作为系统默认的编辑器的 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">你也许会有疑问， </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">与 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">有什么区别？可以这样简单理解， </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">是 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">的升级版 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">很多 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">系统管理员都习惯用 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">，那是因为他们接触 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">的时候用的就是 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">， </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">后来才比较流行 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">所以，无所谓用 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">和 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">，只要你能达到你想要的目的即可 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <script async="" src="../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+ <!-- study_zsy -->
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5865024608655371" data-ad-slot="4214051509" data-ad-format="auto"></ins>
+ <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	 </span><span style="font-family:'宋体';font-size:10.5pt;">在笔者看来 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi  </span><span style="font-family:'宋体';font-size:10.5pt;">和 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">最大的区别就是编辑一个文本时， </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">不会显示颜色，而 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">会显示颜色 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">显示颜色更易于用户进行编辑 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">其他功能没有什么区别 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">所以在 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">系统下，使用 </span><span style="font-family:'Calibri';font-size:10.5pt;">vi </span><span style="font-family:'宋体';font-size:10.5pt;">还是 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">完全取决你的个人爱好而已 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">笔者从一开始学 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">就一直使用 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">，所以也会一直以 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">的角色来教授给你 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	vim </span><span style="font-family:'宋体';font-size:10.5pt;">的三种模式：一般模式 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">编辑模式 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">命令模式 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">这需要你牢记的，因为以前笔者刚刚从事 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">工作的时候去面试，很多单位的笔试题就有这个知识点 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	*  </span><span style="font-family:'宋体';font-size:10.5pt;">一般模式： </span><span style="font-family:'Calibri';font-size:10.5pt;">  </span><span style="font-family:'宋体';font-size:10.5pt;">当你 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim  filename   </span><span style="font-family:'宋体';font-size:10.5pt;">编辑一个文件时，一进入该文件就是一般模式了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">在这个模式下，你可以做的操作有，上下移动光标；删除某个字符；删除某行；复制 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">粘贴一行或者多行 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	*  </span><span style="font-family:'宋体';font-size:10.5pt;">编辑模式：一般模式下，是不可以修改某一个字符的，只能到编辑模式了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">从一般模式进入编辑模式，只需你按一个键即可（ </span><span style="font-family:'Calibri';font-size:10.5pt;">i,I,a,A,o,O,r,R </span><span style="font-family:'宋体';font-size:10.5pt;">） </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">当进入编辑模式时，会在屏幕的最下一行出现 </span><span style="font-family:'Calibri';font-size:10.5pt;">“INSERT </span><span style="font-family:'宋体';font-size:10.5pt;">或 </span><span style="font-family:'Calibri';font-size:10.5pt;">REPLACE” </span><span style="font-family:'宋体';font-size:10.5pt;">的字样 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">从编辑模式回到一般模式只需要按一下键盘左上方的 </span><span style="font-family:'Calibri';font-size:10.5pt;">ESC </span><span style="font-family:'宋体';font-size:10.5pt;">键即可 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	*  </span><span style="font-family:'宋体';font-size:10.5pt;">命令模式：在一般模式下，输入 </span><span style="font-family:'Calibri';font-size:10.5pt;">”:” </span><span style="font-family:'宋体';font-size:10.5pt;">或者 </span><span style="font-family:'Calibri';font-size:10.5pt;">”/” </span><span style="font-family:'宋体';font-size:10.5pt;">即可进入命令模式 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">在该模式下，你可以搜索某个字符或者字符串，也可以保存 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">替换 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">退出 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">显示行号等等 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	 </span><span style="font-family:'宋体';font-size:10.5pt;">下面笔者教你如何在一个空白文档中写入一段文字，然后保存 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/9_1.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">输入 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim  test.txt </span><span style="font-family:'宋体';font-size:10.5pt;">直接回车进入一般模式 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">然后按 </span><span style="font-family:'Calibri';font-size:10.5pt;">"i"  </span><span style="font-family:'宋体';font-size:10.5pt;">字母进入编辑模式 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/9_7.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">会看到窗口的左下方出现 </span><span style="font-family:'Calibri';font-size:10.5pt;">”INSERT” </span><span style="font-family:'宋体';font-size:10.5pt;">字样，说明已经进入了编辑模式，此时就可以写入内容了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/9_8.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">等编辑完内容后，按 </span><span style="font-family:'Calibri';font-size:10.5pt;">ESC </span><span style="font-family:'宋体';font-size:10.5pt;">退出编辑模式，进入一般模式 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">此时在左下方的 </span><span style="font-family:'Calibri';font-size:10.5pt;">”INSERT” </span><span style="font-family:'宋体';font-size:10.5pt;">字样消失，然后按 </span><span style="font-family:'Calibri';font-size:10.5pt;">”:” </span><span style="font-family:'宋体';font-size:10.5pt;">进入命令模式，最后输入 </span><span style="font-family:'Calibri';font-size:10.5pt;">wq </span><span style="font-family:'宋体';font-size:10.5pt;">保存并退出 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/9_9.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">这时，看一下 </span><span style="font-family:'Calibri';font-size:10.5pt;">test.txt </span><span style="font-family:'宋体';font-size:10.5pt;">文档的内容吧 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/9_10.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">其实 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">为全键盘操作的编辑器，所以在各个模式下都有很多功能键盘的 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">下面笔者列举一下，其中笔者认为常用的会用红色标出，需要你多加练习，另外不常用的你也要知道的 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p><table cellpadding="0" cellspacing="0" cols="1">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="567"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:11pt;"><b>一般模式下移动光标 </b></span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="2">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">h </span><span style="font-size:10.5pt; color:#FF0000;">或向左方向键 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标向左移动一个字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">j </span><span style="font-size:10.5pt; color:#FF0000;">或者向下方向键 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标向下移动一个字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">K </span><span style="font-size:10.5pt; color:#FF0000;">或者向上方向键 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标向上移动一个字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">l </span><span style="font-size:10.5pt; color:#FF0000;">或者向右方向键 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标向右移动一个字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">Ctrl + f  </span><span style="font-size:10.5pt; color:#FF0000;">或者 </span><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">pageUP </span><span style="font-size:10.5pt; color:#FF0000;">键 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">屏幕向前移动一页 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">Ctrl + b  </span><span style="font-size:10.5pt; color:#FF0000;">或者 </span><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">pageDOWN </span><span style="font-size:10.5pt; color:#FF0000;">键 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">屏幕向后移动一页 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">Ctrl + d </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">屏幕向前移动半页 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">Ctrl + u </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">屏幕向后移动半页 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">+ </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标移动到非空格符的下一列 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">- </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标移动到非空格符的上一列 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">空格（ </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">是数字） </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">按下数字 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">然后按空格，则光标向右移动 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">个字符，如果该行字符数小于 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">，则光标继续从下行开始向右移动，一直到 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">0 </span><span style="font-size:10.5pt; color:#FF0000;">（数字 </span><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">0 </span><span style="font-size:10.5pt; color:#FF0000;">）或者 </span><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">Shift+6 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">移动到本行行首 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">Shift+4 </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">即 </span><span style="font-family:'Calibri';font-size:10.5pt;">’$’ </span><span style="font-size:10.5pt;">移动到本行行尾 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">H </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标移动到当前屏幕的最顶行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">M </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标移动到当前屏幕的中央那一行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">L </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标移动到当前屏幕的最底行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">G </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标移动到文本的最末行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">nG </span><span style="font-size:10.5pt; color:#FF0000;">（ </span><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">n </span><span style="font-size:10.5pt; color:#FF0000;">是数字） </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">移动到该文本的第 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">gg </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">移动带该文本的首行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">回车（ </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">是数字） </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">光标向下移动 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">行 </span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="1">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="567"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:11pt;"><b>一般模式下查找与替换 </b></span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="2">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">/word </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">向光标之后寻找一个字符串名为 </span><span style="font-family:'Calibri';font-size:10.5pt;">word </span><span style="font-size:10.5pt;">的字符串，当找到第一个 </span><span style="font-family:'Calibri';font-size:10.5pt;">word </span><span style="font-size:10.5pt;">后，按 </span><span style="font-family:'Calibri';font-size:10.5pt;">”n” </span><span style="font-size:10.5pt;">继续搜后一个 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">?word </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">想光标之前寻找一个字符串名为 </span><span style="font-family:'Calibri';font-size:10.5pt;">word </span><span style="font-size:10.5pt;">的字符串，当找到第一个 </span><span style="font-family:'Calibri';font-size:10.5pt;">word </span><span style="font-size:10.5pt;">后，按 </span><span style="font-family:'Calibri';font-size:10.5pt;">”n” </span><span style="font-size:10.5pt;">继续搜前一个 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:n1,n2s/word1/word2/g </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在 </span><span style="font-family:'Calibri';font-size:10.5pt;">n1 </span><span style="font-size:10.5pt;">和 </span><span style="font-family:'Calibri';font-size:10.5pt;">n2 </span><span style="font-size:10.5pt;">行间查找 </span><span style="font-family:'Calibri';font-size:10.5pt;">word1 </span><span style="font-size:10.5pt;">这个字符串并替换为 </span><span style="font-family:'Calibri';font-size:10.5pt;">word2 </span><span style="font-size:10.5pt;">，你也可以把 </span><span style="font-family:'Calibri';font-size:10.5pt;">”/” </span><span style="font-size:10.5pt;">换成 </span><span style="font-family:'Calibri';font-size:10.5pt;">”#” </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:1,$s/word1/word2/g </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">从第一行到最末行，查找 </span><span style="font-family:'Calibri';font-size:10.5pt;">word1 </span><span style="font-size:10.5pt;">并替换成 </span><span style="font-family:'Calibri';font-size:10.5pt;">word2 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">:1,$s/word1/word2/gc </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">加上 </span><span style="font-family:'Calibri';font-size:10.5pt;">c </span><span style="font-size:10.5pt;">的作用是，在替换前需要用户确认 </span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="1">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="567"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:11pt;"><b>一般模式下删除 </b></span><span style="font-family:'Calibri';font-size:11pt;"><b>、 </b></span><span style="font-size:11pt;"><b>复制粘贴 </b></span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="2">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">x,X </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">x </span><span style="font-size:10.5pt;">为向后删除一个字符， </span><span style="font-family:'Calibri';font-size:10.5pt;">X </span><span style="font-size:10.5pt;">为向前删除一个字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">nx </span><span style="font-size:10.5pt;">（ </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">为数字） </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">向后删除 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">个字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">dd </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">删除光标所在的那一行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">ndd </span><span style="font-size:10.5pt; color:#FF0000;">（ </span><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">n </span><span style="font-size:10.5pt; color:#FF0000;">为数字） </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">删除光标所在的向下 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">d1G </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">删除光标所在行到第一行的所有数据 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">dG </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">删除光标所在行到末行的所有数据 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">yy </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">复制光标所在的那行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">nyy </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">复制从光标所在行起向下 </span><span style="font-family:'Calibri';font-size:10.5pt;">n </span><span style="font-size:10.5pt;">行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">p,P </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">p </span><span style="font-size:10.5pt;">复制的数据从光标下一行粘贴， </span><span style="font-family:'Calibri';font-size:10.5pt;">P </span><span style="font-size:10.5pt;">则从光标上一行粘贴 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">y1G </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">复制光标所在行到第一行的所有数据 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">yG </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">复制光标所在行到末行的所有数据 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">J </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">讲光标所在行与下一行的数据结合成同一行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">u </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">还原过去的操作 </span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="1">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="567"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:11pt;"><b>进入编辑模式 </b></span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="2">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">i </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前字符前插入字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">I </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前行行首插入字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">a </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前字符后插入字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">A </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前行行末插入字符 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">o </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前行下插入新的一行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">O </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前行上插入新的一行 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">r </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">替换光标所在的字符，只替换一次 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">R </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">一直替换光标所在的字符，一直到按下 </span><span style="font-family:'Calibri';font-size:10.5pt;">ESC </span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="1">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="567"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:11pt;"><b>命令模式 </b></span></div></td>
+ </tr>
+ </tbody></table>
+ <table cellpadding="0" cellspacing="0" cols="2">
+ <tbody><tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:w </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">将编辑过的文本保存 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:w! </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">若文本属性为只读时，强制保存 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:q </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">退出 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:q! </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">不管编辑或未编辑都不保存退出 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:wq </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">保存，退出 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">:e! </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">将文档还原成最原始状态 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">ZZ </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">若文档没有改动，则不储存离开，若文档改动过，则储存后离开，等同于 </span><span style="font-family:'Calibri';font-size:10.5pt;">:wq </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">:w  [filename] </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">编辑后的文档另存为 </span><span style="font-family:'Calibri';font-size:10.5pt;">filename </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">:r  [filename] </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在当前光标所在行的下面读入 </span><span style="font-family:'Calibri';font-size:10.5pt;">filename </span><span style="font-size:10.5pt;">文档的内容 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:set  nu </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">在每行的行首显示行号 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt; color:#FF0000;">:set  nonu </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">取消行号 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">n1,n2 w [filename] </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">将 </span><span style="font-family:'Calibri';font-size:10.5pt;">n1 </span><span style="font-size:10.5pt;">到 </span><span style="font-family:'Calibri';font-size:10.5pt;">n2 </span><span style="font-size:10.5pt;">的内容另存为 </span><span style="font-family:'Calibri';font-size:10.5pt;">filename </span><span style="font-size:10.5pt;">这个文档 </span></div></td>
+ </tr>
+ <tr align="left" valign="top">
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="176"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-family:'Calibri';font-size:10.5pt;">:!  command </span></div></td>
+ <td style="border-width: 1px; border-style: solid; border-color: black;" width="389"><div style="text-align: left;text-indent: 0pt;margin-left: 0pt;margin-top: 0pt;margin-bottom: 0pt;margin-right: 0pt;line-height: 100%;"><span style="font-size:10.5pt;">暂时离开 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-size:10.5pt;">运行某个 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-size:10.5pt;">命令，例如 </span><span style="font-family:'Calibri';font-size:10.5pt;"> :!  ls /____  </span><span style="font-size:10.5pt;">暂时列出 </span><span style="font-family:'Calibri';font-size:10.5pt;">/home </span><span style="font-size:10.5pt;">目录下的文件，然后会提示按回车回到 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span></div></td>
+ </tr>
+ </tbody></table>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">暂时就讲这么多了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">如果你全部掌握，你就是 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">高手啦 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">如果你觉得太多，只要记住笔者标红部分即可，其他的用时再过来查就 </span><span style="font-family:'Calibri';font-size:10.5pt;">ok </span><span style="font-family:'宋体';font-size:10.5pt;">啦 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">下面笔者给你留一个小作业，希望你要认真完成！ </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">1.  </span><span style="font-family:'宋体';font-size:10.5pt;">请把 </span><span style="font-family:'Calibri';font-size:10.5pt;">/etc/init.d/iptables   </span><span style="font-family:'宋体';font-size:10.5pt;">复制到 </span><span style="font-family:'Calibri';font-size:10.5pt;">/root/ </span><span style="font-family:'宋体';font-size:10.5pt;">目录下，并重命名为 </span><span style="font-family:'Calibri';font-size:10.5pt;">test.txt </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">2.  </span><span style="font-family:'宋体';font-size:10.5pt;">用 </span><span style="font-family:'Calibri';font-size:10.5pt;">vim </span><span style="font-family:'宋体';font-size:10.5pt;">打开 </span><span style="font-family:'Calibri';font-size:10.5pt;">test.txt </span><span style="font-family:'宋体';font-size:10.5pt;">并设置行号 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">3.  </span><span style="font-family:'宋体';font-size:10.5pt;">分别向下 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">向右 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">向左 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">向右移动 </span><span style="font-family:'Calibri';font-size:10.5pt;">5 </span><span style="font-family:'宋体';font-size:10.5pt;">个字符 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">4.  </span><span style="font-family:'宋体';font-size:10.5pt;">分别向下 </span><span style="font-family:'Calibri';font-size:10.5pt;">、 </span><span style="font-family:'宋体';font-size:10.5pt;">向上翻两页 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">5.  </span><span style="font-family:'宋体';font-size:10.5pt;">把光标移动到第 </span><span style="font-family:'Calibri';font-size:10.5pt;">49 </span><span style="font-family:'宋体';font-size:10.5pt;">行 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">6.  </span><span style="font-family:'宋体';font-size:10.5pt;">让光标移动到行末，再移动到行首 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">7.  </span><span style="font-family:'宋体';font-size:10.5pt;">移动到 </span><span style="font-family:'Calibri';font-size:10.5pt;">test.txt </span><span style="font-family:'宋体';font-size:10.5pt;">文件的最后一行 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">8.  </span><span style="font-family:'宋体';font-size:10.5pt;">移动到文件的首行 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">9.  </span><span style="font-family:'宋体';font-size:10.5pt;">搜索文件中出现的 </span><span style="font-family:'Calibri';font-size:10.5pt;"> iptables  </span><span style="font-family:'宋体';font-size:10.5pt;">并数一下一共出现多少个 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">10.  </span><span style="font-family:'宋体';font-size:10.5pt;">把从第一行到第三行出现的 </span><span style="font-family:'Calibri';font-size:10.5pt;">iptables  </span><span style="font-family:'宋体';font-size:10.5pt;">替换成 </span><span style="font-family:'Calibri';font-size:10.5pt;">iptable </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">11.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">12.  </span><span style="font-family:'宋体';font-size:10.5pt;">把整个文件中所有的 </span><span style="font-family:'Calibri';font-size:10.5pt;">iptables </span><span style="font-family:'宋体';font-size:10.5pt;">替换成 </span><span style="font-family:'Calibri';font-size:10.5pt;">iptable </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">13.  </span><span style="font-family:'宋体';font-size:10.5pt;">把光标移动到 </span><span style="font-family:'Calibri';font-size:10.5pt;">50 </span><span style="font-family:'宋体';font-size:10.5pt;">行，删除字符 </span><span style="font-family:'Calibri';font-size:10.5pt;">”$” </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">14.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">15.  </span><span style="font-family:'宋体';font-size:10.5pt;">删除第 </span><span style="font-family:'Calibri';font-size:10.5pt;">50 </span><span style="font-family:'宋体';font-size:10.5pt;">行 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">16.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">17.  </span><span style="font-family:'宋体';font-size:10.5pt;">删除从 </span><span style="font-family:'Calibri';font-size:10.5pt;">37 </span><span style="font-family:'宋体';font-size:10.5pt;">行到 </span><span style="font-family:'Calibri';font-size:10.5pt;">42 </span><span style="font-family:'宋体';font-size:10.5pt;">行的所有内容 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">18.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">19.  </span><span style="font-family:'宋体';font-size:10.5pt;">复制 </span><span style="font-family:'Calibri';font-size:10.5pt;">48 </span><span style="font-family:'宋体';font-size:10.5pt;">行并粘贴到 </span><span style="font-family:'Calibri';font-size:10.5pt;">52 </span><span style="font-family:'宋体';font-size:10.5pt;">行下面 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">20.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作（按两次 </span><span style="font-family:'Calibri';font-size:10.5pt;">u </span><span style="font-family:'宋体';font-size:10.5pt;">） </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">21.  </span><span style="font-family:'宋体';font-size:10.5pt;">复制从 </span><span style="font-family:'Calibri';font-size:10.5pt;">37 </span><span style="font-family:'宋体';font-size:10.5pt;">行到 </span><span style="font-family:'Calibri';font-size:10.5pt;">42 </span><span style="font-family:'宋体';font-size:10.5pt;">行的内容并粘贴到 </span><span style="font-family:'Calibri';font-size:10.5pt;">44 </span><span style="font-family:'宋体';font-size:10.5pt;">行上面 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">23.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作（按两次 </span><span style="font-family:'Calibri';font-size:10.5pt;">u </span><span style="font-family:'宋体';font-size:10.5pt;">） </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">24.  </span><span style="font-family:'宋体';font-size:10.5pt;">把 </span><span style="font-family:'Calibri';font-size:10.5pt;">37 </span><span style="font-family:'宋体';font-size:10.5pt;">行到 </span><span style="font-family:'Calibri';font-size:10.5pt;">42 </span><span style="font-family:'宋体';font-size:10.5pt;">行的内容移动到 </span><span style="font-family:'Calibri';font-size:10.5pt;">19 </span><span style="font-family:'宋体';font-size:10.5pt;">行下面 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">25.  </span><span style="font-family:'宋体';font-size:10.5pt;">还原上一步操作（按两次 </span><span style="font-family:'Calibri';font-size:10.5pt;">u </span><span style="font-family:'宋体';font-size:10.5pt;">） </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">26.  </span><span style="font-family:'宋体';font-size:10.5pt;">光标移动到首行，把 </span><span style="font-family:'Calibri';font-size:10.5pt;">/bin/sh   </span><span style="font-family:'宋体';font-size:10.5pt;">改成 </span><span style="font-family:'Calibri';font-size:10.5pt;"> /bin/bash </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">27.  </span><span style="font-family:'宋体';font-size:10.5pt;">在第一行下面插入新的一行，并输入 </span><span style="font-family:'Calibri';font-size:10.5pt;">”# Hello!” </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">28.  </span><span style="font-family:'宋体';font-size:10.5pt;">保存文档并退出 </span></p>
+ <div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5865024608655371";
+google_ad_slot = "3514991827";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+ <script type="text/javascript" src="../../../pagead2.googlesyndication.com/pagead/f.txt.js">
+</script></div>
+ <p style="text-align: justify;"><span style="font-family:'宋体';font-size:10.5pt;">上一页  <a href="8.htm">Linux磁盘管理 </a></span></p>
+ <p style="text-align: justify;"><span style="font-family:'宋体';font-size:10.5pt;">下一页  <a href="10.htm">文档的压缩与打包 </a></span></p>
+ <p style="text-align: justify;"><span style="font-family:'宋体';font-size:10.5pt;"><a href="index.html">回到主目录 </a>&nbsp; </span></p>
+ <script src="../../../s20.cnzz.com/stat_a61bedf.php.js" language="JavaScript"></script>
+ </body></html>an></p>
+ <script src="http://s20.cnzz.com/stat.php?id=3037570&web_id=3037570&show=pic" language="JavaScript"></script>
+ </body></html>

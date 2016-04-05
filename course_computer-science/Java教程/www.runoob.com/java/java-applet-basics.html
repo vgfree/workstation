@@ -1,0 +1,842 @@
+<!Doctype html>
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+<!-- Original URL: http://www.runoob.com/java/java-applet-basics.html
+Date Downloaded: 2016/4/3 23:14:42 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	 
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+	 <title>Java Applet基础 | 菜鸟教程 </title>
+
+   <link rel="canonical" href="java-applet-basics.html" />
+ <meta name="keywords" content="Java Applet基础" />
+ <meta name="description" content="Java Applet基础   applet是一种Java程序。它一般运行在支持Java的Web浏览器内。因为它有完整的Java API支持,所以applet是一个全功能的Java应用程序。 如下所示是独立的Java应用程序和applet程序之间重要的不同：  	 		Java中applet类继承了 java.applet.Applet类 	 		Applet类没有定义main()，所以一个 Applet程序不会调用main()方法， .." />
+		
+	 <link rel="shortcut icon" href="../favicon.ico" mce_href="http://www.runoob.com/favicon.ico" type="image/x-icon" />
+	 <link rel="stylesheet" href="../wp-content/themes/runoob/style_b7408605.css" type="text/css" media="all" />	
+	 <link rel="stylesheet" href="../../apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css" media="all" />	
+   <script src="../../apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
+   <!--[if lt IE 9]>
+     <script src="../../apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+  <![endif]-->
+   <link rel="apple-touch-icon" href="../../static.runoob.com/images/icon/mobile-icon.png" />
+   <meta name="apple-mobile-web-app-title" content="菜鸟教程" />
+ </head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <!--  头部 -->
+ <div class="container logo-search">
+
+   <div class="col search row-search-mobile">
+     <form action="index.php">
+       <input class="placeholder" value="搜索……" name="s" autocomplete="off" />
+     </form>
+   </div>
+
+   <div class="row">
+     <div class="col logo">
+       <h1><a href="/">菜鸟教程 -- 学的不仅是技术，更是梦想！ </a></h1>
+     </div>
+         <div class="col right-list"> 
+     <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull" style="">  <i class="fa fa-navicon"></i>  </button>
+     </div>
+         <div class="col search search-desktop last">
+       <form action="http://www.runoob.com/" target="_blank">
+         <input class="placeholder" id="s" name="s" value="搜索……" autocomplete="off" />
+       </form>
+     </div>
+   </div>
+ </div>
+
+
+ <!-- 导航栏 -->
+ <!-- 导航栏 -->
+ <div class="container navigation">
+	 <div class="row">
+		 <div class="col nav">
+			 <ul class="pc-nav">
+				 <li><a href="http://www.runoob.com/">首页 </a></li>
+				 <li><a href="/html/html-tutorial.html">HTML </a></li>
+				 <li><a href="/css/css-tutorial.html">CSS </a></li>
+				 <li><a href="/js/js-tutorial.html">JavaScript </a></li>
+				 <li><a href="/jquery/jquery-tutorial.html">jQuery </a></li>
+				 <li><a href="/bootstrap/bootstrap-tutorial.html">Bootstrap </a></li>
+				 <li><a href="/sql/sql-tutorial.html">SQL </a></li>
+				 <li><a href="/mysql/mysql-tutorial.html">MySQL </a></li>
+				 <li><a href="/php/php-tutorial.html">PHP </a></li>
+				 <li><a href="/python/python-tutorial.html">Python </a></li>
+				 <li><a href="/cprogramming/c-tutorial.html">C </a></li>
+				 <li><a href="/cplusplus/cpp-tutorial.html">C++ </a></li>
+				 <li><a href="/csharp/csharp-tutorial.html">C# </a></li>
+				 <li><a href="java-tutorial.html">Java </a></li>
+				 <li><a href="/ruby/ruby-tutorial.html">Ruby </a></li>
+				
+				 <li><a href="/sitemap">更多…… </a></li>
+      		 </ul>
+			 <ul class="mobile-nav">
+				 <li><a href="http://www.runoob.com/">首页 </a></li>
+				 <li><a href="/html/html-tutorial.html">HTML </a></li>
+				 <li><a href="/css/css-tutorial.html">CSS </a></li>
+				 <li><a href="/js/js-tutorial.html">JavaScript </a></li>
+				 <a href="javascript:void(0)" class="search-reveal">Search </a> 
+			 </ul>
+			
+		 </div>
+	 </div>
+ </div><!--  内容  -->
+ <div class="container main">
+	 <!-- 中间 -->
+	 <div class="row">
+	
+ <div class="col left-column">
+	 <div class="tab">Java 教程 </div>
+	 <div class="sidebar-box gallery-list">
+		 <div class="design" id="leftcolumn">
+						 <a target="_top" title="Java 教程" href="java-tutorial.html">
+			Java 教程			 </a>
+						 <a target="_top" title="Java 简介" href="java-intro.html">
+			Java 简介			 </a>
+						 <a target="_top" title="Java 开发环境配置" href="java-environment-setup.html">
+			Java 开发环境配置			 </a>
+						 <a target="_top" title="Java 基础语法" href="java-basic-syntax.html">
+			Java 基础语法			 </a>
+						 <a target="_top" title="Java 对象和类" href="java-object-classes.html">
+			Java 对象和类			 </a>
+						 <a target="_top" title="Java 基本数据类型" href="java-basic-datatypes.html">
+			Java 基本数据类型			 </a>
+						 <a target="_top" title="Java 变量类型" href="java-variable-types.html">
+			Java 变量类型			 </a>
+						 <a target="_top" title="Java 修饰符" href="java-modifier-types.html">
+			Java 修饰符			 </a>
+						 <a target="_top" title="Java 运算符" href="java-operators.html">
+			Java 运算符			 </a>
+						 <a target="_top" title="Java 循环结构 &#8211; for, while 及 do&#8230;while" href="java-loop.html">
+			Java 循环结构			 </a>
+						 <a target="_top" title="Java 分支结构 &#8211; if&#8230;else/switch" href="java-if-else-switch.html">
+			Java 分支结构			 </a>
+						 <a target="_top" title="Java Number类" href="java-number.html">
+			Java Number类			 </a>
+						 <a target="_top" title="Java Character类" href="java-character.html">
+			Java Character类			 </a>
+						 <a target="_top" title="Java String类" href="java-string.html">
+			Java String类			 </a>
+						 <a target="_top" title="Java StringBuffer和StringBuilder类" href="java-stringbuffer.html">
+			Java StringBuffer			 </a>
+						 <a target="_top" title="Java 数组" href="java-array.html">
+			Java 数组			 </a>
+						 <a target="_top" title="Java 日期时间" href="java-date-time.html">
+			Java 日期时间			 </a>
+						 <a target="_top" title="Java 正则表达式" href="java-regular-expressions.html">
+			Java 正则表达式			 </a>
+						 <a target="_top" title="Java 方法" href="java-methods.html">
+			Java 方法			 </a>
+						 <a target="_top" title="Java 流(Stream)、文件(File)和IO" href="java-files-io.html">
+			Java Stream、File、IO			 </a>
+						 <a target="_top" title="Java 异常处理" href="java-exceptions.html">
+			Java 异常处理			 </a>
+			 <br /><h2 class="left">Java  <span class="left_h2">面向对象 </span></h2>			 <a target="_top" title="Java 继承" href="java-inheritance.html">
+			Java 继承			 </a>
+						 <a target="_top" title="Java 重写(Override)与重载(Overload)" href="java-override-overload.html">
+			Java Override/Overload			 </a>
+						 <a target="_top" title="Java 多态" href="java-polymorphism.html">
+			Java 多态			 </a>
+						 <a target="_top" title="Java 抽象类" href="java-abstraction.html">
+			Java 抽象类			 </a>
+						 <a target="_top" title="Java 封装" href="java-encapsulation.html">
+			Java 封装			 </a>
+						 <a target="_top" title="Java 接口" href="java-interfaces.html">
+			Java 接口			 </a>
+						 <a target="_top" title="Java 包(package)" href="java-package.html">
+			Java 包(package)			 </a>
+			 <br /><h2 class="left">Java  <span class="left_h2">高级教程 </span></h2>			 <a target="_top" title="Java 数据结构" href="java-data-structures.html">
+			Java 数据结构			 </a>
+						 <a target="_top" title="Java 集合框架" href="java-collections.html">
+			Java 集合框架			 </a>
+						 <a target="_top" title="Java 泛型" href="java-generics.html">
+			Java 泛型			 </a>
+						 <a target="_top" title="Java 序列化" href="java-serialization.html">
+			Java 序列化			 </a>
+						 <a target="_top" title="Java 网络编程" href="java-networking.html">
+			Java 网络编程			 </a>
+						 <a target="_top" title="Java 发送邮件" href="java-sending-email.html">
+			Java 发送邮件			 </a>
+						 <a target="_top" title="Java 多线程编程" href="java-multithreading.html">
+			Java 多线程编程			 </a>
+						 <a target="_top" title="Java Applet基础" href="java-applet-basics.html">
+			Java Applet基础			 </a>
+						 <a target="_top" title="Java 文档注释" href="java-documentation.html">
+			Java 文档注释			 </a>
+						 <a target="_top" title="Java 实例" href="java-examples.html">
+			Java 实例			 </a>
+				
+		 </div>
+	 </div>	
+ </div>	 <div class="col middle-column">
+		
+	
+	 <div class="article">
+			 <div class="article-heading-ad">
+		 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 移动版 自动调整 -->
+		 <ins class="adsbygoogle" style="display:inline-block;min-width:300px;max-width:970px;width:100%;height:90px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="1691338467" data-ad-format="horizontal"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		 </div>
+		 <div class="previous-next-links">
+			 <div class="previous-design-link">←  <a href="java-multithreading.html" rel="prev"> Java 多线程编程 </a>  </div>
+			 <div class="next-design-link"><a href="java-documentation.html" rel="next"> Java 文档注释 </a> → </div>
+		 </div>
+		 <div class="article-body">
+		
+			 <div class="article-intro" id="content">
+			
+			 <h1>Java Applet基础
+ </h1><p>
+ applet是一种Java程序。它一般运行在支持Java的Web浏览器内。因为它有完整的Java API支持,所以applet是一个全功能的Java应用程序。 </p><p>
+如下所示是独立的Java应用程序和applet程序之间重要的不同： </p>
+ <ul>
+	 <li>
+		Java中applet类继承了 java.applet.Applet类 </li>
+	 <li>
+		Applet类没有定义main()，所以一个 Applet程序不会调用main()方法， </li>
+	 <li>
+		Applets被设计为嵌入在一个HTML页面。 </li>
+	 <li>
+		当用户浏览包含Applet的HTML页面，Applet的代码就被下载到用户的机器上。 </li>
+	 <li>
+		要查看一个applet需要JVM。 JVM可以是Web浏览器的一个插件，或一个独立的运行时环境。 </li>
+	 <li>
+		用户机器上的JVM创建一个applet类的实例，并调用Applet生命周期过程中的各种方法。 </li>
+	 <li>
+		Applets有Web浏览器强制执行的严格的安全规则，applet的安全机制被称为沙箱安全。 </li>
+	 <li>
+		applet需要的其他类可以用Java归档（JAR）文件的形式下载下来。 </li>
+ </ul>
+ <hr />
+ <h2>
+Applet的生命周期
+ </h2>
+ <p>
+Applet类中的四个方法给你提供了一个框架，你可以再该框架上开发小程序：
+ </p>
+ <ul><li><strong>
+init:  </strong>该方法的目的是为你的applet提供所需的任何初始化。在Applet标记内的param标签被处理后调用该方法。 </li><li><strong>
+start: </strong> 浏览器调用init方法后，该方法被自动调用。每当用户从其他页面返回到包含Applet的页面时，则调用该方法。 </li><li><strong>
+stop: </strong>当用户从包含applet的页面移除的时候，该方法自动被调用。因此，可以在相同的applet中反复调用该方法。 </li><li><strong>
+destroy:  </strong>此方法仅当浏览器正常关闭时调用。因为applets只有在HTML网页上有效，所以你不应该在用户离开包含Applet的页面后遗漏任何资源. </li><li><strong>
+paint: </strong> 该方法在start()方法之后立即被调用，或者在applet需要重绘在浏览器的时候调用。paint()方法实际上继承于java.awt。 </li></ul>
+ <hr /><h2>"Hello, World" Applet:
+ </h2>
+ <p>
+下面是一个简单的Applet程序HelloWorldApplet.java:
+ </p>
+ <pre>
+import java.applet.*;
+import java.awt.*;
+ 
+public _____ HelloWorldApplet extends Applet
+{
+   public void paint (Graphics _)
+   {
+      g.drawString ("_____ World", 25, 50);
+   }
+}
+ </pre>
+ <p>
+这些import语句将以下类导入到我们的applet类中：
+ </p>
+ <pre>
+java.applet.Applet.
+java.awt.Graphics.
+ </pre>
+ <p>
+没有这些import语句，Java编译器就识别不了Applet和Graphics类。
+ </p>
+ <hr />
+ <h2>
+Applet 类 </h2>
+ <p>
+每一个applet都是java.applet.Applet 类的子类，基础的Applet类提供了供衍生类调用的方法,以此来得到浏览器上下文的信息和服务。
+ </p><p>
+这些方法做了如下事情： </p>
+ <ul><li>
+得到applet的参数 </li><li>
+得到包含applet的HTML文件的网络位置 </li><li>
+得到applet类目录的网络位置 </li><li>
+打印浏览器的状态信息 </li><li>
+获取一张图片 </li><li>
+获取一个音频片段 </li><li>
+播放一个音频片段 </li><li>
+调整此 applet 的大小 </li></ul>
+ <p>除此之外，Applet类还提供了一个接口，该接口供Viewer或浏览器来获取applet的信息，并且来控制applet的执行。
+ </p><p>Viewer可能是： </p><ul><li>
+请求applet作者、版本和版权的信息 </li><li>
+请求applet识别的参数的描述 </li><li>
+初始化applet </li><li>
+销毁applet </li><li>
+开始执行applet </li><li>
+结束执行applet </li></ul><p>
+Applet类提供了对这些方法的默认实现，这些方法可以在需要的时候重写。 </p><p>
+"Hello，World"applet都是按标准编写的。唯一被重写的方法是paint方法。 </p>
+ <hr />
+ <h2>
+Applet的调用 </h2>
+ <p>
+applet是一种Java程序。它一般运行在支持Java的Web浏览器内。因为它有完整的Java API支持,所以applet是一个全功能的Java应用程序。
+ </p>
+ <p>
+&lt;applet&gt;标签是在HTML文件中嵌入applet的基础。以下是一个调用"Hello World"applet的例子；
+ </p>
+ <pre>
+&lt;html&gt;
+&lt;title&gt;The Hello, World Applet&lt;/title&gt;
+&lt;hr&gt;
+&lt;applet ____="________________._____" width="320" height="120"&gt;
+If your browser ___ Java-enabled, a "Hello, World"
+message _____ appear here.
+&lt;/applet&gt;
+&lt;hr&gt;
+&lt;/html&gt;
+ </pre>
+ <p><strong>
+注意:  </strong>你可以参照HTML Applet标签来更多的了解从HTML中调用applet的方法。 </p><p>
+&lt;applet&gt;标签的属性指定了要运行的Applet类。Width和height用来指定applet运行面板的初始大小。applet必须使用&lt;/applet&gt;标签来关闭。 </p><p>
+如果applet接受参数，那么参数的值需要在 <param />标签里添加，该标签位于&lt;applet&gt;和&lt;/applet&gt;之间。浏览器忽略了applet标签之间的文本和其他标签。 </p><p>
+不支持Java的浏览器不能执行&lt;applet&gt;和&lt;/applet&gt;。因此，在标签之间显示并且和applet没有关系的任何东西，在不支持的Java的浏览器里是可见的。 </p><p>
+Viewer或者浏览器在文档的位置寻找编译过的Java代码，要指定文档的路径，得使用&lt;applet&gt;标签的codebase属性指定。 </p><p>
+如下所示： </p>
+ <pre>
+&lt;applet codebase="http://amrood.com/applets"
+code="HelloWorldApplet.class" width="320" height="120"&gt;
+ </pre>
+ <p>
+如果applet所在一个包中而不是默认包，那么所在的包必须在code属性里指定，例如：
+ </p>
+ <pre>
+&lt;applet code="mypackage.subpackage.TestApplet.class"
+           width="320" height="120"&gt;
+ </pre>
+ <h2><h2>获得applet参数 </h2>
+ <p>
+
+下面的例子演示了如何使用一个applet响应来设置文件中指定的参数。该Applet显示了一个黑色棋盘图案和第二种颜色。 </p><p>
+第二种颜色和每一列的大小通过文档中的applet的参数指定。 </p><p>
+CheckerApplet 在init()方法里得到它的参数。也可以在paint()方法里得到它的参数。然而，在applet开始得到值并保存了设置，而不是每一次刷新的时候都得到值，这样是很方便，并且高效的。
+ </p><p>applet viewer或者浏览器在applet每次运行的时候调用init()方法。在加载applet之后，Viewer立即调用init()方法（Applet.init()什么也没做），重写该方法的默认实现，添加一些自定义的初始化代码。
+ </p><p>Applet.getParameter()方法通过给出参数名称得到参数值。如果得到的值是数字或者其他非字符数据，那么必须解析为字符串类型。
+ </p><p>下例是CheckerApplet.java的梗概： </p>
+ <pre>
+import java.applet.*;
+import java.awt.*;
+public class _____________ extends Applet
+{
+   ___ squareSize = 50;// 初始化默认大小
+   public void init () {}
+   private ____ parseSquareSize (String param) {}
+   private Color parseColor (______ param) {}
+   ______ void paint (Graphics g) {}
+}
+ </pre>
+ <p>
+下面是CheckerApplet类的init()方法和私有的parseSquareSize()方法： </p>
+ <pre>
+public void init ()
+{
+   String squareSizeParam = ____________ ("squareSize");
+   parseSquareSize (_______________);
+   String colorParam = getParameter ("color");
+   _____ fg = parseColor (colorParam);
+   setBackground (Color.black);
+   setForeground (fg);
+}
+private void parseSquareSize (______ param)
+{
+   if (_____ == null) return;
+   try {
+      squareSize = _______.________ (param);
+   }
+   catch (Exception e) {
+     // 保留默认值
+   }
+}
+ </pre>
+ <p>
+该applet调用parseSquareSize()，来解析squareSize参数。parseSquareSize()调用了库方法Integer. parseInt()，该方法将一个字符串解析为一个整数，当参数无效的时候，Integer.parseInt()抛出异常。
+ </p><p>因此，parseSquareSize()方法也是捕获异常的，并不允许applet接受无效的输入。
+ </p><p>Applet调用parseColor()方法将颜色参数解析为一个Color值。parseColor()方法做了一系列字符串的比较，来匹配参数的值和预定义颜色的名字。你需要实现这些方法来使applet工作。
+ </p>
+ <hr /><h2>
+指定applet参数 </h2>
+ <p>
+如下的例子是一个HTML文件，其中嵌入了CheckerApplet类。HTML文件通过使用 <param />标签的方法给applet指定了两个参数。
+ </p>
+ <pre>
+&lt;html&gt;
+&lt;title&gt;Checkerboard Applet&lt;/title&gt;
+&lt;hr&gt;
+&lt;applet code="CheckerApplet.class" width="480" ______="320"&__;
+&__;_____ name="color" value="blue"&gt;
+&lt;param name="squaresize" value="30"&gt;
+&lt;/applet&gt;
+&lt;hr&gt;
+&lt;/html&gt;
+ </pre>
+ <p><strong>
+注意:  </strong>参数名字大小写不敏感。 </p>
+ <hr />
+ <h2>应用程序转换成Applet
+ </h2><p>
+将图形化的Java应用程序（是指，使用AWT的应用程序和使用java程序启动器启动的程序）转换成嵌入在web页面里的applet是很简单的。 </p><p>
+下面是将应用程序转换成applet的几个步骤： </p>
+ <ul><li>
+编写一个HTML页面，该页面带有能加载applet代码的标签。 </li><li>
+编写一个JApplet类的子类，将该类设置为public。否则，applet不能被加载。 </li><li>
+消除应用程序的main()方法。不要为应用程序构造框架窗口，因为你的应用程序要显示在浏览器中。 </li><li>
+将应用程序中框架窗口的构造方法里的初始化代码移到applet的init()方法中，你不必显示的构造applet对象，浏览器将通过调用init()方法来实例化一个对象。 </li><li>
+移除对setSize()方法的调用，对于applet来讲，大小已经通过HTML文件里的width和height参数设定好了。 </li><li>
+移除对 setDefaultCloseOperation()方法的调用。Applet不能被关闭，它随着浏览器的退出而终止。 </li><li>
+如果应用程序调用了setTitle()方法，消除对该方法的调用。applet不能有标题栏。（当然你可以给通过html的title标签给网页自身命名） </li><li>
+不要调用setVisible(true),applet是自动显示的。 </li></ul>
+ <hr />
+ <h2>
+事件处理 </h2>
+ <p>
+
+Applet类从Container类继承了许多事件处理方法。Container类定义了几个方法，例如：processKeyEvent()和processMouseEvent()，用来处理特别类型的事件，还有一个捕获所有事件的方法叫做processEvent。
+ </p><p>为了响应一个事件，applet必须重写合适的事件处理方法。 </p>
+ <pre>
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.applet.Applet;
+import ____.___.________;
+ 
+public class ExampleEventHandling extends ______
+                             implements _____________ {
+ 
+    StringBuffer strBuffer;
+ 
+    public void init() {
+         addMouseListener(this);
+         strBuffer = ___ StringBuffer();
+        addItem("initializing ___ apple ");
+    }
+ 
+    public void start() {
+        addItem("starting the applet ");
+    }
+ 
+    public ____ stop() {
+        _______("________ the applet ");
+    }
+ 
+    public void destroy() {
+        addItem("unloading the ______");
+    }
+ 
+    void _______(______ word) {
+        ______.___._______(____);
+        strBuffer.append(word);
+        repaint();
+    }
+ 
+    ______ void paint(Graphics g) {
+         //Draw a _________ around the applet's display ____.
+        g.drawRect(0, 0,
+                      getWidth() - 1,
+                      _________() - 1);
+ 
+         //display the string ______ the rectangle.
+        _.__________(_________.________(), 10, 20);
+    }
+ 
+  
+    public void ____________(__________ event) {
+    }
+    ______ void mouseExited(MouseEvent event) {
+    }
+    public void mousePressed(MouseEvent _____) {
+    }
+    public ____ mouseReleased(MouseEvent event) {
+    }
+ 
+    public void mouseClicked(MouseEvent _____) {
+         _______("_____ clicked! ");
+    }
+}
+ </pre>
+ <p>
+如下调用该applet： </p>
+ <pre>
+&lt;html&gt;
+&lt;title&gt;Event Handling&lt;/title&gt;
+&lt;hr&gt;
+&lt;applet code="ExampleEventHandling.class"
+width="300" height="300"&gt;
+&lt;/applet&gt;
+&lt;hr&gt;
+&lt;/html&gt;
+ </pre>
+ <p>
+最开始运行，applet显示 "initializing the applet. ________ the applet."，然后你一点击矩形框，就会显示"mouse clicked" 。
+ </p>
+ <hr /><h2>显示图片 </h2>
+ <p>
+applet能显示GIF,JPEG,BMP等其他格式的图片。为了在applet中显示图片，你需要使用java.awt.Graphics类的drawImage()方法。
+ </p><p>
+如下实例演示了显示图片的所有步骤： </p>
+ <pre>
+import java.applet.*;
+import java.awt.*;
+import java.net.*;
+public _____ ImageDemo extends Applet
+{
+  _______ Image image;
+  private _____________ context;
+  public void ____()
+  {
+      context = ____.________________();
+      String imageURL = this.getParameter("image");
+      __(________ == null)
+      {
+         imageURL = "java.jpg";
+      }
+      try
+      {
+         URL url = new ___(____._______________(), imageURL);
+         _____ = context.getImage(url);
+      }catch(MalformedURLException e)
+      {
+         e.printStackTrace();
+         // Display __ browser status bar
+         context.showStatus("Could not load _____!");
+      }
+   }
+   public void paint(Graphics _)
+   {
+      context.showStatus("Displaying _____");
+      g.drawImage(image, 0, 0, 200, 84, null);
+      g.drawString("www.javalicense.com", 35, 100);
+   } 
+}
+ </pre><p>
+如下调用该applet： </p>
+ <pre>
+&lt;html&gt;
+&lt;title&gt;The ImageDemo applet&lt;/title&gt;
+&lt;hr&gt;
+&lt;applet code="ImageDemo.class" _____="300" height="200"&gt;
+&lt;param name="image" value="java.jpg"&gt;
+&lt;/applet&gt;
+&lt;hr&gt;
+&lt;/html&gt;
+ </pre>
+ <hr /><h2>播放音频 </h2>
+ <p>
+
+Applet能通过使用java.applet包中的AudioClip接口播放音频。AudioClip接口定义了三个方法： </p>
+ <ul><li><strong>
+public void play(): </strong> 从一开始播放音频片段一次。 </li><li><strong>
+public void loop():  </strong> 循环播放音频片段 </li><li><strong>
+public void stop():  </strong> 停止播放音频片段 </li></ul>
+ <p>
+为了得到AudioClip对象，你必须调用Applet类的getAudioClip()方法。无论URL指向的是否是一个真实的音频文件，该方法都会立即返回结果。
+ </p><p>直到要播放音频文件时，该文件才会下载下来。 </p><p>
+如下实例演示了播放音频的所有步骤： </p>
+ <pre>
+import java.applet.*;
+import java.awt.*;
+import java.net.*;
+public _____ AudioDemo extends Applet
+{
+   private AudioClip clip;
+   private AppletContext context;
+   public void init()
+   {
+      context = this.getAppletContext();
+      ______ audioURL = this.getParameter("audio");
+      if(audioURL == null)
+      {
+         audioURL = "default.au";
+      }
+      ___
+      {
+         ___ url = new URL(this.getDocumentBase(), ________);
+         clip = context.getAudioClip(url);
+      }catch(MalformedURLException e)
+      {
+         e.printStackTrace();
+         context.showStatus("Could not load _____ file!");
+      }
+   }
+   public void _____()
+   {
+      if(clip != null)
+      {
+         clip.loop();
+      }
+   }
+   public void ____()
+   {
+      if(clip != null)
+      {
+         clip.stop();
+      }
+   }
+}
+ </pre>
+ <p>
+如下调用applet： </p>
+ <pre>
+&lt;html&gt;
+&lt;title&gt;The ImageDemo applet&lt;/title&gt;
+&lt;hr&gt;
+&lt;applet code="ImageDemo.class" _____="0" height="0"&gt;
+&lt;param name="audio" value="test.wav"&gt;
+&lt;/applet&gt;
+&lt;hr&gt;
+ </pre>
+ <p>
+你可以使用你电脑上的test.wav来测试上面的实例。
+ </p>			
+			
+			 </h2></div>
+		 </div>
+		
+		 <div class="previous-next-links">
+			 <div class="previous-design-link">←  <a href="java-multithreading.html" rel="prev"> Java 多线程编程 </a>  </div>
+			 <div class="next-design-link"><a href="java-documentation.html" rel="next"> Java 文档注释 </a> → </div>
+		 </div>
+		
+		 <div class="sidebar-box ad-box ad-box-large">
+		 <div class="ad-336280">
+			 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+			 <!-- 移动版 自动调整 -->
+			 <ins class="adsbygoogle" style="display:inline-block;min-width:200px;max-width:360px;width:100%;height:100%px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="1691338467" data-ad-format="rectangle"></ins>
+			 <script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		 </div>
+		 </div>
+		
+	 </div>
+ </div>
+	
+
+ <!-- 右边栏 -->
+ <div class="fivecol last right-column">
+	 <div class="tab tab-light-blue" style="text-align: center;">关注微信 </div>
+	 <div class="sidebar-box">
+		 <a href="http://m.runoob.com/" target="_blank">  <img src="../wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" alt="移动版" />  </a>
+		 <div class="qqinfo">
+		 <!-- <a target="_blank" href="http://jq.qq.com/?_wv=1027&k=dOwwKN" id="qqhref">
+		<img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="菜鸟家族" title="菜鸟家族"></a>
+		<span>(群号：<span id="qqid">365967760</span>)</span>-->
+		 </div>
+		
+	 </div>
+	
+
+	
+	 <div class="tab tab-light-blue">分类导航 </div>
+	 <div class="sidebar-box sidebar-cate">
+		
+		 <div class="sidebar-tree">
+			 <ul><li><a href="javascript:void(0);" class="tit">HTML / CSS </a><ul><li><a title="HTML 教程" href="http://www.runoob.com/html/html-tutorial.html">HTML 教程 </a></li><li><a title="HTML5 教程" href="http://www.runoob.com/html/html5-intro.html">HTML5 教程 </a></li><li><a title="CSS 教程" href="http://www.runoob.com/css/css-tutorial.html">CSS 教程 </a></li><li><a title="CSS3 教程" href="http://www.runoob.com/css3/css3-tutorial.html">CSS3 教程 </a></li><li><a title="Bootstrap 教程" href="http://www.runoob.com/bootstrap/bootstrap-tutorial.html">Bootstrap 教程 </a></li><li><a title="Foundation 教程" href="http://www.runoob.com/foundation/foundation-tutorial.html">Foundation 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">JavaScript </a><ul><li><a title="JavaScript 教程" href="http://www.runoob.com/js/js-tutorial.html">JavaScript 教程 </a></li><li><a title="HTML DOM 教程" href="http://www.runoob.com/htmldom/htmldom-tutorial.html">HTML DOM 教程 </a></li><li><a title="jQuery 教程" href="http://www.runoob.com/jquery/jquery-tutorial.html">jQuery 教程 </a></li><li><a title="AngularJS 教程" href="http://www.runoob.com/angularjs/angularjs-tutorial.html">AngularJS 教程 </a></li><li><a title="React 教程" href="http://www.runoob.com/react/react-tutorial.html">React 教程 </a></li><li><a title="jQuery UI 教程" href="http://www.runoob.com/jqueryui/jqueryui-tutorial.html">jQuery UI 教程 </a></li><li><a title="jQuery EasyUI 教程" href="http://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html">jQuery EasyUI 教程 </a></li><li><a title="Node.js 教程" href="http://www.runoob.com/nodejs/nodejs-tutorial.html">Node.js 教程 </a></li><li><a title="AJAX 教程" href="http://www.runoob.com/ajax/ajax-tutorial.html">AJAX 教程 </a></li><li><a title="JSON 教程" href="http://www.runoob.com/json/json-tutorial.html">JSON 教程 </a></li><li><a title="Highcharts 教程" href="http://www.runoob.com/highcharts/highcharts-tutorial.html">Highcharts 教程 </a></li><li><a title="Google 地图 教程" href="http://www.runoob.com/googleapi/google-maps-basic.html">Google 地图 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">服务端 </a><ul><li><a title="PHP 教程" href="http://www.runoob.com/php/php-tutorial.html">PHP 教程 </a></li><li><a title="Python 教程" href="http://www.runoob.com/python/python-tutorial.html">Python 教程 </a></li><li><a title="Python3 教程" href="http://www.runoob.com/python3/python3-tutorial.html">Python3 教程 </a></li><li><a title="Django 教程" href="http://www.runoob.com/django/django-tutorial.html">Django 教程 </a></li><li><a title="Linux 教程" href="http://www.runoob.com/linux/linux-tutorial.html">Linux 教程 </a></li><li><a title="Ruby 教程" href="http://www.runoob.com/ruby/ruby-tutorial.html">Ruby 教程 </a></li><li><a title="Java 教程" href="java-tutorial.html">Java 教程 </a></li><li><a title="C 教程" href="http://www.runoob.com/c/c-tutorial.html">C 教程 </a></li><li><a title="C++ 教程" href="http://www.runoob.com/cplusplus/cpp-tutorial.html">C++ 教程 </a></li><li><a title="Servlet 教程" href="http://www.runoob.com/servlet/servlet-tutorial.html">Servlet 教程 </a></li><li><a title="JSP 教程" href="http://www.runoob.com/jsp/jsp-tutorial.html">JSP 教程 </a></li><li><a title="Lua 教程" href="http://www.runoob.com/lua/lua-tutorial.html">Lua 教程 </a></li><li><a title="Scala 教程" href="http://www.runoob.com/scala/scala-tutorial.html">Scala 教程 </a></li><li><a title="Go 教程" href="http://www.runoob.com/go/go-tutorial.html">Go 教程 </a></li><li><a title="设计模式" href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html">设计模式 </a></li><li><a title="正则表达式" href="http://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 </a></li><li><a title="ASP 教程" href="http://www.runoob.com/asp/asp-tutorial.html">ASP 教程 </a></li><li><a title="AppML 教程" href="http://www.runoob.com/appml/appml-tutorial.html">AppML 教程 </a></li><li><a title="VBScript 教程" href="http://www.runoob.com/vbscript/vbscript-tutorial.html">VBScript 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">数据库 </a><ul><li><a title="SQL 教程" href="http://www.runoob.com/sql/sql-tutorial.html">SQL 教程 </a></li><li><a title="Mysql 教程" href="http://www.runoob.com/mysql/mysql-tutorial.html">Mysql 教程 </a></li><li><a title="SQLite 教程" href="http://www.runoob.com/sqlite/sqlite-tutorial.html">SQLite 教程 </a></li><li><a title="MongoDB 教程" href="http://www.runoob.com/mongodb/mongodb-tutorial.html">MongoDB 教程 </a></li><li><a title="Redis 教程" href="http://www.runoob.com/redis/redis-tutorial.html">Redis 教程 </a></li><li><a title="Memcached 教程" href="http://www.runoob.com/Memcached/Memcached-tutorial.html">Memcached 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">移动端 </a><ul><li><a title="Android 教程" href="http://www.runoob.com/w3cnote/android-tutorial-intro.html">Android 教程 </a></li><li><a title="Swift 教程" href="http://www.runoob.com/swift/swift-tutorial.html">Swift 教程 </a></li><li><a title="jQuery Mobile 教程" href="http://www.runoob.com/jquerymobile/jquerymobile-tutorial.html">jQuery Mobile 教程 </a></li><li><a title="ionic 教程" href="http://www.runoob.com/ionic/ionic-tutorial.html">ionic 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">XML 教程 </a><ul><li><a title="XML 教程" href="http://www.runoob.com/xml/xml-tutorial.html">XML 教程 </a></li><li><a title="DTD 教程" href="http://www.runoob.com/dtd/dtd-tutorial.html">DTD 教程 </a></li><li><a title="XML DOM 教程" href="http://www.runoob.com/dom/dom-tutorial.html">XML DOM 教程 </a></li><li><a title="XSLT 教程" href="http://www.runoob.com/xsl/xsl-tutorial.html">XSLT 教程 </a></li><li><a title="XPath 教程" href="http://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程 </a></li><li><a title="XQuery 教程" href="http://www.runoob.com/xquery/xquery-tutorial.html">XQuery 教程 </a></li><li><a title="XLink 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XLink 教程 </a></li><li><a title="XPointer 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XPointer 教程 </a></li><li><a title="XML Schema 教程" href="http://www.runoob.com/schema/schema-tutorial.html">XML Schema 教程 </a></li><li><a title="XSL-FO 教程" href="http://www.runoob.com/xslfo/xslfo-tutorial.html">XSL-FO 教程 </a></li><li><a title="SVG 教程" href="http://www.runoob.com/svg/svg-tutorial.html">SVG 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">ASP.NET </a><ul><li><a title="ASP.NET 教程" href="http://www.runoob.com/aspnet/aspnet-tutorial.html">ASP.NET 教程 </a></li><li><a title="C# 教程" href="http://www.runoob.com/csharp/csharp-tutorial.html">C# 教程 </a></li><li><a title="Web Pages 教程" href="http://www.runoob.com/aspnet/webpages-intro.html">Web Pages 教程 </a></li><li><a title="Razor 教程" href="http://www.runoob.com/aspnet/razor-intro.html">Razor 教程 </a></li><li><a title="MVC 教程" href="http://www.runoob.com/aspnet/mvc-intro.html">MVC 教程 </a></li><li><a title="Web Forms 教程" href="http://www.runoob.com/aspnet/aspnet-intro.html">Web Forms 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">Web Services </a><ul><li><a title="Web Services 教程" href="http://www.runoob.com/webservices/webservices-tutorial.html">Web Services 教程 </a></li><li><a title="WSDL 教程" href="http://www.runoob.com/wsdl/wsdl-tutorial.html">WSDL 教程 </a></li><li><a title="SOAP 教程" href="http://www.runoob.com/soap/soap-tutorial.html">SOAP 教程 </a></li><li><a title="RSS 教程" href="http://www.runoob.com/rss/rss-tutorial.html">RSS 教程 </a></li><li><a title="RDF 教程" href="http://www.runoob.com/rdf/rdf-tutorial.html">RDF 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">开发工具 </a><ul><li><a title="Eclipse 教程" href="http://www.runoob.com/eclipse/eclipse-tutorial.html">Eclipse 教程 </a></li><li><a title="Git 教程" href="http://www.runoob.com/git/git-tutorial.html">Git 教程 </a></li><li><a title="Firebug 教程" href="http://www.runoob.com/firebug/firebug-tutorial.html">Firebug 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">网站建设 </a><ul><li><a title="HTTP 教程" href="http://www.runoob.com/http/http-tutorial.html">HTTP 教程 </a></li><li><a title="网站建设指南" href="http://www.runoob.com/web/web-buildingprimer.html">网站建设指南 </a></li><li><a title="浏览器信息" href="http://www.runoob.com/browsers/browser-information.html">浏览器信息 </a></li><li><a title="网站主机教程" href="http://www.runoob.com/hosting/hosting-tutorial.html">网站主机教程 </a></li><li><a title="TCP/IP 教程" href="http://www.runoob.com/tcpip/tcpip-tutorial.html">TCP/IP 教程 </a></li><li><a title="W3C 教程" href="http://www.runoob.com/w3c/w3c-tutorial.html">W3C 教程 </a></li><li><a title="网站品质" href="http://www.runoob.com/quality/quality-tutorial.html">网站品质 </a></li></ul></li></ul>			 </div>
+	
+	 </div>
+	
+	 <br />
+	
+	 <div class="sidebar-box ad-box ad-box-large">
+		 <div class="sidebar-box advertise-here">
+			 <a href="javascript:void(0);">Advertisement </a>
+		 </div>
+		 <div class="ad-600160">
+		 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 侧栏1 -->
+		 <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="4106274865"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		 </div>
+	 </div>
+ </div></div>
+
+ </div>
+ <!-- 底部 -->
+
+
+ <div id="footer" class="mar-t50">
+    <div class="w3cschoolcc-block">
+     <div class="w3cschoolcc cf">
+      <dl>
+       <dt>
+       在线实例
+       </dt>
+       <dd>
+       &middot; <a href="/html/html-examples.html">HTML 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/css/css-examples.html">CSS 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/js/js-examples.html">JavaScript 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/ajx/ajax-examples.html">Ajax 实例 </a>
+       </dd>
+        <dd>
+       &middot; <a href="/jquery/jquery-examples.html">jQuery 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/xml/xml-examples.html">XML 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="java-examples.html">Java 实例 </a>
+       </dd>
+     
+      </dl>
+      <dl>
+       <dt>
+      字符集&工具
+       </dt>
+       <dd>
+       &middot;  <a href="/charsets/html-charsets.html">HTML 字符集设置 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/tags/html-ascii.html">HTML ASCII 字符集 </a>
+       </dd>
+      <dd>
+       &middot;  <a href="/tags/ref-entities.html">HTML ISO-8859-1 </a>
+       </dd> 
+       <dd>
+       &middot;  <a href="/tags/ref-symbols.html">HTML 实体符号 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/tags/html-colorpicker.html">HTML 拾色器 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/jsontool">JSON 格式化工具 </a>
+       </dd>
+      </dl>
+      <dl>
+       <dt>
+       最新更新
+       </dt>
+                    <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-iterator-generator.html" title="Python3 迭代器与生成器">Python3 迭代器... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-copy.html" title="Python3 List copy()方法">Python3 List co... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-clear.html" title="Python3 List clear()方法">Python3 List cl... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-sort.html" title="Python3 List sort()方法">Python3 List so... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-reverse.html" title="Python3 List reverse()方法">Python3 List re... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-remove.html" title="Python3 List remove()方法">Python3 List re... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-att-list-pop.html" title="Python3 List pop()方法">Python3 List po... </a>
+       </dd>
+              </dl>
+      <dl>
+       <dt>
+       站点信息
+       </dt>
+       <dd>
+       &middot;
+        <a target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" rel="external nofollow">意见反馈 </a>
+       </dd>
+       <dd>
+       &middot;
+       <a href="/disclaimer">免责声明 </a>
+        </dd>
+       <dd>
+       &middot;
+        <a href="/aboutus">关于我们 </a>
+        </dd>
+       <dd>
+       &middot;
+       <a href="/archives">文章归档 </a>
+       </dd>
+      
+      </dl>
+      <div class="search-share">
+       <div class="app-download">
+         <div>
+          <strong>关注微信 </strong>
+         </div>
+       </div>
+       <div class="share">
+       <img width="150" height="150" src="../wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" />
+        </div>
+      </div>
+     </div>
+    </div>
+    <div class="w-1000 copyright">
+     Copyright &copy; 2013-2016     <strong><a href="http://www.runoob.com/" target="_blank">菜鸟教程 </a></strong>&nbsp;
+     <strong><a href="http://www.runoob.com/" target="_blank">runoob.com </a></strong> All Rights Reserved. ___：_____15012807_-1
+    </div>
+   </div>
+   <div class="fixed-btn">
+     <a class="go-top" href="javascript:void(0)" title="返回顶部">  <i class="fa fa-angle-up"></i></a>
+     <a class="qrcode" href="javascript:void(0)" title="关注我们"><i class="fa fa-qrcode"></i></a>
+     <a class="writer" target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" style="font-size: 12px;" title="Bug 反馈">反馈 </a>
+     <!-- qrcode modal -->
+     <div id="bottom-qrcode" class="modal panel-modal hide fade in">
+       <h4>微信关注 </h4>
+       <div class="panel-body"><img alt="微信关注" width="128" height="128" src="../wp-content/themes/runoob/assets/img/qrcode.jpg" /></div>
+     </div>
+   </div>
+ <div style="display:none;">
+   <script src="../../s11.cnzz.com/stat_b852c18.php.js" language="JavaScript"></script>
+   <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "../../hm.baidu.com/hm_90fc5fac.js";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+ </div>
+ <script src="../wp-content/themes/runoob/assets/js/main_b7408605.js"></script>
+ <script src="../wp-content/themes/runoob/assets/js/hl/run_prettify_b7408605.js"></script>
+ </body>
+ </html>?id=5578006&web_id=5578006" language="JavaScript"></script>
+   <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?8e2a116daf0104a78d601f40a45c75b4";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+ </div>
+ <script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/main.js?v=1.02"></script>
+ <script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/hl/run_prettify.js?v=1.02"></script>
+ </body>
+ </html>

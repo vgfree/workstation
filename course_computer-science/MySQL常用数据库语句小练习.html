@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="gb2312" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<title>mysql 常用数据库语句 小练习_Mysql_脚本之家</title>
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+<meta name="keywords" content="mysql,数据库,语句" />
+<meta name="description" content="一个mysql小练习 建表 查询 修改表 增加字段 删除字段" />
+<link rel="alternate" media="only screen and(max-width: 640px)" href="http://m.jb51.net/article/19184.htm" />
+<meta http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/article/19184.htm" />
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/article/19184.htm" />
+<script type="text/javascript">
+var tougao="mdxy-dxy";var lmname="Mysql";
+(function(){if(/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile/i.test(navigator.userAgent)){window.location.href="http://m.jb51.net/article/19184.htm"}})();
+</script>
+<link type="text/css" href="http://img.jb51.net/skin/2016/base.css" rel="stylesheet" />
+<link type="text/css" href="http://img.jb51.net/skin/2016/common.css" rel="stylesheet" />
+<script type="text/javascript" src="http://img.jb51.net/jslib/jquery/jquery.min.js"></script>
+<script type=text/javascript src="http://img.jb51.net/js/common.js"></script>
+</head>
+<body>
+<!--head Star -->
+<div id="head">
+  <div class="toolBar">
+  <div class="main">
+    <!--topNav Star -->
+    <div class="topNav clearfix">
+      <ul class="navList fl">
+        <li>
+          <div class="one"><a href="http://www.jb51.net" target="_blank">脚本之家</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/softs/" target="_blank">软件下载<i class="icon"></i></a></div>
+          <div class="two">
+<a href="/softs/android.html" target="_blank">android软件</a> <a href="/softs/mac.html" target="_blank">MAC软件</a> <a href="/qudong/" target="_blank">驱动下载</a> <a href="/fonts/" target="_blank">字体下载</a> <a href="/dll/" target="_blank">DLL下载</a> </div>
+</li>
+        <li>
+          <div class="one"><a href="/codes/" target="_blank">源码下载<i class="icon"></i></a></div>
+          <div class="two"> <a href="/codes/asp.html" target="_blank">asp源码</a> <a href="/codes/php.html" target="_blank">php源码</a> <a href="/codes/aspnet.html" target="_blank">asp.net源码</a> <a href="/codes/jsp.html" target="_blank">jsp源码</a> <a href="/codes/editor.html" target="_blank">网页编辑器</a> <a href="/codes/list123_1.html" target="_blank">数据库管理</a> <a href="/codes/list124_1.html" target="_blank">常用组件</a> <a href="/jiaoben/" target="_blank">脚本下载</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://tools.jb51.net" target="_blank">在线工具<i class="icon"></i></a></div>
+          <div class="two"> <a href="/shouce/" target="_blank">在线手册</a> <a href="/tools/cssyasuo.shtml" target="_blank">CSS格式化</a> <a href="http://tools.jb51.net/tools/js_geshihua.asp" target="_blank">JS格式化</a> <a href="/tools/html-js.htm" target="_blank">Html转化为Js</a> <a href="http://tools.jb51.net/regex/javascript" target="_blank">js正则表达式</a>
+</div>
+        </li>
+        <li>
+          <div class="one"><a href="/w3school/" target="_blank">网页教程基础</a></div>
+        </li>
+			<li>
+          <div class="one"><a href="http://s.jb51.net" target="_blank">服务器常用软件</a></div>
+        </li>
+		<li>
+          <div class="one"><a href="http://m.jb51.net" target="_blank">手机版</a></div>
+          <div class="two"><img src="http://files.jb51.net/images/m.jb51.net.png" data-baiduimageplus-ignore /></div>     
+        </li>
+        <li class="watch">
+          <div class="one"><a href="http://weibo.com/jb51net" target="_blank" rel="nofollow" ><i class="icon"></i>关注微信</a></div>
+          <div class="two"><img src="http://files.jb51.net/images/weixin_200.gif" data-baiduimageplus-ignore /></div>
+        </li>
+      </ul>
+      <div class="navUser mt5 fr" id="jb51_topbar" > </div>
+    </div>
+    <!--topNav End -->
+  </div>
+</div>
+
+  <div class="main clearfix">
+    <div class="mtb10 clearfix">
+      <div class="logo"><a href="http://www.jb51.net/"><img src="http://www.jb51.net/images/logo.gif" title="脚本之家" alt="脚本之家" /></a></div>
+      <div class="logom fl" id="logo_m"></div>
+      <div class="logor fr" id="logo_r"></div>
+    </div>
+<!-- 导航-->
+<DIV class="nav_top clearfix">
+<UL>
+<li><a href="http://www.jb51.net/web/">网页制作</a></li>
+<li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+<li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+<li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+<li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+<li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+<li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+<li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+<li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+<li><a href="http://www.jb51.net/os/">操作系统</a></li>
+<li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+<li><a href="http://www.jb51.net/hack/">网络安全</a></li>
+<li class="last"><a href="http://www.jb51.net/shouce/">在线手册</a></li>
+
+</UL>
+</DIV>
+
+<!--导航结束-->
+<div class="subnav clearfix">
+<ul><li><a href='/list/list_113_1.htm' title="MsSql">MsSql</a></li>
+<li><a href='/list/list_112_1.htm' title="Mysql">Mysql</a></li>
+<li><a href='/list/list_252_1.htm' title="mariadb">mariadb</a></li>
+<li><a href='/list/list_154_1.htm' title="oracle">oracle</a></li>
+<li><a href='/list/list_155_1.htm' title="DB2">DB2</a></li>
+<li><a href='/list/list_236_1.htm' title="mssql2008">mssql2008</a></li>
+<li><a href='/list/list_210_1.htm' title="mssql2005">mssql2005</a></li>
+<li><a href='/list/list_215_1.htm' title="SQLite">SQLite</a></li>
+<li><a href='/list/list_224_1.htm' title="PostgreSQL">PostgreSQL</a></li>
+<li><a href='/list/list_239_1.htm' title="MongoDB">MongoDB</a></li>
+<li><a href='/list/list_242_1.htm' title="Redis">Redis</a></li>
+<li><a href='/list/list_105_1.htm' title="Access">Access</a></li>
+<li><a href='/list/list_132_1.htm' title="数据库文摘">数据库文摘</a></li>
+<li><a href='/list/list_133_1.htm' title="数据库其它">数据库其它</a></li>
+</ul>
+</div>
+<div class="NavBar clearfix ptb10">
+<div class="fl w690">
+<div class="box mb15 mt10"><i class="icon"></i>您的位置：<a href='/'>首页</a> → <a href="/list/index_104.htm" title="数据库">数据库</a> → <a href="/list/list_112_1.htm" title="Mysql">Mysql</a> → 正文内容 mysql 常用 数据库语句</div>
+</div>
+<div class="fr w300"><div class="search">
+<form action="http://so.jb51.net/cse/search" target="_blank">
+    <input type="hidden" name="s" value="10520733385329581432">
+    <input type="hidden" name="ie" value="gbk">
+    <input type="text" name="q" class="key_input" placeholder="请输入关键词">
+    <input type="submit" value="搜索" class="c_btn">
+</form></div></div>
+  </div>
+</div>
+<!--head End -->
+<div class="main mb10 clearfix">
+<div class="clearfix mt10" id="tonglan1"></div>
+</div>
+
+<!--content Star -->
+<div id="contents">
+ <div class="main clearfix">
+      <div class="w690 fl">
+      <div class="article-content border">
+      <div class="title">
+            <h1 class="YaHei">mysql 常用数据库语句 小练习</h1>
+            <p>作者：  字体：[<a href="javascript:turnbig()">增加</a> <a href="javascript:turnsmall()">减小</a>] 类型：转载 时间：2009-07-17<a href="#comments"> 我要评论</a></p>
+        </div>
+        <div class="art_desc mt10"><div id="art_demo">一个mysql小练习 建表 查询 修改表 增加字段 删除字段</div></div>
+        <div class="lbd clearfix" id="bdctop"><script type="text/javascript">dy("art_up")</script></div>
+        <div id="content">
+闲来无事，上班时找了个练习来写，联系题目是针对sql server 2000的以下为mysql <BR>一 单词解释(2分/个) 34分 <BR>　　Data 数据 Database 数据库 RDBMS 关系数据库管理系统 GRANT 授权 <BR>　　REVOKE 取消权限 DENY 拒绝权限 DECLARE 定义变量 PROCEDURE存储过程 <BR>　　事务 Transaction 触发器 TRIGGER 继续 continue 唯一 unqiue <BR>　　主键 primary key 标识列 identity 外键 foreign key 检查 check <BR>　　约束 constraint <BR>-------------------------------------------------------------------- <BR>1) 创建一张学生表，包含以下信息，学号，姓名，年龄，性别，家庭住址，联系电话 <BR>create table student <BR>( <BR>学号 int, <BR>姓名 varchar(10), <BR>年龄 int, <BR>性别 varchar(4), <BR>家庭住址 varchar(50), <BR>联系电话 varchar(11) <BR>); <BR>-------------------------------------------------------------------- <BR>2) 修改学生表的结构，添加一列信息，学历 <BR>alter table student add column 学历 varchar(6); <BR>-------------------------------------------------------------------- <BR>3) 修改学生表的结构，删除一列信息，家庭住址 <BR>alter table student drop column 家庭住址;//注意此处用drop而非delete <BR>-------------------------------------------------------------------- <BR>4) 向学生表添加如下信息： <BR>　　学号 姓名年龄性别联系电话学历 <BR>　　1A22男123456小学 <BR>　　2B21男119中学 <BR>　　3C23男110高中 <BR>　　4D18女114大学 <BR>insert into student (学号,姓名,年龄,性别,联系电话,学历) values(1,"A",22,"男","123456","小学"); <BR>insert into student (学号,姓名,年龄,性别,联系电话,学历) values(1,"B",21,"男","119","中学"); <BR>insert into student (学号,姓名,年龄,性别,联系电话,学历) values(1,"C",23,"男","123456","高中"); <BR>insert into student (学号,姓名,年龄,性别,联系电话,学历) values(1,"D",23,"女","114","大学"); <BR>-------------------------------------------------------------------- <BR>5) 修改学生表的数据，将电话号码以11开头的学员的学历改为“大专” <BR>update student set 学历="大专" where 联系电话 like "11%"; <BR>-------------------------------------------------------------------- <BR>6) 删除学生表的数据，姓名以C开头，性别为‘男'的记录删除 <BR>delete from student where 姓名 like "C" and 性别="男"; <BR>-------------------------------------------------------------------- <BR>7) 查询学生表的数据，将所有年龄小于22岁的，学历为“大专”的，学生的姓名和学号示出来 <BR>select 姓名,学号 from student where 年龄&lt;22 and 学历="大专"; <BR>-------------------------------------------------------------------- <BR>8) 查询学生表的数据，查询所有信息，列出前25%的记录 <BR>select top 25 percent * from student ; ???? <BR>select * from student limit 25%;???? <BR>这条有问题，在sql 2000中应该是select top 25 percent * from student ; <BR>-------------------------------------------------------------------- <BR>　9) 查询出所有学生的姓名，性别，年龄降序排列 <BR>select 姓名,性别,年龄 from student order by 年龄 desc; <BR>-------------------------------------------------------------------- <BR>10) 按照性别分组查询所有的平均年龄 <BR>select avg(年龄) as 平均年龄 from student group by 性别; <BR>select avg(年龄) from student group by 性别; <BR>select avg(年龄) 平均年龄 from student group by 性别; <BR>-------------------------------------------------------------------- <BR>　　3) 说出以下聚合数的含义：avg ,sum ,max ,min , count ,count(*) <BR>　　AVG:求平均值 <BR>　　SUM:求和 <BR>　　MAX:求最大值 <BR>　　MIN:求最小值 <BR>　　COUNT(*):返回所有行数 <BR>　　COUNT返回满足指定条件的记录值
+
+
+</div><!--endmain-->
+<div class="art_xg">
+
+</div>
+<div id="bot_ad" class="lbd clearfix">
+<script type="text/javascript">
+var cpro_id="u776243";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"650",rsi1:"250",pat:"1",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",tft:"0",tlt:"1",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+<div id="shoucang">
+
+</div>
+<div class="tags mt10">
+<strong>Tags：</strong><a href="http://img.jb51.net/tag/mysql/1.htm" target="_blank" title="搜索关于mysql的文章">mysql</a> <a href="http://img.jb51.net/tag/%CA%FD%BE%DD%BF%E2/1.htm" target="_blank" title="搜索关于数据库的文章">数据库</a> <a href="http://img.jb51.net/tag/%D3%EF%BE%E4/1.htm" target="_blank" title="搜索关于语句的文章">语句</a> 
+</div>
+<DIV class="relatedarticle clearfix mt5">
+<H2>相关文章</H2>
+<ul><li><span>2015-03-03</span><a href="/article/62851.htm" title="深入分析Mysql中limit的用法" target="_blank">深入分析Mysql中limit的用法</a></li><li><span>2014-02-02</span><a href="/article/46508.htm" title="MySQL字段自增自减的SQL语句示例介绍" target="_blank">MySQL字段自增自减的SQL语句示例介绍</a></li><li><span>2009-07-07</span><a href="/article/19384.htm" title="将MySQL数据库移植为PostgreSQL" target="_blank">将MySQL数据库移植为PostgreSQL</a></li><li><span>2015-05-05</span><a href="/article/66999.htm" title="在MySQL中使用STRAIGHT_JOIN的教程" target="_blank">在MySQL中使用STRAIGHT_JOIN的教程</a></li><li><span>2011-03-03</span><a href="/article/26472.htm" title="简单实现MySQL服务器的优化配置方法" target="_blank">简单实现MySQL服务器的优化配置方法</a></li><li><span>2015-05-05</span><a href="/article/65795.htm" title="设置MySQL中的数据类型来优化运行速度的实例" target="_blank">设置MySQL中的数据类型来优化运行速度的实例</a></li><li><span>2013-07-07</span><a href="/article/39362.htm" title="解析数据库分页的两种方法对比(row_number()over()和top的对比)" target="_blank">解析数据库分页的两种方法对比(row_number()over()和top的对比)</a></li><li><span>2011-03-03</span><a href="/article/26478.htm" title="MySQL数据库存储引擎和分支现状分析" target="_blank">MySQL数据库存储引擎和分支现状分析</a></li><li><span>2015-04-04</span><a href="/article/64827.htm" title="Mysql的语句生成后门木马的方法" target="_blank">Mysql的语句生成后门木马的方法</a></li><li><span>2015-12-12</span><a href="/article/76883.htm" title="在Hadoop集群环境中为MySQL安装配置Sqoop的教程" target="_blank">在Hadoop集群环境中为MySQL安装配置Sqoop的教程</a></li></ul>
+</DIV>
+<div class="lbd clearfix mt5">
+<script type="text/javascript">
+var cpro_id="u2261530";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"680",rsi1:"200",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+<a href="#comments"></a>
+<div id="comments">
+<H2>最新评论</H2>
+<div class="pd5"><div id="SOHUCS" sid="art_19184"></div></div>
+</div>
+      </div><!--endborder-->
+      </div><!--end fl-->
+      
+<div class="w300 fr">
+<div class="r300 clearfix" id="r1gg"><script type="text/javascript">dy("r1gg")</script></div>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">大家感兴趣的内容</H4>
+<UL class="newsList newList-in">
+<li><EM class="no1">1</EM><a href="/article/23876.htm" title="mysql安装图解 mysql图文安装教程(详细说明)" target="_blank">mysql安装图解 mysql图文安装教程</a></li><li><EM class="no2">2</EM><a href="/article/26505.htm" title="Can''t connect to MySQL server on localhost (10061)解决方法" target="_blank">Can''t connect to MySQL server</a></li><li><EM class="no3">3</EM><a href="/article/15386.htm" title="超详细mysql left join,right join,inner join用法分析" target="_blank">超详细mysql left join,right jo</a></li><li><EM class="no4">4</EM><a href="/article/27458.htm" title="Mysql字符串截取函数SUBSTRING的用法说明" target="_blank">Mysql字符串截取函数SUBSTRING的</a></li><li><EM class="no5">5</EM><a href="/article/22734.htm" title="Mysql命令行导入sql数据" target="_blank">Mysql命令行导入sql数据</a></li><li><EM class="no6">6</EM><a href="/article/23966.htm" title="MySQL日期数据类型、时间类型使用总结" target="_blank">MySQL日期数据类型、时间类型使用</a></li><li><EM class="no7">7</EM><a href="/article/39188.htm" title="windows下MySQL5.6版本安装及配置过程附有截图和详细说明" target="_blank">windows下MySQL5.6版本安装及配置</a></li><li><EM class="no8">8</EM><a href="/article/25686.htm" title="MySQL数据库备份与恢复方法" target="_blank">MySQL数据库备份与恢复方法</a></li><li><EM class="no9">9</EM><a href="/article/23781.htm" title="MySQL server has gone away 问题的解决方法" target="_blank">MySQL server has gone away 问题</a></li><li><EM class="no10">10</EM><a href="/article/25257.htm" title="MYSQL 数据库导入导出命令" target="_blank">MYSQL 数据库导入导出命令</a></li>
+</UL>
+</DIV>
+</DIV>
+<div class="r300 clearfix mt10" id="r2"></div>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">最近更新的内容</H4>
+<UL class="newsListA">
+<ul><li><a href="/article/71502.htm" title="微信开发中mysql字符编码问题" target="_blank">微信开发中mysql字符编码问题</a></li><li><a href="/article/70677.htm" title="MySql存储过程与函数详解" target="_blank">MySql存储过程与函数详解</a></li><li><a href="/article/50638.htm" title="浅析MySQL replace into 的用法" target="_blank">浅析MySQL replace into 的用法</a></li><li><a href="/article/32284.htm" title="mysql连接的空闲时间超过8小时后 MySQL自动断开该连接解决方案" target="_blank">mysql连接的空闲时间超过8小时后 MySQL自</a></li><li><a href="/article/52804.htm" title="允许远程用户访问mysql服务sql语句" target="_blank">允许远程用户访问mysql服务sql语句</a></li><li><a href="/article/73669.htm" title="MYSQL数据库使用UTF-8中文编码乱码的解决办法" target="_blank">MYSQL数据库使用UTF-8中文编码乱码的解决</a></li><li><a href="/article/66695.htm" title="详解MySQL中的SQRT函数的使用方法" target="_blank">详解MySQL中的SQRT函数的使用方法</a></li><li><a href="/article/47275.htm" title="在linux中导入sql文件的方法分享(使用命令行转移mysql数据库)" target="_blank">在linux中导入sql文件的方法分享(使用命令</a></li><li><a href="/article/32237.htm" title="mysql 本地数据库如何从远程数据库导数据" target="_blank">mysql 本地数据库如何从远程数据库导数据</a></li><li><a href="/article/32048.htm" title="Ubuntu10下如何搭建MySQL Proxy读写分离探讨" target="_blank">Ubuntu10下如何搭建MySQL Proxy读写分离探</a></li></ul>
+</UL>
+</DIV>
+</DIV>   
+<div class="r300 clearfix mt10" id="idctu1"></div>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">常用在线小工具</H4>
+<ul class="newsListA" id="bctools"></ul>
+</DIV>
+</DIV>
+<div class="r300 clearfix mt10" id="idctu2"></div>
+<div class="mt10 rFixedBox" id="r3">
+<script type="text/javascript">
+var cpro_id="u1397867";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"300",rsi1:"380",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+      
+      
+      </div><!--end fr-->
+      </div>
+</div><!--end content-->
+<div id="footer">
+<div class="main clearfix">
+<p>
+<a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> - 
+<a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> - 
+<a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  
+<a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  
+<a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - 
+<a href="tencent://message/?uin=461478385&Site=http://www.jb51.net" target="_blank">投诉建议</a> - 
+<a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+</p>
+<p>&copy;CopyRight 2006-2016 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+</div>
+</div><!--end footer-->
+<link type="text/css" rel="stylesheet" href="/jslib/syntaxhighlighter/styles/shCore.css" />
+<link type="text/css" rel="Stylesheet" href="/jslib/syntaxhighlighter/styles/shThemeDefault.css" />
+<script type="text/javascript" src="/jslib/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="/jslib/syntaxhighlighter/scripts/shAutoloader.js"></script>
+<script type="text/javascript"> 
+if (top.location != self.location)top.location=self.location;
+$('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 650){
+            img.style.width = "650px";
+            img.style.height = "auto";
+            //$(img).removeAttr('height');
+            var aTag = document.createElement('a');
+            aTag.href = img.src;
+			aTag.target="_blank";
+            $(aTag).addClass('bPic')
+            .insertAfter(img).append(img)
+          }
+    });
+ $(window).scroll(function()
+    {	
+    	//rFixedBox跟随滚动
+    	var h = $(window).height();
+        var top = $(window).scrollTop();
+    	var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+		
+        if(top>=fixedTop+344)
+        {
+			var h1 = parseInt($('#content').children('.main').height());
+			if(parseInt(top) + 340 < h1){
+				$('.rFixedBox').css({'position':'fixed','top': 0});
+			}else{
+				$('.rFixedBox').css({'position':'absolute','top': h1-510});
+			}
+        }
+        else
+        {
+            $('.rFixedBox').css({'position':'static', 'top':0});   
+        }	
+       /* return true;*/
+    });
+SyntaxHighlighter.autoloader(
+	'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+	'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+	'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+	'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+	'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+	'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+	'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+	'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+	'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+	'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+	'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+	'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+	'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+	'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+	'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+	'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+	'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+	'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+	'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+	'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+	'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+	'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+	'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script type="text/javascript" src="http://img.jb51.net/js/a.js"></script>
+<div id="tongji">
+<script type="text/javascript" src="http://img.jb51.net/inc/tongji.js"></script>
+<script type="text/javascript" src="http://www.jb51.net/pl.asp?id=19184"></script>
+</div>
+<script>
+(function(){
+var appid = 'cyrHH3dwi',
+conf = 'prod_1dc5dc80970106099d43fe242b7465fc';
+var doc = document,
+s = doc.createElement('script'),
+h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+s.type = 'text/javascript';
+s.charset = 'utf-8';
+s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+h.insertBefore(s,h.firstChild);
+window.SCS_NO_IFRAME = true;
+})();
+</script>
+<script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/??lib/jquery.js,changyan.labs.js?appid=cyrEjJlIw"></script>
+</body>
+</html>
+<!-- published at 2016-3-29 21:28:59By dxycms qq:461478385  -->

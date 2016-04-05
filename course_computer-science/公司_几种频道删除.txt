@@ -1,0 +1,43 @@
+----  获取频道,删除所在频道
+WEME
+private  accountid:currentChannel:groupVoice
+statistic','srem',  string.format('%s:channelOnlineUser',ok_channel),accountid)
+机车
+private','get',string.format('%s:modelInfo',accountid)
+--车机model对应默认的频道
+--频道对应的频道idx    ok_channel
+statistic','srem',  string.format('%s:channelOnlineUser',ok_channel),accountid)
+
+----  获取频道,删除所在频道voiceCommand
+在clientcustom/api/api_set_userkey_info.lua  里set_voicecommand_v2设置
+
+
+accountid:currentChannel:voiceCommand  获取ok_channel
+
+redis_api.cmd('statistic','srem',  string.format('%s:channelOnlineUser',ok_channel),accountid)
+
+----  从在线城市列表删除
+[mtdk@WZ-tiaoban-61  bin]$  ./redis-cli  -h  172.16.71.84  -p  6319
+172.16.71.84:6319>  get  k3tH7lVAmu:cityCode
+"310000"
+
+[mtdk@WZ-tiaoban-61  bin]$  ./redis-cli  -h  172.16.71.84  -p  6339
+172.16.71.84:6339>  SCARD  310000:cityOnlineUser
+(integer)  1395
+
+redis_api.cmd('statistic','srem',  ok_citycode  ..  ':cityOnlineUser',accountid)
+
+
+----  从附近道客格网内把数据删除
+
+mapGPSData  hget  gridID:info  k3tH7lVAmu
+redis_api.cmd('mapGPSData','hget',  string.format("%s:info"  ,  accountid  )  ,  "gridID"  )
+redis_api.cmd('mapGPSData','srem',  string.format("%s:accountIds",  ok_ret  )  ,  accountid  )
+redis_api.cmd('mapGPSData','del',  string.format("%s:info"  ,  accountid  )  )
+
+
+----  删除微频道,密频道列表
+redis_api.cmd('private','smembers',  string.format("%s:userFollowMicroChannel",accountid))返回channel_id列表
+
+遍历并删除
+redis_api.cmd('statistic','srem',string.format("%s:channelOnlineUser",channel_id),accountid  )

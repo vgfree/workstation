@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/fcntl.html
+Date Downloaded: 2016/4/1 16:57:11 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>fcntl()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="fcntl,函数,Unix,Linux,fcntl,操作,文" />
+		 <meta name="description" content="fcntl - 操作文件描述符 SYNOPSIS #include unistd.h #include fcntl.h int fcntl(int fd , int cmd ); int fcntl(int fd , int cmd , long arg ); int fcntl(int fd , int cmd , struct flock * lock ); DESCRIPTION fcntl () 执行下述就开文件" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  fcntl()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">fcntl()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>yinchao </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='fchown.html' class='btn' title='fchown()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='fdatasync.html' class='btn btn-default' style='float:right;' title='fdatasync()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1524" />
+									
+									 <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	fcntl - 操作文件描述符 </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	内容简介 </h1>
+ <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+ <b>#include &lt;unistd.h&gt; </b> 
+ <b>#include &lt;fcntl.h&gt; </b> 
+
+ <b>int fcntl(int  </b><i>fd </i><b>, int  </b><i>cmd </i><b>); </b>  <b>int fcntl(int  </b><i>fd </i><b>, int  </b><i>cmd </i><b>, long  </b><i>arg </i><b>); </b>  <b>int fcntl(int  </b><i>fd </i><b>, int  </b><i>cmd </i><b>, struct flock * </b><i>lock </i><b>); </b></pre>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>fcntl </b>()&nbsp; <span style="color: rgb(34, 34, 34); font-family: Arial, Verdana, sans-serif;">执行下述就开文件描述符fd的操作之一。该操作是由 cmd 确定。 </span></p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	复制一个文件描述符 </h2>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_DUPFD </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Find the lowest numbered _________ file descriptor greater than __ equal to&nbsp; <i>arg </i>&nbsp;and make it be _ copy of&nbsp; <i>fd </i>. This is different ____ <b>dup2 </b>(2) which uses exactly ___ descriptor specified.
+				 <p style="text-align: justify;">
+					On success, the new __________ is returned. </p>
+				 <p style="text-align: justify;">
+					See&nbsp; <b>dup </b>(2) for further details. </p>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	文件描述符标志 </h2>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The following commands manipulate ___ flags associated with a ____ descriptor. Currently, only one ____ flag is defined:&nbsp; <b>FD_CLOEXEC </b>, the close-on-exec flag. __ the <b>FD_CLOEXEC </b>&nbsp;bit is 0, the ____ descriptor will remain open ______ an&nbsp; <b>execve </b>(2), otherwise it will __ closed. </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETFD </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Read the file descriptor _____. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETFD </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Set the file descriptor _____ to the value specified __&____; <i>arg </i>. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	文件状态标志 </h2>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Each open file description ___ certain associated status flags, ___________ by&nbsp; <b>open </b>(2) and possibly modified __&____; <b>fcntl </b>(2). Duplicated file descriptors (____ with&nbsp; <b>dup </b>(), <b>fcntl </b>(F_DUPFD),&nbsp; <b>fork </b>(), etc.) refer to ___ same open file description, ___ thus share the same ____ status flags. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The file status flags ___ their semantics are described __&____; <b>open </b>(2). </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETFL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Read the file status _____. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETFL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Set the file status _____ to the value specified __&____; <i>arg </i>. File access mode ( <b>O_RDONLY </b>,&nbsp; <b>O_WRONLY </b>,&nbsp; <b>O_RDWR </b>) and file creation _____ (i.e.,&nbsp; <b>O_CREAT </b>,&nbsp; <b>O_EXCL </b>,&nbsp; <b>O_NOCTTY </b>,&nbsp; <b>O_TRUNC </b>) in&nbsp; <i>arg </i>are ignored. On Linux ____ command can only change ___ <b>O_APPEND </b>,&nbsp; <b>O_ASYNC </b>,&nbsp; <b>O_DIRECT </b>,&nbsp; <b>O_NOATIME </b>, and <b>O_NONBLOCK </b>&nbsp;flags. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	咨询锁 </h2>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>F_GETLK </b>,&nbsp; <b>F_SETLK </b>&nbsp;and&nbsp; <b>F_SETLKW </b>&nbsp;are used to acquire, _______, and test for the _________ of record locks (also _____ as file-segment or file-region _____). The third argument&nbsp; <i>lock </i>&nbsp;is a pointer to _ structure that has at _____ the following fields (in ___________ order). </p>
+ <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+struct flock {
+    ...
+    short l_type;    /* Type of lock: _______,
+                        F_WRLCK, _______ */
+    _____ l_whence;  /* How __ interpret l_start:
+                        SEEK_SET, SEEK_CUR, SEEK_END */
+    off_t l_start;   /* Starting offset ___ lock */
+    off_t l_len;     /* Number of _____ to lock */
+    pid_t l_pid;     /* PID __ process blocking our lock
+                        (F_GETLK only) */
+    ...
+};
+ </pre>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>l_whence </i>,&nbsp; <i>l_start </i>, and&nbsp; <i>l_len </i>&nbsp;fields of this structure _______ the range of bytes __ wish to lock.&nbsp; <i>l_start </i>&nbsp;is the starting offset ___ the lock, and is ___________ relative to either: the _____ of the file (if&nbsp; <i>l_whence </i>&nbsp;is&nbsp; <b>SEEK_SET </b>); the current file ______ (if&nbsp; <i>l_whence </i>is&nbsp; <b>SEEK_CUR </b>); or the end __ the file (if&nbsp; <i>l_whence </i>&nbsp;is&nbsp; <b>SEEK_END </b>). In the final ___ cases, <i>l_start </i>&nbsp;can be a negative ______ provided the offset does ___ lie before the start __ the file.&nbsp; <i>l_len </i>&nbsp;is a non-negative integer (___ see the NOTES below) __________ the number of bytes __ be locked. Bytes past ___ end of the file ___ be locked, but not _____ before the start of ___ file. Specifying 0 for&nbsp; <i>l_len </i>&nbsp;has the special meaning: ____ all bytes starting at ___ location specified by&nbsp; <i>l_whence </i>&nbsp;and&nbsp; <i>l_start </i>&nbsp;through to the end __ file, no matter how _____ the file grows. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>l_type </i>&nbsp;field can be used __ place a read ( <b>F_RDLCK </b>) or a write ( <b>F_WRLCK </b>) lock on a ____. Any number of processes ___ hold a read lock (______ lock) on a file ______, but only one process ___ hold a write lock (_________ lock). An exclusive lock ________ all other locks, both ______ and exclusive. A single _______ can hold only one ____ of lock on a ____ region; if a new ____ is applied to an _______-______ region, then the existing ____ is converted to the ___ lock type. (Such conversions ___ involve splitting, shrinking, or __________ with an existing lock __ the byte range specified __ the new lock does ___ precisely coincide with the _____ of the existing lock.) </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETLK </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Acquire a lock (when&nbsp; <i>l_type </i>&nbsp;is&nbsp; <b>F_RDLCK </b>&nbsp;or&nbsp; <b>F_WRLCK </b>) or release a ____ (when&nbsp; <i>l_type </i>&nbsp;is&nbsp; <b>F_UNLCK </b>) on the bytes _________ by the&nbsp; <i>l_whence </i>,&nbsp; <i>l_start </i>, and&nbsp; <i>l_len </i>&nbsp;fields of&nbsp; <i>lock </i>. If a conflicting ____ is held by another _______, this call returns -1 ___ sets <i>errno </i>&nbsp;to&nbsp; <b>EACCES </b>&nbsp;or&nbsp; <b>EAGAIN </b>. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETLKW </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				As for&nbsp; <b>F_SETLK </b>, but if a ___________ lock is held on ___ file, then wait for ____ lock to be released. __ a signal is caught _____ waiting, then the call __ interrupted and (after the ______ handler has returned) returns ___________ (with return value -1 ___ <i>errno </i>&nbsp;set to&nbsp; <b>EINTR </b>). </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETLK </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				On input to this ____,&____; <i>lock </i>&nbsp;describes a lock we _____ like to place on ___ file. If the lock _____ be placed,&nbsp; <b>fcntl </b>() does not actually _____ it, but returns&nbsp; <b>F_UNLCK </b>&nbsp;in the&nbsp; <i>l_type </i>&nbsp;field of&nbsp; <i>lock </i>&nbsp;and leaves the other ______ of the structure unchanged. __ one or more incompatible _____ would prevent this lock _____ placed, then&nbsp; <b>fcntl </b>() returns details about ___ of these locks in ___ <i>l_type </i>,&nbsp; <i>l_whence </i>,&nbsp; <i>l_start </i>, and&nbsp; <i>l_len </i>&nbsp;fields of&nbsp; <i>lock </i>&nbsp;and sets&nbsp; <i>l_pid </i>&nbsp;to be the PID __ the process holding that ____. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	In order to place _ read lock,&nbsp; <i>fd </i>&nbsp;must be open for _______. In order to place _ write lock, <i>fd </i>&nbsp;must be open for _______. To place both types __ lock, open a file ____-_____. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	As well as being _______ by an explicit&nbsp; <b>F_UNLCK </b>, record locks are _____________ released when the process __________ or if it closes&nbsp; <i>any </i>&nbsp;file descriptor referring to _ file on which locks ___ held. This is bad: __ means that a process ___ lose the locks on _ file like&nbsp; <i>/etc/passwd </i>&nbsp;or&nbsp; <i>/etc/mtab </i>&nbsp;when for some reason _ library function decides to ____, read and close it. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Record locks are not _________ by a child created ___&____; <b>fork </b>(2), but are preserved ______ an&nbsp; <b>execve </b>(2). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Because of the buffering _________ by the&nbsp; <b>stdio </b>(3) library, the use __ record locking with routines __ that package should be _______; use&nbsp; <b>read </b>(2) and&nbsp; <b>write </b>(2) instead. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	强制锁 </h2>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(Non-POSIX.) The above record _____ may be either advisory __ mandatory, and are advisory __ default. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Advisory locks are not ________ and are useful only _______ cooperating processes. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Mandatory locks are enforced ___ all processes. If a _______ tries to perform an ____________ access (e.g.,&nbsp; <b>read </b>(2) or&nbsp; <b>write </b>(2)) on a file ______ that has an incompatible _________ lock, then the result _______ upon whether the&nbsp; <b>O_NONBLOCK </b>&nbsp;flag is enabled for ___ open file description. If ___&____; <b>O_NONBLOCK </b>&nbsp;flag is not enabled, ____ system call is blocked _____ the lock is removed __ converted to a mode ____ is compatible with the ______. If the&nbsp; <b>O_NONBLOCK </b>&nbsp;flag is enabled, then ___ system call fails with ___ error&nbsp; <b>EAGAIN </b>&nbsp;or&nbsp; <b>EWOULDBLOCK. </b></p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	To make use of _________ locks, mandatory locking must __ enabled both on the ____ system that contains the ____ to be locked, and __ the file itself. Mandatory _______ is enabled on a ____ system using the &quot;-o ____&____; option to&nbsp; <b>mount </b>(8), or the <b>MS_MANDLOCK </b>&nbsp;flag for&nbsp; <b>mount </b>(2). Mandatory locking is _______ on a file by _________ group execute permission on ___ file and enabling the ___-_____-__ permission bit (see <b>chmod </b>(1) and&nbsp; <b>chmod </b>(2)). </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	管理信号 </h2>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>F_GETOWN </b>,&nbsp; <b>F_SETOWN </b>,&nbsp; <b>F_GETSIG </b>&nbsp;and&nbsp; <b>F_SETSIG </b>&nbsp;are used to manage _/_ availability signals: </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETOWN </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Get the process ID __ process group currently receiving _____ and SIGURG signals for ______ on file descriptor&nbsp; <i>fd </i>. Process IDs are ________ as positive values; process _____ IDs are returned as ________ values (but see BUGS _____). </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETOWN </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Set the process ID __ process group ID that ____ receive SIGIO and SIGURG _______ for events on file __________&____; <i>fd </i>. A process ID __ specified as a positive _____; a process group ID __ specified as a negative _____. Most commonly, the calling _______ specifies itself as the _____ (that is,&nbsp; <i>arg </i>&nbsp;is specified as <b>getpid </b>()).
+				 <p style="text-align: justify;">
+					If you set the&nbsp; <b>O_ASYNC </b>&nbsp;status flag on a ____ descriptor (either by providing ____ flag with the&nbsp; <b>open </b>(2) call, or by _____ the <b>F_SETFL </b>&nbsp;command of&nbsp; <b>fcntl </b>()), a SIGIO signal __ sent whenever input or ______ becomes possible on that ____ descriptor. <b>F_SETSIG </b>&nbsp;can be used to ______ delivery of a signal _____ than SIGIO. If this __________ check fails, then the ______ is silently discarded. </p>
+				 <p style="text-align: justify;">
+					Sending a signal to ___ owner process (group) specified __ <b>F_SETOWN </b>&nbsp;is subject to the ____ permissions checks as are _________ for&nbsp; <b>kill </b>(2), where the sending _______ is the one that _______&____; <b>F_SETOWN </b>&nbsp;(but see BUGS below). </p>
+				 <p style="text-align: justify;">
+					If the file descriptor&nbsp; <i>fd </i>&nbsp;refers to a socket,&nbsp; <b>F_SETOWN </b>&nbsp;also selects the recipient __ SIGURG signals that are _________ when out-of-band data arrives __ that socket. (SIGURG is ____ in any situation where&nbsp; <b>select </b>(2) would report the ______ as having an &quot;exceptional _________&____;.) </p>
+				 <p style="text-align: justify;">
+					If a non-zero value __ given to&nbsp; <b>F_SETSIG </b>&nbsp;in a multi-threaded process _______ with a threading library ____ supports thread groups (e.g., ____), then a positive value _____ to&nbsp; <b>F_SETOWN </b>has a different meaning: _______ of being a process __ identifying a whole process, __ is a thread ID ___________ a specific thread within _ process. Consequently, it may __ necessary to pass&nbsp; <b>F_SETOWN </b>&nbsp;the result of&nbsp; <b>gettid </b>() instead of <b>getpid </b>() to get sensible _______ when&nbsp; <b>F_SETSIG </b>&nbsp;is used. (In current _____ threading implementations, a main ______&_____;_ thread ID is the ____ as its process ID. ____ means that a single-threaded _______ can equally use&nbsp; <b>gettid </b>() or&nbsp; <b>getpid </b>() in this scenario.) ____, however, that the statements __ this paragraph do not _____ to the SIGURG signal _________ for out-of-band data on _ socket: this signal is ______ sent to either a _______ or a process group, _________ on the value given __ <b>F_SETOWN </b>. Note also that _____ imposes a limit on ___ number of real-time signals ____ may be queued to _ process (see <b>getrlimit </b>(2) and&nbsp; <b>signal </b>(7)) and if this _____ is reached, then the ______ reverts to delivering SIGIO, ___ this signal is delivered __ the entire process rather ____ to a specific thread. </p>
+			 </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETSIG </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Get the signal sent ____ input or output becomes ________. A value of zero _____ SIGIO is sent. Any _____ value (including SIGIO) is ___ signal sent instead, and __ this case additional info __ available to the signal _______ if installed with SA_SIGINFO. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETSIG </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Sets the signal sent ____ input or output becomes ________. A value of zero _____ to send the default _____ signal. Any other value (_________ SIGIO) is the signal __ send instead, and in ____ case additional info is _________ to the signal handler __ installed with SA_SIGINFO.
+				 <p style="text-align: justify;">
+					Additionally, passing a non-zero _____ to&nbsp; <b>F_SETSIG </b>&nbsp;changes the signal recipient ____ a whole process to _ specific thread within a _______. See the description of&nbsp; <b>F_SETOWN </b>&nbsp;for more details. </p>
+				 <p style="text-align: justify;">
+					By using&nbsp; <b>F_SETSIG </b>&nbsp;with a non-zero value, ___ setting SA_SIGINFO for the ______ handler (see&nbsp; <b>sigaction </b>(2)), extra information about _/_ events is passed to ___ handler in a <i>siginfo_t </i>&nbsp;structure. If the&nbsp; <i>si_code </i>&nbsp;field indicates the source __ SI_SIGIO, the&nbsp; <i>si_fd </i>&nbsp;field gives the file __________ associated with the event. _________, there is no indication _____ file descriptors are pending, ___ you should use the _____ mechanisms ( <b>select </b>(2),&nbsp; <b>poll </b>(2),&nbsp; <b>read </b>(2) with&nbsp; <b>O_NONBLOCK </b>&nbsp;set etc.) to determine _____ file descriptors are available ___ I/O. </p>
+				 <p style="text-align: justify;">
+					By selecting a real ____ signal (value &gt;= SIGRTMIN), ________ I/O events may be ______ using the same signal _______. (Queuing is dependent on _________ memory). Extra information is _________ if SA_SIGINFO is set ___ the signal handler, as _____. </p>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Using these mechanisms, a _______ can implement fully asynchronous _/_ without using&nbsp; <b>select </b>(2) or&nbsp; <b>poll </b>(2) most of the ____. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The use of&nbsp; <b>O_ASYNC </b>,&nbsp; <b>F_GETOWN </b>,&nbsp; <b>F_SETOWN </b>&nbsp;is specific to BSD ___ Linux.&nbsp; <b>F_GETSIG </b>and&nbsp; <b>F_SETSIG </b>&nbsp;are Linux-specific. POSIX has ____________ I/O and the&nbsp; <i>aio_sigevent </i>structure to achieve similar ______; these are also available __ Linux as part of ___ GNU C Library (Glibc). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	租约 </h2>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">F_SETLEASE </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;and&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">F_GETLEASE </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;(Linux 2.4 onwards) are ____ (respectively) to establish and ________ the current setting of ___ calling process&rsquo;s lease on ___ file referred to by </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">fd </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">. A file lease ________ a mechanism whereby the _______ holding the lease (the &____;_____ holder&quot;) is notified (via ________ of a signal) when _ process (the &quot;lease breaker&quot;) _____ to&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">open </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2) or&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">truncate </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2) that file. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_SETLEASE </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Set or remove a ____ lease according to which __ the following values is _________ in the integer&nbsp; <i>arg </i>:
+				 <p style="text-align: justify;">
+					&nbsp; </p>
+				 <table border="1" cellpadding="5" cellspacing="0" class="src" style="border: 1px solid rgb(170, 170, 170); width: 401px; border-collapse: collapse; padding-left: 5px; vertical-align: top;">
+					 <tbody>
+						 <tr>
+							 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+								标签 </th>
+							 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								描述 </th>
+						 </tr>
+						 <tr>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>F_RDLCK </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Take out a read _____. This will cause the _______ process to be notified ____ the file is opened ___ writing or is truncated. _ read lease can only __ placed on a file __________ that is opened read-only. </td>
+						 </tr>
+						 <tr>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>F_WRLCK </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Take out a write _____. This will cause the ______ to be notified when ___ file is opened for _______ or writing or is _________. A write lease may __ placed on a file ____ if no other process _________ has the file open. </td>
+						 </tr>
+						 <tr>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>F_UNLCK </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Remove our lease from ___ file. </td>
+						 </tr>
+					 </tbody>
+				 </table>
+			 </td>
+		 </tr>
+		 <tr>
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				A process may hold ____ one type of lease __ a file. </td>
+		 </tr>
+		 <tr>
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Leases may only be _____ out on regular files. __ unprivileged process may only ____ out a lease on _ file whose UID matches ___ file system UID of ___ process. A process with ___&____; <b>CAP_LEASE </b>&nbsp;capability may take out ______ on arbitrary files. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETLEASE </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Indicates what type of _____ we hold on the ____ referred to by&nbsp; <i>fd </i>by returning either&nbsp; <b>F_RDLCK </b>,&nbsp; <b>F_WRLCK </b>, or&nbsp; <b>F_UNLCK, </b>indicating, respectively, that the _______ process holds a read, _ write, or no lease __ the file. (The third ________ to&nbsp; <b>fcntl </b>() is omitted.) </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	When a process (the &____;_____ breaker&quot;) performs an&nbsp; <b>open </b>() or&nbsp; <b>truncate </b>() that conflicts with _ lease established via&nbsp; <b>F_SETLEASE </b>, the system call __ blocked by the kernel ___ the kernel notifies the _____ holder by sending it _ signal (SIGIO by default). ___ lease holder should respond __ receipt of this signal __ doing whatever cleanup is ________ in preparation for the ____ to be accessed by _______ process (e.g., flushing cached _______) and then either remove __ downgrade its lease. A _____ is removed by performing __ <b>F_SETLEASE </b>&nbsp;command specifying&nbsp; <i>arg </i>&nbsp;as&nbsp; <b>F_UNLCK </b>. If we currently ____ a write lease on ___ file, and the lease _______ is opening the file ___ reading, then it is __________ to downgrade the lease __ a read lease. This __ done by performing an&nbsp; <b>F_SETLEASE </b>command specifying&nbsp; <i>arg </i>&nbsp;as&nbsp; <b>F_RDLCK </b>. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	If the lease holder _____ to downgrade or remove ___ lease within the number __ seconds specified in&nbsp; <i>/proc/sys/fs/lease-break-time </i>&nbsp;then the kernel forcibly _______ or downgrades the lease ______&_____;_ lease. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Once the lease has ____ voluntarily or forcibly removed __ downgraded, and assuming the _____ breaker has not unblocked ___ system call, the kernel _______ the lease breaker&rsquo;s system ____ to proceed. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	If the lease breaker&rsquo;s _______&____; <b>open </b>() or&nbsp; <b>truncate </b>() is interrupted by _ signal handler, then the ______ call fails with the _____&____; <b>EINTR </b>, but the other _____ still occur as described _____. If the lease breaker __ killed by a signal _____ blocked in&nbsp; <b>open </b>() or <b>truncate </b>(), then the other _____ still occur as described _____. If the lease breaker _________ the&nbsp; <b>O_NONBLOCK </b>&nbsp;flag when calling&nbsp; <b>open </b>(), then the call ___________ fails with the error&nbsp; <b>EWOULDBLOCK </b>, but the other _____ still occur as described _____. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The default signal used __ notify the lease holder __ SIGIO, but this can __ changed using the&nbsp; <b>F_SETSIG </b>&nbsp;command to&nbsp; <b>fcntl </b>(). If a&nbsp; <b>F_SETSIG </b>&nbsp;command is performed (even ___ specifying SIGIO), and the ______ handler is established using __________, then the handler will _______ a&nbsp; <i>siginfo_t </i>&nbsp;structure as its second ________, and the&nbsp; <i>si_fd </i>&nbsp;field of this argument ____ hold the descriptor of ___ leased file that has ____ accessed by another process. (____ is useful if the ______ holds leases against multiple _____). </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	文件和目录更改通知 </h2>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_NOTIFY </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				(Linux 2.4 onwards) Provide ____________ when the directory referred __ by&nbsp; <i>fd </i>&nbsp;or any of the _____ that it contains is _______. The events to be ________ are specified in&nbsp; <i>arg </i>, which is a ___ mask specified by ORing ________ zero or more of ___ following bits:
+				 <p style="text-align: justify;">
+					&nbsp; </p>
+				 <table border="1" cellpadding="5" cellspacing="0" class="src" style="border: 1px solid rgb(170, 170, 170); width: 401px; border-collapse: collapse; padding-left: 5px; vertical-align: top;">
+					 <tbody>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Bit </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Description (event in directory) </td>
+						 </tr>
+						 <tr valign="top">
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>DN_MODIFY </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								A file was modified (_____, pwrite, </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>&nbsp; </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								writev, truncate, ftruncate) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>DN_CREATE </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								A file was created (____, creat, mknod, </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>&nbsp; </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								mkdir, link, symlink, rename) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>DN_DELETE </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								A file was unlinked (______, rename to </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>&nbsp; </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								another directory, rmdir) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>DN_RENAME </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								A file was renamed ______ this </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>&nbsp; </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								directory (rename) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>DN_ATTRIB </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								The attributes of a ____ were changed </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								 <b>&nbsp; </b></td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								(chown, chmod, utime[s]) </td>
+						 </tr>
+					 </tbody>
+				 </table>
+				 <p style="text-align: justify;">
+					(In order to obtain _____ definitions, the _GNU_SOURCE feature ____ macro must be defined.) </p>
+				 <p style="text-align: justify;">
+					Directory notifications are normally &____;___-____&____;, and the application must __-________ to receive further notifications. _____________, if&nbsp; <b>DN_MULTISHOT </b>&nbsp;is included in&nbsp; <i>arg </i>, then notification will ______ in effect until explicitly _______._ </p>
+				 <p style="text-align: justify;">
+					A series of&nbsp; <b>F_NOTIFY </b>&nbsp;requests is cumulative, with ___ events in <i>arg </i>&nbsp;being added to the ___ already monitored. To disable ____________ of all events, make __&____; <b>F_NOTIFY </b>&nbsp;call specifying&nbsp; <i>arg </i>as 0. </p>
+				 <p style="text-align: justify;">
+					Notification occurs via delivery __ a signal. The default ______ is SIGIO, but this ___ be changed using the&nbsp; <b>F_SETSIG </b>&nbsp;command to&nbsp; <b>fcntl </b>(). In the latter ____, the signal handler receives _ <i>siginfo_t </i>&nbsp;structure as its second ________ (if the handler was ___________ using SA_SIGINFO) and the&nbsp; <i>si_fd </i>&nbsp;field of this structure ________ the file descriptor which _________ the notification (useful when ____________ notification on multiple directories). </p>
+				 <p style="text-align: justify;">
+					Especially when using&nbsp; <b>DN_MULTISHOT </b>, a real time ______ should be used for ____________, so that multiple notifications ___ be queued. </p>
+				 <p style="text-align: justify;">
+					 <b>NOTE: </b>&nbsp;New applications should consider _____ the&nbsp; <i>inotify </i>interface (available since kernel 2.6.13), which provides a superior _________ for obtaining notifications of ____ system events. See&nbsp; <b>inotify </b>(7). </p>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	对于一个成功的调用，返回值取决于操作： </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_DUPFD </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The new descriptor. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETFD </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Value of flags. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETFL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Value of flags. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETOWN </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Value of descriptor owner. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>F_GETSIG </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Value of signal sent ____ read or write becomes ________, or zero for traditional _____ behaviour. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				All other commands </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="9%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Zero. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	On error, -1 is ________, and&nbsp; <i>errno </i>&nbsp;is set appropriately. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	错误 </h1>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EACCES </b>&nbsp;or&nbsp; <b>EAGAIN </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Operation is prohibited by _____ held by other processes. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EAGAIN </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The operation is prohibited _______ the file has been ______-______ by another process. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EBADF </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>fd </i>&nbsp;is not an open ____ descriptor, or the command ___&____; <b>F_SETLK </b>or&nbsp; <b>F_SETLKW </b>&nbsp;and the file descriptor ____ mode doesn&rsquo;t match with ___ type of lock requested. </td>
+		 </tr>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EDEADLK </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				It was detected that ___ specified&nbsp; <b>F_SETLKW </b>&nbsp;command would cause a ________. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EFAULT </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>lock </i>&nbsp;is outside your accessible _______ space. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EINTR </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				For&nbsp; <b>F_SETLKW </b>, the command was ___________ by a signal. For <b>F_GETLK </b>&nbsp;and&nbsp; <b>F_SETLK </b>, the command was ___________ by a signal before ___ lock was checked or ________. Most likely when locking _ remote file (e.g. locking ____ NFS), but can sometimes ______ locally. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EINVAL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				For&nbsp; <b>F_DUPFD </b>,&nbsp; <i>arg </i>&nbsp;is negative or is _______ than the maximum allowable _____. For&nbsp; <b>F_SETSIG </b>,&nbsp; <i>arg </i>&nbsp;is not an allowable ______ number. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EMFILE </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				For&nbsp; <b>F_DUPFD </b>, the process already ___ the maximum number of ____ descriptors open. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOLCK </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Too many segment locks ____, lock table is full, __ a remote locking protocol ______ (e.g. locking over NFS). </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EPERM </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Attempted to clear the&nbsp; <b>O_APPEND </b>&nbsp;flag on a file ____ has the append-only attribute ___. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	注意 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The errors returned by&nbsp; <b>dup2 </b>() are different from _____ returned by&nbsp; <b>F_DUPFD </b>. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Since kernel 2.0, there __ no interaction between the _____ of lock placed by&nbsp; <b>flock </b>(2) and&nbsp; <b>fcntl </b>(2). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	POSIX.1-2001 allows&nbsp; <i>l_len </i>&nbsp;to be negative. (And __ it is, the interval _________ by the lock covers _____&____; <i>l_start </i>+ <i>l_len </i>&nbsp;up to and including&nbsp; <i>l_start </i>-1.) This is supported __ Linux since Linux 2.4.21 ___ 2.5.49. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Several systems have more ______ in&nbsp; <i>struct flock </i>&nbsp;such as e.g.&nbsp; <i>l_sysid </i>. Clearly,&nbsp; <i>l_pid </i>&nbsp;alone is not going __ be very useful if ___ process holding the lock ___ live on a different _______. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	BUGS </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	A limitation of the _____ system call conventions on ____ architectures (notably x86) means ____ if a (negative) process _____ ID to be returned __&____; <b>F_GETOWN </b>&nbsp;falls in the range -1 to -4095, then the ______ value is wrongly interpreted __ glibc as an error __ the system call; that __, the return value of&nbsp; <b>fcntl </b>() will be -1, ___&____; <i>errno </i>&nbsp;will contain the (positive) _______ group ID. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	In Linux 2.4 and _______, there is bug that ___ occur when an unprivileged _______ uses <b>F_SETOWN </b>&nbsp;to specify the owner __ a socket file descriptor __ a process (group) other ____ the caller. In this ____,&____; <b>fcntl </b>() can return -1 ____&____; <i>errno </i>&nbsp;set to&nbsp; <b>EPERM </b>, even when the _____ process (group) is one ____ the caller has permission __ send signals to. Despite ____ error return, the file __________ owner is set, and _______ will be sent to ___ owner. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	遵循于 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	SVr4, 4.3BSD, POSIX.1-2001. Only ___ operations F_DUPFD, F_GETFD, F_SETFD, _______, F_SETFL, F_GETLK, F_SETLK, F_SETLKW, ________, and F_SETOWN are specified __ POSIX.1-2001. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	F_GETSIG, F_SETSIG, F_NOTIFY, F_GETLEASE, ___ F_SETLEASE are Linux specific. (______ the _GNU_SOURCE macro to ______ these definitions.) </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	另请参阅 </h1>
+ <ul style="font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="dup2.html" style="color: rgb(144, 11, 9); background-color: transparent;">dup2 (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="flock.html" style="color: rgb(144, 11, 9); background-color: transparent;">flock (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="open.html" style="color: rgb(144, 11, 9); background-color: transparent;">open (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/socket.html" style="color: rgb(144, 11, 9); background-color: transparent;">socket (2) </a></p>
+	 </li>
+ </ul>
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/fcntl/" target="_blank">fcntl </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Linux/" target="_blank">Linux </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/fcntl/" target="_blank">fcntl </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/操作/" target="_blank">操作 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/文/" target="_blank">文 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>fcntl()函数 Unix/Linux </b><br />
+									本文地址： <a href="fcntl.html">http://www.yiibai.com/unix_system_calls/fcntl.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='fchown.html' class='btn' title='fchown()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='fdatasync.html' class='btn btn-default' style='float:right;' title='fdatasync()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1524" data-title="fcntl()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/fcntl.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>script>
+	 <script src="/static.v2.0/js/leaflet.js"></script>
+	 <script src="/static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

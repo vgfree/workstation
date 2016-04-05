@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/mount.html
+Date Downloaded: 2016/4/1 17:08:41 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>mount()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="mount,函数,Unix,Linux,mount,umou" />
+		 <meta name="description" content="mount, umount - 装载和卸载文件系统 SYNOPSIS #include sys/mount.h int mount(const char * source , const char * target , const char * filesystemtype , unsigned long mountflags , const void * data ); int umount(const char * target );" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  mount()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">mount()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>卡通嘟嘟 </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='modify_ldt.html' class='btn' title='modify_ldt()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='move_pages.html' class='btn btn-default' style='float:right;' title='move_pages()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1623" />
+									
+									 <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">mount, umount -&nbsp; </span>装载和卸载文件系统
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	内容简介 </h1>
+ <table cellpadding="5" cellspacing="5" class="src" style="font-family: verdana, helvetica, arial, sans-serif;  border-color: rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+				 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+ <b>#include &lt;sys/mount.h&gt; </b> 
+ </pre>
+				 <p style="text-align: justify;">
+					 <b>int mount(const char * </b><i>source </i><b>, const char * </b><i>target </i><b>, </b>  <b> const char * </b><i>filesystemtype </i><b>, unsigned long  </b><i>mountflags </i><b>, </b>  <b> const void * </b><i>data </i><b>); </b></p>
+				 <p style="text-align: justify;">
+					 <b>int umount(const char * </b><i>target </i><b>); </b></p>
+				 <p style="text-align: justify;">
+					 <b>int umount2(const char * </b><i>target </i><b>, int  </b><i>flags </i><b>); </b></p>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">mount </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() attaches the filesystem _________ by&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">source </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;(which is often a ______ name, but can also __ a directory name or _ dummy) to the directory _________ by&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">target </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>umount </b>() and&nbsp; <b>umount2 </b>() remove the attachment __ the (topmost) filesystem mounted __&____; <i>target </i>. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Appropriate privilege (Linux: the&nbsp; <b>CAP_SYS_ADMIN </b>&nbsp;capability) is required to _____ and unmount filesystems. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Since Linux 2.4 a ______ filesystem can be visible __ multiple mount points, and ________ mounts can be stacked __ the same mount point. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Values for the&nbsp; <i>filesystemtype </i>&nbsp;argument supported by the ______ are listed in <i>/proc/filesystems </i>&nbsp;(like &quot;minix&quot;, &quot;ext2&quot;, &quot;msdos&quot;, &____;____&____;, &quot;nfs&quot;, &quot;iso9660&quot; etc.). Further _____ may become available when ___ appropriate modules are loaded. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>mountflags </i>&nbsp;argument may have the _____ number 0xC0ED ( <b>MS_MGC_VAL </b>) in the top 16 bits (this was required __ kernel versions prior to 2.4, but is no longer ________ and ignored if specified), ___ various mount flags (as _______ in &lt;linux/fs.h&gt; for libc4 ___ libc5 and in &lt;sys/mount.h&gt; ___ glibc2) in the low _____ 16 bits: </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_BIND </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				(Linux 2.4 onwards) Perform _ bind mount, making a ____ or a directory subtree _______ at another point within _ file system. Bind mounts ___ cross file system boundaries ___ span <b>chroot </b>(2) jails. The&nbsp; <i>filesystemtype </i>,&nbsp; <i>mountflags </i>, and&nbsp; <i>data </i>arguments are ignored. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_DIRSYNC </b>&nbsp;(since Linux 2.5.19) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Make directory changes on ____ file system synchronous. (This ________ can be obtained for __________ directories or subtrees using&nbsp; <b>chattr </b>(8).) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_MANDLOCK </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Permit mandatory locking on _____ in this file system. (_________ locking must still be _______ on a per-file basis, __ described in <b>fcntl </b>(2).) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_MOVE </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Move a subtree.&nbsp; <i>source </i>&nbsp;specifies an existing mount _____ and <i>target </i>&nbsp;specifies the new location. ___ move is atomic: at __ point is the subtree _________. The&nbsp; <i>filesystemtype </i>,&nbsp; <i>mountflags </i>, and&nbsp; <i>data </i>&nbsp;arguments are ignored. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_NOATIME </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Do not update access _____ for (all types of) _____ on this file system. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_NODEV </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Do not allow access __ devices (special files) on ____ file system. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_NODIRATIME </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Do not update access _____ for directories on this ____ system. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_NOEXEC </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Do not allow programs __ be executed from this ____ system. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_NOSUID </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Do not honour set-user-ID ___ set-group-ID bits when executing ________ from this file system. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_RDONLY </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Mount file system read-only. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_REMOUNT </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Remount an existing mount. ____ is allows you to ______ the <i>mountflags </i>&nbsp;and&nbsp; <i>data </i>&nbsp;of an existing mount _______ having to unmount and _______ the file system.&nbsp; <i>source </i>&nbsp;and&nbsp; <i>target </i>&nbsp;should be the same ______ specified in the initial&nbsp; <b>mount </b>() call; <i>filesystemtype </i>&nbsp;is ignored.
+				 <p style="text-align: justify;">
+					The following&nbsp; <i>mountflags </i>&nbsp;can be changed:&nbsp; <b>MS_RDONLY </b>, <b>MS_SYNCHRONOUS </b>,&nbsp; <b>MS_MANDLOCK </b>; before kernel 2.6.16, ___ following could also be _______:&____; <b>MS_NOATIME </b>&nbsp;and <b>MS_NODIRATIME </b>; and, additionally, before ______ 2.4, the following could ____ be changed:&nbsp; <b>MS_NOSUID </b>,&nbsp; <b>MS_NODEV </b>, <b>MS_NOEXEC </b>. </p>
+			 </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MS_SYNCHRONOUS </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Make writes on this ____ system synchronous (as though ___ <b>O_SYNC </b>&nbsp;flag to&nbsp; <b>open </b>(2) was specified for ___ file opens to this ____ system). </td>
+		 </tr>
+		 <tr>
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				From Linux 2.4 onwards, ___&____; <b>MS_NODEV </b>,&nbsp; <b>MS_NOEXEC </b>, and&nbsp; <b>MS_NOSUID </b>&nbsp;flags are settable on _ per-mount-point basis. From kernel 2.6.16 onwards,&nbsp; <b>MS_NOATIME </b>&nbsp;and <b>MS_NODIRATIME </b>&nbsp;are also settable on _ per-mount-point basis. </td>
+		 </tr>
+		 <tr>
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				The&nbsp; <i>data </i>&nbsp;argument is interpreted by ___ different file systems. Typically __ is a string of _____-_________ options understood by this ____ system. See&nbsp; <b>mount </b>(8) for details of ___ options available for each __________ type. </td>
+		 </tr>
+		 <tr>
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Linux 2.1.116 added the&nbsp; <b>umount2 </b>() system call, which, ____&____; <b>umount </b>(), unmounts a target, ___ allows additional&nbsp; <i>flags </i>&nbsp;controlling the behaviour of ___ operation: </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MNT_FORCE </b>&nbsp;(since Linux 2.1.116) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Force unmount even if ____. (Only for NFS mounts.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MNT_DETACH </b>&nbsp;(since Linux 2.4.11) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Perform a lazy unmount: ____ the mount point unavailable ___ new accesses, and actually _______ the unmount when the _____ point ceases to be ____. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>MNT_EXPIRE </b>&nbsp;(since Linux 2.6.8) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Mark the mount point __ expired. If a mount _____ is not currently in ___, then an initial call __&____; <b>umount2 </b>() with this flag _____ with the error&nbsp; <b>EAGAIN </b>, but marks the _____ point as expired. The _____ point remains expired as ____ as it isn&rsquo;t accessed __ any process. A second&nbsp; <b>umount2 </b>() call specifying <b>MNT_EXPIRE </b>&nbsp;unmounts an expired mount _____. This flag cannot be _________ with either&nbsp; <b>MNT_FORCE </b>&nbsp;or&nbsp; <b>MNT_DETACH </b>. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On success, zero is ________. On error, -1 is ________, and&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">errno </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is set appropriately. </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	错误 </h1>
+下面给出的误差值，导致文件系统类型无关的错误。每个文件系统类型可能有自己特殊的错误和自己的特殊行为。详情请参阅内核源代码。 <br />
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EACCES </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				A component of a ____ was not searchable. (See ____ <b>path_resolution </b>(2).) Or, mounting a ____-____ filesystem was attempted without ______ the&nbsp; <b>MS_RDONLY </b>&nbsp;flag. Or, the block ______&____; <i>source </i>&nbsp;is located on a __________ mounted with the <b>MS_NODEV </b>&nbsp;option. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EAGAIN </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				A call to&nbsp; <b>umount2 </b>() specifying&nbsp; <b>MNT_EXPIRE </b>&nbsp;successfully marked an unbusy ____ system as expired. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EBUSY </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>source </i>&nbsp;is already mounted. Or, __ cannot be remounted read-only, _______ it still holds files ____ for writing. Or, it ______ be mounted on&nbsp; <i>target </i>&nbsp;because&nbsp; <i>target </i>&nbsp;is still busy (it __ the working directory of ____ task, the mount point __ another device, has open _____, etc.). Or, it could ___ be unmounted because it __ busy. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EFAULT </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				One of the pointer _________ points outside the user _______ space. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EINVAL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>source </i>&nbsp;had an invalid superblock. __, a remount ( <b>MS_REMOUNT </b>) was attempted, but&nbsp; <i>source </i>&nbsp;was not already mounted __&____; <i>target </i>. Or, a move ( <b>MS_MOVE </b>) was attempted, but <i>source </i>&nbsp;was not a mount _____, or was &rsquo;/&rsquo;. Or, __ unmount was attempted, but&nbsp; <i>target </i>&nbsp;was not a mount _____. Or,&nbsp; <b>umount2 </b>() was called with&nbsp; <b>MNT_EXPIRE </b>&nbsp;and either&nbsp; <b>MNT_DETACH </b>&nbsp;or <b>MNT_FORCE </b>. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ELOOP </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Too many link encountered ______ pathname resolution. Or, a ____ was attempted, while&nbsp; <i>target </i>&nbsp;is a descendant of&nbsp; <i>source </i>. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EMFILE </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				(In case no block ______ is required:) Table of _____ devices is full. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENAMETOOLONG </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				A pathname was longer ____ MAXPATHLEN. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENODEV </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>filesystemtype </i>&nbsp;not configured in the ______. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOENT </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				A pathname was empty __ had a nonexistent component. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOMEM </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The kernel could not ________ a free page to ____ filenames or data into. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOTBLK </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <i>source </i>&nbsp;is not a block ______ (and a device was ________). </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOTDIR </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				The second argument, or _ prefix of the first ________, is not a directory. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENXIO </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The major number of ___ block device&nbsp; <i>source </i>&nbsp;is out of range. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EPERM </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The caller does not ____ the required privileges. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	遵循于 </h1>
+这些功能是Linux特有的，应在拟移植的程序不能使用。 <br />
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	历史 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">The original&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">umount </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() function was called __&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">umount(device) </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;and would return ENOTBLK ____ called with something other ____ a block device. In _____ 0.98p4 a call&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">umount(dir) </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">was added, in order __ support anonymous devices. In _____ 2.3.99-pre7 the call </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">umount(device) </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;was removed, leaving only&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">umount(dir) </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;(since now devices can __ mounted in more than ___ place, so specifying the ______ does not suffice). </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The original MS_SYNC flag ___ renamed MS_SYNCHRONOUS in 1.1.69 ____ a different MS_SYNC was _____ to &lt;mman.h&gt;. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Before Linux 2.4 an _______ to execute a set-user-ID __ set-group-ID program on a __________ mounted with&nbsp; <b>MS_NOSUID </b>&nbsp;would fail with&nbsp; <b>EPERM </b>. Since Linux 2.4 ___ set-user-ID and set-group-ID bits ___ just silently ignored in ____ case. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	另请参阅 </h1>
+ <ul style="font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="path_resolution.html" style="color: rgb(144, 11, 9); background-color: transparent;">path_resolution (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_commands/mount.html" style="color: rgb(144, 11, 9); background-color: transparent;">mount (8) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_commands/umount.html" style="color: rgb(144, 11, 9); background-color: transparent;">umount (8) </a></p>
+	 </li>
+ </ul>
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/mount/" target="_blank">mount </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Linux/" target="_blank">Linux </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/mount/" target="_blank">mount </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/umou/" target="_blank">umou </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>mount()函数 Unix/Linux </b><br />
+									本文地址： <a href="mount.html">http://www.yiibai.com/unix_system_calls/mount.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='modify_ldt.html' class='btn' title='modify_ldt()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='move_pages.html' class='btn btn-default' style='float:right;' title='move_pages()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1623" data-title="mount()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/mount.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>tic.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

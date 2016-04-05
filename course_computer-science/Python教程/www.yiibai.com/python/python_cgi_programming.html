@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/python/python_cgi_programming.html
+Date Downloaded: 2016/4/1 16:52:15 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>Python CGI编程 - Python教程 </title>
+		 <meta name="keywords" content="Python,CGI,CGI编程" />
+		 <meta name="description" content="CGI是什么? 通用网关接口或CGI，是一组定义信息如何在Web服务器和自定义脚本之间交换的标准。 CGI规范目前保持是由NCSA 和 NCSA 维护和定义如下。 通用网关接口或CGI，是外部网关方案，" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="index.html">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/script/'>脚本语言 </a> >  <a href='index.html'>Python教程 </a> >  Python _____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Python教程 </a>
+							 <a class="list-group-item" href="python_quick_guide.html" title="Python快速入门">Python快速入门 </a><a class="list-group-item" href="python_overview.html" title="Python概述">Python概述 </a><a class="list-group-item" href="python_environment.html" title="Python环境安装">Python环境安装 </a><a class="list-group-item" href="python_basic_syntax.html" title="Python基本语法">Python基本语法 </a><a class="list-group-item" href="python_variable_types.html" title="Python变量类型">Python变量类型 </a><a class="list-group-item" href="python_basic_operators.html" title="Python基本运算符">Python基本运算符 </a><a class="list-group-item" href="python_decision_making.html" title="Python决策">Python决策 </a><a class="list-group-item" href="python_loops.html" title="Python循环">Python循环 </a><a class="list-group-item" href="python_numbers.html" title="Python数字类型">Python数字类型 </a><a class="list-group-item" href="python_strings.html" title="Python字符串">Python字符串 </a><a class="list-group-item" href="python_lists.html" title="Python列表">Python列表 </a><a class="list-group-item" href="python_tuples.html" title="Python元组">Python元组 </a><a class="list-group-item" href="python_dictionary.html" title="Python字典">Python字典 </a><a class="list-group-item" href="python_date_time.html" title="Python日期时间Date/Time">Python日期时间Date/Time </a><a class="list-group-item" href="python_functions.html" title="Python函数">Python函数 </a><a class="list-group-item" href="python_modules.html" title="Python模块">Python模块 </a><a class="list-group-item" href="python_files_io.html" title="Python文件I/O">Python文件I/O </a><a class="list-group-item" href="python_exceptions.html" title="Python异常处理">Python异常处理 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="python3-webbug-series1.html" title="Python 3开发网络爬虫(一)">Python 3开发网络爬虫(一) </a><a class="list-group-item" href="python3-webbug-series2.html" title="Python 3开发网络爬虫(二)">Python 3开发网络爬虫(二) </a><a class="list-group-item" href="python3-webbug-series3.html" title="Python3网络爬虫(三): 伪装浏览器">Python3网络爬虫(三): 伪装浏览器 </a><a class="list-group-item" href="python3-webbug-series4.html" title="Python3网络爬虫(四): 登录">Python3网络爬虫(四): 登录 </a><a class="list-group-item" href="python_classes_objects.html" title="Python面向对象">Python面向对象 </a><a class="list-group-item" href="python_reg_expressions.html" title="Python正则表达式">Python正则表达式 </a><a class="list-group-item" href="python_cgi_programming.html" title="Python CGI编程">Python CGI编程 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">Python CGI编程 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>weng4570 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='python_reg_expressions.html' class='btn' title='Python正则表达式' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='python_quick_guide.html' class='btn btn-default' style='float:right;' title='Python快速入门'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="5724" />
+									 <h2>
+	CGI是什么? </h2>
+ <ul>
+	 <li>
+		 <p>
+			通用网关接口或CGI，是一组定义信息如何在Web服务器和自定义脚本之间交换的标准。 </p>
+	 </li>
+	 <li>
+		 <p>
+			CGI规范目前保持是由NCSA 和 NCSA 维护和定义如下。 </p>
+	 </li>
+	 <li>
+		 <p>
+			通用网关接口或CGI，是外部网关方案，如HTTP服务器的信息服务器的接口标准。 </p>
+	 </li>
+	 <li>
+		 <p>
+			目前的版本是CGI/1.1，而CGI/1.2目前正在定制中。 </p>
+	 </li>
+ </ul>
+ <h2>
+	网页浏览 </h2>
+ <p>
+	要了解CGI的概念，让我们看看当点击一个超链接，浏览某一个网页或URL发生什么情况。 </p>
+ <ul>
+	 <li>
+		 <p>
+			浏览器触发HTTP Web服务器和网址也就是文件名的请求。 </p>
+	 </li>
+	 <li>
+		 <p>
+			Web服务器将解析URL，并寻找，如果找到该文件，然后将其发送回浏览器中的文件名，否则将表示请求了错误文件的错误消息。 </p>
+	 </li>
+	 <li>
+		 <p>
+			Web浏览器需要从Web服务器和显示器接收到的文件信息或错误信息的响应。 </p>
+	 </li>
+ </ul>
+ <p>
+	然而，也可以设置在HTTP服务器，以便每当在某个目录中的文件被请求文件不被发送回;相反，它被执行的程序，无论该程序的输出被发送回浏览器显示。此函数被称为公共网关接口CGI或与程序称为CGI脚本。这些CGI程序可以是一个Python脚本，Perl脚本，Shell脚本，C或C++程序等等。 </p>
+ <h2>
+	CGI架构图 </h2>
+ <img alt="CGI Architecture" src="../uploads/allimg/141102/1S35S440-0.gif" style="margin: auto; padding: 0px 0px 10px; border: 0px; max-width: 560px; height: auto; display: block; color: rgb(0, 0, 0); " />
+ <h2>
+	Web服务器支持与配置 </h2>
+ <p>
+	在进行CGI编程之前，请确保Web服务器支持CGI，它被配置为处理CGI程序。所有对由HTTP服务器执行的CGI程序保存在一个预先配置的目录。此目录被称为CGI目录，并按照惯例被命名为/var/www/cgi-bin目录。按照惯例，CGI文件具有扩展名为.cgi，但文件扩展名可以为Python语言脚本 .py。 </p>
+ <p>
+	默认情况下，Linux服务器被配置为只运行在在/var/www/cgi-bin目录中的脚本。如果想指定要运行的CGI脚本任何其他目录，在httpd.conf文件中注释以下几行： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;Directory </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/var/www/cgi-bin&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+   AllowOverride ____
+   Options ExecCGI
+   Order allow,deny
+   Allow from all
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/Directory&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;Directory </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/var/www/cgi-bin&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+Options All
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/Directory&gt; </span></pre>
+ <p>
+	在这里，假设Web服务器能成功运行cgi程序，也可以运行Perl或Shell等任何其它的CGI程序 </p>
+ <h2>
+	第一个CGI程序 </h2>
+ <p>
+	下面是一个简单的链接，链接到一个名为hello.py CGI脚本。此文件被保存在/var/www/cgi-bin目录，它有以下内容。运行CGI程序之前，请确保有使用chmod 755 hello.py ______，_____________。 </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;html&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;head&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;title&gt;Hello Word - First ___ Program&lt;/title&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;/head&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;body&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;h2&gt;Hello Word! This is __ first CGI program&lt;/h2&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;/body&gt;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&lt;/html&gt;&#39; </span></pre>
+ <p>
+	如果单击hello.py，那么这将产生以下的输出： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px;">
+					Hello Word! This is __ first CGI program </h2>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	hello.py脚本是一个简单的Python脚本，它在标准输出（即屏幕）输出显示文件。还有一个重要的额外功能，第一行要打印Content-type:text/html
+
+。这行内容被发送回浏览器和指定内容类型可以在浏览器画面上显示出来。 </p>
+ <p>
+	现在，必须了解CGI的基本概念，可以使用Python编写许多复杂的CGI程序。脚本可以与任何其他外部系统交互还向交换信息，如RDBMS（数据库管理系统）。 </p>
+ <h2>
+	HTTP报头 </h2>
+ <p>
+	第一行Content-type:text/html
+
+ 被发送到浏览器，了解内容的HTTP标头的一部分。所有HTTP报头将在下面的表格： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="pln" style="margin: 0px; padding: 0px;">HTTP  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Field </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Field </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Content </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">For </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Example </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Content </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;"> text </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">html
+
+ </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	还有其他一些重要的HTTP头，会在CGI程序经常使用。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); width: 157px; background-color: rgb(238, 238, 238);">
+				报头 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Content-type: </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				返回MIME字符串，定义文件的格式。例如Content-type:text/html </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Expires: Date </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				日期的信息变为无效。这应该被使用的浏览器，以决定当一个页面需要刷新。有效日期字符串应该是格式1998年1月1日12:00:00 GMT。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Location: URL </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				应该返回替代请求URL的URL。可以使用此字段来重定向请求到任何文件。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Last-modified: Date </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				资源的最后修改的日期。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Content-length: N </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				数据的长度，以字节为单位被返回。浏览器使用这个值来报告预计下载时间的文件。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Set-Cookie: String </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				通过设置该字符串传递cookie </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	CGI环境变量 </h2>
+ <p>
+	所有CGI程序将可使用下面的环境变量。在编写任何CGI程序，这些变量中发挥重要作用。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); width: 157px; background-color: rgb(238, 238, 238);">
+				Variable Name </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				CONTENT_TYPE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				内容的数据类型。当客户端发送内容附加到服务器使用。例如，文件上传等。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				CONTENT_LENGTH </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				查询信息的长度。它仅适用于POST请求。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				HTTP_COOKIE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				返回键和值对的形式设置Cookie。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				HTTP_USER_AGENT </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				用户代理请求头字段包含有关用户代理发起请求信息。网络浏览器的名称。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				PATH_INFO </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				TCGI脚本的路径。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				QUERY_STRING </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				被发送GET方法请求URL编码的信息。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				REMOTE_ADDR </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				远程主机发出请求的IP地址。这可以是用于记录或用于认证的目的是有用的。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				REMOTE_HOST </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				发出请求的主机的完全合格的名称。如果该信息不可用，则REMOTE_ADDR可用于获得IP地址。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				REQUEST_METHOD </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				该方法用于制造要求。最常用的方法是GET和POST。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				SCRIPT_FILENAME </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				CGI脚本的完整路径。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				SCRIPT_NAME </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				CGI脚本的名称。 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				SERVER_NAME </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				服务器的主机名或IP地址 </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				SERVER_SOFTWARE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				软件服务器运行的名称和版本。 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	这里是小CGI程序，列出所有的CGI变量，代码内容详细如下： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> os
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type: text/html
+
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;font size=+1&gt;Environment&lt;/font&gt;&lt;r&gt;&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">for </span><span class="pln" style="margin: 0px; padding: 0px;"> param  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">in </span><span class="pln" style="margin: 0px; padding: 0px;"> os </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">environ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">keys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(): </span><span class="pln" style="margin: 0px; padding: 0px;">
+   </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;b&gt;%20s&lt;/b&gt;: %s&lt;r&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">param </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> os </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">environ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">param </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]) </span></pre>
+ <h2>
+	GET / POST 方法 </h2>
+ <p>
+	当需要从浏览器中传递一些信息到Web服务器中的CGI程序。最常见的是浏览器会使用两种方法二传这个信息给Web服务器。这两个方法分别是GET方法和POST方法。 </p>
+ <h2>
+	使用GET方法传递信息： </h2>
+ <p>
+	GET方法将附加在页面请求所编码的用户信息。页面和编码信息是由 ？字符分开如下： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="pln" style="margin: 0px; padding: 0px;">http </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">//www.test.com/cgi-bin/hello.py?key1=value1&amp;key2=value2 </span></pre>
+ <p>
+	GET方法是默认的方法，从浏览器的信息传递到Web服务器和它所产生出现在浏览器的位置，如果是很长的字符串，或如果有密码或其他敏感信息传递给服务器，切勿使用GET方法。 GET方法有大小限制：仅1024个字符可以在请求字符串被发送。 GET方法将使用QUERY_STRING头信息，并会通过QUERY_STRING环境变量的CGI程序访问。 </p>
+ <p>
+	可以通过简单的串联键和值对传递以及任何URL信息，或者可以使用HTML&lt;form&gt;标记使用GET方法来传递信息。 </p>
+ <h2>
+	简单URL示例：GET方法 </h2>
+ <p>
+	下面是一个简单的URL，它会通过两个值使用GET方法传递给hello_get.py程序。 </p>
+ <a href="http://www.yiibai.com/cgi-bin/hello_get.py?first_name=ZARA&amp;last_name=ALI" target="_blank">/cgi-bin/hello_get.py?first_name=ZARA&amp;last_name=ALI </a>
+ <p>
+	下面是hello_get.py脚本来处理输入Web浏览器显示。要使用CGI模块，这使得它非常容易访问传递信息： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Create instance of ____________  </span><span class="pln" style="margin: 0px; padding: 0px;">
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get data from ______ </span><span class="pln" style="margin: 0px; padding: 0px;">
+first_name  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;first_name&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+last_name   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;last_name&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;html&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;title&gt;Hello - Second CGI _______&__;/_____&__;&____; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt;Hello %s %s&lt;/h2&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">first_name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> last_name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/html&gt;&quot; </span></pre>
+ <p>
+	这将产生以下结果： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px;">
+					Hello ZARA ALI </h2>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	简单的表单示例：GET方法 </h2>
+ <p>
+	下面是一个简单的例子，通过使用HTML表单和提交按钮两个值。我们将使用相同的CGI脚本hello_get.py来处理这个输入。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;form </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">action </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/cgi-bin/hello_get.py&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">method </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;get&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+First Name:  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;text&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;first_name&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;br </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+Last Name:  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;text&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;last_name&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/form&gt; </span></pre>
+ <p>
+	下面是上述形式的实际输出，输入您名字和姓氏，然后单击提交按钮来查看结果。 </p>
+ <form action="http://www.yiibai.com/cgi-bin/hello_get.py" method="get" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); " target="_blank">
+	First Name:&nbsp; <input name="first_name" style="font-family: inherit; border: 1px solid rgb(170, 170, 170); color: rgb(75, 66, 58); padding: 6px 11.21875px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; -webkit-appearance: none; width: 240px; max-width: 96%; background: rgb(238, 238, 238);" type="text" /><br style="margin: 0px; padding: 0px;" />
+	Last Name:&nbsp; <input name="last_name" style="font-family: inherit; border: 1px solid rgb(170, 170, 170); color: rgb(75, 66, 58); padding: 6px 11.21875px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; -webkit-appearance: none; width: 240px; max-width: 96%; background: rgb(238, 238, 238);" type="text" />&nbsp; <input style="font-family: inherit;" type="submit" value="Submit" />&nbsp; </form>
+ <h2>
+	使用POST方法传递信息： </h2>
+ <p>
+	将信息传递给CGI程序的一般比较可靠的方法是POST方法。这个包中完全相同的方式作为GET方法的信息，但是，代替发送它作为后一个文本字符串？在URL中，它把它作为一个单独的消息。此消息进入在标准输入表单的CGI脚本。 </p>
+ <p>
+	下面是处理GET和POST方法都使用相同的hello_get.py脚本。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Create instance of ____________  </span><span class="pln" style="margin: 0px; padding: 0px;">
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get data from ______ </span><span class="pln" style="margin: 0px; padding: 0px;">
+first_name  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;first_name&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+last_name   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;last_name&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;html&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;title&gt;Hello - Second CGI _______&__;/_____&__;&____; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt;Hello %s %s&lt;/h2&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">first_name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> last_name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/html&gt;&quot; </span></pre>
+ <p>
+	让我们再上面同样的例子其中通过使用HTML表单两个值和提交按钮。我们将使用相同的CGI脚本hello_get.py来处理这个输入框。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;form </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">action </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/cgi-bin/hello_get.py&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">method </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;post&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+First Name:  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;text&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;first_name&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt;&lt;br </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+Last Name:  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;text&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;last_name&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/form&gt; </span></pre>
+ <p>
+	这里是在上述形式的实际输出。输入名字和姓氏，然后单击提交按钮来查看结果。 </p>
+ <form action="http://www.yiibai.com/cgi-bin/hello_get.py" method="post" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); " target="_blank">
+	First Name:&nbsp; <input name="first_name" style="font-family: inherit; border: 1px solid rgb(170, 170, 170); color: rgb(75, 66, 58); padding: 6px 11.21875px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; -webkit-appearance: none; width: 240px; max-width: 96%; background: rgb(238, 238, 238);" type="text" /><br style="margin: 0px; padding: 0px;" />
+	Last Name:&nbsp; <input name="last_name" style="font-family: inherit; border: 1px solid rgb(170, 170, 170); color: rgb(75, 66, 58); padding: 6px 11.21875px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; -webkit-appearance: none; width: 240px; max-width: 96%; background: rgb(238, 238, 238);" type="text" />&nbsp; <input style="font-family: inherit;" type="submit" value="Submit" />&nbsp; </form>
+ <h2>
+	传递复选框数据给CGI程序 </h2>
+ <p>
+	复选框用于当需要多个选项被选中。 </p>
+ <p>
+	下面是两个复选框形式例如HTML代码： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;form </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">action </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/cgi-bin/checkbox.cgi&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">method </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;POST&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">target </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;_blank&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;checkbox&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;maths&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;on&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;"> Maths
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;checkbox&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;physics&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;on&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;"> Physics
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Select Subject&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/form&gt; </span></pre>
+ <p>
+	这段代码的结果如下表： </p>
+ <form action="http://www.yiibai.com/cgi-bin/checkbox.py" method="post" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); " target="_blank">
+	 <input name="maths" style="font-family: inherit;" type="checkbox" value="on" />&nbsp;Maths&nbsp; <input name="physics" style="font-family: inherit;" type="checkbox" value="on" />&nbsp;Physics&nbsp; <input style="font-family: inherit;" type="submit" value="Select Subject" />&nbsp; </form>
+ <p>
+	下面是checkbox.cgi脚本来处理Web浏览器中给出的复选框按钮。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Create instance of ____________  </span><span class="pln" style="margin: 0px; padding: 0px;">
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get data from ______ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;maths&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+   math_flag  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;ON&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   math_flag  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;OFF&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;physics&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+   physics_flag  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;ON&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   physics_flag  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;OFF&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;html&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;title&gt;Checkbox - Third CGI _______&__;/_____&__;&____; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt; CheckBox Maths is : %s&lt;/h2&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> math_flag
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt; CheckBox Physics is : %s&lt;/h2&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> physics_flag
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/html&gt;&quot; </span></pre>
+ <h2>
+	传递单选按钮数据给CGI程序 </h2>
+ <p>
+	单选按钮，使用只需要一个选项被选择。 </p>
+ <p>
+	下面是两个单选按钮的形式例如HTML代码： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;form </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">action </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/cgi-bin/radiobutton.py&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">method </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;post&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">target </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;_blank&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;radio&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;subject&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;maths&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;"> Maths
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;radio&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;subject&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;physics&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;"> Physics
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Select Subject&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/form&gt; </span></pre>
+ <p>
+	这段代码的结果如下表： </p>
+ <form action="http://www.yiibai.com/cgi-bin/radiobutton.py" method="post" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); " target="_blank">
+	 <input name="subject" style="font-family: inherit;" type="radio" value="Maths" />&nbsp;Maths&nbsp; <input name="subject" style="font-family: inherit;" type="radio" value="Physics" />&nbsp;Physics&nbsp; <input style="font-family: inherit;" type="submit" value="Select Subject" />&nbsp; </form>
+ <p>
+	下面是radiobutton.py脚本来处理Web浏览器给出的单选按钮： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Create instance of ____________  </span><span class="pln" style="margin: 0px; padding: 0px;">
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get data from ______ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;subject&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+   subject  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;subject&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   subject  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Not set&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;html&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;title&gt;Radio - Fourth CGI _______&__;/_____&__;&____; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt; Selected Subject is %_&__;/_2&__;&____; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> subject
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/html&gt;&quot; </span></pre>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); ">
+	Passing Text Area Data __ CGI Program </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	TEXTAREA element is used ____ multiline text has to __ passed to the CGI _______. </p>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Here is example HTML ____ for a form with _ TEXTAREA box: </p>
+ <table cellpadding="5" class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; color: rgb(0, 0, 0);  background-color: rgb(247, 247, 247);">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <pre style="margin-bottom: 0px; padding: 0px;">
+&lt;form action=&quot;/cgi-bin/textarea.py&quot; method=&quot;post&quot; target=&quot;_blank&quot;&gt;
+&lt;textarea ____=&____;___________&____; cols=&quot;40&quot; rows=&quot;4&quot;&gt;
+Type your text ____...
+&__;/________&__;
+&__;_____ type=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+&lt;/form&gt; </pre>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	The result of this ____ is the following form: </p>
+ <form action="http://www.yiibai.com/cgi-bin/textarea.py" method="post" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); " target="_blank">
+	 <textarea cols="40" name="textcontent" rows="4" style="font-family: inherit; border-top-style: none; border-right-style: none; border-left-style: none; color: rgb(75, 66, 58); padding: 6px 11.21875px; border-bottom-color: rgb(200, 199, 180); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; -webkit-appearance: none; background: rgb(238, 238, 238);"></textarea>&nbsp; <input style="font-family: inherit;" type="submit" value="Submit" />&nbsp; </form>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Below is textarea.cgi script __ handle input given by ___ browser: </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Create instance of ____________  </span><span class="pln" style="margin: 0px; padding: 0px;">
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get data from ______ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;textcontent&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+   text_content  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;textcontent&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   text_content  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Not entered&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;html&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;head&gt;&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;title&gt;Text Area - Fifth ___ Program&lt;/title&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt; Entered Text Content __ %s&lt;/h2&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> text_content
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/body&gt;&quot; </span></pre>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); ">
+	Passing Drop Down Box ____ to CGI Program </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Drop Down Box is ____ when we have many _______ available but only one __ two will be selected. </p>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Here is example HTML ____ for a form with ___ drop down box: </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;form </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">action </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/cgi-bin/dropdown.py&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">method </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;post&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">target </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;_blank&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;select </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;dropdown&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;option </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Maths&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">selected </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">Maths </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/option&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;option </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Physics&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">Physics </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/option&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/select&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Submit&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/form&gt; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	The result of this ____ is the following form: </p>
+ <form action="http://www.yiibai.com/cgi-bin/dropdown.py" method="post" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); " target="_blank">
+	 <select name="dropdown" style="font-family: inherit;">&nbsp; <option selected="selected" value="Maths" />Maths &nbsp; <option value="Physics" />Physics &nbsp; </select>&nbsp; <input style="font-family: inherit;" type="submit" value="Submit" />&nbsp; </form>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Below is dropdown.py script __ handle input given by ___ browser. </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Create instance of ____________  </span><span class="pln" style="margin: 0px; padding: 0px;">
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get data from ______ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;dropdown&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+   subject  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">getvalue </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;dropdown&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   subject  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Not entered&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Content-type:text/html
+
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;html&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;title&gt;Dropdown Box - Sixth ___ Program&lt;/title&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/head&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;h2&gt; Selected Subject is %_&__;/_2&__;&____; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> subject
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/body&gt;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&lt;/html&gt;&quot; </span></pre>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); ">
+	Using Cookies in CGI </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	HTTP protocol is a _________ protocol. But for a __________ website, it is required __ maintain session information among _________ pages. For example, one ____ registration ends after completing ____ pages. But how to ________ user&#39;s session information across ___ the web pages. </p>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	In many situations, using _______ is the most efficient ______ of remembering and tracking ___________, purchases, commissions, and other ___________ required for better visitor __________ or site statistics. </p>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); ">
+	How It Works? </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Your server sends some ____ to the visitor&#39;s browser __ the form of a ______. The browser may accept ___ cookie. If it does, __ is stored as a _____ text record on the _______&#39;_ hard drive. Now, when ___ visitor arrives at another ____ on your site, the ______ is available for retrieval. ____ retrieved, your server knows/remembers ____ was stored. </p>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Cookies are a plain ____ data record of 5 ________-______ fields: </p>
+ <ul class="list" style="margin: 0px; padding-right: 0px; padding-left: 15px; list-style: none; color: rgb(0, 0, 0); ">
+	 <li style="margin: 0px; padding: 0px 0px 0px 19px; background: url(../images/icon-bullet.png) 0px 0px no-repeat;">
+		 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+			 <b style="margin: 0px; padding: 0px;">Expires : </b>&nbsp;The date the cookie ____ expire. If this is _____, the cookie will expire ____ the visitor quits the _______. </p>
+	 </li>
+	 <li style="margin: 0px; padding: 0px 0px 0px 19px; background: url(../images/icon-bullet.png) 0px 0px no-repeat;">
+		 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+			 <b style="margin: 0px; padding: 0px;">Domain : </b>&nbsp;The domain name of ____ site. </p>
+	 </li>
+	 <li style="margin: 0px; padding: 0px 0px 0px 19px; background: url(../images/icon-bullet.png) 0px 0px no-repeat;">
+		 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+			 <b style="margin: 0px; padding: 0px;">Path : </b>&nbsp;The path to the _________ or web page that ____ the cookie. This may __ blank if you want __ retrieve the cookie from ___ directory or page. </p>
+	 </li>
+	 <li style="margin: 0px; padding: 0px 0px 0px 19px; background: url(../images/icon-bullet.png) 0px 0px no-repeat;">
+		 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+			 <b style="margin: 0px; padding: 0px;">Secure : </b>&nbsp;If this field contains ___ word &quot;secure&quot;, then the ______ may only be retrieved ____ a secure server. If ____ field is blank, no ____ restriction exists. </p>
+	 </li>
+	 <li style="margin: 0px; padding: 0px 0px 0px 19px; background: url(../images/icon-bullet.png) 0px 0px no-repeat;">
+		 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+			 <b style="margin: 0px; padding: 0px;">Name=Value : </b>&nbsp;Cookies are set and _________ in the form of ___ and value pairs. </p>
+	 </li>
+ </ul>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); ">
+	Setting up Cookies </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	It is very easy __ send cookies to browser. _____ cookies will be sent _____ with HTTP Header before __ Content-type field. Assuming you ____ to set UserID and ________ as cookies. So cookies _______ will be done as _______: </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Set-Cookie:UserID=XYZ;
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Set-Cookie:Password=XYZ123;
+&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Set-Cookie:Expires=Tuesday, 31-Dec-2007 23:12:40 GMT&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;
+print &quot; </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Set </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Cookie </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Domain </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">www </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">yiibai </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">com </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;
+print &quot; </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Set </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Cookie </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Path </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">=/ </span><span class="pln" style="margin: 0px; padding: 0px;">perl </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;
+print &quot; </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Content </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">text </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">html
+
+ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;
+...........Rest of the HTML _______.... </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	From this example, you ____ have understood how to ___ cookies. We use&nbsp; <b style="margin: 0px; padding: 0px;">Set-Cookie </b>&nbsp;HTTP header to set _______. </p>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	Here, it is optional __ set cookies attributes like _______, Domain and Path. It __ notable that cookies are ___ before sending magic line&nbsp; <b style="margin: 0px; padding: 0px;">&quot;Content-type:text/html
+
+ </b>. </p>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); ">
+	Retrieving Cookies </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	It is very easy __ retrieve all the set _______. Cookies are stored in ___ environment variable HTTP_COOKIE and ____ will have following form: </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="pln" style="margin: 0px; padding: 0px;">key1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">value1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">key2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">value2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">key3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">value3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.... </span></pre>
+ <p>
+	下面是如何获取cookies的例子。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Import modules for ___ handling  </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">from </span><span class="pln" style="margin: 0px; padding: 0px;"> os  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> environ
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> environ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">has_key </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;HTTP_COOKIE&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">for </span><span class="pln" style="margin: 0px; padding: 0px;"> cookie  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">in </span><span class="pln" style="margin: 0px; padding: 0px;"> map </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">strip </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> split </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">environ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;HTTP_COOKIE&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">], </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;;&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">)): </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">key </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> value  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> split </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">cookie </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;=&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> key  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">== </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;UserID&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+         _______  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> value
+
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> key  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">== </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Password&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+         ________  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> value
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;User ID  = %_&____; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> user_id
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Password = %s&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;"> password </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	这将产生以下结果由上面的脚本设置cookie： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">User </span><span class="pln" style="margin: 0px; padding: 0px;"> ID  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> XYZ
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Password </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> XYZ123 </span></pre>
+ <h2>
+	文件上传例子： </h2>
+ <p>
+	上传文件，HTML表单的enctype属性必须设置为multipart/form-data。文件类型的input标签将创建一个&ldquo;浏览&rdquo;按钮。 </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;html&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;body&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;form </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">enctype </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;multipart/form-data&quot; </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+                      </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">action </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;save_file.py&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">method </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;post&quot; </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;p&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">File:  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;file&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;filename&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt;&lt;/p&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;p&gt;&lt;input </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">type </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;submit&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="atn" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="atv" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Upload&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">/&gt;&lt;/p&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/form&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/body&gt; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="tag" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">&lt;/html&gt; </span></pre>
+ <p>
+	这段代码的结果如下表： </p>
+ <form action="http://www.yiibai.com/save_file.py" enctype="multipart/form-data" method="post" style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); ">
+	 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+		File:&nbsp; <input name="filename" style="font-family: inherit;" type="file" /></p>
+	 <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify;">
+		 <input style="font-family: inherit;" type="reset" value="Upload" /></p>
+ </form>
+ <p>
+	上面的例子中编写完成后，可以在你的服务器尝试上面的代码。 </p>
+ <p>
+	下面是脚本save_file.py处理文件上传： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> os
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">import </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;"> cgitb </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">enable </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+form  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> cgi </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">FieldStorage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Get filename here. </span><span class="pln" style="margin: 0px; padding: 0px;">
+fileitem  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> form </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;filename&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">] </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Test if the ____ was uploaded </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> fileitem </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">filename </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># strip leading path ____ file name to avoid  </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># directory traversal attacks </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fn  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> os </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">path </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">basename </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">fileitem </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">filename </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+   open </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;/tmp/&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">+ </span><span class="pln" style="margin: 0px; padding: 0px;"> fn </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;wb&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">). </span><span class="pln" style="margin: 0px; padding: 0px;">write </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">fileitem </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">file </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">read </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">()) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+   message  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;The file &quot;&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">+ </span><span class="pln" style="margin: 0px; padding: 0px;"> fn  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">+ </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;&quot; was uploaded successfully&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+   
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   message  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;No file was uploaded&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+   
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&quot;&quot;
+Content-Type: text/html
+
+&lt;html&gt;
+&lt;body&gt;
+   &lt;p&gt;%s&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&quot;&quot;&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">message </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">,) </span></pre>
+ <p>
+	如果运行是上Unix/Linux上的脚本，那么就必须照顾替换文件分隔符，如下所示，否则在Windows机器上面open()语句应该正常工作。 </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="pln" style="margin: 0px; padding: 0px;">fn  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> os </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">path </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">basename </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">fileitem </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">filename </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">replace </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;/&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">)) </span></pre>
+ <h2>
+	如何弹出&ldquo;文件下载&rdquo;对话框？ </h2>
+ <p>
+	有时，期望要提供选项当用户将点击一个链接，它将一个&ldquo;文件下载&rdquo;对话框弹出给用户，而不是显示的实际内容。这是很容易的，并通过HTTP头来实现。这个HTTP头跟从上一节提到的报头是一样。 </p>
+ <p>
+	例如，如果想从一个给定链路进行文件名的文件下载，它的语法如下： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># HTTP Header </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot; </span><b style="margin: 0px; padding: 0px;"><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">Content-Type: </span></b><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">application/octet-stream; name=&quot;FileName&quot;
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot; </span><b style="margin: 0px; padding: 0px;"><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">Content-Disposition: </span></b><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);"> attachment; filename=&quot;FileName&quot;
+
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Actual File Content ____ go hear. </span><span class="pln" style="margin: 0px; padding: 0px;">
+fo  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> open </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;foo.txt&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;rb&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+str  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> fo </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">read </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">(); </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;"> str
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Close opend file </span><span class="pln" style="margin: 0px; padding: 0px;">
+fo </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">close </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); ">
+	&nbsp; </p>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/Python/" target="_blank">Python </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/CGI/" target="_blank">CGI </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/CGI编程/" target="_blank">CGI编程 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>Python CGI编程 </b><br />
+									本文地址： <a href="python_cgi_programming.html">http://www.yiibai.com/python/python_cgi_programming.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='python_reg_expressions.html' class='btn' title='Python正则表达式' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='python_quick_guide.html' class='btn btn-default' style='float:right;' title='Python快速入门'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="5724" data-title="Python CGI编程" data-url="http://www.yiibai.com/python/python_cgi_programming.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

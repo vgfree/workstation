@@ -1,0 +1,401 @@
+<!doctype html>
+<html>
+<head lang="zh-cn">
+    <meta charset="utf-8">
+    <title>nginx 异步非阻塞模型的理解</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="description" content="官方的解释：https://www.nginx.com/blog/thread-pools-boost-performance-9x/ 多进程 一个 master 进程多个 worker 进程 worker 数 = cpu 核数 异步非阻塞 一个请求的完整过程: 建立连接->接受数据->发送数据 底层表现: 读写事件  如果采用阻塞调用,当读写事件没有准备好,阻塞调用就会进入内核等待,CPU就会让..."/>
+    <meta name="keywords" content="计算机基础,北剅沟,周梦康" />
+    <link rel="shortcut icon" href="https://static.mengkang.net/favicon.ico">
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/box.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/public.2.0.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+    <script type="text/javascript" src="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script src="https://static.mengkang.net/view/js/jquery-1.11.3.min.js"></script>
+    <script src="https://static.mengkang.net/view/js/mk.js"></script>
+    <script src="https://static.mengkang.net/view/js/box.js"></script>
+    <script type="text/javascript">
+        var SITE_URL = 'https://mengkang.net/index.php';
+    </script>
+</head>
+<body>
+<header class="header">
+    <div class="header-logo">
+        <div class="site-title">Mengkang's land</div>
+        <div class="site-desc smoothing">coding and recording</div>
+    </div>
+    <div class="header-menu">
+        <ul id="nav">
+            <li><a href="notebook.html" title="学习">学习</a></li><li><a href="tips.html" title="碎片">碎片</a></li><li><a href="playground.html" title="生活">生活</a></li><li><a target="_blank" href="about.me" title="博主">博主</a></li>        </ul>
+        <div class="phone-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+    </div>
+
+</header>
+<div id="content" class="content">
+    <style>
+        #blog-content blockquote p{
+            text-indent:15px;
+        }
+        #blog-content h3,h4{
+            text-indent:28px;
+        }
+        #blog-content p{
+            text-indent: 2em;
+        }
+        .blog-content h3{
+            margin: 10px 0;
+        }
+        .blog-content h2{
+            margin: 8px 0 18px 0;
+        }
+    </style>
+<div class="blog-padding">
+    <div id="blog">
+        <div class="blog-title">
+            <h1><a href="https://mengkang.net/461.html">nginx 异步非阻塞模型的理解</a></h1>
+        </div>
+        <div class="blog-meta smoothing">
+            <span class="post-time"><a href="about.me">周梦康</a> 发表于 2015-06-16</span>
+            <span class="post-category">
+                分类于 <a href="notebook.html" title="学习">学习</a>            </span>
+            <span class="post-comments-count">
+                <a href="">5983 次浏览</a>
+            </span>
+                        <span class="blog-tag">
+                标签 :
+                <a href="/tag-45.html" target="_blank">计算机基础</a>            </span>
+                    </div>
+        <div class="split-line"></div>
+        <div id="blog-content" class="blog-content smoothing">
+            <p class="p1">
+	<span class="s1">官方的解释：<a href="https://www.nginx.com/blog/thread-pools-boost-performance-9x/" target="_blank">https://www.nginx.com/blog/thread-pools-boost-performance-9x/</a></span> 
+</p>
+<p class="p1">
+	<span class="s1">多进程</span> 
+</p>
+<p class="p1">
+	<span class="s1">一个 master 进程多个 worker 进程</span> 
+</p>
+<p class="p1">
+	<span class="s1">worker 数 = cpu 核数</span> 
+</p>
+<p class="p1">
+	<span class="s1">异步非阻塞</span> 
+</p>
+<p class="p1">
+	<span class="s1">一个请求的完整过程: 建立连接-&gt;接受数据-&gt;发送数据</span> 
+</p>
+<p class="p1">
+	<span class="s1">底层表现: 读写事件</span> 
+</p>
+<p class="p2">
+	<span class="s1"></span> 
+</p>
+<p class="p1">
+	<span class="s1">如果采用阻塞调用,当读写事件没有准备好,阻塞调用就会进入内核等待,CPU就会让出去给别人使用了.</span> 
+</p>
+<p class="p2">
+	<span class="s1"></span> 
+</p>
+<p class="p1">
+	<span class="s1">这样对于单线程的 worker 来说,显然不合适,请求一多,都卡在了IO上,CPU 空闲下来没人用,CPU 的利用率就上不去. 如果增加进程数,就会增加无谓的上下文切换.</span> 
+</p>
+<p class="p2">
+	<span class="s1"></span> 
+</p>
+<p class="p1">
+	<span class="s1">如果只是非阻塞,当读写事件还没准备好,就马上返回 EAGAIN,告诉你，事件还没准备好呢，你慌什么，过会再来吧。好吧，你过一会，再来检查一下事件，直到事件准备好了为止，在这期间，你就可以先去做其它事情，然后再来看看事件好了没。虽然不阻塞了，但你得不时地过来检查一下事件的状态，你可以做更多的事情了，但带来的开销也是不小的。</span> 
+</p>
+<p>
+	参考链接:
+</p>
+<p>
+	<a href="http://blog.csdn.net/historyasamirror/article/details/5778378" target="_blank">http://blog.csdn.net/historyasamirror/article/details/5778378</a><br />
+<a href="http://blog.chinaunix.net/uid-26000296-id-3754118.html" target="_blank"><span>http://blog.chinaunix.net/uid-26000296-id-3754118.html</span></a><br />
+<a href="http://mp.weixin.qq.com/s?__biz=MjM5NDMwNjMzNA==&mid=205298917&idx=3&sn=7e977ae02075f7b6fc8cc74b18f9280a&key=1936e2bc22c2ceb54434528246c021fd5d5c5f73871709745c34601100279486f0a95b983bd73caa6b588bb3169791f7&ascene=0&uin=MTM4NDU1NTY0MA%3D%3D&devicetype=iMac+MacBookPro11%2C1+OSX+OSX+10.10+build(14A389)&version=11000006&pass_ticket=WJHWel7Siyw0Ydy%2FZfErv3626m865Av44dMqU66MiCoSQAuHFLnNKG5S5HabPD7v" target="_blank">http://mp.weixin.qq.com</a> 
+</p>        </div>
+        <div class="single-post-share-list">
+    <span class="mobile-hide">分享到</span>
+    <div class="share-group">
+<!--        <a id="weixin-share" class="weixin mobile-hide" href="javascript:void(0)" ref="nofollow" target="_blank">-->
+<!--            <i class="icon-weixin"></i>-->
+<!--            <div class="panel-weixin">-->
+<!--                <section class="weixin-section">-->
+<!--                    <img src="http://s.jiathis.com/qrcode.php?url=--><!--?via=wechat_qr">-->
+<!--                </section>-->
+<!--                <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>-->
+<!--            </div>-->
+<!--        </a>-->
+        <a class="weibo" href="http://v.t.sina.com.cn/share/share.php?url=https://mengkang.net/461.html&title=nginx 异步非阻塞模型的理解" ref="nofollow" target="_blank">
+            <i class="icon-weibo"></i>
+        </a>
+        <a class="qq external mobile-hide" href="http://connect.qq.com/widget/shareqq/index.html?url=https://mengkang.net/461.html&title=nginx 异步非阻塞模型的理解&source=shareqq&desc=刚看到这篇文章不错，推荐给你看看～" ref="nofollow" target="_blank">
+            <i class="icon-qq"></i>
+        </a>
+        <a class="douban external mobile-hide" href="http://share.baidu.com/s?type=text&searchPic=0&sign=on&to=douban&url=https://mengkang.net/461.html&title=nginx 异步非阻塞模型的理解" ref="nofollow" target="_blank">
+            <i class="icon-douban"></i>
+        </a>
+    </div>
+</div>    </div>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+        $(function(){
+            var windowWidth = $(window).width();
+            var minWidth = windowWidth - 50;
+            //图片放大效果
+            $(".blog-content img").each(function(){
+                //获取图片的真实地址
+                var imgSrc;
+                if($(this).attr('data-original')){
+                    imgSrc = $(this).attr('data-original');
+                }else{
+                    imgSrc = $(this).attr('src');
+                }
+
+                // 保证在手机显示完整的图片
+                if (windowWidth < 1024) {
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px").wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+ minWidth +'px"></a>');
+                }else{
+                    $(this).wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+$(this).attr('width')+'px"></a>');
+
+                }
+
+            });
+            //图片处理
+            $('.image-popup-no-margins').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                fixedContentPos: true,
+                mainClass: 'mfp-no-margins mfp-with-zoom',
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300
+                }
+            });
+            $(".blog-content").on("magnificPopup",".image-popup-no-margins");
+            //懒加载
+            $(".blog-content img").lazyload({"effect":"fadeIn"});
+
+            if(windowWidth < 1024){
+                $(".speech-zmk-desc").hide();
+                $("video").each(function(){
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px");
+                });
+            }
+        })
+    </script>
+    <div id="comment">
+    <h2>评论列表</h2>
+    <div id="commentList">
+        <div class="comment-list clearfix">
+            <a name="comment_text"></a>
+            <div class="comment-list-left">
+                <img src="/view/images/avatar/1.jpg" alt=""/>
+            </div>
+            <div class="comment-list-right">
+                <form name="comment">
+                    <input type="hidden" name="blogid" value="461"/>
+                    <input type="hidden" name="replyId" value="0"/>
+                    <div class="comment-input-div">
+                        <input type="text" name="username" placeholder="昵称（可不填写）" class="comment-input" />
+                        <input type="email" name="email" placeholder="邮箱（可不填写）" class="comment-input" />
+                        <span>如果填写邮箱了，当我我回复您的时候会给您邮箱发送消息提醒，方便交流</span>
+                    </div>
+                    <div>
+                        <textarea name="comment" placeholder="加入讨论..." class="comment-textarea"></textarea>
+                    </div>
+                    <div class="comment-input-div">
+                        <a href="javascript:void(0)" id="post_comment" issending="false">提交</a>
+                        <span>可以使用`xxxx`来插入简短的代码碎片</span>
+                    </div>
+                                    </form>
+            </div>
+        </div>
+            </div>
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        //将除了本页锚点链接之外所有的a链接都改为在新窗口打开
+        $(".content").find('a').each(function(){
+            if(/^#/.test($(this).attr('href'))){
+                $(this).attr({'target':'_self'});
+            }else{
+                $(this).attr({'target':'_blank'});
+            }
+        });
+        $(".delreply").click(function(){
+            var _e = $(this);
+            var id = $(this).attr('targetId');
+            ui.confirm('确认删除该留言？',function(){
+                var url = U('Comment/del');
+                $.post(url,{id:id},function(data){
+                    if(parseInt(data.flag)==1){
+                        _e.parents('.comment-list').remove();
+                        ui.success('删除成功');
+                    }else{
+                        ui.error('删除失败');
+                    }
+                },'json')
+            },function(){
+                return false;
+            })
+        });
+        $(".reply_the_comment").click(function(){
+            $("input[name='replyId']").val($(this).attr('targetId'));
+            var pre_content = '回复'+$(this).parent().parent().find(".username").text()+': ';
+            var callback = function(pre_content){
+                $("textarea[name='comment']").css('background','#90DCFF').focus().val(pre_content);
+                setTimeout(function(){
+                    $("textarea[name='comment']").css('background','#FFF');
+                    setTimeout(function(){
+                        $("textarea[name='comment']").css('background','#90DCFF');
+                        setTimeout(function(){
+                            $("textarea[name='comment']").css('background','#FFF');
+                        },300)
+                    },300)
+                },300);
+            };
+
+            var scrollHeight = $('a[name="comment_text"]').offset().top;
+            if($(document).scrollTop() + $(window).height() + 100 <= $(document).height()){
+                $("html,body").animate({scrollTop:scrollHeight},1000,function(){
+                    //使得回复框颜色闪一闪
+                    callback(pre_content);
+                });
+            }else{
+                callback(pre_content);
+            }
+        });
+        $("textarea[name='comment']").focus(function(){
+            $(this).css({"font-size":"16px","line-height":"22px"});
+            $(".comment-input-div").fadeIn();
+        });
+        $("textarea[name='comment'],input").focus(function(){
+            //先自动填下留言表单，为留言做准备
+            if(!$("input[name='email']").val()){
+                var email = getCookie('email');
+                if(email){
+                    $("input[name='email']").val(email);
+                }
+            }
+            if(!$("input[name='username']").val()){
+                var username = getCookie('username');
+                if(username){
+                    $("input[name='username']").val(username);
+                }
+            }
+        });
+        $("textarea[name='comment']").keydown(function(e){
+            if(e.keyCode==13){
+                $(this).css("height",parseInt($(this).css("height")) + parseInt($(this).css("line-height")));
+            }
+        });
+        $("#post_comment").click(function(){
+            post_comment();
+        });
+        //执行评论
+        var post_comment_flag = true;
+        var post_comment = function(){
+            if(!post_comment_flag){
+                ui.error('...稍等一会，上一条还没发送过去哦');
+                return false;
+            }
+            post_comment_flag = false;
+            var post_comment = $("textarea[name='comment']").val();
+            if(post_comment.length < 1){
+                ui.error('...说点什么吧');
+                return false;
+            }
+            var post_email = $("input[name='email']").val();
+            if(!post_email.match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)){
+                ui.error('邮箱格式不正确');
+                return false;
+            }
+
+            var post_username = $("input[name='username']").val();
+            //第一次留言，则把用户的邮箱、称呼、博客地址存到客户端cookie里方便下次调用，而不用浏览的人手动输入了
+            if(!getCookie('username') || getCookie('username') !=  post_username){
+                setCookie('username', post_username);
+            }
+            if(!getCookie('email') || getCookie('email') != post_email){
+                setCookie('email',post_email);
+            }
+
+            $.post(U('Comment/doComment'),{
+                replyId:$("input[name='replyId']").val(),
+                blogid: $("input[name='blogid']").val(),
+                content: post_comment,
+                email: post_email,
+                name:  post_username
+            },function(data){
+                post_comment_flag = true;
+                if(parseInt(data.flag)>0){
+                    ui.success(data.info);
+                    $("#commentList").append('<div class="comment-list clearfix"><div class="comment-list-left"><img src="http://static.mengkang.net/view/images/avatar/1.jpg" alt=""/></div><div class="comment-list-right"><span class="username">'+$("input[name='username']").val()+'</span><span class="time">刚刚</span><p>'+data.data+'</p></div></div>');
+                    $("textarea[name='comment']").val('');
+                    ui.success(data.info);
+                    $("html,body").animate({scrollTop:$("#footer").offset().top},1000);
+                }else{
+                }
+            })
+        }
+    });
+
+</script></div>
+            <link rel="stylesheet" href="https://static.mengkang.net/editor/plugins/code/prettify.css" />
+        <script charset="utf-8" src="https://static.mengkang.net/editor/plugins/code/prettify.js"></script>
+        <script>
+            $(function(){ prettyPrint(); });
+        </script>
+    </div>
+<footer id="footer">
+    <div class="login" id="login">
+        <div class="popbackground"></div>
+        <div class="popbox loginBox" id="loginBox">
+            <div class="innerpopbox">
+                <div class="title">
+                    <div style="font-weight: 800;color: #2e9fff;text-align: center;">登堂入室 请输入密码</div>
+                </div>
+                <div class="password">
+                    <input type="password" name="password"/>
+                    <div><a href="javascript:void(0)" class="loginActive">进入</a><a href="javascript:void(0)" class="closeLoginBox">返回</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright smoothing">
+        <small>
+            <a href="about.me">关于博主 </a>
+<!--            <a class="danciben-link" href="/danciben.html">我的单词本 </a>-->
+            <a href="javascript:void(0)" name="login">登堂入室</a>            © 周梦康 2012 - 2016 京ICP备14049089号-1
+            <span style="display:none">
+                <script type="text/javascript">
+                    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd2adf0c061d575a2921e4a7c41fe9cd6' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+            </span>
+        </small>
+    </div>
+</footer>
+</body>
+</html>

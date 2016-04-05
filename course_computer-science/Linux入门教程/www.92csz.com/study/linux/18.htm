@@ -1,0 +1,249 @@
+<html><head>
+<!-- Original URL: http://www.92csz.com/study/linux/18.htm
+Date Downloaded: 2016/3/26 13:56:55 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+ <meta name="description" content="学会使用简单的MySQL操作" />
+ <meta name="keywords" content="nginx,freebsd,linux,mysql,shell,apache,centos,redhat,rhel,windows,sql,系统运维,IT运维,开源系统,开源系统运维" />
+ <title>学会使用简单的MySQL操作 </title>
+ </head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="menu">
+	 <ul>
+		 <span style="FONT-SIZE: 10.5pt">
+			 <li style="float:right;list-style-type:none;"><a href="http://www.92csz.com/" hidefocus="true" id="mn_list">返回网站首页 </a></li>
+			 <li><a href="index.html" hidefocus="true" id="mn_list">linux入门教程 </a></li>
+			 <li><a href="http://www.92csz.com/search" hidefocus="true" id="mn_search">搜索 </a></li>
+		 </span>
+	 </ul>
+ </div>
+ <p align="center">
+ <span style="FONT-SIZE: 15pt; FONT-FAMILY: '宋体'"><b>第十八章 </b></span><span style="FONT-SIZE: 15pt;"><b>  </b></span><span style="FONT-SIZE: 15pt; FONT-FAMILY: '宋体'"><b>学会使用简单的 </b></span><span style="FONT-SIZE: 15pt;"><b>MySQL </b></span><span style="FONT-SIZE: 15pt; FONT-FAMILY: '宋体'"><b>操作 </b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">在前面两个章节中已经介绍过 </span><span style="FONT-SIZE: 10.5pt;">MySQL </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的安装了，但是光会安装还不够，还需要会一些基本的相关操作 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">当然了，关于 </span><span style="FONT-SIZE: 10.5pt;">MySQL </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的内容也是非常多的，只不过对于 </span><span style="FONT-SIZE: 10.5pt;">linux </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">系统管理员来讲，一些基本的操作已经可以应付日常的管理工作了，至于更高深的那是 </span><span style="FONT-SIZE: 10.5pt;">DBA </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">（专门管理数据库的技术人员）的事情了 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <script async="" src="../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+ <!-- study_zsy -->
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5865024608655371" data-ad-slot="4214051509" data-ad-format="auto"></ins>
+ <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">【 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>更改 </b></span><span style="FONT-SIZE: 10.5pt;"><b>mysql </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>数据库 </b></span><span style="FONT-SIZE: 10.5pt;"><b>root </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>的密码 </b></span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">首次进入数据库是不用密码的 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>/usr/local/mysql/bin/mysql -u root </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Welcome to the MySQL _______. Commands end with ; __ \g. </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Your MySQL connection id __ 2 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Server version: 5.0.86 MySQL _________ Server (GPL) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Type 'help;' or '\h' ___ help. Type '\c' to _____ the buffer. </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">现在已经进入到了 </span><span style="FONT-SIZE: 10.5pt;">mysql  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的操作界面了 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">退出的话，直接输入 </span><span style="FONT-SIZE: 10.5pt;">exit </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">即可 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><i>  </i></span><span style="FONT-SIZE: 10.5pt;"><b><i>exit </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Bye </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">先解释一下上面的命令的含义， </span><span style="FONT-SIZE: 10.5pt;">-u  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用来指定要登录的用户， </span><span style="FONT-SIZE: 10.5pt;">root </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用户是 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">自带的管理员账户，默认没有密码的， </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>那么如何给 </b></span><span style="FONT-SIZE: 10.5pt;"><b>root </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>用户设定密码 </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">？按如下操作： </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>/usr/local/mysql/bin/mysqladmin -u root password ‘123456’ </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这样就可以设定 </span><span style="FONT-SIZE: 10.5pt;">root </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用户的密码了 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">其中 </span><span style="FONT-SIZE: 10.5pt;">mysqladmin </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">就是用来设置密码的工具， </span><span style="FONT-SIZE: 10.5pt;">-u  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">指定用户， </span><span style="FONT-SIZE: 10.5pt;">passwod  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">后跟要定义的密码，密码需要用单引号或者双引号括起来 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">另外你也许发现了，敲命令时总在前面加 </span><span style="FONT-SIZE: 10.5pt;">/usr/local/mysql/bin/  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这样很累 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">但是直接打 </span><span style="FONT-SIZE: 10.5pt;">mysql  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">又不能用，这是因为在系统变量 </span><span style="FONT-SIZE: 10.5pt;">$PATH </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">中没有 </span><span style="FONT-SIZE: 10.5pt;">/usr/local/mysql/bin/ </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这个目录，所以需要这样操作 </span><span style="FONT-SIZE: 10.5pt;">( </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">如果你的 </span><span style="FONT-SIZE: 10.5pt;">linux </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">可以直接打出 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这个命令，则不要做这个操作 </span><span style="FONT-SIZE: 10.5pt;">) </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">： </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>vim /etc/profile </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">在最后加入一行： </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">export PATH=$PATH:/usr/local/mysql/bin/ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">保存后运行 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>source /etc/profile </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">设定完密码后，再来运行最开始进入 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">数据库操作界面的命令： </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>mysql -u root </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">ERROR 1045 (28000): Access ______ for user 'root'@'localhost' (using ________: NO) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">就报错了，这是因为 </span><span style="FONT-SIZE: 10.5pt;">root </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用户有密码 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>mysql -u root -p </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Enter password: </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Welcome to the MySQL _______. Commands end with ; __ \g. </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Your MySQL connection id __ 5 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Server version: 5.0.86 MySQL _________ Server (GPL) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Type 'help;' or '\h' ___ help. Type '\c' to _____ the buffer. </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">需要加 </span><span style="FONT-SIZE: 10.5pt;">-p </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">选项指定密码，这时就会提示你输入密码了 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>当设定密码后，如果要想更改密码如何操作呢 </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">？ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>mysqladmin -u root -p ________ "123456789" </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Enter password: </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">输入原来 </span><span style="FONT-SIZE: 10.5pt;">root </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的密码就可以更改密码了 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">【 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>连接数据库 </b></span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">刚刚讲过通过使用 </span><span style="FONT-SIZE: 10.5pt;"><b><i>mysql -u root -p  </i></b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">就可以连接数据库了，但这只是连接的本地的数据库 </span><span style="FONT-SIZE: 10.5pt;">’localhost’ </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，然后有很多时候都是去连接网络中的某一个主机上的 </span><span style="FONT-SIZE: 10.5pt;">mysql。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>mysql -u user1 -p –_ 3306 -h 10.0.2.69 </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">其中 </span><span style="FONT-SIZE: 10.5pt;">-P </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">（大写）指定远程主机 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的绑定端口，默认都是 </span><span style="FONT-SIZE: 10.5pt;">3306 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">； </span><span style="FONT-SIZE: 10.5pt;">-h </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">指定远程主机的 </span><span style="FONT-SIZE: 10.5pt;">IP </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">【 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>一些基本的 </b></span><span style="FONT-SIZE: 10.5pt;"><b>MySQL </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>操作命令 </b></span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">1.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询当前所有的库 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>show databases; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+--------------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Database | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+--------------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| information_schema | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| mysql | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| test | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+--------------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">2.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询某个库的表 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>use mysql; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Database changed </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><i>  </i></span><span style="FONT-SIZE: 10.5pt;"><b><i>show tables; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+---------------------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Tables_in_mysql | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+---------------------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| columns_priv | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| db | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| func | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| help_category | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| help_keyword | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| help_relation | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| help_topic | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| host | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| proc | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| procs_priv | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| tables_priv | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| time_zone | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| time_zone_leap_second | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| time_zone_name | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| time_zone_transition | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| time_zone_transition_type | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| user | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+---------------------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">3.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看某个表的字段 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>desc func;  </i></b></span><span style="FONT-SIZE: 10.5pt;">//func  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">是表名 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+------------------------------+------+-----+---------+-------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Field | Type | Null | Key | _______ | Extra | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+------------------------------+------+-----+---------+-------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| name | char(64) | NO | PRI | | | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| ret | tinyint(1) | NO | | 0 | | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| dl | char(128) | NO | | | | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| type | enum('function','aggregate') | NO | | NULL | | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+------------------------------+------+-----+---------+-------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">4.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看某个表的表结构（创建表时的详细结构） </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>show create table func; </i></b></span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">|Table | CreateTable |  </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| func | CREATE _____ `func` ( </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">`name` char(64) collate utf8_bin ___ NULL default '', </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">`ret` tinyint(1) NOT NULL _______ '0', </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">`dl` char(128) collate utf8_bin ___ NULL default '', </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">`type` enum('function','aggregate') character set ___8 NOT NULL, </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">PRIMARY KEY (`name`) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">) ENGINE=MyISAM DEFAULT CHARSET=utf8 _______=___8____ COMMENT='User defined functions' | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+---------------------------------------------------------------------------------------------------------------------- </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">5.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看当前是哪个用户 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select user(); </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+----------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| user() | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+----------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| root@localhost | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+----------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">6.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看当前所在数据库 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select database(); </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| database() | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| mysql | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">7.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">创建一个新库 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>create database db1; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 1 row ________ (0.04 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">8.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">创建一个表 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>create table t1 ( `__` int(4), `name` char(40)); </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 0 rows ________ (0.02 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>desc t1; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+----------+------+-----+---------+-------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Field | Type | Null | Key | _______ | Extra | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+----------+------+-----+---------+-------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| id | int(4) | YES | | NULL | | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| name | char(40) | YES | | NULL | | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-------+----------+------+-----+---------+-------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">9.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看当前数据库版本 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select version(); </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-----------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| version() | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-----------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| 5.0.86 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-----------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">10.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看当前系统时间 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select current_date, current_time; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+--------------+--------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| current_date | current_time | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+--------------+--------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| 2011-05-31 | 08:52:50 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+--------------+--------------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">11.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看当前 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的状态 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;"><b><i>mysql&gt; show status; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-----------------------------------+----------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Variable_name | Value | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+-----------------------------------+----------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Aborted_clients | 0 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Aborted_connects | 1 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Binlog_cache_disk_use | 0 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Binlog_cache_use | 0 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Bytes_received | 664 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| Bytes_sent | 6703 | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这个命令打出很多东西，显示你的 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">状态 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">12.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查看 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的参数 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>show variables; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">很多参数都是可以在 </span><span style="FONT-SIZE: 10.5pt;">/etc/my.cnf </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">中定义的 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">13.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">创建一个普通用户并授权 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><b><i> grant all on *.* to user1 identified by '123456'; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 0 rows ________ (0.01 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">all  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表示所有的权限（读 </span><span style="FONT-SIZE: 10.5pt;">、 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">写 </span><span style="FONT-SIZE: 10.5pt;">、 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询 </span><span style="FONT-SIZE: 10.5pt;">、 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">删除等等操作）， </span><span style="FONT-SIZE: 10.5pt;">*.* </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">前面的 </span><span style="FONT-SIZE: 10.5pt;">* </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表示所有的数据库，后面的 </span><span style="FONT-SIZE: 10.5pt;">* </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表示所有的表， </span><span style="FONT-SIZE: 10.5pt;">identified by  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">后面跟密码，用单引号括起来 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这里的 </span><span style="FONT-SIZE: 10.5pt;">user1 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">指的是 </span><span style="FONT-SIZE: 10.5pt;">localhost </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">上的 </span><span style="FONT-SIZE: 10.5pt;">user1 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，如果是给网络上的其他机器上的某个用户授权则这样： </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>grant all on db1.* __ 'user2'@'10.0.2.100' identified by '123456'; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 0 rows ________ (0.00 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用户和主机的 </span><span style="FONT-SIZE: 10.5pt;">IP </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">之间有一个 </span><span style="FONT-SIZE: 10.5pt;">@ </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，另外主机 </span><span style="FONT-SIZE: 10.5pt;">IP </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">那里可以用 </span><span style="FONT-SIZE: 10.5pt;">% </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">替代，表示所有主机 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">例如： </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><b><i> grant all on __1.* to 'user3'@'%' identified by '123456'; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 0 rows ________ (0.00 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">【 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>一些常用的 </b></span><span style="FONT-SIZE: 10.5pt;"><b>sql </b></span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">1.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询语句 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select count(*) from mysql.user; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql.user </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表示 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">库的 </span><span style="FONT-SIZE: 10.5pt;">user </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表； </span><span style="FONT-SIZE: 10.5pt;">count(*) </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表示表中共有多少行 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><b><i> select * from _____.__; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">库的 </span><span style="FONT-SIZE: 10.5pt;">db </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表中的所有数据 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select db from mysql.db; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">库 </span><span style="FONT-SIZE: 10.5pt;">db </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表的 </span><span style="FONT-SIZE: 10.5pt;">db </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">段 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select * from mysql.db _____ host like '10.0.%'; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">查询 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">库 </span><span style="FONT-SIZE: 10.5pt;">db </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表 </span><span style="FONT-SIZE: 10.5pt;">host </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">字段 </span><span style="FONT-SIZE: 10.5pt;">like 10.0.%  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的行，这里的 </span><span style="FONT-SIZE: 10.5pt;">% </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表示匹配所有，类似于前面介绍的通配符 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">2.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">插入一行 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><b><i> insert into db1.t1 ______ (1, 'abc'); </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 1 row ________ (0.00 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">t1 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">表在前面已经创建过 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>select * from db1.t1; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+------+------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| id | name | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+------+------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">| 1 | abc | </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">+------+------+ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">3.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">更改某一行 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>update db1.t1 set name='aaa' _____ id=1; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 1 row ________ (0.02 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Rows matched: 1 Changed: 1 Warnings: 0 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这样就把原来 </span><span style="FONT-SIZE: 10.5pt;">id </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">为 </span><span style="FONT-SIZE: 10.5pt;">1 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的那行中的 </span><span style="FONT-SIZE: 10.5pt;">name </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">改成 </span><span style="FONT-SIZE: 10.5pt;">’aaa’ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">4.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">删除表 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt; </span><span style="FONT-SIZE: 10.5pt;"><b><i> drop table db1.t1; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 0 rows ________ (0.01 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">5.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">删除数据库 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql&gt;  </span><span style="FONT-SIZE: 10.5pt;"><b><i>drop database db1; </i></b></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">Query OK, 0 rows ________ (0.07 sec) </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">6.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">备份与恢复库 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysqldump -uroot -p mysql &__;_____.___ </span></p>
+这里的mysqldump 就是备份的工具了，-p后面的mysql指的是mysql库,把备份的文件重定向到mysql.sql。如果恢复的话，只要： <br />
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mysql -uroot -p mysql &lt; mysql.sql  </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">关于 </span><span style="FONT-SIZE: 10.5pt;">MySQL </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的基本操作笔者就介绍这么多，当然学会了这些还远远不够，希望你能够在你的工作中学习到更多的知识，如果你对 </span><span style="FONT-SIZE: 10.5pt;">MySQL </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">有很大兴趣，不妨深入研究一下，毕竟多学点总没有坏处 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">如果想学跟多的东西请去查看 <a title="" href="http://dev.mysql.com/doc/refman/5.1/zh/index.html" target="_blank">MySQL官方中文参考手册 </a></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">（ </span><span style="FONT-SIZE: 10.5pt;">5.1 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">） </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5865024608655371";
+google_ad_slot = "3514991827";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+ <script type="text/javascript" src="../../../pagead2.googlesyndication.com/pagead/f.txt.js">
+</script></div>
+ <p><span style="FONT-SIZE: 10.5pt;">上一页&nbsp; <a title="" href="17.htm">LNMP环境搭建 </a></span><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">下一页&nbsp; <a title="" href="19.htm">NFS服务配置 </a></span><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><a title="" href="index.html">回到主目录 </a></span></p>
+ <script src="../../../s20.cnzz.com/stat_a61bedf.php.js" language="JavaScript"></script>
+ </body></html>an></p>
+ <script src="http://s20.cnzz.com/stat.php?id=3037570&web_id=3037570&show=pic" language="JavaScript"></script>
+ </body></html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/sql/sql-rdbms-concepts.html
+Date Downloaded: 2016/4/1 16:55:29 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>SQL RDBMS概念 - SQL教程 </title>
+		 <meta name="keywords" content="SQL,RDBMS,概念" />
+		 <meta name="description" content="RDBMS是什么? RDBMS代表关系数据库管理系统。 RDBMS是SQL的基础，对于像MS SQL Server，IBM DB2，Oracle，MySQL和Microsoft Access等所有现代数据库系统。 一个关系数据库管理系统（RDBMS）是一个数据" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/database/'>数据库 </a> >  <a href='index.html'>SQL教程 </a> >  SQL _______
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">SQL教程 </a>
+							 <a class="list-group-item" href="sql-rdbms-concepts.html" title="SQL RDBMS概念">SQL RDBMS概念 </a><a class="list-group-item" href="sql-databases.html" title="SQL RDBMS数据库">SQL RDBMS数据库 </a><a class="list-group-item" href="sql-syntax.html" title="SQL语法">SQL语法 </a><a class="list-group-item" href="sql-data-types.html" title="SQL数据类型">SQL数据类型 </a><a class="list-group-item" href="sql-operators.html" title="SQL操运算符">SQL操运算符 </a><a class="list-group-item" href="sql-expressions.html" title="SQL表达式">SQL表达式 </a><a class="list-group-item" href="sql-create-database.html" title="SQL创建数据库(CREATE DATABASE)">SQL创建数据库(CREATE DATABASE) </a><a class="list-group-item" href="sql-drop-database.html" title="SQL丢弃或删除数据库（DROP DATABASE）">SQL丢弃或删除数据库（DROP DATABASE） </a><a class="list-group-item" href="sql-select-database.html" title="SQL选择数据库(SELECT Database, USE语句)">SQL选择数据库(SELECT Database, USE语句) </a><a class="list-group-item" href="sql-create-table.html" title="SQL创建表(CREATE Table)">SQL创建表(CREATE Table) </a><a class="list-group-item" href="sql-drop-table.html" title="SQL删除表(DROP或DELETE Table)">SQL删除表(DROP或DELETE Table) </a><a class="list-group-item" href="sql-insert-query.html" title="SQL INSERT INTO插入查询">SQL INSERT INTO插入查询 </a><a class="list-group-item" href="sql-select-query.html" title="SQL SELECT查询语句">SQL SELECT查询语句 </a><a class="list-group-item" href="sql-where-clause.html" title="SQL WHERE子句">SQL WHERE子句 </a><a class="list-group-item" href="sql-and-or-clauses.html" title="SQL AND和OR运算符">SQL AND和OR运算符 </a><a class="list-group-item" href="sql-update-query.html" title="SQL UPDATE更新查询">SQL UPDATE更新查询 </a><a class="list-group-item" href="sql-delete-query.html" title="SQL DELETE删除查询">SQL DELETE删除查询 </a><a class="list-group-item" href="sql-like-clause.html" title="SQL LIKE子句">SQL LIKE子句 </a><a class="list-group-item" href="sql-top-clause.html" title="SQL TOP,LIMIT,ROWNUM子句">SQL TOP,LIMIT,ROWNUM子句 </a><a class="list-group-item" href="sql-order-by.html" title="SQL ORDER BY排序子句">SQL ORDER BY排序子句 </a><a class="list-group-item" href="sql-group-by.html" title="SQL GROUP BY(分组)">SQL GROUP BY(分组) </a><a class="list-group-item" href="sql-distinct-keyword.html" title="SQL Distinct关键字">SQL Distinct关键字 </a><a class="list-group-item" href="sql-sorting-results.html" title="SQL排序结果">SQL排序结果 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="sql-null-values.html" title="SQL NULL值">SQL NULL值 </a><a class="list-group-item" href="sql-constraints.html" title="SQL约束">SQL约束 </a><a class="list-group-item" href="sql-using-joins.html" title="SQL Join联接">SQL Join联接 </a><a class="list-group-item" href="sql-unions-clause.html" title="SQL UNION子句/操作符">SQL UNION子句/操作符 </a><a class="list-group-item" href="sql-alias-syntax.html" title="SQL别名语法">SQL别名语法 </a><a class="list-group-item" href="sql-indexes.html" title="SQL索引">SQL索引 </a><a class="list-group-item" href="sql-alter-command.html" title="SQL ALTER TABLE（修改表）">SQL ALTER TABLE（修改表） </a><a class="list-group-item" href="sql-truncate-table.html" title="SQL TRUNCATE TABLE(截断表)">SQL TRUNCATE TABLE(截断表) </a><a class="list-group-item" href="sql-using-views.html" title="SQL View(视图)">SQL View(视图) </a><a class="list-group-item" href="sql-having-clause.html" title="SQL Having子句">SQL Having子句 </a><a class="list-group-item" href="sql-transactions.html" title="SQL事务">SQL事务 </a><a class="list-group-item" href="sql-wildcards.html" title="SQL通配符运算符">SQL通配符运算符 </a><a class="list-group-item" href="sql-date-functions.html" title="SQL日期函数">SQL日期函数 </a><a class="list-group-item" href="sql-temporary-tables.html" title="SQL临时表">SQL临时表 </a><a class="list-group-item" href="sql-clone-tables.html" title="SQL克隆表">SQL克隆表 </a><a class="list-group-item" href="sql-sub-queries.html" title="SQL子查询">SQL子查询 </a><a class="list-group-item" href="sql-using-sequences.html" title="SQL使用序列（自动递增）">SQL使用序列（自动递增） </a><a class="list-group-item" href="sql-handling-duplicates.html" title="SQL DISTINCT重复处理">SQL DISTINCT重复处理 </a><a class="list-group-item" href="sql-injection.html" title="SQL注入">SQL注入 </a><a class="list-group-item" href="sql-useful-functions.html" title="SQL实用函数">SQL实用函数 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">SQL RDBMS概念 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>ffvsnn520 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										
+										 <a href='sql-not-null.html' class='btn btn-default' style='float:right;' title='SQL NOT NULL约束'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="6981" />
+									 <h2>
+	RDBMS是什么? </h2>
+ <p>
+	RDBMS代表关系数据库管理系统。 RDBMS是SQL的基础，对于像MS SQL Server，IBM __2，______，_______________ Access等所有现代数据库系统。 </p>
+ <p>
+	一个关系数据库管理系统(RDBMS)是一个数据库管理系统(DBMS)，基于关系模型如通过&nbsp;E. F. Codd 引入。 </p>
+ <h2>
+	什么是表? </h2>
+ <p>
+	在RDBMS中的数据存储在数据库对象称为表。表是相关数据条目的集合，它由列和行的组成。 </p>
+ <p>
+	记住，表是数据存储在关系数据库中最常见和最简单的形式。以下是CUSTOMERS表的例子： </p>
+ <pre class="prettyprint" style="border-radius: 0px; font-size: 12px; overflow: auto;">
++----+----------+-----+-----------+----------+
+| ID | NAME     | ___ | ADDRESS   | SALARY   |
++----+----------+-----+-----------+----------+
+|  1 | Ramesh   |  32 | _________ |  2000.00 |
+|  2 | Khilan   |  25 | _____     |  1500.00 |
+|  3 | kaushik  |  23 | Kota      |  2000.00 |
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 |
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 |
+|  6 | _____    |  22 | MP        |  4500.00 |
+|  7 | Muffy    |  24 | Indore    | 10000.00 |
++----+----------+-----+-----------+----------+ </pre>
+ <h2>
+	什么是字段? </h2>
+ <p>
+	每个表被分成较小的实体称为字段。在CUSTOMERS表中的字段组成是：ID, NAME, AGE, ADDRESS _ SALARY。 </p>
+ <p>
+	字段旨在维护有关表中的每个记录特定信息表中的列。 </p>
+ <h2>
+	什么是记录或行? </h2>
+ <p>
+	一个记录，也被称为一行数据，是存在于一个表中的每个单独的条目。比如有7条记录在上面的CUSTOMERS表。以下是在CUSTOMERS表中的数据或记录中的一行： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint" style="border-radius: 0px; font-size: 12px; overflow: auto;">
++----+----------+-----+-----------+----------+
+|  1 | ______   |  32 | Ahmedabad |  2000.00 |
++----+----------+-----+-----------+----------+ </pre>
+ <p>
+	记录是表中的一个水平的实体。 </p>
+ <h2>
+	什么是列？ </h2>
+ <p>
+	列是包含在一个表中的特定字段相关联的所有信息表的垂直实体。 </p>
+ <p>
+	例如，在CUSTOMERS表中的一列是ADDRESS，它代表位置描述，并会包括以下内容： </p>
+ <pre class="prettyprint" style="border-radius: 0px; font-size: 12px; overflow: auto;">
++-----------+
+| ADDRESS   |
++-----------+
+| Ahmedabad |
+| Delhi     |
+| Kota      |
+| Mumbai    |
+| Bhopal    |
+| MP        |
+| ______    |
++----+------+ </pre>
+ <h2>
+	什么是NULL值? </h2>
+ <p>
+	在表中的NULL值是一个字段显示为空值，这意味着使用一个NULL值的字段是表示一个没有值的字段。 </p>
+ <p>
+	这是非常重要的是要明白，一个NULL值不同于零值或包含空格的字段。NULL值字段是一个记录创建过程中已经留为空白。 </p>
+ <h2>
+	SQL 约束: </h2>
+ <p>
+	约束是对表执行对数据的列的规则。这些用于限制数据的类型进入表中。这确保数据库中的数据的准确性和可靠性。 </p>
+ <p>
+	约束可能是列级或表级。列级约束仅应用于一列，表级约束应用于整个表。 </p>
+ <p>
+	下面是常用的SQL约束： </p>
+ <ul>
+	 <li>
+		 <p>
+			 <a href="sql-not-null.html">NOT NULL约束 </a>&nbsp;-&nbsp;确保列不能有NULL值 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="sql-default.html">默认值约束 </a>&nbsp;-&nbsp;提供未指定时为列的值时的默认值 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="sql-unique.html">唯一值约束 </a>&nbsp;-&nbsp;确保了在一列中的所有的值是唯一的 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="sql-primary-key.html">主键 </a>&nbsp;-&nbsp;唯一标识数据库表中的每一行/记录 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="sql-foreign-key.html">外键 </a>&nbsp;-&nbsp;唯一标识任何其他数据库表中的行/记录 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="sql-check.html">检查约束 </a>&nbsp;-&nbsp;CHECK约束可以确保列中的所有值满足一定的条件 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="sql-index.html">索引 </a>&nbsp;-&nbsp;使用非常快速地创建和检索数据库中的数据。 </p>
+	 </li>
+ </ul>
+ <h2>
+	数据完整性： </h2>
+ <p>
+	数据的完整性有以下几类存在于每个RDBMS： </p>
+ <ul>
+	 <li>
+		 <p>
+			 <strong>实体完整性 </strong>:&nbsp;表中没有重复行 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <strong>域完整性 </strong>:&nbsp;通过限制的类型，格式或值的范围强制对于一个给定列的有效条目 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <strong>参考完整性 </strong>:&nbsp;行不能被删除，被其他记录使用 </p>
+	 </li>
+	 <li>
+		 <p>
+			 <strong>用户定义的完整性 </strong>:&nbsp;强制执行不属于实体，域和参照完整性一些具体的业务规则 </p>
+	 </li>
+ </ul>
+ <h2>
+	数据库规范化 </h2>
+ <p>
+	数据库正常化是有效地组织数据库中的数据的过程。归一化处理的两个原因： </p>
+ <ul>
+	 <li>
+		 <p>
+			消除冗余数据，例如，存储了一个以上的相同的数据在同一个表。 </p>
+	 </li>
+	 <li>
+		 <p>
+			确保数据的相关性意义。 </p>
+	 </li>
+ </ul>
+ <p>
+	这两者都是值得追求的目标，因为它们减少的空间的数据库消耗的量，并确保数据在逻辑上存储。规范化由一系列指导方针，帮助指导您创建一个良好的数据库结构。 </p>
+ <p>
+	标准化准则分为正常形态;认为形式的格式或数据库结构的布局方式。 正常形态的目的是组织数据库结构，使其符合第一范式，然后第二范式，最后第三范式的规则。 </p>
+ <p>
+	这是你的选择，把它进一步去第四范式，第五范式等，但总体来讲，满足第三范式就够了。 </p>
+ <ul>
+	 <li>
+		 <p>
+			 <a href="first-normal-form.html">第一范式(1NF) </a></p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="second-normal-form.html">第二范式(2NF) </a></p>
+	 </li>
+	 <li>
+		 <p>
+			 <a href="third-normal-form.html">第三范式&nbsp;(3NF) </a></p>
+	 </li>
+ </ul>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/SQL/" target="_blank">SQL </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/RDBMS/" target="_blank">RDBMS </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/概念/" target="_blank">概念 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>SQL RDBMS概念 </b><br />
+									本文地址： <a href="sql-rdbms-concepts.html">http://www.yiibai.com/sql/sql-rdbms-concepts.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										
+										 <a href='sql-not-null.html' class='btn btn-default' style='float:right;' title='SQL NOT NULL约束'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="6981" data-title="SQL RDBMS概念" data-url="http://www.yiibai.com/sql/sql-rdbms-concepts.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>/static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

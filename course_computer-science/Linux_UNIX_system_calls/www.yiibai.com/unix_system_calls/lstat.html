@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/lstat.html
+Date Downloaded: 2016/4/1 17:08:40 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>lstat()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="lstat,函数,Unix,Linux,stat,fstat" />
+		 <meta name="description" content="stat, fstat, lstat - 获取文件状态 SYNOPSIS #include sys/types.h #include sys/stat.h #include unistd.h int stat(const char * path , struct stat * buf ); int fstat(int filedes , struct stat * buf ); int lstat(const char * path , struct" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  lstat()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">lstat()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>诸葛非卿 </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='lseek.html' class='btn' title='lseek()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='madvise.html' class='btn btn-default' style='float:right;' title='madvise()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1612" />
+									
+									 <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">stat, fstat, lstat -&nbsp; </span>获取文件状态
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	内容简介 </h1>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">#include &lt;sys/types.h&gt; </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp; </span><br style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;" />
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">#include &lt;sys/stat.h&gt; </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp; </span><br style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;" />
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">#include &lt;unistd.h&gt; </b>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>int stat(const char * </b><i>path </i><b>, struct stat * </b><i>buf </i><b>); </b>&nbsp; <br />
+	 <b>int fstat(int&nbsp; </b><i>filedes </i><b>, struct stat * </b><i>buf </i><b>); </b>&nbsp; <br />
+	 <b>int lstat(const char * </b><i>path </i><b>, struct stat * </b><i>buf </i><b>); </b></p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	These functions return information _____ a file. No permissions ___ required on the file ______, but &mdash; in the ____ of&nbsp; <b>stat </b>() and&nbsp; <b>lstat </b>() &mdash; execute (search) __________ is required on all __ the directories in&nbsp; <i>path </i>&nbsp;that lead to the ____. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>stat </b>() stats the file _______ to by&nbsp; <i>path </i>&nbsp;and fills in&nbsp; <i>buf </i>. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>lstat </b>() is identical to&nbsp; <b>stat </b>(), except that if&nbsp; <i>path </i>&nbsp;is a symbolic link, ____ the link itself is ____-__, not the file that __ refers to. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>fstat </b>() is identical to&nbsp; <b>stat </b>(), except that the ____ to be stat-ed is _________ by the file descriptor&nbsp; <i>filedes </i>. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	All of these system _____ return a&nbsp; <i>stat </i>&nbsp;structure, which contains the _________ fields: </p>
+ <table cellpadding="5" cellspacing="5" class="src" style="font-family: verdana, helvetica, arial, sans-serif;  border-color: rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+				 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+struct stat {
+    dev_t     st_dev;     /* ID of ______ containing file */
+    ino_t     st_ino;     /* inode number */
+    mode_t    st_mode;    /* protection */
+    nlink_t   st_nlink;   /* ______ of hard links */
+    uid_t     st_uid;     /* user __ of owner */
+    gid_t     st_gid;     /* group ID __ owner */
+    dev_t     st_rdev;    /* device ID (if special ____) */
+    _____     _______;    /* _____ size, in bytes */
+    blksize_t st_blksize; /* blocksize for filesystem I/O */
+    blkcnt_t  st_blocks;  /* number __ blocks allocated */
+    time_t    st_atime;   /* ____ of last access */
+    time_t    st_mtime;   /* time of last modification */
+    time_t    st_ctime;   /* time of last ______ change */
+};
+ </pre>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>st_dev </i>&nbsp;field describes the device __ which this file resides. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>st_rdev </i>&nbsp;field describes the device ____ this file (inode) represents. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>st_size </i>&nbsp;field gives the size __ the file (if it __ a regular file or _ symbolic link) in bytes. ___ size of a symlink __ the length of the ________ it contains, without a ________ null byte. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>st_blocks </i>&nbsp;field indicates the number __ blocks allocated to the ____, 512-byte units. (This may __ smaller than&nbsp; <i>st_size </i>/512, for example, when ___ file has holes.) </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The&nbsp; <i>st_blksize </i>&nbsp;field gives the &quot;preferred&quot; _________ for efficient file system _/_. (Writing to a file __ smaller chunks may cause __ inefficient read-modify-rewrite.) </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Not all of the _____ filesystems implement all of ___ time fields. Some file ______ types allow mounting in ____ a way that file ________ do not cause an ______ of the&nbsp; <i>st_atime </i>field. (See &lsquo;noatime&rsquo; in&nbsp; <b>mount </b>(8).) </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The field&nbsp; <i>st_atime </i>&nbsp;is changed by file ________, e.g. by&nbsp; <b>execve </b>(2),&nbsp; <b>mknod </b>(2),&nbsp; <b>pipe </b>(2), <b>utime </b>(2) and&nbsp; <b>read </b>(2) (of more than ____ bytes). Other routines, like&nbsp; <b>mmap </b>(2), may or may ___ update&nbsp; <i>st_atime </i>. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The field&nbsp; <i>st_mtime </i>&nbsp;is changed by file _____________, e.g. by&nbsp; <b>mknod </b>(2),&nbsp; <b>truncate </b>(2), <b>utime </b>(2) and&nbsp; <b>write </b>(2) (of more than ____ bytes). Moreover,&nbsp; <i>st_mtime </i>&nbsp;of a directory is _______ by the creation or ________ of files in that _________. The&nbsp; <i>st_mtime </i>&nbsp;field is&nbsp; <i>not </i>changed for changes in _____, group, hard link count, __ mode. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The field&nbsp; <i>st_ctime </i>&nbsp;is changed by writing __ by setting inode information (_._., owner, group, link count, ____, etc.). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The following POSIX macros ___ defined to check the ____ type using the&nbsp; <i>st_mode </i>&nbsp;field: </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISREG(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				is it a regular ____? </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISDIR(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				directory? </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISCHR(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				character device? </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISBLK(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				block device? </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISFIFO(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				FIFO (named pipe)? </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISLNK(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				symbolic link? (Not in _____.1-1996.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISSOCK(m) </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				socket? (Not in POSIX.1-1996.) </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The following flags are _______ for the&nbsp; <i>st_mode </i>&nbsp;field: </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFMT </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0170000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				bitmask for the file ____ bitfields </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFSOCK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0140000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				socket </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFLNK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0120000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				symbolic link </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFREG </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0100000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				regular file </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFBLK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0060000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				block device </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFDIR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0040000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				directory </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFCHR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0020000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				character device </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFIFO </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0010000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				FIFO </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISUID </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0004000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				set UID bit </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISGID </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0002000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				set-group-ID bit (see below) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISVTX </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0001000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				sticky bit (see below) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IRWXU </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00700 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				mask for file owner ___________ </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IRUSR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00400 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				owner has read permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IWUSR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00200 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				owner has write permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IXUSR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00100 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				owner has execute permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IRWXG </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00070 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				mask for group permissions </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IRGRP </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00040 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				group has read permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IWGRP </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00020 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				group has write permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IXGRP </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00010 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				group has execute permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IRWXO </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00007 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				mask for permissions for ______ (not in group) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IROTH </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00004 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				others have read permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IWOTH </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00002 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				others have write permission </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IXOTH </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				00001 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				others have execute permission </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The set-group-ID bit (S_ISGID) ___ several special uses. For _ directory it indicates that ___ semantics is to be ____ for that directory: files _______ there inherit their group __ from the directory, not ____ the effective group ID __ the creating process, and ___________ created there will also ___ the S_ISGID bit set. ___ a file that does ___ have the group execution ___ (S_IXGRP) set, the set-group-ID ___ indicates mandatory file/record locking. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The &lsquo;sticky&rsquo; bit (S_ISVTX) __ a directory means that _ file in that directory ___ be renamed or deleted ____ by the owner of ___ file, by the owner __ the directory, and by _ privileged process. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	LINUX 注意 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Since kernel 2.5.48, the&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">stat </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;structure supports nanosecond resolution ___ the three file timestamp ______. Glibc exposes the nanosecond _________ of each field using _____ either of the form&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">st_atim.tv_nsec </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">, if the _BSD_SOURCE __ _SVID_SOURCE feature test macro __ defined, or of the ____&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">st_atimensec </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">, if neither of _____ macros is defined. On ____ systems that do not _______ sub-second timestamps, these nanosecond ______ are returned with the _____ 0. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	For most files under ___&____; <i>/proc </i>&nbsp;directory,&nbsp; <b>stat </b>() does not return ___ file size in the&nbsp; <i>st_size </i>field; instead the field __ returned with the value 0. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On success, zero is ________. On error, -1 is ________, and&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">errno </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is set appropriately. </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	错误 </h1>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EACCES </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Search permission is denied ___ one of the directories __ the path prefix of&nbsp; <i>path </i>. (See also&nbsp; <b>path_resolution </b>(2).) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EBADF </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>filedes </i>&nbsp;is bad. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EFAULT </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Bad address. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ELOOP </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Too many symbolic links ___________ while traversing the path. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENAMETOOLONG </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				File name too long. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOENT </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				A component of the ____&____; <i>path </i>&nbsp;does not exist, or ___ path is an empty ______. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOMEM </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				Out of memory (i.e. ______ memory). </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ENOTDIR </b></td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				A component of the ____ is not a directory. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	遵循于 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">These system calls conform __ SVr4, 4.3BSD, POSIX.1-2001. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Use of the&nbsp; <i>st_blocks </i>&nbsp;and&nbsp; <i>st_blksize </i>&nbsp;fields may be less ________. (They were introduced in ___. The interpretation differs between _______, and possibly on a ______ system when NFS mounts ___ involved.) </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	POSIX does not describe ___ S_IFMT, S_IFSOCK, S_IFLNK, S_IFREG, _______, S_IFDIR, S_IFCHR, S_IFIFO, S_ISVTX ____, but instead demands the ___ of the macros S_ISDIR(), ___. The S_ISLNK and S_ISSOCK ______ are not in POSIX.1-1996, ___ both are present in _____.1-2001; the former is from ____ 4, the latter from ____2. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Unix V7 (and later _______) had S_IREAD, S_IWRITE, S_IEXEC, _____ POSIX prescribes the synonyms _______, S_IWUSR, S_IXUSR. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	其它系统 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Values that have been (__ are) in use on _______ systems: </span>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				hex </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				name </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				ls </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				octal </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				description </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				f000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFMT </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				170000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				mask for file type </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				000000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				SCO out-of-service inode, BSD _______ type </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				SVID-v2 and XPG2 have ____ 0 and 0100000 for ________ file </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				1000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFIFO </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				p| </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				010000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				FIFO (named pipe) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				2000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFCHR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				c </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				020000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				character special (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				3000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFMPC </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				030000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				multiplexed character special (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				4000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFDIR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				d/ </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				040000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				directory (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				5000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFNAM </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				050000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				XENIX named special file </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				with two subtypes, distinguished __ st_rdev values 1, 2: </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0001 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_INSEM </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				s </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				000001 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				XENIX semaphore subtype of _____ </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0002 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_INSHD </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				m </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				000002 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				XENIX shared data subtype __ IFNAM </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				6000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFBLK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				b </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				060000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				block special (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				7000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFMPB </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				070000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				multiplexed block special (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				8000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFREG </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				- </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				100000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				regular (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				9000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFCMP </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				110000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				VxFS compressed </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				9000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFNWK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				n </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				110000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				network special (HP-UX) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				a000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFLNK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				l@ </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				120000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				symbolic link (BSD) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				b000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFSHAD </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				130000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Solaris shadow inode for ___ (not seen by userspace) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				c000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFSOCK </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				s= </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				140000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				socket (BSD; also &quot;S_IFSOC&quot; __ VxFS) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				d000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFDOOR </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				D&gt; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				150000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Solaris door </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				e000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_IFWHT </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				w% </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				160000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				BSD whiteout (not used ___ inode) </td>
+		 </tr>
+		 <tr valign="top">
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0200 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISVTX </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				001000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&lsquo;sticky bit&rsquo;: save swapped ____ even after use (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				reserved (SVID-v2) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				On non-directories: don&rsquo;t cache ____ file (SunOS) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				On directories: restricted deletion ____ (SVID-v4.2) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0400 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISGID </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				002000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				set-group-ID on execution (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				for directories: use BSD _________ for propagation of GID </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0400 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ENFMT </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				002000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				SysV file locking enforcement (______ with S_ISGID) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0800 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_ISUID </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				004000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				set-user-ID on execution (V7) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				0800 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				S_CDF </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				004000 </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				directory is a context _________ file (HP-UX) </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	A sticky command appeared __ Version 32V AT&amp;T UNIX. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	另请参阅 </h1>
+ <ul style="font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="access.html" style="color: rgb(144, 11, 9); background-color: transparent;">access (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="chmod.html" style="color: rgb(144, 11, 9); background-color: transparent;">chmod (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="chown.html" style="color: rgb(144, 11, 9); background-color: transparent;">chown (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="fstatat.html" style="color: rgb(144, 11, 9); background-color: transparent;">fstatat (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="readlink.html" style="color: rgb(144, 11, 9); background-color: transparent;">readlink (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/utime.html" style="color: rgb(144, 11, 9); background-color: transparent;">utime (2) </a></p>
+	 </li>
+ </ul>
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/lstat/" target="_blank">lstat </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Linux/" target="_blank">Linux </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/stat/" target="_blank">stat </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/fstat/" target="_blank">fstat </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>lstat()函数 Unix/Linux </b><br />
+									本文地址： <a href="lstat.html">http://www.yiibai.com/unix_system_calls/lstat.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='lseek.html' class='btn' title='lseek()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='madvise.html' class='btn btn-default' style='float:right;' title='madvise()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1612" data-title="lstat()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/lstat.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>in.js"><\/script>')</script>
+	 <script src="/static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="/static.v2.0/js/leaflet.js"></script>
+	 <script src="/static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

@@ -1,0 +1,724 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script type="text/javascript">
+            if (navigator.userAgent.indexOf("iPhone") > 0 || navigator.userAgent.indexOf("Android") > 0 || navigator.userAgent.indexOf("iPod") > 0) {  //手机端跳转
+                var patt1 = new RegExp("[0-9]*_[0-9]*");
+                var url = patt1.exec(location.href);
+                if (url != "") {
+                    self.location = "http://www.360doc.cn/article/" + url + ".html";
+                }
+            }
+    </script>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="360doc" name="classification" />
+    
+    <link rel="alternate" media="only screen and (max-width: 640px)" href="http://www.360doc.cn/article/1317564_170311011.html"/>
+    <meta content="lua,函数,tables" name=keywords>
+    <meta content="《通过例子学习Lua》" name=description>
+    <meta name="mobile-agent" content="format=html5;url=http://www.360doc.cn/article/1317564_170311011.html"/>
+    <meta content="正如第一讲所说,运行Lua程序或者说调用Lua主要有两种方式:*通过命令行执行&quot;Lua&quot;命令*通过Lua的C库虽然此前偶们一直用第一种方式,但偶要告诉你,通过Lua的C库执行才是游戏中常用的方式.程序说明*#include&lt;lua.h&gt;&lt;/lua.h&gt;包含lua头文件,然后才可以使用API*lua_State*L=lua_open(0)打开一个Lua执行器*fgets(line,sizeof(line),stdin)从标准输入里读入一行*lua_dostring(L,line)执行此行*lua_close(L)关闭Lua执行器。" name=360docabstract>
+
+    <meta content="www.360doc.com" name="author" />
+
+    <title>
+        《通过例子学习Lua》
+    </title>
+    
+    <script type="text/javascript" src="http://www.360doc.com/js/jquery1.js?t=2015041801"></script>
+    <script type="text/javascript" src="http://www.360doc.com/js/jQuery.md5.js?t=2013121101"></script>
+    
+    <script type="text/javascript" language="javascript">
+        window.onerror = ignoreError;
+        function ignoreError() {
+            return true;
+        }
+    </script>
+
+    <link href="http://css.360doc.com/wzhead-cleaned.css?t=2014082005" rel="stylesheet" type="text/css" />
+    <link href="http://css.360doc.com/wz20130912-cleaned.css?t=2016021901" rel="stylesheet" type="text/css" />
+
+
+    
+
+    <script type="text/javascript" src="/js/indexhead.js?t=2015111101"></script>
+    <script type="text/javascript" src="/js/showarticlefollow20130912.js?t=2015101001"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?d86954201130d615136257dde062a503";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif;" onmouseup="setDragEnd()"
+    onmousemove="DragDiv();" onclick="delAllDiv(event)">
+
+    <span id="LayerLogin"></span>
+    <div style="position: fixed; width: 100%; z-index: 1000;">
+        <div class="mainnav">
+            <div class="mainnav1">
+                <div class="lf360" style="padding-left: 5px;">
+                    <a href="http://www.360doc.com/index.html">
+                        <img src="http://pubimage.360doc.com/newsite/logoo.gif" /></a>
+                </div>
+                <div style="width: 625px; padding-top: 0px; padding-left: 4px; position: absolute;">
+                    <table height="34" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr id="daohangtr">
+                                <td style="width: 185px; _width: 0px; *width: 0px !important;"></td>
+                                <td class="navwz1" width="95">
+                                    <a href="http://www.360doc.com/index.html">首&nbsp;页</a>
+                                </td>
+                                <td width="100" class="  navwz1">
+                                    <a href="http://www.360doc.com/readroom.html">阅览室</a>
+                                </td>
+                                <td width="88" class="  navwz1">
+                                    <a href="http://www.360doc.com/weekstar.html">馆友</a>
+                                </td>
+                                <td width="132" class="  navwz1">
+                                    <a href="http://www.360doc.com/my360doc.aspx">我的图书馆</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="rt360" style="padding-top: 6px; width: 133px; padding-left: 38px;" id="outerdiv">
+                </div>
+                <div class=" rt360" style="padding-top: 6px; padding-right: 0px;">
+                    <div class="lf360 serch">
+                        <input name="input2" class="serchpt" id="txtSearchword" onkeydown="ongosearch()"
+                            onkeyup="showIntelliSense()" onfocus="if(this.value=='搜文章 找馆友') this.value='';this.style.color='#272727'"
+                            onblur="if(!this.value) {this.value='搜文章 找馆友';this.style.color='#b2b2b2';}" onpaste="showIntelliSense1()"
+                            type="text" value="搜文章 找馆友">
+                    </div>
+                    <div class="lf360 ssuo">
+                        <a id="searchlinkid" href="javascript:gosearch();"></a>
+                    </div>
+                    <div id="divsearch" style="margin-top: 25px; margin-left: 1px; display: block; position: absolute; z-index: 100;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navxt">
+        </div>
+    </div>
+    <div style="height: 44px; _height: 0px; width: 100%;"></div>
+
+    <div class="both">
+    </div>
+    <div id="docTotalInfo" class="mainzt">
+        <table class="index_main" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td align="left" valign="top" width="727px">
+                        <div id='ADAboveArtContent'>
+                        </div>
+                        <div style="height: 7px;">
+                        </div>
+                        <table border="0" cellpadding="0" cellspacing="0" class="mainbj" id="docArtClass">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; text-align: center;">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <table style="width: 100%; text-align: left;" border="0" cellpadding="0" cellspacing="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="biaoti">
+                                                                        <div class="biaoti2 lf360">
+                                                                            《通过例子学习Lua》
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="height: 32px;">
+
+
+                                                                        <div style="width: 670px; height: 28px; padding-left: 26px; color: #777b7a;">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>收藏人：<span class="name" onclick="wzhitnew(1);"><A href="http://www.360doc.com/userhome/1317564" target="_blank">耶和华的大卫</A></span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="btzctsg" id="spanfollowstatus">
+                                                                                        </div>
+                                                                                        <script>isfollow(1317564);</script>
+
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="ytdh1"><a onclick="doctalk();wzhitnew(106);" href="javascript:void(0)"></a></div>
+
+                                                                                    </td>
+
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+
+
+
+
+                                                                        <div class="wztopxx">
+                                                                            <div style="float: left; height: 28px; padding-top: 7px;">
+                                                                                <table cellpadding="0" cellspacing="0" style="position: relative; z-index: 4">
+                                                                                    <tbody>
+                                                                                        <tr>
+
+                                                                                            <td>
+                                                                                                2011-12-07&nbsp;|&nbsp;阅：<span id="360doc_Readnum"></span>&nbsp;&nbsp;<span
+                                                                                                    style="position: relative;">转：<span onclick="wzhitnew(3)" id="360doc_saverNum"></span><span
+                                                                                                        id="360doc_saverUser"></span></span>&nbsp;&nbsp;
+
+
+
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <div style="position: relative;">
+                                                                                                    &nbsp;|&nbsp;<span id="docsource"></span>
+                                                                                                </div>
+                                                                                                <div class="sekuaibox" style="display: none; margin-left: 48px;" id="zihaoboxID">
+                                                                                                    <div style="padding-top: 10px; padding-left: 5px;">
+                                                                                                        <div class="lf360 danxunbt">
+                                                                                                            <input id="artdocfont3" onclick="ChangeArtSize(3, this); wzhitnew(15); " name="radio"
+                                                                                                                type="radio" value="1" />
+                                                                                                        </div>
+                                                                                                        <div class="lf360 danxunwz" onclick="ChangeArtSize(3,this);wzhitnew(15); " style="cursor: pointer;">
+                                                                                                            大
+                                                                                                        </div>
+                                                                                                        <div class="lf360 danxunbt">
+                                                                                                            <input id="artdocfont2" onclick="ChangeArtSize(2, this); wzhitnew(16); " name="radio"
+                                                                                                                type="radio" value="2" />
+                                                                                                        </div>
+                                                                                                        <div class="lf360 danxunwz" onclick="ChangeArtSize(2,this);wzhitnew(16); " style="cursor: pointer;">
+                                                                                                            中
+                                                                                                        </div>
+                                                                                                        <div class="lf360 danxunbt">
+                                                                                                            <input id="artdocfont1" onclick="ChangeArtSize(1, this); wzhitnew(17); " name="radio"
+                                                                                                                type="radio" value="3" />
+                                                                                                        </div>
+                                                                                                        <div class="lf360 danxunwz" onclick="ChangeArtSize(1,this);wzhitnew(17); " style="cursor: pointer;">
+                                                                                                            小
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="sekuaibox" style="margin-left: 76px; display: none;" id="sekuaiboxID">
+                                                                                                    <div style="padding-top: 10px; padding-left: 5px;">
+                                                                                                        <img src="http://pubimage.360doc.com/wz/cr1.gif" id="docArtC1" onclick="ChangeArtClass(1,this);wzhitnew(18);"
+                                                                                                            style="cursor: pointer;" /><img src="http://pubimage.360doc.com/wz/cr2.gif" id="docArtC2"
+                                                                                                                onclick="ChangeArtClass(2,this);wzhitnew(19);" style="cursor: pointer;" /><img src="http://pubimage.360doc.com/wz/cr3.gif"
+                                                                                                                    id="docArtC3" onclick="ChangeArtClass(3,this);wzhitnew(20);" style="cursor: pointer;" /><img
+                                                                                                                        src="http://pubimage.360doc.com/wz/cr4.gif" id="docArtC4" onclick="ChangeArtClass(4,this);wzhitnew(21);"
+                                                                                                                        style="cursor: pointer;" /><img src="http://pubimage.360doc.com/wz/cr5.gif" id="docArtC5"
+                                                                                                                            onclick="ChangeArtClass(5,this);wzhitnew(22);" style="cursor: pointer;" /><img src="http://pubimage.360doc.com/wz/cr6.gif"
+                                                                                                                                id="docArtC6" onclick="ChangeArtClass(6,this);wzhitnew(23);" style="cursor: pointer;" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div style="padding-left: 10px;">
+                                                                                                    <a href="javascript:void(0)">
+                                                                                                        <img onmouseover="changedivdisplay(1);" src="http://pubimage.360doc.com/wz/wz1.gif" /></a>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <div style="padding-left: 10px;" onmouseover="changedivdisplay(2);">
+                                                                                                    <a href="javascript:void(0)">
+                                                                                                        <img src="http://pubimage.360doc.com/wz/wz2.gif" /></a>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" onclick=" setTimeout(showShareLayer, 10);wzhitnew(4);">分享</a>&nbsp;</td>
+                                                                                            <td>
+                                                                                                <a href="#" onclick="  setTimeout(showShareLayer, 10);wzhitnew(5);">
+                                                                                                    <img style="cursor: pointer;" src="http://pubimage.360doc.com/wz/tb10.gif"></a><div
+                                                                                                        class="fenxiang" id="fenxiangLayer" style="display: none; border: none; width: 110px; margin-left: -28px; _margin-left: -40px;">
+                                                                                                    </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div id="resavelayer1" class="rt360">
+                                                                            </div>
+
+
+                                                                            <div id="shareweixinabove" class="rt360">
+                                                                            </div>
+
+
+                                                                            <table cellpadding="0" cellspacing="0" style="text-align: center; margin: 0px auto;">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div id="AlertArt1" style="display: none; position: absolute;">
+                                                                                            </div>
+                                                                                            <div id="SendToFriends1" style="display: none; position: absolute; z-index: 100;">
+                                                                                            </div>
+                                                                                            <div class="lf360 zcbutton" style="margin-left: 100px;">
+                                                                                            </div>
+                                                                                            <div class="lf360">
+                                                                                                &nbsp;&nbsp;
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        
+                                                        <table class="wenzhangcss" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="xiantao">
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="left" valign="top" width="670px" style="height: 200px;">
+                                                                        <span id="articlecontent" onmousedown="newhighlight = true;" onmouseup="NewHighlight(event)">
+                                                                            <table>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td width="670px" style="position: relative;">
+
+                                                                                            <P>通过例子学习Lua(1)----HelloWorld<BR><BR>1.前言<BR><BR>偶最近在学习Lua,所以写出心得和大家共享,争取一天写一篇,嘿嘿.<BR>才开始学所以内容很浅,希望大家包涵.<BR><BR>Lua是一种完全免费的脚本语言,可以和C/C++语言紧密结合,<BR>它的官方网站在http://www.lua.org.在网站上可以下载到lua的源码,没有可<BR>执行版本,不过不用担心,因为lua源码可以在任何一种C/C++的编译器上编译.<BR><BR>如果要学习Lua,官方网站上的Reference是必备的,上面有每个命令的用法,非常详细。<BR>参考手册http://www.lua.org/manual/5.0/<BR>作者写的ProgramminginLuahttp://www.lua.org/pil/<BR><BR>2.编译<BR>如果用的VC6,可以下载所需的project文件,地址在<BR>http://sourceforge.net/project/showfiles.php?group_id=32250&amp;package_id=115604<BR>VSNET2003可以下载这个sln文件http://home.comcast.net/~vertigrated/lua/vs7.zip<BR>偶用的是cygwin和linux,打入以下命令即可,<BR>tar-zxvflua-5.0.2.tar.gz<BR>cdlua-5.0.2<BR>sh./configure<BR>make<BR>这样就OK了。<BR>为了以后使用方便,最好把bin目录加入到path里面。<BR><BR>3."Hello,world!"<BR>现在开始偶们的第一个小程序"Hello,world!"<BR>把以下程序打入文件e01.lua<BR><BR>例1:e01.lua<BR>--HelloWorldinLua<BR>print("HelloWorld.")<BR><BR>Lua有两种执行方式,一种是嵌入到C程序中执行,还有一种是直接从命令行方式下执行。<BR>这里为了调试方便,采用第二种方式,执行命令luae01.lua<BR><BR>输出结果应该是:<BR>HelloWorld.<BR><BR>4.程序说明<BR>第一行--HelloWorldinLua<BR>这句是注释,其中--和C++中的//意思是一样的<BR>第二行print("HelloWorld.")<BR>调用lua内部命令print,输出"HelloWorld."字符串到屏幕,Lua中的字符串全部是由"括起来的。<BR>这个命令是一个函数的调用,print是lua的一个函数,而"HelloWorld."是print的参数。<BR><BR>5.试试看<BR>在Lua中有不少字符串的处理操作,本次的课后试试看的内容就是,找出连接两个字符串的操作,<BR>并且print出来。<BR>//-----------------------------------------------------------------------------------------------------------------------------------------------</P>
+<P>通过例子学习Lua(2)---Lua流程控制<BR><BR>1.函数的使用<BR>以下程序演示了如何在Lua中使用函数,及局部变量<BR>例e02.lua<BR>--functions<BR>functionpythagorean(a,b)<BR>localc2=a^2+b^2<BR>returnsqrt(c2)<BR>end<BR>print(pythagorean(3,4))<BR><BR>运行结果<BR>5<BR><BR>程序说明<BR>在Lua中函数的定义格式为:<BR>function函数名(参数)<BR>...<BR>end<BR>与Pascal语言不同,end不需要与begin配对,只需要在函数结束后打个end就可以了.<BR>本例函数的作用是已知直角三角形直角边,求斜边长度.参数a,b分别表示直角边长,<BR>在函数内定义了local形变量用于存储斜边的平方.与C语言相同,定义在函数内的代<BR>码不会被直接执行,只有主程序调用时才会被执行.<BR>local表示定义一个局部变量,如果不加local刚表示c2为一个全局变量,local的作用域<BR>是在最里层的end和其配对的关键字之间,如if...end,while...end等。全局变量的<BR>作用域是整个程序。<BR><BR>2.循环语句<BR>例e03.lua<BR>--Loops<BR>fori=1,5do<BR>print("iisnow"..i)<BR>end<BR><BR>运行结果<BR>iisnow1<BR>iisnow2<BR>iisnow3<BR>iisnow4<BR>iisnow5<BR><BR>程序说明<BR>这里偶们用到了for语句<BR>for变量=参数1,参数2,参数3do<BR>循环体<BR>end<BR>变量将以参数3为步长,由参数1变化到参数2<BR>例如:<BR>fori=1,f(x)doprint(i)end<BR>fori=10,1,-1doprint(i)end<BR><BR>这里print("iisnow"..i)中,偶们用到了..,这是用来连接两个字符串的,<BR>偶在(1)的试试看中提到的,不知道你们答对了没有。<BR>虽然这里i是一个整型量,Lua在处理的时候会自动转成字符串型,不需偶们费心。<BR><BR>3.条件分支语句<BR>例e04.lua<BR>--Loopsandconditionals<BR>fori=1,5do<BR>print(“iisnow“..i)<BR>ifi&lt;2then<BR>print(“small”)<BR>elseifi&lt;4then<BR>print(“medium”)<BR>else<BR>print(“big”)<BR>end<BR>end<BR><BR>运行结果<BR>iisnow1<BR>small<BR>iisnow2<BR>medium<BR>iisnow3<BR>medium<BR>iisnow4<BR>big<BR>iisnow5<BR>big<BR><BR>程序说明<BR>ifelse用法比较简单,类似于C语言,不过此处需要注意的是整个if只需要一个end,<BR>哪怕用了多个elseif,也是一个end.<BR>例如<BR>ifop=="+"then<BR>r=a+b<BR>elseifop=="-"then<BR>r=a-b<BR>elseifop=="*"then<BR>r=a*b<BR>elseifop=="/"then<BR>r=a/b<BR>else<BR>error("invalidoperation")<BR>end<BR><BR><BR>4.试试看<BR>Lua中除了for循环以外,还支持多种循环,请用while...do和repeat...until改写本文中的for程序<BR></P>
+<P>//-----------------------------------------------------------------------------------------------------------------------------------------------</P>
+<P>通过例子学习Lua(3)----Lua数据结构<BR><BR>1.简介<BR>Lua语言只有一种基本数据结构,那就是table,所有其他数据结构如数组啦,<BR>类啦,都可以由table实现.<BR><BR>2.table的下标<BR>例e05.lua<BR>--Arrays<BR>myData={}<BR>myData[0]=“foo”<BR>myData[1]=42<BR><BR>--Hashtables<BR>myData[“bar”]=“baz”<BR><BR>--Iteratethroughthe<BR>--structure<BR>forkey,valueinmyDatado<BR>print(key..“=“..value)<BR>end<BR><BR>输出结果<BR>0=foo<BR>1=42<BR>bar=baz<BR><BR>程序说明<BR>首先定义了一个tablemyData={},然后用数字作为下标赋了两个值给它.这种<BR>定义方法类似于C中的数组,但与数组不同的是,每个数组元素不需要为相同类型,<BR>就像本例中一个为整型,一个为字符串.<BR><BR>程序第二部分,以字符串做为下标,又向table内增加了一个元素.这种table非常<BR>像STL里面的map.table下标可以为Lua所支持的任意基本类型,除了nil值以外.<BR><BR>Lua对Table占用内存的处理是自动的,如下面这段代码<BR>a={}<BR>a["x"]=10<BR>b=a--`b'referstothesametableas`a'<BR>print(b["x"])--&gt;10<BR>b["x"]=20<BR>print(a["x"])--&gt;20<BR>a=nil--nowonly`b'stillreferstothetable<BR>b=nil--nowtherearenoreferenceslefttothetable<BR>b和a都指向相同的table,只占用一块内存,当执行到a=nil时,b仍然指向table,<BR>而当执行到b=nil时,因为没有指向table的变量了,所以Lua会自动释放table所占内存<BR><BR>3.Table的嵌套<BR>Table的使用还可以嵌套,如下例<BR>例e06.lua<BR>--Table‘constructor’<BR>myPolygon={<BR>color=“blue”,<BR>thickness=2,<BR>npoints=4;<BR>{x=0,y=0},<BR>{x=-10,y=0},<BR>{x=-5,y=4},<BR>{x=0,y=4}<BR>}<BR><BR>--Printthecolor<BR>print(myPolygon[“color”])<BR><BR>--Printitagainusingdot<BR>--notation<BR>print(myPolygon.color)<BR><BR>--Thepointsareaccessible<BR>--inmyPolygon[1]tomyPolygon[4]<BR><BR>--Printthesecondpoint’sx<BR>--coordinate<BR>print(myPolygon[2].x)<BR><BR>程序说明<BR>首先建立一个table,与上一例不同的是,在table的constructor里面有{x=0,y=0},<BR>这是什么意思呢?这其实就是一个小table,定义在了大table之内,小table的<BR>table名省略了.<BR>最后一行myPolygon[2].x,就是大table里面小table的访问方式. </P>
+<P>//-----------------------------------------------------------------------------------------------------------------------------------------------</P>
+<P>通过例子学习Lua(4)--函数的调用<BR><BR>1.不定参数<BR>例e07.lua<BR>--Functionscantakea<BR>--variablenumberof<BR>--arguments.<BR>functionfunky_print(...)<BR>fori=1,arg.ndo<BR>print("FuNkY:"..arg[i])<BR>end<BR>end<BR><BR>funky_print("one","two")<BR><BR>运行结果<BR>FuNkY:one<BR>FuNkY:two<BR><BR>程序说明<BR>*如果以...为参数,则表示参数的数量不定.<BR>*参数将会自动存储到一个叫arg的table中.<BR>*arg.n中存放参数的个数.arg[]加下标就可以遍历所有的参数.<BR><BR><BR>2.以table做为参数<BR>例e08.lua<BR>--Functionswithtable<BR>--parameters<BR>functionprint_contents(t)<BR>fork,vintdo<BR>print(k.."="..v)<BR>end<BR>end<BR>print_contents{x=10,y=20}<BR><BR>运行结果<BR>x=10<BR>y=20<BR><BR>程序说明<BR>*print_contents{x=10,y=20}这句参数没加圆括号,因为以单个table为参数的时候,不需要加圆括号<BR>*fork,vintdo这个语句是对table中的所有值遍历,k中存放名称,v中存放值<BR><BR><BR>3.把Lua变成类似XML的数据描述语言<BR>例e09.lua<BR>functioncontact(t)<BR>--addthecontact‘t’,whichis<BR>--storedasatable,toadatabase<BR>end<BR><BR>contact{<BR>name="GameDeveloper",<BR>email="hack@ogdev.net",<BR>url="http://www.ogdev.net",<BR>quote=[[<BR>Thereare<BR>10typesofpeople<BR>whocanunderstandbinary.]]<BR>}<BR><BR>contact{<BR>--someothercontact<BR>}<BR><BR>程序说明<BR>*把function和table结合,可以使Lua成为一种类似XML的数据描述语言<BR>*e09中contact{...},是一种函数的调用方法,不要弄混了<BR>*[[...]]是表示多行字符串的方法<BR>*当使用CAPI时此种方式的优势更明显,其中contact{..}部分可以另外存成一配置文件<BR><BR>4.试试看<BR>想想看哪些地方可以用到例e09中提到的配置方法呢? <BR></P>
+<P>//-----------------------------------------------------------------------------------------------------------------------------------------------</P>
+<P>通过例子学习Lua(5)----Lua与C交互入门<BR><BR>1.简介<BR><BR>Lua与C/C++结合是很紧密的,Lua与C++交互是建立在Lua与C的基础上的,所<BR>以偶先从Lua与C讲起.<BR><BR>正如第一讲所说,运行Lua程序或者说调用Lua主要有两种方式:<BR>*通过命令行执行"Lua"命令<BR>*通过Lua的C库<BR>虽然此前偶们一直用第一种方式,但偶要告诉你,通过Lua的C库执行才是游戏中<BR>常用的方式.<BR><BR>2.Lua的C库<BR><BR>Lua的C库可以做为SharedLibrary调用,但一般开发游戏时会把Lua的所有源程序<BR>都包含在内,并不把Lua编译成共享库的形式.因为Lua程序只有100多K,而且几乎<BR>可以在任何编译器下CleanCompile.带Lua源程序的另一个好处时,可以随时对Lua<BR>本身进行扩充,增加偶们所需的功能.<BR><BR>Lua的C库提供一系列API:<BR>*管理全局变量<BR>*管理tables<BR>*调用函数<BR>*定义新函数,这也可以完全由C实现<BR>*垃圾收集器Garbagecollector,虽然Lua可以自动进行,但往往不是立即执行的,<BR>所以对实时性要求比较高的程序,会自己调用垃圾收集器<BR>*载入并执行Lua程序,这也可以由Lua自身实现<BR>*任何Lua可以实现的功能,都可以通过Lua的CAPI实现,这对于优化程序的运行速度<BR>有帮助.经常调用的共用的Lua程序片断可以转成C程序,以提高效率.连Lua都是C写的<BR>还有什么C不能实现呢?<BR><BR>3.Lua与C集成的例子<BR>例e10.c<BR>/*AsimpleLuainterpreter.*/<BR>#include&lt;stdio.h&gt;&lt;/stdio.h&gt;<BR>#include&lt;lua.h&gt;&lt;/lua.h&gt;<BR>intmain(intargc,char*argv[]){<BR>charline[BUFSIZ];<BR>lua_State*L=lua_open(0);<BR>while(fgets(line,sizeof(line),stdin)!=0)<BR>lua_dostring(L,line);<BR>lua_close(L);<BR>return0;<BR>}<BR><BR>编译<BR>Linux/Cygwin<BR>*先编译Lua,并把头文件放入include路径<BR>*gcce10.c-llua-llualib-oe10<BR><BR>VC6/VC2003<BR>*先编译Lua,在Option中设置头文件和库文件路径<BR>*新建工程,在工程配置中加入附加库lua.lib和lualib.lib<BR>*编译成exe<BR><BR>运行结果<BR>本程序的功能是实现一个Lua解释器,输入的每行字符都会被解释成Lua并执行.<BR><BR>程序说明<BR>*#include&lt;lua.h&gt;&lt;/lua.h&gt;包含lua头文件,然后才可以使用API<BR>*lua_State*L=lua_open(0)打开一个Lua执行器<BR>*fgets(line,sizeof(line),stdin)从标准输入里读入一行<BR>*lua_dostring(L,line)执行此行<BR>*lua_close(L)关闭Lua执行器<BR><BR><BR>例e11.c<BR>/*AnothersimpleLuainterpreter.*/<BR>#include&lt;stdio.h&gt;&lt;/stdio.h&gt;<BR>#include&lt;lua.h&gt;&lt;/lua.h&gt;<BR>#include&lt;lualib.h&gt;&lt;/lualib.h&gt;<BR>intmain(intargc,char*argv[]){<BR>charline[BUFSIZ];<BR>lua_State*L=lua_open(0);<BR>lua_baselibopen(L);<BR>lua_iolibopen(L);<BR>lua_strlibopen(L);<BR>lua_mathlibopen(L);<BR>while(fgets(line,sizeof(line),stdin)!=0)<BR>lua_dostring(L,line);<BR>lua_close(L);<BR>return0;<BR>}<BR><BR>运行结果<BR>本程序的功能是实现一个Lua解释器,输入的每行字符都会被解释成Lua并执行.<BR>与上例不同的是,本例调用了Lua的一些标准库.<BR><BR>程序说明<BR>*#include&lt;lualib.h&gt;&lt;/lualib.h&gt;包含Lua的标准库<BR>*以下这几行是用来读入Lua的一些库,这样偶们的Lua程序就可以有更多的功能.<BR>lua_baselibopen(L);<BR>lua_iolibopen(L);<BR>lua_strlibopen(L);<BR>lua_mathlibopen(L);<BR><BR>4.试试看<BR>把上面两个小例子在你熟悉的编译器中编译执行,并试试能否与Lua源码树一起编译 <BR></P>
+<P>//-----------------------------------------------------------------------------------------------------------------------------------------------</P>
+<P>通过例子学习Lua(6)----C/C++中用Lua函数<BR><BR>参考英文文档http://tonyandpaige.com/tutorials/lua2.html<BR><BR>1.简介<BR>偶们这次主要说说怎么由Lua定义函数,然后在C或者C++中调用.这里偶们<BR>暂不涉及C++的对象问题,只讨论调用函数的参数,返回值和全局变量的使用.<BR><BR>2.<BR>这里偶们在e12.lua里先定义一个简单的add(),x,y为加法的两个参数,<BR>return直接返回相加后的结果.<BR><BR>例e12.lua<BR>--addtwonumbers<BR>functionadd(x,y)<BR>returnx+y<BR>end<BR><BR>在前一次里,偶们说到lua_dofile()可以直接在C中执行lua文件.因为偶们<BR>这个程序里只定义了一个add()函数,所以程序执行后并不直接结果,效果相当<BR>于在C中定义了一个函数一样.<BR><BR>Lua的函数可以有多个参数,也可以有多个返回值,这都是由栈(stack)实现的.<BR>需要调用一个函数时,就把这个函数压入栈,然后顺序压入所有参数,然后用<BR>lua_call()调用这个函数.函数返回后,返回值也是存放在栈中.这个过程和<BR>汇编执行函数调用的过程是一样的.<BR><BR>例e13.cpp是一个调用上面的Lua函数的例子<BR>#include&lt;stdio.h&gt;&lt;/stdio.h&gt;<BR><BR>extern"C"{//这是个C++程序,所以要extern"C",<BR>//因为lua的头文件都是C格式的<BR>#include"lua.h"<BR>#include"lualib.h"<BR>#include"lauxlib.h"<BR>}<BR><BR>/*theLuainterpreter*/<BR>lua_State*L;<BR><BR>intluaadd(intx,inty)<BR>{<BR>intsum;<BR><BR>/*thefunctionname*/<BR>lua_getglobal(L,"add");<BR><BR>/*thefirstargument*/<BR>lua_pushnumber(L,x);<BR><BR>/*thesecondargument*/<BR>lua_pushnumber(L,y);<BR><BR>/*callthefunctionwith2<BR>arguments,return1result*/<BR>lua_call(L,2,1);<BR><BR>/*gettheresult*/<BR>sum=(int)lua_tonumber(L,-1);<BR>lua_pop(L,1);<BR><BR>returnsum;<BR>}<BR><BR>intmain(intargc,char*argv[])<BR>{<BR>intsum;<BR><BR>/*initializeLua*/<BR>L=lua_open();<BR><BR>/*loadLuabaselibraries*/<BR>lua_baselibopen(L);<BR><BR>/*loadthescript*/<BR>lua_dofile(L,"e12.lua");<BR><BR>/*calltheaddfunction*/<BR>sum=luaadd(10,15);<BR><BR>/*printtheresult*/<BR>printf("Thesumis%d\n",sum);<BR><BR>/*cleanupLua*/<BR>lua_close(L);<BR><BR>return0;<BR>}<BR><BR>程序说明:<BR>main中过程偶们上次已经说过了,所以这次只说说luaadd的过程<BR>*首先用lua_getglobal()把add函数压栈<BR>*然后用lua_pushnumber()依次把x,y压栈<BR>*然后调用lua_call(),并且告诉程序偶们有两个参数一个返回值<BR>*接着偶们从栈顶取回返回值,用lua_tonumber()<BR>*最后偶们用lua_pop()把返回值清掉<BR><BR>运行结果:<BR>Thesumis25<BR><BR>编译方法<BR>Linux下把程序存成e13.cpp<BR>g++e13.cpp-llua-llualib-oe13<BR>./e13<BR><BR>VC下编译方法<BR>*首先建立一个空的Win32ConsoleApplicationProject<BR>*把e13.cpp加入工程中<BR>*点projectsetting,然后设置link选项,再加上lua.liblualib.lib两个额外的库<BR>*最后编译<BR><BR>建立好的project可以在这里下载<BR>VChttp://tonyandpaige.com/tutorials/luaadd.zip<BR>Linuxhttp://tonyandpaige.com/tutorials/luaadd.tar.gz<BR><BR>3.全局变量<BR>上面偶们用到了lua_getglobal()但并没有详细讲,这里偶们再举两个小例子来说下全局变量<BR>lua_getglobal()的作用就是把lua中全局变量的值压入栈<BR>lua_getglobal(L,"z");<BR>z=(int)lua_tonumber(L,1);<BR>lua_pop(L,1);<BR>假设Lua程序中定义了一个全局变量z,这段小程序就是把z的值取出放入C的变量z中.<BR><BR>另外Lua中还有一个对应的函数lua_setglobal(),作用是用栈顶的值填充指定的全局变量<BR>lua_pushnumber(L,10);<BR>lua_setglobal(L,"z");<BR>例如这段小程序就是把lua中的全局变量z设为10,如果lua中未定义z的话,就会自动创建一个<BR>全局变量z并设为10.<BR><BR>4.试试看<BR>自己写个函数用C/C++来调用下试试<BR></P>
+<P>//-----------------------------------------------------------------------------------------------------------------------------------------------</P>
+<P>通过例子学习Lua(7)----Lua中调用C/C++函数<BR><BR>1.前言<BR>上次偶说到从C/C++中调用Lua的函数,然后就有朋友问从Lua中如何调用C/C++的<BR>函数,所以偶们这次就来说说这个问题.首先偶们会在C++中建立一个函数,然后<BR>告知Lua有这个函数,最后再执行它.另外,由于函数不是在Lua中定义的,所以<BR>无法确定函数的正确性,可能在调用过程中会出错,因此偶们还会说说Lua出错处<BR>理的问题.<BR><BR>2.Lua中调用C函数<BR>在lua中是以函数指针的形式调用函数,并且所有的函数指针都必须满足如下此种<BR>类型:<BR>typedefint(*lua_CFunction)(lua_State*L);<BR><BR>也就是说,偶们在C++中定义函数时必须以lua_State为参数,以int为返回值才能<BR>被Lua所调用.但是不要忘记了,偶们的lua_State是支持栈的,所以通过栈可以<BR>传递无穷个参数,大小只受内存大小限制.而返回的int值也只是指返回值的个数<BR>真正的返回值都存储在lua_State的栈中.偶们通常的做法是做一个wrapper,把<BR>所有需要调用的函数都wrap一下,这样就可以调用任意的函数了.<BR><BR>下面这个例子是一个C++的average()函数,它将展示如何用多个参数并返回多个值<BR><BR>例e14.cpp<BR>#include&lt;stdio.h&gt;&lt;/stdio.h&gt;<BR><BR>extern"C"{<BR>#include"lua.h"<BR>#include"lualib.h"<BR>#include"lauxlib.h"<BR>}<BR><BR>/*theLuainterpreter*/<BR>lua_State*L;<BR><BR>staticintaverage(lua_State*L)<BR>{<BR>/*getnumberofarguments*/<BR>intn=lua_gettop(L);<BR>doublesum=0;<BR>inti;<BR><BR>/*loopthrougheachargument*/<BR>for(i=1;i&lt;=n;i++)<BR>{<BR>/*totalthearguments*/<BR>sum+=lua_tonumber(L,i);<BR>}<BR><BR>/*pushtheaverage*/<BR>lua_pushnumber(L,sum/n);<BR><BR>/*pushthesum*/<BR>lua_pushnumber(L,sum);<BR><BR>/*returnthenumberofresults*/<BR>return2;<BR>}<BR><BR>intmain(intargc,char*argv[])<BR>{<BR>/*initializeLua*/<BR>L=lua_open();<BR><BR>/*loadLuabaselibraries*/<BR>lua_baselibopen(L);<BR><BR>/*registerourfunction*/<BR>lua_register(L,"average",average);<BR><BR>/*runthescript*/<BR>lua_dofile(L,"e15.lua");<BR><BR>/*cleanupLua*/<BR>lua_close(L);<BR><BR>return0;<BR>}<BR><BR>例e15.lua<BR>--callaC++function<BR><BR>avg,sum=average(10,20,30,40,50)<BR><BR>print("Theaverageis",avg)<BR>print("Thesumis",sum)<BR><BR><BR>程序说明:<BR>*lua_gettop()的作用是返回栈顶元素的序号.由于Lua的栈是从1开始编号的,<BR>所以栈顶元素的序号也相当于栈中的元素个数.在这里,栈中元素的个数就<BR>是传入的参数个数.<BR>*for循环计算所有传入参数的总和.这里用到了数值转换lua_tonumber().<BR>*然后偶们用lua_pushnumber()把平均值和总和push到栈中.<BR>*最后,偶们返回2,表示有两个返回值.<BR>*偶们虽然在C++中定义了average()函数,但偶们的Lua程序并不知道,所以需<BR>要在main函数中加入<BR><BR>/*registerourfunction*/<BR>lua_register(L,"average",average);<BR><BR>这两行的作用就是告诉e15.lua有average()这样一个函数.<BR>*这个程序可以存成cpp也可以存成c,如果以.c为扩展名就不需要加extern"C"<BR><BR>编译的方法偶们上次说过了,方法相同.<BR>e15.lua执行的方法只能用上例中的C++中执行,而不能用命令行方式执行.<BR><BR>3.错误处理<BR>在上例中,偶们没有对传入的参数是否为数字进行检测,这样做不好.所以这里偶<BR>们再加上错误处理的片断.<BR><BR>把这段加在for循环之内:<BR>if(!lua_isnumber(L,i)){<BR>lua_pushstring(L,"Incorrectargumentto'average'");<BR>lua_error(L);<BR>}<BR>这段的作用就是检测传入的是否为数字.<BR><BR>加上这段之后,偶们debug的时候就会简单许多.对于结合两种语言的编程,它们之<BR>间传递数据的正确性检测是非常重要的.<BR><BR>这里有别人写好的例子:<BR>VC的http://tonyandpaige.com/tutorials/luaavg.zip<BR>Linux的http://tonyandpaige.com/tutorials/luaavg.tar.gz<BR><BR>至此,Lua与C的结合就基本讲完了,下次偶要开始说说Lua与面向对象.<BR>但是偶自己还没有学完,所以大家可能要多等两天了.Sorry!<BR></P>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div id="viewerPlaceHolder" style="width: 717px; height: 700px; display: none;">
+                                                                            </div>
+                                                                        </span>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="left">
+                                                                        <a name="anchordoc1" id="anchordoc1"></a>
+                                                                        <div style="height: 28px">
+                                                                            <div style="font-size: 14px; color: #797b7a; float: left;">
+                                                                                来自：<span class="name" onclick="wzhitnew(59)"><A href="http://www.360doc.com/userhome/1317564" target="_blank">耶和华的大卫</A></span>&nbsp;>&nbsp;<span
+                                                                                    id="cname" onclick="wzhitnew(60)"></span>
+                                                                            </div>
+                                                                            <div style="float: left;">
+                                                                                <div class="btzctsg" id="spanfollowstatus1">
+                                                                                </div>
+                                                                                <script>isfollow(1317564);</script>
+
+                                                                            </div>
+                                                                            <div style="float: left;">
+                                                                                <div class="ytdh1"><a onclick="doctalk();wzhitnew(107);" href="javascript:void(0)"></a></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="modlist lf360 list" style="padding-top: 0px;">
+                                                                                <ul>
+                                                                                    <div id='lastart'>
+                                                                                    </div>
+                                                                                    <div id='nextart'>
+                                                                                    </div>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="left">
+                                                                        <div style="padding-top: 12px;">
+                                                                            <div id='docAdBelowContent'>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="text-align: left;">
+                                                                        <div style="padding-top: 15px; width: 670px;">
+                                                                            <table style="width: 670px;" cellpadding="0" cellspacing="0">
+                                                                                <tbody>
+                                                                                    <tr>
+
+                                                                                        <td style="width: 530px;">
+                                                                                            <div class=" lf360" style="cursor: pointer" onmouseover="ChangeBtnStyle(1);" onmouseout="ChangeBtnStyle(2);">
+                                                                                                <div class="zscbt">
+                                                                                                    <a href="javascript:void(0);" onclick="SaveArt();wzhitnew(26);">
+                                                                                                        <div id="zscbtword" class="lf360 xianhua" style="padding-left: 38px;">
+                                                                                                            转藏到我的图书馆
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div style="margin-left: 10px; cursor: pointer;" class="lf360 xhmainbox" id="sendflowerdiv"
+                                                                                                onclick='Showflowerlayer("sendedLayer1");wzhitnew(27)' onmouseover="ChangeFlowerBtnStyle(1);"
+                                                                                                onmouseout="ChangeFlowerBtnStyle(2);">
+
+                                                                                                <div id="flowimg2" class="lf360">
+                                                                                                    <div style="padding-left: 10px; padding-top: 10px;">
+                                                                                                        <img id="flowimg3" src="http://pubimage.360doc.com/wz/huahuanew.gif">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div id="flowimg5" class=" lf360 xianhua">
+                                                                                                    献花(<span id="articleflowernum">0</span>)<div id='flowernumadd' class="addtionone">
+                                                                                                        +1
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+
+
+
+
+                                                                                            <div class="lf360" style="cursor: pointer; padding-left: 10px;" onmouseover="ChangeBtnStyle(3);" onmouseout="ChangeBtnStyle(4);">
+                                                                                                <div class="fxwxbt">
+
+                                                                                                    <a href="javascript:void(0);" onclick="shareWeixin();wzhitnew(64);">
+                                                                                                        <div id="fxwxword" class="lf360 xianhua" style="padding-left: 38px;">
+                                                                                                            分享到微信
+                                                                                                        </div>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            
+                                                                                            <div class="lf360" style="cursor: pointer; padding-left: 10px;" onmouseover="ChangeBtnStyle(5);" onmouseout="ChangeBtnStyle(6);">
+                                                                                                <div class="ywzwbt">
+
+                                                                                                    <a id="ywzwa" href=" https://www.baidu.com/s?wd=lua+%e5%87%bd%e6%95%b0+tables&tn=SE_hldp01010_6r0gix1f" onclick="wzhitnew(100);" target="_blank">
+                                                                                                        <div id="ywzwword" class="lf360 xianhua" style="padding-left: 44px;">
+                                                                                                            以文找文
+                                                                                                        </div>
+                                                                                                    </a>
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                          
+
+                                                                                        </td>
+                                                                                        <td style="vertical-align: bottom; font-size: 12px;" width="140">
+                                                                                            <div class="rt360" id="sharediv2">
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td height="10"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="lswzbox" style="padding-top: 10px;">
+                            <div>
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td width="330" valign="top">
+                                                <div class="lswz" style="height: 300px;">
+                                                    <div class="lstwtop">
+                                                        <div class="lswztit">
+                                                            <div class=" lf360">
+                                                                <div class="titwx1">
+                                                                    类似文章
+                                                                </div>
+                                                            </div>
+                                                            <div class="rt360" style="padding-top: 5px; padding-right: 9px;">
+                                                                <a href=http://www.360doc.com/relevant/170311011_more.shtml  target='_blank'  onclick='wzhitnew(38)'>更多</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modlist2 list">
+                                                            <ul>
+                                                                
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/11/1207/09/1317564_170303760.shtml target=_blank onclick='wzhitnew(37)'>Lua函数</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/14/0103/17/9200790_342365074.shtml target=_blank onclick='wzhitnew(37)'>简单的Lua命令行调试器</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/14/0119/20/9200790_346471430.shtml target=_blank onclick='wzhitnew(37)'>如何把lua的函数作为回调函数当参数传给...</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/11/1207/09/1317564_170303961.shtml target=_blank onclick='wzhitnew(37)'>Lua的Table类型</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/13/1216/16/14605176_337623998.shtml target=_blank onclick='wzhitnew(37)'>lua学习： lua的table类型（转）</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/14/0105/08/9200790_342724768.shtml target=_blank onclick='wzhitnew(37)'>开始学习LUA,在LUA中使用UNICODE字符串</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/11/1124/22/2660674_167158974.shtml target=_blank onclick='wzhitnew(37)'>c++调用lua脚本1（平台windows）</a></span></li>
+                                                                    
+                                                                        <li style="height: 30px; line-height: 30px;"><span>
+                                                                            <a href=http://www.360doc.com/content/12/0130/10/1317564_182678871.shtml target=_blank onclick='wzhitnew(37)'>lua语言中闭包的学习心得</a></span></li>
+                                                                    
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td width="330" valign="top">
+                                                <div class="lswz" style="margin-left: 9px; height: 300px;">
+                                                    <div class="lstwtop">
+                                                        <div class="lswztit">
+                                                            <div class=" lf360">
+                                                                <div class="titwx1">
+                                                                    热门推广
+                                                                </div>
+                                                            </div>
+                                                            <div class="rt360" style="padding-top: 5px; padding-right: 9px;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modlist2 list" id="dochotartabovecontent">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="background-color: #fafafa; width: 670px; height: 317px; margin-top: 10px;">
+                                    <div style=' padding-top:7px; padding-left:12px; '> <div style=' height:30px;'><div class='titwx3 lf360'>猜你喜欢</div><div class=' rt360' style=' padding-right:18px;'><img onclick='changefiveart2("19999","19999");wzhitnew(62);' src='http://pubimage.360doc.com/wz/hyz.gif' onmouseover='this.src="http://pubimage.360doc.com/wz/hyza.gif"' onmouseout='this.src="http://pubimage.360doc.com/wz/hyz.gif"' width='76' height='24' style='cursor:pointer;' /></div></div><table cellpadding='0' cellspacing='0'><tr id='fivearttdid' style="height:138px"><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/1205/10/1835337_334619019.shtml' target='_blank'><img src='http://artpic.360doc.com/13/1208/00/1835337_201312080010050993.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/1205/10/1835337_334619019.shtml' target='_blank'>揭30条绝密生活冷知识</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/14/0428/10/1547978_372855370.shtml' target='_blank'><img src='http://artpic.360doc.com/14/0510/00/1547978_201405100010190787.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/14/0428/10/1547978_372855370.shtml' target='_blank'>肉体换利益面相女</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/1123/05/10101824_331450771.shtml' target='_blank'><img src='http://artpic.360doc.com/13/1204/09/331450771_201312040928390671.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/1123/05/10101824_331450771.shtml' target='_blank'>白领必看的十大生存法则</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/0920/07/3218641_315697207.shtml' target='_blank'><img src='http://artpic.360doc.com/13/0927/09/3218641_201309270942130821.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/0920/07/3218641_315697207.shtml' target='_blank'>寡妇之相格与特征</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/14/1120/11/13504251_426614928.shtml' target='_blank'><img src='http://artpic2.360doc.com/14/1129/00/13504251_201411290010390428.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/14/1120/11/13504251_426614928.shtml' target='_blank'>羊的不吉祥传说</a></div></td></tr><tr id='fivearttdidtwo'><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/0618/08/190539_293640161.shtml' target='_blank'><img src='http://artpic.360doc.com/13/0928/16/293640161_201309281647390148.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/0618/08/190539_293640161.shtml' target='_blank'>24小时腌出好吃的酸豆角</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/0413/16/11700587_278005383.shtml' target='_blank'><img src='http://artpic.360doc.com/13/0930/16/278005383_201309301645560784.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/0413/16/11700587_278005383.shtml' target='_blank'>传统甜酒酿制做方法</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/0920/10/9477183_315725129.shtml' target='_blank'><img src='http://artpic.360doc.com/13/0925/16/315725129_201309251608010539.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/0920/10/9477183_315725129.shtml' target='_blank'>家用电脑 大胆卸载这“三个地方”网...</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/0718/20/8028250_300910240.shtml' target='_blank'><img src='http://artpic.360doc.com/13/1004/12/300910240_201310041248220733.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/0718/20/8028250_300910240.shtml' target='_blank'>人生最大的贵人，永远是自己！请好...</a></div></td><td valign='top' width='131'><div><a onclick='wzhitnew(39);' href='http://www.360doc.com/content/13/0207/21/4763210_264752975.shtml' target='_blank'><img src='http://artpic.360doc.com/13/1004/12/264752975_201310041255240327.jpg' width='114' height='86'/></a></div><div class='lan twentit'><a  onclick='wzhitnew(40);' href='http://www.360doc.com/content/13/0207/21/4763210_264752975.shtml' target='_blank'>关于知己,情人,二奶,妻子的总结！！</a></div></td></tr></table></div>
+
+                                    <div id="adabtest">
+                                    </div>
+
+                                </div>
+
+
+
+
+
+                                <div id="Reflction" style="padding-top: 15px; padding-left: 15px;">
+                                    <div id="360docRefTN">
+                                    </div>
+                                    <div id="360docRefCT">
+                                    </div>
+                                    <div id="360docRefPB" align="center">
+                                    </div>
+                                </div>
+                                <a name="sf"></a>
+                                
+                                <div id="ReflectionPart">
+                                    <div style="height: 206px; margin: 0px 0px;">
+                                        <div class="plbox">
+                                            <div class="plmain">
+                                                <div class="titwx" style="height: 23px;">
+                                                    发表评论：
+                                                </div>
+                                                <textarea name="SendRefTB" id="SendRefTB" style="width: 100%; height: 75px; border: 1px solid #e7e7e7; background-color: #fff; overflow: auto; font-size: 12px;"
+                                                    onfocus="testContent(1);" onblur="testContent(2)"></textarea>
+                                                <div style="text-align: right; padding-right: 3px; padding-top: 6px;">
+                                                    <div class="huifubt">
+                                                        <a id="ImgSendPL" href="javascript:void(0);"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td align="center" valign="top" width="18px"></td>
+                    <td align="left" valign="top" width="252px">
+                        
+
+
+<div style='height: 98px' id="artrightad1">
+ 
+</div>
+
+
+     <div  id="artrightnewarticle" class="pageqh"><div id="qh" class="nav"> <span id="docpart1" class="checked" style=" width:124px;"  onmouseover="change('qh',0)">TA的推荐</span><span  id="docpart2" style=" border-left:1px solid #e4e4e4; width:123px;" onmouseover="change('qh',1)">最新文章</span></div><div  class="mokuaicontent both" id="docpart3">&nbsp;</div><div style=" padding-top:4px;_padding-top:1px;"><div id='qh_ul_0'   ><div class="modlist3 list  both" style=" padding-left:15px;"><ul><li><span><a href=http://www.360doc.com/content/16/0131/17/1317564_531901587.shtml target=_blank onclick='wzhitnew(51)'>永远成功的秘密，就是每天淘汰自己</a></span></li><li><span><a href=http://www.360doc.com/content/15/1017/07/1317564_506204826.shtml target=_blank onclick='wzhitnew(51)'>我们将永生还是灭绝？人工智能很快...</a></span></li><li><span><a href=http://www.360doc.com/content/15/1017/07/1317564_506204786.shtml target=_blank onclick='wzhitnew(51)'>我们将永生还是灭绝？人工智能很快...</a></span></li><li><span><span style="color:#7d7d7d;">[转]&nbsp;</span><a href=http://www.360doc.com/content/11/0209/02/3220655_91495565.shtml target=_blank onclick='wzhitnew(51)'>赞美的大能</a></span></li><li><span><a href=http://www.360doc.com/content/14/1014/09/1317564_416731595.shtml target=_blank onclick='wzhitnew(51)'>他们还不信我要到几时呢？</a></span></li><li><span><a href=http://www.360doc.com/content/11/0613/22/1317564_126736177.shtml target=_blank onclick='wzhitnew(51)'>基督徒的委身  【】</a></span></li></ul><div class=" rt360" style=" padding-right:23px;"><a onclick="wzhitnew(54)" href="http://www.360doc.com/userhome/1317564" target="_blank">更多</a></div></div></div><div id="qh_ul_1" style="display:none;"><div class="modlist3 list  both" style=" padding-left:15px;"><ul><li><span><a href=http://www.360doc.com/content/16/0325/10/1317564_545091452.shtml target=_blank onclick='wzhitnew(53)'>一只蜗牛的十八年 | 左岸读书</a></span></li><li><span><a href=http://www.360doc.com/content/16/0325/10/1317564_545087563.shtml target=_blank onclick='wzhitnew(53)'>用SAR指标来消除MACD指标的反复</a></span></li><li><span><a href=http://www.360doc.com/content/16/0325/09/1317564_545071636.shtml target=_blank onclick='wzhitnew(53)'>中药的双向调节作用</a></span></li><li><span><a href=http://www.360doc.com/content/16/0325/09/1317564_545070636.shtml target=_blank onclick='wzhitnew(53)'>人人都能用Python写出LSTM</a></span></li><li><span><a href=http://www.360doc.com/content/16/0325/08/1317564_545060137.shtml target=_blank onclick='wzhitnew(53)'>关于人工神经网络，你所应知道的一...</a></span></li><li><span><a href=http://www.360doc.com/content/16/0325/08/1317564_545055704.shtml target=_blank onclick='wzhitnew(53)'>深入浅出LSTM神经网络</a></span></li></ul><div class=" rt360" style=" padding-right:23px;"><a onclick="wzhitnew(52)" href="http://www.360doc.com/userhome/1317564" target="_blank">更多</a></div> </div> </div></div></div>
+
+
+<div class="both" style="padding-top: 10px; height: 260px;">
+   <iframe id="ifartad1" height="250px" width="250px" frameborder="0" scrolling="no"></iframe>
+    <div style="height: 10px;">
+    </div>
+</div>
+
+<div class="remenwz" id="artrighthotarticle">
+    <div class="rementop">
+        <div class="titwx" style="padding-top: 10px; padding-left: 24px;">
+            热门文章</div>
+    </div>
+    <div class="modlist3 list" style="padding-left: 15px;">
+        <ul>
+            
+                    <li><span>
+                        <a href=http://www.360doc.com/content/15/1126/19/26423451_516125462.shtml target=_blank onclick='wzhitnew(55)'>【好口诀】写文章的步骤口诀</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/16/0124/06/10101824_530148668.shtml target=_blank onclick='wzhitnew(55)'>中国历史知识快板</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/15/1106/14/7202136_511189124.shtml target=_blank onclick='wzhitnew(55)'>夫妻之间相处，『下台阶』的学问是得...</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/15/0922/17/530348_500753861.shtml target=_blank onclick='wzhitnew(55)'>不收藏必后悔！上百套房子装修样板！</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/15/1002/08/4503649_502795643.shtml target=_blank onclick='wzhitnew(55)'>图文：图说德国</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/16/0219/20/2289804_535804928.shtml target=_blank onclick='wzhitnew(55)'>高中物理模型、方法（精华）</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/16/0311/07/5138922_541212948.shtml target=_blank onclick='wzhitnew(55)'>媳妇与闺女</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/15/1108/07/9219826_511577998.shtml target=_blank onclick='wzhitnew(55)'>曹操：欲称霸，先招服这5类人</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/16/0302/12/2289804_538775745.shtml target=_blank onclick='wzhitnew(55)'>精致女人的8条诱人曲线，你有几条</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/16/0102/22/156610_525021570.shtml target=_blank onclick='wzhitnew(55)'>趣图</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/16/0101/05/9986257_524544855.shtml target=_blank onclick='wzhitnew(55)'>【成功宝典】三十二条《黄金铁律》,让...</a></span></li>
+                
+                    <li><span>
+                        <a href=http://www.360doc.com/content/15/1125/21/29342144_515810928.shtml target=_blank onclick='wzhitnew(55)'>10部豆瓣高评分的推理悬疑小说</a></span></li>
+                
+        </ul>
+        
+        <div style="padding-right: 23px;text-align: right;">
+            <a href="http://www.360doc.com/readroom.html" target="_blank" onclick='wzhitnew(56)'>更多>></a></div>
+        
+    </div>
+</div>
+
+<div class="both" style="padding-top: 10px;">
+    <iframe id="ifartad2" height="250px" width="250px" frameborder="0" scrolling="no"></iframe>
+</div>
+<br />
+
+
+ <iframe id="ifartrightsogou" height="328px" width="250px" frameborder="0" scrolling="no"></iframe>
+
+
+
+<script>
+    function change(pro_name, i) {
+        var pro = document.getElementById(pro_name); 
+        var pro_arr = pro.getElementsByTagName("span");
+
+        for (var m = 0; m < pro_arr.length; m++) {
+            pro_arr[m].className = "unclecked link_black";
+        }
+        pro_arr[i].className = "checked link_bai";
+
+        if (i == 1) {
+            document.getElementById("qh_ul_1").style.display = "";
+            document.getElementById("qh_ul_0").style.display = "none";
+        }
+        else if (i == 0) {
+            document.getElementById("qh_ul_1").style.display = "none";
+            document.getElementById("qh_ul_0").style.display = "";
+        }
+    }
+</script>
+
+                        <div class="both" id="divad5" style="padding-top: 11px; zoom: 1;">
+                            <div id="divad4" style="display: none;">
+                                <div>
+                                    <iframe id="ifartad" height="250px" width="250px" frameborder="0" scrolling="no"></iframe>
+                                </div>
+                                <div class="ggwz">
+                                    <a href="javascript:void(0);" onclick="closead(2);">关闭</a>
+                                </div>
+                                <div style="height: 13px;">
+                                </div>
+                            </div>
+                            <div style="clear: both; display: none;" id="divad6">
+                                <div id="adfloatbaidu">
+                                    <iframe id="ifartadfloadbaidu" height="250px" width="250px" frameborder="0" scrolling="no"></iframe>
+                                </div>
+                                <div class="ggwz">
+                                    <a href="javascript:void(0);" onclick="closead(3);">关闭</a>
+                                </div>
+                                <div style="height: 13px;">
+                                </div>
+                            </div>
+
+                            <div style="clear: both; display: none;" id="divDwnloadDocApp">
+                            </div>
+                            <div style="height: 75px;">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <input type="hidden" id="docarttitle" value="%e3%80%8a%e9%80%9a%e8%bf%87%e4%be%8b%e5%ad%90%e5%ad%a6%e4%b9%a0Lua%e3%80%8b" />
+    <input type="hidden" id="artreadroomid" value="0" />
+    <script>var asw='%e3%80%8a%e9%80%9a%e8%bf%87%e4%be%8b%e5%ad%90%e5%ad%a6%e4%b9%a0Lua%e3%80%8b'</script>
+    <div id="docdiviframe"></div>
+    <script language="javascript" type="text/javascript">
+        var appName = navigator.appName.toLowerCase();
+        if (appName.indexOf("microsoft internet explorer") > -1) {
+            document.write("<scr" + "ipt type='text/javascript' src='http://www.360doc.com/js/StickySystemIE20130911.js?t=2016030701'></sc" + "ript>");
+        }
+        else {
+            document.write("<scr" + "ipt type='text/javascript' src='http://www.360doc.com/js/StickySystemOther20130911.js?t=2016030701'></sc" + "ript>");
+        }
+    </script>
+
+    <script>GerLookingUserInfo(1,1317564,1,1,'-1',-1,10,0);OutputSource('http%3a%2f%2fwww.360doc.com%2fuserhome%2f1317564');OutputCategory(1317564,512,'%e3%80%8a%e7%b2%be%e5%8d%8e%e3%80%8b');OutputLastNextArt('%e5%9c%a8VS2005%e4%b8%ad%e9%85%8d%e7%bd%aeLua','http://www.360doc.com/content/11/1207/10/1317564_170310413.shtml',0);OutputLastNextArt('Lua%e8%af%ad%e6%b3%95%e7%ae%80%e8%bf%b0','http://www.360doc.com/content/11/1207/10/1317564_170317862.shtml',1);</script>
+</body>
+</html>

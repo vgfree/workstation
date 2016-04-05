@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/sqlite/sqlite_pragma.html
+Date Downloaded: 2016/4/1 16:55:11 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>SQLite PRAGMA - SQLite教程 </title>
+		 <meta name="keywords" content="SQLite,PRAGMA,SQLite,的,pragma," />
+		 <meta name="description" content="SQLite 的 pragma命令是一个特殊的命令，SQLite环境内可以用来控制各种环境变量和状态标志。可以读取一个pragma值，也可以根据需求设置。 Syntax: 要查询当前的pragma值，只需要提供该prag" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/database/'>数据库 </a> >  <a href='index.html'>SQLite教程 </a> >  SQLite ______
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">SQLite教程 </a>
+							 <a class="list-group-item" href="sqlite_overview.html" title="SQLite 是什么？">SQLite 是什么？ </a><a class="list-group-item" href="sqlite_installation.html" title="SQLite 安装">SQLite 安装 </a><a class="list-group-item" href="sqlite_commands.html" title="SQLite 命令">SQLite 命令 </a><a class="list-group-item" href="sqlite_syntax.html" title="SQLite 语法">SQLite 语法 </a><a class="list-group-item" href="sqlite_data_types.html" title="SQLite 数据类型">SQLite 数据类型 </a><a class="list-group-item" href="sqlite_create_database.html" title="SQLite 创建数据库">SQLite 创建数据库 </a><a class="list-group-item" href="sqlite_attach_database.html" title="SQLite 附加数据库">SQLite 附加数据库 </a><a class="list-group-item" href="sqlite_detach_database.html" title="SQLite 分离数据库">SQLite 分离数据库 </a><a class="list-group-item" href="sqlite_create_table.html" title="SQLite 创建表">SQLite 创建表 </a><a class="list-group-item" href="sqlite_drop_table.html" title="SQLite 删除表">SQLite 删除表 </a><a class="list-group-item" href="sqlite_insert_query.html" title="SQLite 插入查询">SQLite 插入查询 </a><a class="list-group-item" href="sqlite_select_query.html" title="SQLite SELECT查询">SQLite SELECT查询 </a><a class="list-group-item" href="sqlite_operators.html" title="SQLite 运算符">SQLite 运算符 </a><a class="list-group-item" href="sqlite_expressions.html" title="SQLite 表达式">SQLite 表达式 </a><a class="list-group-item" href="sqlite_where_clause.html" title="SQLite WHERE子句">SQLite WHERE子句 </a><a class="list-group-item" href="sqlite_and_or_clauses.html" title="SQLite AND/OR操作符">SQLite AND/OR操作符 </a><a class="list-group-item" href="sqlite_update_query.html" title="SQLite UPDATE 查询">SQLite UPDATE 查询 </a><a class="list-group-item" href="sqlite_like_clause.html" title="SQLite LIKE 子句">SQLite LIKE 子句 </a><a class="list-group-item" href="sqlite_glob_clause.html" title="SQLite GLOB子句">SQLite GLOB子句 </a><a class="list-group-item" href="sqlite_limit_clause.html" title="SQLite LIMIT 子句">SQLite LIMIT 子句 </a><a class="list-group-item" href="sqlite_order_by.html" title="SQLite ORDER BY 子句">SQLite ORDER BY 子句 </a><a class="list-group-item" href="sqlite_group_by.html" title="SQLite GROUP BY">SQLite GROUP BY </a><a class="list-group-item" href="sqlite_having_clause.html" title="SQLite HAVING 子句">SQLite HAVING 子句 </a><a class="list-group-item" href="sqlite_distinct_keyword.html" title="SQLite DISTINCT 关键字">SQLite DISTINCT 关键字 </a><a class="list-group-item" href="sqlite_constraints.html" title="SQLite 约束">SQLite 约束 </a><a class="list-group-item" href="sqlite_using_joins.html" title="SQLite JOINS连接">SQLite JOINS连接 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="sqlite_pragma.html" title="SQLite PRAGMA">SQLite PRAGMA </a><a class="list-group-item" href="sqlite_unions_clause.html" title="SQLite UNIONS 子句">SQLite UNIONS 子句 </a><a class="list-group-item" href="sqlite_alias_syntax.html" title="SQLite ALIAS/别名">SQLite ALIAS/别名 </a><a class="list-group-item" href="sqlite_triggers.html" title="SQLite TRIGGERS/触发器">SQLite TRIGGERS/触发器 </a><a class="list-group-item" href="sqlite_indexes.html" title="SQLite 索引">SQLite 索引 </a><a class="list-group-item" href="sqlite_indexed_by.html" title="SQLite INDEXED BY">SQLite INDEXED BY </a><a class="list-group-item" href="sqlite_alter_command.html" title="SQLite ALTER TABLE命令">SQLite ALTER TABLE命令 </a><a class="list-group-item" href="sqlite_truncate_table.html" title="SQLite truncate table命令">SQLite truncate table命令 </a><a class="list-group-item" href="sqlite_views.html" title="SQLite VIEW/视图">SQLite VIEW/视图 </a><a class="list-group-item" href="sqlite_transactions.html" title="SQLite TRANSACTIONS/事务">SQLite TRANSACTIONS/事务 </a><a class="list-group-item" href="sqlite_sub_queries.html" title="SQLite 子查询">SQLite 子查询 </a><a class="list-group-item" href="sqlite_using_autoincrement.html" title="SQLite AUTO INCREMENT/自动递增">SQLite AUTO INCREMENT/自动递增 </a><a class="list-group-item" href="sqlite_injection.html" title="SQLite INJECTION/注入">SQLite INJECTION/注入 </a><a class="list-group-item" href="sqlite_explain.html" title="SQLite EXPLAIN/解释">SQLite EXPLAIN/解释 </a><a class="list-group-item" href="sqlite_vacuum.html" title="SQLite VACUUM/真空">SQLite VACUUM/真空 </a><a class="list-group-item" href="sqlite_date_time.html" title="SQLite Date&amp;Time/日期时间">SQLite Date&amp;Time/日期时间 </a><a class="list-group-item" href="sqlite_useful_functions.html" title="SQLite 常用函数">SQLite 常用函数 </a><a class="list-group-item" href="sqlite_c_cpp.html" title="SQLite C/C++">SQLite C/C++ </a><a class="list-group-item" href="sqlite_java.html" title="SQLite Java">SQLite Java </a><a class="list-group-item" href="sqlite_php.html" title="SQLite PHP">SQLite PHP </a><a class="list-group-item" href="sqlite_perl.html" title="SQLite Perl">SQLite Perl </a><a class="list-group-item" href="sqlite_python.html" title="SQLite Python">SQLite Python </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">SQLite PRAGMA </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>易百 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='sqlite_distinct_keyword.html' class='btn' title='SQLite DISTINCT 关键字' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='sqlite_constraints.html' class='btn btn-default' style='float:right;' title='SQLite 约束'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="972" />
+									 <p>
+	SQLite 的 pragma命令是一个特殊的命令，SQLite环境内可以用来控制各种环境变量和状态标志。可以读取一个pragma值，也可以根据需求设置。 </p>
+ <h2>
+	语法 </h2>
+ <p>
+	要查询当前的pragma值，只需要提供该pragma的名字： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA pragma_name </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	为PRAGMA要设置一个新的值，使用以下语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA pragma_name  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> value </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	设置模式，可以是名称或等值的整数，但返回的值将始终是一个整数。 </p>
+ <h2>
+	auto_vacuum Pragma </h2>
+ <p>
+	auto_vacuum编译指示获取或设置自动真空模式。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">auto_vacuum </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">auto_vacuum  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	模式可以是以下任何一种： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px; border-style: solid; border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				pragma值 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				0 or NONE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Auto-vacuum is disabled. This __ default mode which means ____ a database file will _____ shrink in size unless __ is manually vacuumed using ___ VACUUM command. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				1 or FULL </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Auto-vacuum is enabled and _____ automatic which allows a ________ file to shrink as ____ is removed from the ________. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				2 or INCREMENTAL </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Auto-vacuum is enabled but ____ be manually activated. In ____ mode the reference data __ maintained, but free pages ___ simply put on the ____ list. These pages can __ recovered using the&nbsp; <b style="margin: 0px; padding: 0px;">incremental_vacuum pragma </b>any time. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	cache_size Pragma </h2>
+ <p>
+	将cache_size&nbsp;pragma 可以得到或暂时设置在内存中的页面缓存的最大大小。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">cache_size </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">cache_size  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> pages </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	该的页数值表示在缓存中的页面数。内置页面缓存的默认大小2,000页，最小尺寸10页。 </p>
+ <h2>
+	case_sensitive_like Pragma </h2>
+ <p>
+	&nbsp;case_sensitive_like&nbsp;pragma控制的情况下，灵敏度的内置的LIKE表达式。默认情况下，该pragma为false，这意味着，内置的LIKE操作符忽略字母的大小写。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA case_sensitive_like  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <p>
+	也没有办法查询该pragma的当前状态。 </p>
+ <h2>
+	count_changes Pragma </h2>
+ <p>
+	在count_changes pragma获取或设置返回值的数据操作语句，如INSERT，UPDATE和DELETE。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA count_changes </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA count_changes  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <p>
+	默认情况下，该pragma为false，这些语句不返回任何东西。如果设置为true，每个所提到的语句将返回一列，一列的表，由一个单一的整数值，表示操作影响的行。 </p>
+ <h2>
+	database_list Pragma </h2>
+ <p>
+	database_listpragma 将用于列出了所有的数据库连接。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA database_list </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	该pragma将返回与开放或附加的数据库，数据库中的序列号，它的名字和文件相关的一列，每一个三列的表。 </p>
+ <h2>
+	encoding Pragma </h2>
+ <p>
+	编码pragma指示控制如何将字符串编码并存储在数据库中的文件。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA encoding </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA encoding  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> format </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	格式值可以是UTF-8，UTF-16LE或UTF-16BE之一。 </p>
+ <h2>
+	freelist_count Pragma </h2>
+ <p>
+	&nbsp;freelist_count&nbsp;pragma返回一个整数表明有多少个数据库页当前标记为自由和可用。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">freelist_count </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	格式值可以是UTF-8，UTF-16LE或UTF-16BE之一。 </p>
+ <h2>
+	index_info Pragma </h2>
+ <p>
+	index_info pragma将返回关于数据库索引的信息。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">index_info </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;"> index_name  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span></pre>
+ <p>
+	结果集将包含一行出栏序列表和列名，列索引在索引中包含每一列。 </p>
+ <h2>
+	index_list Pragma </h2>
+ <p>
+	index_list pragma列出所有与表相关联的索引。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">index_list </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;"> table_name  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span></pre>
+ <p>
+	结果集将包含每个索引一行指数序列，索引名和标志，指示是否索引是否唯一。 </p>
+ <h2>
+	journal_mode Pragma </h2>
+ <p>
+	journal_mode pragma获取或设置控制日志文件如何存储和处理的日志模式。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA journal_mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA journal_mode  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">journal_mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">journal_mode  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	支持journal 模式有五种： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px; border-style: solid; border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				Pragma 值 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				DELETE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				This is default mode. ____ at the conclusion of _ transaction, the journal file __ deleted. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				TRUNCATE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				The journal file is _________ to a length of ____ bytes. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				PERSIST </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				The journal file is ____ in place, but the ______ is overwritten to indicate ___ journal is no longer _____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				MEMORY </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				The journal record is ____ in memory, rather than __ disk. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				OFF </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				No journal record is ____. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	max_page_count Pragma </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	max_page_count pragma获取或设置为数据库允许的最大页面数。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">max_page_count </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">max_page_count  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> max_page </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	默认值为1,073,741,823这是一个千兆的页面这意味着如果默认1 KB的页面大小，这使得数据库中增长起来的一个terabyte。 </p>
+ <h2>
+	page_count Pragma </h2>
+ <p>
+	page_count&nbsp;pragma 返回当前数据库中的网页数量。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">page_count </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	数据库文件的大小应该是 page_count * page_size. </p>
+ <h2>
+	page_size Pragma </h2>
+ <p>
+	page_size&nbsp;pragma 获取或设置数据库页面的大小。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">page_size </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">page_size  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> bytes </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	默认情况下，允许的尺寸是512，1024，2048，4096，8192，16384，32768字节。只有这样，才能改变现有的数据库页面大小设置页面大小，然后立即用数据库的VACUUM 。 </p>
+ <h2>
+	parser_trace Pragma </h2>
+ <p>
+	parser_trace pragma控制打印的调试状态，因为它解析SQL命令。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA parser_trace  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <p>
+	默认情况下，它被设置为false，但启用其设置为true时，SQL解析器会打印出它的状态，因为它解析SQL命令。 </p>
+ <h2>
+	recursive_triggers Pragma </h2>
+ <p>
+	recursive_triggers&nbsp;pragma获取或设置的递归触发器功能。如果未启用递归触发器，触发动作将不会触发另一个触发。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA recursive_triggers </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA recursive_triggers  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <h2>
+	schema_version Pragma </h2>
+ <p>
+	schema_version&nbsp;pragma 获取或设置值存储在数据库头的架构版本。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">schema_version </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">schema_version  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> number </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	这是一个32位有符号整数，跟踪模式的变化。每当一个模式改变命令的执行（比如，CREATE或DROP），这个值是递增。 </p>
+ <h2>
+	secure_delete Pragma </h2>
+ <p>
+	secure_delete&nbsp;pragma 用来控制内容是如何从数据库中删除。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA secure_delete </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA secure_delete  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">secure_delete </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">secure_delete  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <p>
+	安全删除标志的默认值通常是关闭的，但是这是可以改变的SQLITE_SECURE_DELETE构建选项。 </p>
+ <h2>
+	sql_trace Pragma </h2>
+ <p>
+	sql_trace&nbsp;pragma 用于转储到屏幕上SQL跟踪结果。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA sql_trace </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA sql_trace  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <p>
+	SQLite必须编译 SQLITE_DEBUG指令被列入该pragma。 </p>
+ <h2>
+	synchronous Pragma </h2>
+ <p>
+	synchronous&nbsp;pragma&nbsp;获取或设置当前磁盘的同步模式，控制如何积极SQLite将数据写入物理存储。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">synchronous </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">synchronous  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	SQLite支持下同步模式： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px; border-style: solid; border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				Pragma 值 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				0 or OFF </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				No syncs at all </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				1 or NORMAL </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Sync after each sequence __ critical disk operations </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				2 or FULL </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Sync after each critical ____ operation </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	temp_store Pragma </h2>
+ <p>
+	temp_store&nbsp;pragma 获取或设置临时数据库文件所使用的存储模式。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA temp_store </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA temp_store  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> mode </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p>
+	SQLite支持以下存储模式： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px; border-style: solid; border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				Pragma 值 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238);">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				0 or DEFAULT </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Use compile-time default. Normally ____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				1 or FILE </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Use file-based storage. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				2 or MEMORY </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse; border-style: solid; border-color: rgb(214, 214, 214);">
+				Use memory-based storage. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	temp_store_directory Pragma </h2>
+ <p>
+	&nbsp;temp_store_directory&nbsp;pragma 获取或设置用于临时数据库文件的位置。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA temp_store_directory </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA temp_store_directory  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;directory_path&#39; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <h2>
+	user_version Pragma </h2>
+ <p>
+	user_version&nbsp;pragma 获取或设置用户定义的版本值存储在数据库头。以下是简单的语法： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">user_version </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">database </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.] </span><span class="pln" style="margin: 0px; padding: 0px;">user_version  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> number </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	这是一个32位有符号整数的值可以设置由开发人员的版本跟踪目的。 </p>
+ <h2 style="margin: 0.2em 0.2em 0.2em 0px; padding: 0px; font-size: 1.6em; line-height: 1.5em; font-weight: normal; text-shadow: rgb(204, 204, 204) 1px 1px 2px; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	writable_schema Pragma </h2>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <b style="margin: 0px; padding: 0px;">writable_schema </b>&nbsp;pragma 获取或设置能够修改系统表。以下是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">PRAGMA writable_schema </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+PRAGMA writable_schema  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">true </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">false </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	pragma设置，表开始sqlite_的可以创建和修改，包括SQLITE_MASTER表。使用pragma时要小心，因为它可能导致完成数据库损坏。 </p>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/SQLite/" target="_blank">SQLite </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/PRAGMA/" target="_blank">PRAGMA </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/SQLite/" target="_blank">SQLite </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/的/" target="_blank">的 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/pragma/" target="_blank">pragma </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag//" target="_blank"></a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>SQLite PRAGMA </b><br />
+									本文地址： <a href="sqlite_pragma.html">http://www.yiibai.com/sqlite/sqlite_pragma.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='sqlite_distinct_keyword.html' class='btn' title='SQLite DISTINCT 关键字' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='sqlite_constraints.html' class='btn btn-default' style='float:right;' title='SQLite 约束'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="972" data-title="SQLite PRAGMA" data-url="http://www.yiibai.com/sqlite/sqlite_pragma.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

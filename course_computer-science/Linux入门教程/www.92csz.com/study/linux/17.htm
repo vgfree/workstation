@@ -1,0 +1,215 @@
+<html><head>
+<!-- Original URL: http://www.92csz.com/study/linux/17.htm
+Date Downloaded: 2016/3/26 13:56:54 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+ <title>LNMP环境搭建 </title>
+ <meta name="description" content="LNMP环境搭建" />
+ <meta name="keywords" content="nginx,freebsd,linux,mysql,shell,apache,centos,redhat,rhel,windows,sql,系统运维,IT运维,开源系统,开源系统运维" />
+ <!-- base href="http://www.92csz.com/" -->
+ </head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="menu">
+	 <ul>
+		 <span style="FONT-SIZE: 10.5pt">
+			 <li style="float:right;list-style-type:none;"><a href="http://www.92csz.com/" hidefocus="true" id="mn_list">返回网站首页 </a></li>
+			 <li><a href="index.html" hidefocus="true" id="mn_list">linux入门教程 </a></li>
+			 <li><a href="http://www.92csz.com/search" hidefocus="true" id="mn_search">搜索 </a></li>
+		 </span>
+	 </ul>
+ </div>
+ <p style="TEXT-ALIGN: center"><span style="FONT-SIZE: 15pt; FONT-FAMILY: '宋体'"><b>第十七章 </b></span><span style="FONT-SIZE: 15pt;"><b> LNMP </b></span><span style="FONT-SIZE: 15pt; FONT-FAMILY: '宋体'"><b>环境搭建 </b></span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">和 </span><span style="FONT-SIZE: 10.5pt;">LAMP </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">不同的是 </span><span style="FONT-SIZE: 10.5pt;">LNMP </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">中的 </span><span style="FONT-SIZE: 10.5pt;">N </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">指的是是 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">（类似于 </span><span style="FONT-SIZE: 10.5pt;">Apache </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的一种 </span><span style="FONT-SIZE: 10.5pt;">web </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">服务软件）其他都一样 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">目前这种环境应用的也是非常之多 </span><span style="FONT-SIZE: 10.5pt;">。Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">设计的初衷是提供一种快速高效多并发的 </span><span style="FONT-SIZE: 10.5pt;">web </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">服务软件 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">在静态页面的处理上 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的确胜 </span><span style="FONT-SIZE: 10.5pt;">Apache </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">一筹，然而在动态页面的处理上 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">并不比 </span><span style="FONT-SIZE: 10.5pt;">Apache </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">有多少优势 </span><span style="FONT-SIZE: 10.5pt;">。 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">但是，目前还是有很多爱好者对 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">比较热衷，随着 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的技术逐渐成熟，它在 </span><span style="FONT-SIZE: 10.5pt;">web </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">服务软件领域的地位越来越高 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <script async="" src="../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+ <!-- study_zsy -->
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5865024608655371" data-ad-slot="4214051509" data-ad-format="auto"></ins>
+ <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ <p><span style="FONT-SIZE: 10.5pt;">【MySQL </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">安装 </span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">1.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">下载 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">到 </span><span style="FONT-SIZE: 10.5pt;">/usr/local/src/  </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">cd /usr/local/src/ </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">wget http://syslab.comsenz.com/downloads/linux/mysql-5.0.86-linux-i686-icc-glibc23.tar.gz </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">2.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">解压 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">tar zxvf /usr/local/src/ mysql-5.0.86-linux-i686-icc-glibc23.tar.gz </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">3.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">把解压完的 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">数据 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">移动到 </span><span style="FONT-SIZE: 10.5pt;">/usr/local/mysql </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mv mysql-5.0.86-linux-i686-ii-glibc23 /usr/local/mysql </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">4.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">建立 </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用户 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">useradd mysql </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">5.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">初始化数据库 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">cd /usr/local/mysql </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">mkdir /data/mysql ; chown -_ mysql:mysql /data/mysql </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">./scripts/mysql_install_db --user=mysql --datadir=/data/mysql  </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">--user </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">定义数据库的所属主， </span><span style="FONT-SIZE: 10.5pt;">--datadir </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">定义数据库安装到哪里，建议放到大空间的分区上，这个目录需要自行创建 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">6.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">拷贝配置文件 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">cp support-files/my-large.cnf /etc/my.cnf </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">7.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">拷贝启动脚本文件并修改其属性 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">cp support-files/mysql.server&nbsp;&nbsp;/etc/init.d/mysqld </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">chmod 755 /etc/init.d/mysqld </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">8.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">修改启动脚本 </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">vim /etc/init.d/mysqld </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">需要修改的地方有 </span><span style="FONT-SIZE: 10.5pt;">datadir=/data/mysql </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">（前面初始化数据库时定义的目录） </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">9.  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">把启动脚本加入系统服务项，并设定开机启动，启动 </span><span style="FONT-SIZE: 10.5pt;">mysql </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">chkconfig --add mysqld </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">chkconfig mysqld on </span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">service mysqld start </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">如果启动不了，请到 </span><span style="FONT-SIZE: 10.5pt;">/data/mysql/  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">下查看错误日志，该日志格式为主机名 </span><span style="FONT-SIZE: 10.5pt;">.err。 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">【 </span><span style="FONT-SIZE: 10.5pt;"><b>php </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>的安装 </b></span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这里要先声明一下，针对 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">安装和针对 </span><span style="FONT-SIZE: 10.5pt;">apache </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">安装是有区别的，因为 </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">中的 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">是以 </span><span style="FONT-SIZE: 10.5pt;">fastcgi </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的方式结合 </span><span style="FONT-SIZE: 10.5pt;">nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的，可以理解为 </span><span style="FONT-SIZE: 10.5pt;">nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">代理了 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的 </span><span style="FONT-SIZE: 10.5pt;">fastcgi </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，而 </span><span style="FONT-SIZE: 10.5pt;">apache </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">是把 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">作为自己的模块来调用的 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">useradd www </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">cd /usr/local/src/ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">wget http://syslab.comsenz.com/downloads/linux/php-5.2.10.tar.gz </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">wget http://syslab.comsenz.com/downloads/linux/php-5.2.10-fpm-0.5.13.diff.gz </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">下载的第二个包 </span><span style="FONT-SIZE: 10.5pt;">php-5.2.10-fpm-0.5.13.diff.gz </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">是用来给 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">打补丁的，默认情况下， </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">是无法编译出 </span><span style="FONT-SIZE: 10.5pt;">fastcgi </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">tar zxvf php-5.2.10.tar.gz </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip -cd php-5.2.10-fpm-0.5.13.diff.gz | _____ -d php-5.2.10 -p1 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">cd php-5.2.10 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">./ </span><span style="FONT-SIZE: 10.5pt;">conf </span><span style="FONT-SIZE: 10.5pt;">igure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with- </span><span style="FONT-SIZE: 10.5pt;">mysql </span><span style="FONT-SIZE: 10.5pt;">=/usr/local/my </span><span style="FONT-SIZE: 10.5pt;">sql </span><span style="FONT-SIZE: 10.5pt;">
+ --with-mysql-sock=/tmp --with-libxml-dir --with-gd --____-____-___ 
+--with-png-dir --with-freetype-dir --with-iconv-dir --with-zlib-dir 
+--____-______=/___/_____/_________ --enable-soap --enable-gd-native-ttf 
+--enable-ftp --enable-mbstring --______-____ --enable-zend-multibyte 
+--disable-ipv6 --enable-fastcgi --enable-fpm </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">make &amp;&amp; make install </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">mkdir /usr/local/php/etc </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">cp php.ini-dist /usr/local/php/etc/php.ini&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">vim /usr/local/php/etc/php-fpm.conf </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">&lt;value name="listen_address"&gt;/tmp/php-fcgi.sock&lt;/value&gt;  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这一行要改成这样，这里这样修改了以后，在配置 </span><span style="FONT-SIZE: 10.5pt;">nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的时候就需要注意这个路径了 </span><span style="FONT-SIZE: 10.5pt;">。 <br /></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">修改 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">用户 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">和组的名称为 </span><span style="FONT-SIZE: 10.5pt;">”www”  <br /></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">去掉注释，改成这样： </span><span style="FONT-SIZE: 10.5pt;"><br />Unix user of processes <br />&nbsp;
+ &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&lt;value 
+____="____"&__;___&__;/_____&__; <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;Unix _____ of processes <br />&nbsp;
+ &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
+&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&lt;value 
+____="_____"&__;___&__;/_____&__; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">/usr/local/php/sbin/php-fpm start </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">其他关于 </span><span style="FONT-SIZE: 10.5pt;">php </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的扩展模块安装请参考： </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><a title="" href="http://www.92csz.com/19/603.html" target="_blank">CentOS 5.5下安装mysql5.1.57+php5.2.17(FastCGI)+nginx1.0.1高性能Web服务器 </a><br /></span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">【 </span><span style="FONT-SIZE: 10.5pt;"><b>nginx  </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>安装以及配置 </b></span><span style="FONT-SIZE: 10.5pt;">】 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><b>1. nginx </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>源码安装 </b></span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">cd /usr/local/src/ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">wget http://syslab.comsenz.com/downloads/linux/nginx-0.9.6.tar.gz </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">tar zxvf nginx-0.9.6.tar.gz </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">cd nginx-0.9.6 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">./configure 
+--prefix=/usr/local/nginx --sbin-path=/usr/local/nginx/sbin/nginx 
+--conf-path=/usr/local/nginx/conf/nginx.conf 
+--_____-___-____=/___/_____/_____/____/_____.___ 
+--http-log-path=/usr/local/nginx/logs/access.log 
+--pid-path=/usr/local/nginx/var/nginx.pid 
+--lock-path=/usr/local/nginx/var/nginx.lock 
+--http-client-body-temp-path=/dev/shm/nginx_temp/client_body 
+--____-_____-____-____=/___/___/__________/_____ 
+--http-fastcgi-temp-path=/dev/shm/nginx_temp/fastcgi --user=www 
+--group=www --with-cpu-opt=pentium4F --_______-_____________ 
+--without-poll_module --with-http_realip_module --with-http_sub_module 
+--with-http_gzip_static_module --____-_______________________ 
+--without-http_ssi_module --without-http_userid_module 
+--without-http_geo_module --without-http_memcached_module 
+--_______-_______________ --without-mail_pop3_module 
+--without-mail_imap_module --without-mail_smtp_module --with-pcre </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">make &amp;&amp; make install  </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">mkdir /dev/shm/nginx_temp </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">有的 </span><span style="FONT-SIZE: 10.5pt;">nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">版本编译时会因为 </span><span style="FONT-SIZE: 10.5pt;">pcre </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">编译 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">不过去，需要修改一下 </span><span style="FONT-SIZE: 10.5pt;"> --with-pcre=/usr/local/src/pcre-7.8 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，前提是已经 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">下载 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">了 </span><span style="FONT-SIZE: 10.5pt;">pcre </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">源码 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">包 </span><span style="FONT-SIZE: 10.5pt;">pcre-7.8.tar.gz </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，并解压到 </span><span style="FONT-SIZE: 10.5pt;">/usr/local/src/pcre-7.8 </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">，不需要编译 </span><span style="FONT-SIZE: 10.5pt;">pcre </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><b>2.  </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>编写 </b></span><span style="FONT-SIZE: 10.5pt;"><b>nginx </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>的启动脚本，并加入系统服务 </b></span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">vi /etc/init.d/nginx  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">写入以下内容： </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">#!/bin/bash <br /># chk </span><span style="FONT-SIZE: 10.5pt;">conf </span><span style="FONT-SIZE: 10.5pt;">ig: - 30 21 <br /># description: http service. <br /># Source Function Library <br />. /etc/init.d/functions <br />#  </span><span style="FONT-SIZE: 10.5pt;">Nginx </span><span style="FONT-SIZE: 10.5pt;"> Settings <br />NGINX_SBIN="/usr/local/nginx/sbin/nginx" <br />NGINX_CONF="/usr/local/nginx/conf/nginx.conf" <br />NGINX_PID="/usr/local/nginx/var/nginx.pid" <br />RETVAL=0 <br />prog="Nginx" <br />start() { <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </span><span style="FONT-SIZE: 10.5pt;">echo </span><span style="FONT-SIZE: 10.5pt;"> -n $"Starting $prog: " <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mkdir -p /___/___/__________ <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;daemon $NGINX_SBIN -_ $NGINX_CONF <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;RETVAL=$? <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;echo <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;return $RETVAL <br />} <br />stop() { <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;echo -n $"________ $prog: " <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;killproc -p $_________ $NGINX_SBIN -TERM <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;rm -rf /___/___/__________ <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;RETVAL=$? <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;echo <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;return $RETVAL <br />} <br />reload(){ <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;echo -n $"_________ $prog: " <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;killproc -p $_________ $NGINX_SBIN -HUP <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;RETVAL=$? <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;echo <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;return $RETVAL <br />} <br />restart(){ <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;stop <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;start <br />} <br />config </span><span style="FONT-SIZE: 10.5pt;">test </span><span style="FONT-SIZE: 10.5pt;">(){ <br />&nbsp; &nbsp; $NGINX_SBIN -c $__________ -t <br />&nbsp; &nbsp; return 0 <br />} <br />case "$1" in <br />&nbsp;&nbsp;start) <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;start <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;;; <br />&nbsp;&nbsp;stop) <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;stop <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;;; <br />&nbsp;&nbsp;reload) <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;reload <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;;; <br />&nbsp;&nbsp;restart) <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;restart <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;;; <br />&nbsp;&nbsp;configtest) <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;configtest <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;;; <br />&nbsp;&nbsp;*) <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;echo $"Usage: $0 {start|stop|reload|restart|configtest}" <br />&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;RETVAL=1 <br />esac <br /><br />exit $RETVAL </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">保存后，更改 </span><span style="FONT-SIZE: 10.5pt;">/etc/init.d/nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">的权限 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">chmod 755 /etc/init.d/nginx </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">chkconfig --add nginx </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">chkconfig nginx on </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><b>3. nginx </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>的配置 </b></span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">vim /usr/local/nginx/conf/nginx.conf </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">把原来的文件清空，然后粘贴如下内容： </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">user www www; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">worker_processes 2; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">error_log /usr/local/nginx/logs/nginx_error.log crit; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">pid /usr/local/nginx/var/nginx.pid; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">#Specifies the value for _______ file descriptors that can __ opened by this process. </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">worker_rlimit_nofile 51200; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">events </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">{ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">use epoll; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">worker_connections 6000; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">} </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">http </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">{ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">include mime.types; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">default_type application/octet-stream; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">server_names_hash_bucket_size 2048; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">server_names_hash_max_size 4096; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">log_format combined_realip '$remote_addr $http_x_forwarded_for [$__________] ' </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">'$host "$request_uri" $status ' </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">'"$http_referer" "$http_user_agent"'; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">sendfile on; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">tcp_nopush on; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">keepalive_timeout 30; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">client_header_timeout 3m; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">client_body_timeout 3m; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">send_timeout 3m; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">connection_pool_size 256; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">client_header_buffer_size 1k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">large_client_header_buffers 8 4k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">request_pool_size 4k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">output_buffers 4 32k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">postpone_output 1460; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">client_max_body_size 10m; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">client_body_buffer_size 256k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">client_body_temp_path /usr/local/nginx/client_body_temp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">proxy_temp_path /usr/local/nginx/proxy_temp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">fastcgi_temp_path /usr/local/nginx/fastcgi_temp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">fastcgi_intercept_errors on; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">tcp_nodelay on; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip on; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip_min_length 1k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip_buffers 4 8k; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip_comp_level 5; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip_http_version 1.1; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">gzip_types text/plain application/x-javascript text/css ____/___ application/xml; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">server </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">{ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">listen 80; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">server_name www.example.com; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">index index.html index.htm index.php; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">root /data/www; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">location ~ \.php$ { </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">include fastcgi_params; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">fastcgi_pass unix:/ php-fcgi.sock; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">fastcgi_index index.php; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">fastcgi_param SCRIPT_FILENAME /data/www$fastcgi_script_name; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">} </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">} </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">保存后就可以启动 </span><span style="FONT-SIZE: 10.5pt;">nginx </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">了，在重启之前最好先检查一下是否有问题 <br /></span><span style="FONT-SIZE: 10.5pt;"><br />/usr/local/nginx/sbin/nginx&nbsp;
+ -t&nbsp;&nbsp; 如果显示 "syntax __ ok&nbsp; 和&nbsp; nginx.conf was ______ 
+successfully"这样的信息，就说明配置没有问题了，否则就需要根据提示修改了。 <br />service nginx start  </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">如果启动不了，请到 </span><span style="FONT-SIZE: 10.5pt;">/usr/local/nginx/logs/ </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">目录下查看 <font size="3">nginx_ </font></span><span style="FONT-SIZE: 10.5pt;"><font size="3">error.log </font></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">这个日志文件 </span><span style="FONT-SIZE: 10.5pt;">。若是没有这个日志文件，很有可能是那个目录没有写权限，请执行 <br /><br />chmod +w /usr/local/nginx/logs/  <br />service&nbsp; nginx&nbsp; restart  </span></p>
+【 <span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>测试是否解析 </b></span><span style="FONT-SIZE: 10.5pt;"><b>php </b></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><b>文件 </b></span><span style="FONT-SIZE: 10.5pt;">】 </span><p />
+ <p><span style="FONT-SIZE: 10.5pt;">vim /data/www/1.php  </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">写入如下内容： </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">&lt;?php <br /></span><span style="FONT-SIZE: 10.5pt;">phpinfo(); <br /></span><span style="FONT-SIZE: 10.5pt;">?&gt; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">然后设定 </span><span style="FONT-SIZE: 10.5pt;">hosts </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">文件，访问 </span><span style="FONT-SIZE: 10.5pt;"> www.92csz.com/1.php  </span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">看是否能解析出这个页面 </span><span style="FONT-SIZE: 10.5pt;">。 </span></p>
+ <div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5865024608655371";
+google_ad_slot = "3514991827";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+ <script type="text/javascript" src="../../../pagead2.googlesyndication.com/pagead/f.txt.js">
+</script></div>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">上一页  <a href="16.htm">LAMP环境搭建 </a></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'">下一页  <a title="" href="18.htm">学会使用简单的MySQL操作 </a></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"></span><span style="FONT-SIZE: 10.5pt; FONT-FAMILY: '宋体'"><a href="index.html">回到主目录 </a></span></p>
+ <p style="TEXT-ALIGN: justify"><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <script src="../../../s20.cnzz.com/stat_a61bedf.php.js" language="JavaScript"></script>
+ </body></html>an></p>
+ <script src="http://s20.cnzz.com/stat.php?id=3037570&web_id=3037570&show=pic" language="JavaScript"></script>
+ </body></html>

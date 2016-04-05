@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Nginx配置详解 - OPEN 开发经验库</title>
+	<meta content="text/html; charset=utf-8" http-equiv=content-type>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name=keywords content="Nginx,Nginx ">
+	<meta name=description content="Nginx是lgor Sysoev为俄罗斯访问量第二的rambler.ru站点设计开发的。从2004年发布至今，凭借开源的力量，已经接近成熟与完善。">
+	<link rel="shortcut icon" href="/lib/favicon.ico">
+	<link rel=copyright href="http://www.open-open.com/">
+
+	<link href="//cdn.bootcss.com/highlight.js/9.2.0/styles/idea.min.css" rel="stylesheet">
+
+	
+	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://www.open-open.com/resource/styles.css" rel="stylesheet">
+
+	<style type="text/css" media="screen, projection">
+		/*<![CDATA[*/
+		@import "/lib/css/common.css";
+		@import "/lib/css/main.css";
+		@import "/lib/css/jGrowl.css";
+		@import "/lib/css/thickbox.css";
+		@import "/lib/css/jquery.ui.css";
+		/*]]>*/
+	</style>
+	<style type="text/css">
+.topheader h1{font-size: 24px;}
+
+	</style>
+
+	<script type="text/javascript">
+		if(window.location.toString().indexOf('pref=padindex') != -1){
+		}else{
+			if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+				if(window.location.href.indexOf("?mobile")<0){
+					try{
+						if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1454411494230.html";
+						}else if(/iPad/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1454411494230.html"
+						}else{
+							window.location.href="http://m.open-open.com/m/lib/view/1454411494230.html"
+						}
+					}catch(e){}
+				}
+			}
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		var rooturl="/lib";
+		var wgDocKey='1454411494230';
+		var wgDocTitle='Nginx配置详解';
+		var wgDocStatusFlag='';
+		var wgUserFolders=null;
+		var wgDownFrame=null;
+		var wgCostByUser=null;
+		var wgDocFavoriteByUser=false;
+		var wgDocScoreByUser=null;
+		var wgUserLogined=0;
+		var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+	</script>
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?4b19e5cc155fe555484434d8338ee0af";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+
+</head>
+<body id=view>
+
+
+
+
+
+
+<header class="site-header">
+	<div class="header-top ">
+		<div class="header-top-inner">
+			<div class="" style="margin: 0 30px;">
+				<div class="row">
+					<div class="header-top-left col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="header-talet">
+							<a  href="http://www.open-open.com/">首页</a> &nbsp;
+							<a class="" href="http://www.open-open.com/code/">OPEN代码</a> &nbsp;<img src="http://www.open-open.com/image/new.gif" alt='最新上线'/> &nbsp;
+							<a class="" href="http://www.open-open.com/doc/">OPEN文档</a> &nbsp;
+							<a title='OPEN论坛频道' href="http://www.open-open.com/bbs">OPEN问答</a> &nbsp;
+							<a title="OPEN资讯" class="" href="http://www.open-open.com/news/">OPEN资讯</a> &nbsp;
+							<a title="OPEN经验库" class="active" href="http://www.open-open.com/lib/" >OPEN经验</a> &nbsp;
+							<a title="GitHub日报" class="" href="http://www.open-open.com/github/">GitHub日报</a>
+							&nbsp;
+						</div>
+					</div>
+					<div class="header-top-right col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="user-info pull-right" id="Personal">
+							
+								<a href="/lib/members/login?keepThis=true&TB_iframe=true&height=177&width=280" title="登录OPEN经验库" class="thickbox">登录</a>&nbsp;&nbsp;
+								<a href="/lib/members/register?keepThis=true&TB_iframe=true&height=460&width=710" title="注册新的账号" class="thickbox">注册</a>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar ">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-hamburger"></span>
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-up"></span>
+				</button>
+				<a class="top-logo" href="//www.open-open.com/lib"><span>www.open-open.com/lib</span></a>
+				<span style="font-size: 30px;color: #b5b5b5">经验</span>
+				<span style="font-size: 12px;color: #b5b5b5"></span>
+			</div>
+			<div id="search" class="navbar-collapse navbar-right collapse ">
+				<form onsubmit="document.charset='utf-8';" accept-charset="utf-8" method="post" action="/lib/query" name="sf">
+					<input type="hidden" value="all" name="site">
+					<div class="input-group">
+						<input type="text" x-webkit-speech="" placeholder="经验搜索" class="form-control" name="q" id="kw">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                      </span>
+
+					</div>
+				</form>
+
+				<!-- /input-group -->
+
+			</div>
+
+		</div>
+	</nav>
+</header>
+
+
+
+
+<div class="topheader" style="background: #eee;padding-bottom: 10px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 id="articleTitle" >Nginx配置详解</h1>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div id=content>
+	<div id=content-nav>
+		<a href="/lib/list/all">所有分类</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/75">服务器软件</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/77">Web服务器</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/151">Nginx </a>
+		
+	</div>
+
+
+	<div id=view-main>
+
+
+		<div id=view-titleh>
+
+			<div id=view-summary>
+				<table>
+					<tbody>
+					<tr>
+						<td><strong>您的评价</strong>:</td>
+						<td>
+							<div id=rate class=rate-container><span id=star1 class=star-big-off title=很差>&nbsp;</span><span id=star2 class=star-big-off title=较差>&nbsp;</span><span id=star3 class=star-big-off title=还行>&nbsp;</span><span
+									id=star4 class=star-big-off title=不错>&nbsp;</span><span id=star5 class=star-big-off title=力荐>&nbsp;</span></div>
+						</td>
+						<td width=30>
+							<span id=score-num>0.0</span>
+						</td>
+						<td width=30>
+							<div id=rate-tip></div>
+						</td>
+
+						<td>
+							<div id=favorite-container><span class="icon favorite">&nbsp;</span><a id=favorite href="javascript:void(0)"><strong>收藏该经验</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+							<span class=item>收藏：0人</span>
+
+							<span class=item>发布时间1：2016-02-02 19:13:29</span>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<div id=favorite-box>
+					<table>
+						<tbody>
+						<tr>
+							<td width=70 align=right>文件夹</td>
+							<td><select id=fav_folderlist name=folder>
+								<option selected value=0>请选择...</option>
+								<option id=newfolder-sp disabled value="">-------------</option>
+								<option value=-1>新增文件夹...</option>
+							</select></td>
+						</tr>
+						<tr style="display: none" id=newfolder-input>
+							<td align=right>新增文件夹</td>
+							<td><input id=fav_newfolder maxlength=50 type=text name=newfolder></td>
+						</tr>
+						<tr>
+							<td align=right>标签</td>
+							<td><input id=fav_tags maxlength=135 size=20 type=text name=tags></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan=2>(多个标签用逗号分隔)</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div id=readercontainer>
+
+
+			<div id="toc"></div>
+
+
+			<!-- google_ad_section_start -->
+			<p>来自： <a href="http://www.cnblogs.com/knowledgesea/p/5175711.html" rel="nofollow" target="_blank">http://www.cnblogs.com/knowledgesea/p/5175711.html</a></p>
+<div>
+<h2>序言 </h2>
+<p>Nginx是lgor Sysoev为俄罗斯访问量第二的rambler.ru站点设计开发的。从2004年发布至今，凭借开源的力量，已经接近成熟与完善。</p>
+<p>Nginx功能丰富，可作为HTTP服务器，也可作为反向代理服务器，邮件服务器。支持FastCGI、SSL、Virtual Host、URL Rewrite、Gzip等功能。并且支持很多第三方的模块扩展。</p>
+<p>Nginx的稳定性、功能集、示例配置文件和低系统资源的消耗让他后来居上，在全球活跃的网站中有12.18%的使用比率，大约为2220万个网站。</p>
+<p>牛逼吹的差不多啦，如果你还不过瘾，你可以百度百科或者一些书上找到这样的夸耀，比比皆是。</p>
+<h2>Nginx常用功能 </h2>
+<p>1、Http代理，反向代理：作为web服务器最常用的功能之一，尤其是反向代理。</p>
+<p>这里我给来2张图，对正向代理与反响代理做个诠释，具体细节，大家可以翻阅下资料。</p>
+<p><img class="alignCenter" src="http://static.open-open.com/lib/uploadImg/20160202/20160202191131_773.jpg" width="700" height="341" /> <img class="alignCenter" src="http://static.open-open.com/lib/uploadImg/20160202/20160202191131_71.jpg" width="700" height="331" /> </p>
+<p>Nginx在做反向代理时，提供性能稳定，并且能够提供配置灵活的转发功能。Nginx可以根据不同的正则匹配，采取不同的转发策略，比如图片文件结尾的走文件服务器，动态页面走web服务器，只要你正则写的没问题，又有相对应的服务器解决方案，你就可以随心所欲的玩。并且Nginx对返回结果进行错误页跳转，异常判断等。如果被分发的服务器存在异常，他可以将请求重新转发给另外一台服务器，然后自动去除异常服务器。</p>
+<p>2、负载均衡</p>
+<p>Nginx提供的负载均衡策略有2种：内置策略和扩展策略。内置策略为轮询，加权轮询，Ip hash。扩展策略，就天马行空，只有你想不到的没有他做不到的啦，你可以参照所有的负载均衡算法，给他一一找出来做下实现。</p>
+<p>上3个图，理解这三种负载均衡算法的实现</p>
+<p><img class="alignCenter" src="http://static.open-open.com/lib/uploadImg/20160202/20160202191132_915.jpg" width="700" height="264" /> <img class="alignCenter" src="http://static.open-open.com/lib/uploadImg/20160202/20160202191133_979.jpg" width="700" height="261" /> </p>
+<p>Ip hash算法，对客户端请求的ip进行hash操作，然后根据hash结果将同一个客户端ip的请求分发给同一台服务器进行处理，可以解决session不共享的问题。&nbsp; <img class="alignCenter" src="http://static.open-open.com/lib/uploadImg/20160202/20160202191133_379.jpg" width="700" height="261" /> </p>
+<p>3、web缓存</p>
+<p>Nginx可以对不同的文件做不同的缓存处理，配置灵活，并且支持FastCGI_Cache，主要用于对FastCGI的动态程序进行缓存。配合着第三方的ngx_cache_purge，对制定的URL缓存内容可以的进行增删管理。</p>
+<p>4、Nginx相关地址</p>
+<p>源码：https://trac.nginx.org/nginx/browser</p>
+<p>官网：http://www.nginx.org/</p>
+<h2>Nginx配置文件结构 </h2>
+<p>如果你下载好啦，你的安装文件，不妨打开conf文件夹的nginx.conf文件，Nginx服务器的基础配置，默认的配置也存放在此。</p>
+<p>在nginx.conf的注释符号位#</p>
+<p>nginx文件的结构，这个对刚入门的同学，可以多看两眼。</p>
+<p>默认的config</p>
+<pre class="brush:shell; toolbar: true; auto-links: false;"> #user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
+
+View Code</pre> <p>nginx文件结构</p>
+<pre class="brush:shell; toolbar: true; auto-links: false;">...              #全局块
+
+events {         #events块
+   ...
+}
+
+http      #http块
+{
+    ...   #http全局块
+    server        #server块
+    { 
+        ...       #server全局块
+        location [PATTERN]   #location块
+        {
+            ...
+        }
+        location [PATTERN] 
+        {
+            ...
+        }
+    }
+    server
+    {
+      ...
+    }
+    ...     #http全局块
+}</pre> <p>1、全局块：配置影响nginx全局的指令。一般有运行nginx服务器的用户组，nginx进程pid存放路径，日志存放路径，配置文件引入，允许生成worker process数等。</p>
+<p>2、events块：配置影响nginx服务器或与用户的网络连接。有每个进程的最大连接数，选取哪种事件驱动模型处理连接请求，是否允许同时接受多个网路连接，开启多个网络连接序列化等。</p>
+<p>3、http块：可以嵌套多个server，配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置。如文件引入，mime-type定义，日志自定义，是否使用sendfile传输文件，连接超时时间，单连接请求数等。</p>
+<p>4、server块：配置虚拟主机的相关参数，一个http中可以有多个server。</p>
+<p>5、location块：配置请求的路由，以及各种页面的处理情况。</p>
+<p>下面给大家上一个配置文件，作为理解，同时也配入我搭建的一台测试机中，给大家示例。</p>
+<pre class="brush:shell; toolbar: true; auto-links: false;">########### 每个指令必须有分号结束。#################
+#user administrator administrators;  #配置用户或者组，默认为nobody nobody。
+#worker_processes 2;  #允许生成的进程数，默认为1
+#pid /nginx/pid/nginx.pid;   #指定nginx进程运行文件存放地址
+error_log log/error.log debug;  #制定日志路径，级别。这个设置可以放入全局块，http块，server块，级别以此为：debug|info|notice|warn|error|crit|alert|emerg
+events {
+    accept_mutex on;   #设置网路连接序列化，防止惊群现象发生，默认为on
+    multi_accept on;  #设置一个进程是否同时接受多个网络连接，默认为off
+    #use epoll;      #事件驱动模型，select|poll|kqueue|epoll|resig|/dev/poll|eventport
+    worker_connections  1024;    #最大连接数，默认为512
+}
+http {
+    include       mime.types;   #文件扩展名与文件类型映射表
+    default_type  application/octet-stream; #默认文件类型，默认为text/plain
+    #access_log off; #取消服务日志    
+    log_format myFormat '$remote_addr–$remote_user [$time_local] $request $status $body_bytes_sent $http_referer $http_user_agent $http_x_forwarded_for'; #自定义格式
+    access_log log/access.log myFormat;  #combined为日志格式的默认值
+    sendfile on;   #允许sendfile方式传输文件，默认为off，可以在http块，server块，location块。
+    sendfile_max_chunk 100k;  #每个进程每次调用传输数量不能大于设定的值，默认为0，即不设上限。
+    keepalive_timeout 65;  #连接超时时间，默认为75s，可以在http，server，location块。
+
+    upstream mysvr {   
+      server 127.0.0.1:7878;
+      server 192.168.10.121:3333 backup;  #热备
+    }
+    error_page 404 https://www.baidu.com; #错误页
+    server {
+        keepalive_requests 120; #单连接请求上限次数。
+        listen       4545;   #监听端口
+        server_name  127.0.0.1;   #监听地址       
+        location  ~*^.+$ {       #请求的url过滤，正则匹配，~为区分大小写，~*为不区分大小写。
+           #root path;  #根目录
+           #index vv.txt;  #设置默认页
+           proxy_pass  http://mysvr;  #请求转向mysvr 定义的服务器列表
+           deny 127.0.0.1;  #拒绝的ip
+           allow 172.18.5.54; #允许的ip           
+        } 
+    }
+}</pre> <p>上面是nginx的基本配置，需要注意的有以下几点：</p>
+<p>1、1.$remote_addr 与$http_x_forwarded_for 用以记录客户端的ip地址；&nbsp;2.$remote_user ：用来记录客户端用户名称；&nbsp;3.$time_local ： 用来记录访问时间与时区；4.$request ： 用来记录请求的url与http协议；</p>
+<p>5.$status ： 用来记录请求状态；成功是200，&nbsp;6.$body_bytes_s ent ：记录发送给客户端文件主体内容大小；7.$http_referer ：用来记录从那个页面链接访问过来的；&nbsp;8.$http_user_agent ：记录客户端浏览器的相关信息；</p>
+<p>2、惊群现象：一个网路连接到来，多个睡眠的进程被同事叫醒，但只有一个进程能获得链接，这样会影响系统性能。</p>
+<p>3、每个指令必须有分号结束。</p>
+<h2>总结 </h2>
+<p>如果你在开发过程中使用啦这些技术，或者你要使用遇到啦什么问题，欢迎加入左上角的群，我们一起讨论学习，本篇未完待续。</p>
+</div>
+
+
+		</div>
+		
+
+
+		<table width='100%'><tr>
+			<td  valign='top' width="49%" class="Related">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关资讯</strong> 　—　<a href="http://www.open-open.com/news" target="_blank" rel="nofollow">更多</a></div>
+				<ul>
+					
+						<li><a href="http://www.open-open.com/news/view/720f9e" target="_blank" rel="nofollow" title="Nginx 1.7.7 发布">Nginx 1.7.7 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1e7083d" target="_blank" rel="nofollow" title="Nginx 1.1.18 开发版发布">Nginx 1.1.18 开发版发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/9ed27b" target="_blank" rel="nofollow" title="Nginx vs Apache">Nginx vs Apache</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1d68b9e" target="_blank" rel="nofollow" title="通过Nginx和Nginx Plus阻止DDoS攻击">通过Nginx和Nginx Plus阻止DDoS攻击</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/166125b" target="_blank" rel="nofollow" title="Nginx 1.9.7 发布">Nginx 1.9.7 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/ce6973" target="_blank" rel="nofollow" title="使用新调试功能探测Nginx内核">使用新调试功能探测Nginx内核</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/e3e865" target="_blank" rel="nofollow" title="Nginx 1.7.10 发布">Nginx 1.7.10 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1fc6d27" target="_blank" rel="nofollow" title="Nginx 1.6.3/1.7.12 发布">Nginx 1.6.3/1.7.12 发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/2f1aa5" target="_blank" rel="nofollow" title="Nginx 将增加动态模块，用户可修改服务器">Nginx 将增加动态模块，用户可修改服务器</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/5a3768" target="_blank" rel="nofollow" title="Nginx 1.1.10 发布下载">Nginx 1.1.10 发布下载</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/2a5aa9" target="_blank" rel="nofollow" title="Nginx 1.9.8 发布，支持 pwritev()">Nginx 1.9.8 发布，支持 pwritev()</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1c4a5bb" target="_blank" rel="nofollow" title="Nginx 1.0.10 稳定版发布">Nginx 1.0.10 稳定版发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1a5a540" target="_blank" rel="nofollow" title="nginx openresty windows 1.9.10.1001 更新">nginx openresty windows 1.9.10.1001 更新</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/192d479" target="_blank" rel="nofollow" title="Nginx 1.2.0 稳定版发布">Nginx 1.2.0 稳定版发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/123b9b2" target="_blank" rel="nofollow" title="Nginx 1.8.0 稳定版发布">Nginx 1.8.0 稳定版发布</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/6dcf1" target="_blank" rel="nofollow" title="Nginx 宣布支持 WebSocket 协议">Nginx 宣布支持 WebSocket 协议</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1e0a78" target="_blank" rel="nofollow" title="Nginx 战斗准备：优化指南 ">Nginx 战斗准备：优化指南 </a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/8f872f" target="_blank" rel="nofollow" title="如何使用 Datadog 监控 NGINX（第三篇）">如何使用 Datadog 监控 NGINX（第三篇）</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1166f5" target="_blank" rel="nofollow" title="加强 Nginx 的 SSL 安全">加强 Nginx 的 SSL 安全</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/bb1cdd" target="_blank" rel="nofollow" title="Nginx 1.1.12 开发版发布">Nginx 1.1.12 开发版发布</a></li>
+					
+
+				</ul>
+				<div style="clear: both; font-size: 1px; line-height: 0;"></div>
+			</td>
+			<td width="5px"></td>
+			<td valign='top' width="49%" class="Relatedb">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关文档</strong> 　—　<a href="http://www.open-open.com/doc" rel="nofollow" target="_blank">更多</a></div>
+				<ul >
+					
+						<li><a  href="http://www.open-open.com/doc/view/050e8f361c4e40718905be5c7aa7c41f" rel="nofollow" target="_blank" title="（总结）Nginx配置文件nginx.conf中文详解.docx">（总结）Nginx配置文件nginx.conf中文详解.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/39d28adc0d6f402380d86b99d1ac367a" rel="nofollow" target="_blank" title="Nginx反向代理、负载均衡、页面缓存、url重写及读写分离详解.docx">Nginx反向代理、负载均衡、页面缓存、url重写及读写分离详解.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/4a425cababf14e61b98679b57d7c1681" rel="nofollow" target="_blank" title="Nginx配置and nginx+tomcat+memcached实现.pdf">Nginx配置and nginx+tomcat+memcached实现.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/5bed2162763e4d3fabd7f3ee384c6778" rel="nofollow" target="_blank" title="Nginx详解.pptx">Nginx详解.pptx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/2ae36bc425894edf808e41f7d34099ed" rel="nofollow" target="_blank" title="nginx 官网配置.pdf">nginx 官网配置.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/516af5beaf354bbbb07535c9911cf437" rel="nofollow" target="_blank" title="Nginx+Keepalived 双主配置.pdf">Nginx+Keepalived 双主配置.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/23ea168856184b80b7c2b7999bdfd75b" rel="nofollow" target="_blank" title="nginx+tomcat负载均衡配置文档.docx">nginx+tomcat负载均衡配置文档.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/9ce39abf2c3c47c093063e533a9b1781" rel="nofollow" target="_blank" title="Nginx配置 Nginx安装.doc">Nginx配置 Nginx安装.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/a0d0f2848b8a488c9e0a8904f1685159" rel="nofollow" target="_blank" title="Java Apache Tomcat Resin Nginx 详细配置.doc">Java Apache Tomcat Resin Nginx 详细配置.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/9d47717fa7254976b2c85c8dc087e6eb" rel="nofollow" target="_blank" title="windows下nginx配置.docx">windows下nginx配置.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/d642f78ff9ee4a0d81cad3af65b8af54" rel="nofollow" target="_blank" title="第3章 Nginx的基本配置与优化.pdf">第3章 Nginx的基本配置与优化.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/627d06a8e517415c8cdb85727eb80d99" rel="nofollow" target="_blank" title="linux下nginx+tomcat整合的安装与配置.docx">linux下nginx+tomcat整合的安装与配置.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c9a6ede784084f6b8bd57a6e563e095c" rel="nofollow" target="_blank" title="Java Apache Tomcat Resin Nginx 详细配置资料.doc">Java Apache Tomcat Resin Nginx 详细配置资料.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/dfba8943b51b4c09ad133976cf97b761" rel="nofollow" target="_blank" title="Nginx编译安装与简单负载均衡配置手册.docx">Nginx编译安装与简单负载均衡配置手册.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/57b718152986417991c7192a1a8ef969" rel="nofollow" target="_blank" title="Nginx配置文件详细说明.docx">Nginx配置文件详细说明.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/f9326181056c4bc3a89bc2cb4edd1bf5" rel="nofollow" target="_blank" title="Nginx 安装配置.doc">Nginx 安装配置.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/9dabec84bfd04089ad00ac8d3bb46722" rel="nofollow" target="_blank" title="Linux下Nginx+tomcat整合的安装与配置.pdf">Linux下Nginx+tomcat整合的安装与配置.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/721791da17c345db853970a37210be0d" rel="nofollow" target="_blank" title="Nginx完整配置手册_v1.pdf">Nginx完整配置手册_v1.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/5b811cdc132d4114b7057ff88292fe75" rel="nofollow" target="_blank" title="Nginx安装配置、Resin安装配置说明文档.doc">Nginx安装配置、Resin安装配置说明文档.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/91dce7e56e5d4a2b8790cd02fecfe7fa" rel="nofollow" target="_blank" title="第5章 Nginx与JSP、ASP.NET、Perl的安装与配置.pdf">第5章 Nginx与JSP、ASP.NET、Perl的安装与配置.pdf</a></li>
+					
+				</ul>
+			</td>
+		</tr></table>
+		<div style="margin-top: 10px;margin-bottom: 10px;">
+			<div id="baiduad1" style="margin-bottom: 5px;">
+			</div>
+
+		</div>
+
+
+
+
+
+	</div>
+
+	<div id=view-side>
+		<div id=upload-box class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-body><a id=upload class=upload href="#"></a>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div id=view-tag class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>经验标签</div>
+				<div id=tag-list class=box-body>
+					
+						<a href="/lib/tag/Nginx">Nginx</a>
+					
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+
+		<div id=view-topic class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>同类热门经验</div>
+				<div class=box-body>
+					<ul id=topic-list class=file-shortlist>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx 完整配置说明 href="/lib/view/open1330003599968.html"><span class=title>Nginx 完整配置说明</span></a>
+								<div class=attribute><span>40557次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx+Tomcat实现https安全链接 href="/lib/view/open1330516293186.html"><span class=title>Nginx+Tomcat实现https安全链接</span></a>
+								<div class=attribute><span>41500次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx和Tomcat负载均衡实现session共享  href="/lib/view/open1334626362015.html"><span class=title>Nginx和Tomcat负载均衡实现session共享 </span></a>
+								<div class=attribute><span>27874次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx搭建反向代理服务器过程详解 href="/lib/view/open1417488526633.html"><span class=title>Nginx搭建反向代理服务器过程详解</span></a>
+								<div class=attribute><span>88317次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=[Ganglia监控扩展]监控nginx的连接数  href="/lib/view/open1326333999327.html"><span class=title>[Ganglia监控扩展]监控nginx的连接数 </span></a>
+								<div class=attribute><span>35071次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Nginx+Tomcat集群与负载均衡 href="/lib/view/open1351061706430.html"><span class=title>Nginx+Tomcat集群与负载均衡</span></a>
+								<div class=attribute><span>33322次浏览</span></div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关经验</div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li><span class="samelist"></span><a title=nginx配置详解  href="/lib/view/open1449893446035.html" target=_blank><span
+									class=title>nginx配置详解 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title= Nginx配置文档详解  href="/lib/view/open1439884898817.html" target=_blank><span
+									class=title> Nginx配置文档详解 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=nginx配置文件详解 href="/lib/view/open1394978562540.html" target=_blank><span
+									class=title>nginx配置文件详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx安装配置详解  href="/lib/view/open1435416028528.html" target=_blank><span
+									class=title>Nginx安装配置详解 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title= nginx配置文件详解  href="/lib/view/open1431170819132.html" target=_blank><span
+									class=title> nginx配置文件详解 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx配置文件nginx.conf配置详解 href="/lib/view/open1422804521566.html" target=_blank><span
+									class=title>Nginx配置文件nginx.conf配置详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx配置文件nginx.conf中文详解 href="/lib/view/open1369459880347.html" target=_blank><span
+									class=title>Nginx配置文件nginx.conf中文详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx配置文件nginx.conf中文详解 href="/lib/view/open1445565693070.html" target=_blank><span
+									class=title>Nginx配置文件nginx.conf中文详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx服务器安全配置详解  href="/lib/view/open1411528826359.html" target=_blank><span
+									class=title>Nginx服务器安全配置详解 </span></a><br>
+								<div class=attribute><span class="score stars-small-10" title=经验评价得分：5.0分>&nbsp;</span> <span>1人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx高并发访问配置详解 href="/lib/view/open1438355156769.html" target=_blank><span
+									class=title>Nginx高并发访问配置详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=nginx配置：location配置原理及实例详解 href="/lib/view/open1456707112031.html" target=_blank><span
+									class=title>nginx配置：location配置原理及实例详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=nginx服务器安装及配置文件详解 href="/lib/view/open1433489643244.html" target=_blank><span
+									class=title>nginx服务器安装及配置文件详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx 反向代理、负载均衡、页面缓存、URL重写及读写分离详解 href="/lib/view/open1441161653393.html" target=_blank><span
+									class=title>Nginx 反向代理、负载均衡、页面缓存、URL重写及读写分离详解</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Nginx的介绍和使用  href="/lib/view/open1392709343194.html" target=_blank><span
+									class=title>Nginx的介绍和使用 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关讨论 - <a href="http://www.open-open.com/bbs" target="_blank" rel="nofollow">更多</a></div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li >
+								<span class="samelist"></span><a title=高性能的 HTTP 和 反向代理服务器 Nginx href="http://www.open-open.com/bbs/view/1319457665703" rel="nofollow" target=_blank><span class=title>高性能的 HTTP 和 反向代理服务器 Nginx</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=Python从基础入门到高级经典资料汇总（视频+电子书） href="http://www.open-open.com/bbs/view/1367477290031" rel="nofollow" target=_blank><span class=title>Python从基础入门到高级经典资料汇总（视频+电子书）</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=程序员技术练级攻略 href="http://www.open-open.com/bbs/view/1319276210452" rel="nofollow" target=_blank><span class=title>程序员技术练级攻略</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=天猫浏览型应用的CDN静态化架构演变 href="http://www.open-open.com/bbs/view/1404964984388" rel="nofollow" target=_blank><span class=title>天猫浏览型应用的CDN静态化架构演变</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=高性能缓存服务器 NCache 介绍 href="http://www.open-open.com/bbs/view/1319457448046" rel="nofollow" target=_blank><span class=title>高性能缓存服务器 NCache 介绍</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=PHP程序员的技术成长规划 href="http://www.open-open.com/bbs/view/1414478644325" rel="nofollow" target=_blank><span class=title>PHP程序员的技术成长规划</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=工作机会感兴趣的可联系哈 href="http://www.open-open.com/bbs/view/1392014162660" rel="nofollow" target=_blank><span class=title>工作机会感兴趣的可联系哈</span></a>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+		<!-- end top list--></div>
+</div>
+
+
+
+
+<div id=footer>
+	<div id=footer-menu><a href="http://www.open-open.com/home/1">联系我们</a> - <a href="http://www.open-open.com/home/1">问题反馈</a> - 微信公众号:openopen </div>
+	<p>2005-2015 OPEN-OPEN, all rights reserved.</p>
+</div>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/lib/js/thickbox.patch.js"></script>
+
+<script type="text/javascript" src="/lib/js/app.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+	var rooturl="/lib";
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+</script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.22/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="/lib/js/view.js"></script>
+
+<script type="text/javascript" src="/lib/js/jquery.jgrowl_minimized.js"></script>
+
+<script type="text/javascript">
+	scrolltotop.offset(95,165);
+	scrolltotop.init();
+</script>
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script language="javascript" type="text/javascript">
+	//生成目录索引列表
+	function GenerateContentList()
+	{
+		var jquery_h3_list = $('#readercontainer h3');//如果你的章节标题不是h3,只需要将这里的h3换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#readercontainer')[0]).prepend(content);
+			}
+		}else{
+			GenerateContentList2()
+		}
+	}
+
+	function GenerateContentList2()
+	{
+		var jquery_h3_list = $('#readercontainer h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#toc')[0]).prepend(content);
+			}
+		}
+	}
+
+	GenerateContentList();
+</script>
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		bp.src = '//push.zhanzhang.baidu.com/push.js';
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+</script>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=6734290" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config={"bdTop":256};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+
+</body>
+</html>

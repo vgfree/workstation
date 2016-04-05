@@ -1,0 +1,658 @@
+<!Doctype html>
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+<!-- Original URL: http://www.runoob.com/java/java-array.html
+Date Downloaded: 2016/4/3 23:14:40 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	 
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+	 <title>Java 数组 | 菜鸟教程 </title>
+
+   <link rel="canonical" href="java-array.html" />
+ <meta name="keywords" content="Java 数组" />
+ <meta name="description" content="Java 数组  数组对于每一门编程语言来说都是重要的数据结构之一，当然不同语言对数组的实现及处理也不尽相同。  Java语言中提供的数组是用来存储固定大小的同类型元素。 你可以声明一个数组变量，如numbers[100]来代替直接声明100个独立变量number0，number1，....，number99。  本教程将为大家介绍Java数组的声明、创建和初始化，并给出其对应的代码。  声明数组变量 首先必须声明数组变量，才能在程序中.." />
+		
+	 <link rel="shortcut icon" href="../favicon.ico" mce_href="http://www.runoob.com/favicon.ico" type="image/x-icon" />
+	 <link rel="stylesheet" href="../wp-content/themes/runoob/style_b7408605.css" type="text/css" media="all" />	
+	 <link rel="stylesheet" href="../../apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.min.css" media="all" />	
+   <script src="../../apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
+   <!--[if lt IE 9]>
+     <script src="../../apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+  <![endif]-->
+   <link rel="apple-touch-icon" href="../../static.runoob.com/images/icon/mobile-icon.png" />
+   <meta name="apple-mobile-web-app-title" content="菜鸟教程" />
+ </head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <!--  头部 -->
+ <div class="container logo-search">
+
+   <div class="col search row-search-mobile">
+     <form action="index.php">
+       <input class="placeholder" value="搜索……" name="s" autocomplete="off" />
+     </form>
+   </div>
+
+   <div class="row">
+     <div class="col logo">
+       <h1><a href="/">菜鸟教程 -- 学的不仅是技术，更是梦想！ </a></h1>
+     </div>
+         <div class="col right-list"> 
+     <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull" style="">  <i class="fa fa-navicon"></i>  </button>
+     </div>
+         <div class="col search search-desktop last">
+       <form action="http://www.runoob.com/" target="_blank">
+         <input class="placeholder" id="s" name="s" value="搜索……" autocomplete="off" />
+       </form>
+     </div>
+   </div>
+ </div>
+
+
+ <!-- 导航栏 -->
+ <!-- 导航栏 -->
+ <div class="container navigation">
+	 <div class="row">
+		 <div class="col nav">
+			 <ul class="pc-nav">
+				 <li><a href="http://www.runoob.com/">首页 </a></li>
+				 <li><a href="/html/html-tutorial.html">HTML </a></li>
+				 <li><a href="/css/css-tutorial.html">CSS </a></li>
+				 <li><a href="/js/js-tutorial.html">JavaScript </a></li>
+				 <li><a href="/jquery/jquery-tutorial.html">jQuery </a></li>
+				 <li><a href="/bootstrap/bootstrap-tutorial.html">Bootstrap </a></li>
+				 <li><a href="/sql/sql-tutorial.html">SQL </a></li>
+				 <li><a href="/mysql/mysql-tutorial.html">MySQL </a></li>
+				 <li><a href="/php/php-tutorial.html">PHP </a></li>
+				 <li><a href="/python/python-tutorial.html">Python </a></li>
+				 <li><a href="/cprogramming/c-tutorial.html">C </a></li>
+				 <li><a href="/cplusplus/cpp-tutorial.html">C++ </a></li>
+				 <li><a href="/csharp/csharp-tutorial.html">C# </a></li>
+				 <li><a href="java-tutorial.html">Java </a></li>
+				 <li><a href="/ruby/ruby-tutorial.html">Ruby </a></li>
+				
+				 <li><a href="/sitemap">更多…… </a></li>
+      		 </ul>
+			 <ul class="mobile-nav">
+				 <li><a href="http://www.runoob.com/">首页 </a></li>
+				 <li><a href="/html/html-tutorial.html">HTML </a></li>
+				 <li><a href="/css/css-tutorial.html">CSS </a></li>
+				 <li><a href="/js/js-tutorial.html">JavaScript </a></li>
+				 <a href="javascript:void(0)" class="search-reveal">Search </a> 
+			 </ul>
+			
+		 </div>
+	 </div>
+ </div><!--  内容  -->
+ <div class="container main">
+	 <!-- 中间 -->
+	 <div class="row">
+	
+ <div class="col left-column">
+	 <div class="tab">Java 教程 </div>
+	 <div class="sidebar-box gallery-list">
+		 <div class="design" id="leftcolumn">
+						 <a target="_top" title="Java 教程" href="java-tutorial.html">
+			Java 教程			 </a>
+						 <a target="_top" title="Java 简介" href="java-intro.html">
+			Java 简介			 </a>
+						 <a target="_top" title="Java 开发环境配置" href="java-environment-setup.html">
+			Java 开发环境配置			 </a>
+						 <a target="_top" title="Java 基础语法" href="java-basic-syntax.html">
+			Java 基础语法			 </a>
+						 <a target="_top" title="Java 对象和类" href="java-object-classes.html">
+			Java 对象和类			 </a>
+						 <a target="_top" title="Java 基本数据类型" href="java-basic-datatypes.html">
+			Java 基本数据类型			 </a>
+						 <a target="_top" title="Java 变量类型" href="java-variable-types.html">
+			Java 变量类型			 </a>
+						 <a target="_top" title="Java 修饰符" href="java-modifier-types.html">
+			Java 修饰符			 </a>
+						 <a target="_top" title="Java 运算符" href="java-operators.html">
+			Java 运算符			 </a>
+						 <a target="_top" title="Java 循环结构 &#8211; for, while 及 do&#8230;while" href="java-loop.html">
+			Java 循环结构			 </a>
+						 <a target="_top" title="Java 分支结构 &#8211; if&#8230;else/switch" href="java-if-else-switch.html">
+			Java 分支结构			 </a>
+						 <a target="_top" title="Java Number类" href="java-number.html">
+			Java Number类			 </a>
+						 <a target="_top" title="Java Character类" href="java-character.html">
+			Java Character类			 </a>
+						 <a target="_top" title="Java String类" href="java-string.html">
+			Java String类			 </a>
+						 <a target="_top" title="Java StringBuffer和StringBuilder类" href="java-stringbuffer.html">
+			Java StringBuffer			 </a>
+						 <a target="_top" title="Java 数组" href="java-array.html">
+			Java 数组			 </a>
+						 <a target="_top" title="Java 日期时间" href="java-date-time.html">
+			Java 日期时间			 </a>
+						 <a target="_top" title="Java 正则表达式" href="java-regular-expressions.html">
+			Java 正则表达式			 </a>
+						 <a target="_top" title="Java 方法" href="java-methods.html">
+			Java 方法			 </a>
+						 <a target="_top" title="Java 流(Stream)、文件(File)和IO" href="java-files-io.html">
+			Java Stream、File、IO			 </a>
+						 <a target="_top" title="Java 异常处理" href="java-exceptions.html">
+			Java 异常处理			 </a>
+			 <br /><h2 class="left">Java  <span class="left_h2">面向对象 </span></h2>			 <a target="_top" title="Java 继承" href="java-inheritance.html">
+			Java 继承			 </a>
+						 <a target="_top" title="Java 重写(Override)与重载(Overload)" href="java-override-overload.html">
+			Java Override/Overload			 </a>
+						 <a target="_top" title="Java 多态" href="java-polymorphism.html">
+			Java 多态			 </a>
+						 <a target="_top" title="Java 抽象类" href="java-abstraction.html">
+			Java 抽象类			 </a>
+						 <a target="_top" title="Java 封装" href="java-encapsulation.html">
+			Java 封装			 </a>
+						 <a target="_top" title="Java 接口" href="java-interfaces.html">
+			Java 接口			 </a>
+						 <a target="_top" title="Java 包(package)" href="java-package.html">
+			Java 包(package)			 </a>
+			 <br /><h2 class="left">Java  <span class="left_h2">高级教程 </span></h2>			 <a target="_top" title="Java 数据结构" href="java-data-structures.html">
+			Java 数据结构			 </a>
+						 <a target="_top" title="Java 集合框架" href="java-collections.html">
+			Java 集合框架			 </a>
+						 <a target="_top" title="Java 泛型" href="java-generics.html">
+			Java 泛型			 </a>
+						 <a target="_top" title="Java 序列化" href="java-serialization.html">
+			Java 序列化			 </a>
+						 <a target="_top" title="Java 网络编程" href="java-networking.html">
+			Java 网络编程			 </a>
+						 <a target="_top" title="Java 发送邮件" href="java-sending-email.html">
+			Java 发送邮件			 </a>
+						 <a target="_top" title="Java 多线程编程" href="java-multithreading.html">
+			Java 多线程编程			 </a>
+						 <a target="_top" title="Java Applet基础" href="java-applet-basics.html">
+			Java Applet基础			 </a>
+						 <a target="_top" title="Java 文档注释" href="java-documentation.html">
+			Java 文档注释			 </a>
+						 <a target="_top" title="Java 实例" href="java-examples.html">
+			Java 实例			 </a>
+				
+		 </div>
+	 </div>	
+ </div>	 <div class="col middle-column">
+		
+	
+	 <div class="article">
+			 <div class="article-heading-ad">
+		 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 移动版 自动调整 -->
+		 <ins class="adsbygoogle" style="display:inline-block;min-width:300px;max-width:970px;width:100%;height:90px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="1691338467" data-ad-format="horizontal"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		 </div>
+		 <div class="previous-next-links">
+			 <div class="previous-design-link">←  <a href="java-stringbuffer.html" rel="prev"> Java StringBuffer和StringBuilder类 </a>  </div>
+			 <div class="next-design-link"><a href="java-date-time.html" rel="next"> Java 日期时间 </a> → </div>
+		 </div>
+		 <div class="article-body">
+		
+			 <div class="article-intro" id="content">
+			
+			 <h1>Java 数组 </h1>
+ <p>
+数组对于每一门编程语言来说都是重要的数据结构之一，当然不同语言对数组的实现及处理也不尽相同。
+ </p>
+ <p>Java语言中提供的数组是用来存储固定大小的同类型元素。 </p>
+ <p>你可以声明一个数组变量，如numbers[100]来代替直接声明100个独立变量number0，number1，....，number99。
+ </p>
+ <p>本教程将为大家介绍Java数组的声明、创建和初始化，并给出其对应的代码。 </p>
+ <hr />
+ <h2>声明数组变量 </h2>
+ <p>首先必须声明数组变量，才能在程序中使用数组。下面是声明数组变量的语法： </p>
+ <pre>
+dataType[] arrayRefVar;   // 首选的方法
+
+或
+
+dataType arrayRefVar[];  // ____，_______
+ </pre>
+ <p><strong>
+注意: </strong> 建议使用dataType[] arrayRefVar 的声明风格声明数组变量。
+dataType ___________[] 风格是来自 C/C++ 语言 ，在Java中采用是为了让 _/_++ 程序员能够快速理解java语言。
+ </p>
+ <h3>实例 </h3>
+ <p>下面是这两种语法的代码示例： </p>
+ <pre>
+double[] myList;         // 首选的方法
+
+或
+
+double myList[];         //  效果相同，但不是首选方法
+ </pre><hr />
+ <h2>创建数组 </h2>
+ <p>Java语言使用new操作符来创建数组，语法如下： </p>
+ <pre>
+arrayRefVar = new dataType[arraySize];
+ </pre>
+ <p>上面的语法语句做了两件事： </p>
+ <ul><li>
+一、使用dataType[arraySize]创建了一个数组。 </li>
+ <li>二、把新创建的数组的引用赋值给变量 arrayRefVar。 </li></ul>
+ <p>数组变量的声明，和创建数组可以用一条语句完成，如下所示： </p>
+ <pre>
+dataType[] arrayRefVar = new ________[_________];
+ </pre>
+ <p>另外，你还可以使用如下的方式创建数组。 </p>
+ <pre>
+dataType[] arrayRefVar = {value0, _____1, ..., valuek};
+ </pre>
+ <p>数组的元素是通过索引访问的。数组索引从0开始，所以索引值从0到arrayRefVar.length-1。 </p>
+ <h3>实例 </h3>
+ <p>
+下面的语句首先声明了一个数组变量myList，接着创建了一个包含10个double类型元素的数组，并且把它的引用赋值给myList变量。
+ </p>
+ <pre>
+public class TestArray {
+
+   public static void ____(______[] args) {
+      // 数组大小
+      ___ size = 10;
+      // ____
+      double[] myList = new ______[____];
+      myList[0] = 5.6;
+      myList[1] = 4.5;
+      myList[2] = 3.3;
+      ______[4] = 4.0;
+      myList[5] = 34.33;
+      myList[6] = 34.0;
+      myList[7] = 45.45;
+      myList[8] = 99.993;
+      ______[9] = 11123;
+      // 计算所有元素的总和
+      ______ total = 0;
+      for (___ i = 0; i &lt; size; i++) {
+         total += myList[i];
+      }
+      System.out.println("总和为： " + total);
+   }
+}
+ </pre>
+ <p>以上实例输出结果为： </p>
+ <pre>
+总和为： 11354.173
+ </pre>
+ <p>下面的图片描绘了数组myList。这里myList数组里有10个double元素，它的下标从0到9。 </p>
+ <p><img src="../wp-content/uploads/2013/12/12-130Q0221Q5602.jpg" alt="java数组结构说明" /></p><hr />
+ <h2>处理数组 </h2>
+ <p>数组的元素类型和数组的大小都是确定的，所以当处理数组元素时候，我们通常使用基本循环或者foreach循环。 </p>
+ <h3>示例 </h3>
+ <p>
+该实例完整地展示了如何创建、初始化和操纵数组： </p>
+ <pre>
+public class TestArray {
+
+   public static void ____(______[] args) {
+      double[] myList = {1.9, 2.9, 3.4, 3.5};
+
+      // 打印所有数组元素
+      for (int i = 0; i &lt; myList.length; _++) {
+         ______.___._______(______[_] + " ");
+      }
+      // 计算所有元素的总和
+      double total = 0;
+      for (int i = 0; i &lt; myList.length; i++) {
+         total += myList[i];
+      }
+      System.out.println("Total is " + total);
+      // 查找最大元素
+      ______ max = myList[0];
+      for (___ i = 1; i &lt; myList.length; i++) {
+         if (myList[i] &gt; ___) max = myList[i];
+      }
+      ______.___._______("___ is " + max);
+   }
+}
+ </pre>
+ <p>以上实例编译运行结果如下： </p>
+ <pre>
+1.9
+2.9
+3.4
+3.5
+Total is 11.7
+Max is 3.5
+ </pre>
+ <hr />
+ <h2>foreach循环 </h2>
+ <p>JDK 1.5 引进了一种新的循环类型，被称为foreach循环或者加强型循环，它能在不使用下标的情况下遍历数组。 </p>
+ <h3>
+示例 </h3><p>
+该实例用来显示数组myList中的所有元素： </p>
+ <pre>
+public class TestArray {
+
+   public static void ____(______[] args) {
+      double[] myList = {1.9, 2.9, 3.4, 3.5};
+
+      // 打印所有数组元素
+      for (double element: ______) {
+         ______.___._______(_______);
+      }
+   }
+}
+ </pre>
+ <p>以上实例编译运行结果如下： </p>
+ <pre>
+1.9
+2.9
+3.4
+3.5
+ </pre><hr />
+ <h2>数组作为函数的参数 </h2>
+ <p>数组可以作为参数传递给方法。例如，下面的例子就是一个打印int数组中元素的方法。 </p>
+ <pre>
+public static void printArray(int[] _____) {
+  for (int _ = 0; i &lt; _____.______; i++) {
+    System.out.print(array[i] + " ");
+  }
+}
+ </pre>
+ <p>下面例子调用printArray方法打印出 3，1，2，6，4和2： </p>
+ <pre>
+printArray(new int[]{3, 1, 2, 6, 4, 2});
+ </pre><hr />
+ <h2>数组作为函数的返回值 </h2>
+ <pre>
+public static int[] reverse(int[] ____) {
+  int[] result = new int[list.length];
+
+  for (___ i = 0, j = result.length - 1; i &lt; list.length; i++, j--) {
+    result[j] = ____[_];
+  }
+  return ______;
+}
+ </pre>
+ <p>以上实例中result数组作为函数的返回值。 </p>
+ <hr />
+ <h2>Arrays 类 </h2>
+ <p>
+java.util.Arrays类能方便地操作数组，它提供的所有方法都是静态的。具有以下功能： </p>
+ <ul>
+ <li>给数组赋值：通过fill方法。 </li>
+ <li>对数组排序：通过sort方法,按升序。 </li>
+ <li>比较数组：通过equals方法比较数组中元素值是否相等。 </li>
+ <li>查找数组元素：通过binarySearch方法能对排序好的数组进行二分查找法操作。 </li>
+ </ul>
+ <p>具体说明请查看下表： </p>
+ <table class="reference">
+	 <tbody>
+		 <tr>
+			 <th style="width:76px;">
+				序号 </th>
+			 <th style="width:501px;">
+				方法和说明 </th>
+		 </tr>
+		 <tr>
+			 <td style="width:76px;">
+				1 </td>
+			 <td style="width:501px;">
+				 <strong>public static int binarySearch(Object[] _, Object key) </strong><br />
+				用二分查找算法在给定数组中搜索给定值的对象(Byte,Int,double等)。数组在调用前必须排序好的。如果查找值包含在数组中，则返回搜索键的索引；否则返回 (-( <em>插入点 </em>) - 1)。 </td>
+		 </tr>
+		 <tr>
+			 <td style="width:76px;">
+				2 </td>
+			 <td style="width:501px;">
+				 <strong>public static boolean equals(long[] _, long[] a2) </strong><br />
+				如果两个指定的 long 型数组彼此 <em>相等 </em>，则返回 true。如果两个数组包含相同数量的元素，并且两个数组中的所有相应元素对都是相等的，则认为这两个数组是相等的。换句话说，如果两个数组以相同顺序包含相同的元素，则两个数组是相等的。同样的方法适用于所有的其他基本数据类型（Byte，short，Int等）。 </td>
+		 </tr>
+		 <tr>
+			 <td style="width:76px;">
+				3 </td>
+			 <td style="width:501px;">
+				 <strong>public static void fill(int[] _, int val) </strong><br />
+				将指定的 int 值分配给指定 int _____________。___________________（____，_____，____）。 </td>
+		 </tr>
+		 <tr>
+			 <td style="width:76px;">
+				4 </td>
+			 <td style="width:501px;">
+				 <strong>public static void sort(Object[] _) </strong><br />
+				对指定对象数组根据其元素的自然顺序进行升序排列。同样的方法适用于所有的其他基本数据类型（Byte，short，Int等）。 </td>
+		 </tr>
+	 </tbody>
+ </table>			
+			
+			 </div>
+		 </div>
+		
+		 <div class="previous-next-links">
+			 <div class="previous-design-link">←  <a href="java-stringbuffer.html" rel="prev"> Java StringBuffer和StringBuilder类 </a>  </div>
+			 <div class="next-design-link"><a href="java-date-time.html" rel="next"> Java 日期时间 </a> → </div>
+		 </div>
+		
+		 <div class="sidebar-box ad-box ad-box-large">
+		 <div class="ad-336280">
+			 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+			 <!-- 移动版 自动调整 -->
+			 <ins class="adsbygoogle" style="display:inline-block;min-width:200px;max-width:360px;width:100%;height:100%px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="1691338467" data-ad-format="rectangle"></ins>
+			 <script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		 </div>
+		 </div>
+		
+	 </div>
+ </div>
+	
+
+ <!-- 右边栏 -->
+ <div class="fivecol last right-column">
+	 <div class="tab tab-light-blue" style="text-align: center;">关注微信 </div>
+	 <div class="sidebar-box">
+		 <a href="http://m.runoob.com/" target="_blank">  <img src="../wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" alt="移动版" />  </a>
+		 <div class="qqinfo">
+		 <!-- <a target="_blank" href="http://jq.qq.com/?_wv=1027&k=dOwwKN" id="qqhref">
+		<img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="菜鸟家族" title="菜鸟家族"></a>
+		<span>(群号：<span id="qqid">365967760</span>)</span>-->
+		 </div>
+		
+	 </div>
+	
+
+	
+	 <div class="tab tab-light-blue">分类导航 </div>
+	 <div class="sidebar-box sidebar-cate">
+		
+		 <div class="sidebar-tree">
+			 <ul><li><a href="javascript:void(0);" class="tit">HTML / CSS </a><ul><li><a title="HTML 教程" href="http://www.runoob.com/html/html-tutorial.html">HTML 教程 </a></li><li><a title="HTML5 教程" href="http://www.runoob.com/html/html5-intro.html">HTML5 教程 </a></li><li><a title="CSS 教程" href="http://www.runoob.com/css/css-tutorial.html">CSS 教程 </a></li><li><a title="CSS3 教程" href="http://www.runoob.com/css3/css3-tutorial.html">CSS3 教程 </a></li><li><a title="Bootstrap 教程" href="http://www.runoob.com/bootstrap/bootstrap-tutorial.html">Bootstrap 教程 </a></li><li><a title="Foundation 教程" href="http://www.runoob.com/foundation/foundation-tutorial.html">Foundation 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">JavaScript </a><ul><li><a title="JavaScript 教程" href="http://www.runoob.com/js/js-tutorial.html">JavaScript 教程 </a></li><li><a title="HTML DOM 教程" href="http://www.runoob.com/htmldom/htmldom-tutorial.html">HTML DOM 教程 </a></li><li><a title="jQuery 教程" href="http://www.runoob.com/jquery/jquery-tutorial.html">jQuery 教程 </a></li><li><a title="AngularJS 教程" href="http://www.runoob.com/angularjs/angularjs-tutorial.html">AngularJS 教程 </a></li><li><a title="React 教程" href="http://www.runoob.com/react/react-tutorial.html">React 教程 </a></li><li><a title="jQuery UI 教程" href="http://www.runoob.com/jqueryui/jqueryui-tutorial.html">jQuery UI 教程 </a></li><li><a title="jQuery EasyUI 教程" href="http://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html">jQuery EasyUI 教程 </a></li><li><a title="Node.js 教程" href="http://www.runoob.com/nodejs/nodejs-tutorial.html">Node.js 教程 </a></li><li><a title="AJAX 教程" href="http://www.runoob.com/ajax/ajax-tutorial.html">AJAX 教程 </a></li><li><a title="JSON 教程" href="http://www.runoob.com/json/json-tutorial.html">JSON 教程 </a></li><li><a title="Highcharts 教程" href="http://www.runoob.com/highcharts/highcharts-tutorial.html">Highcharts 教程 </a></li><li><a title="Google 地图 教程" href="http://www.runoob.com/googleapi/google-maps-basic.html">Google 地图 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">服务端 </a><ul><li><a title="PHP 教程" href="http://www.runoob.com/php/php-tutorial.html">PHP 教程 </a></li><li><a title="Python 教程" href="http://www.runoob.com/python/python-tutorial.html">Python 教程 </a></li><li><a title="Python3 教程" href="http://www.runoob.com/python3/python3-tutorial.html">Python3 教程 </a></li><li><a title="Django 教程" href="http://www.runoob.com/django/django-tutorial.html">Django 教程 </a></li><li><a title="Linux 教程" href="http://www.runoob.com/linux/linux-tutorial.html">Linux 教程 </a></li><li><a title="Ruby 教程" href="http://www.runoob.com/ruby/ruby-tutorial.html">Ruby 教程 </a></li><li><a title="Java 教程" href="java-tutorial.html">Java 教程 </a></li><li><a title="C 教程" href="http://www.runoob.com/c/c-tutorial.html">C 教程 </a></li><li><a title="C++ 教程" href="http://www.runoob.com/cplusplus/cpp-tutorial.html">C++ 教程 </a></li><li><a title="Servlet 教程" href="http://www.runoob.com/servlet/servlet-tutorial.html">Servlet 教程 </a></li><li><a title="JSP 教程" href="http://www.runoob.com/jsp/jsp-tutorial.html">JSP 教程 </a></li><li><a title="Lua 教程" href="http://www.runoob.com/lua/lua-tutorial.html">Lua 教程 </a></li><li><a title="Scala 教程" href="http://www.runoob.com/scala/scala-tutorial.html">Scala 教程 </a></li><li><a title="Go 教程" href="http://www.runoob.com/go/go-tutorial.html">Go 教程 </a></li><li><a title="设计模式" href="http://www.runoob.com/design-pattern/design-pattern-tutorial.html">设计模式 </a></li><li><a title="正则表达式" href="http://www.runoob.com/regexp/regexp-tutorial.html">正则表达式 </a></li><li><a title="ASP 教程" href="http://www.runoob.com/asp/asp-tutorial.html">ASP 教程 </a></li><li><a title="AppML 教程" href="http://www.runoob.com/appml/appml-tutorial.html">AppML 教程 </a></li><li><a title="VBScript 教程" href="http://www.runoob.com/vbscript/vbscript-tutorial.html">VBScript 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">数据库 </a><ul><li><a title="SQL 教程" href="http://www.runoob.com/sql/sql-tutorial.html">SQL 教程 </a></li><li><a title="Mysql 教程" href="http://www.runoob.com/mysql/mysql-tutorial.html">Mysql 教程 </a></li><li><a title="SQLite 教程" href="http://www.runoob.com/sqlite/sqlite-tutorial.html">SQLite 教程 </a></li><li><a title="MongoDB 教程" href="http://www.runoob.com/mongodb/mongodb-tutorial.html">MongoDB 教程 </a></li><li><a title="Redis 教程" href="http://www.runoob.com/redis/redis-tutorial.html">Redis 教程 </a></li><li><a title="Memcached 教程" href="http://www.runoob.com/Memcached/Memcached-tutorial.html">Memcached 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">移动端 </a><ul><li><a title="Android 教程" href="http://www.runoob.com/w3cnote/android-tutorial-intro.html">Android 教程 </a></li><li><a title="Swift 教程" href="http://www.runoob.com/swift/swift-tutorial.html">Swift 教程 </a></li><li><a title="jQuery Mobile 教程" href="http://www.runoob.com/jquerymobile/jquerymobile-tutorial.html">jQuery Mobile 教程 </a></li><li><a title="ionic 教程" href="http://www.runoob.com/ionic/ionic-tutorial.html">ionic 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">XML 教程 </a><ul><li><a title="XML 教程" href="http://www.runoob.com/xml/xml-tutorial.html">XML 教程 </a></li><li><a title="DTD 教程" href="http://www.runoob.com/dtd/dtd-tutorial.html">DTD 教程 </a></li><li><a title="XML DOM 教程" href="http://www.runoob.com/dom/dom-tutorial.html">XML DOM 教程 </a></li><li><a title="XSLT 教程" href="http://www.runoob.com/xsl/xsl-tutorial.html">XSLT 教程 </a></li><li><a title="XPath 教程" href="http://www.runoob.com/xpath/xpath-tutorial.html">XPath 教程 </a></li><li><a title="XQuery 教程" href="http://www.runoob.com/xquery/xquery-tutorial.html">XQuery 教程 </a></li><li><a title="XLink 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XLink 教程 </a></li><li><a title="XPointer 教程" href="http://www.runoob.com/xlink/xlink-tutorial.html">XPointer 教程 </a></li><li><a title="XML Schema 教程" href="http://www.runoob.com/schema/schema-tutorial.html">XML Schema 教程 </a></li><li><a title="XSL-FO 教程" href="http://www.runoob.com/xslfo/xslfo-tutorial.html">XSL-FO 教程 </a></li><li><a title="SVG 教程" href="http://www.runoob.com/svg/svg-tutorial.html">SVG 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">ASP.NET </a><ul><li><a title="ASP.NET 教程" href="http://www.runoob.com/aspnet/aspnet-tutorial.html">ASP.NET 教程 </a></li><li><a title="C# 教程" href="http://www.runoob.com/csharp/csharp-tutorial.html">C# 教程 </a></li><li><a title="Web Pages 教程" href="http://www.runoob.com/aspnet/webpages-intro.html">Web Pages 教程 </a></li><li><a title="Razor 教程" href="http://www.runoob.com/aspnet/razor-intro.html">Razor 教程 </a></li><li><a title="MVC 教程" href="http://www.runoob.com/aspnet/mvc-intro.html">MVC 教程 </a></li><li><a title="Web Forms 教程" href="http://www.runoob.com/aspnet/aspnet-intro.html">Web Forms 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">Web Services </a><ul><li><a title="Web Services 教程" href="http://www.runoob.com/webservices/webservices-tutorial.html">Web Services 教程 </a></li><li><a title="WSDL 教程" href="http://www.runoob.com/wsdl/wsdl-tutorial.html">WSDL 教程 </a></li><li><a title="SOAP 教程" href="http://www.runoob.com/soap/soap-tutorial.html">SOAP 教程 </a></li><li><a title="RSS 教程" href="http://www.runoob.com/rss/rss-tutorial.html">RSS 教程 </a></li><li><a title="RDF 教程" href="http://www.runoob.com/rdf/rdf-tutorial.html">RDF 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">开发工具 </a><ul><li><a title="Eclipse 教程" href="http://www.runoob.com/eclipse/eclipse-tutorial.html">Eclipse 教程 </a></li><li><a title="Git 教程" href="http://www.runoob.com/git/git-tutorial.html">Git 教程 </a></li><li><a title="Firebug 教程" href="http://www.runoob.com/firebug/firebug-tutorial.html">Firebug 教程 </a></li></ul></li><li><a href="javascript:void(0);" class="tit">网站建设 </a><ul><li><a title="HTTP 教程" href="http://www.runoob.com/http/http-tutorial.html">HTTP 教程 </a></li><li><a title="网站建设指南" href="http://www.runoob.com/web/web-buildingprimer.html">网站建设指南 </a></li><li><a title="浏览器信息" href="http://www.runoob.com/browsers/browser-information.html">浏览器信息 </a></li><li><a title="网站主机教程" href="http://www.runoob.com/hosting/hosting-tutorial.html">网站主机教程 </a></li><li><a title="TCP/IP 教程" href="http://www.runoob.com/tcpip/tcpip-tutorial.html">TCP/IP 教程 </a></li><li><a title="W3C 教程" href="http://www.runoob.com/w3c/w3c-tutorial.html">W3C 教程 </a></li><li><a title="网站品质" href="http://www.runoob.com/quality/quality-tutorial.html">网站品质 </a></li></ul></li></ul>			 </div>
+	
+	 </div>
+	
+	 <br />
+	
+	 <div class="sidebar-box ad-box ad-box-large">
+		 <div class="sidebar-box advertise-here">
+			 <a href="javascript:void(0);">Advertisement </a>
+		 </div>
+		 <div class="ad-600160">
+		 <script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 侧栏1 -->
+		 <ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-5751451760833794" data-ad-slot="4106274865"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		 </div>
+	 </div>
+ </div></div>
+
+ </div>
+ <!-- 底部 -->
+
+
+ <div id="footer" class="mar-t50">
+    <div class="w3cschoolcc-block">
+     <div class="w3cschoolcc cf">
+      <dl>
+       <dt>
+       在线实例
+       </dt>
+       <dd>
+       &middot; <a href="/html/html-examples.html">HTML 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/css/css-examples.html">CSS 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/js/js-examples.html">JavaScript 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/ajx/ajax-examples.html">Ajax 实例 </a>
+       </dd>
+        <dd>
+       &middot; <a href="/jquery/jquery-examples.html">jQuery 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="/xml/xml-examples.html">XML 实例 </a>
+       </dd>
+       <dd>
+       &middot; <a href="java-examples.html">Java 实例 </a>
+       </dd>
+     
+      </dl>
+      <dl>
+       <dt>
+      字符集&工具
+       </dt>
+       <dd>
+       &middot;  <a href="/charsets/html-charsets.html">HTML 字符集设置 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/tags/html-ascii.html">HTML ASCII 字符集 </a>
+       </dd>
+      <dd>
+       &middot;  <a href="/tags/ref-entities.html">HTML ISO-8859-1 </a>
+       </dd> 
+       <dd>
+       &middot;  <a href="/tags/ref-symbols.html">HTML 实体符号 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/tags/html-colorpicker.html">HTML 拾色器 </a>
+       </dd>
+       <dd>
+       &middot;  <a href="/jsontool">JSON 格式化工具 </a>
+       </dd>
+      </dl>
+      <dl>
+       <dt>
+       最新更新
+       </dt>
+                    <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-isdecimal.html" title="Python3 isdecimal()方法">Python3 isdecim... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-zfill.html" title="Python3 zfill()方法">Python3 zfill()... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-upper.html" title="Python3 upper()方法">Python3 upper()... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-translate.html" title="Python3 translate()方法">Python3 transla... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-title.html" title="Python3 title()方法">Python3 title()... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-swapcase.html" title="Python3 swapcase()方法">Python3 swapcas... </a>
+       </dd>
+               <dd>
+       &middot;
+       <a href="http://www.runoob.com/python3/python3-string-strip.html" title="Python3 strip()方法">Python3 strip()... </a>
+       </dd>
+              </dl>
+      <dl>
+       <dt>
+       站点信息
+       </dt>
+       <dd>
+       &middot;
+        <a target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" rel="external nofollow">意见反馈 </a>
+       </dd>
+       <dd>
+       &middot;
+       <a href="/disclaimer">免责声明 </a>
+        </dd>
+       <dd>
+       &middot;
+        <a href="/aboutus">关于我们 </a>
+        </dd>
+       <dd>
+       &middot;
+       <a href="/archives">文章归档 </a>
+       </dd>
+      
+      </dl>
+      <div class="search-share">
+       <div class="app-download">
+         <div>
+          <strong>关注微信 </strong>
+         </div>
+       </div>
+       <div class="share">
+       <img width="150" height="150" src="../wp-content/themes/w3cschool.cc/assets/img/qrcode.jpg" />
+        </div>
+      </div>
+     </div>
+    </div>
+    <div class="w-1000 copyright">
+     Copyright &copy; 2013-2016     <strong><a href="http://www.runoob.com/" target="_blank">菜鸟教程 </a></strong>&nbsp;
+     <strong><a href="http://www.runoob.com/" target="_blank">runoob.com </a></strong> All Rights Reserved. ___：_____15012807_-1
+    </div>
+   </div>
+   <div class="fixed-btn">
+     <a class="go-top" href="javascript:void(0)" title="返回顶部">  <i class="fa fa-angle-up"></i></a>
+     <a class="qrcode" href="javascript:void(0)" title="关注我们"><i class="fa fa-qrcode"></i></a>
+     <a class="writer" target="_blank" href="//mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=ssbDyoOAgfLU3crf09venNHd3w" style="font-size: 12px;" title="Bug 反馈">反馈 </a>
+     <!-- qrcode modal -->
+     <div id="bottom-qrcode" class="modal panel-modal hide fade in">
+       <h4>微信关注 </h4>
+       <div class="panel-body"><img alt="微信关注" width="128" height="128" src="../wp-content/themes/runoob/assets/img/qrcode.jpg" /></div>
+     </div>
+   </div>
+ <div style="display:none;">
+   <script src="../../s11.cnzz.com/stat_b852c18.php.js" language="JavaScript"></script>
+   <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "../../hm.baidu.com/hm_90fc5fac.js";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+ </div>
+ <script src="../wp-content/themes/runoob/assets/js/main_b7408605.js"></script>
+ <script src="../wp-content/themes/runoob/assets/js/hl/run_prettify_b7408605.js"></script>
+ </body>
+ </html>1.cnzz.com/stat.php?id=5578006&web_id=5578006" language="JavaScript"></script>
+   <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?8e2a116daf0104a78d601f40a45c75b4";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+ </div>
+ <script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/main.js?v=1.02"></script>
+ <script src="http://www.runoob.com/wp-content/themes/runoob/assets/js/hl/run_prettify.js?v=1.02"></script>
+ </body>
+ </html>

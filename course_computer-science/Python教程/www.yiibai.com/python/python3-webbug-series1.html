@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/python/python3-webbug-series1.html
+Date Downloaded: 2016/4/1 16:52:12 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>Python 3开发网络爬虫(一) - Python教程 </title>
+		 <meta name="keywords" content="Python3,网络爬虫" />
+		 <meta name="description" content="选择Python版本 有2和3两个版本, 3比较新, 听说改动大. 根据我在知乎上搜集的观点来看, 我还是倾向于使用在趋势中将会越来越火的版本, 而非目前已经很稳定而且很成熟的版本. 这是个人" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="index.html">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/script/'>脚本语言 </a> >  <a href='index.html'>Python教程 </a> >  Python 3______(_)
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Python教程 </a>
+							 <a class="list-group-item" href="python_quick_guide.html" title="Python快速入门">Python快速入门 </a><a class="list-group-item" href="python_overview.html" title="Python概述">Python概述 </a><a class="list-group-item" href="python_environment.html" title="Python环境安装">Python环境安装 </a><a class="list-group-item" href="python_basic_syntax.html" title="Python基本语法">Python基本语法 </a><a class="list-group-item" href="python_variable_types.html" title="Python变量类型">Python变量类型 </a><a class="list-group-item" href="python_basic_operators.html" title="Python基本运算符">Python基本运算符 </a><a class="list-group-item" href="python_decision_making.html" title="Python决策">Python决策 </a><a class="list-group-item" href="python_loops.html" title="Python循环">Python循环 </a><a class="list-group-item" href="python_numbers.html" title="Python数字类型">Python数字类型 </a><a class="list-group-item" href="python_strings.html" title="Python字符串">Python字符串 </a><a class="list-group-item" href="python_lists.html" title="Python列表">Python列表 </a><a class="list-group-item" href="python_tuples.html" title="Python元组">Python元组 </a><a class="list-group-item" href="python_dictionary.html" title="Python字典">Python字典 </a><a class="list-group-item" href="python_date_time.html" title="Python日期时间Date/Time">Python日期时间Date/Time </a><a class="list-group-item" href="python_functions.html" title="Python函数">Python函数 </a><a class="list-group-item" href="python_modules.html" title="Python模块">Python模块 </a><a class="list-group-item" href="python_files_io.html" title="Python文件I/O">Python文件I/O </a><a class="list-group-item" href="python_exceptions.html" title="Python异常处理">Python异常处理 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="python3-webbug-series1.html" title="Python 3开发网络爬虫(一)">Python 3开发网络爬虫(一) </a><a class="list-group-item" href="python3-webbug-series2.html" title="Python 3开发网络爬虫(二)">Python 3开发网络爬虫(二) </a><a class="list-group-item" href="python3-webbug-series3.html" title="Python3网络爬虫(三): 伪装浏览器">Python3网络爬虫(三): 伪装浏览器 </a><a class="list-group-item" href="python3-webbug-series4.html" title="Python3网络爬虫(四): 登录">Python3网络爬虫(四): 登录 </a><a class="list-group-item" href="python_classes_objects.html" title="Python面向对象">Python面向对象 </a><a class="list-group-item" href="python_reg_expressions.html" title="Python正则表达式">Python正则表达式 </a><a class="list-group-item" href="python_cgi_programming.html" title="Python CGI编程">Python CGI编程 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">Python 3开发网络爬虫(一) </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>十月的星空 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='interpreter.html' class='btn' title='使用Python解释器' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='python3-webbug-series2.html' class='btn btn-default' style='float:right;' title='Python 3开发网络爬虫(二)'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="5343" />
+									 <h2 style="font-family: 'Microsoft JhengHei', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1.28571em; color: rgb(17, 17, 17);">
+	选择Python版本 </h2>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	有2和3两个版本, 3比较新, 听说改动大. 根据我在知乎上搜集的观点来看, ________&_____;__________&_____;___, 而非&rdquo;目前已经很稳定而且很成熟&rdquo;的版本. 这是个人喜好, 而且预测不一定准确. 但是如果Python3无法像Python2那么火, ______________________________, 因此我想其实选哪个的最坏风险都一样, 但是最好回报却是Python3的大. 其实两者区别也可以说大也可以说不大, 最终都不是什么大问题. ___________ 3. </p>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	&nbsp; </p>
+ <h2 style="font-family: 'Microsoft JhengHei', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1.28571em; color: rgb(17, 17, 17);">
+	选择参考资料 </h2>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	由于我是一边学一边写, 而不是我完全学会了之后才开始很有条理的写, 所以参考资料就很重要(本来应该是个人开发经验很重要, 但我是零基础). </p>
+ <ul style="border: 1px solid rgb(221, 221, 221); overflow: auto; padding: 0.5em 2.4em; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; margin: 1.8em 0px; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px; background-color: rgb(248, 248, 248);">
+	 <li>
+		 <a href="https://docs.python.org/3/" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank">Python官方文档 </a></li>
+	 <li>
+		 <a href="http://www.zhihu.com/question/20899988" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank">知乎相关资料(1) </a>&nbsp;这篇非常好, 通俗易懂的总览整个Python学习框架. </li>
+	 <li>
+		 <a href="http://www.zhihu.com/question/21358581" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank">知乎相关资料(2) </a></li>
+ </ul>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	写到这里的时候, 上面第二第三个链接的票数第一的回答已经看完了, 他们提到的有些部分(比如爬行的路线不能有回路)我就不写了。 <br />
+	&nbsp; </p>
+ <h2 style="font-family: 'Microsoft JhengHei', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1.28571em; color: rgb(17, 17, 17);">
+	一个简单的伪代码 </h2>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	以下这个简单的伪代码用到了set和queue这两种经典的数据结构, 集与队列. 集的作用是记录那些已经访问过的页面, 队列的作用是进行广度优先搜索. </p>
+ <pre>
+queue Q
+set S
+StartPoint = &____;____://______.___&____;
+_.____(__________)  # 经典的BFS开头
+S.insert(StartPoint)  # 访问一个页面之前先标记他为已访问
+while (Q.empty() == false)  # BFS循环体
+  T = Q.top()  # 并且pop
+  for point in PageUrl(T)  # PageUrl(T)是指页面T中所有url的集合, point是这个集合中的一个元素.
+    if (point not __ S)
+      Q.push(point)
+      S.insert(point) </pre>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	这个伪代码不能执行, &nbsp;我觉得我写的有的不伦不类, 不类Python也不类C++.. 但是我相信看懂是没问题的, _____________. 我是看了知乎里面的那个伪代码之后, 自己用我的风格写了一遍. 你也需要用你的风格写一遍. </p>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	这里用到的Set其内部原理是采用了Hash表, 传统的Hash对爬虫来说占用空间太大, 因此 <strong>有一种叫做 <a href="http://billmill.org/bloomfilter-tutorial/" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank" title="一个简单的例子">Bloom Filter </a>的数据结构 </strong>更适合用在这里替代Hash版本的set. 我打算以后再看这个数据结构怎么使用, 现在先跳过, 因为对于零基础的我来说, _____. </p>
+ <h2 style="font-family: 'Microsoft JhengHei', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1.28571em; color: rgb(17, 17, 17);">
+	代码实现(一): 用Python抓取指定页面 </h2>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	我使用的编辑器是Idle, 安装好Python3后这个编辑器也安装好了, 小巧轻便, 按一个F5就能运行并显示结果. ____: </p>
+ <pre>
+#encoding:UTF-8
+import urllib.request
+ 
+url = &____;____://___._____.___&____;
+____ = urllib.request.urlopen(url).read()
+data = data.decode(&#39;UTF-8&#39;)
+print(data) </pre>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	 <a href="../uploads/allimg/141005/0A3562145-0.jpg" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;"><img alt="示例图片" class="alignnone wp-image-298" height="314" src="../uploads/allimg/141005/0A3562145-0.jpg" style="border: 0px; padding: 1em 0px; max-width: 100%; position: relative; bottom: -4px; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;" width="595" /></a></p>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	urllib.request是一个库, 隶属urllib.&nbsp; <a href="https://docs.python.org/3/library/urllib.htmll" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank">点此打开官方相关文档 </a>. 官方文档应该怎么使用呢? 首先点刚刚提到的这个链接进去的页面有urllib的几个子库, 我们暂时用到了request, ____________._________. 首先看到的是一句话介绍这个库是干什么用的: </p>
+ <blockquote style="margin: 2em 1.5em; padding: 0.5em 0em 0em 1em; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px; background: rgb(246, 248, 255);">
+	 <p style="margin: 0px 0px 1.234em;">
+		The urllib.request module defines _________ and classes which help __ opening URLs (mostly HTTP) __ a complex world &mdash; _____ and digest authentication, redirections, _______ and more. </p>
+ </blockquote>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	然后把我们代码中用到的urlopen()函数部分阅读完. </p>
+ <blockquote style="margin: 2em 1.5em; padding: 0.5em 0em 0em 1em; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px; background: rgb(246, 248, 255);">
+	 <p style="margin: 0px 0px 1.234em;">
+		urllib.request.urlopen(url, data=None, [timeout, ]*, ______=____, capath=None, cadefault=False) </p>
+ </blockquote>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	重点部分是返回值, 这个函数返回一个 http.client.HTTPResponse 对象, __________, 比如我们用到的read()方法, 这些方法都可以 <a href="https://docs.python.org/3/library/http.client.htmll#httpresponse-objects" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank" title="HTTPResponse Objects">根据官方文档的链接链过去 </a>. 根据官方文档所写, 我用控制台运行完毕上面这个程序后, 又继续运行如下代码, __________________. </p>
+ <blockquote style="margin: 2em 1.5em; padding: 0.5em 0em 0em 1em; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; color: rgb(51, 51, 51); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px; background: rgb(246, 248, 255);">
+	 <p style="margin: 0px 0px 1.234em;">
+		&gt;&gt;&gt; a = urllib.request.urlopen(full_url) <br />
+		&gt;&gt;&gt; type(a) <br />
+		&lt;class &lsquo;http.client.HTTPResponse&rsquo;&gt; </p>
+	 <p style="margin: 0px 0px 1.234em;">
+		&gt;&gt;&gt; a.geturl() <br />
+		&lsquo;http://www.baidu.com/s?word=Jecvay&rsquo; </p>
+	 <p style="margin: 0px 0px 1.234em;">
+		&gt;&gt;&gt; a.info() <br />
+		&lt;http.client.HTTPMessage object at 0x03272250&gt; </p>
+	 <p style="margin: 0px 0px 1.234em;">
+		&gt;&gt;&gt; a.getcode() <br />
+		200 </p>
+ </blockquote>
+ <h2 style="font-family: 'Microsoft JhengHei', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 1.28571em; color: rgb(17, 17, 17);">
+	代码实现(二): 用Python简单处理URL </h2>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	如果要抓取百度上面搜索关键词为Jecvay Notes的网页, 则代码如下 </p>
+ <pre>
+import urllib
+import urllib.request
+ 
+data={}
+data[&#39;word&#39;]=&#39;Jecvay _____&#39;
+ 
+url_values=urllib.parse.urlencode(data)
+url=&quot;http://www.baidu.com/s?&quot;
+full_url=url+url_values
+ 
+data=urllib.request.urlopen(full_url).read()
+data=data.decode(&#39;UTF-8&#39;)
+print(data) </pre>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	data是一个字典, 然后通过urllib.parse.urlencode()来将data转换为 &lsquo;word=Jecvay+Notes&rsquo;的字符串, 最后和url合并为full_url, _______________. 关于urlencode(), 同样通过官方文档学习一下他是干什么的. 通过查看 </p>
+ <ol style="color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	 <li>
+		 <a href="https://docs.python.org/3/library/urllib.parse.htmll#urllib.parse.urlencode" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank">urllib.parse.urlencode(query, doseq=False, safe=&rdquo;, encoding=None, ______=____) </a></li>
+	 <li>
+		 <a href="https://docs.python.org/3/library/urllib.parse.htmll#urllib.parse.quote_plus" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background: transparent;" target="_blank">urllib.parse.quote_plus(string, safe=&rdquo;, encoding=None, errors=None) </a></li>
+ </ol>
+ <p style="margin: 0px 0px 1.234em; color: rgb(17, 17, 17); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 22.295000076293945px;">
+	大概知道他是把一个通俗的字符串, 转化为url格式的字符串。 <br />
+	 <br />
+	( 转载自:&nbsp; <a href="http://jecvay.com/2014/09/python3-web-bug-series1/" style="color: rgb(110, 113, 115); text-decoration: none; transition: all 0.1s ease-in; -webkit-transition: all 0.1s ease-in; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">Jecvay Notes </a>&nbsp;) </p>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/Python3/" target="_blank">Python3 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/网络爬虫/" target="_blank">网络爬虫 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>Python 3开发网络爬虫(一) </b><br />
+									本文地址： <a href="python3-webbug-series1.html">http://www.yiibai.com/python/python3-webbug-series1.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='interpreter.html' class='btn' title='使用Python解释器' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='python3-webbug-series2.html' class='btn btn-default' style='float:right;' title='Python 3开发网络爬虫(二)'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="5343" data-title="Python 3开发网络爬虫(一)" data-url="http://www.yiibai.com/python/python3-webbug-series1.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>pt src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

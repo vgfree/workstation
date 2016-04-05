@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/ptrace.html
+Date Downloaded: 2016/4/1 16:57:44 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>ptrace()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="ptrace,函数,Unix,Linux,ptrace,进程" />
+		 <meta name="description" content="ptrace - 进程跟踪 SYNOPSIS #include sys/ptrace.h long ptrace(enum __ptrace_request request , pid_t pid , void * addr , void * data ); DESCRIPTION The ptrace () system call provides a means by which a parent process may observe and contr" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  ptrace()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">ptrace()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>hyw2458 </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='pselect.html' class='btn' title='pselect()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='putmsg.html' class='btn btn-default' style='float:right;' title='putmsg()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1672" />
+									
+									 <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">ptrace -&nbsp; </span>进程跟踪
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	内容简介 </h1>
+ <table cellpadding="5" cellspacing="5" class="src" style="font-family: verdana, helvetica, arial, sans-serif;  border-color: rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+				 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+ <b>#include &lt;sys/ptrace.h&gt; </b> 
+ </pre>
+				 <p style="text-align: justify;">
+					 <b>long ptrace(enum __ptrace_request  </b><i>request </i><b>, pid_t  </b><i>pid </i><b>,  </b>  <b> void * </b><i>addr </i><b>, void * </b><i>data </i><b>); </b></p>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">ptrace </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">()&nbsp; </span>系统调用提供了其中一个父进程可以观察和控制另一个进程的执行，检查和改变其核心映像和寄存器的手段。它主要用于实现断点调试和系统调用跟踪。
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The parent can initiate _ trace by calling&nbsp; <b>fork </b>(2) and having the _________ child do a PTRACE_TRACEME, ________ (typically) by an&nbsp; <b>exec </b>(3). Alternatively, the parent ___ commence trace of an ________ process using PTRACE_ATTACH. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	While being traced, the _____ will stop each time _ signal is delivered, even __ the signal is being _______. (The exception is SIGKILL, _____ has its usual effect.) ___ parent will be notified __ its next&nbsp; <b>wait </b>(2) and may inspect ___ modify the child process _____ it is stopped. The ______ then causes the child __ continue, optionally ignoring the _________ signal (or even delivering _ different signal instead). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	When the parent is ________ tracing, it can terminate ___ child with PTRACE_KILL or _____ it to continue executing __ a normal, untraced mode ___ PTRACE_DETACH. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The value of&nbsp; <i>request </i>&nbsp;determines the action to __ performed: </p>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_TRACEME </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Indicates that this process __ to be traced by ___ parent. Any signal (except _______) delivered to this process ____ cause it to stop ___ its parent to be ________ via&nbsp; <b>wait </b>(). Also, all subsequent _____ to&nbsp; <b>exec </b>() by this process ____ cause a SIGTRAP to __ sent to it, giving ___ parent a chance to ____ control before the new _______ begins execution. A process ________ shouldn&rsquo;t make this request __ its parent isn&rsquo;t expecting __ trace it. ( <i>pid </i>,&nbsp; <i>addr </i>, and&nbsp; <i>data </i>&nbsp;are ignored.) </td>
+		 </tr>
+		 <tr>
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				The above request is ____ only by the child _______; the rest are used ____ by the parent. In ___ following requests,&nbsp; <i>pid </i>&nbsp;specifies the child process __ be acted on. For ________ other than PTRACE_KILL, the _____ process must be stopped. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_PEEKTEXT, PTRACE_PEEKDATA </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Reads a word at ___ location&nbsp; <i>addr </i>&nbsp;in the child&rsquo;s memory, _________ the word as the ______ of the&nbsp; <b>ptrace </b>() call. Linux does ___ have separate text and ____ address spaces, so the ___ requests are currently equivalent. (___ argument&nbsp; <i>data </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_PEEKUSR </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Reads a word at ______&____; <i>addr </i>&nbsp;in the child&rsquo;s&nbsp; <b>USER </b>&nbsp;area, which holds the _________ and other information about ___ process (see &lt;linux/user.h&gt; and &__;___/____._&__;). The word is returned __ the result of the&nbsp; <b>ptrace </b>() call. Typically the ______ must be word-aligned, though ____ might vary by architecture. ___ NOTES. ( <i>data </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_POKETEXT, PTRACE_POKEDATA </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Copies the word&nbsp; <i>data </i>&nbsp;to location&nbsp; <i>addr </i>&nbsp;in the child&rsquo;s memory. __ above, the two requests ___ currently equivalent. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_POKEUSR </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Copies the word&nbsp; <i>data </i>&nbsp;to offset&nbsp; <i>addr </i>&nbsp;in the child&rsquo;s&nbsp; <b>USER </b>&nbsp;area. As above, the ______ must typically be word-aligned. __ order to maintain the _________ of the kernel, some _____________ to the <b>USER </b>&nbsp;area are disallowed. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_GETREGS, PTRACE_GETFPREGS </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Copies the child&rsquo;s general _______ or floating-point registers, respectively, __ location&nbsp; <i>data </i>&nbsp;in the parent. See &lt;linux/user.h&gt; for information on the ______ of this data. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_GETSIGINFO (since Linux 2.3.99-pre6) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Retrieve information about the ______ that caused the stop. ______ a&nbsp; <i>siginfo_t </i>&nbsp;structure (see&nbsp; <b>sigaction </b>(2)) from the child __ location&nbsp; <i>data </i>&nbsp;in the parent. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_SETREGS, PTRACE_SETFPREGS </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Copies the child&rsquo;s general _______ or floating-point registers, respectively, ____ location&nbsp; <i>data </i>&nbsp;in the parent. As ___ PTRACE_POKEUSER, some general purpose ________ modifications may be disallowed. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_SETSIGINFO (since Linux 2.3.99-pre6) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Set signal information. Copies _&____; <i>siginfo_t </i>&nbsp;structure from location <i>data </i>&nbsp;in the parent to ___ child. This will only ______ signals that would normally __ delivered to the child ___ were caught by the ______. It may be difficult __ tell these normal signals ____ synthetic signals generated by&nbsp; <b>ptrace </b>() itself. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_SETOPTIONS (since Linux 2.4.6; ___ BUGS for caveats) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Sets ptrace options from&nbsp; <i>data </i>&nbsp;in the parent. ( <i>addr </i>&nbsp;is ignored.) <i>data </i>&nbsp;is interpreted as a _______ of options, which are _________ by the following flags:
+				 <table border="1" cellpadding="5" cellspacing="0" class="src" style="border: 1px solid rgb(170, 170, 170); width: 401px; border-collapse: collapse; padding-left: 5px; vertical-align: top;">
+					 <tbody>
+						 <tr>
+							 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+								标签 </th>
+							 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								描述 </th>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACESYSGOOD (since Linux 2.4.6) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								When delivering syscall traps, ___ bit 7 in the ______ number (i.e., deliver (SIGTRAP | 0x80) This makes it ____ for the tracer to ____ the difference between normal _____ and those caused by _ syscall. (PTRACE_O_TRACESYSGOOD may not ____ on all architectures.) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACEFORK (since Linux 2.5.46) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Stop the child at ___ next&nbsp; <b>fork </b>() call with SIGTRAP | PTRACE_EVENT_FORK &lt;&lt; 8 and _____________ start tracing the newly ______ process, which will start ____ a SIGSTOP. The PID ___ the new process can __ retrieved with PTRACE_GETEVENTMSG. </td>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACEVFORK (since Linux 2.5.46) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Stop the child at ___ next&nbsp; <b>vfork </b>() call with SIGTRAP | PTRACE_EVENT_VFORK &lt;&lt; 8 and _____________ start tracing the newly _______ process, which will start ____ a SIGSTOP. The PID ___ the new process can __ retrieved with PTRACE_GETEVENTMSG. </td>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACECLONE (since Linux 2.5.46) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Stop the child at ___ next&nbsp; <b>clone </b>() call with SIGTRAP | PTRACE_EVENT_CLONE &lt;&lt; 8 and _____________ start tracing the newly ______ process, which will start ____ a SIGSTOP. The PID ___ the new process can __ retrieved with PTRACE_GETEVENTMSG. This ______ may not catch&nbsp; <b>clone </b>() calls in all _____. If the child calls <b>clone </b>() with the CLONE_VFORK ____, PTRACE_EVENT_VFORK will be delivered _______ if PTRACE_O_TRACEVFORK is set; _________ if the child calls&nbsp; <b>clone </b>() with the exit ______ set to SIGCHLD, PTRACE_EVENT_FORK ____ be delivered if PTRACE_O_TRACEFORK __ set. </td>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACEEXEC (since Linux 2.5.46) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Stop the child at ___ next&nbsp; <b>exec </b>() call with SIGTRAP | PTRACE_EVENT_EXEC &lt;&lt; 8. </td>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACEVFORKDONE (since Linux 2.5.60) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Stop the child at ___ completion of the next <b>vfork </b>() call with SIGTRAP | PTRACE_EVENT_VFORK_DONE &lt;&lt; 8. </td>
+						 </tr>
+						 <tr valign="top">
+							 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								PTRACE_O_TRACEEXIT (since Linux 2.5.60) </td>
+						 </tr>
+						 <tr valign="top">
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+								&nbsp; </td>
+							 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+								Stop the child at ____ with SIGTRAP | PTRACE_EVENT_EXIT &lt;&lt; 8. The child&rsquo;s exit ______ can be retrieved with __________________. This stop will be ____ early during process exit ____ registers are still available, ________ the tracer to see _____ the exit occurred, whereas ___ normal exit notification is ____ after the process is ________ exiting. Even though context __ available, the tracer cannot _______ the exit from happening __ this point. </td>
+						 </tr>
+					 </tbody>
+				 </table>
+			 </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_GETEVENTMSG (since Linux 2.5.46) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Retrieve a message (as __&____; <i>unsigned long </i>) about the ptrace _____ that just happened, placing __ in the location&nbsp; <i>data </i>&nbsp;in the parent. For _________________ this is the child&rsquo;s ____ status. For PTRACE_EVENT_FORK, PTRACE_EVENT_VFORK ___ PTRACE_EVENT_CLONE this is the ___ of the new process. ( <i>addr </i>is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_CONT </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Restarts the stopped child _______. If&nbsp; <i>data </i>&nbsp;is non-zero and not _______, it is interpreted as _ signal to be delivered __ the child; otherwise, no ______ is delivered. Thus, for _______, the parent can control _______ a signal sent to ___ child is delivered or ___. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_SYSCALL, PTRACE_SINGLESTEP </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Restarts the stopped child __ for PTRACE_CONT, but arranges ___ the child to be _______ at the next entry __ or exit from a ______ call, or after execution __ a single instruction, respectively. (___ child will also, as _____, be stopped upon receipt __ a signal.) From the ______&_____;_ perspective, the child will ______ to have been stopped __ receipt of a SIGTRAP. __, for PTRACE_SYSCALL, for example, ___ idea is to inspect ___ arguments to the system ____ at the first stop, ____ do another PTRACE_SYSCALL and _______ the return value of ___ system call at the ______ stop. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_SYSEMU, PTRACE_SYSEMU_SINGLESTEP (since Linux 2.6.14) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				For PTRACE_SYSEMU, continue and ____ on entry to the ____ syscall, which will not __ executed. For PTRACE_SYSEMU_SINGLESTEP, do ___ same but also singlestep __ not a syscall. This ____ is used by programs ____ User Mode Linux that ____ to emulate all the ___ child&rsquo;s syscalls. ( <i>addr </i>&nbsp;and <i>data </i>&nbsp;are ignored; not supported __ all architectures.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_KILL </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Sends the child a _______ to terminate it. ( <i>addr </i>&nbsp;and&nbsp; <i>data </i>&nbsp;are ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_ATTACH </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Attaches to the process _________ in&nbsp; <i>pid </i>, making it a ______ &quot;child&quot; of the current _______; the behavior of the _____ is as if it ___ done a PTRACE_TRACEME. The _______ process actually becomes the ______ of the child process ___ most purposes (e.g., it ____ receive notification of child ______ and appears in <b>ps </b>(1) output as the _____&_____;_ parent), but a&nbsp; <b>getppid </b>(2) by the child ____ still return the PID __ the original parent. The _____ is sent a SIGSTOP, ___ will not necessarily have _______ by the completion of ____ call; use&nbsp; <b>wait </b>() to wait for ___ child to stop. ( <i>addr </i>&nbsp;and&nbsp; <i>data </i>&nbsp;are ignored.) </td>
+		 </tr>
+		 <tr valign="top">
+			 <td colspan="2" style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				PTRACE_DETACH </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="6%">
+				&nbsp; </td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				Restarts the stopped child __ for PTRACE_CONT, but first ________ from the process, undoing ___ reparenting effect of PTRACE_ATTACH, ___ the effects of PTRACE_TRACEME. ________ perhaps not intended, under _____ a traced child can __ detached in this way __________ of which method was ____ to initiate tracing. ( <i>addr </i>&nbsp;is ignored.) </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	注意 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Although arguments to&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">ptrace </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() are interpreted according __ the prototype given, GNU ____ currently declares&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">ptrace </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() as a variadic ________ with only the&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">request </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;argument fixed. This means ____ unneeded trailing arguments may __ omitted, though doing so _____ use of undocumented&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">gcc </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(1) behavior. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>init </b>(8), the process with ___ 1, may not be ______. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The layout of the ________ of memory and the ____ area are quite OS- ___ architecture-specific. The offset supplied ___ the data returned might ___ entirely match with the __________ of&nbsp; <i>struct user </i></p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The size of a &quot;word&quot; is determined by the __ variant (e.g., for 32-bit _____ it&rsquo;s 32 bits, etc.). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Tracing causes a few ______ differences in the semantics __ traced processes. For example, __ a process is attached __ with PTRACE_ATTACH, its original ______ can no longer receive ____________ via&nbsp; <b>wait </b>() when it stops, ___ there is no way ___ the new parent to ___________ simulate this notification. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	This page documents the ___ the&nbsp; <b>ptrace </b>() call works currently __ Linux. Its behavior differs __________ on other flavors of ____. In any case, use __&____; <b>ptrace </b>() is highly OS- ___ architecture-specific. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The SunOS man page _________&____; <b>ptrace </b>() as &quot;unique and ______&____;, which it is. The ____-_____ debugging interface present in _______ 2 implements a superset __&____; <b>ptrace </b>() functionality in a ____ powerful and uniform way. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On success, PTRACE_PEEK* requests ______ the requested data, while _____ requests return zero. On _____, all requests return -1, ___&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">errno </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is set appropriately. Since ___ value returned by a __________ PTRACE_PEEK* request may be -1, the caller must check </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">errno </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;after such requests to _________ whether or not an _____ occurred. </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	BUGS </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On hosts with 2.6 ______ headers, PTRACE_SETOPTIONS is declared ____ a different value than ___ one for 2.4. This _____ to applications compiled with ____ headers failing when run __ 2.4 kernels. This can __ worked around by redefining _________________ to PTRACE_OLDSETOPTIONS, if that __ defined. </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	错误 </h1>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EBUSY </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				(i386 only) There was __ error with allocating or _______ a debug register. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EFAULT </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				There was an attempt __ read from or write __ an invalid area in ___ parent&rsquo;s or child&rsquo;s memory, ________ because the area wasn&rsquo;t ______ or accessible. Unfortunately, under _____, different variations of this _____ will return EIO or ______ more or less arbitrarily. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EINVAL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				An attempt was made __ set an invalid option. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EIO </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				 <i>request </i>&nbsp;is invalid, or an _______ was made to read ____ or write to an _______ area in the parent&rsquo;s __ child&rsquo;s memory, or there ___ a word-alignment violation, or __ invalid signal was specified ______ a restart request. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EPERM </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The specified process cannot __ traced. This could be _______ the parent has insufficient __________ (the required capability is <b>CAP_SYS_PTRACE </b>); non-root processes cannot _____ processes that they cannot ____ signals to or those _______ set-user-ID/set-group-ID programs, for obvious _______. Alternatively, the process may _______ be being traced, or __ <b>init </b>&nbsp;(PID 1). </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ESRCH </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The specified process does ___ exist, or is not _________ being traced by the ______, or is not stopped (___ requests that require that). </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	遵循于 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SVr4, 4.3BSD </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	另请参阅 </h1>
+ <ul style="font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_commands/gdb.html" style="color: rgb(144, 11, 9); background-color: transparent;">gdb (1) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_commands/strace.html" style="color: rgb(144, 11, 9); background-color: transparent;">strace (1) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="execve.html" style="color: rgb(144, 11, 9); background-color: transparent;">execve (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="fork.html" style="color: rgb(144, 11, 9); background-color: transparent;">fork (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/signal.html" style="color: rgb(144, 11, 9); background-color: transparent;">signal (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/wait.html" style="color: rgb(144, 11, 9); background-color: transparent;">wait (2) </a></p>
+		 <div>
+			&nbsp; </div>
+	 </li>
+ </ul>
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/ptrace/" target="_blank">ptrace </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Linux/" target="_blank">Linux </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/ptrace/" target="_blank">ptrace </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/进程/" target="_blank">进程 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>ptrace()函数 Unix/Linux </b><br />
+									本文地址： <a href="ptrace.html">http://www.yiibai.com/unix_system_calls/ptrace.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='pselect.html' class='btn' title='pselect()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='putmsg.html' class='btn btn-default' style='float:right;' title='putmsg()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1672" data-title="ptrace()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/ptrace.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>eaflet.js"></script>
+	 <script src="/static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

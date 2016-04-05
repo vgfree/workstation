@@ -1,0 +1,668 @@
+<!doctype html>
+<html>
+<head lang="zh-cn">
+    <meta charset="utf-8">
+    <title>多进程并发的面向连接服务器与客户端实践</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="description" content="实验内容：多个客户端并发给服务器端发送消息，服务器端给客户端返回反转的内容。服务器端做了两个版本，不限制子进程数版本预先分配指定进程数的改进。这一系列笔记代码我都存储在https://github.com/zhoumengkang/notes/tree/master/unix/socket服务器端原理图：心得与收获：客户端从send到recv的过程是阻塞的，一直等待服务器端给socket fd写入..."/>
+    <meta name="keywords" content="Linux,socket,北剅沟,周梦康" />
+    <link rel="shortcut icon" href="https://static.mengkang.net/favicon.ico">
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/box.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/public.2.0.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+    <script type="text/javascript" src="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script src="https://static.mengkang.net/view/js/jquery-1.11.3.min.js"></script>
+    <script src="https://static.mengkang.net/view/js/mk.js"></script>
+    <script src="https://static.mengkang.net/view/js/box.js"></script>
+    <script type="text/javascript">
+        var SITE_URL = 'https://mengkang.net/index.php';
+    </script>
+</head>
+<body>
+<header class="header">
+    <div class="header-logo">
+        <div class="site-title">Mengkang's land</div>
+        <div class="site-desc smoothing">coding and recording</div>
+    </div>
+    <div class="header-menu">
+        <ul id="nav">
+            <li><a href="notebook.html" title="学习">学习</a></li><li><a href="tips.html" title="碎片">碎片</a></li><li><a href="playground.html" title="生活">生活</a></li><li><a target="_blank" href="about.me" title="博主">博主</a></li>        </ul>
+        <div class="phone-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+    </div>
+
+</header>
+<div id="content" class="content">
+    <style>
+        #blog-content blockquote p{
+            text-indent:15px;
+        }
+        #blog-content h3,h4{
+            text-indent:28px;
+        }
+        #blog-content p{
+            text-indent: 2em;
+        }
+        .blog-content h3{
+            margin: 10px 0;
+        }
+        .blog-content h2{
+            margin: 8px 0 18px 0;
+        }
+    </style>
+<div class="blog-padding">
+    <div id="blog">
+        <div class="blog-title">
+            <h1><a href="https://mengkang.net/576.html">多进程并发的面向连接服务器与客户端实践</a></h1>
+        </div>
+        <div class="blog-meta smoothing">
+            <span class="post-time"><a href="about.me">周梦康</a> 发表于 2015-11-22</span>
+            <span class="post-category">
+                分类于 <a href="notebook.html" title="学习">学习</a>            </span>
+            <span class="post-comments-count">
+                <a href="">459 次浏览</a>
+            </span>
+                        <span class="blog-tag">
+                标签 :
+                <a href="/tag-24.html" target="_blank">Linux</a><a href="/tag-79.html" target="_blank">socket</a>            </span>
+                    </div>
+        <div class="split-line"></div>
+        <div id="blog-content" class="blog-content smoothing">
+            <p style="text-indent: 2em;">实验内容：多个客户端并发给服务器端发送消息，服务器端给客户端返回反转的内容。</p><p style="text-indent: 2em;">服务器端做了两个版本，不限制子进程数版本预先分配指定进程数的改进。这一系列笔记代码我都存储在<a href="https://github.com/zhoumengkang/notes/tree/master/unix/socket" target="_blank">https://github.com/zhoumengkang/notes/tree/master/unix/socket</a></p><p style="text-indent: 2em;">服务器端原理图：</p><p style="text-indent: 2em;"><img src="/upload/image/2015/1121/1448036403858890.jpg" width="640" height="994" alt="多进程并发的面向连接服务器与客户端实践" ></p><p style="text-indent: 2em;">心得与收获：客户端从<code class="markdownTags">send</code>到<code class="markdownTags">recv</code>的过程是阻塞的，一直等待服务器端给<code class="markdownTags">socket fd</code>写入内容返回。如果客户端没有使用<code class="markdownTags">recv</code>来接收<code class="markdownTags">socket fd</code>的返回信息，则不会等待直接往下继续执行。</p><h2 style="text-indent: 2em;">客户端代码</h2><pre class="brush:cpp;toolbar:false">#include&nbsp;&lt;stdio.h&gt;
+#include&nbsp;&lt;stdlib.h&gt;
+#include&nbsp;&lt;unistd.h&gt;
+#include&nbsp;&lt;sys/types.h&gt;
+#include&nbsp;&lt;sys/socket.h&gt;
+#include&nbsp;&lt;arpa/inet.h&gt;
+#include&nbsp;&lt;netinet/in.h&gt;
+#include&nbsp;&lt;string.h&gt;
+#include&nbsp;&lt;netdb.h&gt;
+&nbsp;&nbsp;
+#define&nbsp;SERV_PORT&nbsp;8031
+#define&nbsp;BUFSIZE	1024
+void&nbsp;process(FILE&nbsp;*&nbsp;fp,&nbsp;int&nbsp;sockfd);
+char&nbsp;*&nbsp;getMessage(char&nbsp;*&nbsp;sendline,int&nbsp;len,FILE&nbsp;*&nbsp;fp);
+&nbsp;
+int&nbsp;main(int&nbsp;argc,char&nbsp;const&nbsp;*&nbsp;argv[])
+{
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;fd;
+&nbsp;&nbsp;&nbsp;&nbsp;struct&nbsp;hostent&nbsp;*&nbsp;he;
+&nbsp;&nbsp;&nbsp;&nbsp;struct&nbsp;sockaddr_in&nbsp;server;
+
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(argc&nbsp;!=&nbsp;2)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;	printf(&quot;usage&nbsp;%s&nbsp;&lt;IP&nbsp;Adrress&gt;&quot;,&nbsp;argv[0]);
+&nbsp;&nbsp;&nbsp;&nbsp;	exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;((he&nbsp;=&nbsp;gethostbyname(argv[1]))&nbsp;==&nbsp;NULL)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;	perror(&quot;gethostbyname&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;	exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;if((fd&nbsp;=&nbsp;socket(AF_INET,SOCK_STREAM,0))&nbsp;==&nbsp;-1){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;create&nbsp;socket&nbsp;failed&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;memset(&amp;server,&nbsp;0,&nbsp;sizeof(server));
+&nbsp;&nbsp;&nbsp;&nbsp;server.sin_family&nbsp;=&nbsp;AF_INET;
+&nbsp;&nbsp;&nbsp;&nbsp;server.sin_port&nbsp;=&nbsp;htons(SERV_PORT);
+&nbsp;&nbsp;&nbsp;&nbsp;server.sin_addr&nbsp;=&nbsp;*((struct&nbsp;in_addr&nbsp;*)&nbsp;he-&gt;h_addr);
+
+&nbsp;&nbsp;&nbsp;&nbsp;if(connect(fd,&nbsp;(struct&nbsp;sockaddr&nbsp;*)&amp;server,&nbsp;sizeof(server))&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;connect&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;process(stdin,fd);
+
+&nbsp;&nbsp;&nbsp;&nbsp;close(fd);
+
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;
+}
+
+void&nbsp;process(FILE&nbsp;*&nbsp;fp,&nbsp;int&nbsp;sockfd)
+{
+	char&nbsp;sendline[BUFSIZE],&nbsp;recvline[BUFSIZE];
+	int&nbsp;numbytes;
+
+	while(getMessage(sendline,BUFSIZE,fp)&nbsp;!=&nbsp;NULL)
+	{
+		send(sockfd,sendline,strlen(sendline),0);
+
+		if&nbsp;((numbytes&nbsp;=&nbsp;recv(sockfd,recvline,BUFSIZE,0))&nbsp;==&nbsp;0)
+		{
+			printf(&quot;server&nbsp;terminated\n&quot;);
+			return;
+		}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recvline[numbytes]&nbsp;=&nbsp;&#39;\0&#39;;
+		printf(&quot;server&nbsp;string&nbsp;return&nbsp;&nbsp;:%s\n&quot;,recvline);
+	}
+
+	printf(&quot;client&nbsp;exit.\n&quot;);
+}
+
+
+char&nbsp;*&nbsp;getMessage(char&nbsp;*&nbsp;sendline,int&nbsp;len,FILE&nbsp;*&nbsp;fp)
+{
+	printf(&quot;input&nbsp;string&nbsp;to&nbsp;server:&quot;);
+	return&nbsp;(fgets(sendline,len,fp));
+}</pre><h2 style="text-indent: 2em;">服务器端代码</h2><h3 style="text-indent: 2em;">不固定进程数的并发模型设计</h3><pre class="brush:cpp;toolbar:false">#include&nbsp;&lt;stdio.h&gt;
+#include&nbsp;&lt;stdlib.h&gt;
+#include&nbsp;&lt;unistd.h&gt;
+#include&nbsp;&lt;sys/types.h&gt;
+#include&nbsp;&lt;sys/socket.h&gt;
+#include&nbsp;&lt;arpa/inet.h&gt;
+#include&nbsp;&lt;netinet/in.h&gt;
+#include&nbsp;&lt;signal.h&gt;
+#include&nbsp;&lt;string.h&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;
+#define&nbsp;SERV_PORT&nbsp;8031
+#define&nbsp;BUFSIZE&nbsp;1024
+void&nbsp;process_cli(int&nbsp;connectfd,struct&nbsp;sockaddr_in&nbsp;client);
+
+int&nbsp;main(void)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;lfd,&nbsp;cfd;
+&nbsp;&nbsp;&nbsp;&nbsp;struct&nbsp;sockaddr_in&nbsp;serv_addr,clin_addr;
+&nbsp;&nbsp;&nbsp;&nbsp;socklen_t&nbsp;clin_len;
+&nbsp;&nbsp;&nbsp;&nbsp;pid_t&nbsp;pid;
+&nbsp;&nbsp;&nbsp;&nbsp;char&nbsp;buf[1024];
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;len;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if((lfd&nbsp;=&nbsp;socket(AF_INET,SOCK_STREAM,0))&nbsp;==&nbsp;-1){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;create&nbsp;socket&nbsp;failed&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;opt&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;setsockopt(lfd,&nbsp;SOL_SOCKET,&nbsp;SO_REUSEADDR,&nbsp;&amp;opt,&nbsp;sizeof(opt));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;memset(&amp;serv_addr,&nbsp;0,&nbsp;sizeof(serv_addr));
+&nbsp;&nbsp;&nbsp;&nbsp;serv_addr.sin_family&nbsp;=&nbsp;AF_INET;
+&nbsp;&nbsp;&nbsp;&nbsp;serv_addr.sin_addr.s_addr&nbsp;=&nbsp;htonl(INADDR_ANY);
+&nbsp;&nbsp;&nbsp;&nbsp;serv_addr.sin_port&nbsp;=&nbsp;htons(SERV_PORT);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if(bind(lfd,&nbsp;(struct&nbsp;sockaddr&nbsp;*)&amp;serv_addr,&nbsp;sizeof(serv_addr))&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;bind&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if(listen(lfd,&nbsp;128)&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;listen&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;clin_len&nbsp;=&nbsp;sizeof(clin_addr);
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;signal(SIGCLD,SIG_IGN);
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;while(1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((cfd&nbsp;=&nbsp;accept(lfd,&nbsp;(struct&nbsp;sockaddr&nbsp;*)&amp;clin_addr,&nbsp;&amp;clin_len))&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;accept&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pid&nbsp;=&nbsp;fork();
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(pid&nbsp;&gt;&nbsp;0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;在父进程中关闭连接的套接字描述符，只是把&nbsp;cfd&nbsp;的引用数减少1，在子进程中还在使用&nbsp;cfd
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close(cfd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;if&nbsp;(pid&nbsp;==&nbsp;0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;子进程关闭&nbsp;lfd&nbsp;处理任务，使其回到&nbsp;TIME_WAIT&nbsp;状态值
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close(lfd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process_cli(cfd,clin_addr);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(0);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;fork&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;close(lfd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;
+}
+
+void&nbsp;process_cli(int&nbsp;connectfd,struct&nbsp;sockaddr_in&nbsp;client)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;num,len;
+&nbsp;&nbsp;&nbsp;&nbsp;char&nbsp;recvbuf[BUFSIZE],sendbuf[BUFSIZE],client_name[BUFSIZE],client_port[5];
+
+&nbsp;&nbsp;&nbsp;&nbsp;snprintf(client_name,100,&quot;%s:%d&quot;,inet_ntoa(client.sin_addr),client.sin_port);
+
+&nbsp;&nbsp;&nbsp;&nbsp;printf(&quot;you&nbsp;get&nbsp;a&nbsp;connection&nbsp;from&nbsp;%s\n&quot;,&nbsp;client_name);
+
+&nbsp;&nbsp;&nbsp;&nbsp;while(num&nbsp;=&nbsp;recv(connectfd,recvbuf,BUFSIZE,0))
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recvbuf[num-1]&nbsp;=&nbsp;&#39;\0&#39;;//&nbsp;去掉收到消息末尾的回车
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(&quot;receive&nbsp;client&nbsp;(%s)&nbsp;message:&nbsp;%s\n&quot;,&nbsp;client_name,recvbuf);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;len&nbsp;=&nbsp;num-1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;len;&nbsp;++i)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sendbuf[i]&nbsp;=&nbsp;recvbuf[num&nbsp;-i&nbsp;-2];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sendbuf[len]&nbsp;=&nbsp;&#39;\0&#39;;//&nbsp;这样就不用执行&nbsp;memset(sendbuf,0,sizeof(sendbuf));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send(connectfd,sendbuf,len,0);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;printf(&quot;client&nbsp;(%s)&nbsp;exit\n&quot;,client_name);
+
+&nbsp;&nbsp;&nbsp;&nbsp;close(connectfd);
+}</pre><p style="text-indent: 2em;">客户端终端</p><pre class="brush:bash;toolbar:false">[zhoumengkang@localhost&nbsp;unix]$&nbsp;gcc&nbsp;client.c&nbsp;-o&nbsp;client
+[zhoumengkang@localhost&nbsp;unix]$&nbsp;./client&nbsp;127.0.0.1
+input&nbsp;string&nbsp;to&nbsp;server:zmk
+server&nbsp;string&nbsp;return&nbsp;&nbsp;:kmz
+input&nbsp;string&nbsp;to&nbsp;server:haha
+server&nbsp;string&nbsp;return&nbsp;&nbsp;:ahah
+input&nbsp;string&nbsp;to&nbsp;server:hei
+server&nbsp;string&nbsp;return&nbsp;&nbsp;:ieh
+input&nbsp;string&nbsp;to&nbsp;server:</pre><p style="text-indent: 2em;">服务器终端</p><pre class="brush:bash;toolbar:false">[zhoumengkang@localhost&nbsp;unix]$&nbsp;gcc&nbsp;server.c&nbsp;-std=c99&nbsp;-o&nbsp;server
+[zhoumengkang@localhost&nbsp;unix]$&nbsp;./server&nbsp;
+you&nbsp;get&nbsp;a&nbsp;connection&nbsp;from&nbsp;127.0.0.1:40362
+receive&nbsp;client&nbsp;(127.0.0.1:40362)&nbsp;message:&nbsp;zmk
+receive&nbsp;client&nbsp;(127.0.0.1:40362)&nbsp;message:&nbsp;haha
+receive&nbsp;client&nbsp;(127.0.0.1:40362)&nbsp;message:&nbsp;hei</pre><p style="text-indent: 2em;">这里还没有对子进程个数做限定，压测的时候，如果请求多，并发大，则会创建太多子进程而退出的情况，所以还需要对上面的代码的子进程做线程池管理。</p><h3 style="text-indent: 2em;">固定进程数的并发模型<a name="server02"></a></h3><pre class="brush:cpp;toolbar:false">#include&nbsp;&lt;stdio.h&gt;
+#include&nbsp;&lt;stdlib.h&gt;
+#include&nbsp;&lt;unistd.h&gt;
+#include&nbsp;&lt;sys/types.h&gt;
+#include&nbsp;&lt;sys/socket.h&gt;
+#include&nbsp;&lt;arpa/inet.h&gt;
+#include&nbsp;&lt;netinet/in.h&gt;
+#include&nbsp;&lt;signal.h&gt;
+#include&nbsp;&lt;string.h&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;
+#define&nbsp;SERV_PORT&nbsp;8031
+#define&nbsp;BUFSIZE&nbsp;1024
+#define&nbsp;BACKLOG&nbsp;20
+
+static&nbsp;void&nbsp;handle_fork(int&nbsp;lfd);
+
+int&nbsp;main(void)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;lfd,&nbsp;cfd;
+&nbsp;&nbsp;&nbsp;&nbsp;struct&nbsp;sockaddr_in&nbsp;serv_addr;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;pid_t&nbsp;pid[BACKLOG];
+&nbsp;&nbsp;&nbsp;&nbsp;char&nbsp;buf[BUFSIZE];
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;len;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if((lfd&nbsp;=&nbsp;socket(AF_INET,SOCK_STREAM,0))&nbsp;==&nbsp;-1){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;create&nbsp;socket&nbsp;failed&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;opt&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;setsockopt(lfd,&nbsp;SOL_SOCKET,&nbsp;SO_REUSEADDR,&nbsp;&amp;opt,&nbsp;sizeof(opt));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;memset(&amp;serv_addr,&nbsp;0,&nbsp;sizeof(serv_addr));
+&nbsp;&nbsp;&nbsp;&nbsp;serv_addr.sin_family&nbsp;=&nbsp;AF_INET;
+&nbsp;&nbsp;&nbsp;&nbsp;serv_addr.sin_addr.s_addr&nbsp;=&nbsp;htonl(INADDR_ANY);
+&nbsp;&nbsp;&nbsp;&nbsp;serv_addr.sin_port&nbsp;=&nbsp;htons(SERV_PORT);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if(bind(lfd,&nbsp;(struct&nbsp;sockaddr&nbsp;*)&amp;serv_addr,&nbsp;sizeof(serv_addr))&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;bind&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;if(listen(lfd,&nbsp;BACKLOG)&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;listen&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;signal(SIGCLD,SIG_IGN);
+&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;BACKLOG;&nbsp;++i)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pid[i]&nbsp;=&nbsp;fork();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(pid[i]&nbsp;==&nbsp;0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handle_fork(lfd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;close(lfd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;
+}
+
+static&nbsp;void&nbsp;handle_fork(int&nbsp;lfd)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;cfd;
+&nbsp;&nbsp;&nbsp;&nbsp;struct&nbsp;sockaddr_in&nbsp;clin_addr;
+&nbsp;&nbsp;&nbsp;&nbsp;socklen_t&nbsp;clin_len;
+&nbsp;&nbsp;&nbsp;&nbsp;socklen_t&nbsp;num,len;
+&nbsp;&nbsp;&nbsp;&nbsp;char&nbsp;recvbuf[BUFSIZE],sendbuf[BUFSIZE],client_name[100];
+
+&nbsp;&nbsp;&nbsp;&nbsp;clin_len&nbsp;=&nbsp;sizeof(clin_addr);
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;while(1)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((cfd&nbsp;=&nbsp;accept(lfd,&nbsp;(struct&nbsp;sockaddr&nbsp;*)&amp;clin_addr,&nbsp;&amp;clin_len))&nbsp;==&nbsp;-1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(&quot;accept&nbsp;error&quot;);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;snprintf(client_name,100,&quot;%s:%d&quot;,inet_ntoa(clin_addr.sin_addr),ntohs(clin_addr.sin_port));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(&quot;you&nbsp;get&nbsp;a&nbsp;connection&nbsp;from&nbsp;%s\n&quot;,&nbsp;client_name);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(num&nbsp;=&nbsp;recv(cfd,recvbuf,BUFSIZE,0))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recvbuf[num-1]&nbsp;=&nbsp;&#39;\0&#39;;//&nbsp;把客户端发送过来的最后的一个空格去掉
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(&quot;receive&nbsp;client&nbsp;(%s)&nbsp;message:&nbsp;%s\n&quot;,&nbsp;client_name,recvbuf);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;len&nbsp;=&nbsp;num-1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;len;&nbsp;++i)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sendbuf[i]&nbsp;=&nbsp;recvbuf[num&nbsp;-i&nbsp;-2];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sendbuf[len]&nbsp;=&nbsp;&#39;\0&#39;;//&nbsp;这样就不用执行&nbsp;memset(sendbuf,0,sizeof(sendbuf));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;send(cfd,sendbuf,len,0);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(&quot;client&nbsp;(%s)&nbsp;exit\n&quot;,client_name);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close(cfd);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+}</pre><p><br/></p>        </div>
+        <div class="single-post-share-list">
+    <span class="mobile-hide">分享到</span>
+    <div class="share-group">
+<!--        <a id="weixin-share" class="weixin mobile-hide" href="javascript:void(0)" ref="nofollow" target="_blank">-->
+<!--            <i class="icon-weixin"></i>-->
+<!--            <div class="panel-weixin">-->
+<!--                <section class="weixin-section">-->
+<!--                    <img src="http://s.jiathis.com/qrcode.php?url=--><!--?via=wechat_qr">-->
+<!--                </section>-->
+<!--                <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>-->
+<!--            </div>-->
+<!--        </a>-->
+        <a class="weibo" href="http://v.t.sina.com.cn/share/share.php?url=https://mengkang.net/576.html&title=多进程并发的面向连接服务器与客户端实践" ref="nofollow" target="_blank">
+            <i class="icon-weibo"></i>
+        </a>
+        <a class="qq external mobile-hide" href="http://connect.qq.com/widget/shareqq/index.html?url=https://mengkang.net/576.html&title=多进程并发的面向连接服务器与客户端实践&source=shareqq&desc=刚看到这篇文章不错，推荐给你看看～" ref="nofollow" target="_blank">
+            <i class="icon-qq"></i>
+        </a>
+        <a class="douban external mobile-hide" href="http://share.baidu.com/s?type=text&searchPic=0&sign=on&to=douban&url=https://mengkang.net/576.html&title=多进程并发的面向连接服务器与客户端实践" ref="nofollow" target="_blank">
+            <i class="icon-douban"></i>
+        </a>
+    </div>
+</div>    </div>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+        $(function(){
+            var windowWidth = $(window).width();
+            var minWidth = windowWidth - 50;
+            //图片放大效果
+            $(".blog-content img").each(function(){
+                //获取图片的真实地址
+                var imgSrc;
+                if($(this).attr('data-original')){
+                    imgSrc = $(this).attr('data-original');
+                }else{
+                    imgSrc = $(this).attr('src');
+                }
+
+                // 保证在手机显示完整的图片
+                if (windowWidth < 1024) {
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px").wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+ minWidth +'px"></a>');
+                }else{
+                    $(this).wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+$(this).attr('width')+'px"></a>');
+
+                }
+
+            });
+            //图片处理
+            $('.image-popup-no-margins').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                fixedContentPos: true,
+                mainClass: 'mfp-no-margins mfp-with-zoom',
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300
+                }
+            });
+            $(".blog-content").on("magnificPopup",".image-popup-no-margins");
+            //懒加载
+            $(".blog-content img").lazyload({"effect":"fadeIn"});
+
+            if(windowWidth < 1024){
+                $(".speech-zmk-desc").hide();
+                $("video").each(function(){
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px");
+                });
+            }
+        })
+    </script>
+    <div id="comment">
+    <h2>评论列表</h2>
+    <div id="commentList">
+        <div class="comment-list clearfix">
+            <a name="comment_text"></a>
+            <div class="comment-list-left">
+                <img src="/view/images/avatar/1.jpg" alt=""/>
+            </div>
+            <div class="comment-list-right">
+                <form name="comment">
+                    <input type="hidden" name="blogid" value="576"/>
+                    <input type="hidden" name="replyId" value="0"/>
+                    <div class="comment-input-div">
+                        <input type="text" name="username" placeholder="昵称（可不填写）" class="comment-input" />
+                        <input type="email" name="email" placeholder="邮箱（可不填写）" class="comment-input" />
+                        <span>如果填写邮箱了，当我我回复您的时候会给您邮箱发送消息提醒，方便交流</span>
+                    </div>
+                    <div>
+                        <textarea name="comment" placeholder="加入讨论..." class="comment-textarea"></textarea>
+                    </div>
+                    <div class="comment-input-div">
+                        <a href="javascript:void(0)" id="post_comment" issending="false">提交</a>
+                        <span>可以使用`xxxx`来插入简短的代码碎片</span>
+                    </div>
+                                    </form>
+            </div>
+        </div>
+            </div>
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        //将除了本页锚点链接之外所有的a链接都改为在新窗口打开
+        $(".content").find('a').each(function(){
+            if(/^#/.test($(this).attr('href'))){
+                $(this).attr({'target':'_self'});
+            }else{
+                $(this).attr({'target':'_blank'});
+            }
+        });
+        $(".delreply").click(function(){
+            var _e = $(this);
+            var id = $(this).attr('targetId');
+            ui.confirm('确认删除该留言？',function(){
+                var url = U('Comment/del');
+                $.post(url,{id:id},function(data){
+                    if(parseInt(data.flag)==1){
+                        _e.parents('.comment-list').remove();
+                        ui.success('删除成功');
+                    }else{
+                        ui.error('删除失败');
+                    }
+                },'json')
+            },function(){
+                return false;
+            })
+        });
+        $(".reply_the_comment").click(function(){
+            $("input[name='replyId']").val($(this).attr('targetId'));
+            var pre_content = '回复'+$(this).parent().parent().find(".username").text()+': ';
+            var callback = function(pre_content){
+                $("textarea[name='comment']").css('background','#90DCFF').focus().val(pre_content);
+                setTimeout(function(){
+                    $("textarea[name='comment']").css('background','#FFF');
+                    setTimeout(function(){
+                        $("textarea[name='comment']").css('background','#90DCFF');
+                        setTimeout(function(){
+                            $("textarea[name='comment']").css('background','#FFF');
+                        },300)
+                    },300)
+                },300);
+            };
+
+            var scrollHeight = $('a[name="comment_text"]').offset().top;
+            if($(document).scrollTop() + $(window).height() + 100 <= $(document).height()){
+                $("html,body").animate({scrollTop:scrollHeight},1000,function(){
+                    //使得回复框颜色闪一闪
+                    callback(pre_content);
+                });
+            }else{
+                callback(pre_content);
+            }
+        });
+        $("textarea[name='comment']").focus(function(){
+            $(this).css({"font-size":"16px","line-height":"22px"});
+            $(".comment-input-div").fadeIn();
+        });
+        $("textarea[name='comment'],input").focus(function(){
+            //先自动填下留言表单，为留言做准备
+            if(!$("input[name='email']").val()){
+                var email = getCookie('email');
+                if(email){
+                    $("input[name='email']").val(email);
+                }
+            }
+            if(!$("input[name='username']").val()){
+                var username = getCookie('username');
+                if(username){
+                    $("input[name='username']").val(username);
+                }
+            }
+        });
+        $("textarea[name='comment']").keydown(function(e){
+            if(e.keyCode==13){
+                $(this).css("height",parseInt($(this).css("height")) + parseInt($(this).css("line-height")));
+            }
+        });
+        $("#post_comment").click(function(){
+            post_comment();
+        });
+        //执行评论
+        var post_comment_flag = true;
+        var post_comment = function(){
+            if(!post_comment_flag){
+                ui.error('...稍等一会，上一条还没发送过去哦');
+                return false;
+            }
+            post_comment_flag = false;
+            var post_comment = $("textarea[name='comment']").val();
+            if(post_comment.length < 1){
+                ui.error('...说点什么吧');
+                return false;
+            }
+            var post_email = $("input[name='email']").val();
+            if(!post_email.match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)){
+                ui.error('邮箱格式不正确');
+                return false;
+            }
+
+            var post_username = $("input[name='username']").val();
+            //第一次留言，则把用户的邮箱、称呼、博客地址存到客户端cookie里方便下次调用，而不用浏览的人手动输入了
+            if(!getCookie('username') || getCookie('username') !=  post_username){
+                setCookie('username', post_username);
+            }
+            if(!getCookie('email') || getCookie('email') != post_email){
+                setCookie('email',post_email);
+            }
+
+            $.post(U('Comment/doComment'),{
+                replyId:$("input[name='replyId']").val(),
+                blogid: $("input[name='blogid']").val(),
+                content: post_comment,
+                email: post_email,
+                name:  post_username
+            },function(data){
+                post_comment_flag = true;
+                if(parseInt(data.flag)>0){
+                    ui.success(data.info);
+                    $("#commentList").append('<div class="comment-list clearfix"><div class="comment-list-left"><img src="http://static.mengkang.net/view/images/avatar/1.jpg" alt=""/></div><div class="comment-list-right"><span class="username">'+$("input[name='username']").val()+'</span><span class="time">刚刚</span><p>'+data.data+'</p></div></div>');
+                    $("textarea[name='comment']").val('');
+                    ui.success(data.info);
+                    $("html,body").animate({scrollTop:$("#footer").offset().top},1000);
+                }else{
+                }
+            })
+        }
+    });
+
+</script></div>
+    </div>
+<footer id="footer">
+    <div class="login" id="login">
+        <div class="popbackground"></div>
+        <div class="popbox loginBox" id="loginBox">
+            <div class="innerpopbox">
+                <div class="title">
+                    <div style="font-weight: 800;color: #2e9fff;text-align: center;">登堂入室 请输入密码</div>
+                </div>
+                <div class="password">
+                    <input type="password" name="password"/>
+                    <div><a href="javascript:void(0)" class="loginActive">进入</a><a href="javascript:void(0)" class="closeLoginBox">返回</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright smoothing">
+        <small>
+            <a href="about.me">关于博主 </a>
+<!--            <a class="danciben-link" href="/danciben.html">我的单词本 </a>-->
+            <a href="javascript:void(0)" name="login">登堂入室</a>            © 周梦康 2012 - 2016 京ICP备14049089号-1
+            <span style="display:none">
+                <script type="text/javascript">
+                    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd2adf0c061d575a2921e4a7c41fe9cd6' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+            </span>
+        </small>
+    </div>
+</footer>
+</body>
+</html>

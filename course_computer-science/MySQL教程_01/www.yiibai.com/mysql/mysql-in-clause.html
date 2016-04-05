@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+ <html lang="en">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/mysql/mysql-in-clause.html
+Date Downloaded: 2016/3/26 17:33:23 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		 <meta name="description" content="" />
+		 <meta name="author" content="" />
+		 <title>系统提示信息 - 易百教程 </title>
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		
+		 <!--[if lt IE 9]>
+		<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+		<![endif]-->
+		 <style>
+			.system-main {
+				width: 998px;
+				min-height: 446px;
+				float: left;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				border: 1px solid #e4e4e4;
+				-moz-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+			}
+			.system-main h2 {
+				width: 998px;
+				font-size: 16pt;
+				padding-left: 24px;
+				text-align: left;
+				border-bottom: 1px solid #eeeeee;
+				padding-bottom: 12px;
+				float: left;
+			}
+			.system-main .system-body {
+				width: 798px;
+				min-height: 356px;
+				float: left;
+				margin-left: 68px;
+				text-align: center;
+			}
+			.system-main .system-body h4 {
+				margin-top: 24px;
+				margin-bottom: 24px;
+				color: #A00;
+			}
+			.system-main .system-body p {
+				margin-top: 24px;
+				margin-bottom: 34px;
+				color: #A00;
+				line-height: 24px;
+			}
+		</style>
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">+全部 </a>
+					 <div class="mainmenu-submenu">
+						 <!--//include file="submenu.html"-->
+						
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="index.html">MySQL </a>
+				 </li>
+				
+				 <li>
+					 <a href="http://www.yiibai.com/article/post" style="color: #4f8db1;">+分享文章 </a>
+				 </li>
+				 <li>
+										 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+									 </li>
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <div class="container" style="width:998px; padding:0px; margin-bottom: 18px;" id="news">
+			 <div class="system-main">
+				 <h2 style="font-size: 13.5pt;"> 系统提示信息：  </h2>
+				 <div class="system-body">
+					 <h4><span class="glyphicon glyphicon-info-sign"></span></h4>
+					 <p style="font-size: 12pt;line-height: 22px;color: #1071CB;">
+						对不起，没有找到教程内容信息！
+					 </p>
+					 <p id="message">
+						
+					 </p>
+					 <p style="padding-top: 22px;">
+						 <a class="btn btn-primary" href="javascript:history.go(-1);"> 返回上一页  »  </a>
+						 <a class="btn btn-default" href="../index.html"> 首页  »  </a>
+					 </p>
+				 </div>
+			 </div>
+		 </div>
+		 <!--//container -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2014 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a> .  <a href="/about/flink_apply" target="_blank">申请友情链接 </a> &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+ <script src="../static.v2.0/js/jquery.min.js"></script>
+ <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+ <script src="../static.v2.0/js/bootstrap.min.js"></script>
+ <script src="../static.v2.0/js/leaflet.js"></script>
+ <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+ <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+ <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+ <script src="../static.v2.0/js/main-menu.js"></script>
+ <script src="../static.v2.0/js/template.js"></script>
+
+
+
+		 <script type="text/javascript">
+			var time_out = 3;
+			var gourl = '../index.html';
+			function goUrl() {
+				time_out -- ;
+				if (time_out == 0) {
+					document.location.href = gourl;
+				}
+				//document.getElementById("message").innerHTML = time_out + "秒后自动跳转到某页";
+			}
+			window.setInterval("goUrl()", 1000);
+		</script>
+	 </body>
+ </html>
+
+ y>
+ </html>
+
+ 

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/sched_setscheduler.html
+Date Downloaded: 2016/4/1 16:57:48 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>sched_setscheduler()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="sched,setscheduler,函数,Unix,Lin" />
+		 <meta name="description" content="sched_setscheduler, sched_getscheduler - 设置和获取调度算法/参数 SYNOPSIS #include sched.h int sched_setscheduler(pid_t pid , int policy , const struct sched_param * param ); int sched_getscheduler(pid_t pid ); struct sched_param" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  sched_setscheduler()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">sched_setscheduler()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>王艳青 </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='sched_get_priority_min.html' class='btn' title='sched_get_priority_min()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='sched_rr_get_interval.html' class='btn btn-default' style='float:right;' title='sched_rr_get_interval()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1698" />
+									
+									 <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_setscheduler, sched_getscheduler -&nbsp; </span>设置和获取调度算法/参数
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	内容简介 </h1>
+ <table cellpadding="5" cellspacing="5" class="src" style="font-family: verdana, helvetica, arial, sans-serif;  border-color: rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse;  border-color: rgb(170, 170, 170);">
+				 <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+ <b>#include &lt;sched.h&gt; </b> 
+ </pre>
+				 <p style="text-align: justify;">
+					 <b>int sched_setscheduler(pid_t  </b><i>pid </i><b>, int  </b><i>policy </i><b>, </b>  <b> const struct sched_param * </b><i>param </i><b>); </b></p>
+				 <p style="text-align: justify;">
+					 <b>int sched_getscheduler(pid_t  </b><i>pid </i><b>); </b></p>
+				 <p style="text-align: justify;">
+					 <b>struct sched_param { ... ___  </b><i>sched_priority </i><b>; ... };  </b></p>
+			 </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_setscheduler </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() sets both the __________ policy and the associated __________ for the process identified __&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pid </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">. If&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pid </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;equals zero, the scheduler __ the calling process will __ set. The interpretation of ___ parameter&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">param </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;depends on the selected ______. Currently, the following three __________ policies are supported under _____: </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">,&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_RR </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">,&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">, and&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_BATCH </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">; their respective semantics ___ described below. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <b>sched_getscheduler </b>() queries the scheduling ______ currently applied to the _______ identified by&nbsp; <i>pid </i>. If&nbsp; <i>pid </i>&nbsp;equals zero, the policy __ the calling process will __ retrieved. </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	调度策略 </h2>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">The scheduler is the ______ part that decides which ________ process will be executed __ the CPU next. The _____ scheduler offers three different __________ policies, one for normal _________ and two for real-time ____________. A static priority value&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_priority </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">is assigned to each _______ and this value can __ changed only via system _____. Conceptually, the scheduler maintains _ list of runnable processes ___ each possible </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_priority </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;value, and&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_priority </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;can have a value __ the range 0 to 99. In order to determine ___ process that runs next, ___ Linux scheduler looks for ___ non-empty list with the _______ static priority and takes ___ process at the head __ this list. The scheduling ______ determines for each process, _____ it will be inserted ____ the list of processes ____ equal static priority and ___ it will move inside ____ list. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <i>SCHED_OTHER </i>&nbsp;is the default universal ____-_______ scheduler policy used by ____ processes.&nbsp; <i>SCHED_BATCH </i>&nbsp;is intended for &quot;batch&quot; _____ execution of processes. <i>SCHED_FIFO </i>&nbsp;and&nbsp; <i>SCHED_RR </i>&nbsp;are intended for special ____-________ applications that need precise _______ over the way in _____ runnable processes are selected ___ execution. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Processes scheduled with&nbsp; <i>SCHED_OTHER </i>&nbsp;or&nbsp; <i>SCHED_BATCH </i>&nbsp;must be assigned the ______ priority 0. Processes scheduled _____&____; <i>SCHED_FIFO </i>&nbsp;or&nbsp; <i>SCHED_RR </i>&nbsp;can have a static ________ in the range 1 __ 99. The system calls&nbsp; <b>sched_get_priority_min </b>() and <b>sched_get_priority_max </b>() can be used __ find out the valid ________ range for a scheduling ______ in a portable way __ all POSIX.1-2001 conforming systems. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	All scheduling is preemptive: __ a process with a ______ static priority gets ready __ run, the current process ____ be preempted and returned ____ its wait list. The __________ policy only determines the ________ within the list of ________ processes with equal static ________. </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	SCHED_FIFO：先入先出调度 </h2>
+ <i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;can only be used ____ static priorities higher than 0, which means that when _&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;processes becomes runnable, it ____ always immediately preempt any _________ running&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;or&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_BATCH </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;process.&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is a simple scheduling _________ without time slicing. For _________ scheduled under the </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;policy, the following rules ___ applied: A&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;process that has been _________ by another process of ______ priority will stay at ___ head of the list ___ its priority and will ______ execution as soon as ___ processes of higher priority ___ blocked again. When a&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;process becomes runnable, it ____ be inserted at the ___ of the list for ___ priority. A call to&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_setscheduler </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() or&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_setparam </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() will put the&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;(or&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_RR </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">) process identified by&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pid </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;at the start of ___ list if it was ________. As a consequence, it ___ preempt the currently running _______ if it has the ____ priority. (POSIX.1-2001 specifies that ___ process should go to ___ end of the list.) _ process calling&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_yield </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() will be put __ the end of the ____. No other events will ____ a process scheduled under ___&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;policy in the wait ____ of runnable processes with _____ static priority. A&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;process runs until either __ is blocked by an _/_ request, it is preempted __ a higher priority process, __ it calls&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_yield </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(). </span>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	SCHED_RR：轮循调度 </h2>
+ <i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_RR </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is a simple enhancement __&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">. Everything described above ___ </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_FIFO </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;also applies to&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_RR </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">, except that each _______ is only allowed to ___ for a maximum time _______. If a&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_RR </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;process has been running ___ a time period equal __ or longer than the ____ quantum, it will be ___ at the end of ___ list for its priority. _&____; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_RR </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;process that has been _________ by a higher priority _______ and subsequently resumes execution __ a running process will ________ the unexpired portion of ___ round robin time quantum. ___ length of the time _______ can be retrieved using&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_rr_get_interval </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2). </span>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	SCHED_OTHER：默认的Linux分时调度 </h2>
+ <i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;can only be used __ static priority 0.&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is the standard Linux ____-_______ scheduler that is intended ___ all processes that do ___ require special static priority ____-____ mechanisms. The process to ___ is chosen from the ______ priority 0 list based __ a dynamic priority that __ determined only inside this ____. The dynamic priority is _____ on the nice level (___ by&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">nice </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2) or&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">setpriority </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2)) and increased for ____ time quantum the process __ ready to run, but ______ to run by the _________. This ensures fair progress _____ all&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;processes. </span>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	SCHED_BATCH：调度批处理 </h2>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(Since Linux 2.6.16.)&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_BATCH </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;can only be used __ static priority 0. This ______ is similar to&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">, except that this ______ will cause the scheduler __ always assume that the _______ is CPU-intensive. Consequently, the _________ will apply a small __________ penalty so that this _______ is mildly disfavoured in __________ decisions. This policy is ______ for workloads that are ___-___________, but do not want __ lower their nice value, ___ for workloads that want _ deterministic scheduling policy without _____________ causing extra preemptions (between ___ workload&rsquo;s tasks). </span>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	权限和资源限制 </h2>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">In Linux kernels before 2.6.12, only privileged ( </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">CAP_SYS_NICE </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">) processes can set _ non-zero static priority. The ____ change that an unprivileged _______ can make is to ___ the&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_OTHER </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;policy, and this can ____ be done if the _________ user ID of the ______ of&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_setscheduler </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() matches the real __ effective user ID of ___ target process (i.e., the _______ specified by&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">pid </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">) whose policy is _____ changed. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Since Linux 2.6.12, the&nbsp; <b>RLIMIT_RTPRIO </b>&nbsp;resource limit defines a _______ on an unprivileged process&rsquo;s ________ for the&nbsp; <b>SCHED_RR </b>&nbsp;and&nbsp; <b>SCHED_FIFO </b>&nbsp;policies. If an unprivileged _______ has a non-zero&nbsp; <b>RLIMIT_RTPRIO </b>&nbsp;soft limit, then it ___ change its scheduling policy ___ priority, subject to the ___________ that the priority cannot __ set to a value ______ than the&nbsp; <b>RLIMIT_RTPRIO </b>&nbsp;soft limit. If the&nbsp; <b>RLIMIT_RTPRIO </b>&nbsp;soft limit is 0, ____ the only permitted change __ to lower the priority. _______ to the same rules, _______ unprivileged process can also ____ these changes, as long __ the effective user ID __ the process making the ______ matches the real or _________ user ID of the ______ process. See&nbsp; <b>getrlimit </b>(2) for further information __&____; <b>RLIMIT_RTPRIO </b>. Privileged ( <b>CAP_SYS_NICE </b>) processes ignore this _____; as with older older _______, they can make arbitrary _______ to scheduling policy and ________. </p>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	响应时间 </h2>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">A blocked high priority _______ waiting for the I/O ___ a certain response time ______ it is scheduled again. ___ device driver writer can _______ reduce this response time __ using a &quot;slow interrupt&quot; _________ handler. </span>
+ <h2 style="font-size: 16px; line-height: 1.5; font-family: Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif; margin-bottom: 10px; margin-top: 10px; color: rgb(0, 0, 0);">
+	杂项 </h2>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Child processes inherit the __________ algorithm and parameters across _&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">fork </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(). The scheduling algorithm ___ parameters are preserved across&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">execve </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">(2). </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Memory locking is usually ______ for real-time processes to _____ paging delays, this can __ done with&nbsp; <b>mlock </b>() or&nbsp; <b>mlockall </b>(). </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	As a non-blocking end-less ____ in a process scheduled _____&____; <i>SCHED_FIFO </i>&nbsp;or&nbsp; <i>SCHED_RR </i>will block all processes ____ lower priority forever, a ________ developer should always keep _________ on the console a _____ scheduled under a higher ______ priority than the tested ___________. This will allow an _________ kill of tested real-time ____________ that do not block __ terminate as expected. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	POSIX systems on which&nbsp; <b>sched_setscheduler </b>() and&nbsp; <b>sched_getscheduler </b>() are available define&nbsp; <i>_POSIX_PRIORITY_SCHEDULING </i>&nbsp;in &lt;unistd.h&gt;. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">On success,&nbsp; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_setscheduler </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() returns zero. On _______,&____; </span><b style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">sched_getscheduler </b><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">() returns the policy ___ the process (a non-negative _______). On error, -1 is ________, and </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">errno </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;is set appropriately. </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	错误 </h1>
+ <table border="1" cellpadding="5" cellspacing="0" class="src" style="font-family: verdana, helvetica, arial, sans-serif; border: 1px solid rgb(170, 170, 170); width: 552px; background-color: rgb(241, 241, 241); border-collapse: collapse; padding-left: 5px; vertical-align: top; color: rgb(0, 0, 0);">
+	 <tbody>
+		 <tr>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" width="25%">
+				标签 </th>
+			 <th style="background-color: rgb(205, 205, 205); border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				描述 </th>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EINVAL </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The scheduling&nbsp; <i>policy </i>&nbsp;is not one of ___ recognized policies, or the _________&____; <i>param </i>&nbsp;does not make sense ___ the&nbsp; <i>policy </i>. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>EPERM </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The calling process does ___ have appropriate privileges. </td>
+		 </tr>
+		 <tr valign="top">
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);">
+				 <b>ESRCH </b></td>
+			 <td style="vertical-align: top; margin-bottom: 0px; border-collapse: collapse; border: 1px solid rgb(170, 170, 170);" valign="bottom">
+				The process whose ID __&____; <i>pid </i>&nbsp;could not be found. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	遵循于 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">POSIX.1-2001. The&nbsp; </span><i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">SCHED_BATCH </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;policy is Linux specific. </span>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	注意 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Standard Linux is a _______-_______ operating system and can ______ background processes, interactive applications, ___ soft real-time applications (applications ____ need to usually meet ______ deadlines). This man page __ directed at these kinds __ applications. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Standard Linux is&nbsp; <i>not </i>&nbsp;designed to support hard ____-____ applications, that is, applications __ which deadlines (often much _______ than a second) must __ guaranteed or the system ____ fail catastrophically. Like all _______-_______ operating systems, Linux is ________ to maximize average case ___________ instead of worst case ___________. Linux&rsquo;s worst case performance ___ interrupt handling is much ______ than its average case, ___ various kernel locks (such __ for SMP) produce long _______ wait times, and many __ its performance improvement techniques ________ average time by increasing _____-____ time. For most situations, ____&_____;_ what you want, but __ you truly are developing _ hard real-time application, consider _____ hard real-time extensions to _____ such as RTLinux ( <a href="http://www.rtlinux.org/" style="color: rgb(144, 11, 9); background-color: transparent;">http://www.rtlinux.org </a>) or RTAI ( <a href="http://www.rtai.org/" style="color: rgb(144, 11, 9); background-color: transparent;">http://www.rtai.org </a>) or use a _________ operating system designed specifically ___ hard real-time applications. </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	另请参阅 </h1>
+ <ul style="font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="getpriority.html" style="color: rgb(144, 11, 9); background-color: transparent;">getpriority (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="mlock.html" style="color: rgb(144, 11, 9); background-color: transparent;">mlock (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="mlockall.html" style="color: rgb(144, 11, 9); background-color: transparent;">mlockall (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="munlock.html" style="color: rgb(144, 11, 9); background-color: transparent;">munlock (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="munlockall.html" style="color: rgb(144, 11, 9); background-color: transparent;">munlockall (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="nice.html" style="color: rgb(144, 11, 9); background-color: transparent;">nice (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_get_priority_max.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_get_priority_max (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_get_priority_min.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_get_priority_min (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/sched_getaffinity.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_getaffinity (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_getparam.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_getparam (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_rr_get_interval.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_rr_get_interval (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_setaffinity.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_setaffinity (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_setparam.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_setparam (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="sched_yield.html" style="color: rgb(144, 11, 9); background-color: transparent;">sched_yield (2) </a></p>
+	 </li>
+	 <li>
+		 <p style="text-align: justify;">
+			 <a href="http://www.yiibai.com/unix_system_calls/setpriority.html" style="color: rgb(144, 11, 9); background-color: transparent;">setpriority (2) </a></p>
+	 </li>
+ </ul>
+ <i style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Programming for the real _____ - POSIX.4 </i><span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">&nbsp;by Bill O. Gallmeister, _&_____;______ &amp; Associates, Inc., ISBN 1-56592-074-0&____; </span><br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/sched/" target="_blank">sched </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/setscheduler/" target="_blank">setscheduler </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Lin/" target="_blank">Lin </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>sched_setscheduler()函数 Unix/Linux </b><br />
+									本文地址： <a href="sched_setscheduler.html">http://www.yiibai.com/unix_system_calls/sched_setscheduler.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='sched_get_priority_min.html' class='btn' title='sched_get_priority_min()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='sched_rr_get_interval.html' class='btn btn-default' style='float:right;' title='sched_rr_get_interval()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1698" data-title="sched_setscheduler()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/sched_setscheduler.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>t src="http://s23.cnzz.com/stat.php?id=4255568&web_id=4255568" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="/static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="/static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="/static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="/static.v2.0/js/leaflet.js"></script>
+	 <script src="/static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix/unix-user-administration.html
+Date Downloaded: 2016/4/1 17:08:40 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>UNIX 用户管理 - Unix </title>
+		 <meta name="keywords" content="UNIX,用户,管理,在,Unix,系统,上,的,账户,有三" />
+		 <meta name="description" content="在Unix系统上的账户有三种类型： Root 账号:这也被称为超级用户，并有完整的和不受约束的控制系统。一个超级用户可以运行任何命令，没有任何限制。该用户应承担作为一个系统管理" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix </a> >  UNIX ____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix </a>
+							 <a class="list-group-item" href="unix-getting-started.html" title="Unix是什么？">Unix是什么？ </a><a class="list-group-item" href="unix-file-management.html" title="UNIX 文件管理">UNIX 文件管理 </a><a class="list-group-item" href="unix-directories.html" title="UNIX 目录管理">UNIX 目录管理 </a><a class="list-group-item" href="unix-file-permission.html" title="UNIX 文件权限/访问模式">UNIX 文件权限/访问模式 </a><a class="list-group-item" href="unix-environment.html" title="UNIX 环境">UNIX 环境 </a><a class="list-group-item" href="unix-basic-utilities.html" title="Unix 基本工具(打印，电子邮件)">Unix 基本工具(打印，电子邮件) </a><a class="list-group-item" href="unix-pipes-filters.html" title="UNIX 管道和过滤器">UNIX 管道和过滤器 </a><a class="list-group-item" href="unix-processes.html" title="UNIX 进程管理">UNIX 进程管理 </a><a class="list-group-item" href="unix-communication.html" title="UNIX 网络实用工具">UNIX 网络实用工具 </a><a class="list-group-item" href="unix-vi-editor.html" title="vi编辑器教程">vi编辑器教程 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="unix-regular-expressions.html" title="Unix 正则表达式SED">Unix 正则表达式SED </a><a class="list-group-item" href="unix-file-system.html" title="Unix 文件系统基础">Unix 文件系统基础 </a><a class="list-group-item" href="unix-user-administration.html" title="UNIX 用户管理">UNIX 用户管理 </a><a class="list-group-item" href="unix-system-performance.html" title="UNIX 系统性能">UNIX 系统性能 </a><a class="list-group-item" href="unix-system-logging.html" title="UNIX 系统日志">UNIX 系统日志 </a><a class="list-group-item" href="unix-signals-traps.html" title="UNIX 信号和陷阱">UNIX 信号和陷阱 </a><a class="list-group-item" href="unix-useful-commands.html" title="Unix 有用命令">Unix 有用命令 </a><a class="list-group-item" href="unix-builtin-functions.html" title="Shell 内置数学函数">Shell 内置数学函数 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">UNIX 用户管理 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>jink2005 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='unix-file-system.html' class='btn' title='Unix 文件系统基础' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-system-performance.html' class='btn btn-default' style='float:right;' title='UNIX 系统性能'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1478" />
+									 <p>
+	在Unix系统上的账户有三种类型： </p>
+ <ol>
+	 <li>
+		 <p>
+			Root 账号:&nbsp;这也被称为超级用户，并有完整的和不受约束的控制系统。一个超级用户可以运行任何命令，没有任何限制。该用户应承担作为一个系统管理员。 </p>
+	 </li>
+	 <li>
+		 <p>
+			System 账号:&nbsp;系统帐户是那些需要特定系统组件，例如电子邮件帐户和sshd的账户的操作。这些账户通常需要在您的系统上的一些特定功能，任何修改系统可能会受到不好的影响。 </p>
+	 </li>
+	 <li>
+		 <p>
+			User 账号:&nbsp;用户帐户提供交互式访问系统的用户和用户组。一般使用者通常分配给这些帐户，通常有有限的访问关键系统文件和目录。 </p>
+	 </li>
+ </ol>
+ <p>
+	UNIX支持组帐户的概念逻辑分组多个账户。每个帐户将任何组帐户的一部分。 Unix群组中起着重要的作用，在处理文件的权限和流程管理。 </p>
+ <h2>
+	管理用户和组： </h2>
+ <p>
+	有三个主要的用户管理文件： </p>
+ <ol>
+	 <li>
+		 <p>
+			/etc/passwd:&nbsp;保持用户帐户和密码信息。这个文件包含了大多数的Unix系统上的账户信息。 </p>
+	 </li>
+	 <li>
+		 <p>
+			/etc/shadow:&nbsp;相应的帐户保存加密口令。并非所有的系统支持此文件。 </p>
+	 </li>
+	 <li>
+		 <p>
+			/etc/group:&nbsp;此文件包含每个帐户的组信息。 </p>
+	 </li>
+	 <li>
+		 <p>
+			/etc/gshadow:&nbsp;此文件包含安全组的帐户信息。 </p>
+	 </li>
+ </ol>
+ <p>
+	检查上述所有文件使用cat命令。 </p>
+ <p>
+	以下是大多数Unix系统上可用来创建和管理帐户和组的命令： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				 <span style="text-align: justify;">命令 </span></th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 409px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				useradd </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Adds accounts to the ______. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				usermod </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Modifies account attributes. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				userdel </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Deletes accounts from the ______. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				groupadd </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Adds groups to the ______. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				groupmod </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Modifies group attributes. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				groupdel </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Removes groups from the ______. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	您可以使用联机帮助帮助这里提到的每个命令的语法检查完成。 </p>
+ <h2>
+	创建一个组 </h2>
+ <p>
+	您需要创建组，然后才能再创建任何帐户，系统中必须使用现有组。你将不得不在&nbsp;/etc/groups文件中列出的所有组。 </p>
+ <p>
+	所有默认组将系统帐户的特定群体，它是不推荐使用普通帐户。所以语法来创建一个新的帐户： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+ groupadd [-g gid [-_]] [-r] [-f] groupname
+ </pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下面是详细的参数： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				选项 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 409px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-g GID </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				The numerical value of ___ group&#39;s ID. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-o </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This option permits to ___ group with non-unique GID </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-r </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This flag instructs groupadd __ add a system account </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-f </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This option causes to ____ exit with success status __ the specified group already ______. With -g, if specified ___ already exists, other (unique) ___ is chosen </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				groupname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Actaul group name to __ created. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	如果你不指定任何参数，那么系统将使用默认值。 </p>
+ <p>
+	以下示例将创建开发组的默认值，这是非常可以接受的大多数管理员。 </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ groupadd developers
+ </pre>
+ <h2>
+	修改组： </h2>
+ <p>
+	要修改组，使用groupmod语法： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ groupmod -n new_modified_group_name ______________
+ </pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	要改变developers_2 组的名称到开发组，输入： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ groupmod -n developer __________2
+ </pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	这里显示如何改变GID为545： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ groupmod -g 545 _________
+ </pre>
+ <h2>
+	删除组： </h2>
+ <p>
+	要删除现有的组，所有你需要的是一个命令groupdel命令和组名。要删除的&nbsp;financial &nbsp;组，该命令是： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ groupdel developer
+ </pre>
+ <p>
+	这将删除组，没有任何与该组相关的文件。这些文件是由他们的所有者仍然可以访问。 </p>
+ <h2>
+	创建一个帐户 </h2>
+ <p>
+	让我们来看看如何在你的Unix系统上创建一个新的帐户。以下是语法来创建用户帐户： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+useradd -d homedir -g _________ -m -s shell -u ______ accountname
+ </pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下面是详细的参数： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				Option </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 409px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-d homedir </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Specifies home directory for ___ account. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-g groupname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Specifies a group account ___ this account. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-m </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Creates the home directory __ it doesn&#39;t exist. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-s shell </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Specifies the default shell ___ this account. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				-u userid </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				You can specify a ____ id for this account. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				accountname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Actual account name to __ created </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	如果你不指定任何参数，那么系统将使用默认值。useradd命令修改了&nbsp;/etc/passwd, /etc/shadow, 和 /etc/group文件，并创建一个主目录。 </p>
+ <p>
+	下面的例子将创建一个帐户 mcmohd 其主目录设置到&nbsp;/home/mcmohd&nbsp;和开发组。该用户将有Korn Shell的分配给它。&nbsp; </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ useradd -d /home/mcmohd -_ developers -s /bin/ksh mcmohd
+ </pre>
+ <p>
+	发出上述命令前，请确保你已经有开发组使用groupadd的命令创建。 </p>
+ <p>
+	一旦创建一个帐户，你可以设置其密码，使用passwd命令如下： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ passwd mcmohd20
+Changing password ___ user mcmohd20.
+New UNIX password:
+Retype ___ UNIX password:
+passwd: all authentication ______ updated successfully.
+ </pre>
+ <p>
+	当你输入&nbsp;passwd accountname，它给你提供的密码你是超级用户，否则，你就可以改变你的密码使用相同的命令，但没有指定帐户名选项来改变。 </p>
+ <h2>
+	修改帐户： </h2>
+ <p>
+	通过usermod命令使您可以更改现有的帐户，在命令行。它使用相同的参数，useradd命令，加上-l参数，它允许您更改帐户名。 </p>
+ <p>
+	举例来说，，更改帐户名称 mcmohd 到 mcmohd20，并相应地改变主目录，你会需要发出以下命令： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint" style="font-size: 12px;">
+$ usermod -d /home/mcmohd20 -_ -l mcmohd mcmohd20
+ </pre>
+ <h2>
+	删除一个帐户： </h2>
+ <p>
+	userdel命令可以用来删除现有用户。这是一个非常危险的命令，如果不小心使用。 </p>
+ <p>
+	只有一个参数或选项可用于命令：.r，删除帐户的主目录和邮件文件。 </p>
+ <p>
+	例如，删除帐户mcmohd20，您将需要发出以下命令： </p>
+ <pre class="prettyprint" style="font-size: 12px;">
+$ userdel -r mcmohd20
+ </pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	如果你想保持她的主目录备份的目的，省略-r选项。您可以删除的主目录，在以后的时间。 </p>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/UNIX/" target="_blank">UNIX </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/用户/" target="_blank">用户 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/管理/" target="_blank">管理 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/在/" target="_blank">在 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/系统/" target="_blank">系统 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/上/" target="_blank">上 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/的/" target="_blank">的 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/账户/" target="_blank">账户 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/有三/" target="_blank">有三 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>UNIX 用户管理 </b><br />
+									本文地址： <a href="unix-user-administration.html">http://www.yiibai.com/unix/unix-user-administration.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='unix-file-system.html' class='btn' title='Unix 文件系统基础' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-system-performance.html' class='btn btn-default' style='float:right;' title='UNIX 系统性能'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1478" data-title="UNIX 用户管理" data-url="http://www.yiibai.com/unix/unix-user-administration.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>ript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

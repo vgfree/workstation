@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix/unix-regular-expressions.html
+Date Downloaded: 2016/4/1 17:08:39 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>Unix 正则表达式SED - Unix </title>
+		 <meta name="keywords" content="Unix,正则,表达式,SED,正则,表达式,是,一个," />
+		 <meta name="description" content="正则表达式是一个字符串，它可以用来描述几个字符序列。使用正则表达式是由几个不同的Unix命令，包括ed, sed, awk, grep，并且，在较为有限的程度上扩展vi. 本教程将教你如何使用正则" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix </a> >  Unix ________
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix </a>
+							 <a class="list-group-item" href="unix-getting-started.html" title="Unix是什么？">Unix是什么？ </a><a class="list-group-item" href="unix-file-management.html" title="UNIX 文件管理">UNIX 文件管理 </a><a class="list-group-item" href="unix-directories.html" title="UNIX 目录管理">UNIX 目录管理 </a><a class="list-group-item" href="unix-file-permission.html" title="UNIX 文件权限/访问模式">UNIX 文件权限/访问模式 </a><a class="list-group-item" href="unix-environment.html" title="UNIX 环境">UNIX 环境 </a><a class="list-group-item" href="unix-basic-utilities.html" title="Unix 基本工具(打印，电子邮件)">Unix 基本工具(打印，电子邮件) </a><a class="list-group-item" href="unix-pipes-filters.html" title="UNIX 管道和过滤器">UNIX 管道和过滤器 </a><a class="list-group-item" href="unix-processes.html" title="UNIX 进程管理">UNIX 进程管理 </a><a class="list-group-item" href="unix-communication.html" title="UNIX 网络实用工具">UNIX 网络实用工具 </a><a class="list-group-item" href="unix-vi-editor.html" title="vi编辑器教程">vi编辑器教程 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="unix-regular-expressions.html" title="Unix 正则表达式SED">Unix 正则表达式SED </a><a class="list-group-item" href="unix-file-system.html" title="Unix 文件系统基础">Unix 文件系统基础 </a><a class="list-group-item" href="unix-user-administration.html" title="UNIX 用户管理">UNIX 用户管理 </a><a class="list-group-item" href="unix-system-performance.html" title="UNIX 系统性能">UNIX 系统性能 </a><a class="list-group-item" href="unix-system-logging.html" title="UNIX 系统日志">UNIX 系统日志 </a><a class="list-group-item" href="unix-signals-traps.html" title="UNIX 信号和陷阱">UNIX 信号和陷阱 </a><a class="list-group-item" href="unix-useful-commands.html" title="Unix 有用命令">Unix 有用命令 </a><a class="list-group-item" href="unix-builtin-functions.html" title="Shell 内置数学函数">Shell 内置数学函数 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">Unix 正则表达式SED </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>桥下一粒砂 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='unix-vi-editor.html' class='btn' title='vi编辑器教程' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-file-system.html' class='btn btn-default' style='float:right;' title='Unix 文件系统基础'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1476" />
+									 <p>
+	正则表达式是一个字符串，它可以用来描述几个字符序列。使用正则表达式是由几个不同的Unix命令，包括&nbsp;ed, sed, awk, grep，并且，在较为有限的程度上扩展&nbsp;vi. </p>
+ <p>
+	本教程将教你如何使用正则表达式使用&nbsp;sed. </p>
+ <p>
+	这里流编辑器sed的代表是面向流的编辑器，它是专门用于执行脚本创建。因此，所有的输入送入通过到stdout，它不会改变输入文件。 </p>
+ <h2>
+	调用&nbsp;sed: </h2>
+ <p>
+	在我们开始之前，让我们确保你有一个本地副本 /etc/passwd 文件的文本文件，用sed。 </p>
+ <p>
+	正如前面提到的，可以调用sed的发送数据通过管道如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Usage </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">OPTION </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]... </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">{ </span><span class="pln" style="margin: 0px; padding: 0px;">script </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">other </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">script </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">} </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">input </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">file </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]... </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">n </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">quiet </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">silent
+                 suppress automatic ________ of pattern space
+   </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e script </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">expression </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;">script
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">............................... </span></pre>
+ <p>
+	cat命令转储 /etc/passwd文件的内容通过管道进入sed 模式空间sed&nbsp;。是内部工作模式空间缓冲区，sed使用做其工作。 </p>
+ <h2>
+	sed 一般语法： </h2>
+ <p>
+	以下是 sed 的一般语法 </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/pattern/ </span><span class="pln" style="margin: 0px; padding: 0px;">action </span></pre>
+ <p>
+	在这里，模式是一个正则表达式，动作是下表中给出的命令之一。如果省略模式，执行操作的每一行，正如我们上面看到的。 </p>
+ <p>
+	斜线字符（/），环绕模式是必需的，因为它们被用来作为分隔符。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 106px;">
+				Range </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 432px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				p </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Prints the line </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				d </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Deletes the line </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				s/pattern1/pattern2/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Substitutes the first occurrence __ pattern1 with pattern2. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	用sed删除所有行： </h2>
+ <p>
+	再次调用sed ，但这个时候告诉sed使用编辑命令删除行，由单字母d表示： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;d&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+$ </span></pre>
+ <p>
+	调用sed 发送文件，通过管道，而是可以指示sed来读取数据文件，在下面的例子。 </p>
+ <p>
+	下面的命令做完全一样的东西，以前的尝试，没有 cat 命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;d&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd
+$ </span></pre>
+ <h2>
+	sed 位址： </h2>
+ <p>
+	SED还了解到一种叫做地址。位址是特定的地点，在一个文件或一个特定的编辑命令应适用范围。当sed遇到没有地址，在该文件中的每一行上执行其操作。 </p>
+ <p>
+	以下命令将sed 命令你已经使用了一个基本的地址： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;1d&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;">more
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/dev:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">65534 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sync
+games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">60 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">12 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">cache </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">spool </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">backups </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+$ </span></pre>
+ <p>
+	请注意，数字1之前添加删除编辑命令。这告诉sed执行编辑命令的第一行上的文件。在这个例子中，sed将删除第一行 /etc/password，并打印文件的其余部分。 </p>
+ <h2>
+	sed 地址范围： </h2>
+ <p>
+	所以如果你想从文件中删除多个行？用sed，您可以指定一个地址范围如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;1, 5d&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;">more
+games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">60 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">12 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">cache </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">spool </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">backups </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+$ </span></pre>
+ <p>
+	上面的命令将开始从1至5的所有行。所以，删除前五行。 </p>
+ <p>
+	试试下面的地址范围： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 73px;">
+				Range </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 465px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;4,10d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Lines starting from 4th ____ 10th are deleted </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;10,4d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Only 10th line is _______, because sed does not ____ in reverse direction. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;4,+5d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This will match line 4 in the file, delete ____ line, continue to delete ___ next five lines, and ____ cease its deletion and _____ the rest </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;2,5!d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This will deleted everything ______ starting from 2nd till 5__ line. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;1~3d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This deletes the first ____, steps over the next _____ lines, and then deletes ___ fourth line. Sed continues ________ this pattern until the ___ of the file. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;2~2d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This tells sed to ______ the second line, step ____ the next line, delete ___ next line, and repeat _____ the end of the ____ is reached. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;4,10p&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Lines starting from 4th ____ 10th are printed </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;4,d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This would generate syntax _____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				&#39;,10d&#39; </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This would also generate ______ error. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	注：使用p动作时，你应该使用-n选项，以避免重复行式打印。检查以下两条命令之间的区别： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">n  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;1,3p&#39; </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	检查上面的命令没有-n作为如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;1,3p&#39; </span></pre>
+ <h2>
+	替换命令： </h2>
+ <p>
+	替换命令，用s表示，将您指定的其他任何字符串中指定的任何字符串代替。 </p>
+ <p>
+	用一个字符串代替另一个，你需要有一些方式告诉sed，你的第一个字符串结束，并开始替换字符串。这是传统上是由两个字符串bookending斜线（/）字符。 </p>
+ <p>
+	首次出现一行字符串根字符串amrood与下面的命令替代。 </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/root/amrood/&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+amrood </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">root user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/root:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.......................... </span></pre>
+ <p>
+	这是非常重要的，需要注意的是替代sed的只有第一次出现的行上。如果字符串根不止一次发生在一行的第一个匹配项将被替换。 </p>
+ <p>
+	告诉sed执行全局替换，添加字母g结束的命令如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/root/amrood/g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+amrood </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">amrood user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/amrood:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/dev:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">........................... </span></pre>
+ <h2>
+	替代标志： </h2>
+ <p>
+	还有一些其他有用的g标志除了可以传递的标志，你可以一次指定多个。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 101px;">
+				标志 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 437px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				g </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Replace all matches, not ____ the first match. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				NUMBER </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Replace only NUMBERth match. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				p </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				If substitution was made, _____ pattern space. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				w FILENAME </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				If substitution was made, _____ result to FILENAME. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				I or i </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Match in a case-insensitive ______. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				M or m </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				In addition to the ______ behavior of the special _______ expression characters ^ and $, this flag causes ^ __ match the empty string _____ a newline and $ __ match the empty string ______ a newline. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	使用替代字符串分隔符： </h2>
+ <p>
+	您可能会发现自己不得不做一个替换在一个字符串，其中包含斜线字符。在这种情况下，您可以指定不同的分隔，提供指定的字符后的s。 </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s:/root:/amrood:g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+amrood </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">amrood user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/amrood:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh </span></pre>
+ <p>
+	在上面的例子中，我们使用：作为分隔符，而不是斜线（/），因为我们试图搜索/root&nbsp;，而不是简单的root。 </p>
+ <h2>
+	替换空字符： </h2>
+ <p>
+	使用空替换字符串从 /etc/passwd 文件中完全删除root字符串： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/root//g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">:: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh </span></pre>
+ <h2>
+	地址替换： </h2>
+ <p>
+	如果你想用quiet 在第10行字符串替换字符串的sh，您可以指定如下：&nbsp; </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;10s/sh/quiet/g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+root </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">root user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/root:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/dev:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">65534 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sync
+games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">60 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">12 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">cache </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">spool </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">backups </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">quiet </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	同样，做一个地址范围替换，你可以做类似以下内容： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">passwd  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;1,5s/sh/quiet/g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+root </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">root user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/root:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">quiet
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">quiet
+bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">quiet
+sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/dev:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">quiet
+sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">65534 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sync
+games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">60 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">12 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">cache </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">spool </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">backups </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh </span></pre>
+ <p>
+	正如你可以看到从输出前五行字符串的sh改变quiet，但其余各行均保持不变。 </p>
+ <h2>
+	匹配的命令： </h2>
+ <p>
+	你会使用-n选项一起使用p选项打印所有匹配的行，如下所示： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat testing  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">n  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;/root/p&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+root </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">root user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/root:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="pln" style="margin: 0px; padding: 0px;">root@ip </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">72 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">167 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">112 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">17 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]# </span><span class="pln" style="margin: 0px; padding: 0px;"> vi testing
+root </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">root user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/root:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">daemon </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">sbin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/dev:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">65534 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sync
+games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">60 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">12 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">cache </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">spool </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">backups </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh </span></pre>
+ <h2>
+	使用正则表达式： </h2>
+ <p>
+	在匹配模式中，你可以使用正则表达式，它提供了更多的灵活性。 </p>
+ <p>
+	检查下面的例子匹配所有的行开始守护进程，然后删除它们： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat testing  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;/^daemon/d&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+root </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">0 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">root user </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/root:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sys </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/dev:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">65534 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sync
+games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">60 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/usr/ </span><span class="pln" style="margin: 0px; padding: 0px;">games </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">12 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">cache </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">man </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">spool </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh
+backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">34 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">backup </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">backups </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin/ </span><span class="pln" style="margin: 0px; padding: 0px;">sh </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下面的例子将删除所有的行以sh结束： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat testing  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;/sh$/d&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">x </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">65534 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/bin:/ </span><span class="pln" style="margin: 0px; padding: 0px;">bin </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">sync </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下表列出了四个特殊字符在正则表达式中是非常有用的。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 101px;">
+				字符 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 437px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				^ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches the beginning of _____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				$ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches the end of _____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				. </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches any single character. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				* </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches zero or more ___________ of the previous character </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[chars] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches any one of ___ characters given in chars, _____ chars is a sequence __ characters. You can use ___ - character to indicate _ range of characters. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	匹配字符： </h2>
+ <p>
+	看几个表达式元字符演示使用。例如，下面的模式： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 101px;">
+				表达式 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 437px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/a.c/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches lines that contain _______ such as a+c, a-c, ___, match, and a3c, whereas ___ pattern </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/a*c/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches the same strings _____ with strings such as ___, yacc, and arctic. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/[tT]he/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches the string The ___ the: </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/^$/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches Blank lines </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/^.*$/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches an entire line ________ it is. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/ */ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches one or more ______ </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/^$/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches Blank lines </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下表列出了一些常用的字符集： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 101px;">
+				Set </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 437px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[a-z] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches a single lowercase ______ </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[A-Z] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches a single uppercase ______ </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[a-zA-Z] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches a single letter </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[0-9] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches a single number </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[a-zA-Z0-9] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Matches a single letter __ number </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	字符类关键词： </h2>
+ <p>
+	一些特殊的关键字是常用的正则表达式，特别是GNU工具，采用正则表达式。这些sed的正则表达式是非常有用的，因为它们简化了的东西，增强可读性。 </p>
+ <p>
+	例如，字符a到z以及A到Z的字符构成的字符的其中一类，具有关键字&nbsp;[[:alpha:]] </p>
+ <p>
+	使用字母字符类的关键字，只有那些行在&nbsp;/etc/syslog.conf&nbsp;文件，一个字母开始，这个命令打印： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">syslog </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">conf  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">n  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;/^[[:alpha:]]/p&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+authpriv </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.* </span><span class="pln" style="margin: 0px; padding: 0px;">                          </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">log </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">secure
+mail </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.* </span><span class="pln" style="margin: 0px; padding: 0px;">                              </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/var/ </span><span class="pln" style="margin: 0px; padding: 0px;">log </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">maillog
+cron </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.* </span><span class="pln" style="margin: 0px; padding: 0px;">                              </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">log </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">cron
+uucp </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">news </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">crit                      </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">log </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">spooler
+local7 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.* </span><span class="pln" style="margin: 0px; padding: 0px;">                            </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">log </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">boot </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">log </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下表是GNU sed的可用字符类中的关键字的完整列表。 </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 157px;">
+				Character Class </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 381px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:alnum:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Alphanumeric [a-z A-Z 0-9] </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:alpha:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Alphabetic [a-z A-Z] </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:blank:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Blank characters (spaces or ____) </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:cntrl:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Control characters </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:digit:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Numbers [0-9] </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:graph:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Any visible characters (excludes __________) </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:lower:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Lowercase letters [a-z] </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:print:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Printable characters (noncontrol characters) </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:punct:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Punctuation characters </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:space:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Whitespace </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:upper:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Uppercase letters [A-Z] </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				[[:xdigit:]] </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Hex digits [0-9 a-f _-_] </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	与符号引用： </h2>
+ <p>
+	sed 字元代表的模式相匹配的内容。例如，假设你有一个文件名为phone.txt的完整电话号码，如下面的： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5555551212 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5555551213 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5555551214 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6665551215 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6665551216 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">7775551217 </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	你想更容易阅读的括号包围的区域码（前三位）。要做到这一点，你可以使用符号替换字符，像这样： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/^[[:digit:]][[:digit:]][[:digit:]]/(&amp;)/g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;"> phone </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">txt
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5551212 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5551213 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5551214 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5551215 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5551216 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">777 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5551217 </span></pre>
+ <p>
+	在模式匹配第3位，然后使用要更换这3个数字与周围的括号。 </p>
+ <h2>
+	使用多个sed命令： </h2>
+ <p>
+	您可以使用多个sed命令在一个单一的sed命令如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;command1&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;command2&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;commandN&#39; </span><span class="pln" style="margin: 0px; padding: 0px;"> files </span></pre>
+ <p>
+	这里命令通过commandN是前面讨论过的类型的sed命令。这些命令被施加到给定的文件的文件列表中的各行。 </p>
+ <p>
+	我们可以使用相同的机制，上面写的电话号码的例子如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ sed  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/^[[:digit:]]{3}/(&amp;)/g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">  
+                       </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">e  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/)[[:digit:]]{3}/&amp;-/g&#39; </span><span class="pln" style="margin: 0px; padding: 0px;"> phone </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">txt
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1212 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1213 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1214 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1215 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1216 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">777 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1217 </span></pre>
+ <p>
+	注：在上面的例子中，而不是重复字符类关键字&nbsp;[[:digit:]]三次，取而代之的是{3}，这意味着匹配前面的正则表达式三次。在这里，我用  断行运行此命令之前你应该删除。&nbsp; </p>
+ <h2>
+	返回参考： </h2>
+ <p>
+	符号元字符是有用的，但更为有用的是能够定义特定的区域，在一个正则表达式，这样你就可以替换字符串中引用它们。通过定义一个正则表达式的特定部分，你可以参考那些部分特别提到字符。 </p>
+ <p>
+	要做返回引用，你必须首先定义一个区域，然后参考该区域。要定义一个区域，你插入反斜杠括号，围绕感兴趣区域。环绕反斜杠第一区域，然后引用 1， 2 第二区域，依此类推。 </p>
+ <p>
+	假设phone.txt有以下文字： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1212 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1213 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1214 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1215 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1216 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">777 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1217 </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	现在尝试下面的命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat phone </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">txt  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">| </span><span class="pln" style="margin: 0px; padding: 0px;"> sed  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;s/(.*))(.*-)(.*$)/Area 
+                       ____: 1 Second: 2 Third: 3/&#39; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Area </span><span class="pln" style="margin: 0px; padding: 0px;"> code </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Second </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Third </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1212 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Area </span><span class="pln" style="margin: 0px; padding: 0px;"> code </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Second </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Third </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1213 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Area </span><span class="pln" style="margin: 0px; padding: 0px;"> code </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Second </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Third </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1214 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Area </span><span class="pln" style="margin: 0px; padding: 0px;"> code </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Second </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Third </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1215 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Area </span><span class="pln" style="margin: 0px; padding: 0px;"> code </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">666 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Second </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Third </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1216 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Area </span><span class="pln" style="margin: 0px; padding: 0px;"> code </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">777 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Second </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">555 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Third </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1217 </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	注意：在上面的例子中括号内的每个正则表达式将引用1 2，依此类推。在这里，我用断行运行此命令之前你应该删除。 </p>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/正则/" target="_blank">正则 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/表达式/" target="_blank">表达式 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/SED/" target="_blank">SED </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/正则/" target="_blank">正则 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/表达式/" target="_blank">表达式 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/是/" target="_blank">是 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/一个/" target="_blank">一个 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag//" target="_blank"></a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>Unix 正则表达式SED </b><br />
+									本文地址： <a href="unix-regular-expressions.html">http://www.yiibai.com/unix/unix-regular-expressions.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='unix-vi-editor.html' class='btn' title='vi编辑器教程' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-file-system.html' class='btn btn-default' style='float:right;' title='Unix 文件系统基础'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1476" data-title="Unix 正则表达式SED" data-url="http://www.yiibai.com/unix/unix-regular-expressions.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>ript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

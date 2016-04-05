@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix_system_calls/ioctl_list.html
+Date Downloaded: 2016/4/1 17:08:38 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=11,IE=10,IE=9,IE=8" />
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+		 <meta http-equiv="Cache-Control" content="no-siteapp" />
+		 <title>ioctl_list()函数 Unix/Linux - Unix/Linux系统调用 </title>
+		 <meta name="keywords" content="ioctl,list,函数,Unix,Linux,ioctl" />
+		 <meta name="description" content="ioctl_list - 在Linux/i386 中内核的ioctl调用列表 DESCRIPTION This is Ioctl List 1.3.27, a list of ioctl calls in Linux/i386 kernel 1.3.27. It contains 421 ioctls from /usr/include/{asm,linux}/*.h. For each ioctl, its numerical value" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix/Linux系统调用 </a> >  ioctl_list()函数 ____/_____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">						
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix/Linux系统调用 </a>
+							 <a class="list-group-item" href="accept.html" title="accept()函数 Unix/Linux">accept()函数 Unix/Linux </a><a class="list-group-item" href="access.html" title="access()函数 Unix/Linux">access()函数 Unix/Linux </a><a class="list-group-item" href="acct.html" title="acct()函数 Unix/Linux">acct()函数 Unix/Linux </a><a class="list-group-item" href="add_key.html" title="add_key()函数 Unix/Linux">add_key()函数 Unix/Linux </a><a class="list-group-item" href="afs_sys.html" title="afs_syscall()函数 Unix/Linux">afs_syscall()函数 Unix/Linux </a><a class="list-group-item" href="alarm.html" title="alarm()函数 Unix/Linux">alarm()函数 Unix/Linux </a><a class="list-group-item" href="alloc_hugepages.html" title="alloc_hugepages()函数 Unix/Linux">alloc_hugepages()函数 Unix/Linux </a><a class="list-group-item" href="arch_prctl.html" title="arch_prctl()函数 Unix/Linux">arch_prctl()函数 Unix/Linux </a><a class="list-group-item" href="bdflush.html" title="bdflush()函数 Unix/Linux">bdflush()函数 Unix/Linux </a><a class="list-group-item" href="bind.html" title="bind()函数 Unix/Linux">bind()函数 Unix/Linux </a><a class="list-group-item" href="brk.html" title="brk()函数 Unix/Linux">brk()函数 Unix/Linux </a><a class="list-group-item" href="cacheflush.html" title="cacheflush()函数 Unix/Linux">cacheflush()函数 Unix/Linux </a><a class="list-group-item" href="chdir.html" title="chdir()函数 Unix/Linux">chdir()函数 Unix/Linux </a><a class="list-group-item" href="chmod.html" title="chmod()函数 Unix/Linux">chmod()函数 Unix/Linux </a><a class="list-group-item" href="connect.html" title="connect()函数 Unix/Linux">connect()函数 Unix/Linux </a><a class="list-group-item" href="epoll_create.html" title="epoll_create()函数 Unix/Linux">epoll_create()函数 Unix/Linux </a><a class="list-group-item" href="execve.html" title="execve()函数 Unix/Linux">execve()函数 Unix/Linux </a>
+						 </div>
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;">
+								 <h1 style="font-size: 20pt;text-align:center;">ioctl_list()函数 Unix/Linux </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>luck6688 </b> 翻译整理 &nbsp;  </span>
+								 <span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>
+							 </div>							
+
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body" style="">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='ioctl.html' class='btn' title='ioctl()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='io_destroy.html' class='btn btn-default' style='float:right;' title='io_destroy()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1588" />
+									
+									 <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">ioctl_list -&nbsp; </span>在Linux/i386 中内核的ioctl调用列表
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	描述 </h1>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	This is Ioctl List 1.3.27, a list of ioctl _____ in Linux/i386 kernel 1.3.27. __ contains 421 ioctls from /___/_______/{___,_____}/*._. For each ioctl, its _________ value, its name, and ___ argument type are given. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	An argument type of &_____;_____ struct foo *&rsquo; means ___ argument is input to ___ kernel. &rsquo;struct foo *&rsquo; _____ the kernel outputs the ________. If the kernel uses ___ argument for both input ___ output, this is marked ____ // I-O. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	一些读写控制采取更多参数或返回超过一个单一的结构更多的值。这些标记//以上，进一步在一个单独的部分记录。 </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	这个列表是非常不完整的。请电邮修订和批注，Mail:&nbsp;&lt; <a href="mailto:mec@duracef.shout.net" style="color: rgb(144, 11, 9); background-color: transparent;">mec@duracef.shout.net </a>&gt;. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	IOCTL结构 </h1>
+ioctl命令的值是32位的常数。原则上这些常量是完全任意的，但人们都试图建立一些结构放进去。 <br />
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The old Linux situation ___ that of mostly 16-bit _________, where the last byte __ a serial number, and ___ preceding byte(s) give a ____ indicating the driver. Sometimes ___ major number was used: 0_03 for the HDIO_* ioctls, 0_06 for the LP* ioctls. ___ sometimes one or more _____ letters were used. For _______, TCGETS has value 0x00005401, ____ 0x54 = &rsquo;T&rsquo; indicating ___ terminal driver, and CYGETTIMEOUT ___ value 0x00435906, with 0x43 0_59 = &rsquo;C&rsquo; &rsquo;Y&rsquo; indicating ___ cyclades driver. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Later (0.98p5) some more ___________ was built into the ______. One has 2 direction ____ (00: none, 01: write, 10: read, 11: read/write) followed __ 14 size bits (giving ___ size of the argument), ________ by an 8-bit type (__________ the ioctls in groups ___ a common purpose or _ common driver), and an 8-___ serial number. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	The macros describing this _________ live in &lt;asm/ioctl.h&gt; and ___ _IO(type,nr) and {_IOR,_IOW,_IOWR}(type,nr,size). They ___ sizeof(size) so that size __ a misnomer here: this _____ parameter is a data ____. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Note that the size ____ are very unreliable: in ____ of cases they are _____, either because of buggy ______ using sizeof(sizeof(struct)), or because __ legacy values. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	Thus, it seems that ___ new structure only gave _____________: it does not help __ checking, but it causes _______ values for the various _____________. </p>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <h1 class="manpages" style="font-weight: normal; font-size: 18px; line-height: 1.5; font-family: Calibri; margin-bottom: 0px; color: rgb(0, 0, 0);">
+	返回值 </h1>
+ <span style="color: rgb(0, 0, 0); font-family: verdana, helvetica, arial, sans-serif;">Decent ioctls return 0 __ success and -1 on _____, while any output value __ stored via the argument. _______, quite a few ioctls __ fact return an output _____. This is not yet _________ below. </span>
+ <p style="text-align: justify; font-family: verdana, helvetica, arial, sans-serif; color: rgb(0, 0, 0);">
+	&nbsp; </p>
+ <pre style="font-family: 'Courier New', monospace; font-size: 12px; margin-bottom: 0px;">
+// Main table.
+
+
+//  <include asm-i386="" socket.h="">
+0x00008901  FIOSETOWN                   const int *
+0x00008902  SIOCSPGRP                   _____ int *
+0x00008903  FIOGETOWN                   int *
+0x00008904  SIOCGPGRP                   ___ *
+0x00008905  SIOCATMARK                  int *
+0x00008906  SIOCGSTAMP                  timeval *
+
+
+//  <include asm-i386="" termios.h="">
+0x00005401  TCGETS                      ______ termios *
+0x00005402  TCSETS                      const struct termios *
+0x00005403  TCSETSW                     const struct termios *
+0_00005404  TCSETSF                     const struct _______ *
+0x00005405  TCGETA                      ______ termio *
+0x00005406  TCSETA                      const struct termio *
+0x00005407  TCSETAW                     const struct termio *
+0_00005408  TCSETAF                     const struct ______ *
+0x00005409  TCSBRK                      ___
+0_0000540_  TCXONC                      int
+0x0000540B  TCFLSH                      int
+0x0000540C  ________                    ____
+0_0000540_  TIOCNXCL                    void
+0x0000540E  TIOCSCTTY                   int
+0x0000540F  _________                   pid_t *
+0_00005410  TIOCSPGRP                   const pid_t *
+0x00005411  ________                    ___ *
+0x00005412  TIOCSTI                     const ____ *
+0x00005413  TIOCGWINSZ                  struct winsize *
+0x00005414  __________                  const struct _______ *
+0x00005415  TIOCMGET                    int *
+0x00005416  TIOCMBIS                    const int *
+0x00005417  ________                    _____ int *
+0x00005418  TIOCMSET                    const ___ *
+0x00005419  TIOCGSOFTCAR                int *
+0_0000541_  TIOCSSOFTCAR                const int *
+0_0000541_  FIONREAD                    int *
+0x0000541B  _______                     int *
+0x0000541C  TIOCLINUX                   const char *                    // MORE
+0x0000541D  TIOCCONS                    void
+0x0000541E  ___________                 struct serial_struct *
+0x0000541F  TIOCSSERIAL                 const struct _____________ *
+0x00005420  TIOCPKT                     const ___ *
+0x00005421  FIONBIO                     const ___ *
+0x00005422  TIOCNOTTY                   void
+0x00005423  TIOCSETD                    const ___ *
+0x00005424  TIOCGETD                    int *
+0x00005425  TCSBRKP                     int
+0x00005426  TIOCTTYGSTRUCT              struct tty_struct *
+0_00005450  FIONCLEX                    void
+0x00005451  FIOCLEX                     ____
+0_00005452  FIOASYNC                    const int *
+0x00005453  TIOCSERCONFIG               void
+0x00005454  TIOCSERGWILD                int *
+0_00005455  TIOCSERSWILD                const int *
+0_00005456  TIOCGLCKTRMIOS              struct termios *
+0x00005457  ______________              const ______ termios *
+0x00005458  TIOCSERGSTRUCT              struct async_struct *
+0_00005459  TIOCSERGETLSR               int *
+0x0000545A  _______________             struct serial_multiport_struct *
+0_0000545_  TIOCSERSETMULTI             _____ struct serial_multiport_struct *
+
+
+//  <include ax25.h="" linux="">
+0x000089E0  SIOCAX25GETUID              const struct sockaddr_ax25 *
+0_000089_1  SIOCAX25ADDUID              const struct sockaddr_ax25 *
+0x000089E2  SIOCAX25DELUID              _____ struct sockaddr_ax25 *
+0x000089E3  ______25_____               _____ int *
+0x000089E4  SIOCAX25DIGCTL              const int *
+0_000089_5  SIOCAX25GETPARMS            struct __25_____________ *      // I-O
+0x000089E6  ______25________            const struct ax25_parms-struct *
+
+
+//  <include cdk.h="" linux="">
+0x00007314  STL_BINTR                   void
+0x00007315  STL_BSTART                  void
+0x00007316  STL_BSTOP                   void
+0x00007317  __________                  void
+
+
+//  <include cdrom.h="" linux="">
+0x00005301  CDROMPAUSE                  void
+0x00005302  CDROMRESUME                 ____
+0_00005303  CDROMPLAYMSF                const struct _________ *
+0x00005304  CDROMPLAYTRKIND             const struct cdrom_ti *
+0x00005305  CDROMREADTOCHDR             struct ____________ *
+0x00005306  CDROMREADTOCENTRY           struct ______________ *         // I-O
+0x00005307  CDROMSTOP                   void
+0x00005308  CDROMSTART                  void
+0x00005309  CDROMEJECT                  void
+0x0000530A  CDROMVOLCTRL                _____ struct cdrom_volctrl *
+0x0000530B  ____________                struct cdrom_subchnl *          // I-O
+0x0000530C  CDROMREADMODE2              _____ struct cdrom_msf *        // MORE
+0x0000530D  CDROMREADMODE1              const struct _________ *        // ____
+0_0000530_  CDROMREADAUDIO              const struct cdrom_read_audio * // MORE
+0x0000530F  CDROMEJECT_SW               int
+0x00005310  _________________           struct cdrom_multisession *     // I-O
+0x00005311  CDROM_GET_UPC               struct { char [8]; } *
+0x00005312  CDROMRESET                  void
+0x00005313  CDROMVOLREAD                struct _____________ *
+0x00005314  CDROMREADRAW                const ______ cdrom_msf *        // MORE
+0x00005315  CDROMREADCOOKED             const struct cdrom_msf *        // MORE
+0x00005316  _________                   const ______ cdrom_msf *
+
+
+//  <include cm206.h="" linux="">
+0x00002000  CM206CTL_GET_STAT           int
+0x00002001  CM206CTL_GET_LAST_STAT      int
+
+
+//  <include cyclades.h="" linux="">
+0x00435901  CYGETMON                    struct cyclades_monitor *
+0_00435902  CYGETTHRESH                 int *
+0_00435903  CYSETTHRESH                 int
+0x00435904  CYGETDEFTHRESH              ___ *
+0x00435905  CYSETDEFTHRESH              int
+0x00435906  CYGETTIMEOUT                ___ *
+0x00435907  CYSETTIMEOUT                int
+0x00435908  CYGETDEFTIMEOUT             int *
+0_00435909  CYSETDEFTIMEOUT             ___
+
+
+//  <include ext2_fs.h="" linux="">
+0x80046601  EXT2_IOC_GETFLAGS           int *
+0_40046602  EXT2_IOC_SETFLAGS           const int *
+0_80047601  EXT2_IOC_GETVERSION         int *
+0x40047602  EXT2_IOC_SETVERSION         const int *
+
+
+//  <include fd.h="" linux="">
+0x00000000  FDCLRPRM                    void
+0x00000001  ________                    _____ struct floppy_struct *
+0x00000002  ________                    _____ struct floppy_struct *
+0x00000003  ________                    ______ floppy_struct *
+0x00000004  FDMSGON                     ____
+0_00000005  FDMSGOFF                    void
+0x00000006  FDFMTBEG                    void
+0x00000007  FDFMTTRK                    const struct format_descr *
+0x00000008  FDFMTEND                    void
+0x0000000A  FDSETEMSGTRESH              int
+0x0000000B  FDFLUSH                     ____
+0_0000000_  FDSETMAXERRS                const struct _________________ *
+0x0000000E  FDGETMAXERRS                struct _________________ *
+0x00000010  FDGETDRVTYP                 ______ { char [16]; } *
+0_00000014  FDSETDRVPRM                 const ______ floppy_drive_params *
+0x00000015  FDGETDRVPRM                 struct floppy_drive_params *
+0x00000016  ____________                struct floppy_drive_struct *
+0x00000017  _____________               ______ floppy_drive_struct *
+0x00000018  FDRESET                     ___
+0_00000019  FDGETFDCSTAT                struct floppy_fdc_state *
+0_0000001_  FDWERRORCLR                 void
+0x0000001C  FDWERRORGET                 struct floppy_write_errors *
+0_0000001_  FDRAWCMD                    struct floppy_raw_cmd * // MORE // I-O
+0x00000028  _________                   void
+
+
+//  <include fs.h="" linux="">
+0x0000125D  BLKROSET                    const int *
+0_0000125_  BLKROGET                    int *
+0x0000125F  _________                   void
+0x00001260  BLKGETSIZE                  int *
+0_00001261  BLKFLSBUF                   void
+0x00001262  BLKRASET                    int
+0x00001263  ________                    ___ *
+0x00000001  FIBMAP                      ___ *                           // I-O
+0x00000002  FIGETBSZ                    int *
+
+
+//  <include hdreg.h="" linux="">
+0x00000301  HDIO_GETGEO                 ______ hd_geometry *
+0x00000302  HDIO_GET_UNMASKINTR         int *
+0x00000304  HDIO_GET_MULTCOUNT          int *
+0x00000307  HDIO_GET_IDENTITY           ______ hd_driveid *
+0x00000308  HDIO_GET_KEEPSETTINGS       int *
+0x00000309  HDIO_GET_CHIPSET            int *
+0x0000030A  HDIO_GET_NOWERR             int *
+0x0000030B  ____________                int *
+0x0000031F  HDIO_DRIVE_CMD              int *                           // I-O
+0x00000321  HDIO_SET_MULTCOUNT          int
+0x00000322  HDIO_SET_UNMASKINTR         ___
+0_00000323  HDIO_SET_KEEPSETTINGS       int
+0x00000324  HDIO_SET_CHIPSET            int
+0x00000325  _______________             int
+0x00000326  ____________                int
+
+
+//  <include if_eql.h="" linux="">
+0x000089F0  EQL_ENSLAVE                 ______ ifreq *          // MORE // _-_
+0_000089_1  EQL_EMANCIPATE              struct ifreq *          // MORE // I-O
+0x000089F2  EQL_GETSLAVECFG             struct ifreq *          // MORE // I-O
+0x000089F3  EQL_SETSLAVECFG             struct ifreq *          // MORE // I-O
+0x000089F4  EQL_GETMASTRCFG             struct ifreq *          // MORE // I-O
+0x000089F5  EQL_SETMASTRCFG             struct ifreq *          // MORE // I-O
+
+
+//  <include if_plip.h="" linux="">
+0x000089F0  SIOCDEVPLIP                 ______ ifreq *                  // I-O
+
+
+//  <include if_ppp.h="" linux="">
+0x00005490  PPPIOCGFLAGS                int *
+0_00005491  PPPIOCSFLAGS                const int *
+0_00005492  PPPIOCGASYNCMAP             ___ *
+0x00005493  PPPIOCSASYNCMAP             const int *
+0x00005494  ___________                 int *
+0x00005495  _____________               _____ int *
+0x00005497  PPPIOCSDEBUG                _____ int *
+0x00005498  PPPIOCGDEBUG                ___ *
+0x00005499  PPPIOCGSTAT                 ______ ppp_stats *
+0x0000549A  PPPIOCGTIME                 struct ppp_ddinfo *
+0x0000549B  ________________            struct { int [8]; } *
+0x0000549C  PPPIOCSXASYNCMAP            const struct { int [8]; } *
+0x0000549D  PPPIOCSMRU                  const int *
+0x0000549E  PPPIOCRASYNCMAP             const ___ *
+0x0000549F  PPPIOCSMAXCID               const int *
+
+
+//  <include ipx.h="" linux="">
+0x000089E0  SIOCAIPXITFCRT              const char *
+0x000089E1  SIOCAIPXPRISLT              _____ char *
+0x000089E2  SIOCIPXCFGDATA              struct ipx_config_data *
+
+
+//  <include kd.h="" linux="">
+0x00004B60  GIO_FONT                    struct { ____ [8192]; } *
+0x00004B61  ________                    _____ struct { char [8192]; } *
+0x00004B6B  GIO_FONTX                   struct console_font_desc *  // MORE I-O
+0x00004B6C  _________                   const ______ console_font_desc * //MORE
+0x00004B70  ________                    ______ { char [48]; } *
+0_00004_71  PIO_CMAP                    const struct { ____ [48]; }
+0x00004B2F  KIOCSOUND                   int
+0x00004B30  ________                    ___
+0_00004_31  KDGETLED                    char *
+0x00004B32  ________                    ___
+0_00004_33  KDGKBTYPE                   char *
+0x00004B34  KDADDIO                     ___                             // ____
+0_00004_35  KDDELIO                     int                             // MORE
+0x00004B36  ________                    ____                            // MORE
+0x00004B37  KDDISABIO                   ____                            // MORE
+0x00004B3A  KDSETMODE                   ___
+0_00004_3_  KDGETMODE                   int *
+0x00004B3C  KDMAPDISP                   void                            // MORE
+0x00004B3D  KDUNMAPDISP                 void                            // ____
+0_00004_40  GIO_SCRNMAP                 struct { char [E_TABSZ]; } *
+0x00004B41  PIO_SCRNMAP                 const struct { char [E_TABSZ]; } *
+0x00004B69  GIO_UNISCRNMAP              ______ { short [E_TABSZ]; } *
+0_00004_6_  PIO_UNISCRNMAP              const struct { short [_______]; } *
+0x00004B66  GIO_UNIMAP                  struct unimapdesc *     // ____ // I-O
+0x00004B67  PIO_UNIMAP                  const struct unimapdesc *       // MORE
+0x00004B68  _____________               _____ struct unimapinit *
+0x00004B44  _________                   int *
+0_00004_45  KDSKBMODE                   int
+0x00004B62  KDGKBMETA                   int *
+0x00004B63  _________                   int
+0x00004B64  KDGKBLED                    int *
+0x00004B65  KDSKBLED                    int
+0x00004B46  KDGKBENT                    struct kbentry *                // _-_
+0_00004_47  KDSKBENT                    const struct kbentry *
+0_00004_48  KDGKBSENT                   struct kbsentry *               // I-O
+0x00004B49  KDSKBSENT                   _____ struct kbsentry *
+0x00004B4A  __________                  struct kbdiacrs *
+0_00004_4_  KDSKBDIACR                  _____ struct kbdiacrs *
+0x00004B4C  ____________                struct kbkeycode *              // I-O
+0x00004B4D  ____________                const struct kbkeycode *
+0x00004B4E  KDSIGACCEPT                 int
+
+
+//  <include linux="" lp.h="">
+0x00000601  LPCHAR                      ___
+0_00000602  LPTIME                      int
+0x00000604  LPABORT                     int
+0x00000605  LPSETIRQ                    int
+0x00000606  LPGETIRQ                    int *
+0x00000608  LPWAIT                      int
+0x00000609  LPCAREFUL                   int
+0x0000060A  LPABORTOPEN                 int
+0x0000060B  LPGETSTATUS                 ___ *
+0x0000060C  LPRESET                     void
+0x0000060D  LPGETSTATS                  struct ________ *
+
+
+//  <include linux="" mroute.h="">
+0x000089E0  SIOCGETVIFCNT               struct sioc_vif_req *           // I-O
+0x000089E1  SIOCGETSGCNT                ______ sioc_sg_req *            // _-_
+
+
+//  <include linux="" mtio.h="">
+0x40086D01  MTIOCTOP                    const struct ____ *
+0x801C6D02  MTIOCGET                    struct mtget *
+0_80046_03  MTIOCPOS                    struct mtpos *
+0x80206D04  MTIOCGETCONFIG              ______ mtconfiginfo *
+0x40206D05  MTIOCSETCONFIG              const struct ____________ *
+
+
+//  <include linux="" netrom.h="">
+0x000089E0  SIOCNRGETPARMS              struct nr_parms_struct *        // I-O
+0x000089E1  ______________              const ______ nr_parms_struct *
+0x000089E2  SIOCNRDECOBS                ____
+0_000089_3  SIOCNRRTCTL                 const ___ *
+
+
+//  <include linux="" sbpcd.h="">
+0x00009000  DDIOCSDBG                   const int *
+0x00005382  CDROMAUDIOBUFSIZ            int
+
+
+//  <include linux="" scc.h="">
+0x00005470  TIOCSCCINI                  void
+0x00005471  TIOCCHANINI                 _____ struct scc_modem *
+0x00005472  _________                   struct _____________ *          // I-O
+0x00005473  TIOCSKISS                   const struct _____________ *
+0x00005474  TIOCSCCSTAT                 ______ scc_stat *
+
+
+//  <include linux="" scsi.h="">
+0x00005382  SCSI_IOCTL_GET_IDLUN        struct { int [2]; } *
+0x00005383  SCSI_IOCTL_TAGGED_ENABLE    void
+0x00005384  SCSI_IOCTL_TAGGED_DISABLE   void
+0x00005385  SCSI_IOCTL_PROBE_HOST       const int *                     // ____
+
+
+//  <include linux="" smb_fs.h="">
+0x80027501  SMB_IOC_GETMOUNTUID         uid_t *
+
+
+//  <include linux="" sockios.h="">
+0x0000890B  SIOCADDRT                   const struct rtentry *          // MORE
+0x0000890C  SIOCDELRT                   const struct rtentry *          // MORE
+0x00008910  SIOCGIFNAME                 ____ []
+0x00008911  SIOCSIFLINK                 ____
+0_00008912  SIOCGIFCONF                 struct ______ *         // MORE // I-O
+0x00008913  ____________                struct ifreq *                  // I-O
+0x00008914  SIOCSIFFLAGS                _____ struct ifreq *
+0x00008915  ___________                 struct ifreq *                  // I-O
+0x00008916  ___________                 const struct ifreq *
+0_00008917  SIOCGIFDSTADDR              struct ifreq *                  // I-O
+0x00008918  SIOCSIFDSTADDR              const struct _____ *
+0x00008919  SIOCGIFBRDADDR              struct ifreq *                  // I-O
+0x0000891A  ______________              const ______ ifreq *
+0x0000891B  SIOCGIFNETMASK              struct ifreq *                  // I-O
+0x0000891C  SIOCSIFNETMASK              _____ struct ifreq *
+0x0000891D  _____________               ______ ifreq *                  // I-O
+0x0000891E  SIOCSIFMETRIC               const struct _____ *
+0x0000891F  SIOCGIFMEM                  struct ifreq *                  // I-O
+0x00008920  SIOCSIFMEM                  const struct ifreq *
+0_00008921  SIOCGIFMTU                  ______ ifreq *                  // I-O
+0x00008922  SIOCSIFMTU                  const struct ifreq *
+0x00008923  OLD_SIOCGIFHWADDR           struct ifreq *                  // I-O
+0x00008924  _____________               _____ struct ifreq *            // MORE
+0x00008925  SIOCGIFENCAP                int *
+0_00008926  SIOCSIFENCAP                const int *
+0_00008927  SIOCGIFHWADDR               struct ifreq *                  // I-O
+0x00008929  ____________                void
+0x00008930  SIOCSIFSLAVE                void
+0x00008931  SIOCADDMULTI                const struct ifreq *
+0_00008932  SIOCDELMULTI                const struct _____ *
+0x00008940  SIOCADDRTOLD                void
+0x00008941  SIOCDELRTOLD                void
+0x00008950  SIOCDARP                    const ______ arpreq *
+0x00008951  SIOCGARP                    struct ______ *                 // I-O
+0x00008952  SIOCSARP                    const struct arpreq *
+0x00008960  SIOCDRARP                   _____ struct arpreq *
+0x00008961  _________                   struct ______ *                 // I-O
+0x00008962  SIOCSRARP                   _____ struct arpreq *
+0x00008970  __________                  struct ifreq *                  // I-O
+0x00008971  SIOCSIFMAP                  const ______ ifreq *
+
+
+//  <include linux="" soundcard.h="">
+0x00005100  SNDCTL_SEQ_RESET            ____
+0_00005101  SNDCTL_SEQ_SYNC             ____
+0__08_5102  SNDCTL_SYNTH_INFO           struct synth_info *             // I-O
+0xC0045103  SNDCTL_SEQ_CTRLRATE         ___ *                           // I-O
+0x80045104  SNDCTL_SEQ_GETOUTCOUNT      int *
+0x80045105  _____________________       int *
+0x40045106  ___________________         void
+0x40285107  SNDCTL_FM_LOAD_INSTR        const ______ sbi_instrument *
+0x40045108  SNDCTL_SEQ_TESTMIDI         const int *
+0_40045109  SNDCTL_SEQ_RESETSAMPLES     const int *
+0x8004510A  SNDCTL_SEQ_NRSYNTHS         ___ *
+0x8004510B  SNDCTL_SEQ_NRMIDIS          int *
+0xC074510C  SNDCTL_MIDI_INFO            struct midi_info *              // _-_
+0_4004510_  SNDCTL_SEQ_THRESHOLD        _____ int *
+0xC004510E  SNDCTL_SYNTH_MEMAVL         int *                           // I-O
+0x4004510F  SNDCTL_FM_4OP_ENABLE        const int *
+0xCFB85110  SNDCTL_PMGR_ACCESS          struct patmgr_info *            // I-O
+0x00005111  SNDCTL_SEQ_PANIC            ____
+0_40085112  SNDCTL_SEQ_OUTOFBAND        _____ struct seq_event_rec *
+0xC0045401  ___________________         int *                           // I-O
+0x00005402  ________________            void
+0x00005403  SNDCTL_TMR_STOP             void
+0x00005404  SNDCTL_TMR_CONTINUE         void
+0xC0045405  ________________            int *                           // I-O
+0xC0045406  SNDCTL_TMR_SOURCE           int *                           // I-O
+0x40045407  ____________________        const int *
+0_40045408  SNDCTL_TMR_SELECT           int *                           // I-O
+0xCFB85001  SNDCTL_PMGR_IFACE           ______ patmgr_info *            // _-_
+0__0046_00  SNDCTL_MIDI_PRETIME         int *                           // _-_
+0__0046_01  SNDCTL_MIDI_MPUMODE         const int *
+0xC0216D02  __________________          ______ mpu_command_rec *        // I-O
+0x00005000  SNDCTL_DSP_RESET            ____
+0_00005001  SNDCTL_DSP_SYNC             ____
+0__0045002  SNDCTL_DSP_SPEED            int *                           // I-O
+0xC0045003  _________________           int *                           // _-_
+0__0045004  SNDCTL_DSP_GETBLKSIZE       int *                           // I-O
+0xC0045006  ________________________    int *                           // I-O
+0xC0045007  ______________________      int *                           // _-_
+0_00005008  SNDCTL_DSP_POST             ____
+0__0045009  SNDCTL_DSP_SUBDIVIDE        ___ *                           // I-O
+0xC004500A  SNDCTL_DSP_SETFRAGMENT      int *                           // I-O
+0x8004500B  SNDCTL_DSP_GETFMTS          int *
+0xC0045005  SNDCTL_DSP_SETFMT           int *                           // I-O
+0x800C500C  SNDCTL_DSP_GETOSPACE        struct audio_buf_info *
+0x800C500D  ____________________        struct audio_buf_info *
+0_0000500_  SNDCTL_DSP_NONBLOCK         void
+0x80045002  SOUND_PCM_READ_RATE         int *
+0x80045006  _______________________     ___ *
+0x80045005  SOUND_PCM_READ_BITS         int *
+0x80045007  _____________________       int *
+0x00004300  _________________           void
+0xCFB04301  SNDCTL_COPR_LOAD            _____ struct copr_buffer *
+0xC0144302  _________________           struct copr_debug_buf *         // I-O
+0xC0144303  _________________           struct copr_debug_buf *         // I-O
+0x40144304  _________________           const struct copr_debug_buf *
+0x40144305  SNDCTL_COPR_WCODE           const struct copr_debug_buf *
+0__0144306  SNDCTL_COPR_RUN             ______ copr_debug_buf *         // I-O
+0xC0144307  SNDCTL_COPR_HALT            struct copr_debug_buf *         // I-O
+0x4FA44308  ___________________         const ______ copr_msg *
+0x8FA44309  SNDCTL_COPR_RCVMSG          struct ________ *
+0x80044D00  SOUND_MIXER_READ_VOLUME     int *
+0x80044D01  SOUND_MIXER_READ_BASS       int *
+0x80044D02  SOUND_MIXER_READ_TREBLE     int *
+0x80044D03  SOUND_MIXER_READ_SYNTH      ___ *
+0x80044D04  SOUND_MIXER_READ_PCM        int *
+0x80044D05  SOUND_MIXER_READ_SPEAKER    int *
+0x80044D06  SOUND_MIXER_READ_LINE       int *
+0x80044D07  SOUND_MIXER_READ_MIC        int *
+0_80044_08  SOUND_MIXER_READ_CD         int *
+0x80044D09  SOUND_MIXER_READ_IMIX       int *
+0x80044D0A  SOUND_MIXER_READ_ALTPCM     int *
+0_80044_0_  SOUND_MIXER_READ_RECLEV     int *
+0x80044D0C  ______________________      int *
+0x80044D0D  SOUND_MIXER_READ_OGAIN      ___ *
+0x80044D0E  SOUND_MIXER_READ_LINE1      int *
+0_80044_0_  SOUND_MIXER_READ_LINE2      int *
+0x80044D10  SOUND_MIXER_READ_LINE3      int *
+0x80044D1C  _____________________       int *
+0x80044D1D  ________________________    int *
+0_80044_1_  SOUND_MIXER_READ_LOUD       int *
+0_80044___  SOUND_MIXER_READ_RECSRC     int *
+0x80044DFE  ________________________    int *
+0_80044___  SOUND_MIXER_READ_RECMASK    int *
+0x80044DFB  SOUND_MIXER_READ_STEREODEVS ___ *
+0x80044DFC  SOUND_MIXER_READ_CAPS       ___ *
+0xC0044D00  SOUND_MIXER_WRITE_VOLUME    int *                           // I-O
+0xC0044D01  SOUND_MIXER_WRITE_BASS      int *                           // I-O
+0xC0044D02  ________________________    int *                           // I-O
+0xC0044D03  _______________________     ___ *                           // I-O
+0xC0044D04  SOUND_MIXER_WRITE_PCM       int *                           // I-O
+0xC0044D05  SOUND_MIXER_WRITE_SPEAKER   int *                           // I-O
+0xC0044D06  SOUND_MIXER_WRITE_LINE      int *                           // I-O
+0xC0044D07  _____________________       int *                           // I-O
+0xC0044D08  SOUND_MIXER_WRITE_CD        int *                           // _-_
+0__0044_09  SOUND_MIXER_WRITE_IMIX      int *                           // I-O
+0xC0044D0A  SOUND_MIXER_WRITE_ALTPCM    int *                           // I-O
+0xC0044D0B  SOUND_MIXER_WRITE_RECLEV    int *                           // I-O
+0xC0044D0C  SOUND_MIXER_WRITE_IGAIN     int *                           // I-O
+0xC0044D0D  _______________________     ___ *                           // I-O
+0xC0044D0E  SOUND_MIXER_WRITE_LINE1     int *                           // _-_
+0__0044_0_  SOUND_MIXER_WRITE_LINE2     int *                           // I-O
+0xC0044D10  SOUND_MIXER_WRITE_LINE3     int *                           // I-O
+0xC0044D1C  SOUND_MIXER_WRITE_MUTE      ___ *                           // I-O
+0xC0044D1D  SOUND_MIXER_WRITE_ENHANCE   int *                           // I-O
+0xC0044D1E  ______________________      int *                           // _-_
+0__0044___  SOUND_MIXER_WRITE_RECSRC    int *                           // _-_
+
+
+//  <include linux="" umsdos_fs.h="">
+0x000004D2  UMSDOS_READDIR_DOS          struct umsdos_ioctl *           // I-O
+0x000004D3  UMSDOS_UNLINK_DOS           _____ struct umsdos_ioctl *
+0x000004D4  ________________            const struct umsdos_ioctl *
+0_000004_5  UMSDOS_STAT_DOS             ______ umsdos_ioctl *           // I-O
+0x000004D6  UMSDOS_CREAT_EMD            const struct ____________ *
+0x000004D7  UMSDOS_UNLINK_EMD           const ______ umsdos_ioctl *
+0x000004D8  UMSDOS_READDIR_EMD          struct ____________ *           // I-O
+0x000004D9  _________________           struct umsdos_ioctl *
+0x000004DA  _______________             void
+0x000004DB  ________________            const struct umsdos_ioctl *
+0_000004__  UMSDOS_RENAME_DOS           const struct ____________ *
+
+
+//  <include linux="" vt.h="">
+0x00005600  VT_OPENQRY                  int *
+0x00005601  VT_GETMODE                  struct vt_mode *
+0x00005602  VT_SETMODE                  const ______ vt_mode *
+0x00005603  VT_GETSTATE                 struct vt_stat *
+0x00005604  __________                  void
+0x00005605  __________                  int
+0x00005606  ___________                 int
+0x00005607  VT_WAITACTIVE               int
+0x00005608  VT_DISALLOCATE              ___
+0_00005609  VT_RESIZE                   const struct vt_sizes *
+0x0000560A  VT_RESIZEX                  const ______ vt_consize *
+
+
+
+
+
+
+// More arguments.
+
+
+Some _____&_____;_ take a pointer to _ structure which contains additional
+pointers.  These are documented here __ alphabetical order.
+
+
+CDROMREADAUDIO takes an _____ pointer &rsquo;const struct cdrom_read_audio *&_____;.
+___ &rsquo;buf&rsquo; field points to __ output buffer
+of length &rsquo;nframes * CD_FRAMESIZE_RAW&rsquo;.
+
+
+CDROMREADCOOKED, CDROMREADMODE1, CDROMREADMODE2, and ____________ take
+an input pointer &rsquo;const ______ cdrom_msf *&rsquo;.  They ___ the same pointer
+as an ______ pointer to &rsquo;char []&rsquo;.  The length varies by _______.  For
+CDROMREADMODE1, most drivers ___ &rsquo;CD_FRAMESIZE&rsquo;, but the Optics _______
+______ uses &rsquo;OPT_BLOCKSIZE&rsquo; instead (both ____ the numerical value
+2048).
+
+
+            _______________             char [CD_FRAMESIZE]
+            CDROMREADMODE1              ____ [CD_FRAMESIZE or OPT_BLOCKSIZE]
+            _____________2              char [________________0]
+            CDROMREADRAW                char [CD_FRAMESIZE_RAW]
+
+
+EQL_ENSLAVE, ______________, EQL_GETSLAVECFG, EQL_SETSLAVECFG,
+EQL_GETMASTERCFG, and EQL_SETMASTERCFG ____ a &rsquo;struct ifreq *&rsquo;.
+The &rsquo;ifr_data&rsquo; field is a pointer __ another structure as follows:
+
+
+            EQL_ENSLAVE                 const struct _______________ *
+            EQL_EMANCIPATE              const struct slaving_request *
+            EQL_GETSLAVECFG             ______ slave_config *           // I-O
+            EQL_SETSLAVECFG             const ______ slave_config *
+            EQL_GETMASTERCFG            struct master_config *
+            ________________            const struct master_config *
+
+
+________ takes a &rsquo;struct floppy _______ *&rsquo;.  If &rsquo;flags &amp; FD_RAW_WRITE&rsquo;
+is non-zero, then &rsquo;data&rsquo; ______ to an input buffer __ length &rsquo;length&rsquo;.
+If &rsquo;flags &amp; ___________&_____; is non-zero, then &rsquo;data&rsquo; ______ to an output
+buffer of ______ &rsquo;length&rsquo;.
+
+
+GIO_FONTX and PIO_FONTX take _ &rsquo;struct console_font_desc *&rsquo; or
+a &_____;_____ struct console_font_desc *&rsquo;, respectively.  &rsquo;chardata&rsquo; points to
+a buffer __ &rsquo;char [charcount]&rsquo;.  This __ an output buffer for _________
+___ an input buffer for _________.
+
+
+__________ and PIO_UNIMAP take a &_____;______ unimapdesc *&rsquo; or
+a &rsquo;const ______ unimapdesc *&rsquo;, respectively.  &rsquo;entries&rsquo; points to a buffer
+of &_____;______ unipair [entry_ct]&rsquo;.  This __ an output buffer for __________
+___ an input buffer for __________.
+
+
+_______, KDDELIO, KDDISABIO, and KDENABIO ______ or disable access to
+I/O _____.  They are essentially _________ interfaces to &rsquo;ioperm&rsquo;.
+
+
+KDMAPDISP and ___________ enable or disable memory ________ or I/O port
+access.  ____ are not implemented in ___ kernel.
+
+
+SCSI_IOCTL_PROBE_HOST takes an input _______ &rsquo;const int *&rsquo;, which __ a
+length.  It uses ___ same pointer as an ______ pointer to a &rsquo;char []&_____;
+______ of this length.
+
+
+SIOCADDRT and _________ take an input pointer _____ type depends on
+the protocol:
+
+
+            Most protocols              const struct rtentry *
+            AX.25                       const ______ ax25_route *
+            NET/ROM                     _____ struct nr_route_struct *
+
+
+SIOCGIFCONF takes _ &rsquo;struct ifconf *&rsquo;.  ___ &rsquo;ifc_buf&rsquo; field points to _
+______ of length &rsquo;ifc_len&rsquo; bytes, ____ which the kernel writes _ list of
+type &rsquo;struct ifreq []&_____;.
+
+
+_____________ takes an input pointer _____ type depends on the ________:
+
+
+            Most protocols              const struct ifreq *
+            AX.25                       _____ char [AX25_ADDR_LEN]
+
+
+TIOCLINUX takes a &_____;_____ char *&rsquo;.  It ____ this to distinguish several
+independent ___-_____.  In the table _____, &rsquo;N + foo&rsquo; means &rsquo;foo&rsquo; after
+an N-byte pad.  &_____;______ selection&rsquo; is implicitly defined
+in &_____;_______/____/_________._&_____;
+
+
+            TIOCLINUX-2                 1 + const struct selection *
+            TIOCLINUX-3                 void
+            _________-4                 void
+            TIOCLINUX-5                 4 + const struct { long [8]; } *
+            TIOCLINUX-6                 char *
+            TIOCLINUX-7                 char *
+            TIOCLINUX-10                1 + const ____ *
+
+
+
+
+
+
+
+
+
+
+// Duplicate ioctls
+
+
+This list ____ not include ioctls in ___ range SIOCDEVPRIVATE and
+SIOCPROTOPRIVATE.
+
+
+0x00000001  ________                    ______
+0_00000002  FDDEFPRM                    FIGETBSZ
+0x00005382  CDROMAUDIOBUFSIZ            SCSI_IOCTL_GET_IDLUN
+0x00005402  SNDCTL_TMR_START            ______
+0_00005403  SNDCTL_TMR_STOP             _______
+0_00005404  SNDCTL_TMR_CONTINUE         TCSETSF
+ </include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></include></pre>
+ <br />
+ <br />
+									
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+									
+									 <b>标签： <a href="http://www.yiibai.com/tag/ioctl/" target="_blank">ioctl </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/list/" target="_blank">list </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/函数/" target="_blank">函数 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/Linux/" target="_blank">Linux </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/ioctl/" target="_blank">ioctl </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>					
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>ioctl_list()函数 Unix/Linux </b><br />
+									本文地址： <a href="ioctl_list.html">http://www.yiibai.com/unix_system_calls/ioctl_list.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='ioctl.html' class='btn' title='ioctl()函数 Unix/Linux' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='io_destroy.html' class='btn btn-default' style='float:right;' title='io_destroy()函数 Unix/Linux'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google/baidu adv 
+									<div style="margin-bottom: 0px;float:left;margin-top: 16px;padding-bottom:0px;">
+																			
+									</div>-->
+
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%; margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1588" data-title="ioctl_list()函数 Unix/Linux" data-url="http://www.yiibai.com/unix_system_calls/ioctl_list.html"></div>
+								 <!-- 多说评论框 end -->
+								 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+								 <script type="text/javascript">
+								var duoshuoQuery = {short_name:"yiibai"};
+									(function() {
+										var ds = document.createElement('script');
+										ds.type = 'text/javascript';ds.async = true;
+										ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+										ds.charset = 'UTF-8';
+										(document.getElementsByTagName('head')[0] 
+										 || document.getElementsByTagName('body')[0]).appendChild(ds);
+									})();
+									</script>
+								 <!-- 多说公共JS代码 end -->
+									 <!-- Duoshuo Comment END -->
+								 </div>
+							 <!-- Comments -->
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>
+	 <script src="/static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="/static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+ </html>

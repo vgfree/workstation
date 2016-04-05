@@ -1,0 +1,2331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script>
+var ua = navigator.userAgent.toLowerCase();
+if(ua.match(/MicroMessenger/i)=="micromessenger") {
+    location.href='http://blog.itpub.net/article.php?url='+ window.location.href;
+}
+</script>
+     	 <style>
+    .Blog_nav1_2 a em { display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/default/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/qqface/qqFace.css" />
+<link rel="stylesheet" type="text/css" href="/css/asyncbox/skins/Chrome/asyncbox.css" />
+<link rel="stylesheet" type="text/css" href="/assets/877c31c4/pager.css" />
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookies.min.js"></script>
+<script type="text/javascript" src="/js/AsyncBox.v1.4.5.js"></script>
+<title>Nginx安装学习使用详细记录-mchdba-ITPUB博客</title>
+<meta name="description" content='前言：
+选择Nginx的优点：
+Nginx 可以在大多数 Unix like OS 上编译运行，并有 Windows 移植版。 Nginx 的1.4.0稳定版已经于2013年4月24日发布，一般情况下，对于新建站点，建议使用最新稳定版作'/>
+
+<script type="text/javascript">
+if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+	try{
+		if(!/iPad/i.test(navigator.userAgent)){
+			var oldurl=window.location.href;
+			var wapUrl= oldurl.replace('blog.itpub.net', "m.blog.itpub.net") ;
+			window.location.href = wapUrl;
+		}
+	}catch(e){}
+}
+</script>
+
+<script language="javascript">
+//用户是否在线
+var isOnLine = '';
+$(document).ready(function(){
+	var blog = {'name': '', 'name_url': '', 'brief': ''};
+	//消息通知显示和隐藏控制
+	$('#show_message_slide_button').hover(
+		function(){
+			$('#message_slide_div').slideDown(100);											   
+		},
+		function(){
+			
+		}
+	);
+
+	$('#message_slide_div').hover(
+		function(){
+			
+		},
+		function(){
+			$('#message_slide_div').slideUp(100);
+		}
+	);
+	
+	//编辑博客名
+	$('#editbna').click(function(){
+		blog.name = $('#bnaspan a').text();
+		var val = '<input id="bnainput" type="text" style="float:left" value="" rel="' +$(this).attr('rel') + '" /><input id="bnasub" type="button" style="float:left" class="btn1"><input id="bnacanl" type="button" style="float:left" class="btn2"><div class="clear"></div>';
+		$('#bnaspan').html(val);
+		$('#bnainput').val(blog.name);
+		$(this).parent().hide();
+	});
+	
+	$('#bnasub').live('click', function(){
+	    var rel = eval('({' + $('#bnainput').attr('rel') + '})');
+		var name = $('#bnainput').val();
+		if(name != blog.name){
+	        $.ajax({
+			    type: "POST",
+			    url: rel.url,	
+			    data: {
+				    'name' : name
+			    },
+			    success:function(data){
+				    if(data == 0){
+						$('#bnaspan').html(blog.name);
+						$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+				    }else{
+						$('#bnaspan').html(data);
+						$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+				    }
+					$('#editbna').parent().show();
+				}
+			});
+		}else{
+		    $('#bnaspan').text(blog.name).html();
+			$('#bnaspan').html('<a href="' + rel.href + '">' + $('#bnaspan').html() + '</a>');
+			$('#editbna').parent().show();
+		}
+	});
+	
+	$('#bnacanl').live('click', function(){
+		var rel = eval('({' + $('#bnainput').attr('rel') + '})');
+		$('#bnaspan').html('<a href="' + rel.href + '">' + blog.name + '</a>');
+		$('#editbna').parent().show();
+	});
+	
+	//编辑签名
+	$('#editbrief').click(function(){
+	    blog.brief = $('#briefem').text();
+		var val = '<input id="brfinput" type="text" style="float:left" value="" rel="' + $(this).attr('rel') + '" /><input id="brfsub" style="float:left"  type="button" class="btn1"><input style="float:left"  id="brfcanl" type="button" class="btn2"><div class="clear"></div>';
+		$('#briefem').html(val);
+		$('#brfinput').val(blog.brief);
+		$(this).parent().hide();
+	});
+	
+	$('#brfsub').live('click', function(){
+	    var url = $('#brfinput').attr('rel');
+		var brief = $('#brfinput').val();
+		if(brief != blog.brief){
+	        $.ajax({
+			    type: "POST",
+			    url: url,	
+			    data: {
+				    'brief' : brief
+			    },
+			    success:function(data){
+				    if(data == 0){
+				        $('#briefem').html(blog.brief);
+				    }else{
+						$('#briefem').html(data);
+				    }
+					$('#editbrief').parent().show();
+				}
+			});
+		}else{
+		    $('#briefem').text(blog.brief).html();
+			$('#editbrief').parent().show();
+		}
+	});
+	
+	$('#brfcanl').live('click', function(){
+		$('#briefem').html(blog.brief);
+		$('#editbrief').parent().show();
+	});
+
+});
+</script>
+</head>
+<body>
+<div class="box">
+  <!-- 一级导航 -->
+  <div class="Blog_nav1">
+    <div class="Blog_nav1_2"><a href="/"><img src="/image/default/1.png"></a><a href="http://www.itpub.net" class="Blog_a1">ITPUB首页</a>　| 　<a href="http://www.itpub.net" target="_blank">论坛</a> | <a href="http://u.it168.com/vip/"><font color="red">认证专区</font></a> | <a href="http://blog.itpub.net" target="_blank">博客</a><span class="Blog_span1"></span>
+            <a href="/site/login/" class="Blog_a1"  onclick="linkto()">登录</a> | <a href="http://u.it168.com/Register?webid=4&returnUrl=http%3A%2F%2Fblog.itpub.net%2F26230597%2Fviewspace-1222941" class="Blog_a1">注册</a>
+          </div>
+	<!--自动提示层-->
+	<style>
+	.bor13221{border:1px #bbb solid;width:206px;position:absolute;top:34px;left:0;background:#fff; z-index:9999;display:none}
+	.bor13221 li{height:26px;line-height:26px;padding-left:6px;color:#555;font-size:14px;cursor:pointer;}
+	.here{background:#f3f3f3;}
+    </style>
+
+	<!--自动提示层-->
+    <div class="Blog_nav1_3" style="position:relative; z-index:9999;">
+	 <div class="bor13221">
+      <ul>
+      </ul>
+    </div>
+	  <form action='/site/search/' method='post'>
+		<input type="text"  autocomplete="off"  class="Blog_txt1" id='search_input_id' name='keywords'>
+		<select class="Bolg_sel1" name='type' id='search_type_blog'>
+		  <option value='blog'>博文</option>
+		  <option value='author'>博主</option>
+		</select>
+		<input type="submit" value='' name='submit' class="Blog_btn1">
+	 </form>
+    </div>
+    <div class="clear"></div>
+    <div class="Blog_nav1_layer1" id="message_slide_div" style="display:none;">
+	    <ul>
+	    	<li><a href="/message/private/">私人消息()</a></li>
+	    	<li><a href="/message/system/">系统消息()</a></li>
+	    	<li><a href="/member/request/">好友请求()</a></li>
+	    	<li><a href="/member/notification/">通知管理()</a></li>
+	    </ul>
+    </div>
+  </div>
+   <script type="text/javascript">
+  	$(function(){
+		//点击添加进文本框
+		$(".bor13221 li").live( 'click' , function(e){
+			if ( e && e.stopPropagation )
+			{
+				//因此它支持W3C的stopPropagation()方法
+				e.stopPropagation();
+			}
+			else
+			{
+				//否则，我们需要使用IE的方式来取消事件冒泡
+				window.event.cancelBubble = true; 
+			}
+			$('#search_input_id').val($(this).text());
+			$(".bor13221 ul").html('');
+			$(".bor13221").hide();
+		});
+		$(".bor13221 ul li").live({
+			mouseenter:
+			function()
+			{
+				$(".bor13221 ul li").removeClass("here");
+				$(this).addClass('here');
+			},
+			mouseleave:
+			function()
+			{
+				$(".bor13221 ul li").removeClass("here");
+				$(this).removeClass('here');
+			}
+		});
+		//自动提示
+		$('#search_input_id').keyup(function(event){
+			//取消博主的提示
+			var search_type_blog = $('#search_type_blog').val();
+			if(search_type_blog == 'author') return false;
+
+			var key = $(this).val();
+			//获取键值
+			var keycode = event.which; //38 上 40 下
+			var count = $('.bor13221 ul li').length;
+			if(key != '' && keycode != 38 && keycode != 40)
+			{
+				$.getJSON("http://api.sou.it168.com/autoWenKuCloud?jsoncallback=?",{"ty":"json","offset":"0","limit":"10","q":key}, function(result)
+					{
+						var arr = result.data;
+
+						var html ='';
+						for (i=0;i<arr.length ;i++ )   
+						{   
+							html += '<li>'+arr[i]+'</li>';
+						} 
+						
+						$('.bor13221 ul').html(html);
+						(arr.length > 1) ?  $(".bor13221").show() : $(".bor13221").hide();
+					}
+				);
+			}
+			else if(keycode == 38)
+			{
+				if(count > 0)
+				{
+					//遍历li
+					var curr_li_num;
+					$('.bor13221 ul li').each(function(index , dom){
+						if($(dom).attr('class') == 'here')
+						{
+							curr_li_num = index;
+							return false;
+						}
+					}); 
+					var next_li_num;
+					if(typeof(curr_li_num) == 'undefined')
+					{
+						next_li_num = count - 1;
+					}
+					else
+					{
+						if(curr_li_num == 0)
+						{
+							next_li_num = count - 1;
+						}
+						else
+						{
+							next_li_num = curr_li_num - 1;
+						}
+					}
+					$(".bor13221 ul li").removeClass("here");
+					$(".bor13221 ul li:eq(" + next_li_num + ")").addClass("here");
+					$('#search_input_id').val($(".bor13221 ul li:eq(" + next_li_num + ")").text());
+				}
+			}
+			else if(keycode == 40)
+			{
+				if(count > 0)
+				{
+					//遍历li
+					var curr_li_num;
+					$('.bor13221 ul li').each(function(index , dom){
+						if($(dom).attr('class') == 'here')
+						{
+							curr_li_num = index;
+							return false;
+						}
+					}); 
+					var next_li_num;
+					if(typeof(curr_li_num) == 'undefined')
+					{
+						next_li_num = 0;
+					}
+					else
+					{
+						if(curr_li_num == count - 1)
+						{
+							next_li_num = 0;
+						}
+						else
+						{
+							next_li_num = curr_li_num + 1;
+						}
+					}
+					$(".bor13221 ul li").removeClass("here");
+					$(".bor13221 ul li:eq(" + next_li_num + ")").addClass("here");
+					$('#search_input_id').val($(".bor13221 ul li:eq(" + next_li_num + ")").text());
+				}
+			}
+		});
+		$(document).click(function(e){
+			$(".bor13221").hide();
+		});
+
+	});
+  </script>
+  <!-- 头 -->
+  <!-- 推荐博客-->
+  <div class="Blog_header1">
+	<div class="img1"></div>    <div class="Blog_header1_1">
+      <p class="Blog_p1" ><em><a href="/26230597/">黄杉</a></em>      <p class="Blog_p2" style="color:#8F0100">Roads&nbsp;Untraveled</p>
+    </div>
+        <div class="Blog_header1_2" id="hide_div1">
+    	<span class="Blog_span3"></span>
+    	<div class="float_div1" style="white-space:nowrap;" onmouseover="javascript:isMove=false" onmouseout="javascript:isMove=true">
+	    <ul id="noticev2">  
+		    		    <li><a href="http://blog.itpub.net/10718265/viewspace-1654311/" target="_blank">成立QQ群、微信群，辅助互动与技术同行交流 </a></li>
+		    		    <li><a href="http://blog.itpub.net/25508077/viewspace-1787372/" target="_blank"> 新注册用户开博客，需要申请与实名认证 </a></li>
+		    		    <li><a href="http://bbs.chinaunix.net/thread-4181131-1-1.html" target="_blank">征文：技术自白书之架构师大会 前8有奖！</a></li>
+		    	    </ul>
+	    </div>
+    </div>
+            <div class="Blog_header1_3"><a href="/26230597/">首页</a>　| 　<a href="/26230597/abstract/1/">博文目录</a>　| 　<a href="/member/profile/uid/26230597/">关于我</a></div>
+  </div>
+    
+  <!-- 内容部分 -->
+  	<script type="text/javascript" src="/highlight/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+<script type="text/javascript" src="/highlight/scripts/shCore.js"></script>
+<script type="text/javascript" src="/highlight/scripts/shAutoloader.js"></script>
+<link type="text/css" rel="stylesheet" href="/highlight/styles/shCore.css"/>
+<link type="text/css" rel="Stylesheet" href="/highlight/styles/shThemeDefault.css" />
+<link href="/code/css/fck_editorarea.css" rel="stylesheet" type="text/css" />
+<style>
+.Blog_p5 em{ display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+  <div class="Blog_contain"> 
+    <!-- 左 -->
+	<style>
+    .Blog_left1_1 p a em { display:inline-block; width:16px; height:13px; background:url(/image/v.jpg) no-repeat; overflow:hidden;}
+</style>
+
+<script language="javascript">
+//$(document).ready(function(){
+//showErrorMsg('你好，您还未实名认证，认证后您将获得更多专享服务！<a href="http://u.it168.com/renzheng" target="new"><b style="color:blue"> 去认证</b></a> ', '消息提示');
+//})
+</script>
+<script language="javascript">
+$(document).ready(function(){
+	$('#ConcernBtn').bind('click',function(){
+			var cuid = '26230597';
+			var url =  '/member/concern/';
+			var type = $(this).attr('rel');
+		
+			if(type == 'addConcern'){
+				$.ajax({
+					type : 'get',
+					url  : url,
+					data : {'op' : 'ajaxadd' , 'cuid' : cuid, 'random' : Math.random()},
+					success : function(msg){	
+					   if(msg == -1){
+						   showErrorMsg('参数错误！');
+					   } else if (msg == 0){
+						   showErrorMsg('关注失败，没有该用户！');
+					   } else if (msg == 1){
+						   showErrorMsg('关注失败，您已经关注了该用户！');
+					   } else if (msg == 2){
+						   $('#ConcernBtn').val('已关注');
+						   $('#ConcernBtn').attr('rel','delConcern');
+						   showSucceedMsg('关注成功!');
+					   } else if (msg == 3){
+						   showErrorMsg('未知错误');
+					   }
+					}
+				});	
+			} else if ( type == 'delConcern'){
+				$.ajax({
+					type : 'get',
+					url  : url,
+					data : {'op' : 'ajaxdel' , 'cuid' : cuid, 'random' : Math.random()},
+					success : function(msg){
+					   if(msg == 0){
+						   showErrorMsg('参数错误！','消息提示');
+					   } else if (msg == 1){
+						   showErrorMsg('操作失败，请尝试刷新页面重试！','消息提示');
+					   } else if (msg == 2){
+						   $('#ConcernBtn').val('加关注');
+						   $('#ConcernBtn').attr('rel','addConcern');
+						   showSucceedMsg('成功取消关注！','消息提示');
+					   } else if (msg == 3){
+						   showErrorMsg('未知错误！','消息提示'); 
+					   }
+					}
+				});	
+			}
+	});					   
+});
+
+//加好友
+function addFriend(fuid, url){
+	if(fuid == '' || fuid.length == 0){
+		showErrorMsg('缺少参数！','信息提示');
+		return false;
+	}
+	$.ajax({
+		   type : 'get',
+		   url : url,
+		   data : {'op' : 'add', 'fuid' : fuid , 'random' : Math.random()},
+		   success : function(msg){
+				if(msg == -1){
+					showErrorMsg('参数错误！','消息提示');
+				} else if (msg == -2){
+					showErrorMsg('添加好友失败,没有该用户的信息！','消息提示');
+				} else if (msg == -3){
+					showErrorMsg('添加好友失败,你不能添加自己为好友！','消息提示');
+				} else if (msg == -4){
+					showErrorMsg('添加好友未知错误,该错误已被记录！','消息提示');
+				} else if (msg == -5){
+					showErrorMsg('添加好友失败,你之前已经发送过好友请求,请耐心等待对方同意申请！','消息提示');
+				} else if (msg == -6){
+					showErrorMsg('添加好友失败,你们已经是好友了！','消息提示');
+				} else {
+					$.cover(true);
+					asyncbox.open({
+						id : 'addFriend',
+						title : '添加好友',
+						url : url,
+						data : {'op' : 'add', 'fuid' : fuid , 'random' : Math.random()},
+						width : 490,
+						height : 180,
+						scroll : 'no',
+						callback : function(action) {
+							if (action == 'close'){
+								$.cover(false);
+							}	
+						}
+					});	
+				}
+		   }
+	});	
+	
+}
+
+//发送短消息
+function postMessage(msguid, url){
+	if(msguid == '' || msguid.length == 0){
+		showErrorMsg('缺少参数！','信息提示');
+		return false;
+	}
+	
+	$.ajax({
+		   type : 'post',
+		   url : url,
+		   data : {'op' : 'ajaxpost', 'msguid' : msguid , 'random' : Math.random()},
+		   success : function(msg){
+				if(msg == -1){
+					showErrorMsg('发送失败，缺少收件人对象！','消息提示');
+				} else if(msg == -2){
+					showErrorMsg('发送失败，自己不能给自己发送短消息！','消息提示');
+				} else {
+					$.cover(true);
+					asyncbox.open({
+						id : 'postMessage',
+						title : '发送短消息',
+						url : url,
+						data : {'op' : 'ajaxpost', 'msguid' : msguid , 'random' : Math.random()},
+						width : 510,
+						height : 255,
+						scroll : 'no',
+						callback : function(action) {
+							if (action == 'close'){
+								$.cover(false);
+							}	
+						}
+					});	
+				}
+		   }
+	});	
+}
+
+</script>
+<div class="Blog_left">
+      <div class="Blog_left1 Blog_bg1">
+        <div class="Blog_left1_1">
+			<div class="img"></div><!-- 专家博客-->
+			<a href="/26230597/"><img src="http://passport.ixpub.net/data/avatar/026/23/05/97_avatar_middle.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_middle.gif'" /></a>
+                            
+            <p><a href="/26230597/" style="color:#f6c500">mchdba<em></em></a></p>
+                    </div>
+        <ul class="Blog_ul1 Blog_noline1">
+          <li>博客访问： 2261385 </li>
+          <li>博文数量： 176 </li>
+          <li>用  户  组：  普通用户</li>
+          <li>注册时间： 2011-09-05 16:54 </li>
+		            <li>认证徽章：<img src="/image/renzheng.png"   style="vertical-align:middle;"/> </li>
+          		          </ul> 
+		
+		
+        
+                <div class="HT_line3 HT_line3_1"></div>
+        <ul class="Blog_ul2">
+          <li><input type="button" value="加关注" id="ConcernBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/')"></li>
+          <li><input type="button" value="短消息" id="postMessageBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/')"></li>
+          <li><input type="button" value="论坛" onclick="location.href='http://www.itpub.net/forum.php'"></li>
+          <li><input type="button" value="加好友" id="addFriendBtn" onclick="showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/')"></li>
+        </ul>
+              </div>
+            <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">个人简介</div>
+        <p class="Blog_p3">Happy is the man who is living by his hobby.</p>
+      </div>
+        
+         
+      <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">文章分类</div>
+        <div class="Blog_left2_1">
+          <p class="Blog_p4"><a href="/26230597/list/1/">全部博文</a>（176）</p>
+          <ul id="blogCla">
+                            <li><a href="/26230597/cid-173620-list-1/" title="Oracle&nbsp;DataGuard">Oracle&nbsp;Data</a>（8）
+                                </li>
+                            <li><a href="/26230597/cid-172747-list-1/" title="C语言">C语言</a>（4）
+                                </li>
+                            <li><a href="/26230597/cid-170694-list-1/" title="Jira">Jira</a>（5）
+                                </li>
+                            <li><a href="/26230597/cid-170433-list-1/" title="Redis">Redis</a>（1）
+                                </li>
+                            <li><a href="/26230597/cid-170367-list-1/" title="Sqlite">Sqlite</a>（7）
+                                </li>
+                            <li><a href="/26230597/cid-170285-list-1/" title="Hadoop">Hadoop</a>（6）
+                                </li>
+                            <li><a href="/26230597/cid-169194-list-1/" title="Nginx">Nginx</a>（3）
+                                </li>
+                            <li><a href="/26230597/cid-168568-list-1/" title="Cacti">Cacti</a>（8）
+                                </li>
+                            <li><a href="/26230597/cid-168242-list-1/" title="Nagios">Nagios</a>（10）
+                                </li>
+                            <li><a href="/26230597/cid-168127-list-1/" title="Tomcat">Tomcat</a>（3）
+                                </li>
+                            <li><a href="/26230597/cid-168032-list-1/" title="Zabbix">Zabbix</a>（2）
+                                </li>
+                            <li><a href="/26230597/cid-167068-list-1/" title="MongoDB">MongoDB</a>（19）
+                                </li>
+                            <li><a href="/26230597/cid-93051-list-1/" title="English">English</a>（0）
+                                </li>
+                            <li><a href="/26230597/cid-87126-list-1/" title="Life">Life</a>（2）
+                                </li>
+                            <li><span class="Blog_jia1"></span><a href="/26230597/cid-87082-list-1/" title="MySQL">MySQL</a>（67）
+                                    <div style="display:none;" class="zk">
+					                        <p><a href="/26230597/sid-171483-list-1/" title="Lock">Lock</a>（2）</p>
+                                            <p><a href="/26230597/sid-171413-list-1/" title="Design">Design</a>（1）</p>
+                                            <p><a href="/26230597/sid-170284-list-1/" title="Triggers">Triggers</a>（0）</p>
+                                            <p><a href="/26230597/sid-167228-list-1/" title="Transaction">Transaction</a>（3）</p>
+                                            <p><a href="/26230597/sid-166944-list-1/" title="Help">Help</a>（11）</p>
+                                            <p><a href="/26230597/sid-166935-list-1/" title="cluster">cluster</a>（6）</p>
+                                            <p><a href="/26230597/sid-166835-list-1/" title="MMM">MMM</a>（1）</p>
+                                            <p><a href="/26230597/sid-166798-list-1/" title="Problem">Problem</a>（8）</p>
+                                            <p><a href="/26230597/sid-166760-list-1/" title="Replication">Replication</a>（2）</p>
+                                            <p><a href="/26230597/sid-166752-list-1/" title="Install">Install</a>（5）</p>
+                                            <p><a href="/26230597/sid-166685-list-1/" title="Log">Log</a>（4）</p>
+                                            <p><a href="/26230597/sid-166666-list-1/" title="BackupRecovery">BackupRecovery</a>（4）</p>
+                                        </div>
+                                </li>
+                            <li><a href="/26230597/cid-87075-list-1/" title="Oracle">Oracle</a>（18）
+                                </li>
+                            <li><a href="/26230597/cid-87061-list-1/" title="Linux">Linux</a>（12）
+                                </li>
+                            <li><a href="/26230597/cid--1-list-1/" title="未分配的博文">未分配的博文</a>（1）
+                                </li>
+                      </ul>
+        </div>
+      </div>
+      	              <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">文章存档</div>
+        <div class="Blog_left2_1" id="blogdtr">
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="/26230597/year-2015-list-1/">2015年</a>（33）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="/26230597/year-201505-list-1/">2015年05月</a>（2）</li>
+                        <li><a href="/26230597/year-201504-list-1/">2015年04月</a>（5）</li>
+                        <li><a href="/26230597/year-201503-list-1/">2015年03月</a>（9）</li>
+                        <li><a href="/26230597/year-201502-list-1/">2015年02月</a>（7）</li>
+                        <li><a href="/26230597/year-201501-list-1/">2015年01月</a>（10）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="/26230597/year-2014-list-1/">2014年</a>（129）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="/26230597/year-201412-list-1/">2014年12月</a>（10）</li>
+                        <li><a href="/26230597/year-201411-list-1/">2014年11月</a>（2）</li>
+                        <li><a href="/26230597/year-201410-list-1/">2014年10月</a>（10）</li>
+                        <li><a href="/26230597/year-201409-list-1/">2014年09月</a>（10）</li>
+                        <li><a href="/26230597/year-201408-list-1/">2014年08月</a>（11）</li>
+                        <li><a href="/26230597/year-201407-list-1/">2014年07月</a>（9）</li>
+                        <li><a href="/26230597/year-201406-list-1/">2014年06月</a>（10）</li>
+                        <li><a href="/26230597/year-201405-list-1/">2014年05月</a>（14）</li>
+                        <li><a href="/26230597/year-201404-list-1/">2014年04月</a>（8）</li>
+                        <li><a href="/26230597/year-201403-list-1/">2014年03月</a>（32）</li>
+                        <li><a href="/26230597/year-201402-list-1/">2014年02月</a>（13）</li>
+                      </ul>
+                    <p class="Blog_p4"><span class="Blog_jia1"></span><a href="/26230597/year-2013-list-1/">2013年</a>（13）</p>
+          <ul style="display:none;" class="Blog_ul3 zk">
+                        <li><a href="/26230597/year-201307-list-1/">2013年07月</a>（1）</li>
+                        <li><a href="/26230597/year-201305-list-1/">2013年05月</a>（2）</li>
+                        <li><a href="/26230597/year-201303-list-1/">2013年03月</a>（9）</li>
+                        <li><a href="/26230597/year-201302-list-1/">2013年02月</a>（1）</li>
+                      </ul>
+                  </div>
+      </div>
+      	  	        <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">我的朋友</div>
+        <ul class="Blog_ul4">
+                    <li><a href="/30030074/"><img src="http://passport.ixpub.net/data/avatar/030/03/00/74_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30030074/" title="jelly_sh">jelly_sh</a></p>
+          </li>
+                    <li><a href="/26863299/"><img src="http://passport.ixpub.net/data/avatar/026/86/32/99_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/26863299/" title="hello_ketty">hello_ke</a></p>
+          </li>
+                    <li><a href="/25723371/"><img src="http://passport.ixpub.net/data/avatar/025/72/33/71_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/25723371/" title="fengzhanhai">fengzhan</a></p>
+          </li>
+                    <li><a href="/30089851/"><img src="http://passport.ixpub.net/data/avatar/030/08/98/51_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30089851/" title="hackeruncle">hackerun</a></p>
+          </li>
+                    <li><a href="/30403720/"><img src="http://passport.ixpub.net/data/avatar/030/40/37/20_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30403720/" title="hmy_362322">hmy_3623</a></p>
+          </li>
+                    <li><a href="/30263158/"><img src="http://passport.ixpub.net/data/avatar/030/26/31/58_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30263158/" title="回忆淡了">回忆淡了</a></p>
+          </li>
+                    <li><a href="/30265865/"><img src="http://passport.ixpub.net/data/avatar/030/26/58/65_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30265865/" title="yy540zv">yy540zv</a></p>
+          </li>
+                    <li><a href="/30250853/"><img src="http://passport.ixpub.net/data/avatar/030/25/08/53_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30250853/" title="shinnying365">shinnyin</a></p>
+          </li>
+                    <li><a href="/29754888/"><img src="http://passport.ixpub.net/data/avatar/029/75/48/88_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/29754888/" title="破棉袄">破棉袄</a></p>
+          </li>
+                  </ul>
+      </div>
+	  	        <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">最近访客</div>
+        <ul class="Blog_ul4">
+                    <li><a href="/21203740/"><img src="http://passport.ixpub.net/data/avatar/021/20/37/40_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/21203740/" title="lztjcom">lztjcom</a></p>
+          </li>
+                    <li><a href="/31054343/"><img src="http://passport.ixpub.net/data/avatar/031/05/43/43_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/31054343/" title="zhangxiaofan110">zhangxia</a></p>
+          </li>
+                    <li><a href="/30935525/"><img src="http://passport.ixpub.net/data/avatar/030/93/55/25_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30935525/" title="woods_su">woods_su</a></p>
+          </li>
+                    <li><a href="/26809479/"><img src="http://passport.ixpub.net/data/avatar/026/80/94/79_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/26809479/" title="mxy_leon">mxy_leon</a></p>
+          </li>
+                    <li><a href="/7406907/"><img src="http://passport.ixpub.net/data/avatar/007/40/69/07_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/7406907/" title="bnso">bnso</a></p>
+          </li>
+                    <li><a href="/30112324/"><img src="http://passport.ixpub.net/data/avatar/030/11/23/24_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/30112324/" title="OrclChina">OrclChin</a></p>
+          </li>
+                    <li><a href="/31060687/"><img src="http://passport.ixpub.net/data/avatar/031/06/06/87_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/31060687/" title="abcabcssc">abcabcss</a></p>
+          </li>
+                    <li><a href="/26902322/"><img src="http://passport.ixpub.net/data/avatar/026/90/23/22_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/26902322/" title="zxy877298415">zxy87729</a></p>
+          </li>
+                    <li><a href="/31060674/"><img src="http://passport.ixpub.net/data/avatar/031/06/06/74_avatar_small.jpg" onerror="this.onerror=null;this.src='http://passport.ixpub.net/images/noavatar_small.gif'" /></a>
+            <p><a href="/31060674/" title="zyp649117491">zyp64911</a></p>
+          </li>
+                  </ul>
+      </div>
+	       <div  class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">微信关注</div>
+        <div class="">
+                <div class="" style="float:left; margin-right:5px;">
+                 <img width="90" height="90" alt="" src="/image/IT168.jpg"/>
+                 </div><br>
+                <div class="" style="margin-top:10px;">
+                 <p class="">
+                         IT168企业级官微
+                </p>
+                 <p class="">
+
+                 <br></br>
+                 微信号：IT168qiye
+                </p>
+                </div>
+        </div>
+<hr size="1" style="clear:both;">
+        <div class="" style="clear:both;">
+                <div class="" style="float:left; margin-right:5px;">
+                 <img width="90" height="90" alt="" src="/image/itpub.jpg"/>
+                 </div><br>
+                <div class="" style="margin-top:10px;">
+                 <p class="">
+                         系统架构师大会
+                </p>
+                 <p class="">
+
+                 <br></br>
+                 微信号：SACC2013
+                </p>
+                </div>
+        </div>
+
+</div>
+      <div class="Blog_left2 Blog_bg1">
+        <div class="Blog_tit1">订阅</div>
+        <ul class="Blog_ul5">
+          <li><a href="/blog/rss/uid/26230597/" class="Blog_a4"></a></li>
+          <li><a href="http://www.google.com/ig/add?feedurl=http%3A%2F%2Fblog.itpub.net%2F26230597%2F" class="Blog_a5"></a></li>
+        </ul>
+      </div>
+      <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">推荐博文</div>
+        <ul class="Blog_ul6">
+				  			<li>·<a href="/29475508/viewspace-2063193/" title="【Linux】Linux软件安装管理5 挂载本地iso光盘镜像、配置yum软件仓库">【Linux】Linux软件安装管理5...</a></li>
+		  			<li>·<a href="/29371470/viewspace-2062914/" title="goldengate中长事务引起的问题">goldengate中长事务引起的问...</a></li>
+		  			<li>·<a href="/23718752/viewspace-2062851/" title="物化视图刷新结合ADG的尝试">物化视图刷新结合ADG的尝试...</a></li>
+		  			<li>·<a href="/30109892/viewspace-2062589/" title="记录一次执行计划恶化的处理过程">记录一次执行计划恶化的处理...</a></li>
+		  			<li>·<a href="/30109892/viewspace-2062493/" title="MySQL数据库丢失数据场景分析">MySQL数据库丢失数据场景分析...</a></li>
+		  		        </ul>
+      </div>
+
+	  <div class="Blog_left2 Blog_left3 Blog_bg1">
+        <div class="Blog_tit1">热词专题</div>
+        <ul class="Blog_ul6">
+          <!--              <li>·<a href="http://www.dataguru.cn/zhuanti/hadoop220peizhi.shtml" target='blank' title='配置hadoop2.2.0格式化namenode问题'></a></li>
+              <li>·<a href="http://www.dataguru.cn/zhuanti/hadoopshouce.shtml" target='blank' title='hadoop2.2.0安装手册'></a></li>-->
+        </ul>
+      </div>
+      
+	  
+
+	</div>
+<script language="javascript">
+$(document).ready(function(){
+    /*目录树JS效果*/
+	$('#blogCla li > span').click(function(){
+		var cla = $(this).attr('class');
+		if(cla == 'Blog_jia1'){
+			//$('#blogCla li > span').removeClass('Blog_jian1').addClass('Blog_jia1');
+			//$('#blogCla li > .zk').css('display', 'none');
+				
+			$(this).removeClass('Blog_jia1').addClass('Blog_jian1');
+            $(this).parent().children('.zk').css('display', 'block');
+		}else{
+			$(this).removeClass('Blog_jian1').addClass('Blog_jia1');
+            $(this).parent().children('.zk').css('display', 'none');
+		}
+	});
+		
+	$('#blogdtr > p > span').click(function(){
+		var cla = $(this).attr('class');
+		if(cla == 'Blog_jia1'){
+			//$('#blogdtr > .Blog_p4 > span').removeClass('Blog_jian1').addClass('Blog_jia1');
+			//$('#blogdtr ul').css('display', 'none');
+				
+			$(this).removeClass('Blog_jia1').addClass('Blog_jian1');
+            $(this).parent().next().css('display', 'block');
+		}else{
+			$(this).removeClass('Blog_jian1').addClass('Blog_jia1');
+            $(this).parent().next().css('display', 'none');
+		}
+	});
+});
+</script>    <!-- 右 -->
+    <div class="Blog_right1">
+      <div class="Blog_right1_1 Blog_right1_11">
+        <div class="Blog_right1_2 ">
+			<div class="img2"></div><!--推荐博文-->
+          <div class="Blog_tit4 Blog_tit5">
+                        <b class="Blog_b1"></b>
+            <a href="/26230597/viewspace-1222941/">Nginx安装学习使用详细记录</a>
+            <em>2014-07-19 23:09:18</em>
+          </div>
+          <div class="Blog_con2">
+            <div class="Blog_con3">
+              <p>分类： <span>Linux</span></p>
+			                </p>
+            </div>
+           <div class="Blog_wz1" style='word-wrap: break-word;'>
+               			<strong><span style="font-size:14px;">前言：</span></strong><br />
+<span style="font-size:14px;">选择Nginx的优点：</span><br />
+<span style="font-size:14px;">Nginx 可以在大多数 Unix like OS 上编译运行，并有 Windows 移植版。 Nginx 的1.4.0稳定版已经于2013年4月24日发布，一般情况下，对于新建站点，建议使用最新稳定版作为生产版本，已有站点的升级急迫性不高。Nginx 的源代码使用 2-clause BSD-like license。</span><br />
+<span style="font-size:14px;">Nginx 是一个很强大的高性能Web和反向代理服务器，它具有很多非常优越的特性：</span><br />
+<span style="font-size:14px;">在高连接并发的情况下，Nginx是Apache服务器不错的替代品：Nginx在美国是做虚拟主机生意的老板们经常选择的软件平台之一。能够支持高达 50,000 个并发连接数的响应，感谢Nginx为我们选择了 epoll and kqueue作为开发模型。</span><br />
+<br />
+<strong><span style="font-size:14px;">1.1 </span></strong><strong><span style="font-size:14px;">执行安装</span></strong><br />
+<div id="codeText" class="codeText">
+	<ol style="margin:0 1px 0 0;padding:5px 0pt;" start="1" class="dp-css none_number">
+		<li>
+			<span style="color:#000000;">tar <span style="color:#0000CC;">-</span>xvf nginx<span style="color:#0000CC;">-</span>1<span style="color:#0000CC;">.</span>4<span style="color:#0000CC;">.</span>2<span style="color:#0000CC;">.</span>tar<span style="color:#0000CC;">.</span>gz<br />
+</span>
+		</li>
+		<li>
+			cd nginx<span style="color:#0000CC;">-</span>1<span style="color:#0000CC;">.</span>4<span style="color:#0000CC;">.</span>2<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">.</span><span style="color:#0000CC;">/</span>configure <span style="color:#0000CC;">-</span><span style="color:#0000CC;">-</span>prefix<span style="color:#0000CC;">=</span><span style="color:#0000CC;">/</span>usr/nginx <span style="color:#0000CC;">-</span><span style="color:#0000CC;">-</span>with<span style="color:#0000CC;">-</span>http_stub_status_module <span style="color:#0000CC;">-</span><span style="color:#0000CC;">-</span>with<span style="color:#0000CC;">-</span>debug <span style="color:#0000CC;">-</span><span style="color:#0000CC;">-</span>with<span style="color:#0000CC;">-</span>http_realip_module <span style="color:#0000CC;">-</span><span style="color:#0000CC;">-</span>with<span style="color:#0000CC;">-</span>http_ssl_module<br />
+		</li>
+		<li>
+			<br />
+		</li>
+		<li>
+			<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">[</span>root@localhost nginx<span style="color:#0000CC;">-</span>1<span style="color:#0000CC;">.</span>4<span style="color:#0000CC;">.</span>2<span style="color:#0000CC;">]</span><span style="color:#0000CC;">#</span> make install<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">.</span><span style="color:#0000CC;">.</span><span style="color:#0000CC;">.</span><span style="color:#0000CC;">.</span><span style="color:#0000CC;">.</span><span style="color:#0000CC;">.</span><br />
+		</li>
+		<li>
+			<span style="color:#0000FF;">test</span> <span style="color:#0000CC;">-</span>d \<span style="color:#FF00FF;">'/usr/nginx/logs\'</span> <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> mkdir <span style="color:#0000CC;">-</span>p \<span style="color:#FF00FF;">'/usr/nginx/logs\'</span><br />
+		</li>
+		<li>
+			<span style="color:#0000FF;">test</span> <span style="color:#0000CC;">-</span>d \<span style="color:#FF00FF;">'/usr/nginx/logs\'</span> <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> mkdir <span style="color:#0000CC;">-</span>p \<span style="color:#FF00FF;">'/usr/nginx/logs\'</span><br />
+		</li>
+		<li>
+			<span style="color:#0000FF;">test</span> <span style="color:#0000CC;">-</span>d \<span style="color:#FF00FF;">'/usr/nginx/html\'</span> <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> cp <span style="color:#0000CC;">-</span>R html \<span style="color:#FF00FF;">'/usr/nginx\'</span><br />
+		</li>
+		<li>
+			<span style="color:#0000FF;">test</span> <span style="color:#0000CC;">-</span>d \<span style="color:#FF00FF;">'/usr/nginx/logs\'</span> <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> mkdir <span style="color:#0000CC;">-</span>p \<span style="color:#FF00FF;">'/usr/nginx/logs\'</span>
+		</li>
+	</ol>
+</div>
+<br />
+<span style="font-size:14px;"><strong>1.2 查看进程数</strong></span><br />
+<span style="font-size:14px;">进程数是与top出来的cpu数量是一样的。在/usr/local/nginx/conf/nginx.conf配置文件里面的worker_processes参数。</span><br />
+<span style="font-size:14px;">worker_processes指明了nginx要开启的进程数，据官方说法，一般开一个就够了，多开几个，可以减少机器io带来的影响。据实践表明，nginx的这个参数在一般情况下开4个或8个就可以了，再往上开的话优化不太大。据另一种说法是，nginx开启太多的进程，会影响主进程调度，所以占用的cpu会增高。</span><br />
+<div id="codeText" class="codeText">
+	<ol style="margin:0 1px 0 0;padding:5px 0pt;" start="1" class="dp-css none_number">
+		<li>
+			<span style="color:#000000;"><span style="color:#0000CC;">[</span>root@lb<span style="color:#0000CC;">-</span>net<span style="color:#0000CC;">-</span>2 ~<span style="color:#0000CC;">]</span><span style="color:#0000CC;">#</span> ps <span style="color:#0000CC;">-</span>eaf<span style="color:#0000CC;">|</span>grep nginx<br />
+</span>
+		</li>
+		<li>
+			root      2221  1382  0 18<span style="color:#0000CC;">:</span>06 pts/0    00<span style="color:#0000CC;">:</span>00<span style="color:#0000CC;">:</span>00 grep nginx<br />
+		</li>
+		<li>
+			root     16260     1  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>00<span style="color:#0000CC;">:</span>00 nginx<span style="color:#0000CC;">:</span> master process /usr/<span style="color:#0000FF;">local</span><span style="color:#0000FF;">/</span>nginx/sbin/nginx<br />
+		</li>
+		<li>
+			nobody   16261 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>26 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16262 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16263 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>25 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16264 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>33 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16265 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16266 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>24 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16267 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16268 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>23 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16269 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16270 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>26 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16271 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16272 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>25 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16273 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>26 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16274 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16275 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16276 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>33 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16277 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>24 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16278 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>24 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16279 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>30 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16280 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>24 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16281 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16282 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>32 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16283 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>25 nginx<span style="color:#0000CC;">:</span> worker process <br />
+		</li>
+		<li>
+			nobody   16284 16260  0 Jun18 <span style="color:#0000CC;">?</span> 00<span style="color:#0000CC;">:</span>01<span style="color:#0000CC;">:</span>26 nginx<span style="color:#0000CC;">:</span> worker process
+		</li>
+	</ol>
+</div>
+<br />
+<span style="font-size:14px;"><strong>2 配置文件</strong></span><br />
+<span style="font-size:14px;">2.1 Nginx反向代理实践</span><br />
+<span style="font-size:14px;">省过</span><br />
+<br />
+<span style="font-size:14px;"><strong>2.2 Nginx Rewrite重新定向</strong></span><br />
+<span style="font-size:14px;">使用nginx做重新定向。 </span><br />
+<span style="font-size:14px;">nginx参考网址：http://blog.sina.com.cn/s/blog_97688f8e0100zws5.html</span><br />
+<span style="font-size:14px;">语法规则： location [=|~|~*|^~] /uri/ { … }</span><br />
+<span style="font-size:14px;">= 开头表示精确匹配</span><br />
+<span style="font-size:14px;">^~ 开头表示uri以某个常规字符串开头，理解为匹配 url路径即可。nginx不对url做编码，因此请求为/static/20%/aa，可以被规则^~ /static/ /aa匹配到（注意是空格）。</span><br />
+<span style="font-size:14px;">~ 开头表示区分大小写的正则匹配</span><br />
+<span style="font-size:14px;">~* &nbsp;开头表示不区分大小写的正则匹配</span><br />
+<span style="font-size:14px;">!~和!~*分别为区分大小写不匹配及不区分大小写不匹配 的正则</span><br />
+<span style="font-size:14px;">/ 通用匹配，任何请求都会匹配到。</span><br />
+<span style="font-size:14px;">多个location配置的情况下匹配顺序为（参考资料而来，还未实际验证，试试就知道了，不必拘泥，仅供参考）:</span><br />
+<span style="font-size:14px;">首先匹配 =，其次匹配^~, 其次是按文件中顺序的正则匹配，最后是交给 / 通用匹配。当有匹配成功时候，停止匹配，按当前匹配规则处理请求。</span><br />
+<span style="font-size:14px;">例子，有如下匹配规则：</span><br />
+<span style="font-size:14px;">location = / {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则A</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location = /login {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则B</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location ^~ /static/ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则C</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location ~ \.(gif|jpg|png|js|css)$ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则D</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location ~* \.png$ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则E</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location !~ \.xhtml$ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则F</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location !~* \.xhtml$ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则G</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location / {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp;#规则H</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">那么产生的效果如下：</span><br />
+<span style="font-size:14px;">访问根目录/， 比如http://localhost/ 将匹配规则A</span><br />
+<span style="font-size:14px;">访问 http://localhost/login 将匹配规则B，http://localhost/register 则匹配规则H</span><br />
+<span style="font-size:14px;">访问 http://localhost/static/a.html 将匹配规则C</span><br />
+<span style="font-size:14px;">访问 http://localhost/a.gif, http://localhost/b.jpg 将匹配规则D和规则E，但是规则D顺序优先，规则E不起作用，而 http://localhost/static/c.png 则优先匹配到规则C</span><br />
+<span style="font-size:14px;">访问 http://localhost/a.PNG 则匹配规则E，而不会匹配规则D，因为规则E不区分大小写。</span><br />
+<span style="font-size:14px;">访问 http://localhost/a.xhtml 不会匹配规则F和规则G，http://localhost/a.XHTML不会匹配规则G，因为不区分大小写。规则F，规则G属于排除法，符合匹配规则但是不会匹配到，所以想想看实际应用中哪里会用到。</span><br />
+<span style="font-size:14px;">访问 http://localhost/category/id/1111 则最终匹配到规则H，因为以上规则都不匹配，这个时候应该是nginx转发请求给后端应用服务器，比如FastCGI（php），tomcat（jsp），nginx作为方向代理服务器存在。</span><br />
+<br />
+<span style="font-size:14px;">所以实际使用中，个人觉得至少有三个匹配规则定义，如下：</span><br />
+<span style="font-size:14px;">#直接匹配网站根，通过域名访问网站首页比较频繁，使用这个会加速处理，官网如是说。</span><br />
+<span style="font-size:14px;">#这里是直接转发给后端应用服务器了，也可以是一个静态首页</span><br />
+<span style="font-size:14px;"># 第一个必选规则</span><br />
+<span style="font-size:14px;">location = / {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; proxy_pass http://tomcat:8080/index</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;"># 第二个必选规则是处理静态文件请求，这是nginx作为http服务器的强项</span><br />
+<span style="font-size:14px;"># 有两种配置模式，目录匹配或后缀匹配,任选其一或搭配使用</span><br />
+<span style="font-size:14px;">location ^~ /static/ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; root /webroot/static/;</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">location ~* \.(gif|jpg|jpeg|png|css|js|ico)$ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; root /webroot/res/;</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">#第三个规则就是通用规则，用来转发动态请求到后端应用服务器</span><br />
+<span style="font-size:14px;">#非静态文件请求就默认是动态请求，自己根据实际把握</span><br />
+<span style="font-size:14px;">#毕竟目前的一些框架的流行，带.php,.jsp后缀的情况很少了</span><br />
+<span style="font-size:14px;">location / {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; proxy_pass http://tomcat:8080/</span><br />
+<span style="font-size:14px;">}</span><br />
+<br />
+<br />
+<span style="font-size:14px;"><strong>2.3 ReWrite语法</strong></span><br />
+<span style="font-size:14px;">last – 基本上都用这个Flag。</span><br />
+<span style="font-size:14px;">break – 中止Rewirte，不在继续匹配</span><br />
+<span style="font-size:14px;">redirect – 返回临时重定向的HTTP状态302</span><br />
+<span style="font-size:14px;">permanent – 返回永久重定向的HTTP状态301</span><br />
+<span style="font-size:14px;color:#4C33E5;">1、下面是可以用来判断的表达式：</span><br />
+<span style="font-size:14px;">-f和!-f用来判断是否存在文件</span><br />
+<span style="font-size:14px;">-d和!-d用来判断是否存在目录</span><br />
+<span style="font-size:14px;">-e和!-e用来判断是否存在文件或目录</span><br />
+<span style="font-size:14px;">-x和!-x用来判断文件是否可执行</span><br />
+<span style="font-size:14px;color:#4C33E5;">2、下面是可以用作判断的全局变量</span><br />
+<span style="font-size:14px;">例：http://localhost:88/test1/test2/test.php</span><br />
+<span style="font-size:14px;">$host：localhost</span><br />
+<span style="font-size:14px;">$server_port：88</span><br />
+<span style="font-size:14px;">$request_uri：http://localhost:88/test1/test2/test.php</span><br />
+<span style="font-size:14px;">$document_uri：/test1/test2/test.php</span><br />
+<span style="font-size:14px;">$document_root：D:\nginx/html</span><br />
+<span style="font-size:14px;">$request_filename：D:\nginx/html/test1/test2/test.php<br />
+</span><br />
+<span style="font-size:14px;"><strong>2.4 Redirect语法</strong></span><br />
+<span style="font-size:14px;">server {</span><br />
+<span style="font-size:14px;">listen 80;</span><br />
+<span style="font-size:14px;">server_name start.igrow.cn;</span><br />
+<span style="font-size:14px;">index index.html index.php;</span><br />
+<span style="font-size:14px;">root html;</span><br />
+<span style="font-size:14px;">if ($http_host !~ “^star\.igrow\.cn$&quot {</span><br />
+<span style="font-size:14px;">rewrite ^(.*) http://star.igrow.cn$1 redirect;</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">}<br />
+</span><br />
+<span style="font-size:14px;"><strong>2.5 防盗链</strong></span><br />
+<span style="font-size:14px;">location ~* \.(gif|jpg|swf)$ {</span><br />
+<span style="font-size:14px;">valid_referers none blocked start.igrow.cn sta.igrow.cn;</span><br />
+<span style="font-size:14px;">if ($invalid_referer) {</span><br />
+<span style="font-size:14px;">rewrite ^/ http://$host/logo.png;</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">}<br />
+</span><br />
+<span style="font-size:14px;"><strong>2.6 根据文件类型设置过期时间</strong></span><br />
+<span style="font-size:14px;">location ~* \.(js|css|jpg|jpeg|gif|png|swf)$ {</span><br />
+<span style="font-size:14px;">if (-f $request_filename) {</span><br />
+<span style="font-size:14px;">expires 1h;</span><br />
+<span style="font-size:14px;">break;</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;">}<br />
+</span><br />
+<span style="font-size:14px;"><strong>2.7 禁止访问某个目录</strong></span><br />
+<span style="font-size:14px;">location ~* \.(txt|doc)${</span><br />
+<span style="font-size:14px;">root /data/www/wwwroot/linuxtone/test;</span><br />
+<span style="font-size:14px;">deny all;</span><br />
+<span style="font-size:14px;">}</span><br />
+<span style="font-size:14px;color:#4C33E5;">一些可用的全局变量:</span><br />
+<span style="font-size:14px;">$args</span><br />
+<span style="font-size:14px;">$content_length</span><br />
+<span style="font-size:14px;">$content_type</span><br />
+<span style="font-size:14px;">$document_root</span><br />
+<span style="font-size:14px;">$document_uri</span><br />
+<span style="font-size:14px;">$host</span><br />
+<span style="font-size:14px;">$http_user_agent</span><br />
+<span style="font-size:14px;">$http_cookie</span><br />
+<span style="font-size:14px;">$limit_rate</span><br />
+<span style="font-size:14px;">$request_body_file</span><br />
+<span style="font-size:14px;">$request_method</span><br />
+<span style="font-size:14px;">$remote_addr</span><br />
+<span style="font-size:14px;">$remote_port</span><br />
+<span style="font-size:14px;">$remote_user</span><br />
+<span style="font-size:14px;">$request_filename</span><br />
+<span style="font-size:14px;">$request_uri</span><br />
+<span style="font-size:14px;">$query_string</span><br />
+<span style="font-size:14px;">$scheme</span><br />
+<span style="font-size:14px;">$server_protocol</span><br />
+<span style="font-size:14px;">$server_addr</span><br />
+<span style="font-size:14px;">$server_name</span><br />
+<span style="font-size:14px;">$server_port</span><br />
+<span style="font-size:14px;">$uri</span><br />
+<br />
+<br />
+<span style="font-size:14px;"><strong>2.8 Nginx静态文件(css,js,jpg等等web静态资源)</strong></span><br />
+<span style="font-size:14px;">vim /usr/local/nginx/conf/nginx.conf</span><br />
+<span style="font-size:14px;">&nbsp; server {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; listen &nbsp; &nbsp; &nbsp; 80;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; server_name &nbsp;localhost;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; open_file_cache max=10000 inactive=60s;</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; location /group1/M00 {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; root &nbsp; /data/fastdfs/data;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ngx_fastdfs_module;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; location /css {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; root &nbsp; plocc_static;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; include gzip.conf;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; location /common {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; root &nbsp; plocc_static;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; include gzip.conf;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br />
+<br />
+<br />
+<span style="font-size:14px;"><strong>2.9 nginx 转发工程的日志文件</strong></span><br />
+<span style="font-size:14px;color:#4C33E5;">去nginx.conf配置文件里面去看访问日志，如下：</span><br />
+<span style="font-size:14px;">vim nginx.conf</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp;location ~* ^/mobileWeb/.*$ {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;include deny.conf;</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;proxy_pass http://mobilewebbackend;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;include proxy.conf;</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;error_log &nbsp;logs/mobileweb_error.log error;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;access_log &nbsp;logs/mobileweb_access.log &nbsp;main;</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;include gzip.conf;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br />
+<span style="font-size:14px;color:#4C33E5;">再去logs目录查看日志文件，如下：</span><br />
+<span style="font-size:14px;">[root@xx logs]# ll /usr/local/nginx/logs/mobileweb*</span><br />
+<span style="font-size:14px;">-rw-r--r--. 1 root root 10946 7月 &nbsp;18 10:36 /usr/local/nginx/logs/mobileweb_access.log</span><br />
+<span style="font-size:14px;">-rw-r--r--. 1 root root &nbsp;1628 7月 &nbsp;18 10:36 /usr/local/nginx/logs/mobileweb_error.log</span><br />
+<br />
+<br />
+<span style="font-size:14px;"><strong>3 添加启动服务</strong></span><br />
+<div id="codeText" class="codeText">
+	<ol style="margin:0 1px 0 0;padding:5px 0pt;" start="1" class="dp-css none_number">
+		<li>
+			<span style="color:#000000;"><span style="color:#0000CC;">[</span>root@localhost nginx<span style="color:#0000CC;">]</span><span style="color:#0000CC;">#</span> cat /etc/init<span style="color:#0000CC;">.</span>d/nginx<br />
+</span>
+		</li>
+		<li>
+			#<span style="color:#0000CC;">!</span><span style="color:#0000CC;">/</span>bin/bash<br />
+		</li>
+		<li>
+			#chkconfig<span style="color:#0000CC;">:</span>2345 70 70<br />
+		</li>
+		<li>
+			#description<span style="color:#0000CC;">:</span>nginx<br />
+		</li>
+		<li>
+			BIN<span style="color:#0000CC;">=</span><span style="color:#0000CC;">/</span>usr/nginx/sbin/nginx<br />
+		</li>
+		<li>
+			function d_start {<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;$BIN <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> <span style="color:#0000FF;">echo</span> <span style="color:#0000CC;">-</span>n \<span style="color:#FF00FF;">"nginx is running\"</span><br />
+		</li>
+		<li>
+			}<br />
+		</li>
+		<li>
+			<br />
+		</li>
+		<li>
+			function d_stop {<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;$BIN <span style="color:#0000CC;">-</span>s stop <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> <span style="color:#0000FF;">echo</span> <span style="color:#0000CC;">-</span>n \<span style="color:#FF00FF;">"nginx is not running\"</span><br />
+		</li>
+		<li>
+			}<br />
+		</li>
+		<li>
+			<br />
+		</li>
+		<li>
+			function d_reload {<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;$BIN <span style="color:#0000CC;">-</span>s reload <span style="color:#0000CC;">|</span><span style="color:#0000CC;">|</span> <span style="color:#0000FF;">echo</span> <span style="color:#0000CC;">-</span>n \<span style="color:#FF00FF;">"nginx reload failed\"</span><br />
+		</li>
+		<li>
+			}<br />
+		</li>
+		<li>
+			<br />
+		</li>
+		<li>
+			case $1 <span style="color:#0000FF;">in</span><br />
+		</li>
+		<li>
+			start<span style="color:#0000CC;">)</span><br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#0000FF;">echo</span> start nginx<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;d_start<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">;</span><span style="color:#0000CC;">;</span><br />
+		</li>
+		<li>
+			stop<span style="color:#0000CC;">)</span> <br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#0000FF;">echo</span> stop nginx<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;d_stop<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">;</span><span style="color:#0000CC;">;</span><br />
+		</li>
+		<li>
+			reload<span style="color:#0000CC;">)</span><br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#0000FF;">echo</span> reload nginx<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;d_reload<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">;</span><span style="color:#0000CC;">;</span><br />
+		</li>
+		<li>
+			restart<span style="color:#0000CC;">)</span><br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#0000FF;">echo</span> restart nginx<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;d_stop<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#0000FF;">echo</span> <span style="color:#FF0000;">sleep</span> 5s<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#FF0000;">sleep</span> 5<br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;d_start<br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">;</span><span style="color:#0000CC;">;</span><br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">*</span><span style="color:#0000CC;">)</span> <br />
+		</li>
+		<li>
+			&nbsp;&nbsp;&nbsp;<span style="color:#0000FF;">echo</span> \<span style="color:#FF00FF;">"Usage: nginx [start | stop |reload |restart]\"</span><br />
+		</li>
+		<li>
+			<span style="color:#0000CC;">;</span><span style="color:#0000CC;">;</span><br />
+		</li>
+		<li>
+			<br />
+		</li>
+		<li>
+			esac<br />
+		</li>
+		<li>
+			exit 0
+		</li>
+	</ol>
+</div>
+<span style="font-size:14px;color:#4C33E5;">启动： <strong>service nginx start;</strong></span><br />
+<br />
+<br />
+<span style="font-size:14px;"><strong>4 制作证书Key。</strong></span><br />
+<span style="font-size:14px;color:#4C33E5;"><strong>4.1.首先要生成服务器端的私钥(key文件):</strong></span><br />
+<span style="font-size:14px;">openssl genrsa -des3 -out server.key 2048</span><br />
+<br />
+<span style="font-size:14px;">Enter pass phrase for server.key:gongsilong0617</span><br />
+<br />
+<span style="font-size:14px;"><strong>4.2.用server.key生成一个证书：</strong></span><br />
+<span style="font-size:14px;">openssl req -new -key server.key -out server.csr</span><br />
+<span style="font-size:14px;">pass phrase: gongsilong0617</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost ssl]# openssl req -new -key server.key -out server.csr</span><br />
+<span style="font-size:14px;">Enter pass phrase for server.key:</span><br />
+<span style="font-size:14px;">You are about to be asked to enter information that will be incorporated</span><br />
+<span style="font-size:14px;">into your certificate request.</span><br />
+<span style="font-size:14px;">What you are about to enter is what is called a Distinguished Name or a DN.</span><br />
+<span style="font-size:14px;">There are quite a few fields but you can leave some blank</span><br />
+<span style="font-size:14px;">For some fields there will be a default value,</span><br />
+<span style="font-size:14px;">If you enter '.', the field will be left blank.</span><br />
+<span style="font-size:14px;">-----</span><br />
+<span style="font-size:14px;">Country Name (2 letter code) [GB]:cn</span><br />
+<span style="font-size:14px;">State or Province Name (full name) [Berkshire]:shanghai</span><br />
+<span style="font-size:14px;">Locality Name (eg, city) [Newbury]:shanghai</span><br />
+<span style="font-size:14px;">Organization Name (eg, company) [My Company Ltd]:gongsilong</span><br />
+<span style="font-size:14px;">Organizational Unit Name (eg, section) []:business</span><br />
+<span style="font-size:14px;">Common Name (eg, your name or your server's hostname) []:ops</span><br />
+<span style="font-size:14px;">Email Address []:mch@gongsilong.com</span><br />
+<br />
+<span style="font-size:14px;">Please enter the following 'extra' attributes</span><br />
+<span style="font-size:14px;">to be sent with your certificate request</span><br />
+<span style="font-size:14px;">A challenge password []:gongsilong0617</span><br />
+<span style="font-size:14px;">An optional company name []:gongsilong</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#</span><br />
+<br />
+<span style="font-size:14px;"><strong>4.3. </strong><strong>对客户端也作同样的命令生成key及csr文件</strong></span><br />
+<span style="font-size:14px;">openssl genrsa -des3 -out client.key 2048</span><br />
+<span style="font-size:14px;">pass phrase: plclient0618</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost client]# openssl req -new -key client.key -out client.csr</span><br />
+<span style="font-size:14px;">Enter pass phrase for client.key:</span><br />
+<span style="font-size:14px;">You are about to be asked to enter information that will be incorporated</span><br />
+<span style="font-size:14px;">into your certificate request.</span><br />
+<span style="font-size:14px;">What you are about to enter is what is called a Distinguished Name or a DN.</span><br />
+<span style="font-size:14px;">There are quite a few fields but you can leave some blank</span><br />
+<span style="font-size:14px;">For some fields there will be a default value,</span><br />
+<span style="font-size:14px;">If you enter '.', the field will be left blank.</span><br />
+<span style="font-size:14px;">-----</span><br />
+<span style="font-size:14px;">Country Name (2 letter code) [GB]:cn</span><br />
+<span style="font-size:14px;">State or Province Name (full name) [Berkshire]:shanghai</span><br />
+<span style="font-size:14px;">Locality Name (eg, city) [Newbury]:shanghai</span><br />
+<span style="font-size:14px;">Organization Name (eg, company) [My Company Ltd]:gongsilong</span><br />
+<span style="font-size:14px;">Organizational Unit Name (eg, section) []:business</span><br />
+<span style="font-size:14px;">Common Name (eg, your name or your server's hostname) []:ops</span><br />
+<span style="font-size:14px;">Email Address []:mch@gongsilong.com</span><br />
+<br />
+<span style="font-size:14px;">Please enter the following 'extra' attributes</span><br />
+<span style="font-size:14px;">to be sent with your certificate request</span><br />
+<span style="font-size:14px;">A challenge password []:plclient0618</span><br />
+<span style="font-size:14px;">An optional company name []:gongsilong</span><br />
+<br />
+<span style="font-size:14px;"><strong>4.4 生成的CSR证书文件必须有CA的签名才可形成证书.这里制作自己的CA 这时生成一个KEY文件ca.key 和根证书ca.crt</strong></span><br />
+<span style="font-size:14px;">pass phrase: gongsilong0617</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost ssl]# openssl req -new -x509 -nodes -keyout ca.key -out ca.crt</span><br />
+<span style="font-size:14px;">Generating a 1024 bit RSA private key</span><br />
+<span style="font-size:14px;">.......++++++</span><br />
+<span style="font-size:14px;">................++++++</span><br />
+<span style="font-size:14px;">writing new private key to 'ca.key'</span><br />
+<span style="font-size:14px;">Enter PEM pass phrase:</span><br />
+<span style="font-size:14px;">Verifying - Enter PEM pass phrase:</span><br />
+<span style="font-size:14px;">-----</span><br />
+<span style="font-size:14px;">You are about to be asked to enter information that will be incorporated</span><br />
+<span style="font-size:14px;">into your certificate request.</span><br />
+<span style="font-size:14px;">What you are about to enter is what is called a Distinguished Name or a DN.</span><br />
+<span style="font-size:14px;">There are quite a few fields but you can leave some blank</span><br />
+<span style="font-size:14px;">For some fields there will be a default value,</span><br />
+<span style="font-size:14px;">If you enter '.', the field will be left blank.</span><br />
+<span style="font-size:14px;">-----</span><br />
+<span style="font-size:14px;">Country Name (2 letter code) [GB]:cn</span><br />
+<span style="font-size:14px;">State or Province Name (full name) [Berkshire]:shanghai</span><br />
+<span style="font-size:14px;">Locality Name (eg, city) [Newbury]:</span><br />
+<span style="font-size:14px;">writing new private key to 'ca.key'Organization Name (eg, company) [My Company Ltd]:</span><br />
+<span style="font-size:14px;">[root@localhost ssl]# openssl req -new -x509 -keyout ca.key -out ca.crt</span><br />
+<span style="font-size:14px;">Generating a 1024 bit RSA private key</span><br />
+<span style="font-size:14px;">..............++++++</span><br />
+<span style="font-size:14px;">..................................................++++++</span><br />
+<span style="font-size:14px;">writing new private key to 'ca.key'</span><br />
+<span style="font-size:14px;">Enter PEM pass phrase:</span><br />
+<span style="font-size:14px;">Verifying - Enter PEM pass phrase:</span><br />
+<span style="font-size:14px;">-----</span><br />
+<span style="font-size:14px;">You are about to be asked to enter information that will be incorporated</span><br />
+<span style="font-size:14px;">into your certificate request.</span><br />
+<span style="font-size:14px;">What you are about to enter is what is called a Distinguished Name or a DN.</span><br />
+<span style="font-size:14px;">There are quite a few fields but you can leave some blank</span><br />
+<span style="font-size:14px;">For some fields there will be a default value,</span><br />
+<span style="font-size:14px;">If you enter '.', the field will be left blank.</span><br />
+<span style="font-size:14px;">-----</span><br />
+<span style="font-size:14px;">Country Name (2 letter code) [GB]:cn</span><br />
+<span style="font-size:14px;">State or Province Name (full name) [Berkshire]:shanghai</span><br />
+<span style="font-size:14px;">Locality Name (eg, city) [Newbury]:shanghai</span><br />
+<span style="font-size:14px;">Organization Name (eg, company) [My Company Ltd]:gongsilong</span><br />
+<span style="font-size:14px;">Organizational Unit Name (eg, section) []:business</span><br />
+<span style="font-size:14px;">Common Name (eg, your name or your server's hostname) []:ops</span><br />
+<span style="font-size:14px;">Email Address []:mch@gongsilong.com</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#&nbsp;</span><br />
+<span style="font-size:14px;">[root@localhost ssl]# mch@gongsilong.com</span><br />
+<span style="font-size:14px;">-bash: mch@gongsilong.com: command not found</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#&nbsp;</span><br />
+<br />
+<span style="font-size:14px;color:#4C33E5;">签署证书准备工作：</span><br />
+<span style="font-size:14px;">[root@mail ssl]# vim /etc/pki/tls/openssl.cnf</span><br />
+<span style="font-size:14px;">#dir &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= ../../CA &nbsp; &nbsp; &nbsp;//修改如下</span><br />
+<span style="font-size:14px;">dir &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = /etc/pki/plocc/CA</span><br />
+<br />
+<br />
+<span style="font-size:14px;">touch /etc/pki/plocc/CA/{index.txt,serial}&nbsp;</span><br />
+<span style="font-size:14px;">[root@localhost ssl]# ll /etc/pki/plocc/CA/</span><br />
+<span style="font-size:14px;">总计 0</span><br />
+<span style="font-size:14px;">-rw-r--r-- 1 root root 0 06-18 10:47 index.txt</span><br />
+<span style="font-size:14px;">-rw-r--r-- 1 root root 0 06-18 10:47 serial</span><br />
+<span style="font-size:14px;">[root@localhost ssl]# echo 01 > /etc/pki/plocc/CA/serial</span><br />
+<span style="font-size:14px;">[root@localhost ssl]# mkdir /etc/pki/plocc/CA/newcerts</span><br />
+<br />
+<span style="font-size:14px;"><strong>4.5 用生成的CA的证书(ca.crt)为刚才生成的server.csr,client.csr文件签名</strong></span><br />
+<span style="font-size:14px;">pass phrase:gongsilong0617</span><br />
+<span style="font-size:14px;">openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key&nbsp;</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost ssl]#<span style="color:#4C33E5;"> openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key&nbsp;</span></span><br />
+<span style="font-size:14px;">Using configuration from /etc/pki/tls/openssl.cnf</span><br />
+<span style="font-size:14px;">Enter pass phrase for ca.key:</span><br />
+<span style="font-size:14px;">Check that the request matches the signature</span><br />
+<span style="font-size:14px;">Signature ok</span><br />
+<span style="font-size:14px;">Certificate Details:</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; Serial Number: 1 (0x1)</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; Validity</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not Before: Jun 18 04:04:09 2014 GMT</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not After : Jun 18 04:04:09 2015 GMT</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; Subject:</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; countryName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = cn</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; stateOrProvinceName &nbsp; &nbsp; &nbsp; = shanghai</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; organizationName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= baolong</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; organizationalUnitName &nbsp; &nbsp;= business</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; commonName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= ops</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; emailAddress &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= mch@gongsilong.com</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; X509v3 extensions:</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X509v3 Basic Constraints:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; CA:FALSE</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Netscape Comment:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; OpenSSL Generated Certificate</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X509v3 Subject Key Identifier:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 52:6A:D9:56:CB:2B:DA:E3:9A:18:CC:FE:4D:A1:8C:21:86:55:D5:11</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X509v3 Authority Key Identifier:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; keyid:4E:F5:29:7F:6B:AD:11:EF:FC:44:CC:76:1D:B0:B9:F7:4B:9D:CB:93</span><br />
+<br />
+<span style="font-size:14px;">Certificate is to be certified until Jun 18 04:04:09 2015 GMT (365 days)</span><br />
+<span style="font-size:14px;">Sign the certificate? [y/n]:y</span><br />
+<br />
+<span style="font-size:14px;">1 out of 1 certificate requests certified, commit? [y/n]y</span><br />
+<span style="font-size:14px;">Write out database with 1 new entries</span><br />
+<span style="font-size:14px;">Data Base Updated</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#&nbsp;</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost ssl]# <span style="color:#4C33E5;">openssl ca -in client.csr -out client.crt -cert ca.crt -keyfile ca.key&nbsp;</span></span><br />
+<span style="font-size:14px;">Using configuration from /etc/pki/tls/openssl.cnf</span><br />
+<span style="font-size:14px;">Enter pass phrase for ca.key:</span><br />
+<span style="font-size:14px;">Check that the request matches the signature</span><br />
+<span style="font-size:14px;">Signature ok</span><br />
+<span style="font-size:14px;">Certificate Details:</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; Serial Number: 2 (0x2)</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; Validity</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not Before: Jun 18 04:10:40 2014 GMT</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Not After : Jun 18 04:10:40 2015 GMT</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; Subject:</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; countryName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; = cn</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; stateOrProvinceName &nbsp; &nbsp; &nbsp; = shanghai</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; organizationName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= baolong</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; organizationalUnitName &nbsp; &nbsp;= business</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; commonName &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= ops</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; emailAddress &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;= mch@gongsilong.com</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; X509v3 extensions:</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X509v3 Basic Constraints:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; CA:FALSE</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Netscape Comment:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; OpenSSL Generated Certificate</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X509v3 Subject Key Identifier:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; E2:64:97:DC:A6:2B:85:53:5F:6C:5C:8D:1F:EB:59:C8:2C:66:C5:10</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X509v3 Authority Key Identifier:&nbsp;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; keyid:4E:F5:29:7F:6B:AD:11:EF:FC:44:CC:76:1D:B0:B9:F7:4B:9D:CB:93</span><br />
+<br />
+<br />
+<span style="font-size:14px;">Certificate is to be certified until Jun 18 04:10:40 2015 GMT (365 days)</span><br />
+<span style="font-size:14px;">Sign the certificate? [y/n]:y</span><br />
+<br />
+<br />
+<span style="font-size:14px;">1 out of 1 certificate requests certified, commit? [y/n]y</span><br />
+<span style="font-size:14px;">Write out database with 1 new entries</span><br />
+<span style="font-size:14px;">Data Base Updated</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#&nbsp;</span><br />
+<br />
+<br />
+<span style="font-size:14px;background-color:#DFC5A4;">[PS]：附带功能：</span><br />
+<span style="font-size:14px;color:#4C33E5;">另外，这个certificate是BASE64形式的,要转成PKCS12才能装到IE,/NETSCAPE上.转换如下：</span><br />
+<span style="font-size:14px;color:#4C33E5;"><strong>双击安装就行</strong></span><br />
+<span style="font-size:14px;">&nbsp;openssl pkcs12 -export -clcerts -in client.crt -inkey client.key -out client.p12</span><br />
+<span style="font-size:14px;">这个是ISO 需要的证书格式</span><br />
+<span style="font-size:14px;">openssl x509 -in client.crt -out client.cer</span><br />
+<span style="font-size:14px;">这个是android 需要的证书格式。</span><br />
+<span style="font-size:14px;">[root@mail ssl]# openssl pkcs12 -export -in client.crt -inkey client.key -out &nbsp;client.pfx</span><br />
+<span style="font-size:14px;">Enter pass phrase for client.key: &nbsp; &nbsp; &nbsp;//客户端私钥密码</span><br />
+<span style="font-size:14px;">Enter Export Password: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //pfx文件导入要求的密码</span><br />
+<span style="font-size:14px;">Verifying - Enter Export Password:</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost conf]# <span style="color:#4C33E5;">service nginx stop</span></span><br />
+<span style="font-size:14px;">stop nginx</span><br />
+<span style="font-size:14px;">Enter PEM pass phrase:</span><br />
+<span style="font-size:14px;">phrase is too short, needs to be at least 4 chars</span><br />
+<span style="font-size:14px;">Enter PEM pass phrase:</span><br />
+<span style="font-size:14px;">phrase is too short, needs to be at least 4 chars</span><br />
+<span style="font-size:14px;">Enter PEM pass phrase:</span><br />
+<br />
+<span style="font-size:14px;background-color:#9933E5;">nginx启动SSL默认不输入密码</span><br />
+<span style="font-size:14px;">如果nginx配置了SSL，在每次启动nginx的时候都会需要你手动输入证书的密码，如果不想输入，可以</span><br />
+<span style="font-size:14px;">cp server.key server.key.orig</span><br />
+<span style="font-size:14px;">openssl rsa -in server.key.orig -out server.key</span><br />
+<span style="font-size:14px;">这样启动nginx的时候就不需要输入密码了。</span><br />
+<br />
+<span style="font-size:14px;">[root@localhost ssl]#<span style="color:#4C33E5;"> cp server.key server.key.orig</span></span><br />
+<span style="font-size:14px;">[root@localhost ssl]# <span style="color:#4C33E5;">openssl rsa -in server.key.orig -out server.key</span></span><br />
+<span style="font-size:14px;">Enter pass phrase for server.key.orig:</span><br />
+<span style="font-size:14px;">unable to load Private Key</span><br />
+<span style="font-size:14px;">20487:error:06065064:digital envelope routines:EVP_DecryptFinal_ex:bad decrypt:evp_enc.c:325:</span><br />
+<span style="font-size:14px;">20487:error:0906A065:PEM routines:PEM_do_header:bad decrypt:pem_lib.c:425:</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#&nbsp;</span><br />
+<br />
+<span style="font-size:14px;background-color:#FFE500;">这里奇怪，一开始通不过，但是过了15分钟后，在运行一遍，输入密码，又通过了，如下所示：</span><br />
+<span style="font-size:14px;">[root@localhost ssl]# openssl rsa -in server.key.orig -out server.key</span><br />
+<span style="font-size:14px;">Enter pass phrase for server.key.orig:</span><br />
+<span style="font-size:14px;">writing RSA key</span><br />
+<span style="font-size:14px;">[root@localhost ssl]#&nbsp;</span><br />
+<br />
+<span style="font-size:14px;">当然也可以保留密码，改用expect的方式，这个可以参考expect自动登录SSH的方法，下次有时间再整理贴上来</span><br />
+<br />
+<span style="font-size:14px;"><strong>5 静态文件地址映射 nginx</strong></span><br />
+<span style="font-size:14px;">location = userWeb/userCenter/findConsultList.htm {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;rewrite ^.*$ http://xx.gongsilong.com/xx/xx/findConsultList.htm;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br />
+<br />
+<br />
+<span style="font-size:14px;">&nbsp;# add by tim begin ...</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; location ~* ^/svn/(.*) {</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;rewrite ^.*$ https://192.123.11.12/$1;</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; }</span><br />
+<span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; # add by tim end ..&nbsp;</span><br />
+<br />
+<br />
+<br />
+<span style="font-size:14px;">conference：http://blog.chinaunix.net/uid-22006903-id-149747.html</span><br />                          </div>
+            <!-- <div class="Blog_con3_1">管理员在2009年8月13日编辑了该文章文章。</div> -->
+            <div style="clear:both"></div>
+            <div class="Blog_con2_1 Blog_con3_2">
+              <div>
+			  <!--<img src="/image/default/tu_8.png">-->
+			  <!-- JiaThis Button BEGIN -->
+				<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+				<!-- JiaThis Button END -->
+			  </div>
+                
+              阅读(6055) | 评论(0) | 转发(2) |
+			                <div class="HT_line3"></div>
+            </div>
+            <div class="Blog_con3_3">
+              <div><span id='digg_num'>0</span><a href="javascript:void(0)" id='digg' bid='1222941' url='/blog/digg/' ></a></div>
+              <p>上一篇：<a href="/26230597/viewspace-1217246/">Nagios监控MySQL报错：NRPE: Unable to read output的详细解决过程</a></p>
+              <p>下一篇：<a href="/26230597/viewspace-1224676/">Oracle 11G DataGuard ORA-16086问题修复详细过程</a></p>
+            </div>
+          </div>
+          <div class="Blog_con3_4">
+            <div class="Blog_tit2 Blog_tit6">相关热门文章</div>
+			            <ul class="Blog_ul7">
+						  <li><span class="Blog_span6"></span><a href="http://blog.itpub.net/30812185/viewspace-1981727/" title='欢迎yangting152在ITPUB博客安家!' target='blank' >欢迎yangting152在ITPUB博客安...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.itpub.net/30812182/viewspace-1981726/" title='欢迎hgpocac在ITPUB博客安家!' target='blank' >欢迎hgpocac在ITPUB博客安家!...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.itpub.net/30812180/viewspace-1981725/" title='欢迎watantea在ITPUB博客安家!' target='blank' >欢迎watantea在ITPUB博客安家!...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.itpub.net/30812165/viewspace-1981720/" title='欢迎古刹钟声在ITPUB博客安家!' target='blank' >欢迎古刹钟声在ITPUB博客安家!...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://blog.itpub.net/30812149/viewspace-1981717/" title='欢迎u2pink在ITPUB博客安家!' target='blank' >欢迎u2pink在ITPUB博客安家!...</a></li>
+			            </ul>
+			            <ul class="Blog_ul7">
+						  <li><span class="Blog_span7"></span><a href="/41594/viewspace-50538/" title='用asp发布水晶报表' target='blank' >用asp发布水晶报表</a></li>
+						  <li><span class="Blog_span7"></span><a href="/41594/viewspace-50539/" title='用asp发布水晶报表' target='blank' >用asp发布水晶报表</a></li>
+						  <li><span class="Blog_span7"></span><a href="/735494/viewspace-816925/" title='Ubuntu Linux中文输入法（scim)安装' target='blank' >Ubuntu Linux中文输入法（scim...</a></li>
+						  <li><span class="Blog_span7"></span><a href="/7668319/viewspace-856199/" title='深入理解linux启动过程' target='blank' >深入理解linux启动过程...</a></li>
+						  <li><span class="Blog_span7"></span><a href="/35686/viewspace-825611/" title='linux vmware上网设置' target='blank' >linux vmware上网设置</a></li>
+			            </ul>
+            <ul class="Blog_ul7">
+						  <li><span class="Blog_span6"></span><a href="http://www.itpub.net/thread-2054804-1-1.html" title='【大话IT】面对AlphaGo，我们到底是输了还是赢了？' target='blank'  >【大话IT】面对AlphaGo，我们...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://www.itpub.net/thread-2054237-1-1.html" title='挑战题' target='blank'  >挑战题</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://www.itpub.net/thread-2054798-1-1.html" title='oracle会话阻塞排查' target='blank'  >oracle会话阻塞排查</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://www.itpub.net/thread-2053909-1-1.html" title='【活动】物联网感智创新大赛火热报名中' target='blank'  >【活动】物联网感智创新大赛火...</a></li>
+						  <li><span class="Blog_span6"></span><a href="http://www.itpub.net/thread-2054454-1-1.html" title='【独家精彩花絮】技术竞技：谁是上海滩的Lucky DBA？' target='blank'  >【独家精彩花絮】技术竞技：谁...</a></li>
+			            </ul>
+            <div class="clear"></div>
+          </div>
+		  <!--
+          <div class="Blog_con3_4 Blog_con3_5">
+            <div class="Blog_tit2 Blog_tit7">热门推荐</div>
+            <ul>
+			              <li><a href="" title="" target='blank' ></a></li>
+			            </ul>
+          </div>
+		  -->
+        </div>
+      </div>
+      <div class="Blog_right1_7" id='replyList'>
+		<div class="Blog_tit3">给主人留下些什么吧！~~</div>
+				<!--暂无内容-->
+				<!-- 评论分页-->
+		<div class="Blog_right1_6 Blog_right1_12">
+        		</div>
+		<!-- 评论分页-->
+        <div class="Blog_right1_10">
+          <div class="Blog_tit3">评论热议</div>
+		  		 <!--未登录 -->
+        <div class="Blog_right1_8">
+          <div class="nologin_con1"> 请登录后评论。
+            <p><a href="/site/login/"  onclick="linkto()">登录</a> <a href="http://sso.itpub.net/Register?return_url=http://blog.itpub.net">注册</a></p>
+          </div>
+        </div>
+		
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type='hidden' id='report_url' value='/blog/ViewReport/' />
+
+<script type="text/javascript">
+  	//测试字符串的长度 一个汉字算2个字节
+	function mb_strlen(str)
+	{
+		var len=str.length;
+		var totalCount=0;
+		for(var i=0;i<len;i++)
+		{
+			var c = str.charCodeAt(i);
+			if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+				totalCount++;
+			}else{
+				totalCount+=2;
+			}
+		}
+		return totalCount;
+	}
+	/*
+	var Util = {};
+	Util.calWbText = function (text, max){
+		if(max === undefined)
+			max = 500;
+		var cLen=0;
+		var matcher = text.match(/[^\x00-\xff]/g),
+			wlen  = (matcher && matcher.length) || 0;
+		//匹配url链接正则 http://***
+		var pattern = /http:\/\/([\w-]+\.)+[\w-]+(\/*[\w-\.\/\?%&=][^\s^\u4e00-\u9fa5]*)?/gi;
+		//匹配的数据存入数组
+		var arrPt = new Array();
+		var i = 0;
+		while((result = pattern.exec(text)) != null){
+			arrPt[i] = result[0];
+			i++;
+		}
+		//替换掉原文本中的链接
+		for(var j = 0;j<arrPt.length;j++){
+			text = text.replace(arrPt[j],"");
+		}
+		//减掉链接所占的长度
+		return Math.floor((max*2 - text.length - wlen)/2 - 12*i);
+	};
+	*/
+	var allowComment = '0';
+	
+	//举报弹出层
+	function showJuBao(url, cid){
+		
+			$.cover(false);
+			asyncbox.open({
+				id  : 'report_thickbox',
+				url : url,
+				title : '举报违规',
+				width : 378,
+				height : 240,
+				scroll : 'no',
+				data : {
+					'cid'	 : cid,
+					'idtype' : 2 
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+	}
+
+	$(function(){
+
+		//创建管理员删除的弹出层
+		$('#admin_article_del').click(function(){
+			$.cover(false);
+			asyncbox.open({
+				id : 'class_thickbox',
+				html : '<div class="HT_layer3_1"><ul><li class="HT_li1">操作原因：<select class="HT_sel7" id="del_type" name="del_type"><option value="广告文章">广告文章</option><option value="违规内容">违规内容</option><option value="标题不明">标题不明</option><option value="文不对题">文不对题</option></select></li><li class="HT_li1" ><input class="HT_btn4" id="admin_delete"  type="button" /></li></ul></div>',
+				title : '选择类型',
+				width : 300,
+				height : 150,
+				scroll : 'no',
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});
+		$('#admin_delete').live('click' , function(){
+			///blog/logicdel/id/3480184/url/%252Fblog%252Findex.html.html
+			var type = $('#del_type').val();
+			var url = '/blog/logicdel/id/1222941/url/%252F26230597%252F/';
+			window.location.href= url + '?type=' + type;
+		});
+
+
+		//顶  js中暂未添加&过滤 
+		$('#digg').live('click' , function(){
+
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				return false;
+			}
+
+			var bid = $('#digg').attr('bid');
+			var url = $('#digg').attr('url');
+
+			var digg_str = $.cookie('digg_id');
+			if(digg_str != null)
+			{
+				var arr= new Array(); //定义一数组
+
+				arr = digg_str.split(","); //字符分割     
+				for( i=0 ; i < arr.length ; i++ )   
+				{   
+					if(bid == arr[i])
+					{
+						showErrorMsg('已经赞过该文章', '消息提示'); 
+						return false;
+					}
+				} 
+			}
+			$.ajax({
+				type:"POST",
+				url:url,	
+				data: {
+					'bid' : bid 
+				},
+				dataType: 'json',
+				success:function(msg){
+					if(msg.error == 0)
+					{
+						var num = parseInt($('#digg_num').html(),10);
+						num += 1;
+						$('#digg_num').html(num);
+						$('#digg').die();
+
+						if(digg_str == null)
+						{
+							$.cookie('digg_id', bid, {expires: 30 , path: '/'});
+						}
+						else
+						{
+							$.cookie('digg_id', digg_str + ',' + bid, {expires: 30 , path: '/'});
+						}
+						showSucceedMsg('谢谢' , '消息提示');
+					}
+					else if(msg.error == 1)
+					{
+						//showErrorMsg(msg.error_content , '消息提示'); 
+						showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+					}
+					else if(msg.error == 2)
+					{
+						showErrorMsg(msg.error_content , '消息提示'); 
+					}
+				}
+			});
+		});
+		//举报弹出层
+		/*$('.box_report').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				return false;
+			}
+			var url = $('#report_url').val();
+			var cid = $(this).attr('cid');
+			$.cover(false);
+			asyncbox.open({
+				id  : 'report_thickbox',
+				url : url,
+				title : '举报违规',
+				width : 378,
+				height : 240,
+				scroll : 'no',
+				data : {
+					'cid'	 : cid,
+					'idtype' : 2 
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});*/
+
+
+		//评论相关代码
+		
+		//点击回复显示评论框
+		$('.Blog_a10').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				return false;
+			}
+
+			if(allowComment == 1)
+			{
+				showErrorMsg('该博文不允许评论' , '消息提示'); 
+				return false;
+			}
+			var tid = $(this).attr('toid');//留言作者id
+			var bid = $(this).attr('bid');//blogid
+			var cid = $(this).attr('cid');//留言id
+			var tname = $(this).attr('tname');
+                        			var tpl  = '<div class="Blog_right1_9">';
+				tpl +=	 '<div class="div2">';
+				tpl +=     '<textarea name="" cols="" rows="" class="Blog_ar1_1" id="rmsg">文明上网，理性发言...</textarea>';
+				tpl +=	 '</div>';
+				tpl +=   '<div class="div3">';
+				tpl +=		'<div class="div3_2"><a href="javascript:void(0);" class="Blog_a11" id="quota_sbumit" url="/Comment/PostComment/" tid="'+tid+'" bid="'+bid+'" cid="'+cid+'" tname="'+tname+'" ></a><a href="javascript:void(0)" id="qx_comment" class="Blog_a12"></a></div>';
+				tpl +=		'<div class="div3_1"><a href="javascript:void(0);" id="mface" onclick="delval()"><span></span>表情</a></div>';
+				tpl +=		'<div class="clear"></div>';
+				tpl +=	 '</div>';
+				tpl +=  '</div>';
+                          			$('.z_move_comment').html('');
+			$(this).parents('.Blog_right1_8').find('.z_move_comment').html(tpl).show();
+		});
+		//引用的评论提交
+		$('#quota_sbumit').live('click' , function(){
+
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				return false;
+			}
+
+			var bid   = $(this).attr('bid');
+			var tid   = $(this).attr('tid');//被引用人的id
+			var qid   = $(this).attr('cid');//引用的id
+			var url = $(this).attr('url');
+			var text = $('#rmsg').val();
+			var tname = $(this).attr('tname');
+			if(text == '' || text=='文明上网，理性发言...')
+			{
+				showErrorMsg('评论内容不能为空！' , '消息提示'); 
+				return false;
+			}
+			else
+			{
+				if(mb_strlen(text) > 1000){
+					showErrorMsg('评论内容不能超过500个汉字' , '消息提示'); 
+					return false;
+				}
+			}
+		    $.ajax({
+		        type: "post",
+			    url: url ,
+			    data: {'bid': bid , 'to' : tid , 'qid' : qid , 'text': text , 'tname' : tname },
+				dataType: 'json',
+			    success: function(data){
+				    if(data.code == 1){
+						var tpl =  '<div class="Blog_right1_8">';
+							tpl+=     '<div class="Blog_right_img1"><a href="' +data.info.url+ '" >' + data.info.header + '</a></div>';
+							tpl+=     '<div class="Blog_right_font1">';
+							tpl+=         '<p class="Blog_p5"><span><a href="' +data.info.url+ '" >' + data.info.username + '</a></span>' + data.info.dateline + '</p>';
+							tpl+=         '<p class="Blog_p7"><a href="' + data.info.quota.url + '">' + data.info.quota.username + '</a>：'+ data.info.quota.content + '</p>';
+							tpl+=         '<p class="Blog_p8">' + data.info.content + '</p><span class="span_text1"><a href="javascript:void(0);" class="Blog_a10" toid=' + data.info.fuid + ' bid=' + data.info.bid + ' cid=' + data.info.cid + '  tname = ' + data.info.username + ' >回复</a> | 　<a class="comment_del_mark" style="cursor:pointer" url="' + data.info.delurl + '" >删除</a>　| 　<a href="javascript:showJuBao(\'/blog/ViewReport/\','+data.info.cid+')" class="box_report" cid="' + data.info.cid + '" >举报</a></span></div>';
+							tpl+=         '<div class="z_move_comment" style="display:none"></div>';
+							tpl+=	      '<div class="Blog_line1"></div></div>';
+							$('#replyList .Blog_right1_8:first').before(tpl);
+							$('.z_move_comment').html('').hide();
+				    }
+					else if(data.code == -1){
+						//showErrorMsg(data.info , '消息提示'); 
+						showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+			        }
+                },
+			    error: function(){//请求出错处理
+                        
+                }
+			});
+		});
+		//底部发表评论
+		$('#submitmsg').click(function(){
+			if(allowComment == 1)
+			{
+				showErrorMsg('该博文不允许评论' , '消息提示'); 
+				return false;
+			}
+			var bid   = $(this).attr('bid');
+			var toid  = $(this).attr('toid');
+			var text = $('#reply').val();
+			var url = $(this).attr('url');
+			if(text == '' || text=='文明上网，理性发言...')
+			{
+				showErrorMsg('评论内容不能为空！' , '消息提示'); 
+				return false;
+			}
+			else
+			{
+				if(mb_strlen(text) > 1000){
+					showErrorMsg('评论内容不能超过500个汉字' , '消息提示'); 
+					return false;
+				}
+			}
+		    $.ajax({
+		        type: "post",
+			    url: url ,
+			    data: {'bid': bid , 'to' : toid ,'text': text},
+				dataType: 'json',
+			    success: function(data){
+				    if(data.code == 1)
+					{
+						var tpl   = '<div class="Blog_right1_8">';
+							tpl  +=   '<div class="Blog_right_img1"><a href="' +data.info.url+ '" >' + data.info.header + '</a></div>';
+							tpl  +=	  '<div class="Blog_right_font1">';
+							tpl  +=       '<p class="Blog_p5"><span><a href="' +data.info.url+ '" >' + data.info.username + '</a></span>' + data.info.dateline + '</p>';
+							tpl  +=       '<p class="Blog_p6">' + data.info.content + '</p>';
+							tpl  +=		  '<div class="div1"><a href="javascript:void(0);" class="Blog_a10"  toid=' + data.info.fuid + ' bid=' + data.info.bid + ' cid=' + data.info.cid + '>回复</a> | 　<a class="comment_del_mark" style="cursor:pointer" url="' + data.info.delurl + '">删除</a>　| 　<a href="javascript:showJuBao(\'/blog/ViewReport/\','+data.info.cid+')" class="box_report" cid="' + data.info.cid + '">举报</a></div>';
+							tpl  +=		  '<div class="z_move_comment" style="display:none"></div>';
+							tpl  +=    '</div><div class="Blog_line1"></div></div>';
+							$('.Blog_tit3:first').after(tpl);
+							$('#reply').val('文明上网，理性发言...');
+					}
+					else if(data.code == -1)
+					{
+						showErrorMsg(data.info , '消息提示'); 
+			        }
+                },
+			    error: function(){//请求出错处理
+                        
+                }
+		    });
+			
+		});
+		//底部评论重置
+		$('#reset_comment').click(function(){
+			$('#reply').val('文明上网，理性发言...');
+		});
+		//取消回复
+		$('#qx_comment').live('click' , function(){
+			$('.z_move_comment').html('').hide();
+		});
+
+
+		$('#rmsg, #reply').live({
+		    focus:function(){
+			    if($(this).val() == '文明上网，理性发言...'){
+			        $(this).val('');
+			    }
+			},
+			blur:function(){
+		        if($(this).val() == ''){
+			        $(this).val('文明上网，理性发言...');
+			    }
+			}
+		});
+		//删除留言确认
+		$('.comment_del_mark').live('click' , function(){
+			var url = $(this).attr('url');
+			asyncbox.confirm('删除留言','确认', function(action){
+				if(action == 'ok')
+				{
+					location.href = url;
+				}
+			});
+		});
+		//删除时间确认
+		$('.del_article_id').click(function(){
+			var delurl = $(this).attr('delurl');
+			asyncbox.confirm('删除文章','确认', function(action){
+				if(action == 'ok')
+				{
+					location.href = delurl;
+				}
+			});
+		});
+		/*
+		//字数限制
+		$('#rmsg, #reply').live('keyup', function(){
+			var id = $(this).attr('id');
+			var left = Util.calWbText($(this).val(), 500);
+			var eid = '#errmsg';
+			
+			if(id == 'reply') eid =  '#rerrmsg';
+			if (left >= 0)
+		        $(eid).html('您还可以输入<span>' + left + '</span>字');
+		    else
+		        $(eid).html('<font color="red">您已超出<span>' + Math.abs(left) + '</span>字 </font>');
+		});
+		*/
+		//加载表情
+                $('#face').click(function(){
+                    var val=$('#reply').val();
+                    if(val == '文明上网，理性发言...'){
+                        $('#reply').val('');
+                    }
+                });
+              
+	    $('#face').qqFace({id : 'facebox1', assign : 'reply', path : '/image/qqface/'});
+	    $('#mface').qqFace({id : 'facebox', assign : 'rmsg', path:'/image/qqface/'});
+	    
+		/*
+		$('#class_one_id').change(function(){
+			alert(123213);
+			var id = parseInt($(this).val() , 10);
+			if(id == 0) return false;
+			$('.hidden_son_class span').each(function( index , dom ){
+				if( dom.attr('cid')  == id )
+				{
+				}
+			});
+		});
+		*/
+		//转载文章
+		var turn_url = "/blog/viewClassPart/";
+		$('#repost_bar').click(function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				return false;
+			}
+			var id = $(this).attr('bid');
+			asyncbox.open({
+				id  : 'turn_class_thickbox',
+				url : turn_url,
+				title : '转载文章',
+				width : 330,
+				height : 131,
+				scroll : 'no',
+				data : {
+					'id'	 : id
+				},
+				callback : function(action){
+					if(action == 'close'){
+						$.cover(false);
+					}
+				}
+			});
+		});
+		/*
+	    //转发文章
+	    $('#repost_bar').live('click' , function(){
+			if(isOnLine == '' )
+			{
+				//showErrorMsg('登录之后才能进行此操作' , '消息提示');
+				showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				return false;
+			}
+	    	var bid  = $(this).attr('bid');
+	    	var url  = $(this).attr('url');
+	    	asyncbox.confirm('转载文章','确认', function(action){
+	    	  if(action == 'ok'){
+	    	    $.ajax({
+				type:"POST",
+				url:url,	
+				data: {
+					'bid' : bid 
+				},
+				dataType: 'json',
+				success:function(msg){
+				  if(msg.error == 0){
+				    showSucceedMsg('转发成功！', '消息提示');
+				  }else if(msg.error == 1){
+				    //location.href = '/index.php?r=site/login';
+					showErrorMsg('操作失败,您需要先登录!', '消息提示', '/site/login/');
+				  }else{
+				    showErrorMsg(msg.error_content, '消息提示');
+			      }
+				}
+			  });
+	    	  }
+	    	});
+
+		});
+		*/
+
+	});
+        function delval(){
+           if($('#rmsg').val() == '文明上网，理性发言...'){
+                  $('#rmsg').val('');
+            }
+        }
+</script>
+<!--该部分应该放在输出代码块的后面才起作用 -->
+<script type="text/javascript">
+
+SyntaxHighlighter.autoloader(
+	'applescript			/highlight/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/highlight/scripts/shBrushAS3.js',
+	'bash shell				/highlight/scripts/shBrushBash.js',
+	'coldfusion cf			/highlight/scripts/shBrushColdFusion.js',
+	'cpp c					/highlight/scripts/shBrushCpp.js',
+	'c# c-sharp csharp		/highlight/scripts/shBrushCSharp.js',
+	'css					/highlight/scripts/shBrushCss.js',
+	'delphi pascal			/highlight/scripts/shBrushDelphi.js',
+	'diff patch pas			/highlight/scripts/shBrushDiff.js',
+	'erl erlang				/highlight/scripts/shBrushErlang.js',
+	'groovy					/highlight/scripts/shBrushGroovy.js',
+	'java					/highlight/scripts/shBrushJava.js',
+	'jfx javafx				/highlight/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/highlight/scripts/shBrushJScript.js',
+	'perl pl				/highlight/scripts/shBrushPerl.js',
+	'php					/highlight/scripts/shBrushPhp.js',
+	'text plain				/highlight/scripts/shBrushPlain.js',
+	'py python				/highlight/scripts/shBrushPython.js',
+	'ruby rails ror rb		/highlight/scripts/shBrushRuby.js',
+	'scala					/highlight/scripts/shBrushScala.js',
+	'sql					/highlight/scripts/shBrushSql.js',
+	'vb vbnet				/highlight/scripts/shBrushVb.js',
+	'xml xhtml xslt html	/highlight/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+
+
+function code_hide(id){
+	var code = document.getElementById(id).style.display;
+	if(code == 'none'){
+		document.getElementById(id).style.display = 'block';
+	}else{
+		document.getElementById(id).style.display = 'none';
+	}
+}
+</script>
+
+<!--回顶部js2011.12.30-->
+<script language="javascript">
+ lastScrollY=0;
+ function heartBeat(){
+ var diffY;
+ if (document.documentElement && document.documentElement.scrollTop)
+     diffY = document.documentElement.scrollTop;
+ else if (document.body)
+     diffY = document.body.scrollTop
+ else
+     {/*Netscape stuff*/}
+ percent=.1*(diffY-lastScrollY);
+ if(percent>0)percent=Math.ceil(percent);
+ else percent=Math.floor(percent);
+ document.getElementById("full").style.top=parseInt(document.getElementById("full").style.top)+percent+"px";
+ lastScrollY=lastScrollY+percent;
+ if(lastScrollY<200)
+ {
+ document.getElementById("full").style.display="none";
+ }
+ else
+ {
+ document.getElementById("full").style.display="block";
+ }
+ }
+ var gkuan=document.body.clientWidth;
+ var ks=(gkuan-960)/2-30;
+ suspendcode="<div id=\"full\" style='right:4px;POSITION:absolute;TOP:500px;z-index:100;width:20px; height:50px;cursor:pointer;'><a href=\"javascript:void(0)\" onclick=\"window.scrollTo(0,0);\"><img src=\"\/image\/top.png\" /></a></div>"
+ document.write(suspendcode);
+ window.setInterval("heartBeat()",1);
+ </script>
+  <!-- footer -->
+  
+  <div class="Blog_footer" style='clear:both'>
+    <div><a href="http://www.it168.com/bottomfile/about.shtml" rel="nofollow">盛拓传媒简介</a> | <a href="http://www.it168.com/bottomfile/it168.shtml" rel="nofollow">关于IT168</a> | <a href="http://www.it168.com/bottomfile/hzhb.shtml" rel="nofollow">合作伙伴</a> | <a href="http://www.it168.com/bottomfile/ggfw.shtml" rel="nofollow">广告服务</a> | <a href="http://www.it168.com/bottomfile/sytk.shtml" rel="nofollow">使用条款</a> | <a href="http://www.it168.com/bottomfile/tgzn.shtml" rel="nofollow">投稿指南</a> | <a href="http://www.wintalent.cn:8031/wt5/sequelmedia/web/index" rel="nofollow">诚聘精英</a> | <a href="http://www.it168.com/bottomfile/lxwm.shtml" rel="nofollow">联系我们</a> | <a href="http://bbs.app111.com/" rel="nofollow">苹果论坛</a> | <a href="http://www.it168.com/bottomfile/sitemap/sitemap.html" rel="nofollow">网站导航</a> | <a href="http://archive.it168.com/" rel="nofollow">往日回顾</a> 
+      <p>	北京皓辰网域网络信息技术有限公司. 版权所有 <a href="http://www.it168.com/images/icp.jpg" rel="nofollow">京ICP证:060528号</a> 北京市公安局海淀分局网监中心备案编号：1101082001<br>	<a href="http://www.it168.com/1201/images/it168tv.pdf" rel="nofollow">广播电视节目制作经营许可证(京) 字第1234号</a> <a href="http://www.it168.com/huiyuan/it168.html" rel="nofollow">中国互联网协会会员</a> <a href="http://www.it168.com/icoimages/yczz.jpg" rel="nofollow">测绘资质证书（乙测资字11005067）</a> <a href="http://www.it168.com/1201/images/wlwh.pdf" rel="nofollow">网络文化经营许可证</a>	</p>
+      <div>感谢所有关心和支持过ITPUB的朋友们
+      </div>
+    </div>
+  </div>
+</div>
+<script language="javascript">
+
+//全局错误提示弹出框
+function showErrorMsg(content, title, url){
+	var url = url || '';
+	var title = title || '消息提示';
+	var html = '';
+	html += '<div class="HT_layer3_1 HT_layer3_2"><ul><li><p><span class="login_span1"></span>' + content + '</p></li>';
+	if(url == '' || url.length == 0){
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2"  onclick=\'close_windows("error_msg")\'></li>';	
+	} else {
+		html += '<li class="HT_li1"><input type="button" class="login_btn1" onclick="location.href=\'' + url + '\'"></li>';
+	}
+	html += '</ul></div>';
+	$.cover(true);
+	   asyncbox.open({
+		 id: 'error_msg',
+		 title : title,
+		 html : html,
+		 'callback' : function(action){
+			 if(action == 'close'){
+				 $.cover(false);
+			 }
+		 }
+	});
+}
+
+//全局正确提示
+function showSucceedMsg(content, title , url ){
+	var url = url || '';
+	var title = title || '消息提示';
+	var html = '';
+	html += '<div class="HT_layer3_1 HT_layer3_2"><ul><li><p><span class="login_span2"></span>' + content + '</p></li>';
+	if(url == '' || url.length == 0){
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2"  onclick=\'close_windows("error_msg")\'></li>';	
+	} else {
+		html += '<li class="HT_li1"><input type="button" class="HT_btn2" onclick="location.href=\'' + url + '\'"></li>';
+	}
+	html += '</ul></div>';
+	$.cover(true);
+	asyncbox.open({
+		 id: 'error_msg',
+		 title : title,
+		 html : html,
+		 'callback' : function(action){
+			 if(action == 'close'){
+				 $.cover(false);
+			 }
+		 }
+	});
+}
+
+//关闭指定id的窗口
+function close_windows(id){
+	 var tmp="";
+if(tmp){
+        var tm='1';
+}
+	$.cover(false);
+	$.close(id);
+}
+
+
+//公告
+var tID;
+var tn;                        // 高度
+var nStopTime = 5000;        // 不同行间滚动时间隔的时间，值越小，移动越快
+var nSpeed = 50;            // 滚动时，向上移动一像素间隔的时间，值越小，移动越快
+var isMove = true;
+var nHeight = 25;
+var nS = 0;
+var nNewsCount = 3;
+
+/**
+ * n 用于表示是否为第一次运行
+ **/
+function moveT(n)
+{
+    clearTimeout(tID)
+    var noticev2 = document.getElementById("noticev2")
+    nS = nSpeed;
+    
+    // 只在第一次调用时运行，初始化环境（有没有参数）
+    if (n)
+    {
+        // 设置行高
+        noticev2.style.lineHeight = nHeight + "px";
+        // 初始化显示位置
+        tn = 0;
+        // 刚进入时在第一行停止时间
+        nS = nStopTime;
+    }
+    
+    // 判断鼠标是否指向层
+    if (isMove)
+    {
+        // 向上移动一像素
+        tn--;
+        // 如果移动到最下面一行了，则移到顶行
+        if (Math.abs(tn) == nNewsCount * nHeight)
+        {
+            tn = 0;
+        }
+        // 设置位置
+        noticev2.style.marginTop = tn + "px";
+        // 完整显示一行时，停止一段时间
+        if (tn % nHeight == 0)
+        {
+            nS = nStopTime;
+        }
+    }
+
+    tID = setTimeout("moveT()", nS);
+}
+moveT(1);    // 此处可以传入任何参数
+</script>
+
+<!-- START STAT PV -->
+<script src="http://stat.it168.com/pv.js" type="text/javascript" type="text/javascript"></script>
+<script type="text/javascript">
+
+function sendPV(){ 
+var pvTrack = new PvTrack(); 
+pvTrack.type = 35; // 频道类别ID 
+pvTrack.channel = 587; // 频道ID 
+pvTrack.pageType = 0; 
+pvTrack.track(); 
+} 
+window.setTimeout("sendPV()", 1000); 
+</script>
+
+  <script src='http://static1.bfdcdn.com/service/itpub/itpub_detail_blog.js'></script><script src='http://w.cnzz.com/c.php?id=30029880' language='JavaScript' charset='gb2312'></script>
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F4d3c7b7e328a205250dfc24e66c623ee' type='text/javascript'%3E%3C/script%3E"));
+
+function linkto(){
+    setCookie("returnUrl", location.href, 1459071562, "/");
+}
+function linktoOut(){
+    setCookie("returnOutUrl", location.href, 1459071562, "/");
+}
+//JS写COOKIE
+function setCookie(name, value, expires, path, domain){
+	if(!arguments[2]) expires = 3600 * 24;
+	if(!arguments[3]) path = "";
+	if(!arguments[4]) domain = "";
+	var str=name+"="+escape(value);
+	if(expires!=""){
+		var date=new Date();
+		date.setTime(date.getTime()+expires*1000);
+		str+=";expires="+date.toGMTString();
+	}
+	if(path!=""){
+		str+=";path="+path;//指定可访问cookie的目录
+	}
+	if(domain!=""){
+		str+=";domain="+domain;//指定可访问cookie的域
+	}
+	document.cookie = str;
+}
+
+</script>
+
+<!-- END STAT PV -->
+<script type="text/javascript" src="/js/jquery.qqFace.js"></script>
+</body>
+</html>

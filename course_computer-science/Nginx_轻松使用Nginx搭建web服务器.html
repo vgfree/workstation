@@ -1,0 +1,1704 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+    
+     
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>轻松使用Nginx搭建web服务器 - xo_zhang的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="教程：如何使用Unity制作3D版iOS游戏（1）http://www.gameres.com/msg_205190.html教程：如何使用Unity制作3D版iOS游戏（2）http://www.gameres.com/msg_205191.html" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/ink/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/xo_zhang/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/xo_zhang">xo_zhang的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/xo_zhang?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/xo_zhang?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/xo_zhang/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "xo_zhang";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/xo_zhang";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://blog.csdn.net/phodal/article/details/50960160">
+<font color=red>为什么未来是全栈工程师的世界
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/csdnedu/article/details/50788201">
+<font color=blue>前端精品课程免费看，写课评赢心动大礼！
+
+<a href="http://lib.csdn.net/base/23">
+<font color=red>AngularJS知识库发布
+</font></a>
+
+</font></a>
+</div>                        </div>
+                        
+
+
+
+<!--AdForward Begin:-->
+<script type="text/javascript" ads-src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|fumeiti&db=csdnim&border=0&local=yes&js=ie" src="http://creatim.qtmojo.cn/td/AllyesDeliver.min.js" charset="gbk"></script>
+<!--AdForward End-->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+ <script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/xo_zhang/article/details/8995756">
+        轻松使用Nginx搭建web服务器            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/%e8%bd%bb%e6%9d%be%e4%bd%bf%e7%94%a8Nginx%e6%90%ad%e5%bb%baweb%e6%9c%8d%e5%8a%a1%e5%99%a8' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">轻松使用Nginx搭建web服务器</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2013-05-30 17:29</span>
+            <span class="link_view" title="阅读次数">17230人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(1)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('轻松使用Nginx搭建web服务器','8995756');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(8995756,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            var lib = eval("("+$("#lib").attr("value")+")");
+            var html = "";
+            if (lib.err == 0) {
+                $.each(lib.data, function (i) {
+                    var obj = lib.data[i];
+                    //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                    html += ' <a href="' + obj.url + '" target="_blank">';
+                    html += ' <img src="' + obj.logo + '">';
+                    html += ' <em><b>' + obj.name + '</b></em>';
+                    html += ' </a>';
+                });
+                if (html != "") {
+                    setTimeout(function () {
+                        $("#lib").html(html);
+                        /*
+                        var testhtml = "";
+                        testhtml += '<a href="#">';
+                        testhtml += '<img src="http://img.knowledge.csdn.net/upload/base/1455589744328_328.jpg">';
+                        testhtml += '<em>Android知识库</em>';
+                        testhtml += '</a>';
+                        $(".embody_c").html(testhtml);
+                        */
+                        $("#embody").show();
+                    }, 100);
+                }
+            }          
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('1411446','xo_zhang','top','8995756');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Nginx<em>（54）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/xo_zhang/article/category/1411446"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1411446">                            
+                            </ul>
+                        </div>
+                    </label>                    
+                    <label  onclick="GetCategoryArticles('1410579','xo_zhang','top','8995756');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">负载均衡<em>（55）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/xo_zhang/article/category/1410579"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1410579">                            
+                            </ul>
+                        </div>
+                    </label>                    
+                    <label  onclick="GetCategoryArticles('1412639','xo_zhang','top','8995756');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Squid<em>（44）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/xo_zhang/article/category/1412639"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1412639">                            
+                            </ul>
+                        </div>
+                    </label>                    
+                    <label  onclick="GetCategoryArticles('1400657','xo_zhang','top','8995756');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Linux<em>（80）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/xo_zhang/article/category/1400657"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1400657">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<div class="CopyrightStatement lh22" style="padding:10px; margin:0px 12px; border:1px dashed rgb(213,213,213); line-height:22px; color:rgb(85,85,85); font-family:宋体,'Arial Narrow',arial,serif">
+<br>
+</div>
+<div class="showContent" style="padding:0px; margin:20px 15px 8px; line-height:2; font-size:14px; border-bottom-width:1px; border-bottom-style:dashed; border-bottom-color:rgb(217,217,217); overflow:hidden; word-wrap:break-word; word-break:normal; color:rgb(85,85,85); font-family:宋体,'Arial Narrow',arial,serif">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果读者以前做过web开发的话，就应该知道如何去搭建一个web服务器来跑你的web站点，在windows下你可能会选择去用IIS，十分的快捷，在linux下，你可能首先会想到apache，“一哥”（ W3Techs网站数据的排名）啦</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732870kcT7.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image002" border="0" alt="clip_image002" height="393" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732878dVLF.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 今天小编要介绍后起之秀nginx来实现web服务器。小编在前面的博客中也详细的聊过apache的使用，如今又来说nginx的使用，读者可能以后搭建web服务器的话就不知道选用哪一种，O(∩_∩)O~，别急，小编这就来给读者分析一下Nginx和Apache区别，以后读者就可以根据自己web站点的特点来择其优即可。</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:24px; padding:0px; margin:0px">Project 1：Nginx和Apache的区别</span></p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">1. apache 相对于nginx 的优点：</span></p>
+<ul style="padding:0px; margin:0px; list-style:none">
+<li style="padding:0px; margin:0px 0px 0px 20px">rewrite ，比nginx 的rewrite 强大</li><li style="padding:0px; margin:0px 0px 0px 20px">动态页面，nginx处理动态请求是鸡肋，一般动态请求要apache去做，nginx只适合静态和反向。</li><li style="padding:0px; margin:0px 0px 0px 20px">模块超多，基本想到的都可以找到</li><li style="padding:0px; margin:0px 0px 0px 20px">少bug ，nginx 的bug 相对较多超稳定</li></ul>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">2. nginx相对于apache的优点</span>：</p>
+<ul style="padding:0px; margin:0px; list-style:none">
+<li style="padding:0px; margin:0px 0px 0px 20px">轻量级，同样起web 服务，比apache占用更少的内存及资源 ，支持更多的并发连接，体现更高的效率，这点使 Nginx 尤其受到虚拟主机提供商的欢迎。在高连接并发的情况下，Nginx是Apache服务器不错的替代品: Nginx在美国是做虚拟主机生意的老板们经常选择的软件平台之一. 能够支持高达 50,000 个并发连接数的响应, 这归功于Nginx为我们选择了 epoll and kqueue 作为开发模型.</li><li style="padding:0px; margin:0px 0px 0px 20px">抗并发，nginx 处理请求是异步非阻塞的，而apache 则是阻塞型的，在高并发下nginx 能保持低资源低消耗高性能</li><li style="padding:0px; margin:0px 0px 0px 20px">高度模块化的设计，编写模块相对简单</li><li style="padding:0px; margin:0px 0px 0px 20px">社区活跃，各种高性能模块出品迅速啊</li><li style="padding:0px; margin:0px 0px 0px 20px">Nginx本身就是一个反向代理服务器</li><li style="padding:0px; margin:0px 0px 0px 20px">负载均衡能力突出，Nginx 既可以在内部直接支持 Rails 和 PHP 程序对外进行服务, 也可以支持作为 HTTP代理 服务器对外进行服务. Nginx采用C进行编写, 不论是系统资源开销还是CPU使用效率都比 Perlbal 要好很多.</li></ul>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">3. 核心区别：apache是同步多进程模型，一个连接对应一个进程；nginx是异步的，多个连接（万级别）可以对应一个进程</span></p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+一般来说，需要性能的web 服务，用nginx 。如果不需要性能只求稳定，那就apache 吧。后者的各种功能模块实现得比前者，例如ssl 的模块就比前者好，可配置项多。这里要注意一点，epoll(freebsd 上是 kqueue )网络IO 模型是nginx 处理性能高的根本理由，但并不是所有的情况下都是epoll 大获全胜的，如果本身提供静态服务的就只有寥寥几个文件，apache 的select 模型或许比epoll 更高性能。</p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">先说Select:</span></p>
+<ul style="padding:0px; margin:0px; list-style:none">
+<li style="padding:0px; margin:0px 0px 0px 20px">Socket数量限制:该模式可操作的Socket数由FD_SETSIZE决定,内核默认32*32=1024.</li><li style="padding:0px; margin:0px 0px 0px 20px">操作限制:通过遍历FD_SETSIZE个Socket来完成调度,不管哪个Socket是活跃的,都遍历一遍（这就是apache慢的原因）.</li></ul>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">再说Epoll:</span></p>
+<ul style="padding:0px; margin:0px; list-style:none">
+<li style="padding:0px; margin:0px 0px 0px 20px">Socket数量无限制</li><li style="padding:0px; margin:0px 0px 0px 20px">操作无限制:基于内核提供的反射模式,有活跃Socket时,内核访问该Socket的callback,不需要遍历轮询（这当然是nginx快的原因啦）.</li></ul>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+原理部分小编觉得读者知道这些就够了，起码当别人问起你选择上述二者之一的理由你已经够应付啦，当然小编还给你推荐一种折中的方案，nginx做前端，apache做后端啦</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:24px; padding:0px; margin:0px">Project 2：安装nginx</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+软件需求：</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+官方最新的是<span style="padding:0px; margin:0px"><a target="\&quot;_blank\&quot;" href="http://nginx.org/download/nginx-1.3.16.tar.gz" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">nginx-1.3.16.tar.gz</a></span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+官方最新<a target="\&quot;_blank\&quot;" href="http://cloud.github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">libevent-2.0.21-stable.tar.gz</a>&nbsp;提供事件处理机制，linux 5.4 自带的也可以，默认安装了</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+Pcre以及pcre-devel，默认pcre是安装的，pcre-devel需要使用yum安装</p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 1：安装pcre-devel，以及建立nginx用户</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# yum install pcre-devel</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# groupadd -r nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# useradd -r -g nginx -M nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 2：解压缩nginx的源码并安装</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# tar -zxvf nginx-1.3.16.tar.gz -C /usr/local/src/</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# cd /usr/local/src/nginx-1.3.16/</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ./configure \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--conf-path=/etc/nginx/nginx.conf \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--error-log-path=/var/log/nginx/error.log \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--http-log-path=/var/log/nginx/access.log \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--pid-path=/var/run/nginx/nginx.pid \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--lock-path=/var/lock/nginx.lock \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--user=nginx \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--group=nginx \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--with-http_ssl_module \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--with-http_flv_module \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--with-http_stub_status_module \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--with-http_gzip_static_module \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--http-client-body-temp-path=/var/tmp/nginx/client/ \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--http-proxy-temp-path=/var/tmp/nginx/proxy/ \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--http-fastcgi-temp-path=/var/tmp/nginx/fcgi/ \</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+--with-pcre</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# make &amp;&amp; make install</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir -p /var/tmp/nginx/client</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 3：启动nginx服务并在客户端做测试</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# /usr/local/nginx/sbin/nginx &amp; //这里小编还没写启动脚本，之后会附上</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+查询nginx的启动状态</p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732882nw1w.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image004" border="0" alt="clip_image004" height="42" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732882YiFs.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+客户机浏览器输入<a target="\&quot;_blank\&quot;" href="http://192.168.111.10/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">http://192.168.111.10</a>试试</p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732882WyQW.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image006" border="0" alt="clip_image006" height="310" src="http://img1.51cto.com/attachment/201304/23/5200614_13667328835BnR.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+到这里nginx的简单安装就算完成了</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:24px; padding:0px; margin:0px">Project 3：静态网页的负载测试</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+前面总是说nginx在处理静态网页方面性能优越于apache，那这里小编就来测试一下来试试，nginx的web站点主目录在/usr/local/nginx/html，apache的web站点主目录在/var/www/html，编写一个相同的静态页面分别放到两个web站点主目录</p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 1：建立相同的测试页</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# rm –rf /usr/local/nginx/html/index.html //删除原有的主页</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# echo &quot;This is testPage.&quot; &gt;/usr/local/nginx/html/index.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# echo &quot;This is testPage.&quot; &gt;/var/www/html/index.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 2：ab工具测试nginx</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# pkill nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# /usr/local/nginx/sbin/nginx &amp;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ab -c 1000 -n 5000 http://192.168.111.10:80/</p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732887uAJb.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image008" border="0" alt="clip_image008" height="416" src="http://img1.51cto.com/attachment/201304/23/5200614_13667328884mTu.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ab -c 1000 -n 10000 http://192.168.111.10:80/</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_13667328928MIW.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image010" border="0" alt="clip_image010" height="418" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732894DJDv.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ab -c 1000 -n 50000&nbsp;<a target="\&quot;_blank\&quot;" href="http://192.168.111.10/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">http://192.168.111.10:80/</a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732904i2W6.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image012" border="0" alt="clip_image012" height="413" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732906ArjQ.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+下面来测试一下apache的性能</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# pkill nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# service httpd start</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ab -c 1000 -n 5000 http://192.168.111.10:80/</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732915gbR0.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image014" border="0" alt="clip_image014" height="417" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732923V8ew.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+居然还没当掉，那就来个10000的试试</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ab -c 1000 -n 10000&nbsp;<a target="\&quot;_blank\&quot;" href="http://192.168.111.10/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">http://192.168.111.10:80/</a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732925GMpV.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image016" border="0" alt="clip_image016" height="411" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732927p3x4.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+好吧来50000的</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732932sqOC.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image018" border="0" alt="clip_image018" height="282" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732934RrQk.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+读者可以好好看看小编在图片上圈的数字，很明显nginx在处理静态页面方面很出色啦</p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:24px; padding:0px; margin:0px">Project 4：实现虚拟主机啦，这个是比较常用的功能啦</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+Nginx的配置文件是比较简洁啦，配置起来也不是那么麻烦</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; color:#0000ff; padding:0px; margin:0px">基于IP的虚拟主机</span></p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 1：准备工作</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+增加一个网卡地址（原有的是192.168.111.10）</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# ifconfig eth0:0 192.168.111.20</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+建立两个站点目录</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir /website1</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir /website2</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+建立两个存放日志的目录</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir /var/log/nginx/website1</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir /var/log/nginx/website2</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+创建两个测试页</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# echo &quot;This is website1&quot; &gt;/website1/index.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# echo &quot;This is website2&quot; &gt;/website2/index.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 2：修改配置文件，原有的配置文件中默认有一个server节点，修改一下，然后再添加一个server节点</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+listen 192.168.111.10:80;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server_name localhost;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#charset koi8-r;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+access_log /var/log/nginx/website1/access.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_log /var/log/nginx/website1/error.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location / {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root /website1;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+index index.html index.htm;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 404 /404.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# redirect server error pages to the static page /50x.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 500 502 503 504 /50x.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location = /50x.html {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+listen 192.168.111.20:80;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server_name localhost;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#charset koi8-r;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+access_log /var/log/nginx/website2/access.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_log /var/log/nginx/website2/error.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location / {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root /website2;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+index index.html index.htm;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 404 /404.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# redirect server error pages to the static page /50x.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 500 502 503 504 /50x.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location = /50x.html {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 3：停掉原有的apache服务</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# service httpd stop</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# /usr/local/nginx/sbin/nginx &amp;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 4：在客户机分别访问站点试试</span></p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732937X9RU.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image020" border="0" alt="clip_image020" height="310" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732940Jf7K.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732942wHDs.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image022" border="0" alt="clip_image022" height="311" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732944OOJj.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; color:#0000ff; padding:0px; margin:0px">基于主机头的</span></p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 1：修改配置文件</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+listen 192.168.111.10:80;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server_name www.website1.com;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#charset koi8-r;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+access_log /var/log/nginx/website1/access.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_log /var/log/nginx/website1/error.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location / {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root /website1;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+index index.html index.htm;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 404 /404.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# redirect server error pages to the static page /50x.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 500 502 503 504 /50x.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location = /50x.html {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+listen 192.168.111.20:80;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server_name www.website2.com;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#charset koi8-r;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+access_log /var/log/nginx/website2/access.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_log /var/log/nginx/website2/error.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location / {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root /website2;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+index index.html index.htm;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 404 /404.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# redirect server error pages to the static page /50x.html</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+#</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_page 500 502 503 504 /50x.html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location = /50x.html {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 2：修改本机的hosts文件，并重启nginx服务</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+192.168.111.10 www.website1.com</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+192.168.111.10&nbsp;<a target="\&quot;_blank\&quot;" href="http://www.website2.com/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">www.website2.com</a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# pkill nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# /usr/local/nginx/sbin/nginx &amp;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 3：在浏览器分别输入</span><a target="\&quot;_blank\&quot;" href="http://www.website1.com/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><span style="font-size:18px; padding:0px; margin:0px">www.website1.com</span></a><span style="font-size:18px; padding:0px; margin:0px">和</span><a target="\&quot;_blank\&quot;" href="http://www.website2.com/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><span style="font-size:18px; padding:0px; margin:0px">www.website2.com</span></a><span style="font-size:18px; padding:0px; margin:0px">试试</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732945C76z.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image024" border="0" alt="clip_image024" height="308" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732946nwMF.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732948pfzv.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image026" border="0" alt="clip_image026" height="307" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732950vuUr.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+完成了吧，下面小编就来实现简单的安全性的访问（使用ssl来控制），这就涉及到证书的创建啦，这里小编将该服务器即作为web服务器，又作为CA服务器，如果作为CA服务器，那么首先的给CA创建证书</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:24px; padding:0px; margin:0px">Project 5：</span></p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 1：配置创建证书的配置文件，以及创建证书</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# vim /etc/pki/tls/openssl.cnf</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+45行修改为dir = /etc/pki/CA</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_13667329504rTv.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image028" border="0" alt="clip_image028" height="59" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732951G1yW.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_136673295233qh.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image030" border="0" alt="clip_image030" height="196" src="http://img1.51cto.com/attachment/201304/23/5200614_13667329549QIa.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+根据配置文件的需求创建相关的文件夹和文件</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732958w07X.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image032" border="0" alt="clip_image032" height="216" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732971srwn.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir certs crl newcerts</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# touch index.txt serial</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# echo 01 &gt;&gt;serial //初始化文件</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+创建私钥</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# openssl genrsa 1024 &gt;private/cakey.pem</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# chmod 600 private/cakey.pem</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+生成证书文件</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732974H6aE.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image034" border="0" alt="clip_image034" height="208" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732974mZBE.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 2：建立Nginx的安全目录，并生成相关的私钥和证书文件</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# mkdir /usr/local/nginx/certs</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# cd /usr/local/nginx/certs/</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# openssl genrsa 1024 &gt;nginx.key</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# chmod 600 nginx.key</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+因为小编的这台服务器即作为CA又作为web服务器，所以可以证书申请的过程可以直接在本机做</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732978NilG.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image036" border="0" alt="clip_image036" height="315" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732981zGdp.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+生成证书</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732985R8Nq.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image038" border="0" alt="clip_image038" height="465" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732987XcVq.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 3：修改nginx的配置文件，添加用于安全访问的站点</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+listen 192.168.111.10:443;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+server_name www.zzu.com;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl on;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl_certificate /usr/local/nginx/certs/nginx.cert;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl_certificate_key /usr/local/nginx/certs/nginx.key;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl_session_timeout 5m;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+access_log /var/log/nginx/access.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+error_log /var/log/nginx/error.log;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl_protocols SSLv2 SSLv3 TLSv1;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl_ciphers HIGH:!aNULL:!MD5;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+ssl_prefer_server_ciphers on;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+location / {</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+root html;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+index index.html index.htm;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+}</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 4：重启nginx服务，修改客户机的hosts文件并访问</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# pkill nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# /usr/local/nginx/sbin/nginx &amp;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+修改hosts文件</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+192.168.111.10 www.zzu.com</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+当首次访问的时候会提示风险</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732990K81M.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image040" border="0" alt="clip_image040" height="398" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732992ocWg.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732994uGPH.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image042" border="0" alt="clip_image042" height="397" src="http://img1.51cto.com/attachment/201304/23/5200614_1366732996hg8W.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+既然没有一个可信任的机构来承认这个证书，那么小编就给一个机构呗，还记得小编最初给这台服务器生成的CA证书吗，web网站的证书就是这个CA发的，如果客户端信任这个CA了，那不就信任web的证书了么，那么就来实现吧，原理是使用证书链，在发送web证书的时候附带将其上级的证书带过去</p>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<span style="font-size:18px; padding:0px; margin:0px">Step 5：修改web的证书，将CA的证书内容加进去，但是要注意加的顺序，web证书的内容在前，CA证书在后</span></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# cp /etc/pki/CA/cacert.pem /usr/local/nginx/certs</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# cd /usr/local/nginx/certs/</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# cat cacert.pem &gt;&gt; nginx.cert</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+重启ngnix服务是必须的</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# pkill nginx</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+# /usr/local/nginx/sbin/nginx &amp;</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+客户端访问试试</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366732998Ry9G.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image044" border="0" alt="clip_image044" height="398" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733000d06n.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<blockquote style="padding:0px; margin:0px">
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+继续</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733001Z8kh.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image046" border="0" alt="clip_image046" height="399" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733003dj2F.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+继续</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733004M2jD.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image048" border="0" alt="clip_image048" height="446" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733005iSMf.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+GOON</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733007zilQ.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image050" border="0" alt="clip_image050" height="362" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733009zlYq.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733010gbPy.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image052" border="0" alt="clip_image052" height="362" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733011l2Ov.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733011dAe4.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image054" border="0" alt="clip_image054" height="242" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733013GCqo.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733014STaM.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image056" border="0" alt="clip_image056" height="362" src="http://img1.51cto.com/attachment/201304/23/5200614_13667330207bOD.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733023BWWN.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image058" border="0" alt="clip_image058" height="362" src="http://img1.51cto.com/attachment/201304/23/5200614_13667330241bJl.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733027DFKs.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image060" border="0" alt="clip_image060" height="182" src="http://img1.51cto.com/attachment/201304/23/5200614_13667330293dKh.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+点击“是”</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733029jype.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image062" border="0" alt="clip_image062" height="123" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733029LDny.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+关闭浏览器重新打开试试</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+<a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201304/23/5200614_1366733030hJEw.jpg" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none"><img title="clip_image064" border="0" alt="clip_image064" height="398" src="http://img1.51cto.com/attachment/201304/23/5200614_1366733031WRuq.jpg" style="padding:0px; margin:0px; vertical-align:top; border:0px"></a></p>
+</blockquote>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+好啦，小编要实现的几项已近完成了，当然这只是一些简单的应用，在后面的博文中小编将会介绍如何搭建”LNMP”，敬请关注哈。。。。。</p>
+<p style="padding-top:0px; padding-bottom:0px; margin-top:0px; margin-bottom:0px; clear:both; height:auto; overflow:hidden">
+本文出自 “<a href="http://wnqcmq.blog.51cto.com/" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">90後噭凊陽洸</a>” 博客，请务必保留此出处<a href="http://wnqcmq.blog.51cto.com/5200614/1184888" style="padding:0px; margin:0px; color:rgb(67,67,67); text-decoration:none">http://wnqcmq.blog.51cto.com/5200614/1184888</a></p>
+</div>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="8995756">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/xo_zhang/article/details/8991647';">上一篇</span><a href="/xo_zhang/article/details/8991647" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">高性能、高流量互联网应用架构设计实战原则</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/xo_zhang/article/details/8995844';">下一篇</span><a href="/xo_zhang/article/details/8995844" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">HA+LB+NAS:三层架构实现群集高可用和高性能</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('1411446','xo_zhang','foot','8995756');">Nginx<em>（54）</em></span>
+                                </label>
+                                <label class="">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('1410579','xo_zhang','foot','8995756');">负载均衡<em>（55）</em></span>
+                                </label>
+                                <label class="">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('1412639','xo_zhang','foot','8995756');">Squid<em>（44）</em></span>
+                                </label>
+                                <label class="">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('1400657','xo_zhang','foot','8995756');">Linux<em>（80）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('1411446', 'xo_zhang','foot','8995756');
+        });
+    </script>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/xo_zhang/svc/GetSuggestContent/8995756",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "8995756",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = '轻松使用Nginx搭建web服务器' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+    <div id="ad_cen">        
+<!--AdForward Begin:-->
+<script type="text/javascript" src="http://csdnim.qtmojo.com/main/s?user=csdn|blog|banner2&db=csdnim&border=0&local=yes&js=ie" charset="gbk"></script>
+<!--AdForward End-->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '8995756';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/xo_zhang/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });
+        },200);  
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/xo_zhang" target="_blank">
+    <img src="http://avatar.csdn.net/A/4/5/1_xo_zhang.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/xo_zhang" class="user_name" target="_blank">xo_zhang</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=xo_zhang','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>283793次</span></li>
+    <li>积分：<span>6257</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog6.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：6257 </div>
+        </span>  </li>
+    <li>排名：<span>第2230名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>315篇</span></li>
+    <li>转载：<span>245篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>36条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/xo_zhang/article/category/1329786" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">规则引擎drools</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1329787" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">工作流引擎jbpm</a><span>(12)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1329788" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">架构师</a><span>(77)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1329794" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库</a><span>(63)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1398771" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Java程序员从笨鸟到菜鸟(转自曹胜欢)</a><span>(71)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400180" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">hibernate</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400205" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">项目管理</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400206" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">UML</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400210" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">设计模式</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400212" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MyEclipse</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400450" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">PowerDesigner</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400612" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">cookie</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1400657" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Linux</a><span>(81)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1401053" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">F5</a><span>(54)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1408372" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MyiBatis</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1409341" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">google map</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1410515" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MYSQL</a><span>(13)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1410579" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">负载均衡</a><span>(56)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1410581" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">持续集成服务器</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1410594" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">redis jedis</a><span>(25)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1411341" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MongoDB</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1411440" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">apache</a><span>(40)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1411446" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Nginx</a><span>(55)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1411453" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Unix/Linux开源世界资源链接汇总</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1411461" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">java</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1412058" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">英语</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1412212" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">视频</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1412639" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Squid</a><span>(45)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1413512" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Lucene</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1417734" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">memcache</a><span>(14)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1418010" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">weblogic</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1418016" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">单点登录代码整理</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1418593" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">防火墙</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1419667" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">zabbix</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1419668" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">存储设备架构</a><span>(12)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1423929" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ActiveMQ</a><span>(22)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1423940" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JMS</a><span>(16)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1424588" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JasperReport(iReport)</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1433818" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">tomcat</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1434809" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">JAVA面试题</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1465427" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">电子商务</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1465763" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">金融知识</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1465897" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">java加密</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1466013" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">算法</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1474105" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">wso2esb</a><span>(34)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1474243" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">OSGI</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1481165" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">apache synapse</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1481173" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">BPM</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1481259" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">webservice</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1481603" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">单点登录</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1484871" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">架构 开发等集锦</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1487789" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Maven</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1497765" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">win2000、2003 命令行命令大全</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1502813" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">O‘REILLY 书架</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1502825" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">O&#39;Reilly&#39;s CD bookshelf</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1505015" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Varnish</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/xo_zhang/article/category/1578539" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">websphere6.1</a><span>(10)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/xo_zhang/article/month/2013/08">2013年08月</a><span>(16)</span></li><li><a href="/xo_zhang/article/month/2013/07">2013年07月</a><span>(45)</span></li><li><a href="/xo_zhang/article/month/2013/06">2013年06月</a><span>(90)</span></li><li><a href="/xo_zhang/article/month/2013/05">2013年05月</a><span>(256)</span></li><li><a href="/xo_zhang/article/month/2013/04">2013年04月</a><span>(133)</span></li><li><a href="/xo_zhang/article/month/2013/01">2013年01月</a><span>(10)</span></li><li><a href="/xo_zhang/article/month/2012/12">2012年12月</a><span>(8)</span></li><li><a href="/xo_zhang/article/month/2008/01">2008年01月</a><span>(2)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/xo_zhang/article/details/8995756" title="轻松使用Nginx搭建web服务器">轻松使用Nginx搭建web服务器</a><span>(17198)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8886514" title="apache shiro集群实现（一） session共享">apache shiro集群实现（一） session共享</a><span>(4671)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8945478" title="大数据量缓存应用--memcached+magent">大数据量缓存应用--memcached+magent</a><span>(3584)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8886517" title="apache shiro集群实现（二）— cache共享">apache shiro集群实现（二）— cache共享</a><span>(3437)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/9191975" title="WSO2 ESB（4）">WSO2 ESB（4）</a><span>(3282)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8510251" title="Drools入门-----------环境搭建，分析Helloworld   Drools5.0的xls文件转drl文件提升解析效率  使用BRMS的Tomcat6.0配置">Drools入门-----------环境搭建，分析Helloworld   Drools5.0的xls文件转drl文件提升解析效率  使用BRMS的Tomcat6.0配置</a><span>(3130)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/9152519" title="java SSL加密传输">java SSL加密传输</a><span>(2598)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8945078" title="ActiveMQ和spring集成">ActiveMQ和spring集成</a><span>(2564)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8995858" title="实例详解tomcat组件安装+Nginx反向代理tomcat+Apache使用mod_jk和mod_proxy反向代理和负载均衡">实例详解tomcat组件安装+Nginx反向代理tomcat+Apache使用mod_jk和mod_proxy反向代理和负载均衡</a><span>(2538)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8945234" title="SPRING整合JMS进行网络通信">SPRING整合JMS进行网络通信</a><span>(2389)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/xo_zhang/article/details/8886514" title="apache shiro集群实现（一） session共享">apache shiro集群实现（一） session共享</a><span>(8)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8886517" title="apache shiro集群实现（二）— cache共享">apache shiro集群实现（二）— cache共享</a><span>(6)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8945078" title="ActiveMQ和spring集成">ActiveMQ和spring集成</a><span>(2)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/9152519" title="java SSL加密传输">java SSL加密传输</a><span>(2)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/9152409" title="打造成功电子商务网站的六大设计准则">打造成功电子商务网站的六大设计准则</a><span>(2)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8991406" title="Tomcat多实例部署">Tomcat多实例部署</a><span>(1)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8921462" title="大型网站架构(转帖)--详细介绍阶段性需求和应对方法">大型网站架构(转帖)--详细介绍阶段性需求和应对方法</a><span>(1)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8945478" title="大数据量缓存应用--memcached+magent">大数据量缓存应用--memcached+magent</a><span>(1)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/2044026" title="Pro*C概述">Pro*C概述</a><span>(1)</span>
+</li>
+<li>
+<a href="/xo_zhang/article/details/8511126" title="drools介绍">drools介绍</a><span>(1)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/u013822374/article/details/50963108" 
+
+target="_blank">*Xcode 调试方法总结</a></li>
+<li><a href="http://blog.csdn.net/woshimalingyi/article/details/50964787" 
+target="_blank">*Android框架设计模式（三）——Observer Method</a></li>
+<li><a href="http://blog.csdn.net/fanyun_01/article/details/50921678" 
+
+target="_blank">*浅谈Storm流式处理框架</a></li>
+<li><a 
+
+href="http://blog.csdn.net/u013088062/article/details/50893901"target="_blank">*有关深度学习领域的几点想法</a></li>
+<li><a href="http://blog.csdn.net/wangpeng198688/article/details/50964828" 
+target="_blank">* 管理Java垃圾回收的五个建议</a></li>
+<li><a href="http://blog.csdn.net/u014421556/article/details/50964505" target="_blank">* 大数据并发问题</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/xo_zhang/article/details/10149843#comments">Websphere6.1---SRVE0255E</a>
+    <p style="margin:0px;"><a href="/zfr629" class="user_name">zfr629</a>:
+看不到图片！有卵用！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/8945078#comments">ActiveMQ和spring集成</a>
+    <p style="margin:0px;"><a href="/han_yankun2009" class="user_name">han_yankun2009</a>:
+了解学习了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/8886514#comments">apache shiro集群实现（一） session共享</a>
+    <p style="margin:0px;"><a href="/pengpengchaoren" class="user_name">pengpengchaoren</a>:
+请问你的shiro用的哪个版本？redis存储session，往外拿的时候反序列化可曾遇到过问题？q...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/9152519#comments">java SSL加密传输</a>
+    <p style="margin:0px;"><a href="/qixuwushuang" class="user_name">qixuwushuang</a>:
+这里实现的好像是client到server的单向通讯，如果client需要从server获取返回数据...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/9152519#comments">java SSL加密传输</a>
+    <p style="margin:0px;"><a href="/xunxiangqiu" class="user_name">xunxiangqiu</a>:
+谢谢分享。。。楼主这一套在ftp里边还可以用吗？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/10149899#comments">WebSphere集群部署的问题</a>
+    <p style="margin:0px;"><a href="/foxghoul" class="user_name">foxghoul</a>:
+集群部署后访问的时候无法访问，我的url是http://192.168.238.129:9081/l...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/9224253#comments">集群LVS+GFS+ISCSI+TOMCAT</a>
+    <p style="margin:0px;"><a href="/fcbaiy" class="user_name">fcbaiy</a>:
+mark
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/9192341#comments">OSGI开发web应用</a>
+    <p style="margin:0px;"><a href="/VCBoyGirl" class="user_name">VCBoyGirl</a>:
+http://osgi.jxtech.net 是一个不错的OSGi开发平台。
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/9192341#comments">apache shiro集群实现（一） session共享</a>
+    <p style="margin:0px;"><a href="/zhuojiajin" class="user_name">zhuojiajin</a>:
+大牛
+    </p>
+    </li>
+    <li>
+   
+         <a href="/xo_zhang/article/details/8511126#comments">drools介绍</a>
+    <p style="margin:0px;"><a href="/tonyswing2011" class="user_name">tonyswing2011</a>:
+不错啊
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=247765"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+</body>
+</html>   
+ 

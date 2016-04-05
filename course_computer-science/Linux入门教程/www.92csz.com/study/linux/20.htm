@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+ <html><head>
+<!-- Original URL: http://www.92csz.com/study/linux/20.htm
+Date Downloaded: 2016/3/26 13:56:55 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+ <meta name="description" content="配置ftp服务" />
+ <meta name="keywords" content="nginx,freebsd,linux,mysql,shell,apache,centos,redhat,rhel,windows,sql,系统运维,IT运维,开源系统,开源系统运维" />
+ <title> 配置ftp服务  </title>
+ <!-- base href="http://www.92csz.com/" -->
+ </head>
+ <body bgcolor="#FFFFFF" text="#000000"><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="menu">
+	 <ul>
+		 <span style="FONT-SIZE: 10.5pt">
+			 <li style="float:right;list-style-type:none;"><a href="http://www.92csz.com/" hidefocus="true" id="mn_list">返回网站首页 </a></li>
+			 <li><a href="index.html" hidefocus="true" id="mn_list">linux入门教程 </a></li>
+			 <li><a href="http://www.92csz.com/search" hidefocus="true" id="mn_search">搜索 </a></li>
+		 </span>
+	 </ul>
+ </div>
+ <p style="MARGIN: 0cm 0cm 0pt; TEXT-ALIGN: center" align="center"><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 15pt; FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri">第二十章 </span></b><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 15pt"><font face="Calibri">  </font></span></b><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 15pt; FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri">配置 </span></b><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 15pt"><font face="Calibri">ftp </font></span></b><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 15pt; FONT-FAMILY: 宋体; mso-ascii-font-family: Calibri; mso-hansi-font-family: Calibri">服务 </span></b><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 15pt"><!--?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /--></span></b></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">【 <b style="mso-bidi-font-weight: normal">什么是 </b></span><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span></b><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">】 </span></font></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">也许你对 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">不陌生，但是你是否了解 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">到底是个什么玩意？ </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP  </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">是 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">File Transfer Protocol </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">（文件传输协议）的英文简称，而中文简称为“文传协议”。用于 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">Internet </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">上的控制文件的双向传输。同时，它也是一个应用程序（ </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">Application </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">）。用户可以通过它把自己的 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">PC </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">机与世界各地所有运行 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">协议的服务器相连，访问服务器上的大量程序和信息。 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">的主要作用，就是让用户连接上一个远程计算机（这些计算机上运行着 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">服务器程序）察看远程计算机有哪些文件，然后把文件从远程计算机上拷到本地计算机，或把本地计算机的文件送到远程计算机去。 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">FTP </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">用的比 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">NFS </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">更多，所以你一定要熟练配置它。 </span></font></p>
+ <script async="" src="../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+ <!-- study_zsy -->
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5865024608655371" data-ad-slot="4214051509" data-ad-format="auto"></ins>
+ <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">【 <b style="mso-bidi-font-weight: normal">配置 </b></span><b style="mso-bidi-font-weight: normal"><span style="FONT-SIZE: 10.5pt"><font face="Calibri">ftp </font></span></b><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">】 </span><span style="FONT-SIZE: 10.5pt"></span></font></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">安装 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">Redhat/CentOS </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">系统时也许你会连带着把 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">ftp </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">装上，系统默认带的 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">ftp </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">是 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">vsftp </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">，比较常用，配置也很简单。但笔者常使用的 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">ftp </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">软件为 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">pure-ftpd </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">。因为这个软件比 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">vsftp </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">配置起来更加灵活和安全。下面是笔者配置 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">pure-ftpd </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">的过程： </span><br /><br /><span style="FONT-SIZE: 10.5pt"></span></font></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">下载最新的 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">pure-ftp </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">源码包 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">pure-ftpd-1.0.21.tar.bz2 <span>&nbsp;&nbsp;  </span></font></span></font></p>
+ <p><span style="FONT-SIZE: 10.5pt"># wget http://syslab.comsenz.com/downloads/linux/pure-ftpd-1.0.21.tar.bz2 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#tar jxvf pure-ftpd-1.0.21.tar.bz2 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#cd pure-ftpd-1.0.21 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">./configure \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--prefix=/usr/local/pureftpd" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--without-inetd" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-altlog" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-puredb" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-throttling" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-largefile" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-peruserlimits" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-tls" \ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">"--with-language=simplified-chinese" </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#make &amp;&amp; make install </span></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">启动 </span><span style="FONT-SIZE: 10.5pt"></span></font></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">用配置文件 </span><span style="FONT-SIZE: 10.5pt"></span></font></p>
+ <p><span style="FONT-SIZE: 10.5pt">#mkdir /usr/local/pureftpd/etc </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#cd configuration-file </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#cp pure-ftpd.conf /usr/local/pureftpd/etc/pure-ftpd.conf </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#cp pure-config.pl <span>&nbsp;  </span>/usr/local/pureftpd/sbin/pure-config.pl </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">#chmod 755 /usr/local/pureftpd/sbin/pure-config.pl </span></p>
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">在启动pure-ftp之前需要先修改配置文件，配置文件为/usr/local/pureftpd/etc/pure-ftpd.conf,你可以打开看一下，里面内容很多，如果你英文好，可以好好研究一番，下面是我的配置文件，如果你嫌麻烦，直接拷贝过去即可。 </span></font></p>
+ <p><span style="FONT-SIZE: 10.5pt">____________________________________ </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">ChrootEveryone <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>yes </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">BrokenClientsCompatibility <span>&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">MaxClientsNumber <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>50 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">Daemonize <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>yes </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">MaxClientsPerIP <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>8 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">VerboseLog <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">DisplayDotFiles <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>yes </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AnonymousOnly <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">NoAnonymous <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">SyslogFacility <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>ftp </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">DontResolve <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>yes </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">MaxIdleTime <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>15 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">PureDB <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span>/usr/local/pureftpd/etc/pureftpd.pdb </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">LimitRecursion <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>2000 8 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AnonymousCanCreateDirs <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">MaxLoad <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>4 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AntiWarez <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>yes </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">Umask <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </span>133:022 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">MinUID <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>100 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AllowUserFXP <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AllowAnonymousFXP <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">ProhibitDotFilesWrite <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">ProhibitDotFilesRead <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AutoRename <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">AnonymousCantUpload <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>no </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">PIDFile <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>/usr/local/pureftpd/var/run/pure-ftpd.pid </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">MaxDiskUsage <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>99 </span></p>
+ <p><span style="FONT-SIZE: 10.5pt">CustomerProof <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>yes </span></p>
+ <p><font size="3"><span style="FONT-SIZE: 9.5pt"><font face="Calibri">####################################到此结束，保存即可######################### </font></span></font></p><font size="3">
+ <p><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">启动命令： </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri"> /usr/local/pureftpd/sbin/pure-config.pl /usr/local/pureftpd/etc/pure-ftpd.conf </font></span></font></p>
+ <p><font size="3"><span style="FONT-SIZE: 9.5pt"><font face="Calibri">####### </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">接下来该建立用户了 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">############### </font></span></font></p>
+ <p><font size="3"><span style="FONT-SIZE: 10.5pt"><font face="Calibri"># /usr/local/pureftpd/bin/pure-pw useradd ftp_test -_ www -d /data/wwwroot </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">其中， </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">-u  </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">将虚拟用户 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri"> ftp_test  </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">与系统用户 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri"> www  </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">关联在一起。 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">-d  </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">参数使 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri"> ftp_test  </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">只能访问其主目录。执行完上述命令后，会提示输入密码。 </span><span style="FONT-SIZE: 10.5pt"></span></font></p>
+ </font><p><font size="3"><span style="FONT-SIZE: 10.5pt"># /usr/local/pureftpd/bin/pure-pw mkdb </span></font></p>
+ <p /><font size="3"><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">另外提供一篇 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">CentOS5.5 </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">下源码的安装 </span><span style="FONT-SIZE: 10.5pt"><font face="Calibri">vsftpd </font></span><span style="FONT-FAMILY: 宋体; FONT-SIZE: 10.5pt">作为参考： </span><p />
+ <p><span style="FONT-SIZE: 10.5pt"><a href="http://www.92csz.com/21/633.html"><u><font size="3"><font color="#0000ff"><font face="Calibri">CentOS 5.5编译安装vsftpd-2.3.4配置虚拟用户 </font></font></font></u></a></span></p>
+ <div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5865024608655371";
+google_ad_slot = "3514991827";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+ <script type="text/javascript" src="../../../pagead2.googlesyndication.com/pagead/f.txt.js">
+</script></div>
+ <p><span style="FONT-SIZE: 10.5pt;">上一页&nbsp; <a title="" href="19.htm">NFS服务配置 </a></span><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;">下一页&nbsp; <a title="" href="21.htm">配置Squid服务 </a></span><span style="FONT-SIZE: 10.5pt;">&nbsp;&nbsp; </span></p>
+ <p><span style="FONT-SIZE: 10.5pt;"><a title="" href="index.html">回到主目录 </a></span></p>
+ <script src="../../../s20.cnzz.com/stat_a61bedf.php.js" language="JavaScript"></script>
+ </font></body></html>
+ <script src="http://s20.cnzz.com/stat.php?id=3037570&web_id=3037570&show=pic" language="JavaScript"></script>
+ </font></body></html>

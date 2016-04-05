@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/python/python_exceptions.html
+Date Downloaded: 2016/4/1 16:52:08 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>Python异常处理 - Python教程 </title>
+		 <meta name="keywords" content="Python,异常,异常处理" />
+		 <meta name="description" content="Python提供了两个非常重要的功能，以处理在Python程序任何异常错误，并增加调试功能： 异常处理：这将包括在本教程中。这是在Python中可用列表标准异常： Standard Exceptions . 断言：这将" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix/">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="index.html">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/script/'>脚本语言 </a> >  <a href='index.html'>Python教程 </a> >  Python异常处理
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Python教程 </a>
+							 <a class="list-group-item" href="python_quick_guide.html" title="Python快速入门">Python快速入门 </a><a class="list-group-item" href="python_overview.html" title="Python概述">Python概述 </a><a class="list-group-item" href="python_environment.html" title="Python环境安装">Python环境安装 </a><a class="list-group-item" href="python_basic_syntax.html" title="Python基本语法">Python基本语法 </a><a class="list-group-item" href="python_variable_types.html" title="Python变量类型">Python变量类型 </a><a class="list-group-item" href="python_basic_operators.html" title="Python基本运算符">Python基本运算符 </a><a class="list-group-item" href="python_decision_making.html" title="Python决策">Python决策 </a><a class="list-group-item" href="python_loops.html" title="Python循环">Python循环 </a><a class="list-group-item" href="python_numbers.html" title="Python数字类型">Python数字类型 </a><a class="list-group-item" href="python_strings.html" title="Python字符串">Python字符串 </a><a class="list-group-item" href="python_lists.html" title="Python列表">Python列表 </a><a class="list-group-item" href="python_tuples.html" title="Python元组">Python元组 </a><a class="list-group-item" href="python_dictionary.html" title="Python字典">Python字典 </a><a class="list-group-item" href="python_date_time.html" title="Python日期时间Date/Time">Python日期时间Date/Time </a><a class="list-group-item" href="python_functions.html" title="Python函数">Python函数 </a><a class="list-group-item" href="python_modules.html" title="Python模块">Python模块 </a><a class="list-group-item" href="python_files_io.html" title="Python文件I/O">Python文件I/O </a><a class="list-group-item" href="python_exceptions.html" title="Python异常处理">Python异常处理 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="python3-webbug-series1.html" title="Python 3开发网络爬虫(一)">Python 3开发网络爬虫(一) </a><a class="list-group-item" href="python3-webbug-series2.html" title="Python 3开发网络爬虫(二)">Python 3开发网络爬虫(二) </a><a class="list-group-item" href="python3-webbug-series3.html" title="Python3网络爬虫(三): 伪装浏览器">Python3网络爬虫(三): 伪装浏览器 </a><a class="list-group-item" href="python3-webbug-series4.html" title="Python3网络爬虫(四): 登录">Python3网络爬虫(四): 登录 </a><a class="list-group-item" href="python_classes_objects.html" title="Python面向对象">Python面向对象 </a><a class="list-group-item" href="python_reg_expressions.html" title="Python正则表达式">Python正则表达式 </a><a class="list-group-item" href="python_cgi_programming.html" title="Python CGI编程">Python CGI编程 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">Python异常处理 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>_Chen_ </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='file_writelines.html' class='btn' title='Python file.writelines()方法' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='standard_exceptions.html' class='btn btn-default' style='float:right;' title='Python的标准异常'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="5714" />
+									 <p>
+	Python提供了两个非常重要的功能，以处理在Python程序任何异常错误，并增加调试功能： </p>
+ <ul>
+	 <li>
+		 <p>
+			异常处理：这将包括在本教程中。这是在Python中可用列表标准异常： <a href="standard_exceptions.html" target="_blank">标准异常 </a>&nbsp;。 </p>
+	 </li>
+	 <li>
+		 <p>
+			断言：这将 <a href="assertions_in_python.html" target="_blank">Python断言教程 </a>中介绍。 </p>
+	 </li>
+ </ul>
+ <h2>
+	什么是异常？ </h2>
+ <p>
+	异常是一个事件，其中一个程序，破坏程序的指令的正常流的执行过程中而发生的。一般情况下，当一个Python脚本遇到一些情况不能处理，就抛出一个异常。异常是一个Python对象，它表示一个错误。 </p>
+ <p>
+	当Python脚本抛出一个异常，它必须处理异常，否则将立即终止。 </p>
+ <h2>
+	处理异常： </h2>
+ <p>
+	如果有可能会引发异常的一些可疑的代码，就可以通过将可疑的代码在一个try块：保卫你的程序。在try块，包括以下情况except：语句，其次是代码，作为优雅的处理问题，尽可能块。 </p>
+ <h3>
+	语法 </h3>
+ <p>
+	这里是try....except...else 块的简单语法： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">You </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">do </span><span class="pln" style="margin: 0px; padding: 0px;"> your operations here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><i style="margin: 0px; padding: 0px;"><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ExceptionI </span></i><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ExceptionI </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><i style="margin: 0px; padding: 0px;"><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ExceptionII </span></i><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ExceptionII </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">no </span><span class="pln" style="margin: 0px; padding: 0px;"> exception  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">  </span></pre>
+ <p>
+	这里有一些关于上述语法要点： </p>
+ <ul>
+	 <li>
+		 <p>
+			单个try语句可以有多个不同的语句。当try块中包含可能会引发不同类型的异常语句，这是很有用的。 </p>
+	 </li>
+	 <li>
+		 <p>
+			也可以提供一个通用的except子句，它用来处理任何异常。 </p>
+	 </li>
+	 <li>
+		 <p>
+			except子句后，可以包括其他子句。块没有引发异常：在别的块中的代码，如果在try中的代码执行。 </p>
+	 </li>
+	 <li>
+		 <p>
+			在else块是不需要try：块的代码的保护。 </p>
+	 </li>
+ </ul>
+ <h3>
+	例子 </h3>
+ <p>
+	这里是简单的例子，这将打开一个文件并写入内容的文件中并移出正常： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> open </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;testfile&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;w&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">write </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;This is my test ____ for exception handling!!&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">IOError </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Error: can&#39;t find file __ read data&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Written content in the ____ successfully&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">close </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span></pre>
+ <p>
+	这将产生以下结果： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Written </span><span class="pln" style="margin: 0px; padding: 0px;"> content  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">in </span><span class="pln" style="margin: 0px; padding: 0px;"> the file successfully </span></pre>
+ <h3>
+	示例： </h3>
+ <p>
+	这里有一个更简单的例子，它试图打开没有权限并在文件中写入内容，所以它会引发一个异常： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> open </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;testfile&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;r&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">write </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;This is my test ____ for exception handling!!&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">IOError </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Error: can&#39;t find file __ read data&quot; </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Written content in the ____ successfully&quot; </span></pre>
+ <p>
+	这将产生以下结果： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Error </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;"> can </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;t find file or ____ data </span></pre>
+ <h2>
+	在except子句无异常： </h2>
+ <p>
+	还可以使用不同的定义如下无异常的声明： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">You </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">do </span><span class="pln" style="margin: 0px; padding: 0px;"> your operations here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;"> any exception </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">no </span><span class="pln" style="margin: 0px; padding: 0px;"> exception  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">  </span></pre>
+ <p>
+	try-except 语句捕获所有出现的异常。使用这种try-except 声明不被认为是一个良好的编程习惯，但因为它捕获所有异常，但不会使程序员找出可能出现的问题的根本原因。 </p>
+ <h2>
+	在except子句的多个异常： </h2>
+ <p>
+	也可以使用相同的除语句来处理多个异常，如下所示： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">You </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">do </span><span class="pln" style="margin: 0px; padding: 0px;"> your operations here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Exception1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Exception2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[,... </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ExceptionN </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]]]): </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;"> any exception  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">from </span><span class="pln" style="margin: 0px; padding: 0px;"> the given exception ____ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">If </span><span class="pln" style="margin: 0px; padding: 0px;"> there  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">no </span><span class="pln" style="margin: 0px; padding: 0px;"> exception  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">then </span><span class="pln" style="margin: 0px; padding: 0px;"> execute  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> block </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">  </span></pre>
+ <h2>
+	try-finally 语句: </h2>
+ <p>
+	可以使用finally:块连同try:块。在try块是否引发异常或没有任何代码 finally块是一个必须执行的块。try-finally语句的语法是这样的： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">You </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">do </span><span class="pln" style="margin: 0px; padding: 0px;"> your operations here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Due </span><span class="pln" style="margin: 0px; padding: 0px;"> to any exception </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">this </span><span class="pln" style="margin: 0px; padding: 0px;"> may be skipped </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">finally </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">This </span><span class="pln" style="margin: 0px; padding: 0px;"> would always be ________ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span></pre>
+ <p>
+	请注意，可以提供except子句或finally子句，但不能同时使用。不能同时使用else子句与finally子句。 </p>
+ <h3>
+	例子： </h3>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> open </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;testfile&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;w&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">write </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;This is my test ____ for exception handling!!&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">finally </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Error: can&#39;t find file __ read data&quot; </span></pre>
+ <p>
+	如果没有权限，以写入方式打开文件，那么这将产生以下结果： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Error </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;"> can </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;t find file or ____ data </span></pre>
+ <p>
+	同样的例子可以写入更简洁，如下所示： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; cursor: default; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+   fh  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> open </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;testfile&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;w&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+      fh </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">write </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;This is my test ____ for exception handling!!&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">finally </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Going to close the ____&____; </span><span class="pln" style="margin: 0px; padding: 0px;">
+      fh </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">close </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">IOError </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Error: can&#39;t find file __ read data&quot; </span></pre>
+ <p>
+	当一个异常被抛出在try块中，执行立即传递到finally块。finally块中的所有语句都执行，该异常被再次抛出，并在被处理 except 语句如果出现在一个更高的层在try-except语句。 </p>
+ <h2>
+	Exception参数： </h2>
+ <p>
+	异常可以有一个参数，参数是一个值，它给出了关于这个问题的其他信息。参数按异常内容改变。可以通过不同的子句提供一个变量，如下所示捕获异常的参数： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">You </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">do </span><span class="pln" style="margin: 0px; padding: 0px;"> your operations here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">; </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">...................... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><i style="margin: 0px; padding: 0px;"><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ExceptionType </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Argument </span></i><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">You </span><span class="pln" style="margin: 0px; padding: 0px;"> can  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;"> value of  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Argument </span><span class="pln" style="margin: 0px; padding: 0px;"> here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span></pre>
+ <p>
+	如果正在编写代码来处理一个异常，可以有一个变量按照异常的名称在不同的声明。如果捕捉多个异常，可以有一个变量按照异常的元组。 </p>
+ <p>
+	这个变量将接收主要包含异常原因的异常值。该变量可以在一个元组的形式接收一个或多个值。该元组通常包含错误串，错误码和一个错误的位置。 </p>
+ <h3>
+	示例： </h3>
+ <p>
+	下面是一个异常的例子： </p>
+ <pre class="prettyprint tryit prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto; background-image: url(http://www.yiibai.com/images/link.png) !important; background-attachment: initial !important; background-size: initial !important; background-origin: initial !important; background-clip: initial !important; background-position: 100% 0%; background-repeat: no-repeat !important;">
+ <span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);">#!/usr/bin/python </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Define a function ____. </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">def </span><span class="pln" style="margin: 0px; padding: 0px;"> temp_convert </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">return </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">var </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">ValueError </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Argument </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;The argument does not _______ numbers
+&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Argument </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+ </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># Call above function ____. </span><span class="pln" style="margin: 0px; padding: 0px;">
+temp_convert </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;xyz&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">); </span></pre>
+ <p>
+	这将产生以下结果: </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">The </span><span class="pln" style="margin: 0px; padding: 0px;"> argument does  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">not </span><span class="pln" style="margin: 0px; padding: 0px;"> contain numbers
+invalid literal  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">for </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">int </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">() </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">with </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">base </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">10 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;xyz&#39; </span></pre>
+ <h2>
+	抛出异常： </h2>
+ <p>
+	可以通过使用raise语句抛出几个方面的异常。一般raise语句的语法。 </p>
+ <h3>
+	语法 </h3>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">raise </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Exception </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[, </span><span class="pln" style="margin: 0px; padding: 0px;"> args  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">[, </span><span class="pln" style="margin: 0px; padding: 0px;"> traceback </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">]]] </span></pre>
+ <p>
+	这里，Exception是异常的类型（例如，NameError）和参数是用于异常的参数值。该参数是可选的;如果未提供，则异常的参数是None。 </p>
+ <p>
+	最后一个参数traceback，也是可选的（并且在实践中很少使用），并且如果存在的话，那么用于异常回溯对象。 </p>
+ <h3>
+	例子： </h3>
+ <p>
+	异常可以是一个字符串，一个类或一个对象。大多数Python核心抛出是类，有参数认为是类的实例的异常。定义新的异常是很容易的，可以参考如下： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">def </span><span class="pln" style="margin: 0px; padding: 0px;"> functionName </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;"> level  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">if </span><span class="pln" style="margin: 0px; padding: 0px;"> level  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">&lt; </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">raise </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Invalid level!&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> level
+       </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># The code below __ this would not be ________ </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="com" style="margin: 0px; padding: 0px; color: rgb(136, 0, 0);"># if we raise ___ exception </span></pre>
+ <p>
+	注：为了捕获一个异常，&ldquo;except&rdquo;语句必须引用抛出类对象或简单的字符串相同的异常。例如，捕捉到上面的异常，必须写except子句，如下所示： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Business </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Logic </span><span class="pln" style="margin: 0px; padding: 0px;"> here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Invalid level!&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Exception </span><span class="pln" style="margin: 0px; padding: 0px;"> handling here </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">else </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Rest </span><span class="pln" style="margin: 0px; padding: 0px;"> of the code ____ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span></pre>
+ <h2>
+	用户定义的异常： </h2>
+ <p>
+	Python中，还可以通过内置的异常标准的派生类来创建自己的异常。 </p>
+ <p>
+	下面是有关RuntimeError一个例子。这里是从RuntimeError子类的类被创建。当需要显示更多的具体信息时，一个异常被捕获，这是很有用的。 </p>
+ <p>
+	在try块中，用户定义的异常引发，并夹在except块。变量e被用来创建类Networkerror的一个实例。 </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">class </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Networkerror </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">RuntimeError </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">def </span><span class="pln" style="margin: 0px; padding: 0px;"> __init__ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">self </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;"> arg </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">): </span><span class="pln" style="margin: 0px; padding: 0px;">
+       </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">self </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">args  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">= </span><span class="pln" style="margin: 0px; padding: 0px;"> arg </span></pre>
+ <p>
+	所以一旦在上面定义的类，可以按如下方法抛出异常： </p>
+ <pre class="prettyprint prettyprinted" style="border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; font-size: 12px; overflow: auto;">
+ <span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">try </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">raise </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Networkerror </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&quot;Bad hostname&quot; </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">except </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Networkerror </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">e </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="pln" style="margin: 0px; padding: 0px;">
+    </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">print </span><span class="pln" style="margin: 0px; padding: 0px;"> e </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">args </span></pre>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/Python/" target="_blank">Python </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/异常/" target="_blank">异常 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/异常处理/" target="_blank">异常处理 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>Python异常处理 </b><br />
+									本文地址： <a href="python_exceptions.html">http://www.yiibai.com/python/python_exceptions.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='file_writelines.html' class='btn' title='Python file.writelines()方法' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='standard_exceptions.html' class='btn btn-default' style='float:right;' title='Python的标准异常'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="5714" data-title="Python异常处理" data-url="http://www.yiibai.com/python/python_exceptions.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>pt>
+	 <script src="/static.v2.0/js/main-menu.js"></script>
+	 <script src="/static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

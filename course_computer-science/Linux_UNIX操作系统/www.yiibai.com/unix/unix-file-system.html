@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix/unix-file-system.html
+Date Downloaded: 2016/4/1 17:08:39 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>Unix 文件系统基础 - Unix </title>
+		 <meta name="keywords" content="Unix,文件,系统,基础,文件,系统,是,一个,分区," />
+		 <meta name="description" content="文件系统是一个分区或磁盘上的文件的逻辑集合。分区是信息的容器，如果需要的话，可以跨越整个硬盘驱动器。 你的硬盘驱动器，可以有不同的分区通常只包含一个文件系统，如一个" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix </a> >  Unix ______
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix </a>
+							 <a class="list-group-item" href="unix-getting-started.html" title="Unix是什么？">Unix是什么？ </a><a class="list-group-item" href="unix-file-management.html" title="UNIX 文件管理">UNIX 文件管理 </a><a class="list-group-item" href="unix-directories.html" title="UNIX 目录管理">UNIX 目录管理 </a><a class="list-group-item" href="unix-file-permission.html" title="UNIX 文件权限/访问模式">UNIX 文件权限/访问模式 </a><a class="list-group-item" href="unix-environment.html" title="UNIX 环境">UNIX 环境 </a><a class="list-group-item" href="unix-basic-utilities.html" title="Unix 基本工具(打印，电子邮件)">Unix 基本工具(打印，电子邮件) </a><a class="list-group-item" href="unix-pipes-filters.html" title="UNIX 管道和过滤器">UNIX 管道和过滤器 </a><a class="list-group-item" href="unix-processes.html" title="UNIX 进程管理">UNIX 进程管理 </a><a class="list-group-item" href="unix-communication.html" title="UNIX 网络实用工具">UNIX 网络实用工具 </a><a class="list-group-item" href="unix-vi-editor.html" title="vi编辑器教程">vi编辑器教程 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="unix-regular-expressions.html" title="Unix 正则表达式SED">Unix 正则表达式SED </a><a class="list-group-item" href="unix-file-system.html" title="Unix 文件系统基础">Unix 文件系统基础 </a><a class="list-group-item" href="unix-user-administration.html" title="UNIX 用户管理">UNIX 用户管理 </a><a class="list-group-item" href="unix-system-performance.html" title="UNIX 系统性能">UNIX 系统性能 </a><a class="list-group-item" href="unix-system-logging.html" title="UNIX 系统日志">UNIX 系统日志 </a><a class="list-group-item" href="unix-signals-traps.html" title="UNIX 信号和陷阱">UNIX 信号和陷阱 </a><a class="list-group-item" href="unix-useful-commands.html" title="Unix 有用命令">Unix 有用命令 </a><a class="list-group-item" href="unix-builtin-functions.html" title="Shell 内置数学函数">Shell 内置数学函数 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">Unix 文件系统基础 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>dragonlonger </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='unix-regular-expressions.html' class='btn' title='Unix 正则表达式SED' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-user-administration.html' class='btn btn-default' style='float:right;' title='UNIX 用户管理'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1477" />
+									 <p>
+	文件系统是一个分区或磁盘上的文件的逻辑集合。分区是信息的容器，如果需要的话，可以跨越整个硬盘驱动器。 </p>
+ <p>
+	你的硬盘驱动器，可以有不同的分区通常只包含一个文件系统，如一个文件系统 / 文件系统或其他包含/home文件系统。 </p>
+ <p>
+	每个分区的一个文件系统允许不同的文件系统的维护和管理逻辑。 </p>
+ <p>
+	在Unix中的一切都被认为是一个文件，包括物理设备，如DVD-ROM，USB设备，软盘驱动器，等等。 </p>
+ <h2>
+	目录结构： </h2>
+ <p>
+	Unix 使用层次结构的文件系统的结构，很象一个倒置的树，在该文件系统的基础上，并从那里扩展的所有其他目录的根目录（/）。 </p>
+ <p>
+	UNIX 文件系统中的文件和目录的集合，具有以下属性： </p>
+ <ul>
+	 <li>
+		 <p>
+			它有一个根目录（/），其中包含其他文件和目录。 </p>
+	 </li>
+	 <li>
+		 <p>
+			每个文件或目录被唯一标识，它的名字，它的目录，以及一个唯一的标识符，通常被称为一个inode。 </p>
+	 </li>
+	 <li>
+		 <p>
+			按照惯例，根目录下有一个inode号为2和3的lost + found目录中有一个inode号。 inode编号0和1不使用。指定-i选项的ls命令可以看到文件的inode编号。 </p>
+	 </li>
+	 <li>
+		 <p>
+			这是自包含的。没有一个文件系统，以及任何其他的之间的依赖关系。 </p>
+	 </li>
+ </ul>
+ <p>
+	目录有特定的目的，普遍持相同类型的信息，轻松定位文件。以下是主要的Unix版本上存在的目录： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 73px;">
+				目录 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 465px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/ </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This is the root _________ which should contain only ___ directories needed at the ___ level of the file _________. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/bin </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This is where the __________ files are located. They ___ available to all user. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/dev </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				These are device drivers. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/etc </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Supervisor directory commands, configuration _____, disk configuration files, valid ____ lists, groups, ethernet, hosts, _____ to send critical messages. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/lib </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Contains shared library files ___ sometimes other kernel-related files. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/boot </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Contains files for booting ___ system. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/home </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Contains the home directory ___ users and other accounts. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/mnt </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Used to mount other _________ file systems, such as _____ and floppy for the __-___ drive and floppy diskette _____, respectively </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/proc </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Contains all processes marked __ a file by process ______ or other information that __ dynamic to the system. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/tmp </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Holds temporary files used _______ system boots </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/usr </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Used for miscellaneous purposes, __ can be used by ____ users. Includes administrative commands, ______ files, library files, and ______ </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/var </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Typically contains variable-length files ____ as log and print _____ and any other type __ file that may contain _ variable amount of data </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/sbin </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Contains binary (executable) files, _______ for system administration. For _______ <i style="margin: 0px; padding: 0px;">fdisk </i>&nbsp;and&nbsp; <i style="margin: 0px; padding: 0px;">ifconfig </i>&nbsp;utlities. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				/kernel </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Contains kernel files </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	浏览文件系统： </h2>
+ <p>
+	现在你了解基本的文件系统，你就可以开始导航到你需要的文件。以下是您将使用浏览系统的命令： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				命令 </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 409px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				cat filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Displays a filename. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				cd dirname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Moves you to the _________ identified. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				cp file1 file2 </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Copies one file/directory to _________ location. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				file filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Identifies the file type (______, text, etc). </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				find filename dir </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Finds a file/directory. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				head filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Shows the beginning of _ file. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				less filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Browses through a file ____ end or beginning. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				ls dirname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Shows the contents of ___ directory specified. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				mkdir dirname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Creates the specified directory. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				more filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Browses through a file ____ beginning to end. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				mv file1 file2 </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Moves the location of __ renames a file/directory. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				pwd </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Shows the current directory ___ user is in. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				rm filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Removes a file. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				rmdir dirname </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Removes a directory. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				tail filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Shows the end of _ file. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				touch filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Creates a blank file __ modifies an existing file.s __________. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				whereis filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Shows the location of _ file. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				which filename </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Shows the location of _ file if it is __ your PATH. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	您可以使用 <a href="http://www.yiibai.com/unix/unix-manpage-help.html">联机帮助帮助 </a>这里提到的每个命令的语法检查完成。&nbsp; </p>
+ <h2>
+	df 命令: </h2>
+ <p>
+	第一种方式来管理你的分区空间使用df（磁盘空闲）命令。命令df-K（可用磁盘）以KB为单位显示磁盘空间使用情况，如下图所示： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$df  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">k
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Filesystem </span><span class="pln" style="margin: 0px; padding: 0px;">       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1K </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">blocks       </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Used </span><span class="pln" style="margin: 0px; padding: 0px;">    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Available </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Use </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Mounted </span><span class="pln" style="margin: 0px; padding: 0px;"> on
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dev </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">vzfs         </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">10485760 </span><span class="pln" style="margin: 0px; padding: 0px;">    </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">7836644 </span><span class="pln" style="margin: 0px; padding: 0px;">      </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2649116 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">75 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">% </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">/devices                0         0           0   0% / </span><span class="pln" style="margin: 0px; padding: 0px;">devices
+$ </span></pre>
+ <p>
+	一些目录，如 &nbsp;/devices，显示0字节，使用和可用列的能力，以及0％。这些特殊的文件系统（或虚拟），虽然它们驻留在磁盘上/下，它们本身不占用磁盘空间。 </p>
+ <p>
+	df -k&nbsp;输出所有的Unix系统上大致相同。下面是它通常包括： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				Column </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 409px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Filesystem </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				The physical file system ____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				kbytes </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Total kilobytes of space _________ on the storage medium. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				used </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Total kilobytes of space ____ (by files). </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				avail </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Total kilobytes available for ___. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				capacity </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Percentage of total space ____ by files. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Mounted on </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				What the file system __ mounted on. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p>
+	你可以使用-h（人类可读的）选项显示的输出格式，显示的大小更容易理解的符号。 </p>
+ <h2>
+	du 命令: </h2>
+ <p>
+	使用du（磁盘使用率）命令使您能够在一个特定的目录指定目录显示磁盘空间使用情况。 </p>
+ <p>
+	此命令是有帮助的，如果你要确定一个特定的目录多大的空间。下面的命令将显示每个目录所消耗的块数。单块可能需要512字节或1千字节，这取决于你的系统。 </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$du  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">10 </span><span class="pln" style="margin: 0px; padding: 0px;">      </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">cron </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">d
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">126 </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">default </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">6 </span><span class="pln" style="margin: 0px; padding: 0px;">       </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dfs
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span><span class="pln" style="margin: 0px; padding: 0px;">
+$ </span></pre>
+ <p>
+	-h选项使输出更容易理解： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$du  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">h  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5k </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">cron </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">d
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">63k </span><span class="pln" style="margin: 0px; padding: 0px;">    </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">default </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3k </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">etc </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dfs
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">... </span><span class="pln" style="margin: 0px; padding: 0px;">
+$ </span></pre>
+ <h2>
+	安装的文件系统： </h2>
+ <p>
+	必须安装的文件系统，以便使用该系统。要看到什么是目前在您的系统上安装（可以使用），使用这个命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ mount
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dev </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">vzfs on  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;"> type reiserfs  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">usrquota </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">grpquota </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+proc on  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">proc type proc  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">, </span><span class="pln" style="margin: 0px; padding: 0px;">nodiratime </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+devpts on  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dev </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">pts type devpts  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">( </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">) </span><span class="pln" style="margin: 0px; padding: 0px;">
+$ </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	/ mnt目录下，Unix的惯例，是位于临时装片（如CD-ROM驱动器，远程网络驱动器，软盘驱动器）。如果您需要挂载文件系统，可以使用mount命令的语法如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">mount  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">t file_system_type device_to_mount directory_to_mount_to </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	例如，如果你想要的CD-ROM安装到目录 /mnt/cdrom，例如，您可以键入： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ mount  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">t iso9660  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dev </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">cdrom  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">mnt </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">cdrom </span></pre>
+ <p>
+	假定您的CD-ROM设备名为 &nbsp;/dev/cdrom命令要挂载到 /mnt/cdrom。更具体的信息或帮助信息在命令行中键入mount -h&nbsp;，请参阅安装手册页。 </p>
+ <p>
+	安装后，您可以使用cd 命令导航最新的文件系统挂载点。 </p>
+ <h2>
+	卸载文件系统： </h2>
+ <p>
+	从您的系统中卸载（删除）文件系统，使用umount命令识别挂载点或设备 </p>
+ <p>
+	例如，要卸载光驱，使用下面的命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ umount  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">dev </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">/ </span><span class="pln" style="margin: 0px; padding: 0px;">cdrom </span></pre>
+ <p>
+	mount 命令，使您能够访问您的文件系统，但最现代的Unix系统，自动装载功能，使这个过程对用户不可见，无需干预。 </p>
+ <h2>
+	用户和组配额： </h2>
+ <p>
+	用户和组配额提供的机制，可以限制特定组内的单个用户或所有用户使用的空间量由管理员定义的值。 </p>
+ <p>
+	配额围绕两个限制，允许用户采取一些行动，如果量的空间或磁盘块数开始超过管理员定义的限制： </p>
+ <ul>
+	 <li>
+		 <p>
+			Soft Limit:&nbsp;如果用户超过定义的限制，有一个宽限期，允许用户腾出一些空间。 </p>
+	 </li>
+	 <li>
+		 <p>
+			Hard Limit:&nbsp;当达到硬限制，无论在宽限期，没有进一步的文件或块可以分配。 </p>
+	 </li>
+ </ul>
+ <p>
+	有一些命令来管理配额： </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 129px;">
+				 <span style="text-align: justify;">命令 </span></th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 409px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				quota </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Displays disk usage and ______ for a user of _____. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				edquota </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This is a quota ______. Users or Groups quota ___ be edited using this _______. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				quotacheck </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Scan a filesystem for ____ usage, create, check and ______ quota files </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				setquota </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This is also a _______ line quota editor. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				quotaon </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This announces to the ______ that disk quotas should __ enabled on one or ____ filesystems. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				quotaoff </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This announces to the ______ that disk quotas should __ disabled off one or ____ filesystems. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				repquota </td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				This prints a summary __ the disc usage and ______ for the specified file _______ </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	您可以使用&nbsp; <a href="http://www.yiibai.com/unix/unix-manpage-help.html">联机帮助帮助 </a>&nbsp;提到的每个命令的语法检查完成。 </p>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/Unix/" target="_blank">Unix </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/文件/" target="_blank">文件 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/系统/" target="_blank">系统 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/基础/" target="_blank">基础 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/文件/" target="_blank">文件 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/系统/" target="_blank">系统 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/是/" target="_blank">是 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/一个/" target="_blank">一个 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/分区/" target="_blank">分区 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag//" target="_blank"></a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>Unix 文件系统基础 </b><br />
+									本文地址： <a href="unix-file-system.html">http://www.yiibai.com/unix/unix-file-system.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='unix-regular-expressions.html' class='btn' title='Unix 正则表达式SED' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-user-administration.html' class='btn btn-default' style='float:right;' title='UNIX 用户管理'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1477" data-title="Unix 文件系统基础" data-url="http://www.yiibai.com/unix/unix-file-system.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>ript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

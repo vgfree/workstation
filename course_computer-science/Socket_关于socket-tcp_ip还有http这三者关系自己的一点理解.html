@@ -1,0 +1,454 @@
+<!doctype html>
+<html>
+<head lang="zh-cn">
+    <meta charset="utf-8">
+    <title>关于socket、tcp/ip还有http这三者关系，自己的一点理解，也不知道正确否</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="description" content="问题起源是我对fsockopen函数的使用，看该函数的描述内容：初始化一个套接字连接到指定主机。而这个函数支持很多种Socket Transports （套接字传输器），通过stream_get_transports()查看我自己的测试环境支持的类型有：array (  0 => 'tcp',  1 => 'udp',  2 => 'unix',  3 => 'udg',  4 => 'ssl',..."/>
+    <meta name="keywords" content="计算机基础,北剅沟,周梦康" />
+    <link rel="shortcut icon" href="https://static.mengkang.net/favicon.ico">
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/box.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/public.2.0.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+    <script type="text/javascript" src="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script src="https://static.mengkang.net/view/js/jquery-1.11.3.min.js"></script>
+    <script src="https://static.mengkang.net/view/js/mk.js"></script>
+    <script src="https://static.mengkang.net/view/js/box.js"></script>
+    <script type="text/javascript">
+        var SITE_URL = 'https://mengkang.net/index.php';
+    </script>
+</head>
+<body>
+<header class="header">
+    <div class="header-logo">
+        <div class="site-title">Mengkang's land</div>
+        <div class="site-desc smoothing">coding and recording</div>
+    </div>
+    <div class="header-menu">
+        <ul id="nav">
+            <li><a href="notebook.html" title="学习">学习</a></li><li><a href="tips.html" title="碎片">碎片</a></li><li><a href="playground.html" title="生活">生活</a></li><li><a target="_blank" href="about.me" title="博主">博主</a></li>        </ul>
+        <div class="phone-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+    </div>
+
+</header>
+<div id="content" class="content">
+    <style>
+        #blog-content blockquote p{
+            text-indent:15px;
+        }
+        #blog-content h3,h4{
+            text-indent:28px;
+        }
+        #blog-content p{
+            text-indent: 2em;
+        }
+        .blog-content h3{
+            margin: 10px 0;
+        }
+        .blog-content h2{
+            margin: 8px 0 18px 0;
+        }
+    </style>
+<div class="blog-padding">
+    <div id="blog">
+        <div class="blog-title">
+            <h1><a href="https://mengkang.net/311.html">关于socket、tcp/ip还有http这三者关系，自己的一点理解，也不知道正确否</a></h1>
+        </div>
+        <div class="blog-meta smoothing">
+            <span class="post-time"><a href="about.me">周梦康</a> 发表于 2014-08-10</span>
+            <span class="post-category">
+                分类于 <a href="notebook.html" title="学习">学习</a>            </span>
+            <span class="post-comments-count">
+                <a href="">1532 次浏览</a>
+            </span>
+                        <span class="blog-tag">
+                标签 :
+                <a href="/tag-45.html" target="_blank">计算机基础</a>            </span>
+                    </div>
+        <div class="split-line"></div>
+        <div id="blog-content" class="blog-content smoothing">
+            <p>
+	问题起源是我对<code class="markdownTags">fsockopen</code>函数的使用，看该函数的描述内容：初始化一个套接字连接到指定主机。
+</p>
+<p>
+	而这个函数支持很多种&nbsp;Socket Transports （套接字传输器），通过<code class="markdownTags">stream_get_transports()</code>查看我自己的测试环境支持的类型有：
+</p>
+<pre class="prettyprint linenums lang-php">array (
+  0 =&gt; 'tcp',
+  1 =&gt; 'udp',
+  2 =&gt; 'unix',
+  3 =&gt; 'udg',
+  4 =&gt; 'ssl',
+  5 =&gt; 'sslv3',
+  6 =&gt; 'sslv2',
+  7 =&gt; 'tls'
+)</pre>
+<p>
+	以上是 PHP 内置用于基于流的套接字函数例如 <code class="markdownTags">fsockopen()</code> 和 <code class="markdownTags">stream_socket_client()</code> 的各种 URL 风格的套接字传输器。
+</p>
+<p>
+	<strong><span style="color:#000000;">但是这些传输器不适用于 <code class="markdownTags">Sockets</code> 扩展库。</span></strong><strong><span style="color:#000000;">（</span></strong><strong><span style="color:#000000;">http://php.net/manual/zh/transports.php</span></strong><strong><span style="color:#000000;">）（why？？？？）</span></strong> 
+</p>
+<p>
+	虽然<span><code class="markdownTags">fsockopen</code>支持这么多种类型的传输器，</span>我注意到最多的还是用来使用来访问一个网络<code class="markdownTags">url</code>地址，不过我们需要自己手动去拼装<code class="markdownTags">HTTP</code>协议的所有信息。例如手册的官方示例：
+</p>
+<pre class="prettyprint linenums lang-php">$fp = fsockopen("www.example.com", 80, $errno, $errstr, 30);
+if (!$fp) {
+    echo "$errstr ($errno)&lt;br /&gt;\n";
+} else {
+    $out = "GET / HTTP/1.1\r\n";
+    $out .= "Host: www.example.com\r\n";
+    $out .= "Connection: Close\r\n\r\n";
+    fwrite($fp, $out);
+    while (!feof($fp)) {
+        echo fgets($fp, 128);
+    }
+    fclose($fp);
+}</pre>
+<p>
+	<strong><span style="color:#E53333;">这个时候我就不明白了，怎么又是<code class="markdownTags">socket</code>又是<code class="markdownTags">url</code>的，<code class="markdownTags">url</code>不是<code class="markdownTags">http</code>协议的基础上的东西么，怎么还可以通过<code class="markdownTags">socket</code>来实现么？</span></strong><span style="line-height:1.5;color:#E53333;"><strong></strong></span> 
+</p>
+<p>
+	网上查了些资料也问了几个老师，记录下我现在的认识：
+</p>
+<p>
+	有一个定义叫“Socket 编程接口”，还有一个定义叫“socket”，似乎二者的内容不一样。
+</p>
+<blockquote>
+	<p>
+		TCP/IP只是一个协议栈，就像操作系统的运行机制一样，必须要具体实现，同时还要提供对外的操作接口。就像操作系统会提供标准的编程接口，比如Win32编程接口一样，TCP/IP也必须对外提供编程接口，<strong><span style="color:#E53333;">这就是</span></strong><strong><span style="color:#E53333;">Socket编程接口</span></strong>。
+	</p>
+	<p>
+		Socket的出现只是可以更方便的使用TCP/IP协议栈而已，其对TCP/IP进行了抽象，形成了几个最基本的函数接口。比如create，listen，accept，connect，read和write等等。Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。
+	</p>
+	<p>
+		在设计模式中，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。
+	</p>
+</blockquote>
+<blockquote>
+	<p>
+		套接字（socket）是通信的基石，是支持TCP/IP协议的网络通信的基本操作单元。它是网络通信过程中端点的抽象表示，包含进行网络通信必须的五种信息：连接使用的协议，本地主机的IP地址，本地进程的协议端口，远地主机的IP地址，远地进程的协议端口。<span>不管是从七层网络模型还是<code class="markdownTags">TCP/IP</code>四层模型，传输层（TCP，UDP）和网络层（IP）都是一样的，所以会说套接字（socket）是通信的基本操作单元。</span> 
+	</p>
+</blockquote>
+<blockquote>
+	<p>
+		<code class="markdownTags">HTTP</code>协议是建立在TCP协议之上的，属于应用层。HTTP连接最显著的特点是客户端发送的每次请求都需要服务器回送响应，在请求结束后，会主动释放连接。从建立连接到关闭连接的过程称为“一次连接”。
+	</p>
+	<p>
+		1）在HTTP 1.0中，客户端的每次请求都要求建立一次单独的连接，在处理完本次请求后，就自动释放连接。
+	</p>
+	<p>
+		2）在HTTP 1.1中则可以在一次连接中处理多个请求，并且多个请求可以重叠进行，不需要等待一个请求结束后再发送下一个请求。（对此，我们现在的很多前端优化工作可以从这里入手，同一个网站的资源分配到多个子域名，这样可以并行请求资源，在客户端，服务器端带宽都足够的情况下，可以减短页面加载速度，而在一次连接中一次并行多少个请求，不同的浏览器则各不相同。）
+	</p>
+</blockquote>
+
+<h3>
+	Socket类型
+</h3>
+<h4>
+	流式套接字（SOCK_STREAM）
+</h4>
+提供了一个面向连接、可靠的数据传输服务，数据无差错、无重复的发送且按发送顺序接收（也许这就是咱们常常说的“流”的特性吧，顺序发送，顺序接受，比如发送的是“1,2,3,4"，收到的内容也将是“1,2,3,4"，而不是“3,2,1,4”或者其他顺序的内容）。内置流量控制，避免数据流淹没慢的接受方。数据被看作是字节流，无长度限制。<br />
+<h4>
+	数据报套接字（SOCK_DGRAM）
+</h4>
+提供无连接服务。数据包以独立数据包的形式被发送，不提供无差错保证，数据可能丢失或重复，顺序发送，可能乱序接受。<br />
+<h4>
+	原始套接字（SOCK_RAW）
+</h4>
+可以对较低层次协议，如IP，ICMP直接访问。
+
+<p>
+	<code class="markdownTags">Scoket</code>所在位置如图所示：
+</p>
+<p>
+	<img src="/upload/image/2014/0811/20140811103655_15418.png" width="612" height="390" alt="关于socket、tcp/ip还有http这三者关系，自己的一点理解，也不知道正确否" > 
+</p>
+<p>
+	综上所述：就可以使用<code class="markdownTags">Socket 流套接字接口</code>来直接操作<code class="markdownTags">TCP</code>数据包的内容来实现<code class="markdownTags">HTTP</code>的内容，而在最开始提到的<code class="markdownTags">fscokopen</code>则是对<code class="markdownTags">Socket</code>API的进一步封装。
+</p>        </div>
+        <div class="single-post-share-list">
+    <span class="mobile-hide">分享到</span>
+    <div class="share-group">
+<!--        <a id="weixin-share" class="weixin mobile-hide" href="javascript:void(0)" ref="nofollow" target="_blank">-->
+<!--            <i class="icon-weixin"></i>-->
+<!--            <div class="panel-weixin">-->
+<!--                <section class="weixin-section">-->
+<!--                    <img src="http://s.jiathis.com/qrcode.php?url=--><!--?via=wechat_qr">-->
+<!--                </section>-->
+<!--                <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>-->
+<!--            </div>-->
+<!--        </a>-->
+        <a class="weibo" href="http://v.t.sina.com.cn/share/share.php?url=https://mengkang.net/311.html&title=关于socket、tcp/ip还有http这三者关系，自己的一点理解，也不知道正确否" ref="nofollow" target="_blank">
+            <i class="icon-weibo"></i>
+        </a>
+        <a class="qq external mobile-hide" href="http://connect.qq.com/widget/shareqq/index.html?url=https://mengkang.net/311.html&title=关于socket、tcp/ip还有http这三者关系，自己的一点理解，也不知道正确否&source=shareqq&desc=刚看到这篇文章不错，推荐给你看看～" ref="nofollow" target="_blank">
+            <i class="icon-qq"></i>
+        </a>
+        <a class="douban external mobile-hide" href="http://share.baidu.com/s?type=text&searchPic=0&sign=on&to=douban&url=https://mengkang.net/311.html&title=关于socket、tcp/ip还有http这三者关系，自己的一点理解，也不知道正确否" ref="nofollow" target="_blank">
+            <i class="icon-douban"></i>
+        </a>
+    </div>
+</div>    </div>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+        $(function(){
+            var windowWidth = $(window).width();
+            var minWidth = windowWidth - 50;
+            //图片放大效果
+            $(".blog-content img").each(function(){
+                //获取图片的真实地址
+                var imgSrc;
+                if($(this).attr('data-original')){
+                    imgSrc = $(this).attr('data-original');
+                }else{
+                    imgSrc = $(this).attr('src');
+                }
+
+                // 保证在手机显示完整的图片
+                if (windowWidth < 1024) {
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px").wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+ minWidth +'px"></a>');
+                }else{
+                    $(this).wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+$(this).attr('width')+'px"></a>');
+
+                }
+
+            });
+            //图片处理
+            $('.image-popup-no-margins').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                fixedContentPos: true,
+                mainClass: 'mfp-no-margins mfp-with-zoom',
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300
+                }
+            });
+            $(".blog-content").on("magnificPopup",".image-popup-no-margins");
+            //懒加载
+            $(".blog-content img").lazyload({"effect":"fadeIn"});
+
+            if(windowWidth < 1024){
+                $(".speech-zmk-desc").hide();
+                $("video").each(function(){
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px");
+                });
+            }
+        })
+    </script>
+    <div id="comment">
+    <h2>评论列表</h2>
+    <div id="commentList">
+        <div class="comment-list clearfix">
+            <a name="comment_text"></a>
+            <div class="comment-list-left">
+                <img src="/view/images/avatar/1.jpg" alt=""/>
+            </div>
+            <div class="comment-list-right">
+                <form name="comment">
+                    <input type="hidden" name="blogid" value="311"/>
+                    <input type="hidden" name="replyId" value="0"/>
+                    <div class="comment-input-div">
+                        <input type="text" name="username" placeholder="昵称（可不填写）" class="comment-input" />
+                        <input type="email" name="email" placeholder="邮箱（可不填写）" class="comment-input" />
+                        <span>如果填写邮箱了，当我我回复您的时候会给您邮箱发送消息提醒，方便交流</span>
+                    </div>
+                    <div>
+                        <textarea name="comment" placeholder="加入讨论..." class="comment-textarea"></textarea>
+                    </div>
+                    <div class="comment-input-div">
+                        <a href="javascript:void(0)" id="post_comment" issending="false">提交</a>
+                        <span>可以使用`xxxx`来插入简短的代码碎片</span>
+                    </div>
+                                    </form>
+            </div>
+        </div>
+            </div>
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        //将除了本页锚点链接之外所有的a链接都改为在新窗口打开
+        $(".content").find('a').each(function(){
+            if(/^#/.test($(this).attr('href'))){
+                $(this).attr({'target':'_self'});
+            }else{
+                $(this).attr({'target':'_blank'});
+            }
+        });
+        $(".delreply").click(function(){
+            var _e = $(this);
+            var id = $(this).attr('targetId');
+            ui.confirm('确认删除该留言？',function(){
+                var url = U('Comment/del');
+                $.post(url,{id:id},function(data){
+                    if(parseInt(data.flag)==1){
+                        _e.parents('.comment-list').remove();
+                        ui.success('删除成功');
+                    }else{
+                        ui.error('删除失败');
+                    }
+                },'json')
+            },function(){
+                return false;
+            })
+        });
+        $(".reply_the_comment").click(function(){
+            $("input[name='replyId']").val($(this).attr('targetId'));
+            var pre_content = '回复'+$(this).parent().parent().find(".username").text()+': ';
+            var callback = function(pre_content){
+                $("textarea[name='comment']").css('background','#90DCFF').focus().val(pre_content);
+                setTimeout(function(){
+                    $("textarea[name='comment']").css('background','#FFF');
+                    setTimeout(function(){
+                        $("textarea[name='comment']").css('background','#90DCFF');
+                        setTimeout(function(){
+                            $("textarea[name='comment']").css('background','#FFF');
+                        },300)
+                    },300)
+                },300);
+            };
+
+            var scrollHeight = $('a[name="comment_text"]').offset().top;
+            if($(document).scrollTop() + $(window).height() + 100 <= $(document).height()){
+                $("html,body").animate({scrollTop:scrollHeight},1000,function(){
+                    //使得回复框颜色闪一闪
+                    callback(pre_content);
+                });
+            }else{
+                callback(pre_content);
+            }
+        });
+        $("textarea[name='comment']").focus(function(){
+            $(this).css({"font-size":"16px","line-height":"22px"});
+            $(".comment-input-div").fadeIn();
+        });
+        $("textarea[name='comment'],input").focus(function(){
+            //先自动填下留言表单，为留言做准备
+            if(!$("input[name='email']").val()){
+                var email = getCookie('email');
+                if(email){
+                    $("input[name='email']").val(email);
+                }
+            }
+            if(!$("input[name='username']").val()){
+                var username = getCookie('username');
+                if(username){
+                    $("input[name='username']").val(username);
+                }
+            }
+        });
+        $("textarea[name='comment']").keydown(function(e){
+            if(e.keyCode==13){
+                $(this).css("height",parseInt($(this).css("height")) + parseInt($(this).css("line-height")));
+            }
+        });
+        $("#post_comment").click(function(){
+            post_comment();
+        });
+        //执行评论
+        var post_comment_flag = true;
+        var post_comment = function(){
+            if(!post_comment_flag){
+                ui.error('...稍等一会，上一条还没发送过去哦');
+                return false;
+            }
+            post_comment_flag = false;
+            var post_comment = $("textarea[name='comment']").val();
+            if(post_comment.length < 1){
+                ui.error('...说点什么吧');
+                return false;
+            }
+            var post_email = $("input[name='email']").val();
+            if(!post_email.match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)){
+                ui.error('邮箱格式不正确');
+                return false;
+            }
+
+            var post_username = $("input[name='username']").val();
+            //第一次留言，则把用户的邮箱、称呼、博客地址存到客户端cookie里方便下次调用，而不用浏览的人手动输入了
+            if(!getCookie('username') || getCookie('username') !=  post_username){
+                setCookie('username', post_username);
+            }
+            if(!getCookie('email') || getCookie('email') != post_email){
+                setCookie('email',post_email);
+            }
+
+            $.post(U('Comment/doComment'),{
+                replyId:$("input[name='replyId']").val(),
+                blogid: $("input[name='blogid']").val(),
+                content: post_comment,
+                email: post_email,
+                name:  post_username
+            },function(data){
+                post_comment_flag = true;
+                if(parseInt(data.flag)>0){
+                    ui.success(data.info);
+                    $("#commentList").append('<div class="comment-list clearfix"><div class="comment-list-left"><img src="http://static.mengkang.net/view/images/avatar/1.jpg" alt=""/></div><div class="comment-list-right"><span class="username">'+$("input[name='username']").val()+'</span><span class="time">刚刚</span><p>'+data.data+'</p></div></div>');
+                    $("textarea[name='comment']").val('');
+                    ui.success(data.info);
+                    $("html,body").animate({scrollTop:$("#footer").offset().top},1000);
+                }else{
+                }
+            })
+        }
+    });
+
+</script></div>
+            <link rel="stylesheet" href="https://static.mengkang.net/editor/plugins/code/prettify.css" />
+        <script charset="utf-8" src="https://static.mengkang.net/editor/plugins/code/prettify.js"></script>
+        <script>
+            $(function(){ prettyPrint(); });
+        </script>
+    </div>
+<footer id="footer">
+    <div class="login" id="login">
+        <div class="popbackground"></div>
+        <div class="popbox loginBox" id="loginBox">
+            <div class="innerpopbox">
+                <div class="title">
+                    <div style="font-weight: 800;color: #2e9fff;text-align: center;">登堂入室 请输入密码</div>
+                </div>
+                <div class="password">
+                    <input type="password" name="password"/>
+                    <div><a href="javascript:void(0)" class="loginActive">进入</a><a href="javascript:void(0)" class="closeLoginBox">返回</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright smoothing">
+        <small>
+            <a href="about.me">关于博主 </a>
+<!--            <a class="danciben-link" href="/danciben.html">我的单词本 </a>-->
+            <a href="javascript:void(0)" name="login">登堂入室</a>            © 周梦康 2012 - 2016 京ICP备14049089号-1
+            <span style="display:none">
+                <script type="text/javascript">
+                    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd2adf0c061d575a2921e4a7c41fe9cd6' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+            </span>
+        </small>
+    </div>
+</footer>
+</body>
+</html>

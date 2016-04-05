@@ -1,0 +1,861 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>lua学习项目笔记 - weixliu - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=8F6jO9aWZhOryqKsIFGUkSbXpyPVKDwgWwvpie3eJis1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/coffee/bundle-coffee.css?v=H7P3zU3_M529NtLVh9kKULJaZLDGv9Qz_L_VdgyN1P41"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/weixliu/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/weixliu/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/weixliu/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'weixliu', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=RfhNKlooq8UCPGza5SEnRApkENocpZBAyea43YNIjNw1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/weixliu/"><img id="blogLogo" src="/Skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/weixliu/">weixliu</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<!--done-->
+			<ul id="navList">
+				<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+				<li><a id="MyLinks1_IngLink" class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+				<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/weixliu/">首页</a></li>
+				<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+				<li><a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/weixliu">联系</a></li>
+				<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+				<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/weixliu/rss">订阅</a>
+				<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/weixliu/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a></li>
+			</ul>
+
+
+			<div class="blogStats">
+				
+				
+<!--done-->
+随笔- 91&nbsp;
+文章- 0&nbsp;
+评论- 112&nbsp;
+
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/weixliu/p/4185001.html">lua学习项目笔记</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>&nbsp; &nbsp; 这几天草草的浏览了一下电子版的《lua程序设计》，没有懂的地方就自动忽略了，挑拣了一些可以理解的部分一直在推进。推进至后面的时候已经浑浑噩噩的了，有种想看完这本书的强迫症的感觉。推进CAPI部分的时候发现难度一下子提升了，有种难以理解的感觉，而且这本书没有相对应的练习，只是看书没有进行相应的实践，确实难度比较大。这里先暂缓推进这本书的进程，决定拿一下小的项目来试试写lua代码的感觉，写完这个项目在回去体会lua程序设计这本书，这样可能效果会更好一些。这里我会列出项目描述，而且会记录完成这个项目的过程，当然，项目是一个非常简单，而且已经存在优秀的开源库的东西，但是这里先检查一下自己是否能够完成，完成之后可以参阅一下相关开源库的实现，对比之中应该会有所提高。</p>
+<p><strong>项目描述：</strong></p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:cpp;gutter:true;">基于lua 5.2.3 封装实现一个可供其他lua脚本使用的功能模块，具体要求为:
+    1、实现一个标准的lua功能模块
+    2、封装json格式的数据与lua value间的互相转换功能
+    3、遵循json格式定义确保相同的数据源彼此转换后数据仍然一致
+    4、只允许使用lua内建基础库，不允许使用任何第三方开发库
+    5、有合理的注释和单元测试代码
+    6、独立完成此作业，对任何代码抄袭现象零容忍
+
+基本要求：
+提交lua代码文件名为json.lua，测试代码和文档（如果有）可以打一个包作为第二个附件提交
+json.lua中需要实现以下接口：
+	function Marshal(json_str) return lua_val end
+	function Unmarshal(lua_val) return "json_str" end
+
+对基本要求的说明：
+	1、lua版本要求5.2.3	
+	2、lua的空table统一转化成json的空object，而不是空array
+	3、test case中的json_str符合ECMA-404 json格式标准
+	4、Unmarshal传入的lua_val如果是table的话，不会有循环嵌套
+	5、table如果是以array方式使用，转换如下：{[2]=1,[4]=1} == {nil,1,nil,1} &lt;-&gt; [null,1,null,1]
+	6、table中有string key时，统一处理成hash table的格式，如：{1,2;a=3} -&gt; {"1":1,"2":2","a":3}
+	7、不会出现类似 {1,2;["2"]="same key 2 in json"} 造成转换有歧义的table
+	8、Unicode转成lua字符串时，按lua的字符串格式 \xXX\xYY...
+	9、能成功转换的话，只需要return单个值
+
+进阶要求：
+对test case的错误进行检查，返回相应错误
+	function Marshal(json_str) return nil, "error_type" end
+
+基本测试方法：
+local json = require 'json'
+
+local test_result1 = json.Marshal('{"a":1}')
+local test_result2 = json.Unmarshal{ b="cd" }
+
+-- validate test_result1 &amp; test_result2
+</pre>
+</div>
+<p>　</p>
+<p>项目解决过程：</p>
+<p><strong>一.模块</strong></p>
+<p>&nbsp; &nbsp; 首先这个问题是实现一个模块，在lua 5.1版开始，lua已经为模块和包定义了一系列的规则，我们需要使用table，函数，元表和环境来实现这些规则。其中lua提供了两个重要的函数实现这些规则，分别是require（使用模块函数）和module（创建模块函数）。</p>
+<p>&nbsp; &nbsp; require可以加载模块，这里加载到的为一个table，table内容包含该模块提供的接口和成员变量；规则还定义一个规范的模块应该可以使require返回该模块的table。require使用方法为：</p>
+<p>require "&lt;模块名&gt;"。其实这里require的功能感觉和dofile比较像，但是还是存在区别的，require详细的内容我目前也不是很理解，这里先略去。</p>
+<p>&nbsp; &nbsp; 完成了加载模块的解释，接下来就是自己实现模块需要遵守什么样的规则呢？模块的主要功能就是定义一个table，然后定义这个table需要导出的成员接口&amp;成员变量，然后返回这个table即完成了这个模块的实现。module函数完成了很多简化模块编写的功能；module函数的更加详细部分以及模块编写的公共部分演化这里略去。</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">local modname = ...
+local M = {}
+_G[modname] = M
+package.loaded[modname] = M
+
+&lt;setup for external access&gt;
+
+setfenv(1,M)
+</pre>
+</div>
+<p>&nbsp; &nbsp; 关于子模块和包的部分这里也利用不到，所以这部分知识也略去，关于lua程序设计一书中这部分讲述也稍有复杂，其中印刷题中关于'-'和'_'区分不好，看起来比较吃力，不过关于require和module的部分讲解的非常不错。</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp;所以这部分的代码实现如下：</p>
+<p>&nbsp; &nbsp;</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:cpp;gutter:true;">module(...,package.seeall)
+
+function Marshal(json_str)
+    print(json_str)
+end
+
+function Unmarshal(lua_content)
+    print(lua_content)
+end
+</pre>
+</div>
+<p>　　</p>
+<p>这里把函数的内容简化为只进行参数的输出，后面继续分析并实现函数的功能。　　</p>
+<p>这部分看起来非常的容易，不过还是要明白其中的道理。</p>
+<p>&nbsp;</p>
+<p><strong>二.JSON语法简析</strong></p>
+<p>json的语法非常的简单，数据在 名称/值 对中，数据由逗号分隔，花括号保存对象，方括号保存数组；</p>
+<p>json的值类型包含：数字（整数或者浮点数），字符串（双引号），逻辑值（true或者false），数组（方括号中），对象（花括号中），null</p>
+<p>所以json语言还是比较简单的。</p>
+<p>&nbsp;</p>
+<p>谈到这种解析的工作，之前接触过（浏览过）一个自己实现的HTMLParser实现，使用的方法是自动机的策略进行实现的。这种有解析思路的项目均可以利用自动机的思想来实现，自动机的课程很早之前学习的了，此时发现智商好低，学习的内容基本都已经完全还给老师了。不过针对JSON的解析可以使用自动机的思路。这里我搬运一下json官网上的自动机图解。</p>
+<p>首先json数据是由对象 or 数组组成的基本结构;</p>
+<p><img src="http://images.cnitblog.com/blog/342726/201412/291105147162809.jpg" alt="" /></p>
+<p>json的对象由大括号包含的key:value组成，key:value之间由逗号隔开，其中key为string的类型，string类型具体定义下面给出。value的具体类型下面给出；</p>
+<p><img src="http://images.cnitblog.com/blog/342726/201412/291105266222771.jpg" alt="" /></p>
+<p>json的数组由中括号包含的value组成，value之间由逗号隔开，其中value的具体类型下面给出；</p>
+<p><img src="http://images.cnitblog.com/blog/342726/201412/291105417637444.jpg" alt="" /></p>
+<p>value的具体类型由string，number，object，array和一些其他json常量组成；</p>
+<p><img src="http://images.cnitblog.com/blog/342726/201412/291105496229810.jpg" alt="" /></p>
+<p>string是由双引号包含的一个字符串，其中包含unicode编码和一些转义字符，其中unicode字符在lua中的存储应该也是一个比较棘手的问题；</p>
+<p>json中的转义字符也是一个很bug的问题，lua字符串中也存在转义字符。</p>
+<p>而且lua中字符串的表示可以利用单引号，双引号和双中括号，其中单双引号的功能比较类似，存在转义符号。然而双中括号会忽略转义符号，所以这个地方编写程序的时候应该特别注意。</p>
+<p>&nbsp;</p>
+<p>所以lua中定义的json字符串的转义符号要转换为lua中的转义字符串，根据上面自动机的标示有8个转义字符和一个unicode转义字符。lua的json字符串中的符号应该为"\\",\\/,\\\\,\\b,\\f,\\n,\\r,\\t,\\u...."这些了，分别应该转为lua中的"",/,\,\b,\f,\n,\r,\t"。</p>
+<p>当然lua中内部的转义字符转换也应该逆转换过来；</p>
+<p>所以会有两个dict进行转换； 关于unicode码的转换后面进行解释；</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">json_to_lua = {
+['\\"] = '"',
+['\\/'] = '/',
+['\\\\'] = '\\'
+["\\t"] = "\t",
+["\\f"] = "\f",
+["\\r"] = "\r",
+["\\n"] = "\n",
+["\\b"] = "\b"
+}
+lua_json = {
+['"'] = '\\"',
+['\\'] = '\\\\',
+['/'] = '\\/',
+['\b'] = '\\b',
+['\f'] = '\\f',
+['\n'] = '\\n',
+['\r'] = '\\r',
+['\t'] = '\\t'
+}</pre>
+</div>
+<p><img src="http://images.cnitblog.com/blog/342726/201412/291105554032078.jpg" alt="" /></p>
+<p>数字的自动机转移图，其中数字包含正负类型，浮点数，整型，科学技术法，所以合法的数字类型的状态机比较复杂，但是lua中有一个可以偷懒的地方在于tonumber函数的使用，可以将string转换为number，如果转换不合法，则返回nil；</p>
+<p><strong>三.lua编写状态机的一些知识</strong></p>
+<p>&nbsp;由于上面已经提及了自动机来实现json的解析，然而根据lua程序设计，函数尾调用一节中得知，在lua中&rdquo;尾调用&ldquo;的一大应用就是编写&rdquo;状态机&ldquo;。</p>
+<p>&rdquo;这种程序通常一个函数就是一个状态，改变状态利用&rsquo;goto&lsquo;或尾调用到另外一个特定的函数。尾调用就是一个函数的return的最后语句是另外一个函数，此时针对此函数的栈信息不进行保存，所以最后一个函数调用相当于goto语句的调用，所以如此可以进行无限的调用也不会产生栈溢出的错误。尾调用详细信息这里略去，只是简单介绍一下。</p>
+<p>另外lua中的字符串遍历不是很方便，lua中的string是不变量，也没有提供下标访问的接口，所以只能利用string提供的sub函数去一个字符一个字符的遍历；</p>
+<p><strong>四.具体代码的实现</strong></p>
+<p>（1）json字符串的解析部分</p>
+<p><strong>a.&nbsp;</strong>Marsha1解析json字符串的接口，从第一个个字符开始遍历json字符串，position设置为1。</p>
+<p><strong>b.&nbsp;</strong>skipBlank函数跳过空格，tab，换行等空白字符；</p>
+<p><strong>c.&nbsp;</strong>找到第一个有效字符，&lsquo;{&rsquo;或者&lsquo;[&rsquo;，分别继续调用decodeObject和decodeArray函数返回相应的内部lua table即可。如果不是这两个符号，则此json字符串存在格式错误。</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--two interface encode json or decode json
+function M.Marshal(json_str)
+
+    local nowTime = os.time()
+
+    --json must be json array or object
+	local position = 1
+	position = M.skipBlank(json_str,position)
+	--null json string case
+	local json_len = string.len(json_str)
+	if position &gt; json_len then
+	    return nil,[[null json string]]
+	end
+	--change to json object or json array
+	--otherwise,invalid
+	local c = string.sub(json_str,position,position)
+	local res
+	if c == [[{]] then
+	    res = M.decodeObject(json_str,position)
+	elseif c == [[[]] then
+	    res = M.decodeArray(json_str,position)
+	else
+	    res = nil,[[error that json no an object or array,invalid]]
+	end
+
+	M.MarshalTime = M.MarshalTime + os.time() - nowTime
+
+	return res
+end
+</pre>
+</div>
+<p>　　</p>
+<p>接下来就是decodeObject，decodeArray，decodeNumber，decodeString，decodeOther等，分别对应于json中的object，array，number，string，true，false，null等变量；和skipBlank函数同样，这些函数具有类似的输入和输出参数；</p>
+<p>关于这些函数的输入，因为整个过程是遍历字符串，所以字符串和当前遍历的位置信息比较重要，所以这些函数的传入参数为json字符串和当前字符的位置信息；</p>
+<p>这些函数的输出函数分别为解析到的lua内部的数据结构和下一个字符的位置信息；</p>
+<p>（这里实现的时候同样可以把json字符串和指针的位置信息设置为两个全局变量，思路相同）</p>
+<p>了解完这些函数的思想之后接下来就容易理解这些函数的实现代码。</p>
+<p><strong>跳过空白字符</strong></p>
+<p>其中在代码debug的时候遇到了</p>
+<p>malformed pattern （missing ']'),error的错误，</p>
+<p>这里因为string.find函数把第二个参数中的'['符号判断为正则表达式符号了，所以这里就产生错误，所以这里针对'['符号进行一下特殊处理；</p>
+<p>其他方面就只检测当前字符是不是自定义的blankcharacter中的一个即可</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--skip the blank character
+--blank character include space,\n \r \t
+--params
+--[in] json_str : json string
+--[in] position : current position of the string
+--[out] the next of end position of the blank character
+function skipBlank(json_str,position)
+    local blankcharacter = ' \t\r\n'
+	local json_len = string.len(json_str)
+	while position &lt;= json_len do
+	    local c = string.sub(json_str,position,position)
+		--malformed pattern (missing ']'),error
+		if c == "[" then
+		    return position
+		elseif string.find(blankcharacter,c) then
+		    position = position + 1
+		else
+			break
+		end
+	end
+	return position
+end
+</pre>
+</div>
+<p><strong>解析json object</strong></p>
+<p>函数看似比较复杂，其实逻辑比较清晰；</p>
+<p>json object开始于 '{'，结束于 '}'，由key:value对组成，由 ',' 分隔；</p>
+<p>不断的读取key ， ':' ， value 然后填入相应的lua table，返回lua table即可；</p>
+<p>其中利用计数的方法保证 ',' 的语法正确；</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--decode from json object
+--begin with '{'
+--params
+--[in] json_str : json string
+--[in] position : current position of the string
+--[out] lua table ,  the next of end the end position of the string
+function decodeObject(json_str,position)
+    local lua_object = {}
+	local key,subobject,subarray,str,number,othervalue
+	local c = string.sub(json_str,position,position)
+	--check case
+	if c ~= [[{]] then
+	   base.print [[error that object not start with { ]]
+	   return nil,[[error in decodeObject begin]]
+	end
+	position = position + 1
+	position = skipBlank(json_str,position)
+	c = string.sub(json_str,position,position)
+	if c == [[}]] then
+	    position = position + 1
+		return lua_object,position
+	end
+	--then json array including {key:value,key:value,key:value,...}
+	--key --&gt; string
+	--value including
+	--string
+	--number
+	--object
+	--array
+	--true,false,nil
+	----------------------------------------------------------------
+	local precount = -1
+	local curcount = 0
+    local json_len = string.len(json_str)
+	while position &lt;= json_len do
+	    position = skipBlank(json_str,position)
+		c = string.sub(json_str,position,position)
+		--key:value
+		if c == [[}]] then
+		    --object over
+			if precount &gt;= curcount then
+			    --,is adjace to ]
+				base.print "error that , is adjace to }"
+				return nil,"error that , is adjace to }"
+			end
+			break
+		elseif c == [[,]] then
+		    --next key:value or over
+			position = position + 1
+			precount = precount + 1
+			if 0 == curcount then
+			    --,is the first,error
+				base.print [[error that , in key:value is the first]]
+				return nil,[[error that , in key:value is the first]]
+			end
+			if precount &gt;= curcount then
+			    --,is more than one
+				base.print [[error that , in key:value is more than one]]
+				return nil,[[error that , in key:value is more than one]]
+			end
+		elseif c == [["]] then
+		    --begin key:value
+		    key,position = decodeString(json_str,position)
+			--:
+			position = skipBlank(json_str,position)
+			c = string.sub(json_str,position,position)
+			if c ~= [[:]] then
+			    base.print [[error,that object not key:value format]]
+				return nil,[[error in decodeObject,format error]]
+			else
+			    position = position + 1
+			end
+			--begin value
+			position = skipBlank(json_str,position)
+			c = string.sub(json_str,position,position)
+			if c == '[' then
+			    subarray,position = decodeArray(json_str,position)
+				lua_object[key] = subarray
+			elseif c == '{' then
+			    subobject,position = decodeObject(json_str,position)
+				lua_object[key] = subobject
+			elseif c == [["]] then
+			    str,position = decodeString(json_str,position)
+				lua_object[key] = str
+			elseif string.find([[+-0123456789.e]],c) then
+			    number,position = decodeNumber(json_str,position)
+				lua_object[key] = number
+			else
+			    othervalue,position = decodeOther(json_str,position)
+				if othervalue then
+				    lua_object[key] = othervalue
+				end
+			end
+			if not lua_object[key] then
+			    base.print [[error in json object key:value --&gt; value,can't get value]]
+				return nil,[[error in decodeObject value]]
+			else
+			    curcount = curcount + 1
+			end
+			--end value
+		else
+		    base.print [[error json format]]
+			return nil,[[error json format,in decodeObject end]]
+		end
+	end
+	return lua_object,position + 1
+end
+</pre>
+</div>
+<p><strong>解析json array</strong></p>
+<p>json array的解析开始于 '[' 符号，结束于 ']' 符号，value值之间利用 ',' 隔开；</p>
+<p>创建一个lua table，针对value值利用 t[#t+1] = value插入新的值，新的值根据符号调用相应的decode方法即可，</p>
+<p>其中为了确保json语法错误被检测出来，利用计数的方法保证 ',' 语法的正确；</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--decode from json array
+--begin with '['
+--params
+--[in] json_str : json string
+--[in] position : current position of the string
+--[out] lua table ,  the next of end the end position of the string
+function decodeArray(json_str,position)
+    local lua_array = {}
+    local c = string.sub(json_str,position,position)
+	--check case
+	if c ~= [[[]] then
+	    base.print [[error that array not start with [ ]]
+		return nil,[[error in decodeArray begin]]
+	end
+	position = position + 1
+	position = skipBlank(json_str,position)
+	c = string.sub(json_str,position,position)
+	if c == ']' then
+	    position = position + 1
+		return lua_array,position
+	end
+	--then json array including [value,value,value...]
+	--value including
+	--string
+	--number
+	--object
+	--array
+	--true,false,nil
+	-------------------------------------------------------------------------
+	--about [,] or ["hello",] or [,"hello"] or ["hello",,"world"] check error
+	--using pre count &amp; cur count to find this
+	local precount = -1
+	local curcount = 0
+	local json_len = string.len(json_str)
+	while position &lt;= json_len do
+	    position = skipBlank(json_str,position)
+		c = string.sub(json_str,position,position)
+		if c == '[' then
+			subarray,position = decodeArray(json_str,position)
+			lua_array[#lua_array+1] = subarray
+			curcount = curcount + 1
+		elseif c == '{' then
+		    subobject,position = decodeObject(json_str,position)
+			lua_array[#lua_array+1] = subobject
+			curcount = curcount + 1
+		elseif c == [["]] then
+		    str,position = decodeString(json_str,position)
+			lua_array[#lua_array+1] = str
+			curcount = curcount + 1
+		elseif string.find([[+-0123456789.e]],c) then
+		    number,position = decodeNumber(json_str,position)
+			lua_array[#lua_array+1] = number
+			curcount = curcount + 1
+		elseif c == ']' then
+		    --there is some bugs,which is end with ,
+			if precount &gt;= curcount then
+			    --,is adjace to ]
+				base.print "error that , is adjace to ]"
+				return nil,"error that , is adjace to ]"
+			end
+			break
+		elseif c == ',' then
+		    --there is some bugs,which is begin with ,
+			position = position + 1
+			precount = precount + 1
+			if 0 == curcount then
+			    --,is the first,error
+				base.print [[error that , is the first]]
+				return nil,[[error that , is the first]]
+			end
+			if precount &gt;= curcount then
+			    --,is more than one
+				base.print [[error that , is more than one]]
+				return nil,[[error that , is more than one]]
+			end
+		else
+			othervalue,position = decodeOther(json_str,position)
+			lua_array[#lua_array+1] = othervalue
+			curcount = curcount + 1
+		end
+	end
+
+	if position &gt; json_len then
+	    base.print 'error that array not end with ]'
+		return nil,[[error in decodeArray end]]
+	end
+	c = string.sub(json_str,position,position)
+	if c ~= ']' then
+	    base.print 'error that array not end with ]'
+		return nil,[[error in decodeArray end]]
+	end
+	position = position + 1
+	return lua_array,position
+end　</pre>
+</div>
+<p><strong>解析json string</strong></p>
+<p>关于unicode的部分还未实现，还不是很了解这方面的知识；</p>
+<p>关于string的解析仅仅是从第一个双引号开始，找到最后一个双引号且不是[[\"]]，及转义的双引号，然后截取两个双引号之间的内容，得到字符串即可；</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--decode json string,include json key of key/value and the string value
+--begin with ' " '
+--params
+--[in] json_str : json string
+--[in] position : current position of the string
+--[out] lua string ,  the next of end the end position of the string
+function M.decodeString(json_str,position)
+
+    nowTime = os.time()
+
+	local endposition = position + 1
+	local json_len = string.len(json_str)
+	while endposition &lt;= json_len and ( [["]] ~= string.sub(json_str,endposition,endposition) or [[\]] == string.sub(json_str,endposition - 1,endposition - 1) ) do
+	    endposition = endposition + 1
+	end
+	local str = string.sub(json_str,position + 1,endposition - 1)
+
+	--process str
+
+    str = string.gsub(str,'\\u....',function (tstr)
+									    local a = string.sub(tstr,3,6)
+										local n = tonumber(a,16)
+										local x
+										if n &lt; 0x80 then
+											x = string.char(n % 0x80)
+										elseif n &lt; 0x800 then
+											-- [110x xxxx] [10xx xxxx]
+											x = string.char(0xC0 + (math.floor(n/64) % 0x20), 0x80 + (n % 0x40))
+										else
+											-- [1110 xxxx] [10xx xxxx] [10xx xxxx]
+											x = string.char(0xE0 + (math.floor(n/4096) % 0x10), 0x80 + (math.floor(n/64) % 0x40), 0x80 + (n % 0x40))
+										end
+										return x
+									end
+			   )
+	str = string.gsub(str,'\\.',escapeSequences)
+	return str,endposition + 1
+end
+</pre>
+</div>
+<p>当然这其中有些转义字符的处理，均利用string.gsub函数，针对相应字符如果table中包含，则进行替换，相关table和函数如下。</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">local ecapses = {
+    ['"'] = '\\"',
+	['\\'] = '\\\\',
+	['/'] = '\\/',
+	['\b'] = '\\b',
+	['\f'] = '\\f',
+    ['\n'] = '\\n',
+    ['\r'] = '\\r',
+    ['\t'] = '\\t'
+}
+function encodeString(s)
+    return string.gsub(s,'.',function(c) return ecapses[c] end)
+end
+
+local escapeSequences = {
+  ["\\t"] = "\t",
+  ["\\f"] = "\f",
+  ["\\r"] = "\r",
+  ["\\n"] = "\n",
+  ["\\b"] = "\b"
+}
+setmetatable(escapeSequences, {__index = function(t,k)
+  -- skip "\" aka strip escape
+  return string.sub(k,2)
+end})</pre>
+</div>
+<p><strong>解析json number</strong></p>
+<p>这里实现number的解析也比较偷懒，获取到连续的比较像number的字符串，利用lua提供的tonumber函数转换为number，失败返回nil</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--decode json number
+--the valid number of json,include float,int and so on
+--[in] json_str : json string
+--[in] position : current position of the string
+--[out] lua number ,  the next of end the end position of the string
+function decodeNumber(json_str,position)
+    --string to number,lua have this function - tonumber
+	local acceptCharacter = [[+-0123456789.e]]
+	if not string.find(acceptCharacter,string.sub(json_str,position,position)) then
+	    base.print [[error that string not start with " ]]
+		return nil,[[error in decodeNumber begin]]
+	end
+	--find the endposition
+	local endposition = position
+	local json_len = string.len(json_str)
+	while endposition &lt;= json_len and string.find(acceptCharacter,string.sub(json_str,endposition,endposition)) do
+	    endposition = endposition + 1
+	end
+	local number = base.tonumber(string.sub(json_str,position,endposition - 1))
+	if not number then
+	    base.print [[error in number format]]
+		return nil,[[error in decodeNumber end]]
+	end
+	return number,endposition
+end　</pre>
+</div>
+<p><strong>解析json的一些常量</strong></p>
+<p>关于json中的常量包含true，false和null，解析得到相应的值即可；</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--decode other json value
+--include boolean value(true,false) or null
+--[in] json_str : json string
+--[in] position : current position of the string
+--[out] lua boolean or nil ,  the next of end the end position of the string
+function decodeOther(json_str,position)
+    --true,false,null,
+	--three value
+	-- "true" --&gt; true
+	-- "false"--&gt; false
+	-- "null" --&gt; nil
+	OtherString = {"true","false","null"}
+	JsonLua = { ["true"] = true,["false"] = false,["null"] = nil }
+	for i = 1,#OtherString do
+	    local str = OtherString[i]
+		if string.sub(json_str,position,position + string.len(str) - 1) == str then
+		    return JsonLua[str],position + string.len(str)
+		end
+	end
+	base.print [[error,invalid json other,not true,false,null]]
+	return nil,[[error in decodeOther end]]
+end
+</pre>
+</div>
+<p>（2）lua内部对象转换json</p>
+<p>这部分比较简单，也存在一种可能是我考虑的比较简单，目前感觉实现还是正确的，因为我在debug上面的时候实现了一个printLua函数，打印json转换为lua table的内部结构；</p>
+<p>打印出的结构刚好比较类似json的结构，所以后面只需要针对这个函数进行修改，输出部分改为输出至string即可</p>
+<p>关于printLua函数：</p>
+<p>这个函数的一个辅助函数是判断lua中的table是否为数组形式，或者是键值对的形式；</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--this function check lua_table is array or is an object
+--compare to json
+--if there exists one key/value in the lua_table,it's an object,otherwise,it's an array
+--[in] lua_table : table type in lua
+--[out] boolean and maxnumber of array : true indicate that the lua table is an array,false indicate that the lua table is an key/value table
+function LuaArray(lua_table)
+    --if lua_table is an array,it imply that all its key's type is number
+	--if lua_table is an key/value table,imply that there exists string type in its keys
+	--so just check all its key type
+	local isarray = true
+	local maxindex = 0
+	for k,_ in base.pairs(lua_table) do
+	    if base.type(k) ~= [[number]] then
+		    isarray = false
+			break
+		elseif base.type(k) == [[number]] and (math.floor(k) ~= k or k &lt; 1) then
+		    isarray = false
+			break
+		else
+		    maxindex = math.max(maxindex,k)
+		end
+	end
+	return isarray,maxindex
+end
+--for test lua Table
+--output lua table
+--format output table
+function printLuaTable(luaT,space)
+    local ss = string.rep([[ ]],space)
+	local isarray,alen = LuaArray(luaT)
+    if isarray then
+	    io.write(ss .. '[\n')
+		for i = 1,alen do
+			io.write(ss .. [[    ]])
+		    if base.type(luaT[i]) == "boolean" then
+			    if luaT[i] then
+				    io.write('true\n')
+				else
+				    io.write('false\n')
+				end
+			elseif base.type(luaT[i]) == "number" then
+			    io.write(luaT[i] .. '\n')
+			elseif base.type(luaT[i]) == "string" then
+			    io.write(luaT[i] .. '\n')
+			elseif base.type(luaT[i]) == "nil" then
+				io.write('nil\n')
+			else
+			    printLuaTable(luaT[i],space + 4)
+			end
+		end
+		io.write(ss .. ']\n')
+	else
+        io.write(ss .. '{\n')
+        for k,v in base.pairs(luaT) do
+	        local str = [[    ]] .. k .. ':'
+	        io.write(ss .. str)
+		    if base.type(v) == "boolean" then
+		        if v then
+			        io.write('true\n')
+			    else
+				    io.write('false\n')
+			    end
+		    elseif base.type(v) == "number" then
+			    io.write(v .. '\n')
+		    elseif base.type(v) == "string" then
+			    io.write(v .. '\n')
+		    else
+			    printLuaTable(v,space + 4)
+		    end
+	    end
+	end
+	io.write(ss .. '}\n')
+end
+</pre>
+</div>
+<p>针对输出进行修改如下：</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">--[out] json string
+function Unmarshal(lua_content)
+    --like output lua_content
+	--like printLuaTable
+	--using table concat
+	result = {}
+	Unmarsha1Helper(lua_content,result)
+	return table.concat(result)
+end
+--[in] lua_content:decode json to lua table
+--[in] result:table that convert to json string
+--like printLuaTable , all the element insert into result
+function Unmarsha1Helper(lua_content,result)
+    if base.type(lua_content) ~= "table" then
+	    base.print [[error that lua_content is not table]]
+		return nil,[[error in Unmarsha1Helper end]]
+	end
+    local isarray,arraylen = LuaArray(lua_content)
+	if isarray and arraylen &gt;= 1 then
+        --array
+		result[#result+1] = '['
+        for i = 1,arraylen do
+		    if base.type(lua_content[i]) == "boolean" then
+			    if lua_content[i] then
+				    result[#result+1] = [[true]]
+				else
+				    result[#result+1] = [[false]]
+				end
+			elseif base.type(lua_content[i]) == "number" then
+				result[#result+1] = '' .. lua_content[i]
+			elseif base.type(lua_content[i]) == "string" then
+                result[#result+1] = [["]] .. lua_content[i] .. [["]]
+			elseif base.type(lua_content[i]) == "nil" then
+                result[#result+1] = "null"
+			else
+                Unmarsha1Helper(lua_content[i],result)
+			end
+			result[#result+1] = ','
+		end
+		if result[#result] == ',' then
+		    result[#result] = nil
+		end
+		result[#result+1] = ']'
+	else
+        --object
+		result[#result+1] = [[{]]
+		for k,v in base.pairs(lua_content) do
+		    result[#result+1] = '"' .. k .. '"' .. ':'
+            if base.type(v) == "boolean" then
+			    if v then
+				    result[#result+1] = [[true]]
+				else
+				    result[#result+1] = [[false]]
+				end
+			elseif base.type(v) == "number" then
+				result[#result+1] = '' .. v
+			elseif base.type(v) == "string" then
+                result[#result+1] = [["]] .. v .. [["]]
+			elseif base.type(v) == "nil" then
+                result[#result+1] = "null"
+			else
+                Unmarsha1Helper(v,result)
+			end
+			result[#result+1] = ','
+		end
+		if result[#result] == ',' then
+		    result[#result] = nil
+		end
+		result[#result+1] = [[}]]
+	end
+end
+</pre>
+</div>
+<p>　</p>
+<p>关于lua与json的解析与反解析的基本实现就完成了，本地可以调试通过，接下来就是细致功能的完成和程序健壮性的调整了。</p>
+<p><strong>五.编写程序的一些心得</strong></p>
+<p>程序的实现过程中也利用了SciTE进行了单步的调试，因为实现完毕之后出现了很多奇怪的问题，死循环，输出不符合语气。用起来感觉SciTE的调试功能还算可以，帮助完成了本地版功能的实现；</p>
+<p>实现的过程中同样感受到浏览了一遍lua程序设计之后能够记住的东西实在太少，基本的循环结构可能都不记得，当这个程序完成之后还是需要lua的继续学习，这样应该才算够学习了这门语言吧。</p>
+<p><strong>六.unicode码知识</strong></p>
+<p>&nbsp;关于unicode与utf8的关系，这篇文章讲的非常的详细：http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html</p>
+<p>unicode只是一个符号集合，并没有规定具体的如何存储，所以如何存储还需要具体的方案，比如utf8，utf16等等。unicode与utf8的关系如下：</p>
+<p>Unicode符号范围 | UTF-8编码方式<br />(十六进制) | （二进制）<br />--------------------+---------------------------------------------<br />0000 0000-0000 007F | 0xxxxxxx<br />0000 0080-0000 07FF | 110xxxxx 10xxxxxx<br />0000 0800-0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx<br />0001 0000-0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</p>
+<p>所以这里只需要把json中的\uXXXX编码转换为utf8字节码即可。</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2015-01-18 15:53</span> <a href='http://www.cnblogs.com/weixliu/'>weixliu</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=4185001" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(4185001);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=135847,cb_entryId=4185001,cb_blogApp=currentBlogApp,cb_blogUserGuid='37a59955-d7fa-e011-b7b9-842b2b196315',cb_entryCreatedDate='2015/1/18 15:53:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2016 weixliu
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>

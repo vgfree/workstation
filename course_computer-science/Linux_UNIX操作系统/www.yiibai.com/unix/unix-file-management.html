@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+ <html class="no-js">
+	 <head>
+<!-- Original URL: http://www.yiibai.com/unix/unix-file-management.html
+Date Downloaded: 2016/4/1 17:08:38 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		 <meta charset="utf-8" />
+		 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		 <title>UNIX 文件管理 - Unix </title>
+		 <meta name="keywords" content="UNIX,文件,管理,UNIX,中的,所有,数据,被,组,织" />
+		 <meta name="description" content="UNIX中的所有数据被组织成文件。所有文件被组织成目录。这些目录被组织成一个树形结构，称为文件系统。 当使用UNIX工作以这种或那种方式，大部分的时间花在工作的文件。本教程将" />
+		 <meta name="viewport" content="width=device-width" />
+		 <link rel="stylesheet" href="../static.v2.0/css/bootstrap.min.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/icomoon-social.css" />
+		 <link rel="stylesheet" href="../static.v2.0/css/leaflet.css" />
+		 <!--[if lte IE 8]>
+		<link rel="stylesheet" href="../static.v2.0/css/leaflet.ie.css" />
+		<![endif]-->
+		 <link rel="stylesheet" href="../static.v2.0/css/main.css" />
+		 <script src="../static.v2.0/js/modernizr-respond.min.js"></script>
+		 <!--[if lt IE 9]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+	 </head>
+	 <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+		 <!-- acticle-art.html -->
+		 <!-- Navigation & Logo-->
+		 <!--[if lt IE 7]>
+<p class="chromeframe">您在使用这样<strong>旧版本</strong>的浏览器让我们实在感到很为难. 请到<a href="http://browsehappy.com/">更新的浏览器版本(IE8以上).</a> 我们强烈建议使用<a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome</a>来获得较高的浏览体验。</p>
+<![endif]-->
+ <!-- Navigation & Logo-->
+ <div class="mainmenu-wrapper">
+	 <div class="container">
+		 <div id="mainmenu" class="mainmenu">
+			 <ul>
+				 <li class="logo-wrapper">
+					 <a href="../index.html"><img src="../static.v2.0/img/logo.png" alt="易百教程" /></a>
+				 </li>
+				 <li class="has-submenu">
+					 <a href="#">全部+ </a>
+					 <div class="mainmenu-submenu">
+						 <style>
+	.mainmenu .mainmenu-submenu-inner > div{
+		width:20%;
+	}
+</style>
+ <div class="mainmenu-submenu-inner" style="margin: auto; padding-left: 24px;">
+	 <div>
+		 <h4>Java技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/junit/">JUnit教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/log4j/">Log4j教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/ejb/">EJB </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/json/">Json教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/testng/">TestNG教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/">Java教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/awt/">AWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jmeter/">JMeter教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swing/">Swing </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/util/">Java.util包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/struts_2/">Struts2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/maven/">Maven教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/io/">Java.io包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javamail_api/">JavaMail </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/spring/">Spring </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsp/">JSP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ant/">ANT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ibatis/">ibatis </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/hibernate/">hibernate </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jdbc/">JDBC教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jasper_reports/">JasperReports教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/javaexamples/">java实例教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/java/math/">Java.math包 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mybatis/">MyBatis教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>Web技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wordpress/">Wordpress教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby-on-rails/">Ruby On Rails </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/flex/">Flex </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gwt/">GWT </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/jsf/">JSF </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/asp.net/">ASP.NET </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/">HTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html5/">HTML5 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/xhtml/">XHTML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/css/">CSS </a>
+			 </li>
+			
+		 </ul>
+		 <h4>高级语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/rust/">Rust教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/assembly/">Assembly汇编 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/c_standard_library/">C语言标准库 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/matlab/">Matlab教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/euphoria/">Euphoria教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/objective_c/">Objective-C教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/d_programming/">D语言教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lisp/">Lisp教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/swift/">Swift教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/cobol/">COBOL教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>脚本语言 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wxpython/">WxPython教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/ruby/">Ruby教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/php/">PHP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/python/">Python教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/lua/">Lua教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tcl/">Tcl教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/tk/">Tk教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>其它技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/excel/">Excel教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/uml/">UML </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/socket/">Socket编程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/radius/">Radius教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/nodejs/">Node.js教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/svn/">SVN教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/git/">Git教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/makefile/">Makefile </a>
+			 </li>
+			
+			 <li>
+				 <a href="index.html">Unix </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_commands/">Linux/Unix命令 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/unix_system_calls/">Unix/Linux系统调用 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/shell/">Shell </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/drools/">Drools教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/linq/">LinQ教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wcf/">WCF教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div>
+	 <div>
+		 <h4>数据库 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mysql/">MySQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/plsql/">PL/SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/postgresql/">PostgreSQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/mongodb/">MongoDB教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sqlite/">SQLite教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/db2/">DB2教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/redis/">Redis教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/memcached/">Memcached教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/access/">Access教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql/">SQL教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sql_server/">SQL Server教程 </a>
+			 </li>
+			
+		 </ul>
+		 <h4>通信技术 </h4>
+		 <ul>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/sip/">SIP教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/html/lte/">LTE </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/4g/">4G </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/gsm/">GSM </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/wifi/">Wifi教程 </a>
+			 </li>
+			
+			 <li>
+				 <a href="http://www.yiibai.com/5g/">5G教程 </a>
+			 </li>
+			
+		 </ul>
+	 </div><!-- /mainmenu-submenu-inner -->
+ </div><!-- /mainmenu-submenu -->
+					 </div>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/java/">Java </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/python/">Python </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/ruby/">Ruby </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/mysql/">MySQL </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/t/" style="color: #4f8db3;">+分享教程 </a>
+				 </li>
+				 <li>
+					 <a href="http://www.yiibai.com/login/byqq" style="color: #4f8db3;"><img src="../static.v2.0/images/QQ_blue_76X24.png" /></a>
+				 </li>
+
+			 </ul>
+			 <!--
+			<form>
+				<div class="input-group">
+					<input class="form-control input-md" id="appendedInputButtons" type="text" value="" data-empty="Search our Blog">
+					<span class="input-group-btn">
+						<button class="btn btn-md" type="button">搜索</button> </span>
+				</div>
+			</form>
+			-->
+		 </div>
+	 </div>
+ </div>
+		 <!-- Page Title -->
+		 <div class="section section-breadcrumbs">
+			 <div class="container">
+				 <div class="row">
+					 <div class="col-md-12" style="font-size: 12pt;">
+						位置： <a href='../index.html'>首页 </a> >  <a href='/html/misc/'>其他技术 </a> >  <a href='index.html'>Unix </a> >  UNIX ____
+					 </div>
+				 </div>
+			 </div>
+		 </div>
+
+		 <div class="section">
+			 <div class="container">
+				 <div class="row">
+					 <!-- Sidebar -->
+					 <div class="col-sm-3 blog-sidebar" style="float:left;width: 22%;">
+						 <div id="w2" class="list-group">
+							 <a class="list-group-item" href="#" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">Unix </a>
+							 <a class="list-group-item" href="unix-getting-started.html" title="Unix是什么？">Unix是什么？ </a><a class="list-group-item" href="unix-file-management.html" title="UNIX 文件管理">UNIX 文件管理 </a><a class="list-group-item" href="unix-directories.html" title="UNIX 目录管理">UNIX 目录管理 </a><a class="list-group-item" href="unix-file-permission.html" title="UNIX 文件权限/访问模式">UNIX 文件权限/访问模式 </a><a class="list-group-item" href="unix-environment.html" title="UNIX 环境">UNIX 环境 </a><a class="list-group-item" href="unix-basic-utilities.html" title="Unix 基本工具(打印，电子邮件)">Unix 基本工具(打印，电子邮件) </a><a class="list-group-item" href="unix-pipes-filters.html" title="UNIX 管道和过滤器">UNIX 管道和过滤器 </a><a class="list-group-item" href="unix-processes.html" title="UNIX 进程管理">UNIX 进程管理 </a><a class="list-group-item" href="unix-communication.html" title="UNIX 网络实用工具">UNIX 网络实用工具 </a><a class="list-group-item" href="unix-vi-editor.html" title="vi编辑器教程">vi编辑器教程 </a>
+						 </div>
+						 <div id="w3" class="list-group">
+							 <a class="list-group-item" href="#advance" style="font-size: 12.5pt;font-weight:bold;background-color: #f5f5f5;">高级教程 </a>
+							 <a class="list-group-item" href="unix-regular-expressions.html" title="Unix 正则表达式SED">Unix 正则表达式SED </a><a class="list-group-item" href="unix-file-system.html" title="Unix 文件系统基础">Unix 文件系统基础 </a><a class="list-group-item" href="unix-user-administration.html" title="UNIX 用户管理">UNIX 用户管理 </a><a class="list-group-item" href="unix-system-performance.html" title="UNIX 系统性能">UNIX 系统性能 </a><a class="list-group-item" href="unix-system-logging.html" title="UNIX 系统日志">UNIX 系统日志 </a><a class="list-group-item" href="unix-signals-traps.html" title="UNIX 信号和陷阱">UNIX 信号和陷阱 </a><a class="list-group-item" href="unix-useful-commands.html" title="Unix 有用命令">Unix 有用命令 </a><a class="list-group-item" href="unix-builtin-functions.html" title="Shell 内置数学函数">Shell 内置数学函数 </a>
+						 </div>
+
+						
+					 </div>
+					 <!-- End Sidebar -->
+					 <div class="col-sm-9" style="float:left;padding:0px;">
+						 <div class="blog-post blog-single-post" style="float:left;">
+							 <div class="single-post-title" style="margin-bottom: 12px;width:100%;float:left;">
+								 <h1 style="font-size: 20pt;text-align:center;width:100%;padding-bottom: 12px;">UNIX 文件管理 </h1>
+							 </div>
+							 <div class="single-post-info" style="margin-top: 24px;">
+								 <i class="glyphicon glyphicon-time"></i>
+								 <span>由  <b>易百 </b> 翻译整理 &nbsp;  </span><span style="color:"><b>注： </b>由于水平有限，欢迎指正。转载请务必注明出处。 </span>
+								 <span style="float:right;">
+								 <!-- JiaThis Button BEGIN -->
+								 <div class="jiathis_style_24x24" style="padding-left:2px;">
+									 <a class="jiathis_button_qzone"></a>
+									 <a class="jiathis_button_tsina"></a>
+									 <a class="jiathis_button_tqq"></a>
+									 <a class="jiathis_button_weixin"></a>
+									 <a class="jiathis_button_renren"></a>
+									 <a href="http://www.jiathis.com/share?uid=1996613" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+									 <a class="jiathis_counter_style"></a>
+								 </div>
+								 <script type="text/javascript">
+								var jiathis_config = {data_track_clickback:'true'};
+								</script>
+								 <script type="text/javascript" src="../../v3.jiathis.com/code/jia_121e8726.js" charset="utf-8"></script>
+								 <!-- JiaThis Button END -->
+								 </span>								
+							 </div>
+							 <div class="row" style="float:left;width:100%;">
+								 <div class="content-body">
+									
+									 <div style="float:left;">
+										 <script type="text/javascript">
+											<!--
+											google_ad_client ="ca-pub-1090193214637198";
+											google_ad_slot = "9805510053";
+											google_ad_width = 728;
+											google_ad_height = 90;
+											//-->
+										</script>
+										 <script type="text/javascript" src="../../pagead2.googlesyndication.com/pagead/f.txt.js"></script>
+									 </div>
+									 <div id="baidu-ad" style="padding-top: 6px;padding-bottom: 6px;float:left;">
+										 <script type="text/javascript">
+											/*文章详细页上方628*90*/
+											var cpro_id = "u1064372";
+										</script>
+										 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+									 </div>
+									
+									 <div class="art_pre_next" style="margin-bottom: 28px;">
+										 <a href='unix-getting-started.html' class='btn' title='Unix是什么？' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-directories.html' class='btn btn-default' style='float:right;' title='UNIX 目录管理'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <input type="hidden" id="aid" name="aid" value="1027" />
+									 <p>
+	UNIX中的所有数据被组织成文件。所有文件被组织成目录。这些目录被组织成一个树形结构，称为文件系统。 </p>
+ <p>
+	当使用UNIX工作以这种或那种方式，大部分的时间花在工作的文件。本教程将教你如何创建和删除文件，复制和重命名，创建链接到它们等。 </p>
+ <p>
+	在UNIX中，有三种基本类型的文件： </p>
+ <ol>
+	 <li>
+		 <p>
+			普通文件:&nbsp;普通文件在系统上的文件包含数据，文字，或程序指令。在本教程中，以操作普通的文件为例。 </p>
+	 </li>
+	 <li>
+		 <p>
+			目录:&nbsp;目录特别及普通文件存储。对于用户熟悉Windows或Mac OS，UNIX目录相当于文件夹。 </p>
+	 </li>
+	 <li>
+		 <p>
+			特殊文件:&nbsp;一些特殊的文件提供访问硬件，如硬盘，CD-ROM驱动器，调制解调器和以太网适配器。其他特殊文件是类似的别名或快捷键，使您能够访问一个单一的文件使用不同的名称。 </p>
+	 </li>
+ </ol>
+ <h2>
+	文件列表： </h2>
+ <p>
+	要列出存储在当前目录中的文件和目录。使用下面的命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ls </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下面是上述命令的示例输出： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ls
+
+bin        hosts  lib     res </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">03 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ch07       hw1    pub     test_results
+ch07 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">bak   hw2    res </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">01 </span><span class="pln" style="margin: 0px; padding: 0px;">  users
+docs       __3    res </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">02 </span><span class="pln" style="margin: 0px; padding: 0px;">  work </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	ls命令支持，这将有助于获得更多的信息有关所列出的文件使用-1选项： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ls  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">l
+total  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1962188 </span><span class="pln" style="margin: 0px; padding: 0px;">
+
+drwxrwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4096 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Dec </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">25 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">09 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">59 </span><span class="pln" style="margin: 0px; padding: 0px;"> uml
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">r </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5341 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Dec </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">25 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">08 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">: </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">38 </span><span class="pln" style="margin: 0px; padding: 0px;"> uml </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">jpg
+drwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">xr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4096 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Feb </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">15 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2006 </span><span class="pln" style="margin: 0px; padding: 0px;"> univ
+drwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">xr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pln" style="margin: 0px; padding: 0px;"> root   ____         </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4096 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Dec </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> urlspedia
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">r </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">r </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;"> root   ____       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">276480 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Dec </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> urlspedia </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">tar
+drwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">xr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">8 </span><span class="pln" style="margin: 0px; padding: 0px;"> root   ____         </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4096 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Nov </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">25 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> usr
+drwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">xr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">200 </span><span class="pln" style="margin: 0px; padding: 0px;">     </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">300 </span><span class="pln" style="margin: 0px; padding: 0px;">       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4096 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Nov </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">25 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> webthumb </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1.01 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">xr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;"> root   ____         </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3192 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Nov </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">25 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> webthumb </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">php
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">r </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood      </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">20480 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Nov </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">25 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> webthumb </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">tar
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">r </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">5654 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Aug </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> yourfile </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">mid
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">rw </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">r </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">-- </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood     </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">166255 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">Aug </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">9 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> yourfile </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">swf
+drwxr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">xr </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">x  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">11 </span><span class="pln" style="margin: 0px; padding: 0px;"> amrood amrood       </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">4096 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">May </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">29 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2007 </span><span class="pln" style="margin: 0px; padding: 0px;"> zlib </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1.2 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">3 </span><span class="pln" style="margin: 0px; padding: 0px;">
+$ </span></pre>
+ <p>
+	这里是所有列出的列信息： </p>
+ <ol>
+	 <li>
+		 <p>
+			第一列：表示授予该文件的文件类型和权限。下面是描述所有类型的文件。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第二列：代表所采取的内存块的文件或目录的数量。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第三栏：表示文件所有者。是谁创建了这个文件的Unix用户。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第四列：代表组的所有者。每个Unix用户将有关联的组。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第五栏：表示文件大小（以字节为单位）。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第六栏：表示当这个文件被创建或修改的最后一次的日期和时间。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第七栏：表示文件名或目录名。 </p>
+	 </li>
+ </ol>
+ <p>
+	在&nbsp;ls -l清单的例子，每一个文件的行开始d, -,或l。这些字符表示的文件类型列出。&nbsp; </p>
+ <table class="src" style="margin: 8px 0px; padding: 0px;  border-color: rgb(214, 214, 214); width: 560px; border-collapse: collapse; vertical-align: top; background-color: rgb(247, 247, 247); color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	 <tbody style="margin: 0px; padding: 0px;">
+		 <tr style="margin: 0px; padding: 0px;">
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 90px;">
+				Prefix </th>
+			 <th style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214); background-color: rgb(238, 238, 238); width: 448px;">
+				描述 </th>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">- </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Regular file, such as __ ASCII text file, binary __________, or hard link. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">b </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Block special file. Block _____/______ device file such as _ physical hard drive. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">c </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Character special file. Raw _____/______ device file such as _ physical hard drive </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">d </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Directory file that contains _ listing of other files ___ directories. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">l </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Symbolic link file. Links __ any regular file. </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">p </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Named pipe. A mechanism ___ interprocess communications </td>
+		 </tr>
+		 <tr style="margin: 0px; padding: 0px;">
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				 <b style="margin: 0px; padding: 0px;">s </b></td>
+			 <td style="margin: 0px; padding: 5px; border-collapse: collapse;  border-color: rgb(214, 214, 214);">
+				Socket used for interprocess _____________. </td>
+		 </tr>
+	 </tbody>
+ </table>
+ <h2>
+	元字符： </h2>
+ <p>
+	在Unix元字符有特殊的含义。例如*和？是元字符。我们使用*匹配0个或多个字符，问号？匹配单个字符。 </p>
+ <p>
+	示例： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ls ch </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">*. </span><span class="pln" style="margin: 0px; padding: 0px;">doc </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	显示所有文件，其名称以ch开始和结束的。doc： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">ch01 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1.doc </span><span class="pln" style="margin: 0px; padding: 0px;">   ch010 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">doc  ch02 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">doc    __03 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2.doc </span><span class="pln" style="margin: 0px; padding: 0px;"> 
+ch04 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1.doc </span><span class="pln" style="margin: 0px; padding: 0px;">   ch040 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">doc  ch05 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">doc    __06 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2.doc </span><span class="pln" style="margin: 0px; padding: 0px;">
+ch01 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2.doc </span><span class="pln" style="margin: 0px; padding: 0px;"> ch02 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1.doc </span><span class="pln" style="margin: 0px; padding: 0px;"> c </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	*元字符匹配任何字符。如果想显示所有文件只是文件结束，那么可以使用下面的命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ls  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">*. </span><span class="pln" style="margin: 0px; padding: 0px;">doc </span></pre>
+ <h2>
+	隐藏文件： </h2>
+ <p>
+	一个无形的文件是一个点或者句号（.）的第一个字符是。 UNIX程序（包括shell）使用这些文件来存储配置信息。 </p>
+ <p>
+	隐藏文件的一些常见的例子包括以下文件： </p>
+ <ul>
+	 <li>
+		 <p>
+			.profile:&nbsp;是Bourne shell（sh）的初始化脚本 </p>
+	 </li>
+	 <li>
+		 <p>
+			.kshrc:&nbsp;Korn shell程序（KSH）初始化脚本 </p>
+	 </li>
+	 <li>
+		 <p>
+			.cshrc:&nbsp;C shell（csh）的初始化脚本 </p>
+	 </li>
+	 <li>
+		 <p>
+			.rhosts:&nbsp;远程shell配置文件 </p>
+	 </li>
+ </ul>
+ <p>
+	要列出隐形文件，指定给ls-a选项： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ ls  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">a
+
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">          </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">profile       docs     lib     test_results
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.. </span><span class="pln" style="margin: 0px; padding: 0px;">         </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">rhosts        hosts    pub     users
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">emacs    ___            hw1      res </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">01 </span><span class="pln" style="margin: 0px; padding: 0px;">  work
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">exrc     ch07           hw2      res </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">02 </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">kshrc    __07 </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="pln" style="margin: 0px; padding: 0px;">bak       hw3      res </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">. </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">03 </span><span class="pln" style="margin: 0px; padding: 0px;">
+$ </span></pre>
+ <ul>
+	 <li>
+		 <p>
+			单一点 . ：这表示当前目录。 </p>
+	 </li>
+	 <li>
+		 <p>
+			双点 ..：这表示父目录。 </p>
+	 </li>
+ </ul>
+ <p>
+	注：我已经把星号（*），只是为了显示位置，需要输入当前密码和新密码，否则系统，它不会告诉你，当键入任何字符。 </p>
+ <h2>
+	创建文件： </h2>
+ <p>
+	可以使用vi编辑器来创建任何类Unix系统上的普通文件。只需给下面的命令： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ vi filename </span></pre>
+ <p>
+	上面的命令，将打开一个给定文件名的文件。会需要按键来进入编辑模式。一旦在编辑模式下，就可以开始写内容在文件，如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">This </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;"> unix file </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.... </span><span class="pln" style="margin: 0px; padding: 0px;">I created it  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">for </span><span class="pln" style="margin: 0px; padding: 0px;"> the first time </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">..... </span><span class="pln" style="margin: 0px; padding: 0px;">
+I </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;m going to save ____ content in this file. </span></pre>
+ <p>
+	一旦完成，请执行以下步骤： </p>
+ <ul>
+	 <li>
+		 <p>
+			按Esc键出来的编辑模式。 </p>
+	 </li>
+	 <li>
+		 <p>
+			按两个键Shift+ ZZ一起完全退出来的文件。 </p>
+	 </li>
+ </ul>
+ <p>
+	现在，就可以把filemame创建的文件在当前目录中。 </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ vi filename
+$ </span></pre>
+ <h2>
+	编辑文件： </h2>
+ <p>
+	使用vi编辑器，可以编辑现有的文件。我们将覆盖在一个单独的教程中详细。但总之，可以打开现有的文件如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ vi filename </span></pre>
+ <p>
+	一旦文件被打开，在编辑模式下，可以使用 i 按键，然后，可以编辑文件。如果想在这里和那里的文件内，那么首先需要走出来的编辑模式下按ESC键，那么可以使用下面的键，将里面的一个文件： </p>
+ <ul>
+	 <li>
+		 <p>
+			l&nbsp;键移动到右侧。 </p>
+	 </li>
+	 <li>
+		 <p>
+			h&nbsp;键移动到左侧。 </p>
+	 </li>
+	 <li>
+		 <p>
+			k&nbsp;键向上移动在文件中。 </p>
+	 </li>
+	 <li>
+		 <p>
+			j&nbsp;键向下移动一边在文件中。 </p>
+	 </li>
+ </ul>
+ <p>
+	因此，使用上面的键就可以将光标定位在任何想要的编辑。然后在编辑模式下，可以使用i键。编辑该文件，一旦完成后，按ESC和最后两个键Shift+ ZZ一起退出的文件。 </p>
+ <h2>
+	显示文件的内容： </h2>
+ <p>
+	可以使用cat命令来查看一个文件的​​内容。下面是一个简单的例子，看看上面创建的文件的内容： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat filename
+ </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">This </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;"> unix file </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.... </span><span class="pln" style="margin: 0px; padding: 0px;">I created it  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">for </span><span class="pln" style="margin: 0px; padding: 0px;"> the first time </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">..... </span><span class="pln" style="margin: 0px; padding: 0px;">
+I </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;m going to save ____ content in this file.
+$ </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	可以通过使用-b选项一起cat命令如下显示行号： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cat filename  </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">- </span><span class="pln" style="margin: 0px; padding: 0px;">b
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">1 </span><span class="pln" style="margin: 0px; padding: 0px;">    </span><span class="typ" style="margin: 0px; padding: 0px; color: rgb(127, 0, 85);">This </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">is </span><span class="pln" style="margin: 0px; padding: 0px;"> unix file </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">.... </span><span class="pln" style="margin: 0px; padding: 0px;">I created it  </span><span class="kwd" style="margin: 0px; padding: 0px; color: rgb(0, 0, 136);">for </span><span class="pln" style="margin: 0px; padding: 0px;"> the first time </span><span class="pun" style="margin: 0px; padding: 0px; color: rgb(102, 102, 0);">..... </span><span class="pln" style="margin: 0px; padding: 0px;">
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pln" style="margin: 0px; padding: 0px;">   I </span><span class="str" style="margin: 0px; padding: 0px; color: rgb(0, 136, 0);">&#39;m going to save ____ content in this file.
+$ </span></pre>
+ <h2>
+	计算在一个文件中的单词： </h2>
+ <p>
+	可以使用wc命令行，字，字符包含在一个文件总数计数。以下是一个简单的例子来看看上面创建的文件的信息： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ wc filename
+ </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">2 </span><span class="pln" style="margin: 0px; padding: 0px;">   </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">19 </span><span class="pln" style="margin: 0px; padding: 0px;">  </span><span class="lit" style="margin: 0px; padding: 0px; color: rgb(0, 102, 102);">103 </span><span class="pln" style="margin: 0px; padding: 0px;"> filename
+$ </span></pre>
+ <p>
+	这里是所有的四列的细节： </p>
+ <ol>
+	 <li>
+		 <p>
+			第一栏：表示文件中的行的总数。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第二栏：表示文件中的总字数。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第三栏：表示文件中的字节总数。这是实际的文件大小。 </p>
+	 </li>
+	 <li>
+		 <p>
+			第四栏：表示文件名。 </p>
+	 </li>
+ </ol>
+ <p>
+	在同一时间，以获得有关这些文件的信息，可以给多个文件。下面是简单的语法： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ wc filename1 filename2 ________3 </span></pre>
+ <h2>
+	复制文件： </h2>
+ <p>
+	要复制的文件，请使用cp命令。该命令的基本语法是： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cp source_file destination_file </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	下面的例子，现有的文件的文件名创建一个副本。 </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ cp filename copyfile
+$ </span></pre>
+ <p>
+	现在，发现多了一个文件在当前目录copyfile&nbsp;。该文件将作为原始文件的filename完全相同。 </p>
+ <h2>
+	重命名文件： </h2>
+ <p>
+	要更改名称的文件，使用mv命令。它的基本语法是： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ mv old_file new_file </span></pre>
+ <p>
+	下面的例子将重命名现有文件&nbsp;filename&nbsp;修改为&nbsp;newfile&nbsp;: </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ mv filename newfile
+$ </span></pre>
+ <p>
+	mv命令将现有的文件移动到新的文件完全。因此在这种情况下，在当前目录中有&nbsp;newfile。 </p>
+ <h2>
+	删除文件： </h2>
+ <p>
+	要删除现有的文件使用rm命令。它的基本语法是： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ rm filename </span></pre>
+ <p>
+	注意：这可能是危险的，删除一个文件，因为它可能包含有用的信息。所以，要小心使用此命令时。建议使用-i选项的rm命令一起使用。 </p>
+ <p>
+	下面的例子将完全删除现有文件的文件名 filename： </p>
+ <div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><div style="float:left;margin-bottom: 10px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+									 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:15px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="1381882050"></ins>
+									 <script>
+									(adsbygoogle = window.adsbygoogle || []).push({});
+									</script></div><pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ rm filename
+$ </span></pre>
+ <p style="margin: 0.8em 0px 1em; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif;">
+	可以删除多个文件如下： </p>
+ <pre class="prettyprint prettyprinted" style="font-size: 12px;">
+ <span class="pln" style="margin: 0px; padding: 0px;">$ rm filename1 filename2 ________3
+$ </span></pre>
+ <h2>
+	标准的UNIX流： </h2>
+ <p>
+	在正常情况下，每个Unix程序有三个流（文件）打开它时，它启动： </p>
+ <ol>
+	 <li>
+		 <p>
+			stdin :&nbsp;这被称为作为标准输入和与其相关的文件的描述符是0。这也表示标准输入。 UNIX程序会从STDIN读取默认的输入。 </p>
+	 </li>
+	 <li>
+		 <p>
+			stdout :&nbsp;这被称为作为标准输出和1相关的文件描述符。这也表示STDOUT。 UNIX程序会写入默认输出STDOUT </p>
+	 </li>
+	 <li>
+		 <p>
+			stderr :&nbsp;这是被称为标准错误和2相关的文件描述符。这也代表STDERR。 UNIX程序会写在STDERR所有的错误消息。 </p>
+	 </li>
+ </ol>
+ <br />
+
+									 <div style="float:left;margin-bottom: 6px;"><script async="" src="../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+										 <!-- 文章中间 -->
+										 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1090193214637198" data-ad-slot="6494738921"></ins>
+										 <script>
+										(adsbygoogle = window.adsbygoogle || []).push({});
+										</script></div>
+									 <br />
+
+									 <b>标签： <a href="http://www.yiibai.com/tag/UNIX/" target="_blank">UNIX </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/文件/" target="_blank">文件 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/管理/" target="_blank">管理 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/UNIX/" target="_blank">UNIX </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/中的/" target="_blank">中的 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/所有/" target="_blank">所有 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/数据/" target="_blank">数据 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/被/" target="_blank">被 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/组/" target="_blank">组 </a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.yiibai.com/tag/织/" target="_blank">织 </a>&nbsp;&nbsp;&nbsp;&nbsp; </b>
+									 <div class="copyright" style="width:100%;float:left;">
+									
+											本站文章除注明转载外，均为本站原创或编译 <br />
+									欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创优秀实例教程 <br />
+									转载请注明：文章转载自： <strong>易百教程 </strong> [ <a href="../index.html">http:/www.yiibai.com </a>] <br />
+									本文标题： <b>UNIX 文件管理 </b><br />
+									本文地址： <a href="unix-file-management.html">http://www.yiibai.com/unix/unix-file-management.html </a><br />
+									 </div>
+									 <div class="art_pre_next" style="margin-bottom: 8px;">
+										 <a href='unix-getting-started.html' class='btn' title='Unix是什么？' style='float:left;'><span class='glyphicon-class glyphicon glyphicon-circle-arrow-left'></span>&nbsp;上一篇 </a> 
+										 <a href='unix-directories.html' class='btn btn-default' style='float:right;' title='UNIX 目录管理'>下一篇 &nbsp; <span class='glyphicon-class glyphicon glyphicon-circle-arrow-right'></span></a>  
+									 </div>
+									 <!--// google adv -->
+									
+									
+								 </div>
+								 <div style="float: right;width: 14%;">
+									 <!-- 文章页右侧（120x600) -->
+									
+								 </div>
+							 </div>
+							 <div class="row" style="float:left;width:80%;margin-top:12px;">
+								
+								 <div style="width:720px;margin-bottom: 8px;float:left;">
+									 <script type="text/javascript">
+										var cpro_id = "u1064372";
+									</script>
+									 <script src="../../cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								 </div>
+								 <!-- Comments -->
+								 <!-- Duoshuo Comment BEGIN -->
+								 <!-- 多说评论框 start -->
+								 <div class="ds-thread" data-thread-key="1027" data-title="UNIX 文件管理" data-url="http://www.yiibai.com/unix/unix-file-management.html"></div>
+							 <!-- 多说评论框 end -->
+							 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+							 <script type="text/javascript">
+							var duoshuoQuery = {short_name:"yiibai"};
+								(function() {
+									var ds = document.createElement('script');
+									ds.type = 'text/javascript';ds.async = true;
+									ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+									ds.charset = 'UTF-8';
+									(document.getElementsByTagName('head')[0] 
+									 || document.getElementsByTagName('body')[0]).appendChild(ds);
+								})();
+								</script>
+							 <!-- 多说公共JS代码 end -->
+								 <!-- Duoshuo Comment END -->
+							 </div>
+
+						 </div>
+
+					 </div>
+					 <!-- End Blog Post -->
+				 </div>
+			 </div>
+		 </div>
+		 <!-- Footer -->
+		 <div class="footer">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12">
+				 <div class="footer-copyright">
+					易百 &copy; 2012-2015 .  <a href="http://www.miitbeian.gov.cn/" target="_blank">琼ICP备13001417号-3 </a>   <b>Email:  </b><img src="../static.v2.0/images/linkmail.png" />
+					
+					&nbsp;&nbsp; <a href="http://www.yiibai.com/html/about/about_us.html" target="_blank">关于我们 </a>
+					 &nbsp;&nbsp; <a href="/about/feedback" target="_blank">反馈建议/意见 </a> &nbsp;&nbsp;
+				 <script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F424e222704e2274e37a8169110e6e00a' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				 <script src="../../s23.cnzz.com/stat_7dcb5f34.php.js" language="JavaScript"></script>
+				
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+ <!-- Javascripts -->
+
+
+	 </body>
+	 <script src="../static.v2.0/js/jquery.min.js"></script>
+	 <script type="text/javascript" src="../static.v2.0/js/custom.js"></script>	
+	 <script>window.jQuery || document.write('<script src="../static.v2.0/js/jquery.min.js"><\/script>')</script>
+	 <script src="../static.v2.0/js/bootstrap.min.js"></script>
+	 <script src="../static.v2.0/js/leaflet.js"></script>
+	 <script src="../static.v2.0/js/jquery.fitvids.js"></script>
+	 <script src="../static.v2.0/js/jquery.sequence-min.js"></script>
+	 <script src="../static.v2.0/js/jquery.bxslider.js"></script>
+	 <script src="../static.v2.0/js/main-menu.js"></script>
+	 <script src="../static.v2.0/js/template.js"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ -->
+	 <script type="text/javascript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="../../cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>ript">
+	var cpro_id = "u1754823";
+	</script>
+	 <script src="http://cpro.baidustatic.com/cpro/ui/f.js" type="text/javascript"></script>
+	 <!-- BD adv     /*视窗-(250*200)*/ End -->
+
+
+ </html>

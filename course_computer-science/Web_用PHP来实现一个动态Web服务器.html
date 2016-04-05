@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+<head lang="zh-cn">
+    <meta charset="utf-8">
+    <title>用 PHP 来实现一个动态 Web 服务器</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="description" content="本文所实现的服务器仅仅是演示和理解原理所用，力求简单易懂。 要是现实一个 web 服务器，那么就需要了解 web 服务器的运行原理。先从静态的文本服务器开始，以访问 web 服务器的1.html为例1.客户端通过发送一个 http 请求到服务器，如果服务器监听的端口号是9002，那么在本机自身测试访问的地址就是http://localhost:9002/1.html。2.服务器监听着9002端口，..."/>
+    <meta name="keywords" content="php,北剅沟,周梦康" />
+    <link rel="shortcut icon" href="https://static.mengkang.net/favicon.ico">
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/box.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/public.2.0.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/view/css/magnific-popup.css"/>
+    <link rel="stylesheet" href="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+    <script type="text/javascript" src="https://static.mengkang.net/plugins/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+    <script src="https://static.mengkang.net/view/js/jquery-1.11.3.min.js"></script>
+    <script src="https://static.mengkang.net/view/js/mk.js"></script>
+    <script src="https://static.mengkang.net/view/js/box.js"></script>
+    <script type="text/javascript">
+        var SITE_URL = 'https://mengkang.net/index.php';
+    </script>
+</head>
+<body>
+<header class="header">
+    <div class="header-logo">
+        <div class="site-title">Mengkang's land</div>
+        <div class="site-desc smoothing">coding and recording</div>
+    </div>
+    <div class="header-menu">
+        <ul id="nav">
+            <li><a href="notebook.html" title="学习">学习</a></li><li><a href="tips.html" title="碎片">碎片</a></li><li><a href="playground.html" title="生活">生活</a></li><li><a target="_blank" href="about.me" title="博主">博主</a></li>        </ul>
+        <div class="phone-nav">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+    </div>
+
+</header>
+<div id="content" class="content">
+    <style>
+        #blog-content blockquote p{
+            text-indent:15px;
+        }
+        #blog-content h3,h4{
+            text-indent:28px;
+        }
+        #blog-content p{
+            text-indent: 2em;
+        }
+        .blog-content h3{
+            margin: 10px 0;
+        }
+        .blog-content h2{
+            margin: 8px 0 18px 0;
+        }
+    </style>
+<div class="blog-padding">
+    <div id="blog">
+        <div class="blog-title">
+            <h1><a href="https://mengkang.net/491.html">用 PHP 来实现一个动态 Web 服务器</a></h1>
+        </div>
+        <div class="blog-meta smoothing">
+            <span class="post-time"><a href="about.me">周梦康</a> 发表于 2015-07-28</span>
+            <span class="post-category">
+                分类于 <a href="notebook.html" title="学习">学习</a>            </span>
+            <span class="post-comments-count">
+                <a href="">729 次浏览</a>
+            </span>
+                        <span class="blog-tag">
+                标签 :
+                <a href="/tag-85.html" target="_blank">php</a>            </span>
+                    </div>
+        <div class="split-line"></div>
+        <div id="blog-content" class="blog-content smoothing">
+            <p style="text-indent:2em;"><strong>本文所实现的服务器仅仅是演示和理解原理所用，力求简单易懂。</strong> </p><p style="text-indent:2em;">
+	要是现实一个 web 服务器，那么就需要了解 web 服务器的运行原理。</p><p style="text-indent:2em;">
+	先从静态的文本服务器开始，以访问 web 服务器的<code class="markdownTags">1.html</code>为例</p><p style="text-indent:2em;">
+	1.客户端通过发送一个 http 请求到服务器，如果服务器监听的端口号是9002，那么在本机自身测试访问的地址就是<a href="http://localhost:9002/1.html" target="_blank">http://localhost:9002/1.html</a>。</p><p style="text-indent:2em;">
+	2.服务器监听着9002端口，那么在收到请求了请求之后，就能从 http head 头中获取到请求里需要访问的 uri 资源在web 目录中的位置。</p><p style="text-indent:2em;">
+	3.服务器读取需要访问的资源文件，然后填充到 http 的实体中返回给客户端。</p><p style="text-indent:2em;">
+	示意图如下：</p><p style="text-indent:2em;"><img src="/upload/image/2015/0726/20150726151214_56440.png" width="640" height="287" alt="用 PHP 来实现一个动态 Web 服务器" > </p><p style="text-indent:2em;"><br/></p><p style="text-indent:2em;">
+	由于博客贴太多代码不太方便，静态服务器演示代码，我已经上传 github&nbsp;<a href="https://github.com/zhoumengkang/php/tree/master/php-webserver/static" target="_blank">https://github.com/zhoumengkang/php/tree/master/php-webserver/static</a> </p><p style="text-indent:2em;">
+	下图为我访问我 web 目录下的<code class="markdownTags">1.jpg</code>文件的截图</p><p style="text-indent:2em;"><img data-original="/upload/image/2015/0728/20150728234942_31757.png" width="640" height="429"> </p><p style="text-indent:2em;">
+	简单的静态 web 服务器已经完成了，下面的问题就是怎么让其支持动态内容的输出了。</p><p style="text-indent:2em;">
+	是不是只需要在 web 服务器内部执行完某个程序之后，把得到的结果返回给客户端就行呢？但是这样 web 服务器的代码就和业务代码耦合在一起了，怎么解决一个 web 服务器，可以运用在各个业务场景下呢？<code class="markdownTags">CGI</code> 的出现解决了这一问题。那么 CGI 是什么呢？下面这段话复制的：</p><p style="text-indent:2em;">
+	CGI是外部应用程序（CGI程序）与Web服务器之间的接口标准，是在CGI程序和Web服务器之间传递信息的规程。CGI规范允许Web服务器执行外部程序，并将它们的输出发送给Web浏览器，CGI将Web的一组简单的静态超媒体文档变成一个完整的新的交互式媒体。</p><p style="text-indent:2em;">
+	好晕，举个具体的例子，比如我们在使用的 PHP 的全局变量<code class="markdownTags">$_SERVER[&#39;QUERY_STRING&#39;]</code>就是 Web 服务器通过 CGI 协议之上，传递过来的。例如在 Nginx 中，也许你记得这样的 fastcgi 配置</p><pre class="prettyprint linenums">fastcgi_param&nbsp;&nbsp;QUERY_STRING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$query_string;</pre><p style="text-indent:2em;">
+	没错 nginx 把自己的全局变量<code class="markdownTags">$query_string</code>传递给了<code class="markdownTags">fastcgi_param</code>的环境变量中。</p><p style="text-indent:2em;">
+	下面我们也以 CGI 的<code class="markdownTags">QUERY_STRING</code>作为桥梁，将客户端请求的 uri 中的信息传递到 cgi 程序中去。通过<code class="markdownTags">putenv</code>的方式把<code class="markdownTags">QUERY_STRING</code>存入该请求的环境变量中。</p><p style="text-indent:2em;">
+	我们约定 Web 服务器中访问的资源是<code class="markdownTags">.cgi</code>后缀则表示是动态访问，这一点有点儿类似于 nginx 里配置 location 来寻找 php 脚本程序一样。都是一种检查是否应该请求 cgi 程序的规则。<span style="line-height:1.5;">为了和 Web 服务器区别开来，我用 C 写了一个查询用户信息的 cgi 程序</span><span style="line-height:1.5;">，根据用户 id 查询用户资料。</span> </p><p style="text-indent:2em;"><span style="line-height:1.5;"><img data-original="/upload/image/2015/0729/20150729005015_18610.png" width="640" height="381"><br/></span> </p><p style="text-indent:2em;"><span style="line-height:1.5;">演示代码地址：<a href="https://github.com/zhoumengkang/php/tree/master/php-webserver/dynamic" target="_blank">https://github.com/zhoumengkang/php/tree/master/php-webserver/dynamic</a></span> </p><p style="text-indent:2em;"><span style="line-height:1.5;">如果要运行该 demo 需要做如下操作&nbsp;</span> </p><p style="text-indent:2em;"><span style="line-height:1.5;">1.修改<code class="markdownTags">config.php</code>里的项目根目录<code class="markdownTags">WEB_ROOT</code>&nbsp;</span> </p><p style="text-indent:2em;"><span style="line-height:1.5;">2.编译<code class="markdownTags">cgi-demo\user.c</code>，编译命令<code class="markdownTags">gcc -o user.cgi user.c</code>，然后将<code class="markdownTags">user.cgi</code>文件放入你配置的项目根目录下面&nbsp;</span> </p><p style="text-indent:2em;"><span style="line-height:1.5;">3.在终端执行<code class="markdownTags">php start.php</code> ,这样该 web 服务器就启动了</span> </p><p style="text-indent:2em;"><span style="line-height:1.5;">4.通过&nbsp;<a href="http://localhost:9003/user.cgi?id=1" target="_blank">http://localhost:9003/user.cgi?id=1</a>&nbsp;就可以访问看到如下效果了</span> </p><p style="text-indent:2em;"><span style="line-height:1.5;"><img data-original="/upload/image/2015/0728/20150728153256_75403.png" width="640" height="344"><br/></span> </p><p style="text-indent: 2em;">关于并发的支持，不是本文的讨论范围，有兴趣的可以看我的系列笔记&nbsp;<a href="http://mengkang.net/567.html" _src="http://mengkang.net/567.html">http://mengkang.net/567.html</a></p>        </div>
+        <div class="single-post-share-list">
+    <span class="mobile-hide">分享到</span>
+    <div class="share-group">
+<!--        <a id="weixin-share" class="weixin mobile-hide" href="javascript:void(0)" ref="nofollow" target="_blank">-->
+<!--            <i class="icon-weixin"></i>-->
+<!--            <div class="panel-weixin">-->
+<!--                <section class="weixin-section">-->
+<!--                    <img src="http://s.jiathis.com/qrcode.php?url=--><!--?via=wechat_qr">-->
+<!--                </section>-->
+<!--                <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>-->
+<!--            </div>-->
+<!--        </a>-->
+        <a class="weibo" href="http://v.t.sina.com.cn/share/share.php?url=https://mengkang.net/491.html&title=用 PHP 来实现一个动态 Web 服务器" ref="nofollow" target="_blank">
+            <i class="icon-weibo"></i>
+        </a>
+        <a class="qq external mobile-hide" href="http://connect.qq.com/widget/shareqq/index.html?url=https://mengkang.net/491.html&title=用 PHP 来实现一个动态 Web 服务器&source=shareqq&desc=刚看到这篇文章不错，推荐给你看看～" ref="nofollow" target="_blank">
+            <i class="icon-qq"></i>
+        </a>
+        <a class="douban external mobile-hide" href="http://share.baidu.com/s?type=text&searchPic=0&sign=on&to=douban&url=https://mengkang.net/491.html&title=用 PHP 来实现一个动态 Web 服务器" ref="nofollow" target="_blank">
+            <i class="icon-douban"></i>
+        </a>
+    </div>
+</div>    </div>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="https://static.mengkang.net/view/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+        $(function(){
+            var windowWidth = $(window).width();
+            var minWidth = windowWidth - 50;
+            //图片放大效果
+            $(".blog-content img").each(function(){
+                //获取图片的真实地址
+                var imgSrc;
+                if($(this).attr('data-original')){
+                    imgSrc = $(this).attr('data-original');
+                }else{
+                    imgSrc = $(this).attr('src');
+                }
+
+                // 保证在手机显示完整的图片
+                if (windowWidth < 1024) {
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px").wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+ minWidth +'px"></a>');
+                }else{
+                    $(this).wrap('<a class="image-popup-no-margins content-img" href="'+imgSrc+'" style="width:'+$(this).attr('width')+'px"></a>');
+
+                }
+
+            });
+            //图片处理
+            $('.image-popup-no-margins').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                fixedContentPos: true,
+                mainClass: 'mfp-no-margins mfp-with-zoom',
+                image: {
+                    verticalFit: true
+                },
+                zoom: {
+                    enabled: true,
+                    duration: 300
+                }
+            });
+            $(".blog-content").on("magnificPopup",".image-popup-no-margins");
+            //懒加载
+            $(".blog-content img").lazyload({"effect":"fadeIn"});
+
+            if(windowWidth < 1024){
+                $(".speech-zmk-desc").hide();
+                $("video").each(function(){
+                    var minHeight = $(this).attr("height") * minWidth / $(this).attr("width");
+                    $(this).attr("width",minWidth + "px").attr("height",minHeight + "px");
+                });
+            }
+        })
+    </script>
+    <div id="comment">
+    <h2>评论列表</h2>
+    <div id="commentList">
+        <div class="comment-list clearfix">
+            <a name="comment_text"></a>
+            <div class="comment-list-left">
+                <img src="/view/images/avatar/1.jpg" alt=""/>
+            </div>
+            <div class="comment-list-right">
+                <form name="comment">
+                    <input type="hidden" name="blogid" value="491"/>
+                    <input type="hidden" name="replyId" value="0"/>
+                    <div class="comment-input-div">
+                        <input type="text" name="username" placeholder="昵称（可不填写）" class="comment-input" />
+                        <input type="email" name="email" placeholder="邮箱（可不填写）" class="comment-input" />
+                        <span>如果填写邮箱了，当我我回复您的时候会给您邮箱发送消息提醒，方便交流</span>
+                    </div>
+                    <div>
+                        <textarea name="comment" placeholder="加入讨论..." class="comment-textarea"></textarea>
+                    </div>
+                    <div class="comment-input-div">
+                        <a href="javascript:void(0)" id="post_comment" issending="false">提交</a>
+                        <span>可以使用`xxxx`来插入简短的代码碎片</span>
+                    </div>
+                                    </form>
+            </div>
+        </div>
+            </div>
+    </div>
+
+<script type="text/javascript">
+    $(function(){
+        //将除了本页锚点链接之外所有的a链接都改为在新窗口打开
+        $(".content").find('a').each(function(){
+            if(/^#/.test($(this).attr('href'))){
+                $(this).attr({'target':'_self'});
+            }else{
+                $(this).attr({'target':'_blank'});
+            }
+        });
+        $(".delreply").click(function(){
+            var _e = $(this);
+            var id = $(this).attr('targetId');
+            ui.confirm('确认删除该留言？',function(){
+                var url = U('Comment/del');
+                $.post(url,{id:id},function(data){
+                    if(parseInt(data.flag)==1){
+                        _e.parents('.comment-list').remove();
+                        ui.success('删除成功');
+                    }else{
+                        ui.error('删除失败');
+                    }
+                },'json')
+            },function(){
+                return false;
+            })
+        });
+        $(".reply_the_comment").click(function(){
+            $("input[name='replyId']").val($(this).attr('targetId'));
+            var pre_content = '回复'+$(this).parent().parent().find(".username").text()+': ';
+            var callback = function(pre_content){
+                $("textarea[name='comment']").css('background','#90DCFF').focus().val(pre_content);
+                setTimeout(function(){
+                    $("textarea[name='comment']").css('background','#FFF');
+                    setTimeout(function(){
+                        $("textarea[name='comment']").css('background','#90DCFF');
+                        setTimeout(function(){
+                            $("textarea[name='comment']").css('background','#FFF');
+                        },300)
+                    },300)
+                },300);
+            };
+
+            var scrollHeight = $('a[name="comment_text"]').offset().top;
+            if($(document).scrollTop() + $(window).height() + 100 <= $(document).height()){
+                $("html,body").animate({scrollTop:scrollHeight},1000,function(){
+                    //使得回复框颜色闪一闪
+                    callback(pre_content);
+                });
+            }else{
+                callback(pre_content);
+            }
+        });
+        $("textarea[name='comment']").focus(function(){
+            $(this).css({"font-size":"16px","line-height":"22px"});
+            $(".comment-input-div").fadeIn();
+        });
+        $("textarea[name='comment'],input").focus(function(){
+            //先自动填下留言表单，为留言做准备
+            if(!$("input[name='email']").val()){
+                var email = getCookie('email');
+                if(email){
+                    $("input[name='email']").val(email);
+                }
+            }
+            if(!$("input[name='username']").val()){
+                var username = getCookie('username');
+                if(username){
+                    $("input[name='username']").val(username);
+                }
+            }
+        });
+        $("textarea[name='comment']").keydown(function(e){
+            if(e.keyCode==13){
+                $(this).css("height",parseInt($(this).css("height")) + parseInt($(this).css("line-height")));
+            }
+        });
+        $("#post_comment").click(function(){
+            post_comment();
+        });
+        //执行评论
+        var post_comment_flag = true;
+        var post_comment = function(){
+            if(!post_comment_flag){
+                ui.error('...稍等一会，上一条还没发送过去哦');
+                return false;
+            }
+            post_comment_flag = false;
+            var post_comment = $("textarea[name='comment']").val();
+            if(post_comment.length < 1){
+                ui.error('...说点什么吧');
+                return false;
+            }
+            var post_email = $("input[name='email']").val();
+            if(!post_email.match(/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/)){
+                ui.error('邮箱格式不正确');
+                return false;
+            }
+
+            var post_username = $("input[name='username']").val();
+            //第一次留言，则把用户的邮箱、称呼、博客地址存到客户端cookie里方便下次调用，而不用浏览的人手动输入了
+            if(!getCookie('username') || getCookie('username') !=  post_username){
+                setCookie('username', post_username);
+            }
+            if(!getCookie('email') || getCookie('email') != post_email){
+                setCookie('email',post_email);
+            }
+
+            $.post(U('Comment/doComment'),{
+                replyId:$("input[name='replyId']").val(),
+                blogid: $("input[name='blogid']").val(),
+                content: post_comment,
+                email: post_email,
+                name:  post_username
+            },function(data){
+                post_comment_flag = true;
+                if(parseInt(data.flag)>0){
+                    ui.success(data.info);
+                    $("#commentList").append('<div class="comment-list clearfix"><div class="comment-list-left"><img src="http://static.mengkang.net/view/images/avatar/1.jpg" alt=""/></div><div class="comment-list-right"><span class="username">'+$("input[name='username']").val()+'</span><span class="time">刚刚</span><p>'+data.data+'</p></div></div>');
+                    $("textarea[name='comment']").val('');
+                    ui.success(data.info);
+                    $("html,body").animate({scrollTop:$("#footer").offset().top},1000);
+                }else{
+                }
+            })
+        }
+    });
+
+</script></div>
+            <link rel="stylesheet" href="https://static.mengkang.net/editor/plugins/code/prettify.css" />
+        <script charset="utf-8" src="https://static.mengkang.net/editor/plugins/code/prettify.js"></script>
+        <script>
+            $(function(){ prettyPrint(); });
+        </script>
+    </div>
+<footer id="footer">
+    <div class="login" id="login">
+        <div class="popbackground"></div>
+        <div class="popbox loginBox" id="loginBox">
+            <div class="innerpopbox">
+                <div class="title">
+                    <div style="font-weight: 800;color: #2e9fff;text-align: center;">登堂入室 请输入密码</div>
+                </div>
+                <div class="password">
+                    <input type="password" name="password"/>
+                    <div><a href="javascript:void(0)" class="loginActive">进入</a><a href="javascript:void(0)" class="closeLoginBox">返回</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright smoothing">
+        <small>
+            <a href="about.me">关于博主 </a>
+<!--            <a class="danciben-link" href="/danciben.html">我的单词本 </a>-->
+            <a href="javascript:void(0)" name="login">登堂入室</a>            © 周梦康 2012 - 2016 京ICP备14049089号-1
+            <span style="display:none">
+                <script type="text/javascript">
+                    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd2adf0c061d575a2921e4a7c41fe9cd6' type='text/javascript'%3E%3C/script%3E"));
+                </script>
+            </span>
+        </small>
+    </div>
+</footer>
+</body>
+</html>

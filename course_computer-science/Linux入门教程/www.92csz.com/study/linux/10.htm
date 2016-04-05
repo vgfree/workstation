@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+ <html><head>
+<!-- Original URL: http://www.92csz.com/study/linux/10.htm
+Date Downloaded: 2016/3/26 13:56:53 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 
+ <meta name="description" content="文档的压缩与打包" />
+ <meta name="keywords" content="nginx,freebsd,linux,mysql,shell,apache,centos,redhat,rhel,windows,sql,系统运维,IT运维,开源系统,开源系统运维" />
+ <title> 文档的压缩与打包  </title>
+ <!-- base href="http://www.92csz.com/" -->
+ </head>
+ <body bgcolor="#FFFFFF" text="#000000"><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="menu">
+	 <ul>
+		 <span style="FONT-SIZE: 10.5pt">
+			 <li style="float:right;list-style-type:none;"><a href="http://www.92csz.com/" hidefocus="true" id="mn_list">返回网站首页 </a></li>
+			 <li><a href="index.html" hidefocus="true" id="mn_list">linux入门教程 </a></li>
+			 <li><a href="http://www.92csz.com/search" hidefocus="true" id="mn_search">搜索 </a></li>
+		 </span>
+	 </ul>
+ </div>
+ <p style="text-align: center;"><span style="font-family:'宋体';font-size:15pt;"><b>第十章 </b></span><span style="font-family:'Calibri';font-size:15pt;"><b>	 </b></span><span style="font-family:'宋体';font-size:15pt;"><b>文档的压缩与打包 </b></span></p><p><span style="font-family:'Calibri';font-size:10.5pt;">	 </span><span style="font-family:'宋体';font-size:10.5pt;">在 </span><span style="font-family:'Calibri';font-size:10.5pt;">windows </span><span style="font-family:'宋体';font-size:10.5pt;">下我们接触最多的压缩文件就是 </span><span style="font-family:'Calibri';font-size:10.5pt;">.rar </span><span style="font-family:'宋体';font-size:10.5pt;">格式的了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">但在 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">下这样的格式是不能识别的，它有自己所特有的压缩工具 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">但有一种文件在 </span><span style="font-family:'Calibri';font-size:10.5pt;">windows </span><span style="font-family:'宋体';font-size:10.5pt;">和 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">下都能使用那就是 </span><span style="font-family:'Calibri';font-size:10.5pt;">.zip </span><span style="font-family:'宋体';font-size:10.5pt;">格式的文件了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">压缩的好处不用笔者介绍相信你也晓得吧，它不仅能节省磁盘空间而且在传输的时候还能节省网络带宽呢 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <script async="" src="../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+ <!-- study_zsy -->
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5865024608655371" data-ad-slot="4214051509" data-ad-format="auto"></ins>
+ <script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	 </span><span style="font-family:'宋体';font-size:10.5pt;">在 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">下最常见的压缩文件通常都是以 </span><span style="font-family:'Calibri';font-size:10.5pt;">.tar.gz  </span><span style="font-family:'宋体';font-size:10.5pt;">为结尾的，除此之外还有 </span><span style="font-family:'Calibri';font-size:10.5pt;">.tar, .gz, .bz2, .zip </span><span style="font-family:'宋体';font-size:10.5pt;">等等 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">以前也介绍过 </span><span style="font-family:'Calibri';font-size:10.5pt;">linux </span><span style="font-family:'宋体';font-size:10.5pt;">系统中的后缀名其实要不要无所谓，但是对于压缩文件来讲必须要带上 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">这是为了判断压缩文件是由哪种压缩工具所压缩，而后才能去正确的解压缩这个文件 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">以下介绍常见的后缀名所对应的压缩工具 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	.gz    ____  </span><span style="font-family:'宋体';font-size:10.5pt;">压缩工具压缩的文件 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	.bz2   bzip2  </span><span style="font-family:'宋体';font-size:10.5pt;">压缩工具压缩的文件 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	.tar    ___  </span><span style="font-family:'宋体';font-size:10.5pt;">打包程序打包的文件 </span><span style="font-family:'Calibri';font-size:10.5pt;">(tar </span><span style="font-family:'宋体';font-size:10.5pt;">并没有压缩功能，只是把一个目录合并成一个文件 </span><span style="font-family:'Calibri';font-size:10.5pt;">) </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	.tar.gz	 </span><span style="font-family:'宋体';font-size:10.5pt;">可以理解为先用 </span><span style="font-family:'Calibri';font-size:10.5pt;">tar </span><span style="font-family:'宋体';font-size:10.5pt;">打包，然后再 </span><span style="font-family:'Calibri';font-size:10.5pt;">gzip </span><span style="font-family:'宋体';font-size:10.5pt;">压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">	.tar.bz2	  </span><span style="font-family:'宋体';font-size:10.5pt;">同上，先用 </span><span style="font-family:'Calibri';font-size:10.5pt;">tar </span><span style="font-family:'宋体';font-size:10.5pt;">打包，然后再 </span><span style="font-family:'Calibri';font-size:10.5pt;">bzip2 </span><span style="font-family:'宋体';font-size:10.5pt;">压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><b>【gzip】 </b></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">语法： </span><span style="font-family:'Calibri';font-size:10.5pt;"> gzip  [-d#] ________    </span><span style="font-family:'宋体';font-size:10.5pt;">其中 </span><span style="font-family:'Calibri';font-size:10.5pt;"># </span><span style="font-family:'宋体';font-size:10.5pt;">为 </span><span style="font-family:'Calibri';font-size:10.5pt;">1-9 </span><span style="font-family:'宋体';font-size:10.5pt;">的数字 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-d  </span><span style="font-family:'宋体';font-size:10.5pt;">：解压缩时使用 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-#  </span><span style="font-family:'宋体';font-size:10.5pt;">：压缩等级， </span><span style="font-family:'Calibri';font-size:10.5pt;">1 </span><span style="font-family:'宋体';font-size:10.5pt;">压缩最差， </span><span style="font-family:'Calibri';font-size:10.5pt;">9 </span><span style="font-family:'宋体';font-size:10.5pt;">压缩最好， </span><span style="font-family:'Calibri';font-size:10.5pt;">6 </span><span style="font-family:'宋体';font-size:10.5pt;">为默认 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_1.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">压缩 </span><span style="font-family:'Calibri';font-size:10.5pt;">test.txt </span><span style="font-family:'宋体';font-size:10.5pt;">后，则变成了 </span><span style="font-family:'Calibri';font-size:10.5pt;">test.txt.gz </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_7.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">用 </span><span style="font-family:'Calibri';font-size:10.5pt;">-d </span><span style="font-family:'宋体';font-size:10.5pt;">解压缩 </span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">要注意的是， </span><span style="font-family:'Calibri';font-size:10.5pt;">gzip </span><span style="font-family:'宋体';font-size:10.5pt;">不可以压缩目录 </span><span style="font-family:'Calibri';font-size:10.5pt;"></span></p><p><img src="images/10_8.png" alt="[image]" border="0" /></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><b>【bzip2】 </b></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">语法： </span><span style="font-family:'Calibri';font-size:10.5pt;">bzip2  [-dz] filename </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-d  </span><span style="font-family:'宋体';font-size:10.5pt;">：解压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-z  </span><span style="font-family:'宋体';font-size:10.5pt;">：压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_9.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">其实 </span><span style="font-family:'Calibri';font-size:10.5pt;">-z </span><span style="font-family:'宋体';font-size:10.5pt;">参数是可以省略掉的，你不妨试试 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_10.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">跟 </span><span style="font-family:'Calibri';font-size:10.5pt;">gzip </span><span style="font-family:'宋体';font-size:10.5pt;">的解压类似，也是用 </span><span style="font-family:'Calibri';font-size:10.5pt;">-d </span><span style="font-family:'宋体';font-size:10.5pt;">解压 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><b>【tar】 </b></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">语法： </span><span style="font-family:'Calibri';font-size:10.5pt;">tar [-zjxcvfpP] filename </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-z  </span><span style="font-family:'宋体';font-size:10.5pt;">：是否同时用 </span><span style="font-family:'Calibri';font-size:10.5pt;">gzip </span><span style="font-family:'宋体';font-size:10.5pt;">压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-j  </span><span style="font-family:'宋体';font-size:10.5pt;">：是否同时用 </span><span style="font-family:'Calibri';font-size:10.5pt;">bzip2 </span><span style="font-family:'宋体';font-size:10.5pt;">压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-x  </span><span style="font-family:'宋体';font-size:10.5pt;">：解包或者解压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-t  </span><span style="font-family:'宋体';font-size:10.5pt;">：查看 </span><span style="font-family:'Calibri';font-size:10.5pt;">tar </span><span style="font-family:'宋体';font-size:10.5pt;">包里面的文件 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-c  </span><span style="font-family:'宋体';font-size:10.5pt;">：建立一个 </span><span style="font-family:'Calibri';font-size:10.5pt;">tar </span><span style="font-family:'宋体';font-size:10.5pt;">包或者压缩文件包 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-v  </span><span style="font-family:'宋体';font-size:10.5pt;">：可视化 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-f  </span><span style="font-family:'宋体';font-size:10.5pt;">：后面跟文件名，压缩时跟 </span><span style="font-family:'Calibri';font-size:10.5pt;">-f </span><span style="font-family:'宋体';font-size:10.5pt;">文件名，意思是压缩后的文件名为 </span><span style="font-family:'Calibri';font-size:10.5pt;">filename </span><span style="font-family:'宋体';font-size:10.5pt;">，解压时跟 </span><span style="font-family:'Calibri';font-size:10.5pt;">-f </span><span style="font-family:'宋体';font-size:10.5pt;">文件名，意思是解压 </span><span style="font-family:'Calibri';font-size:10.5pt;">filename。 </span><span style="font-family:'宋体';font-size:10.5pt;">请注意，如果是多个参数组合的情况下带有 </span><span style="font-family:'Calibri';font-size:10.5pt;">-f </span><span style="font-family:'宋体';font-size:10.5pt;">，请把 </span><span style="font-family:'Calibri';font-size:10.5pt;">f </span><span style="font-family:'宋体';font-size:10.5pt;">写到最后面 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-p  </span><span style="font-family:'宋体';font-size:10.5pt;">：使用原文件的属性，压缩前什么属性压缩后还什么属性 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">（不常用） </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-P  </span><span style="font-family:'宋体';font-size:10.5pt;">：可以使用绝对路径 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">（不常用） </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">--exclude  filename  </span><span style="font-family:'宋体';font-size:10.5pt;">：在打包或者压缩时，不要将 </span><span style="font-family:'Calibri';font-size:10.5pt;">filename </span><span style="font-family:'宋体';font-size:10.5pt;">文件包括在内 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span><span style="font-family:'宋体';font-size:10.5pt;">（不常用） </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_11.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">首先在 </span><span style="font-family:'Calibri';font-size:10.5pt;">test </span><span style="font-family:'宋体';font-size:10.5pt;">目录下建立 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111 </span><span style="font-family:'宋体';font-size:10.5pt;">目录，然后在 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111 </span><span style="font-family:'宋体';font-size:10.5pt;">目录下建立 </span><span style="font-family:'Calibri';font-size:10.5pt;">test2.txt </span><span style="font-family:'宋体';font-size:10.5pt;">，并写入 </span><span style="font-family:'Calibri';font-size:10.5pt;">”nihao” </span><span style="font-family:'宋体';font-size:10.5pt;">到 </span><span style="font-family:'Calibri';font-size:10.5pt;">test2.txt </span><span style="font-family:'宋体';font-size:10.5pt;">中，接着是用 </span><span style="font-family:'Calibri';font-size:10.5pt;">tar </span><span style="font-family:'宋体';font-size:10.5pt;">把 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111 </span><span style="font-family:'宋体';font-size:10.5pt;">打包成 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111.tar。 </span><span style="font-family:'宋体';font-size:10.5pt;">请记住 </span><span style="font-family:'Calibri';font-size:10.5pt;">-f </span><span style="font-family:'宋体';font-size:10.5pt;">参数后跟的是打包后的文件名 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_21.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">删除原来的 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111 </span><span style="font-family:'宋体';font-size:10.5pt;">目录，然后解包 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111.tar </span><span style="font-family:'宋体';font-size:10.5pt;">，不管是打包还是解包，原来的文件是不会删除的 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_22.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">打包的同时使用 </span><span style="font-family:'Calibri';font-size:10.5pt;">gzip </span><span style="font-family:'宋体';font-size:10.5pt;">压缩 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_23.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">用 </span><span style="font-family:'Calibri';font-size:10.5pt;">-tf  </span><span style="font-family:'宋体';font-size:10.5pt;">跟包名来查看包或者压缩包内的文件都有哪些 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_24.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">先删除 </span><span style="font-family:'Calibri';font-size:10.5pt;">test111, </span><span style="font-family:'宋体';font-size:10.5pt;">然后用 </span><span style="font-family:'Calibri';font-size:10.5pt;">tar -zxvf  </span><span style="font-family:'宋体';font-size:10.5pt;">来解压 </span><span style="font-family:'Calibri';font-size:10.5pt;">.tar.gz </span><span style="font-family:'宋体';font-size:10.5pt;">的压缩包 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_25.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-jcvf  </span><span style="font-family:'宋体';font-size:10.5pt;">打包的同时用 </span><span style="font-family:'Calibri';font-size:10.5pt;">bzip2 </span><span style="font-family:'宋体';font-size:10.5pt;">压缩， </span><span style="font-family:'Calibri';font-size:10.5pt;">-tf </span><span style="font-family:'宋体';font-size:10.5pt;">同样可以查看 </span><span style="font-family:'Calibri';font-size:10.5pt;">.tar.bz2 </span><span style="font-family:'宋体';font-size:10.5pt;">的压缩包 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_26.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">-jxvf </span><span style="font-family:'宋体';font-size:10.5pt;">解压缩 </span><span style="font-family:'Calibri';font-size:10.5pt;">.tar.bz2 </span><span style="font-family:'宋体';font-size:10.5pt;">的压缩包 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_27.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;">--exclude </span><span style="font-family:'宋体';font-size:10.5pt;">参数的作用就是打包的时候过滤掉某些文件，如果想过滤多个文件怎么办 </span></p>
+ <p><span style="font-family:'Calibri';font-size:10.5pt;"><img src="images/10_28.png" alt="[image]" border="0" /></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;">只能是继续跟 </span><span style="font-family:'Calibri';font-size:10.5pt;"> --exclude filename </span><span style="font-family:'宋体';font-size:10.5pt;">了 </span><span style="font-family:'Calibri';font-size:10.5pt;">。 </span></p>
+ <div><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5865024608655371";
+google_ad_slot = "3514991827";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+ <script type="text/javascript" src="../../../pagead2.googlesyndication.com/pagead/f.txt.js">
+</script></div>
+ <p style="text-align: justify;"><span style="font-family:'宋体';font-size:10.5pt;">上一页  <a href="9.htm">文本编辑工具vim </a></span></p>
+ <p style="text-align: justify;"><span style="font-family:'宋体';font-size:10.5pt;">下一页  <a href="11.htm">安装RPM包或者安装源码包 </a></span></p>
+ <p><span style="font-family:'宋体';font-size:10.5pt;"><a href="index.html">回到主目录 </a>&nbsp; </span></p>
+ <script src="../../../s20.cnzz.com/stat_a61bedf.php.js" language="JavaScript"></script>
+ </body></html>an></p>
+ <script src="http://s20.cnzz.com/stat.php?id=3037570&web_id=3037570&show=pic" language="JavaScript"></script>
+ </body></html>

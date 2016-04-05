@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="gb2312" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<title>超强、超详细Redis数据库入门教程_Redis_脚本之家</title>
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+<meta name="keywords" content="Redis,入门教程" />
+<meta name="description" content="这篇文章主要介绍了超强、超详细Redis入门教程,本文详细介绍了Redis数据库各个方面的知识,需要的朋友可以参考下" />
+<link rel="alternate" media="only screen and(max-width: 640px)" href="http://m.jb51.net/article/56448.htm" />
+<meta http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/article/56448.htm" />
+<meta http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/article/56448.htm" />
+<script type="text/javascript">
+var tougao="junjie";var lmname="Redis";
+(function(){var ua=navigator.userAgent.toLowerCase();var bIsIpad=ua.match(/ipad/i)=="ipad";var bIsIphoneOs=ua.match(/iphone os/i)=="iphone os";var bIsAndroid=ua.match(/android/i)=="android";var bIsWM=ua.match(/windows mobile/i)=="windows mobile";if(bIsIpad||bIsIphoneOs||bIsAndroid||bIsWM){window.location.href="http://m.jb51.net/article/56448.htm"}})();
+</script>
+<link type="text/css" href="http://img.jb51.net/skin/2016/base.css" rel="stylesheet" />
+<link type="text/css" href="http://img.jb51.net/skin/2016/common.css" rel="stylesheet" />
+<script type="text/javascript" src="http://img.jb51.net/jslib/jquery/jquery.min.js"></script>
+<script type=text/javascript src="http://img.jb51.net/js/common.js"></script>
+</head>
+<body>
+<!--head Star -->
+<div id="head">
+  <div class="toolBar">
+  <div class="main">
+    <!--topNav Star -->
+    <div class="topNav clearfix">
+      <ul class="navList fl">
+        <li>
+          <div class="one"><a href="http://www.jb51.net" target="_blank">脚本之家</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://www.jb51.net/softs/" target="_blank">软件下载<i class="icon"></i></a></div>
+          <div class="two">
+<a href="/softs/android.html" target="_blank">android软件</a> <a href="/softs/mac.html" target="_blank">MAC软件</a> <a href="/qudong/" target="_blank">驱动下载</a> <a href="/fonts/" target="_blank">字体下载</a> <a href="/dll/" target="_blank">DLL下载</a> </div>
+</li>
+        <li>
+          <div class="one"><a href="/codes/" target="_blank">源码下载<i class="icon"></i></a></div>
+          <div class="two"> <a href="/codes/asp.html" target="_blank">asp源码</a> <a href="/codes/php.html" target="_blank">php源码</a> <a href="/codes/aspnet.html" target="_blank">asp.net源码</a> <a href="/codes/jsp.html" target="_blank">jsp源码</a> <a href="/codes/editor.html" target="_blank">网页编辑器</a> <a href="/codes/list123_1.html" target="_blank">数据库管理</a> <a href="/codes/list124_1.html" target="_blank">常用组件</a> <a href="/jiaoben/" target="_blank">脚本下载</a></div>
+        </li>
+        <li>
+          <div class="one"><a href="http://tools.jb51.net" target="_blank">在线工具<i class="icon"></i></a></div>
+          <div class="two"> <a href="/shouce/" target="_blank">在线手册</a> <a href="/tools/cssyasuo.shtml" target="_blank">CSS格式化</a> <a href="http://tools.jb51.net/tools/js_geshihua.asp" target="_blank">JS格式化</a> <a href="/tools/html-js.htm" target="_blank">Html转化为Js</a> <a href="http://tools.jb51.net/regex/javascript" target="_blank">js正则表达式</a>
+</div>
+        </li>
+        <li>
+          <div class="one"><a href="/w3school/" target="_blank">网页教程基础</a></div>
+        </li>
+			<li>
+          <div class="one"><a href="http://s.jb51.net" target="_blank">服务器常用软件</a></div>
+        </li>
+		<li>
+          <div class="one"><a href="http://m.jb51.net" target="_blank">手机版</a></div>
+          <div class="two"><img src="http://files.jb51.net/images/m.jb51.net.png" data-baiduimageplus-ignore /></div>     
+        </li>
+        <li class="watch">
+          <div class="one"><a href="http://weibo.com/jb51net" target="_blank" rel="nofollow" ><i class="icon"></i>关注微信</a></div>
+          <div class="two"><img src="http://files.jb51.net/images/weixin_200.gif" data-baiduimageplus-ignore /></div>
+        </li>
+      </ul>
+      <div class="navUser mt5 fr" id="jb51_topbar" > </div>
+    </div>
+    <!--topNav End -->
+  </div>
+</div>
+
+  <div class="main clearfix">
+    <div class="mtb10 clearfix">
+      <div class="logo"><a href="http://www.jb51.net/"><img src="http://www.jb51.net/images/logo.gif" title="脚本之家" alt="脚本之家" /></a></div>
+      <div class="logom fl" id="logo_m"></div>
+      <div class="logor fr" id="logo_r"></div>
+    </div>
+<!-- 导航-->
+<DIV class="nav_top clearfix">
+<UL>
+<li><a href="http://www.jb51.net/web/">网页制作</a></li>
+<li><a href="http://www.jb51.net/list/index_1.htm">网络编程</a></li>
+<li><a href="http://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+<li><a href="http://www.jb51.net/jiaoben/">脚本下载</a></li>
+<li><a href="http://www.jb51.net/list/index_104.htm">数据库</a></li>
+<li><a href="http://www.jb51.net/cms/">CMS教程</a></li>
+<li><a href="http://www.jb51.net/books/">电子书籍</a></li>
+<li><a href="http://www.jb51.net/pingmian/">平面设计</a></li>
+<li><a href="http://www.jb51.net/media/">媒体动画</a></li>
+<li><a href="http://www.jb51.net/os/">操作系统</a></li>
+<li><a href="http://www.jb51.net/yunying/">网站运营</a></li>
+<li><a href="http://www.jb51.net/hack/">网络安全</a></li>
+<li class="last"><a href="http://www.jb51.net/shouce/">在线手册</a></li>
+
+</UL>
+</DIV>
+
+<!--导航结束-->
+<div class="subnav clearfix">
+<ul><li><a href='/list/list_113_1.htm' title="MsSql">MsSql</a></li>
+<li><a href='/list/list_112_1.htm' title="Mysql">Mysql</a></li>
+<li><a href='/list/list_252_1.htm' title="mariadb">mariadb</a></li>
+<li><a href='/list/list_154_1.htm' title="oracle">oracle</a></li>
+<li><a href='/list/list_155_1.htm' title="DB2">DB2</a></li>
+<li><a href='/list/list_236_1.htm' title="mssql2008">mssql2008</a></li>
+<li><a href='/list/list_210_1.htm' title="mssql2005">mssql2005</a></li>
+<li><a href='/list/list_215_1.htm' title="SQLite">SQLite</a></li>
+<li><a href='/list/list_224_1.htm' title="PostgreSQL">PostgreSQL</a></li>
+<li><a href='/list/list_239_1.htm' title="MongoDB">MongoDB</a></li>
+<li><a href='/list/list_242_1.htm' title="Redis">Redis</a></li>
+<li><a href='/list/list_105_1.htm' title="Access">Access</a></li>
+<li><a href='/list/list_132_1.htm' title="数据库文摘">数据库文摘</a></li>
+<li><a href='/list/list_133_1.htm' title="数据库其它">数据库其它</a></li>
+</ul>
+</div>
+<div class="NavBar clearfix ptb10">
+<div class="fl w690">
+<div class="box mb15 mt10"><i class="icon"></i>您的位置：<a href='/'>首页</a> → <a href="/list/index_104.htm" title="数据库">数据库</a> → <a href="/list/list_242_1.htm" title="Redis">Redis</a> → 正文内容 Redis数据库入门教程</div>
+</div>
+<div class="fr w300"><div class="search">
+<form action="http://so.jb51.net/cse/search" target="_blank">
+    <input type="hidden" name="s" value="10520733385329581432">
+    <input type="hidden" name="ie" value="gbk">
+    <input type="text" name="q" class="key_input" placeholder="请输入关键词">
+    <input type="submit" value="搜索" class="c_btn">
+</form></div></div>
+  </div>
+</div>
+<!--head End -->
+<div class="main mb10 clearfix">
+<div class="tonglanad clearfix" id="tonglanbd"><script type="text/javascript">dy("tonglanbd")</script></div>
+<div class="blank5 clearfix"></div>
+<div class="clearfix mt10" id="tonglan1"></div>
+</div>
+
+<!--content Star -->
+<div id="contents">
+ <div class="main clearfix">
+      <div class="w690 fl">
+      <div class="article-content border">
+      <div class="title">
+            <h1 class="YaHei">超强、超详细Redis数据库入门教程</h1>
+            <p>投稿：junjie  字体：[<a href="javascript:turnbig()">增加</a> <a href="javascript:turnsmall()">减小</a>] 类型：转载 时间：2014-10-20<a href="#comments"> 我要评论</a></p>
+        </div>
+        <div class="art_desc mt10"><div id="art_demo">这篇文章主要介绍了超强、超详细Redis入门教程,本文详细介绍了Redis数据库各个方面的知识,需要的朋友可以参考下</div></div>
+        <div class="lbd clearfix" id="bdctop"><script type="text/javascript">dy("art_up")</script></div>
+        <div id="content">
+<p><strong>【本教程目录】</strong></p>
+<p>1.redis是什么<br />
+2.redis的作者何许人也<br />
+3.谁在使用redis<br />
+4.学会安装redis<br />
+5.学会启动redis<br />
+6.使用redis客户端<br />
+7.redis数据结构 – 简介<br />
+8.redis数据结构 – strings<br />
+9.redis数据结构 – lists<br />
+10.redis数据结构 – 集合<br />
+11.redis数据结构 – 有序集合<br />
+12.redis数据结构 – 哈希<br />
+13.聊聊redis持久化 – 两种方式<br />
+14.聊聊redis持久化 – RDB<br />
+15.聊聊redis持久化 – AOF<br />
+16.聊聊redis持久化 – AOF重写<br />
+17.聊聊redis持久化 – 如何选择RDB和AOF<br />
+18.聊聊主从 – 用法<br />
+19.聊聊主从 – 同步原理<br />
+20.聊聊redis的事务处理<br />
+21.教你看懂redis配置 – 简介<br />
+22.教你看懂redis配置 -通用<br />
+23.教你看懂redis配置 – 快照<br />
+24.教你看懂redis配置 – 复制<br />
+25.教你看懂redis配置 – 安全<br />
+26.教你看懂redis配置 -限制<br />
+27.教你看懂redis配置 – 追加模式<br />
+28.教你看懂redis配置 – LUA脚本<br />
+29.教你看懂redis配置 – 慢日志<br />
+30.教你看懂redis配置 – 事件通知<br />
+31.教你看懂redis配置 – 高级配置</p>
+<p><strong>【redis是什么】</strong></p>
+<p>redis是一个开源的、使用C语言编写的、支持网络交互的、可基于内存也可持久化的Key-Value数据库。</p>
+<p>redis的官网地址，非常好记，是redis.io。（特意查了一下，域名后缀io属于国家域名，是british Indian Ocean territory，即英属印度洋领地）</p>
+<p>目前，Vmware在资助着redis项目的开发和维护。</p>
+<p><strong>【redis的作者何许人也】</strong></p>
+<p>开门见山，先看照片：</p>
+<p><img src="http://files.jb51.net/file_images/article/201410/20141020115931201.png&#63;2014920115946" alt="" /></p>
+<p>是不是出乎了你的意料，嗯，高手总会有些地方与众不同的。</p>
+<p>这位便是redis的作者，他叫Salvatore Sanfilippo，来自意大利的西西里岛，现在居住在卡塔尼亚。目前供职于Pivotal公司。</p>
+<p>他使用的网名是antirez，如果你有兴趣，可以去他的博客逛逛，地址是antirez.com，当然也可以去follow他的github，地址是<a href="http://github.com/antirez">http://github.com/antirez</a>。</p>
+<p><strong>【谁在使用redis】</strong></p>
+<p>Blizzard、digg、stackoverflow、github、flickr …</p>
+<p><strong>【学会安装redis】</strong></p>
+<p>从redis.io下载最新版redis-X.Y.Z.tar.gz后解压，然后进入redis-X.Y.Z文件夹后直接make即可，安装非常简单。</p>
+<p>make成功后会在src文件夹下产生一些二进制可执行文件，包括redis-server、redis-cli等等：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="11436" class="copybut" id="copybut11436" onclick="doCopy('code11436')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code11436"><br />
+$ find . -type f -executable<br />
+./redis-benchmark //用于进行redis性能测试的工具<br />
+./redis-check-dump //用于修复出问题的dump.rdb文件<br />
+./redis-cli //redis的客户端<br />
+./redis-server //redis的服务端<br />
+./redis-check-aof //用于修复出问题的AOF文件<br />
+./redis-sentinel //用于集群管理<br />
+</div></p>
+<p><strong>【学会启动redis】</strong></p>
+<p>启动redis非常简单，直接./redis-server就可以启动服务端了，还可以用下面的方法指定要加载的配置文件：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="3150" class="copybut" id="copybut3150" onclick="doCopy('code3150')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code3150"><br />
+./redis-server ../redis.conf<br />
+</div><br />
+默认情况下，redis-server会以非daemon的方式来运行，且默认服务端口为6379。</p>
+<p>有关作者为什么选择6379作为默认端口，还有一段有趣的典故，英语好的同学可以看看作者这篇博文中的解释。</p>
+<p><strong>【使用redis客户端】</strong></p>
+<p>我们直接看一个例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="81123" class="copybut" id="copybut81123" onclick="doCopy('code81123')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code81123"><br />
+//这样来启动redis客户端了<br />
+$ ./redis-cli<br />
+//用set指令来设置key、value<br />
+127.0.0.1:6379&gt; set name "roc" <br />
+OK<br />
+//来获取name的值<br />
+127.0.0.1:6379&gt; get name <br />
+"roc"<br />
+//通过客户端来关闭redis服务端<br />
+127.0.0.1:6379&gt; shutdown <br />
+127.0.0.1:6379&gt;<br />
+</div></p>
+<p><strong>【redis数据结构 – 简介】</strong></p>
+<p>redis是一种高级的key:value存储系统，其中value支持五种数据类型：</p>
+<p>1.字符串（strings）<br />
+2.字符串列表（lists）<br />
+3.字符串集合（sets）<br />
+4.有序字符串集合（sorted sets）<br />
+5.哈希（hashes）</p>
+<p>而关于key，有几个点要提醒大家：</p>
+<p>1.key不要太长，尽量不要超过1024字节，这不仅消耗内存，而且会降低查找的效率；<br />
+2.key也不要太短，太短的话，key的可读性会降低；<br />
+3.在一个项目中，key最好使用统一的命名模式，例如user:10000:passwd。</p>
+<p><strong>【redis数据结构 – strings】</strong></p>
+<p>有人说，如果只使用redis中的字符串类型，且不使用redis的持久化功能，那么，redis就和memcache非常非常的像了。这说明strings类型是一个很基础的数据类型，也是任何存储系统都必备的数据类型。</p>
+<p>我们来看一个最简单的例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="20644" class="copybut" id="copybut20644" onclick="doCopy('code20644')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code20644"><br />
+set mystr "hello world!" //设置字符串类型<br />
+get mystr //读取字符串类型<br />
+</div><br />
+字符串类型的用法就是这么简单，因为是二进制安全的，所以你完全可以把一个图片文件的内容作为字符串来存储。</p>
+<p>另外，我们还可以通过字符串类型进行数值操作：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="2082" class="copybut" id="copybut2082" onclick="doCopy('code2082')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code2082"><br />
+127.0.0.1:6379&gt; set mynum "2"<br />
+OK<br />
+127.0.0.1:6379&gt; get mynum<br />
+"2"<br />
+127.0.0.1:6379&gt; incr mynum<br />
+(integer) 3<br />
+127.0.0.1:6379&gt; get mynum<br />
+"3"<br />
+</div></p>
+<p>看，在遇到数值操作时，redis会将字符串类型转换成数值。</p>
+<p>由于INCR等指令本身就具有原子操作的特性，所以我们完全可以利用redis的INCR、INCRBY、DECR、DECRBY等指令来实现原子计数的效果，假如，在某种场景下有3个客户端同时读取了mynum的值（值为2），然后对其同时进行了加1的操作，那么，最后mynum的值一定是5。不少网站都利用redis的这个特性来实现业务上的统计计数需求。</p>
+<p><strong>【redis数据结构 – lists】</strong></p>
+<p>redis的另一个重要的数据结构叫做lists，翻译成中文叫做“列表”。</p>
+<p>首先要明确一点，redis中的lists在底层实现上并不是数组，而是链表，也就是说对于一个具有上百万个元素的lists来说，在头部和尾部插入一个新元素，其时间复杂度是常数级别的，比如用LPUSH在10个元素的lists头部插入新元素，和在上千万元素的lists头部插入新元素的速度应该是相同的。</p>
+<p>虽然lists有这样的优势，但同样有其弊端，那就是，链表型lists的元素定位会比较慢，而数组型lists的元素定位就会快得多。</p>
+<p>lists的常用操作包括LPUSH、RPUSH、LRANGE等。我们可以用LPUSH在lists的左侧插入一个新元素，用RPUSH在lists的右侧插入一个新元素，用LRANGE命令从lists中指定一个范围来提取元素。我们来看几个例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="84328" class="copybut" id="copybut84328" onclick="doCopy('code84328')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code84328"><br />
+//新建一个list叫做mylist，并在列表头部插入元素"1"<br />
+127.0.0.1:6379&gt; lpush mylist "1" <br />
+//返回当前mylist中的元素个数<br />
+(integer) 1 <br />
+//在mylist右侧插入元素"2"<br />
+127.0.0.1:6379&gt; rpush mylist "2" <br />
+(integer) 2<br />
+//在mylist左侧插入元素"0"<br />
+127.0.0.1:6379&gt; lpush mylist "0" <br />
+(integer) 3<br />
+//列出mylist中从编号0到编号1的元素<br />
+127.0.0.1:6379&gt; lrange mylist 0 1 <br />
+1) "0"<br />
+2) "1"<br />
+//列出mylist中从编号0到倒数第一个元素<br />
+127.0.0.1:6379&gt; lrange mylist 0 -1 <br />
+1) "0"<br />
+2) "1"<br />
+3) "2"<br />
+</div></p>
+<p>lists的应用相当广泛，随便举几个例子：</p>
+<p>1.我们可以利用lists来实现一个消息队列，而且可以确保先后顺序，不必像MySQL那样还需要通过ORDER BY来进行排序。<br />
+2.利用LRANGE还可以很方便的实现分页的功能。<br />
+3.在博客系统中，每片博文的评论也可以存入一个单独的list中。</p>
+<p><strong>【redis数据结构 – 集合】</strong></p>
+<p>redis的集合，是一种无序的集合，集合中的元素没有先后顺序。</p>
+<p>集合相关的操作也很丰富，如添加新元素、删除已有元素、取交集、取并集、取差集等。我们来看例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="11031" class="copybut" id="copybut11031" onclick="doCopy('code11031')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code11031"><br />
+//向集合myset中加入一个新元素"one"<br />
+127.0.0.1:6379&gt; sadd myset "one" <br />
+(integer) 1<br />
+127.0.0.1:6379&gt; sadd myset "two"<br />
+(integer) 1<br />
+//列出集合myset中的所有元素<br />
+127.0.0.1:6379&gt; smembers myset <br />
+1) "one"<br />
+2) "two"<br />
+//判断元素1是否在集合myset中，返回1表示存在<br />
+127.0.0.1:6379&gt; sismember myset "one" <br />
+(integer) 1<br />
+//判断元素3是否在集合myset中，返回0表示不存在<br />
+127.0.0.1:6379&gt; sismember myset "three" <br />
+(integer) 0<br />
+//新建一个新的集合yourset<br />
+127.0.0.1:6379&gt; sadd yourset "1" <br />
+(integer) 1<br />
+127.0.0.1:6379&gt; sadd yourset "2"<br />
+(integer) 1<br />
+127.0.0.1:6379&gt; smembers yourset<br />
+1) "1"<br />
+2) "2"<br />
+//对两个集合求并集<br />
+127.0.0.1:6379&gt; sunion myset yourset <br />
+1) "1"<br />
+2) "one"<br />
+3) "2"<br />
+4) "two"<br />
+</div></p>
+<p>对于集合的使用，也有一些常见的方式，比如，QQ有一个社交功能叫做“好友标签”，大家可以给你的好友贴标签，比如“大美女”、“土豪”、“欧巴”等等，这时就可以使用redis的集合来实现，把每一个用户的标签都存储在一个集合之中。</p>
+<p><strong>【redis数据结构 – 有序集合】</strong></p>
+<p>redis不但提供了无需集合（sets），还很体贴的提供了有序集合（sorted sets）。有序集合中的每个元素都关联一个序号（score），这便是排序的依据。</p>
+<p>很多时候，我们都将redis中的有序集合叫做zsets，这是因为在redis中，有序集合相关的操作指令都是以z开头的，比如zrange、zadd、zrevrange、zrangebyscore等等</p>
+<p>老规矩，我们来看几个生动的例子：<br />
+//新增一个有序集合myzset，并加入一个元素baidu.com，给它赋予的序号是1：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="30921" class="copybut" id="copybut30921" onclick="doCopy('code30921')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code30921"><br />
+127.0.0.1:6379&gt; zadd myzset 1 baidu.com <br />
+(integer) 1<br />
+//向myzset中新增一个元素360.com，赋予它的序号是3<br />
+127.0.0.1:6379&gt; zadd myzset 3 360.com <br />
+(integer) 1<br />
+//向myzset中新增一个元素google.com，赋予它的序号是2<br />
+127.0.0.1:6379&gt; zadd myzset 2 google.com <br />
+(integer) 1<br />
+//列出myzset的所有元素，同时列出其序号，可以看出myzset已经是有序的了。<br />
+127.0.0.1:6379&gt; zrange myzset 0 -1 with scores <br />
+1) "baidu.com"<br />
+2) "1"<br />
+3) "google.com"<br />
+4) "2"<br />
+5) "360.com"<br />
+6) "3"<br />
+//只列出myzset的元素<br />
+127.0.0.1:6379&gt; zrange myzset 0 -1 <br />
+1) "baidu.com"<br />
+2) "google.com"<br />
+3) "360.com"<br />
+</div></p>
+<p><strong>【redis数据结构 – 哈希】</strong></p>
+<p>最后要给大家介绍的是hashes，即哈希。哈希是从redis-2.0.0版本之后才有的数据结构。</p>
+<p>hashes存的是字符串和字符串值之间的映射，比如一个用户要存储其全名、姓氏、年龄等等，就很适合使用哈希。</p>
+<p>我们来看一个例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="97809" class="copybut" id="copybut97809" onclick="doCopy('code97809')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code97809"><br />
+//建立哈希，并赋值<br />
+127.0.0.1:6379&gt; HMSET user:001 username antirez password P1pp0 age 34 <br />
+OK<br />
+//列出哈希的内容<br />
+127.0.0.1:6379&gt; HGETALL user:001 <br />
+1) "username"<br />
+2) "antirez"<br />
+3) "password"<br />
+4) "P1pp0"<br />
+5) "age"<br />
+6) "34"<br />
+//更改哈希中的某一个值<br />
+127.0.0.1:6379&gt; HSET user:001 password 12345 <br />
+(integer) 0<br />
+//再次列出哈希的内容<br />
+127.0.0.1:6379&gt; HGETALL user:001 <br />
+1) "username"<br />
+2) "antirez"<br />
+3) "password"<br />
+4) "12345"<br />
+5) "age"<br />
+6) "34"<br />
+</div></p>
+<p>有关hashes的操作，同样很丰富，需要时，大家可以从这里<a target="_blank" href="http://redis.io/commands#hash">查询</a>。</p>
+<p><strong>【聊聊redis持久化 – 两种方式】</strong></p>
+<p>redis提供了两种持久化的方式，分别是RDB（Redis DataBase）和AOF（Append Only File）。</p>
+<p>RDB，简而言之，就是在不同的时间点，将redis存储的数据生成快照并存储到磁盘等介质上；</p>
+<p>AOF，则是换了一个角度来实现持久化，那就是将redis执行过的所有写指令记录下来，在下次redis重新启动时，只要把这些写指令从前到后再重复执行一遍，就可以实现数据恢复了。</p>
+<p>其实RDB和AOF两种方式也可以同时使用，在这种情况下，如果redis重启的话，则会优先采用AOF方式来进行数据恢复，这是因为AOF方式的数据恢复完整度更高。</p>
+<p>如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。</p>
+<p><strong>【聊聊redis持久化 – RDB】</strong></p>
+<p>RDB方式，是将redis某一时刻的数据持久化到磁盘中，是一种快照式的持久化方法。</p>
+<p>redis在进行数据持久化的过程中，会先将数据写入到一个临时文件中，待持久化过程都结束了，才会用这个临时文件替换上次持久化好的文件。正是这种特性，让我们可以随时来进行备份，因为快照文件总是完整可用的。</p>
+<p>对于RDB方式，redis会单独创建（fork）一个子进程来进行持久化，而主进程是不会进行任何IO操作的，这样就确保了redis极高的性能。</p>
+<p>如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。</p>
+<p>虽然RDB有不少优点，但它的缺点也是不容忽视的。如果你对数据的完整性非常敏感，那么RDB方式就不太适合你，因为即使你每5分钟都持久化一次，当redis故障时，仍然会有近5分钟的数据丢失。所以，redis还提供了另一种持久化方式，那就是AOF。</p>
+<p><strong>【聊聊redis持久化 – AOF】</strong></p>
+<p>AOF，英文是Append Only File，即只允许追加不允许改写的文件。</p>
+<p>如前面介绍的，AOF方式是将执行过的写指令记录下来，在数据恢复时按照从前到后的顺序再将指令都执行一遍，就这么简单。</p>
+<p>我们通过配置redis.conf中的appendonly yes就可以打开AOF功能。如果有写操作（如SET等），redis就会被追加到AOF文件的末尾。</p>
+<p>默认的AOF持久化策略是每秒钟fsync一次（fsync是指把缓存中的写指令记录到磁盘中），因为在这种情况下，redis仍然可以保持很好的处理性能，即使redis故障，也只会丢失最近1秒钟的数据。</p>
+<p>如果在追加日志时，恰好遇到磁盘空间满、inode满或断电等情况导致日志写入不完整，也没有关系，redis提供了redis-check-aof工具，可以用来进行日志修复。</p>
+<p>因为采用了追加方式，如果不做任何处理的话，AOF文件会变得越来越大，为此，redis提供了AOF文件重写（rewrite）机制，即当AOF文件的大小超过所设定的阈值时，redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集。举个例子或许更形象，假如我们调用了100次INCR指令，在AOF文件中就要存储100条指令，但这明显是很低效的，完全可以把这100条指令合并成一条SET指令，这就是重写机制的原理。</p>
+<p>在进行AOF重写时，仍然是采用先写临时文件，全部完成后再替换的流程，所以断电、磁盘满等问题都不会影响AOF文件的可用性，这点大家可以放心。</p>
+<p>AOF方式的另一个好处，我们通过一个“场景再现”来说明。某同学在操作redis时，不小心执行了FLUSHALL，导致redis内存中的数据全部被清空了，这是很悲剧的事情。不过这也不是世界末日，只要redis配置了AOF持久化方式，且AOF文件还没有被重写（rewrite），我们就可以用最快的速度暂停redis并编辑AOF文件，将最后一行的FLUSHALL命令删除，然后重启redis，就可以恢复redis的所有数据到FLUSHALL之前的状态了。是不是很神奇，这就是AOF持久化方式的好处之一。但是如果AOF文件已经被重写了，那就无法通过这种方法来恢复数据了。</p>
+<p>虽然优点多多，但AOF方式也同样存在缺陷，比如在同样数据规模的情况下，AOF文件要比RDB文件的体积大。而且，AOF方式的恢复速度也要慢于RDB方式。</p>
+<p>如果你直接执行BGREWRITEAOF命令，那么redis会生成一个全新的AOF文件，其中便包括了可以恢复现有数据的最少的命令集。</p>
+<p>如果运气比较差，AOF文件出现了被写坏的情况，也不必过分担忧，redis并不会贸然加载这个有问题的AOF文件，而是报错退出。这时可以通过以下步骤来修复出错的文件：</p>
+<p>1.备份被写坏的AOF文件<br />
+2.运行redis-check-aof –fix进行修复<br />
+3.用diff -u来看下两个文件的差异，确认问题点<br />
+4.重启redis，加载修复后的AOF文件</p>
+<p><strong>【聊聊redis持久化 – AOF重写】</strong></p>
+<p>AOF重写的内部运行原理，我们有必要了解一下。</p>
+<p>在重写即将开始之际，redis会创建（fork）一个“重写子进程”，这个子进程会首先读取现有的AOF文件，并将其包含的指令进行分析压缩并写入到一个临时文件中。</p>
+<p>与此同时，主工作进程会将新接收到的写指令一边累积到内存缓冲区中，一边继续写入到原有的AOF文件中，这样做是保证原有的AOF文件的可用性，避免在重写过程中出现意外。</p>
+<p>当“重写子进程”完成重写工作后，它会给父进程发一个信号，父进程收到信号后就会将内存中缓存的写指令追加到新AOF文件中。</p>
+<p>当追加结束后，redis就会用新AOF文件来代替旧AOF文件，之后再有新的写指令，就都会追加到新的AOF文件中了。</p>
+<p><strong>【聊聊redis持久化 – 如何选择RDB和AOF】</strong></p>
+<p>对于我们应该选择RDB还是AOF，官方的建议是两个同时使用。这样可以提供更可靠的持久化方案。</p>
+<p><strong>【聊聊主从 – 用法】</strong></p>
+<p>像MySQL一样，redis是支持主从同步的，而且也支持一主多从以及多级从结构。</p>
+<p>主从结构，一是为了纯粹的冗余备份，二是为了提升读性能，比如很消耗性能的SORT就可以由从服务器来承担。</p>
+<p>redis的主从同步是异步进行的，这意味着主从同步不会影响主逻辑，也不会降低redis的处理性能。</p>
+<p>主从架构中，可以考虑关闭主服务器的数据持久化功能，只让从服务器进行持久化，这样可以提高主服务器的处理性能。</p>
+<p>在主从架构中，从服务器通常被设置为只读模式，这样可以避免从服务器的数据被误修改。但是从服务器仍然可以接受CONFIG等指令，所以还是不应该将从服务器直接暴露到不安全的网络环境中。如果必须如此，那可以考虑给重要指令进行重命名，来避免命令被外人误执行。</p>
+<p><strong>【聊聊主从 – 同步原理】</strong></p>
+<p>从服务器会向主服务器发出SYNC指令，当主服务器接到此命令后，就会调用BGSAVE指令来创建一个子进程专门进行数据持久化工作，也就是将主服务器的数据写入RDB文件中。在数据持久化期间，主服务器将执行的写指令都缓存在内存中。</p>
+<p>在BGSAVE指令执行完成后，主服务器会将持久化好的RDB文件发送给从服务器，从服务器接到此文件后会将其存储到磁盘上，然后再将其读取到内存中。这个动作完成后，主服务器会将这段时间缓存的写指令再以redis协议的格式发送给从服务器。</p>
+<p>另外，要说的一点是，即使有多个从服务器同时发来SYNC指令，主服务器也只会执行一次BGSAVE，然后把持久化好的RDB文件发给多个下游。在redis2.8版本之前，如果从服务器与主服务器因某些原因断开连接的话，都会进行一次主从之间的全量的数据同步；而在2.8版本之后，redis支持了效率更高的增量同步策略，这大大降低了连接断开的恢复成本。</p>
+<p>主服务器会在内存中维护一个缓冲区，缓冲区中存储着将要发给从服务器的内容。从服务器在与主服务器出现网络瞬断之后，从服务器会尝试再次与主服务器连接，一旦连接成功，从服务器就会把“希望同步的主服务器ID”和“希望请求的数据的偏移位置（replication offset）”发送出去。主服务器接收到这样的同步请求后，首先会验证主服务器ID是否和自己的ID匹配，其次会检查“请求的偏移位置”是否存在于自己的缓冲区中，如果两者都满足的话，主服务器就会向从服务器发送增量内容。</p>
+<p>增量同步功能，需要服务器端支持全新的PSYNC指令。这个指令，只有在redis-2.8之后才具有。</p>
+<p><strong>【聊聊redis的事务处理】</strong></p>
+<p>众所周知，事务是指“一个完整的动作，要么全部执行，要么什么也没有做”。</p>
+<p>在聊redis事务处理之前，要先和大家介绍四个redis指令，即MULTI、EXEC、DISCARD、WATCH。这四个指令构成了redis事务处理的基础。</p>
+<p>1.MULTI用来组装一个事务；<br />
+2.EXEC用来执行一个事务；<br />
+3.DISCARD用来取消一个事务；<br />
+4.WATCH用来监视一些key，一旦这些key在事务执行之前被改变，则取消事务的执行。</p>
+<p>纸上得来终觉浅，我们来看一个MULTI和EXEC的例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="97145" class="copybut" id="copybut97145" onclick="doCopy('code97145')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code97145"><br />
+redis&gt; MULTI //标记事务开始<br />
+OK<br />
+redis&gt; INCR user_id //多条命令按顺序入队<br />
+QUEUED<br />
+redis&gt; INCR user_id<br />
+QUEUED<br />
+redis&gt; INCR user_id<br />
+QUEUED<br />
+redis&gt; PING<br />
+QUEUED<br />
+redis&gt; EXEC //执行<br />
+1) (integer) 1<br />
+2) (integer) 2<br />
+3) (integer) 3<br />
+4) PONG<br />
+</div></p>
+<p>在上面的例子中，我们看到了QUEUED的字样，这表示我们在用MULTI组装事务时，每一个命令都会进入到内存队列中缓存起来，如果出现QUEUED则表示我们这个命令成功插入了缓存队列，在将来执行EXEC时，这些被QUEUED的命令都会被组装成一个事务来执行。</p>
+<p>对于事务的执行来说，如果redis开启了AOF持久化的话，那么一旦事务被成功执行，事务中的命令就会通过write命令一次性写到磁盘中去，如果在向磁盘中写的过程中恰好出现断电、硬件故障等问题，那么就可能出现只有部分命令进行了AOF持久化，这时AOF文件就会出现不完整的情况，这时，我们可以使用redis-check-aof工具来修复这一问题，这个工具会将AOF文件中不完整的信息移除，确保AOF文件完整可用。</p>
+<p>有关事务，大家经常会遇到的是两类错误：</p>
+<p>1.调用EXEC之前的错误<br />
+2.调用EXEC之后的错误</p>
+<p>“调用EXEC之前的错误”，有可能是由于语法有误导致的，也可能时由于内存不足导致的。只要出现某个命令无法成功写入缓冲队列的情况，redis都会进行记录，在客户端调用EXEC时，redis会拒绝执行这一事务。（这时2.6.5版本之后的策略。在2.6.5之前的版本中，redis会忽略那些入队失败的命令，只执行那些入队成功的命令）。我们来看一个这样的例子：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="72578" class="copybut" id="copybut72578" onclick="doCopy('code72578')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code72578"><br />
+127.0.0.1:6379&gt; multi<br />
+OK<br />
+127.0.0.1:6379&gt; haha //一个明显错误的指令<br />
+(error) ERR unknown command 'haha'<br />
+127.0.0.1:6379&gt; ping<br />
+QUEUED<br />
+127.0.0.1:6379&gt; exec<br />
+//redis无情的拒绝了事务的执行，原因是“之前出现了错误”<br />
+(error) EXECABORT Transaction discarded because of previous errors.<br />
+</div></p>
+<p>而对于“调用EXEC之后的错误”，redis则采取了完全不同的策略，即redis不会理睬这些错误，而是继续向下执行事务中的其他命令。这是因为，对于应用层面的错误，并不是redis自身需要考虑和处理的问题，所以一个事务中如果某一条命令执行失败，并不会影响接下来的其他命令的执行。我们也来看一个例子：</p>
+<p><div class="codetitle"><span><a style="CURSOR: pointer" data="46279" class="copybut" id="copybut46279" onclick="doCopy('code46279')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code46279"><br />
+127.0.0.1:6379&gt; multi<br />
+OK<br />
+127.0.0.1:6379&gt; set age 23<br />
+QUEUED<br />
+//age不是集合，所以如下是一条明显错误的指令<br />
+127.0.0.1:6379&gt; sadd age 15 <br />
+QUEUED<br />
+127.0.0.1:6379&gt; set age 29<br />
+QUEUED<br />
+127.0.0.1:6379&gt; exec //执行事务时，redis不会理睬第2条指令执行错误<br />
+1) OK<br />
+2) (error) WRONGTYPE Operation against a key holding the wrong kind of value<br />
+3) OK<br />
+127.0.0.1:6379&gt; get age<br />
+"29" //可以看出第3条指令被成功执行了<br />
+</div></p>
+<p>好了，我们来说说最后一个指令“WATCH”，这是一个很好用的指令，它可以帮我们实现类似于“乐观锁”的效果，即CAS（check and set）。</p>
+<p>WATCH本身的作用是“监视key是否被改动过”，而且支持同时监视多个key，只要还没真正触发事务，WATCH都会尽职尽责的监视，一旦发现某个key被修改了，在执行EXEC时就会返回nil，表示事务无法触发。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="98618" class="copybut" id="copybut98618" onclick="doCopy('code98618')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code98618"><br />
+127.0.0.1:6379&gt; set age 23<br />
+OK<br />
+127.0.0.1:6379&gt; watch age //开始监视age<br />
+OK<br />
+127.0.0.1:6379&gt; set age 24 //在EXEC之前，age的值被修改了<br />
+OK<br />
+127.0.0.1:6379&gt; multi<br />
+OK<br />
+127.0.0.1:6379&gt; set age 25<br />
+QUEUED<br />
+127.0.0.1:6379&gt; get age<br />
+QUEUED<br />
+127.0.0.1:6379&gt; exec //触发EXEC<br />
+(nil) //事务无法被执行<br />
+</div></p>
+<p><strong>【教你看懂redis配置 – 简介】</strong></p>
+<p>我们可以在启动redis-server时指定应该加载的配置文件，方法如下：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="41602" class="copybut" id="copybut41602" onclick="doCopy('code41602')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code41602"><br />
+$ ./redis-server /path/to/redis.conf<br />
+</div></p>
+<p>接下来，我们就来讲解下redis配置文件的各个配置项的含义，注意，本文是基于redis-2.8.4版本进行讲解的。</p>
+<p>redis官方提供的redis.conf文件，足有700+行，其中100多行为有效配置行，另外的600多行为注释说明。</p>
+<p>在配置文件的开头部分，首先明确了一些度量单位：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="65765" class="copybut" id="copybut65765" onclick="doCopy('code65765')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code65765"><br />
+# 1k =&gt; 1000 bytes<br />
+# 1kb =&gt; 1024 bytes<br />
+# 1m =&gt; 1000000 bytes<br />
+# 1mb =&gt; 1024*1024 bytes<br />
+# 1g =&gt; 1000000000 bytes<br />
+# 1gb =&gt; 1024*1024*1024 bytes<br />
+</div></p>
+<p>可以看出，redis配置中对单位的大小写不敏感，1GB、1Gb和1gB都是相同的。由此也说明，redis只支持bytes，不支持bit单位。</p>
+<p>redis支持“主配置文件中引入外部配置文件”，很像C/C++中的include指令，比如：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="93277" class="copybut" id="copybut93277" onclick="doCopy('code93277')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code93277"><br />
+include /path/to/other.conf<br />
+</div></p>
+<p>如果你看过redis的配置文件，会发现还是很有条理的。redis配置文件被分成了几大块区域，它们分别是：</p>
+<p>1.通用（general）<br />
+2.快照（snapshotting）<br />
+3.复制（replication）<br />
+4.安全（security）<br />
+5.限制（limits)<br />
+6.追加模式（append only mode)<br />
+7.LUA脚本（lua scripting)<br />
+8.慢日志（slow log)<br />
+9.事件通知（event notification）</p>
+<p>下面我们就来逐一讲解。</p>
+<p><strong>【教你看懂redis配置 -通用】</strong></p>
+<p>默认情况下，redis并不是以daemon形式来运行的。通过daemonize配置项可以控制redis的运行形式，如果改为yes，那么redis就会以daemon形式运行：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="57624" class="copybut" id="copybut57624" onclick="doCopy('code57624')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code57624"><br />
+daemonize no<br />
+</div><br />
+当以daemon形式运行时，redis会生成一个pid文件，默认会生成在/var/run/redis.pid。当然，你可以通过pidfile来指定pid文件生成的位置，比如：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="91141" class="copybut" id="copybut91141" onclick="doCopy('code91141')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code91141"><br />
+pidfile /path/to/redis.pid<br />
+</div><br />
+默认情况下，redis会响应本机所有可用网卡的连接请求。当然，redis允许你通过bind配置项来指定要绑定的IP，比如：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="64033" class="copybut" id="copybut64033" onclick="doCopy('code64033')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code64033"><br />
+bind 192.168.1.2 10.8.4.2<br />
+</div><br />
+redis的默认服务端口是6379，你可以通过port配置项来修改。如果端口设置为0的话，redis便不会监听端口了。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="71915" class="copybut" id="copybut71915" onclick="doCopy('code71915')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code71915"><br />
+port 6379<br />
+</div><br />
+有些同学会问“如果redis不监听端口，还怎么与外界通信呢”，其实redis还支持通过unix socket方式来接收请求。可以通过unixsocket配置项来指定unix socket文件的路径，并通过unixsocketperm来指定文件的权限。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="21712" class="copybut" id="copybut21712" onclick="doCopy('code21712')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code21712"><br />
+unixsocket /tmp/redis.sock<br />
+unixsocketperm 755<br />
+</div></p>
+<p>当一个redis-client一直没有请求发向server端，那么server端有权主动关闭这个连接，可以通过timeout来设置“空闲超时时限”，0表示永不关闭。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="98877" class="copybut" id="copybut98877" onclick="doCopy('code98877')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code98877"><br />
+timeout 0<br />
+</div><br />
+TCP连接保活策略，可以通过tcp-keepalive配置项来进行设置，单位为秒，假如设置为60秒，则server端会每60秒向连接空闲的客户端发起一次ACK请求，以检查客户端是否已经挂掉，对于无响应的客户端则会关闭其连接。所以关闭一个连接最长需要120秒的时间。如果设置为0，则不会进行保活检测。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="93941" class="copybut" id="copybut93941" onclick="doCopy('code93941')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code93941"><br />
+tcp-keepalive 0<br />
+</div><br />
+redis支持通过loglevel配置项设置日志等级，共分四级，即debug、verbose、notice、warning。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="82191" class="copybut" id="copybut82191" onclick="doCopy('code82191')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code82191"><br />
+loglevel notice<br />
+</div><br />
+redis也支持通过logfile配置项来设置日志文件的生成位置。如果设置为空字符串，则redis会将日志输出到标准输出。假如你在daemon情况下将日志设置为输出到标准输出，则日志会被写到/dev/null中。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="17440" class="copybut" id="copybut17440" onclick="doCopy('code17440')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code17440"><br />
+logfile ""<br />
+</div><br />
+如果希望日志打印到syslog中，也很容易，通过syslog-enabled来控制。另外，syslog-ident还可以让你指定syslog里的日志标志，比如：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="11695" class="copybut" id="copybut11695" onclick="doCopy('code11695')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code11695"><br />
+syslog-ident redis<br />
+</div><br />
+而且还支持指定syslog设备，值可以是USER或LOCAL0-LOCAL7。具体可以参考syslog服务本身的用法。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="55488" class="copybut" id="copybut55488" onclick="doCopy('code55488')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code55488"><br />
+syslog-facility local0<br />
+</div><br />
+对于redis来说，可以设置其数据库的总数量，假如你希望一个redis包含16个数据库，那么设置如下：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="97550" class="copybut" id="copybut97550" onclick="doCopy('code97550')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code97550"><br />
+databases 16<br />
+</div><br />
+这16个数据库的编号将是0到15。默认的数据库是编号为0的数据库。用户可以使用select &lt;DBid&gt;来选择相应的数据库。</p>
+<p><strong>【教你看懂redis配置 – 快照】</strong></p>
+<p>快照，主要涉及的是redis的RDB持久化相关的配置，我们来一起看一看。</p>
+<p>我们可以用如下的指令来让数据保存到磁盘上，即控制RDB快照功能：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="44807" class="copybut" id="copybut44807" onclick="doCopy('code44807')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code44807"><br />
+save &lt;seconds&gt; &lt;changes&gt;<br />
+</div><br />
+举例来说：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="56152" class="copybut" id="copybut56152" onclick="doCopy('code56152')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code56152"><br />
+save 900 1 //表示每15分钟且至少有1个key改变，就触发一次持久化</p>
+<p>save 300 10 //表示每5分钟且至少有10个key改变，就触发一次持久化</p>
+<p>save 60 10000 //表示每60秒至少有10000个key改变，就触发一次持久化<br />
+</div><br />
+如果你想禁用RDB持久化的策略，只要不设置任何save指令就可以，或者给save传入一个空字符串参数也可以达到相同效果，就像这样：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="48675" class="copybut" id="copybut48675" onclick="doCopy('code48675')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code48675"><br />
+save ""<br />
+</div><br />
+如果用户开启了RDB快照功能，那么在redis持久化数据到磁盘时如果出现失败，默认情况下，redis会停止接受所有的写请求。这样做的好处在于可以让用户很明确的知道内存中的数据和磁盘上的数据已经存在不一致了。如果redis不顾这种不一致，一意孤行的继续接收写请求，就可能会引起一些灾难性的后果。</p>
+<p>如果下一次RDB持久化成功，redis会自动恢复接受写请求。</p>
+<p>当然，如果你不在乎这种数据不一致或者有其他的手段发现和控制这种不一致的话，你完全可以关闭这个功能，以便在快照写入失败时，也能确保redis继续接受新的写请求。配置项如下：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="71106" class="copybut" id="copybut71106" onclick="doCopy('code71106')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code71106"><br />
+stop-writes-on-bgsave-error yes<br />
+</div><br />
+对于存储到磁盘中的快照，可以设置是否进行压缩存储。如果是的话，redis会采用LZF算法进行压缩。如果你不想消耗CPU来进行压缩的话，可以设置为关闭此功能，但是存储在磁盘上的快照会比较大。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="77255" class="copybut" id="copybut77255" onclick="doCopy('code77255')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code77255"><br />
+rdbcompression yes<br />
+</div><br />
+在存储快照后，我们还可以让redis使用CRC64算法来进行数据校验，但是这样做会增加大约10%的性能消耗，如果你希望获取到最大的性能提升，可以关闭此功能。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="5690" class="copybut" id="copybut5690" onclick="doCopy('code5690')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code5690"><br />
+rdbchecksum yes<br />
+</div><br />
+我们还可以设置快照文件的名称，默认是这样配置的：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="46943" class="copybut" id="copybut46943" onclick="doCopy('code46943')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code46943"><br />
+dbfilename dump.rdb<br />
+</div><br />
+最后，你还可以设置这个快照文件存放的路径。比如默认设置就是当前文件夹：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="49743" class="copybut" id="copybut49743" onclick="doCopy('code49743')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code49743"><br />
+dir ./<br />
+</div></p>
+<p><strong>【教你看懂redis配置 – 复制】</strong></p>
+<p>redis提供了主从同步功能。</p>
+<p>通过slaveof配置项可以控制某一个redis作为另一个redis的从服务器，通过指定IP和端口来定位到主redis的位置。一般情况下，我们会建议用户为从redis设置一个不同频率的快照持久化的周期，或者为从redis配置一个不同的服务端口等等。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="67901" class="copybut" id="copybut67901" onclick="doCopy('code67901')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code67901"><br />
+slaveof &lt;masterip&gt; &lt;masterport&gt;<br />
+</div><br />
+如果主redis设置了验证密码的话（使用requirepass来设置），则在从redis的配置中要使用masterauth来设置校验密码，否则的话，主redis会拒绝从redis的访问请求。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="86869" class="copybut" id="copybut86869" onclick="doCopy('code86869')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code86869"><br />
+masterauth &lt;master-password&gt;<br />
+</div><br />
+当从redis失去了与主redis的连接，或者主从同步正在进行中时，redis该如何处理外部发来的访问请求呢？这里，从redis可以有两种选择：</p>
+<p>第一种选择：如果slave-serve-stale-data设置为yes（默认），则从redis仍会继续响应客户端的读写请求。</p>
+<p>第二种选择：如果slave-serve-stale-data设置为no，则从redis会对客户端的请求返回“SYNC with master in progress”，当然也有例外，当客户端发来INFO请求和SLAVEOF请求，从redis还是会进行处理。</p>
+<p>你可以控制一个从redis是否可以接受写请求。将数据直接写入从redis，一般只适用于那些生命周期非常短的数据，因为在主从同步时，这些临时数据就会被清理掉。自从redis2.6版本之后，默认从redis为只读。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="76851" class="copybut" id="copybut76851" onclick="doCopy('code76851')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code76851"><br />
+slave-read-only yes<br />
+</div><br />
+只读的从redis并不适合直接暴露给不可信的客户端。为了尽量降低风险，可以使用rename-command指令来将一些可能有破坏力的命令重命名，避免外部直接调用。比如：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="33462" class="copybut" id="copybut33462" onclick="doCopy('code33462')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code33462"><br />
+rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52<br />
+</div><br />
+从redis会周期性的向主redis发出PING包。你可以通过repl_ping_slave_period指令来控制其周期。默认是10秒。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="63629" class="copybut" id="copybut63629" onclick="doCopy('code63629')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code63629"><br />
+repl-ping-slave-period 10<br />
+</div><br />
+在主从同步时，可能在这些情况下会有超时发生：</p>
+<p>1.以从redis的角度来看，当有大规模IO传输时。<br />
+2.以从redis的角度来看，当数据传输或PING时，主redis超时<br />
+3.以主redis的角度来看，在回复从redis的PING时，从redis超时</p>
+<p>用户可以设置上述超时的时限，不过要确保这个时限比repl-ping-slave-period的值要大，否则每次主redis都会认为从redis超时。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="99686" class="copybut" id="copybut99686" onclick="doCopy('code99686')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code99686"><br />
+repl-timeout 60<br />
+</div><br />
+我们可以控制在主从同步时是否禁用TCP_NODELAY。如果开启TCP_NODELAY，那么主redis会使用更少的TCP包和更少的带宽来向从redis传输数据。但是这可能会增加一些同步的延迟，大概会达到40毫秒左右。如果你关闭了TCP_NODELAY，那么数据同步的延迟时间会降低，但是会消耗更多的带宽。（如果你不了解TCP_NODELAY，可以到这里来科普一下）。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="38398" class="copybut" id="copybut38398" onclick="doCopy('code38398')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code38398"><br />
+repl-disable-tcp-nodelay no<br />
+</div><br />
+我们还可以设置同步队列长度。队列长度（backlog)是主redis中的一个缓冲区，在与从redis断开连接期间，主redis会用这个缓冲区来缓存应该发给从redis的数据。这样的话，当从redis重新连接上之后，就不必重新全量同步数据，只需要同步这部分增量数据即可。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="75378" class="copybut" id="copybut75378" onclick="doCopy('code75378')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code75378"><br />
+repl-backlog-size 1mb<br />
+</div><br />
+如果主redis等了一段时间之后，还是无法连接到从redis，那么缓冲队列中的数据将被清理掉。我们可以设置主redis要等待的时间长度。如果设置为0，则表示永远不清理。默认是1个小时。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="64438" class="copybut" id="copybut64438" onclick="doCopy('code64438')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code64438"><br />
+repl-backlog-ttl 3600<br />
+</div><br />
+我们可以给众多的从redis设置优先级，在主redis持续工作不正常的情况，优先级高的从redis将会升级为主redis。而编号越小，优先级越高。比如一个主redis有三个从redis，优先级编号分别为10、100、25，那么编号为10的从redis将会被首先选中升级为主redis。当优先级被设置为0时，这个从redis将永远也不会被选中。默认的优先级为100。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="44143" class="copybut" id="copybut44143" onclick="doCopy('code44143')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code44143"><br />
+slave-priority 100<br />
+</div><br />
+假如主redis发现有超过M个从redis的连接延时大于N秒，那么主redis就停止接受外来的写请求。这是因为从redis一般会每秒钟都向主redis发出PING，而主redis会记录每一个从redis最近一次发来PING的时间点，所以主redis能够了解每一个从redis的运行情况。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="5027" class="copybut" id="copybut5027" onclick="doCopy('code5027')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code5027"><br />
+min-slaves-to-write 3<br />
+min-slaves-max-lag 10<br />
+</div><br />
+上面这个例子表示，假如有大于等于3个从redis的连接延迟大于10秒，那么主redis就不再接受外部的写请求。上述两个配置中有一个被置为0，则这个特性将被关闭。默认情况下min-slaves-to-write为0，而min-slaves-max-lag为10。</p>
+<p><strong>【教你看懂redis配置 – 安全】</strong></p>
+<p>我们可以要求redis客户端在向redis-server发送请求之前，先进行密码验证。当你的redis-server处于一个不太可信的网络环境中时，相信你会用上这个功能。由于redis性能非常高，所以每秒钟可以完成多达15万次的密码尝试，所以你最好设置一个足够复杂的密码，否则很容易被黑客破解。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="55752" class="copybut" id="copybut55752" onclick="doCopy('code55752')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code55752"><br />
+requirepass zhimakaimen<br />
+</div><br />
+这里我们通过requirepass将密码设置成“芝麻开门”。</p>
+<p>redis允许我们对redis指令进行更名，比如将一些比较危险的命令改个名字，避免被误执行。比如可以把CONFIG命令改成一个很复杂的名字，这样可以避免外部的调用，同时还可以满足内部调用的需要：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="56820" class="copybut" id="copybut56820" onclick="doCopy('code56820')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code56820"><br />
+rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c89<br />
+</div><br />
+我们甚至可以禁用掉CONFIG命令，那就是把CONFIG的名字改成一个空字符串：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="53615" class="copybut" id="copybut53615" onclick="doCopy('code53615')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code53615"><br />
+rename-command CONFIG ""<br />
+</div><br />
+但需要注意的是，如果你使用AOF方式进行数据持久化，或者需要与从redis进行通信，那么更改指令的名字可能会引起一些问题。</p>
+<p><strong>【教你看懂redis配置 -限制】</strong></p>
+<p>我们可以设置redis同时可以与多少个客户端进行连接。默认情况下为10000个客户端。当你无法设置进程文件句柄限制时，redis会设置为当前的文件句柄限制值减去32，因为redis会为自身内部处理逻辑留一些句柄出来。</p>
+<p>如果达到了此限制，redis则会拒绝新的连接请求，并且向这些连接请求方发出“max number of clients reached”以作回应。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="63229" class="copybut" id="copybut63229" onclick="doCopy('code63229')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code63229"><br />
+maxclients 10000<br />
+</div><br />
+我们甚至可以设置redis可以使用的内存量。一旦到达内存使用上限，redis将会试图移除内部数据，移除规则可以通过maxmemory-policy来指定。</p>
+<p>如果redis无法根据移除规则来移除内存中的数据，或者我们设置了“不允许移除”，那么redis则会针对那些需要申请内存的指令返回错误信息，比如SET、LPUSH等。但是对于无内存申请的指令，仍然会正常响应，比如GET等。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="34389" class="copybut" id="copybut34389" onclick="doCopy('code34389')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code34389"><br />
+maxmemory &lt;bytes&gt;<br />
+</div><br />
+需要注意的一点是，如果你的redis是主redis（说明你的redis有从redis），那么在设置内存使用上限时，需要在系统中留出一些内存空间给同步队列缓存，只有在你设置的是“不移除”的情况下，才不用考虑这个因素。</p>
+<p>对于内存移除规则来说，redis提供了多达6种的移除规则。他们是：</p>
+<p>1.volatile-lru：使用LRU算法移除过期集合中的key<br />
+2.allkeys-lru：使用LRU算法移除key<br />
+3.volatile-random：在过期集合中移除随机的key<br />
+4.allkeys-random：移除随机的key<br />
+5.volatile-ttl：移除那些TTL值最小的key，即那些最近才过期的key。<br />
+6.noeviction：不进行移除。针对写操作，只是返回错误信息。</p>
+<p>无论使用上述哪一种移除规则，如果没有合适的key可以移除的话，redis都会针对写请求返回错误信息。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="20908" class="copybut" id="copybut20908" onclick="doCopy('code20908')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code20908"><br />
+maxmemory-policy volatile-lru<br />
+</div><br />
+LRU算法和最小TTL算法都并非是精确的算法，而是估算值。所以你可以设置样本的大小。假如redis默认会检查三个key并选择其中LRU的那个，那么你可以改变这个key样本的数量。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="34793" class="copybut" id="copybut34793" onclick="doCopy('code34793')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code34793"><br />
+maxmemory-samples 3<br />
+</div><br />
+最后，我们补充一个信息，那就是到目前版本（2.8.4）为止，redis支持的写指令包括了如下这些：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="93136" class="copybut" id="copybut93136" onclick="doCopy('code93136')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code93136"><br />
+set setnx setex append<br />
+incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd<br />
+sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby<br />
+zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby<br />
+getset mset msetnx exec sort<br />
+</div></p>
+<p><strong>【教你看懂redis配置 – 追加模式】</strong></p>
+<p>默认情况下，redis会异步的将数据持久化到磁盘。这种模式在大部分应用程序中已被验证是很有效的，但是在一些问题发生时，比如断电，则这种机制可能会导致数分钟的写请求丢失。</p>
+<p>如博文上半部分中介绍的，追加文件（Append Only File）是一种更好的保持数据一致性的方式。即使当服务器断电时，也仅会有1秒钟的写请求丢失，当redis进程出现问题且操作系统运行正常时，甚至只会丢失一条写请求。</p>
+<p>我们建议大家，AOF机制和RDB机制可以同时使用，不会有任何冲突。对于如何保持数据一致性的讨论，请参见<a target="_blank" href="http://redis.io/topics/persistence">本文</a>。</p>
+<p><div class="codetitle"><span><a style="CURSOR: pointer" data="18108" class="copybut" id="copybut18108" onclick="doCopy('code18108')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code18108"><br />
+appendonly no<br />
+</div><br />
+我们还可以设置aof文件的名称：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="16635" class="copybut" id="copybut16635" onclick="doCopy('code16635')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code16635"><br />
+appendfilename "appendonly.aof"<br />
+</div></p>
+<p>fsync()调用，用来告诉操作系统立即将缓存的指令写入磁盘。一些操作系统会“立即”进行，而另外一些操作系统则会“尽快”进行。</p>
+<p>redis支持三种不同的模式：</p>
+<p>1.no：不调用fsync()。而是让操作系统自行决定sync的时间。这种模式下，redis的性能会最快。<br />
+2.always：在每次写请求后都调用fsync()。这种模式下，redis会相对较慢，但数据最安全。<br />
+3.everysec：每秒钟调用一次fsync()。这是性能和安全的折衷。</p>
+<p>默认情况下为everysec。有关数据一致性的揭秘，可以参考<a target="_blank" href="http://antirez.com/post/redis-persistence-demystified.html">本文</a>。</p>
+<p><div class="codetitle"><span><a style="CURSOR: pointer" data="47611" class="copybut" id="copybut47611" onclick="doCopy('code47611')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code47611"><br />
+appendfsync everysec<br />
+</div><br />
+当fsync方式设置为always或everysec时，如果后台持久化进程需要执行一个很大的磁盘IO操作，那么redis可能会在fsync()调用时卡住。目前尚未修复这个问题，这是因为即使我们在另一个新的线程中去执行fsync()，也会阻塞住同步写调用。</p>
+<p>为了缓解这个问题，我们可以使用下面的配置项，这样的话，当BGSAVE或BGWRITEAOF运行时，fsync()在主进程中的调用会被阻止。这意味着当另一路进程正在对AOF文件进行重构时，redis的持久化功能就失效了，就好像我们设置了“appendsync none”一样。如果你的redis有时延问题，那么请将下面的选项设置为yes。否则请保持no，因为这是保证数据完整性的最安全的选择。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="54683" class="copybut" id="copybut54683" onclick="doCopy('code54683')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code54683"><br />
+no-appendfsync-on-rewrite no<br />
+</div><br />
+我们允许redis自动重写aof。当aof增长到一定规模时，redis会隐式调用BGREWRITEAOF来重写log文件，以缩减文件体积。</p>
+<p>redis是这样工作的：redis会记录上次重写时的aof大小。假如redis自启动至今还没有进行过重写，那么启动时aof文件的大小会被作为基准值。这个基准值会和当前的aof大小进行比较。如果当前aof大小超出所设置的增长比例，则会触发重写。另外，你还需要设置一个最小大小，是为了防止在aof很小时就触发重写。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="60024" class="copybut" id="copybut60024" onclick="doCopy('code60024')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code60024"><br />
+auto-aof-rewrite-percentage 100<br />
+auto-aof-rewrite-min-size 64mb<br />
+</div><br />
+如果设置auto-aof-rewrite-percentage为0，则会关闭此重写功能。</p>
+<p><strong>【教你看懂redis配置 – LUA脚本】</strong></p>
+<p>lua脚本的最大运行时间是需要被严格限制的，要注意单位是毫秒：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="44002" class="copybut" id="copybut44002" onclick="doCopy('code44002')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code44002"><br />
+lua-time-limit 5000<br />
+</div><br />
+如果此值设置为0或负数，则既不会有报错也不会有时间限制。</p>
+<p><strong>【教你看懂redis配置 – 慢日志】</strong></p>
+<p>redis慢日志是指一个系统进行日志查询超过了指定的时长。这个时长不包括IO操作，比如与客户端的交互、发送响应内容等，而仅包括实际执行查询命令的时间。</p>
+<p>针对慢日志，你可以设置两个参数，一个是执行时长，单位是微秒，另一个是慢日志的长度。当一个新的命令被写入日志时，最老的一条会从命令日志队列中被移除。</p>
+<p>单位是微秒，即1000000表示一秒。负数则会禁用慢日志功能，而0则表示强制记录每一个命令。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="92068" class="copybut" id="copybut92068" onclick="doCopy('code92068')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code92068"><br />
+slowlog-log-slower-than 10000<br />
+</div><br />
+慢日志最大长度，可以随便填写数值，没有上限，但要注意它会消耗内存。你可以使用SLOWLOG RESET来重设这个值。<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="21312" class="copybut" id="copybut21312" onclick="doCopy('code21312')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code21312"><br />
+slowlog-max-len 128<br />
+</div></p>
+<p><strong>【教你看懂redis配置 – 事件通知】</strong></p>
+<p>redis可以向客户端通知某些事件的发生。这个特性的具体解释可以参见<a target="_blank" href="http://redis.io/topics/keyspace-events">本文</a>。</p>
+<p><strong>【教你看懂redis配置 – 高级配置】</strong></p>
+<p>有关哈希数据结构的一些配置项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="7022" class="copybut" id="copybut7022" onclick="doCopy('code7022')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code7022"><br />
+hash-max-ziplist-entries 512<br />
+hash-max-ziplist-value 64<br />
+</div><br />
+有关列表数据结构的一些配置项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="76451" class="copybut" id="copybut76451" onclick="doCopy('code76451')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code76451"><br />
+list-max-ziplist-entries 512<br />
+list-max-ziplist-value 64<br />
+</div><br />
+有关集合数据结构的配置项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="41607" class="copybut" id="copybut41607" onclick="doCopy('code41607')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code41607"><br />
+set-max-intset-entries 512<br />
+</div><br />
+有关有序集合数据结构的配置项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="46138" class="copybut" id="copybut46138" onclick="doCopy('code46138')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code46138"><br />
+zset-max-ziplist-entries 128<br />
+zset-max-ziplist-value 64<br />
+</div><br />
+关于是否需要再哈希的配置项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="85659" class="copybut" id="copybut85659" onclick="doCopy('code85659')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code85659"><br />
+activerehashing yes<br />
+</div><br />
+关于客户端输出缓冲的控制项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="40539" class="copybut" id="copybut40539" onclick="doCopy('code40539')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code40539"><br />
+client-output-buffer-limit normal 0 0 0<br />
+client-output-buffer-limit slave 256mb 64mb 60<br />
+client-output-buffer-limit pubsub 32mb 8mb 60<br />
+</div><br />
+有关频率的配置项：<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="49343" class="copybut" id="copybut49343" onclick="doCopy('code49343')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code49343"><br />
+hz 10<br />
+</div><br />
+有关重写aof的配置项<br />
+<div class="codetitle"><span><a style="CURSOR: pointer" data="76046" class="copybut" id="copybut76046" onclick="doCopy('code76046')"><U>复制代码</U></a></span> 代码如下:</div><div class="codebody" id="code76046"><br />
+aof-rewrite-incremental-fsync yes<br />
+</div><br />
+至此，redis的入门内容就结束了，内容实在不少，但相对来说都很基础，本文没有涉及redis集群、redis工作原理、redis源码、redis相关LIB库等内容，后续会陆续奉献，大家敬请期待：）</p>
+<p>谢谢！</p>
+
+</div><!--endmain-->
+<div class="art_xg">
+<h4>您可能感兴趣的文章:</h4><ul><li><a href="/article/48212.htm" title="Python读写Redis数据库操作示例" target="_blank">Python读写Redis数据库操作示例</a></li><li><a href="/article/54774.htm" title="Redis中5种数据结构的使用场景介绍" target="_blank">Redis中5种数据结构的使用场景介绍</a></li><li><a href="/article/57066.htm" title="redis中使用redis-dump导出、导入、还原数据实例" target="_blank">redis中使用redis-dump导出、导入、还原数据实例</a></li><li><a href="/article/75719.htm" title="spring结合redis如何实现数据的缓存" target="_blank">spring结合redis如何实现数据的缓存</a></li></ul>
+</div>
+<div id="bot_ad" class="lbd clearfix">
+<script type="text/javascript">
+var cpro_id="u776243";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"650",rsi1:"250",pat:"1",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"0",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",tft:"0",tlt:"1",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+<div id="shoucang">
+    <div class="bdsharebuttonbox"><A class=bds_more href="http://share.baidu.com/code#" data-cmd="more"></A><A class=bds_qzone title=分享到QQ空间 href="http://share.baidu.com/code#" data-cmd="qzone"></A><A class=bds_tsina title=分享到新浪微博 href="http://share.baidu.com/code#" data-cmd="tsina"></A><A class=bds_tqq title=分享到腾讯微博 href="http://share.baidu.com/code#" data-cmd="tqq"></A><A class=bds_renren title=分享到人人网 href="http://share.baidu.com/code#" data-cmd="renren"></A><A class=bds_weixin title=分享到微信 href="http://share.baidu.com/code#" data-cmd="weixin"></A></div>
+</div>
+<div class="tags mt10">
+<strong>Tags：</strong><a href="http://img.jb51.net/tag/Redis/1.htm" target="_blank" title="搜索关于Redis的文章">Redis</a> <a href="http://img.jb51.net/tag/%C8%EB%C3%C5%BD%CC%B3%CC/1.htm" target="_blank" title="搜索关于入门教程的文章">入门教程</a> 
+</div>
+<DIV class="relatedarticle clearfix mt5">
+<H2>相关文章</H2>
+<ul><li><span>2015-04-04</span><a href="/article/64726.htm" title="使用Redis实现用户积分排行榜的教程" target="_blank">使用Redis实现用户积分排行榜的教程</a></li><li><span>2015-06-06</span><a href="/article/68264.htm" title="Redis的Python客户端redis-py安装使用说明文档" target="_blank">Redis的Python客户端redis-py安装使用说明文档</a></li><li><span>2015-04-04</span><a href="/article/65253.htm" title="Redis教程(六)：Sorted-Sets数据类型" target="_blank">Redis教程(六)：Sorted-Sets数据类型</a></li><li><span>2015-09-09</span><a href="/article/72070.htm" title="Windows下Redis的安装使用图解" target="_blank">Windows下Redis的安装使用图解</a></li><li><span>2015-03-03</span><a href="/article/62506.htm" title="Redis和Memcached的区别详解" target="_blank">Redis和Memcached的区别详解</a></li><li><span>2015-11-11</span><a href="/article/75439.htm" title="基于Redis实现分布式锁以及任务队列" target="_blank">基于Redis实现分布式锁以及任务队列</a></li><li><span>2015-06-06</span><a href="/article/68614.htm" title="从MySQL到Redis的简单数据库迁移方法" target="_blank">从MySQL到Redis的简单数据库迁移方法</a></li><li><span>2015-06-06</span><a href="/article/68515.htm" title="在Redis数据库中实现分布式速率限制的方法" target="_blank">在Redis数据库中实现分布式速率限制的方法</a></li><li><span>2015-06-06</span><a href="/article/68310.htm" title="Redis禁用命令、危险命令及规避方法" target="_blank">Redis禁用命令、危险命令及规避方法</a></li><li><span>2015-04-04</span><a href="/article/65241.htm" title="Redis教程(二)：String数据类型" target="_blank">Redis教程(二)：String数据类型</a></li></ul>
+</DIV>
+<div class="lbd clearfix mt5">
+<script type="text/javascript">
+var cpro_id="u2261530";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"680",rsi1:"200",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+<a href="#comments"></a>
+<div id="comments">
+<H2>最新评论</H2>
+<div class="pd5"><div id="SOHUCS" sid="art_56448"></div></div>
+</div>
+      </div><!--endborder-->
+      </div><!--end fl-->
+      
+<div class="w300 fr">
+<div class="r300 clearfix" id="r1"></div>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">大家感兴趣的内容</H4>
+<UL class="newsList newList-in">
+<li><EM class="no1">1</EM><a href="/article/56448.htm" title="超强、超详细Redis数据库入门教程" target="_blank">超强、超详细Redis数据库入门教程</a></li><li><EM class="no2">2</EM><a href="/article/60627.htm" title="redis常用命令、常见错误、配置技巧等分享" target="_blank">redis常用命令、常见错误、配置技</a></li><li><EM class="no3">3</EM><a href="/article/54747.htm" title="64位Windows下安装Redis教程" target="_blank">64位Windows下安装Redis教程</a></li><li><EM class="no4">4</EM><a href="/article/54774.htm" title="Redis中5种数据结构的使用场景介绍" target="_blank">Redis中5种数据结构的使用场景介</a></li><li><EM class="no5">5</EM><a href="/article/57066.htm" title="redis中使用redis-dump导出、导入、还原数据实例" target="_blank">redis中使用redis-dump导出、导入</a></li><li><EM class="no6">6</EM><a href="/article/61793.htm" title="Redis操作命令总结" target="_blank">Redis操作命令总结</a></li><li><EM class="no7">7</EM><a href="/article/51624.htm" title="让Redis在你的系统中发挥更大作用的几点建议" target="_blank">让Redis在你的系统中发挥更大作用</a></li><li><EM class="no8">8</EM><a href="/article/51625.htm" title="redis常用命令小结" target="_blank">redis常用命令小结</a></li><li><EM class="no9">9</EM><a href="/article/62877.htm" title="Redis中统计各种数据大小的方法" target="_blank">Redis中统计各种数据大小的方法</a></li><li><EM class="no10">10</EM><a href="/article/62507.htm" title="CentOS 6.6下Redis安装配置记录" target="_blank">CentOS 6.6下Redis安装配置记录</a></li>
+</UL>
+</DIV>
+</DIV>
+<div class="r300 clearfix mt10" id="r2"></div>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">最近更新的内容</H4>
+<UL class="newsListA">
+<ul><li><a href="/article/56448.htm" title="超强、超详细Redis数据库入门教程" target="_blank">超强、超详细Redis数据库入门教程</a></li><li><a href="/article/65241.htm" title="Redis教程(二)：String数据类型" target="_blank">Redis教程(二)：String数据类型</a></li><li><a href="/article/65240.htm" title="Redis教程(一)：Redis简介" target="_blank">Redis教程(一)：Redis简介</a></li><li><a href="/article/65253.htm" title="Redis教程(六)：Sorted-Sets数据类型" target="_blank">Redis教程(六)：Sorted-Sets数据类型</a></li><li><a href="/article/62877.htm" title="Redis中统计各种数据大小的方法" target="_blank">Redis中统计各种数据大小的方法</a></li><li><a href="/article/75998.htm" title="Redis上实现分布式锁以提高性能的方案研究" target="_blank">Redis上实现分布式锁以提高性能的方案研究</a></li><li><a href="/article/57066.htm" title="redis中使用redis-dump导出、导入、还原数据实例" target="_blank">redis中使用redis-dump导出、导入、还原数</a></li><li><a href="/article/51624.htm" title="让Redis在你的系统中发挥更大作用的几点建议" target="_blank">让Redis在你的系统中发挥更大作用的几点建</a></li><li><a href="/article/68254.htm" title="Redis中主键失效的原理及实现机制剖析" target="_blank">Redis中主键失效的原理及实现机制剖析</a></li><li><a href="/article/68260.htm" title="Redis的LRU机制介绍" target="_blank">Redis的LRU机制介绍</a></li></ul>
+</UL>
+</DIV>
+</DIV>   
+<div class="r300 clearfix mt10" id="idctu1"></div>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">常用在线小工具</H4>
+<ul class="newsListA" id="bctools"></ul>
+</DIV>
+</DIV>
+<div class="r300 clearfix mt10" id="idctu2"></div>
+<div class="mt10 rFixedBox" id="r3">
+<script type="text/javascript">
+var cpro_id="u1397867";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"300",rsi1:"380",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+      
+      
+      </div><!--end fr-->
+      </div>
+</div><!--end content-->
+<div id="footer">
+<div class="main clearfix">
+<p>
+<a href="http://www.jb51.net/about.htm" target="_blank">关于我们</a> - 
+<a href="http://www.jb51.net/support.htm" target="_blank">广告合作</a> - 
+<a href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  
+<a href="http://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  
+<a href="http://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - 
+<a href="tencent://message/?uin=461478385&Site=http://www.jb51.net" target="_blank">投诉建议</a> - 
+<a href="http://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+</p>
+<p>&copy;CopyRight 2006-2016 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+</div>
+</div><!--end footer-->
+<link type="text/css" rel="stylesheet" href="/jslib/syntaxhighlighter/styles/shCore.css" />
+<link type="text/css" rel="Stylesheet" href="/jslib/syntaxhighlighter/styles/shThemeDefault.css" />
+<script type="text/javascript" src="/jslib/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="/jslib/syntaxhighlighter/scripts/shAutoloader.js"></script>
+<script type="text/javascript"> 
+if (top.location != self.location)top.location=self.location;
+$('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 650){
+            img.style.width = "650px";
+            img.style.height = "auto";
+            //$(img).removeAttr('height');
+            var aTag = document.createElement('a');
+            aTag.href = img.src;
+			aTag.target="_blank";
+            $(aTag).addClass('bPic')
+            .insertAfter(img).append(img)
+          }
+    });
+ $(window).scroll(function()
+    {	
+    	//rFixedBox跟随滚动
+    	var h = $(window).height();
+        var top = $(window).scrollTop();
+    	var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+		
+        if(top>=fixedTop+344)
+        {
+			var h1 = parseInt($('#content').children('.main').height());
+			if(parseInt(top) + 340 < h1){
+				$('.rFixedBox').css({'position':'fixed','top': 0});
+			}else{
+				$('.rFixedBox').css({'position':'absolute','top': h1-510});
+			}
+        }
+        else
+        {
+            $('.rFixedBox').css({'position':'static', 'top':0});   
+        }	
+       /* return true;*/
+    });
+SyntaxHighlighter.autoloader(
+	'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+	'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+	'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+	'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+	'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+	'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+	'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+	'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+	'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+	'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+	'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+	'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+	'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+	'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+	'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+	'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+	'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+	'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+	'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+	'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+	'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+	'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+	'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script type="text/javascript" src="http://img.jb51.net/js/a.js"></script>
+<div id="tongji">
+<script type="text/javascript" src="http://img.jb51.net/inc/tongji.js"></script>
+<script type="text/javascript" src="http://www.jb51.net/pl.asp?id=56448"></script>
+</div>
+<script>
+(function(){
+var appid = 'cyrHH3dwi',
+conf = 'prod_1dc5dc80970106099d43fe242b7465fc';
+var doc = document,
+s = doc.createElement('script'),
+h = doc.getElementsByTagName('head')[0] || doc.head || doc.documentElement;
+s.type = 'text/javascript';
+s.charset = 'utf-8';
+s.src =  'http://assets.changyan.sohu.com/upload/changyan.js?conf='+ conf +'&appid=' + appid;
+h.insertBefore(s,h.firstChild);
+window.SCS_NO_IFRAME = true;
+})();
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<script type="text/javascript" charset="utf-8" src="http://changyan.itc.cn/js/??lib/jquery.js,changyan.labs.js?appid=cyrEjJlIw"></script>
+</body>
+</html>
+<!-- published at 2016-3-4 23:36:03By dxycms qq:461478385  -->

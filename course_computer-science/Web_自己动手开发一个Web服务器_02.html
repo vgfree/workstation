@@ -1,0 +1,846 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>自己动手开发一个 Web 服务器（二）-技术 ◆ 学习|Linux.中国-开源社区</title>
+ 
+<meta name="keywords" content="自己动手开发一个 Web 服务器（二）" />
+<meta name="description" content="在《自己动手开发一个 Web 服务器（一）》中，我给大家留了一个问题：如何在不对服务器代码作任何修改的情况下，通过该服务器运行Djando应用、Flask应用和Pyramid应用，同时满足这些不同网络框架的要求？读完这篇文章，你就可以回答这个问题了。  以前，你选择的Python网络框架将会限制所能够使用的 Web 服务器，反之亦然。如果框架和服务器在设计时就是可以相互匹配的，那你就不会面临这个问题：  但是如果你试图将设计不相匹配的服务器与框架相结合，那么你肯定就会碰到下面这张图所展示的这个问题：  这就意味着，你基本上只能使用能够 " />
+<meta name="copyright" content="2005-2015 Linux.cn" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="applicable-device" content="pc,mobile">
+<meta name="referrer" content="always">
+<base href="https://linux.cn/" /><link rel="stylesheet" type="text/css" href="https://dn-linuxcn.qbox.me/data/cache/style_1_common.css?R99" />
+<link rel="stylesheet" type="text/css" href="https://dn-linuxcn.qbox.me/data/cache/style_1_portal_view.css?R99" />
+<link href="https://dn-linuxcn.qbox.me/static/css/responsive.css?R99" rel="stylesheet">
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?f219a1d7ae00e99bdc4410080f3a6ef7";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script type="text/javascript">var STYLEID = '1', STATICURL = 'https://dn-linuxcn.qbox.me/static/', IMGDIR = 'https://dn-linuxcn.qbox.me/static/image/common', VERHASH = 'R99', charset = 'utf-8', discuz_uid = '0', cookiepre = 'dx_516d_', cookiedomain = '.linux.cn', cookiepath = '/', showusercard = '1', attackevasive = '0', disallowfloat = '', creditnotice = '1|经验|,2|L币|,3|贡献|', defaultstyle = '', REPORTURL = 'aHR0cDovL2xpbnV4LmNuL2FydGljbGUtNjgxNi0xLmh0bWw=', SITEURL = 'https://linux.cn/', JSPATH = 'https://dn-linuxcn.qbox.me/static/js/', CSSPATH = 'data/cache/style_', DYNAMICURL = '';</script>
+<script src="https://dn-linuxcn.qbox.me/static/js/common.js?R99" type="text/javascript"></script>
+<script src="https://dn-linuxcn.qbox.me/static/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">jQuery.noConflict();</script>
+<script src="https://dn-linuxcn.qbox.me/static/js/jquery.plugins.js?R99" type="text/javascript"></script>
+<script src="https://dn-linuxcn.qbox.me/static/js/bootstrap.min.js?R99" type="text/javascript"></script>
+<link rel="alternate" type="application/rss+xml" title="Linux.中国 - 开源社区 RSS" href="/rss.xml" />
+<link rel="shortcut icon" href="https://dn-linuxcn.qbox.me/favicon.ico"  sizes="32x32" />
+<link rel="canonical" href="https://linux.cn/article-6816-1.html" /><script src="https://dn-linuxcn.qbox.me/static/js/portal.js?R99" type="text/javascript"></script>
+</head>
+
+<body id="nv_portal" class="pg_view" onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div id="toptb" class="cl">
+<div class="wp">
+<div class="z"><a href="/rss.xml" target="_blank" >RSS</a><a href="/tag/" >TAG</a><a href="http://mail.qq.com/cgi-bin/bookcol?colid=20274" >邮件列表</a><a href="http://www.qiniu.com/" target="_blank"  style="color: blue;">由七牛云存储提供图床支持</a></div>
+<div class="y">
+<a href="/aboutus.html" >关于我们/aboutus</a><a href="/business.html" >广告合作/AD</a></div>
+</div>
+</div>
+
+
+<div id="hd">
+<div class="wp">
+<div class="hdc cl"><h2 style="padding:5px 20px 5px 0;"><a href="./" title="Linux.中国 - 开源社区"><img src="https://dn-linuxcn.qbox.me/static/image/common/linuxcn_logo_230x80_ani2.gif" alt="Linux.中国 - 开源社区" border="0" /></a></h2><div class="y"><script src="https://dn-linuxcn.qbox.me/static/js/logging.js?R99" type="text/javascript"></script>
+<form method="post" autocomplete="off" id="lsform" action="member.php?mod=logging&amp;action=login&amp;loginsubmit=yes&amp;infloat=yes&amp;lssubmit=yes" onsubmit="pwmd5('ls_password');return lsSubmit();">
+<div class="fastlg cl">
+<span id="return_ls" style="display:none"></span>
+<div class="y pns">
+<table cellspacing="0" cellpadding="0">
+<tr>
+<td><label for="ls_username">帐号</label></td>
+<td><input type="text" name="username" id="ls_username" class="px vm xg1"  value="用户名/Email" onfocus="if(this.value == '用户名/Email'){this.value = '';this.className = 'px vm';}" onblur="if(this.value == ''){this.value = '用户名/Email';this.className = 'px vm xg1';}" tabindex="901" /></td>
+<td class="fastlg_l"><label for="ls_cookietime"><input type="checkbox" name="cookietime" id="ls_cookietime" class="pc" value="2592000" tabindex="903" />自动登录</label></td>
+<td>&nbsp;<a href="javascript:;" onclick="showWindow('login', 'member.php?mod=logging&action=login&viewlostpw=1')">找回密码</a></td>
+</tr>
+<tr>
+<td><label for="ls_password">密码</label></td>
+<td><input type="password" name="password" id="ls_password" class="px vm" autocomplete="off" tabindex="902" /></td>
+<td class="fastlg_l"><button type="submit" class="pn vm" tabindex="904"><em>登录</em></button></td>
+<td>&nbsp;<a href="member.php?mod=knight" class="xi2 xw1">骑士注册</a></td>
+</tr>
+</table>
+<input type="hidden" name="quickforward" value="yes" />
+<input type="hidden" name="handlekey" value="ls" />
+</div>
+
+<div class="fastlg_fm y" style="margin-right: 10px; padding-right: 10px">
+<p><a href="http://linux.cn/connect.php?mod=login&op=init&referer=portal.php%3Fmod%3Dview%26aid%3D6816%26page%3D1%26ref%3D&statfrom=login_simple"><img src="https://dn-linuxcn.qbox.me/static/image/common/qq_login.gif" class="vm" alt="QQ登录" /></a></p>
+<p><a href="xwb.php?m=xwbAuth.login"><img src="https://dn-linuxcn.qbox.me/static/image/common/sina_login.gif" class="vm" style="padding: 2px 0;" alt="微博登录" /></a></p>
+</div>
+
+<script>
+try{
+(function(){
+var node = document.getElementById("lsform").firstChild;
+var i = 1;
+while(i < 3 && node.nodeType!=1){
+node=node.nextSibling;
+i++;
+}
+node.style.width = 'auto';
+})();
+}catch(e){}
+</script>
+</div>
+</form>
+
+<script src="https://dn-linuxcn.qbox.me/static/js/md5.js?R99" type="text/javascript" reload="1"></script>
+</div>
+<h2 style="padding:5px 20px;float:right;">
+<div style="margin-bottom:5px;">
+    <div><a href="http://linux.cn/go/vuq" target="_blank"><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201603/03/105752vba0wb0wqp3eea97.png" height="80" width="300" alt="UCloud" border="0"></a></div></div>
+</h2>
+</div>
+<div class="p_pop h_pop" id="mn_userapp_menu" style="display: none"></div><div id="topmenu_wrapper">
+<div id="topmenu">
+<div id="nv">
+<ul><li id="mn_N6666" ><a href="/" hidefocus="true"   style="font-weight: bold;">首页</a></li><li id="mn_P3" onmouseover="navShow('P3')"><a href="https://linux.cn/tech/" hidefocus="true"   style="color: #FFFAE5;">技术 ◆ 学习</a></li><li id="mn_P1" ><a href="https://linux.cn/news/" hidefocus="true"   style="color: #FFFAE5;">新闻 ◆ 快讯</a></li><li id="mn_P4" ><a href="https://linux.cn/talk/" hidefocus="true"   style="color: #FFFAE5;">观点 ◆ 热议</a></li><li id="mn_P8" onmouseover="navShow('P8')"><a href="https://linux.cn/share/" hidefocus="true"   style="color: #FFFAE5;">软件 ◆ 分享</a></li><li id="mn_N9be8" onmouseover="navShow('N9be8')"><a href="/forum/" hidefocus="true" target="_blank"   style="color: cyan;">论坛</a></li><li id="mn_Ne749" ><a href="/forum.php?mod=post&action=newthread&fid=119" hidefocus="true" target="_blank"   style="color: red;">投稿</a></li></ul>
+</div>
+<div id="mu" class="cl">
+<ul class="cl " id="snav_mn_P3" style="display:none;">
+<li><a href="https://linux.cn/tech/desktop/" hidefocus="true" >桌面应用</a></li><li><a href="https://linux.cn/tech/sa/" hidefocus="true" >系统运维</a></li><li><a href="https://linux.cn/tech/program/" hidefocus="true" >软件开发</a></li></ul>
+<ul class="cl " id="snav_mn_P8" style="display:none;">
+<li><a href="https://linux.cn/share/distro/" hidefocus="true" >Linux 发行版</a></li></ul>
+<ul class="cl " id="snav_mn_N9be8" style="display:none;">
+<li><a href="/thread/" hidefocus="true"  style="color: blue;">全部话题</a></li><li><a href="javascript:showWindow('nav', 'forum.php?mod=misc&action=nav&special=0');" hidefocus="true"  style="color: red;">发新帖</a></li><li><a href="javascript:void();" hidefocus="true" >|</a></li><li><a href="/forum/news/" hidefocus="true" >新闻杂谈</a></li><li><a href="/forum/sa/" hidefocus="true" >系统运维</a></li><li><a href="/forum/program/" hidefocus="true" >编程开发</a></li></ul>
+<ul class="cl " id="snav_mn_N39f5" style="display:none;">
+<li><a href="/space.php" hidefocus="true" >首页</a></li><li><a href="/home.php?mod=space&do=home" hidefocus="true" >动态</a></li><li><a href="/home.php?mod=space&do=doing" hidefocus="true" >记录</a></li><li><a href="/home.php?mod=space&do=blog" hidefocus="true" >博客</a></li><li><a href="/home.php?mod=space&do=album" hidefocus="true" >相册</a></li><li><a href="/home.php?mod=space&do=favorite" hidefocus="true" >收藏</a></li><li><a href="/home.php?mod=space&do=friend" hidefocus="true" >好友</a></li><li><a href="/home.php?mod=spacecp&ac=invite" hidefocus="true" >邀请</a></li></ul>
+<ul class="cl " id="snav_mn_userapp" style="display:none;">
+</ul>
+</div></div>
+</div>
+<div id="scbar" class="cl">
+<form id="scbar_form" method="post" autocomplete="off" onsubmit="searchFocus($('scbar_txt'))" action="search.php?searchsubmit=yes" target="_blank">
+<input type="hidden" name="mod" id="scbar_mod" value="search" />
+<input type="hidden" name="formhash" value="4a0b8be8" />
+<input type="hidden" name="srchtype" value="title" />
+<input type="hidden" name="srhfid" value="0" />
+<input type="hidden" name="srhlocality" value="portal::view" />
+<table id="scbar_table" cellspacing="0" cellpadding="0" style="float:right;">
+<tr>
+<td class="scbar_icon_td"></td>
+<td class="scbar_txt_td"><input type="text" name="srchtxt" id="scbar_txt" value="请注册后再搜索" autocomplete="off" speech /></td>
+<td class="scbar_type_td"><a href="javascript:;" id="scbar_type" class="xg1" onclick="showMenu(this.id)" hidefocus="true">搜索</a></td>
+<td class="scbar_btn_td"><button type="submit" name="searchsubmit" id="scbar_btn" sc="1" class="pn pnc" value="true"><strong class="xi2">搜索</strong></button></td>
+<td class="scbar_hot_td">
+<div id="scbar_hot">
+</div>
+</td>
+</tr>
+</table>
+</form>
+<span class="z titletext" style="padding: 0 10px 0 20px;">❏ <a href="http://locez.com" target="_blank">Locez</a> 新手指南：</span>
+<ul class="cl mutag z">
+<li><a class="hidefocus" hidefocus="true" href="https://linux.cn/article-4130-1.html">下载 Linux »</a></li>
+<li><a class="hidefocus" hidefocus="true" href="https://linux.cn/article-5893-1.html">安装 Linux »</a></li>
+<li><a class="hidefocus" hidefocus="true" href="https://linux.cn/article-6042-1.html">安装软件 »</a></li>
+<li><a class="hidefocus" hidefocus="true" href="https://linux.cn/article-6160-1.html">基础命令 »</a></li>
+
+</ul>
+</div>
+<br class="clear" />
+<ul id="scbar_type_menu" class="p_pop" style="display: none;"><li><a href="javascript:;" rel="search">全站</a></li></ul>
+<script type="text/javascript">
+initSearchmenu('scbar', '');
+</script>
+<script type="text/javascript">
+(function($){
+$(window).load(function() {
+$("#topmenu").affix({offset : {
+top : $("#topmenu").offset().top,
+bottom: 218}});
+$("#topmenu").width($('.hdc').width());
+$('#topmenu_wrapper').height($("#topmenu").height());
+
+$("#search_more").affix({offset : {
+top: 1000}});
+})
+})(jQuery);
+</script>
+
+</div>
+</div>
+<div id="wp" class="wp">
+<script src="https://dn-linuxcn.qbox.me/static/js/forum_viewthread.js?R99" type="text/javascript"></script>
+<script type="text/javascript">zoomstatus = parseInt(1), imagemaxwidth = '700', aimgcount = new Array();</script>
+
+<div style="margin-bottom:5px;">
+    <div><a href="http://linux.cn/go/vcv" target="_blank"><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201601/25/153225qd92buf78p682jbu.jpg" height="120" width="100%" border="0"></a></div></div>
+<div id="pt" class="bm cl">
+<div class="z">
+<a href="./" class="nvhm" title="首页">Linux.中国 - 开源社区</a> <em>&rsaquo;</em><a href="https://linux.cn/tech/">技术 ◆ 学习</a> <em>&rsaquo;</em>
+查看内容
+</div>
+</div>
+
+<style id="diy_style" type="text/css"></style>
+<div class="wp">
+<!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+</div>
+<div id="ct" class="ct2 wp cl">
+<div class="mn">
+<div style="margin-bottom:5px;">
+    </div>
+<div class="vw">
+<div class="h hm">
+<h1 class="ph" id="article_title">自己动手开发一个 Web 服务器（二） </h1>
+<p class="xg1">
+2016-1-2 10:00&nbsp;&nbsp;&nbsp;
+收藏: <em id="_favtimes">5</em>&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+<p class="copyright">
+    	 
+    		    			    			<span class="z textcut">编译自：<a href="http://ruslanspivak.com/lsbaws-part2/" target="_blank">http://ruslanspivak.com/lsbaws-part2/</a></span>
+    			    		    		<span class="y">作者： Ruslan</span>    		<br class="clear" />
+    	    	<span class="z textcut">转载自：编程派 &nbsp;&nbsp;<a href="http://codingpy.com/article/build-a-simple-web-server-part-two/" target="_blank">http://codingpy.com/article/build-a-simple-web-server-part-two/</a></span>
+    		<br class="clear" />
+    	    	<span class="z">本文地址：<a href="https://linux.cn/article-6816-1.html">https://linux.cn/article-6816-1.html</a></span>
+    	<span class="y"><a href="https://linux.cn/article-6816-1.html?pr" class="print" title="打印"></a></span>
+    	<br class="clear" />
+    	</p>
+
+</div>
+
+<!--[diy=diysummarytop]--><div id="diysummarytop" class="area"></div><!--[/diy]-->
+
+
+<!--[diy=diysummarybottom]--><div id="diysummarybottom" class="area"></div><!--[/diy]-->
+
+<div class="d">
+
+<!--[diy=diycontenttop]--><div id="diycontenttop" class="area"></div><!--[/diy]-->
+
+<div id="article_content"><p>在《<a href="https://linux.cn/article-6815-1.html">自己动手开发一个 Web 服务器（一）</a>》中，我给大家留了一个问题：如何在不对服务器代码作任何修改的情况下，通过该服务器运行Djando应用、Flask应用和Pyramid应用，同时满足这些不同网络框架的要求？读完这篇文章，你就可以回答这个问题了。</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005645e40qio8ijrj7xc88.jpg" alt="" /></p>
+<p>以前，你选择的Python网络框架将会限制所能够使用的 Web 服务器，反之亦然。如果框架和服务器在设计时就是可以相互匹配的，那你就不会面临这个问题：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005732jckw6fqkppkfp5xx.png" alt="服务器与框架是否匹配" /></p>
+<p>但是如果你试图将设计不相匹配的服务器与框架相结合，那么你肯定就会碰到下面这张图所展示的这个问题：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005732hz77swjxxj7n7u6e.png" alt="服务器与框架之间冲突" /></p>
+<p>这就意味着，你基本上只能使用能够正常运行的服务器与框架组合，而不能选择你希望使用的服务器或框架。</p>
+<p>那么，你怎样确保可以在不修改 Web 服务器代码或网络框架代码的前提下，使用自己选择的服务器，并且匹配多个不同的网络框架呢？为了解决这个问题，就出现了Python <ruby>Web 服务器网关接口<rp>（</rp><rt>Web Server Gateway Interface，WSGI</rt><rp>）</rp></ruby>。</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005733uoppuynubscetcss.png" alt="WSGI接口" /></p>
+<p><a href="https://www.python.org/dev/peps/pep-0333/">WSGI</a>的出现，让开发者可以将网络框架与 Web 服务器的选择分隔开来，不再相互限制。现在，你可以真正地将不同的 Web 服务器与网络开发框架进行混合搭配，选择满足自己需求的组合。例如，你可以使用Gunicorn或Nginx/uWSGI或Waitress服务器来运行Django、Flask或Pyramid应用。正是由于服务器和框架均支持WSGI，才真正得以实现二者之间的自由混合搭配。</p>
+<p>所以，WSGI就是我在上一篇文章中所留问题的答案。你的 Web 服务器必须实现一个服务器端的WSGI接口，而目前所有现代Python网络框架都已经实现了框架端的WSGI接口，这样开发者不需要修改服务器的代码，就可以支持某个网络框架。</p>
+<p>Web 服务器和网络框架支持WSGI协议，不仅让应用开发者选择符合自己需求的组合，同时也有利于服务器和框架的开发者，因为他们可以将注意力集中在自己擅长的领域，而不是相互倾轧。其他编程语言也拥有类似的接口：例如Java的Servlet API和Ruby的Rack。</p>
+<p>口说无凭，我猜你肯定在想：&ldquo;无代码无真相！&rdquo;既然如此，我就在这里给出一个非常简单的WSGI服务器实现：</p>
+<pre class="prettyprint linenums"><code># Tested with Python 2.7.9, Linux &amp; Mac OS X
+import socket
+import StringIO
+import sys
+
+
+class WSGIServer(object):
+
+    address_family = socket.AF_INET
+    socket_type = socket.SOCK_STREAM
+    request_queue_size = 1
+
+    def __init__(self, server_address):
+        # Create a listening socket
+        self.listen_socket = listen_socket = socket.socket(
+            self.address_family,
+            self.socket_type
+        )
+        # Allow to reuse the same address
+        listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        # Bind
+        listen_socket.bind(server_address)
+        # Activate
+        listen_socket.listen(self.request_queue_size)
+        # Get server host name and port
+        host, port = self.listen_socket.getsockname()[:2]
+        self.server_name = socket.getfqdn(host)
+        self.server_port = port
+        # Return headers set by Web framework/Web application
+        self.headers_set = []
+
+    def set_app(self, application):
+        self.application = application
+
+    def serve_forever(self):
+        listen_socket = self.listen_socket
+        while True:
+            # New client connection
+            self.client_connection, client_address = listen_socket.accept()
+            # Handle one request and close the client connection. Then
+            # loop over to wait for another client connection
+            self.handle_one_request()
+
+    def handle_one_request(self):
+        self.request_data = request_data = self.client_connection.recv(1024)
+        # Print formatted request data a la 'curl -v'
+        print(''.join(
+            '&lt; {line}\n'.format(line=line)
+            for line in request_data.splitlines()
+        ))
+
+        self.parse_request(request_data)
+
+        # Construct environment dictionary using request data
+        env = self.get_environ()
+
+        # It's time to call our application callable and get
+        # back a result that will become HTTP response body
+        result = self.application(env, self.start_response)
+
+        # Construct a response and send it back to the client
+        self.finish_response(result)
+
+    def parse_request(self, text):
+        request_line = text.splitlines()[0]
+        request_line = request_line.rstrip('\r\n')
+        # Break down the request line into components
+        (self.request_method,  # GET
+         self.path,            # /hello
+         self.request_version  # HTTP/1.1
+         ) = request_line.split()
+
+    def get_environ(self):
+        env = {}
+        # The following code snippet does not follow PEP8 conventions
+        # but it's formatted the way it is for demonstration purposes
+        # to emphasize the required variables and their values
+        #
+        # Required WSGI variables
+        env['wsgi.version']      = (1, 0)
+        env['wsgi.url_scheme']   = 'http'
+        env['wsgi.input']        = StringIO.StringIO(self.request_data)
+        env['wsgi.errors']       = sys.stderr
+        env['wsgi.multithread']  = False
+        env['wsgi.multiprocess'] = False
+        env['wsgi.run_once']     = False
+        # Required CGI variables
+        env['REQUEST_METHOD']    = self.request_method    # GET
+        env['PATH_INFO']         = self.path              # /hello
+        env['SERVER_NAME']       = self.server_name       # localhost
+        env['SERVER_PORT']       = str(self.server_port)  # 8888
+        return env
+
+    def start_response(self, status, response_headers, exc_info=None):
+        # Add necessary server headers
+        server_headers = [
+            ('Date', 'Tue, 31 Mar 2015 12:54:48 GMT'),
+            ('Server', 'WSGIServer 0.2'),
+        ]
+        self.headers_set = [status, response_headers + server_headers]
+        # To adhere to WSGI specification the start_response must return
+        # a 'write' callable. We simplicity's sake we'll ignore that detail
+        # for now.
+        # return self.finish_response
+
+    def finish_response(self, result):
+        try:
+            status, response_headers = self.headers_set
+            response = 'HTTP/1.1 {status}\r\n'.format(status=status)
+            for header in response_headers:
+                response += '{0}: {1}\r\n'.format(*header)
+            response += '\r\n'
+            for data in result:
+                response += data
+            # Print formatted response data a la 'curl -v'
+            print(''.join(
+                '&gt; {line}\n'.format(line=line)
+                for line in response.splitlines()
+            ))
+            self.client_connection.sendall(response)
+        finally:
+            self.client_connection.close()
+
+
+SERVER_ADDRESS = (HOST, PORT) = '', 8888
+
+
+def make_server(server_address, application):
+    server = WSGIServer(server_address)
+    server.set_app(application)
+    return server
+
+
+if __name__ == '__main__':
+    if len(sys.argv) &lt; 2:
+        sys.exit('Provide a WSGI application object as module:callable')
+    app_path = sys.argv[1]
+    module, application = app_path.split(':')
+    module = __import__(module)
+    application = getattr(module, application)
+    httpd = make_server(SERVER_ADDRESS, application)
+    print('WSGIServer: Serving HTTP on port {port} ...\n'.format(port=PORT))
+    httpd.serve_forever()
+</code></pre>
+<p>上面的代码比第一部分的服务器实现代码要长的多，但是这些代码实际也不算太长，只有不到150行，大家理解起来并不会太困难。上面这个服务器的功能也更多&mdash;&mdash;它可以运行你使用自己喜欢的框架所写出来的网络应用，无论你选择Pyramid、Flask、Django或是其他支持WSGI协议的框架。</p>
+<p>你不信？你可以自己测试一下，看看结果如何。将上述代码保存为<code>webserver2.py</code>，或者直接从我的<a href="https://github.com/rspivak/lsbaws/blob/master/part2/webserver2.py">Github仓库</a>下载。如果你运行该文件时没有提供任何参数，那么程序就会报错并退出。</p>
+<pre class="prettyprint linenums"><code>$ python webserver2.py
+Provide a WSGI application object as module:callable
+</code></pre>
+<p>上述程序设计的目的，就是运行你开发的网络应用，但是你还需要满足一些它的要求。要运行服务器，你只需要安装Python即可。但是要运行使用Pyramid、Flask和Django等框架开发的网络应用，你还需要先安装这些框架。我们接下来安装这三种框架。我倾向于使用<code>virtualenv</code>安装。请按照下面的提示创建并激活一个虚拟环境，然后安装这三个网络框架。</p>
+<pre class="prettyprint linenums"><code>$ [sudo] pip install virtualenv
+$ mkdir ~/envs
+$ virtualenv ~/envs/lsbaws/
+$ cd ~/envs/lsbaws/
+$ ls
+bin  include  lib
+$ source bin/activate
+(lsbaws) $ pip install pyramid
+(lsbaws) $ pip install flask
+(lsbaws) $ pip install django
+</code></pre>
+<p>接下来，你需要创建一个网络应用。我们首先创建Pyramid应用。将下面的代码保存为<code>pyramidapp.py</code>文件，放至<code>webserver2.py</code>所在的文件夹中，或者直接从<a href="https://github.com/rspivak/lsbaws/blob/master/part2/pyramidapp.py">我的Github仓库</a>下载该文件：</p>
+<pre class="prettyprint linenums"><code>from pyramid.config import Configurator
+from pyramid.response import Response
+
+
+def hello_world(request):
+    return Response(
+        'Hello world from Pyramid!\n',
+        content_type='text/plain',
+    )
+
+config = Configurator()
+config.add_route('hello', '/hello')
+config.add_view(hello_world, route_name='hello')
+app = config.make_wsgi_app()
+</code></pre>
+<p>现在，你可以通过自己开发的 Web 服务器来启动上面的Pyramid应用。</p>
+<pre class="prettyprint linenums"><code>(lsbaws) $ python webserver2.py pyramidapp:app
+WSGIServer: Serving HTTP on port 8888 ...
+</code></pre>
+<p>在运行<code>webserver2.py</code>时，你告诉自己的服务器去加载<code>pyramidapp</code>模块中的<code>app</code>可调用对象（callable）。你的服务器现在可以接收HTTP请求，并将请求中转至你的Pyramid应用。应用目前只能处理一个路由（route）：/hello。在浏览器的地址栏输入<code>http://localhost:8888/hello</code>，按下回车键，观察会出现什么情况：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005733tvns1sy21nuyqy1b.png" alt="Pyramid应用运行情况" /></p>
+<p>你还可以在命令行使用<code>curl</code>命令，来测试服务器运行情况：</p>
+<pre class="prettyprint linenums"><code>$ curl -v http://localhost:8888/hello
+...
+</code></pre>
+<p>接下来我们创建Flask应用。重复上面的步骤。</p>
+<pre class="prettyprint linenums"><code>from flask import Flask
+from flask import Response
+flask_app = Flask('flaskapp')
+
+
+@flask_app.route('/hello')
+def hello_world():
+    return Response(
+        'Hello world from Flask!\n',
+        mimetype='text/plain'
+    )
+
+app = flask_app.wsgi_app
+</code></pre>
+<p>将上面的代码保存为<code>flaskapp.py</code>，或者直接从<a href="https://github.com/rspivak/lsbaws/blob/master/part2/flaskapp.py">我的Github仓库</a>下载文件，并运行：</p>
+<pre class="prettyprint linenums"><code>(lsbaws) $ python webserver2.py flaskapp:app
+WSGIServer: Serving HTTP on port 8888 ...
+</code></pre>
+<p>然后在浏览器地址栏输入<code>http://localhost:8888/hello</code>，并按下回车：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005733gnh8mua9fma8zu6u.png" alt="Flask应用运行情况" /></p>
+<p>同样，在命令行使用<code>curl</code>命令，看看服务器是否会返回Flask应用生成的信息：</p>
+<pre class="prettyprint linenums"><code>$ curl -v http://localhost:8888/hello
+...
+</code></pre>
+<p>这个服务器是不是也能支持Django应用？试一试就知道了！不过接下来的操作更为复杂一些，我建议大家克隆整个仓库，并使用其中的<code>djangoapp.py</code>文件。下面的代码将一个名叫<code>helloworld</code>的Django应用添加至当前的Python路径中，然后导入了该项目的WSGI应用。</p>
+<pre class="prettyprint linenums"><code>import sys
+sys.path.insert(0, './helloworld')
+from helloworld import wsgi
+
+
+app = wsgi.application
+</code></pre>
+<p>将上面的代码保存为<code>djangoapp.py</code>，并使用你开发的服务器运行这个Django应用。</p>
+<pre class="prettyprint linenums"><code>(lsbaws) $ python webserver2.py djangoapp:app
+WSGIServer: Serving HTTP on port 8888 ...
+</code></pre>
+<p>同样，在浏览器中输入<code>http://localhost:8888/hello</code>，并按下回车键：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005734afbao4iakfd48zi0.png" alt="Django应用的运行情况" /></p>
+<p>接下来，和前面几次一样，你通过命令行使用<code>curl</code>命令进行测试，确认了这个Djando应用成功处理了你发出的请求：</p>
+<pre class="prettyprint linenums"><code>$ curl -v http://localhost:8888/hello
+...
+</code></pre>
+<p>你有没有按照上面的步骤测试？你做到了让服务器支持全部三种框架吗？如果没有，请尽量自己动手操作。阅读代码很重要，但这系列文章的目的在于重新开发，而这意味着你需要自己亲自动手。最好是你自己重新输入所有的代码，并确保代码运行结果符合预期。</p>
+<p>经过上面的介绍，你应该已经认识到了WSGI的强大之处：它可以让你自由混合搭配 Web 服务器和框架。WSGI为Python Web 服务器与Python网络框架之间的交互提供了一个极简的接口，而且非常容易在服务器端和框架端实现。下面的代码段分别展示了服务器端和框架端的WSGI接口：</p>
+<pre class="prettyprint linenums"><code>def run_application(application):
+    """Server code."""
+    # This is where an application/framework stores
+    # an HTTP status and HTTP response headers for the server
+    # to transmit to the client
+    headers_set = []
+    # Environment dictionary with WSGI/CGI variables
+    environ = {}
+
+    def start_response(status, response_headers, exc_info=None):
+        headers_set[:] = [status, response_headers]
+
+    # Server invokes the &lsquo;application' callable and gets back the
+    # response body
+    result = application(environ, start_response)
+    # Server builds an HTTP response and transmits it to the client
+    &hellip;
+
+def app(environ, start_response):
+    """A barebones WSGI app."""
+    start_response('200 OK', [('Content-Type', 'text/plain')])
+    return ['Hello world!']
+
+run_application(app)
+</code></pre>
+<p>下面给大家解释一下上述代码的工作原理：</p>
+<ol>
+<li>网络框架提供一个命名为<code>application</code>的可调用对象（WSGI协议并没有指定如何实现这个对象）。</li>
+<li>服务器每次从HTTP客户端接收请求之后，调用<code>application</code>。它会向可调用对象传递一个名叫<code>environ</code>的字典作为参数，其中包含了WSGI/CGI的诸多变量，以及一个名为<code>start_response</code>的可调用对象。</li>
+<li>框架/应用生成HTTP状态码以及HTTP<ruby>响应报头<rp>（</rp><rt>response headers</rt><rp>）</rp></ruby>，然后将二者传递至<code>start_response</code>，等待服务器保存。此外，框架/应用还将返回响应的正文。</li>
+<li>服务器将状态码、响应报头和响应正文组合成HTTP响应，并返回给客户端（这一步并不属于WSGI协议）。</li>
+</ol>
+<p>下面这张图直观地说明了WSGI接口的情况：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005734vajua3jttff272lz.png" alt="WSGI接口" /></p>
+<p>有一点要提醒大家，当你使用上述框架开发网络应用的时候，你处理的是更高层级的逻辑，并不会直接处理WSGI协议相关的要求，但是我很清楚，既然你正在看这篇文章，你一定对框架端的WSGI接口很感兴趣。所以，我们接下来在不使用Pyramid、Flask或Djando框架的前提下，自己开发一个极简的WSGI网络应用/网络框架，并使用WSGI服务器运行该应用：</p>
+<pre class="prettyprint linenums"><code>def app(environ, start_response):
+    """A barebones WSGI application.
+
+    This is a starting point for your own Web framework :)
+    """
+    status = '200 OK'
+    response_headers = [('Content-Type', 'text/plain')]
+    start_response(status, response_headers)
+    return ['Hello world from a simple WSGI application!\n']
+</code></pre>
+<p>将上述代码保存为<code>wsgiapp.py</code>文件，或者直接从<a href="https://github.com/rspivak/lsbaws/blob/master/part2/wsgiapp.py">我的Github仓库</a>下载，然后利用 Web 服务器运行该应用：</p>
+<pre class="prettyprint linenums"><code>(lsbaws) $ python webserver2.py wsgiapp:app
+WSGIServer: Serving HTTP on port 8888 ...
+</code></pre>
+<p>在浏览器中输入下图中的地址，然后按回车键。结果应该是这样的：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005735boolyes1xzbos242.png" alt="简单的WSGI应用" /></p>
+<p>你刚刚自己编写了一个极简的WSGI网络框架！太不可思议了。</p>
+<p>接下来，我们重新分析服务器返回给客户端的对象。下面这张图展示的是你通过HTTP客户端调用Pyramid应用后，服务器生成的HTTP响应：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005735jq32pt47aj35446p.png" alt="HTTP响应对象" /></p>
+<p>上图中的响应与你在第一篇中看到的有些类似，但是也有明显不同之处。举个例子，其中就出现了你之前没有看到过的4个HTTP报头：Content-Type，Content-Length，Date和Server。这些事 Web 服务器返回的响应对象通常都会包含的报头。不过，这四个都不是必须的。报头的目的是传递有关HTTP请求/响应的额外信息。</p>
+<p>既然你已经对WSGI接口有了更深的理解，下面这张图对响应对象的内容进行了更详细的解释，说明了每条内容是如何产生的。</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005735wsztjpjcfyf8jtnc.png" alt="HTTP响应对象2" /></p>
+<p>到目前为止，我还没有介绍过<code>environ</code>字典的具体内容，但简单来说，它是一个必须包含着WSGI协议所指定的某些WSGI和CGI变量。服务器从HTTP请求中获取字典所需的值。下面这张图展示的是字典的详细内容：</p>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005736j07eaemcm63acnh3.png" alt="Environ字典的详细内容" /></p>
+<p>网络框架通过该字典提供的信息，根据指定的路由和请求方法等参数来决定使用哪个<ruby>视图<rp>（</rp><rt>views</rt><rp>）</rp></ruby>，从哪里读取请求正文，以及如何输出错误信息。</p>
+<p>截至目前，你已经成功创建了自己的支持WSGI协议的 Web 服务器，还利用不同的网络框架开发了多个网络应用。另外，你还自己开发了一个极简的网络框架。本文介绍的内容不可谓不丰富。我们接下来回顾一下WSGI Web 服务器如何处理HTTP请求：</p>
+<ul>
+<li>首先，服务器启动并加载网络框架/应用提供的<code>application</code>可调用对象</li>
+<li>然后，服务器读取一个请求信息</li>
+<li>然后，服务器对请求进行解析</li>
+<li>然后，服务器使用请求数据创建一个名叫<code>environ</code>的字典</li>
+<li>然后，服务器以<code>environ</code>字典和<code>start_response</code>可调用对象作为参数，调用<code>application</code>，并获得应用生成的响应正文。</li>
+<li>然后，服务器根据调用<code>application</code>对象后返回的数据，以及<code>start_response</code>设置的状态码和响应标头，构建一个HTTP响应。</li>
+<li>最后，服务器将HTTP响应返回至客户端。</li>
+</ul>
+<p><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005737hpgua33d4acpdhh7.png" alt="服务器工作原理梳理" width="800" /></p>
+<p>以上就是第二部分的所有内容。你现在已经拥有了一个正常运行的WSGI服务器，可以支持通过遵守WSGI协议的网络框架所写的网络应用。最棒的是，这个服务器可以不需要作任何代码修改，就可以与多个网络框架配合使用。</p>
+<p>最后，我再给大家留一道思考题：怎样让服务器一次处理多个请求？</p>
+</div>
+</div>
+<div class="b">
+<div class="hm">
+<a title="分享到新浪微博" href="javascript:void( share_tsina(SITEURL + 'article-6816-shareweibo.html','article_title','article_content','https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005645e40qio8ijrj7xc88.jpg.large.jpg') );" class="tsina_large"></a>
+<a href="javascript:void();" onmouseover="show_qrcode(event,'#qrcode', SITEURL + 'article-6816-1-wx.html');" onmouseout="show_qrcode(event,'#qrcode','');" class="weixin_large"></a>
+<a title="收藏" href="home.php?mod=spacecp&amp;ac=favorite&amp;type=article&amp;id=6816&amp;handlekey=favoritearticlehk_6816" id="a_favorite" onclick="showWindow(this.id, this.href, 'get', 0);" class="fav_large" title="收藏"></a>
+</div>
+<p class="copyright">
+    	 
+    		    			    			<span class="z textcut">编译自：<a href="http://ruslanspivak.com/lsbaws-part2/" target="_blank">http://ruslanspivak.com/lsbaws-part2/</a></span>
+    			    		    		<span class="y">作者： Ruslan</span>    		<br class="clear" />
+    	    	<span class="z textcut">转载自：编程派 &nbsp;&nbsp;<a href="http://codingpy.com/article/build-a-simple-web-server-part-two/" target="_blank">http://codingpy.com/article/build-a-simple-web-server-part-two/</a></span>
+    		<br class="clear" />
+    	    	<br />
+    	<span style="color:red;">本文为转载，如需再次转载，请查看源站 “<a href="http://codingpy.com/" target=_blank>编程派</a>” 的要求。如果我们的工作有侵犯到您的权益，请及时联系我们。</span>
+    		<br class="clear" />
+    	    	<span>文章仅代表作者的知识和看法，如有不同观点，请楼下排队<a href="javascript:void(0);" onclick="$('message').focus();">吐槽</a> :D</span>
+    	<br class="clear" />
+</p>
+
+
+<!--[diy=diycontentbottom]--><div id="diycontentbottom" class="area"></div><!--[/diy]-->
+
+<script src="https://dn-linuxcn.qbox.me/static/js/home.js?R99" type="text/javascript"></script>
+<div id="click_div"><table cellpadding="0" cellspacing="0" class="atd">
+<tr></tr>
+</table>
+<script type="text/javascript">
+function errorhandle_clickhandle(message, values) {
+if(values['id']) {
+showCreditPrompt();
+show_click(values['idtype'], values['id'], values['clickid']);
+}
+}
+</script>
+
+</div>
+
+<!--[diy=diycontentclickbottom]--><div id="diycontentclickbottom" class="area"></div><!--[/diy]-->
+
+<div class="o cl ptm pbm">
+<a href="home.php?mod=spacecp&amp;ac=share&amp;type=article&amp;id=6816&amp;handlekey=sharearticlehk_6816" id="a_share" onclick="showWindow(this.id, this.href, 'get', 0);" title="站内分享" class="siteshare z"></a>
+<a href="home.php?mod=spacecp&amp;ac=favorite&amp;type=article&amp;id=6816&amp;handlekey=favoritearticlehk_6816" id="a_favorite" onclick="showWindow(this.id, this.href, 'get', 0);" class="favorite z" title="收藏"></a>
+<a href="misc.php?mod=invite&amp;action=article&amp;id=6816" id="a_invite" onclick="showWindow('invite', this.href, 'get', 0);" class="invite z" title="邀请"></a>
+<a href="https://linux.cn/article-6816-1.html?pr" class="print z" title="打印"></a>
+				
+</div>
+<div class="pren pbm cl">
+<em>上一篇：<a href="https://linux.cn/article-6815-1.html">自己动手开发一个 Web 服务器（一）</a></em><em>下一篇：<a href="https://linux.cn/article-6817-1.html">自己动手开发一个 Web 服务器（三）</a></em></div>
+</div>
+</div>
+
+<!--[diy=diycontentrelatetop]--><div id="diycontentrelatetop" class="area"></div><!--[/diy]-->
+
+<!--[diy=diycontentrelate]--><div id="diycontentrelate" class="area"></div><!--[/diy]-->
+
+<div style="margin-right:15px;">
+<div id="add_comment" class="bm">
+<div class="bm_h cl">
+<h3>发表评论</h3>
+</div>
+<div class="bm_c pbn">
+<form id="cform" name="cform" action="portal.php?mod=portalcp&ac=comment" method="post" autocomplete="off">
+<div class="tedt">
+<div class="area">
+<textarea name="message" rows="3" class="pt" id="message" onkeydown="ctrlEnter(event, 'commentsubmit_btn');"></textarea>
+</div>
+</div>
+
+<div class="mtm z"><span id="seccode_cSaO0945"></span>		
+<script type="text/javascript" reload="1">updateseccode('cSaO0945', '<sec> <span id="sec<hash>" onclick="showMenu(this.id);"><sec></span><div id="sec<hash>_menu" class="p_pop p_opt" style="display:none"><sec></div>', 'portal::view');</script>
+<script type="text/javascript">
+(function($){
+$("#cform").submit(function(e) {
+if ($("#checksec_none_cSaO0945").length>0) {
+alert("请输入验证码");
+return false;
+} else if ($("#checksec_error_cSaO0945").length>0) {
+alert("验证码输入错误，请重新输入");
+return false;
+} else if ($("#checksec_loading_cSaO0945").length>0) {
+alert("验证码验证中……");
+return false;
+}
+});
+})(jQuery);
+</script>
+</div>
+<input type="hidden" name="portal_referer" value="https://linux.cn/article-6816-1.html#comment">
+<input type="hidden" name="referer" value="https://linux.cn/article-6816-1.html#comment" />
+<input type="hidden" name="id" value="0" />
+<input type="hidden" name="idtype" value="" />
+<input type="hidden" name="aid" value="6816">
+<input id="reppid" type="hidden" name="reppid" value="">
+<input type="hidden" name="formhash" value="4a0b8be8">
+<input type="hidden" name="replysubmit" value="true">
+<input type="hidden" name="commentsubmit" value="true" />
+<p class="mtm z"><button type="submit" name="commentsubmit_btn" id="commentsubmit_btn" value="true" class="pn"><strong>评论</strong></button></p>
+<br class="clear" />
+</form>
+</div>
+</div>
+</div>
+<div id="comment" class="bm" style="margin-right:15px;">
+<div class="bm_h cl">
+<h3 class="z"><a name="comment"></a>最新评论</h3>
+<h3 class="y"><a href="javascript:void(0);" class="y" style="color:#C00;" onclick="$('message').focus();">我也要发表评论</a></h3>
+</div>
+<div id="comment_ul" class="bm_c"></div>
+</div>
+
+<!--[diy=diycontentcomment]--><div id="diycontentcomment" class="area"></div><!--[/diy]-->
+</div>
+<div class="sd pph">
+
+
+<div class="drag">
+<!--[diy=diyrighttop]--><div id="diyrighttop" class="area"></div><!--[/diy]-->
+</div>
+
+<div style="margin-bottom:5px;">
+    <div><a href="http://linux.cn/go/vuw" target="_blank"><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201602/29/013538pvq9t8vvxou9zcz7.jpg" height="100" width="350" border="0"></a></div></div>
+<div style="margin-bottom:5px;">
+    </div>
+
+<!--热门评论-->
+
+<div style="margin-bottom:5px;"></div>
+
+<div id="right_affix" style="width:350px;">
+<div style="margin-bottom:5px;">
+    <div><a href="http://linux.cn/go/vun" target="_blank"><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201602/26/173134u2bbobatqu6vo6ia.jpg" height="150" width="100%" border="0"></a></div></div>
+
+<div class="bm block">
+<div class="bm_h cl">
+<h3>相关阅读</h3>
+</div>
+<div class="bm_c pbn" id="related_tag">
+<ul class="xl xl2 cl bbs pbm" id="tag"><li><a href="tag-%E6%9C%8D%E5%8A%A1%E5%99%A8.html">服务器</a></li>
+</ul>
+</div>
+<div class="bm_c xl xl1 cl" id="related_article">
+<ul><li><em>2016-1-1</em><a href="https://linux.cn/article-6815-1.html" target="_blank">自己动手开发一个 Web 服务器（一）</a> </li>
+<li><em>2016-1-3</em><a href="https://linux.cn/article-6817-1.html" target="_blank">自己动手开发一个 Web 服务器（三）</a> </li>
+<li><em>2014-11-2</em><a href="article-4144-1-rel.html" target="_blank">[华章赠书]《构建高可用Linux服务器(第3版)》点评赠书</a> </li>
+<li><em>2014-11-20</em><a href="article-4265-1-rel.html" target="_blank">是时候将Linux一分为二了吗？</a> </li>
+<li><em>2015-1-12</em><a href="article-4647-1-rel.html" target="_blank">[图灵赠书]《24小时365天不间断服务：服务器/基础设施核心技术》点评赠书</a> </li>
+<li><em>2015-1-19</em><a href="article-4707-1-rel.html" target="_blank">《24小时365天不间断服务：服务器/基础设施核心技术》点评赠书获奖名单</a> </li>
+</ul>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+(function($){
+$(window).load(function() {
+// 顶部固顶菜单高度
+affix_topmenu = 35;
+// 可见窗口的高度
+window_height = $(window).height();
+
+// 右侧固顶区的顶部固顶条件，当滚动至此时，本区域以顶部固顶
+affix_rtop = $("#right_affix").offset().top - affix_topmenu;
+// 右侧固顶区的底部固顶条件，当滚动至此时，本区域以底部固顶
+if ($('#comment').length) {
+affix_rbottom = $('body').height() - $('#comment').offset().top - $('#comment').height() - 2;
+} else {
+affix_rbottom = $('body').height() - 2;
+}
+// 右侧固顶区的高度
+affix_rheight = $("#right_affix").height();
+if (window_height >= affix_topmenu + affix_rheight) {
+// 可见窗口可以见到全部的右侧固顶区域时，使用顶部和底部固顶条件
+affix_roffset = {top : affix_rtop, bottom: affix_rbottom};
+} else {
+// 否则，只使用顶部固顶条件（如果也设置了底部固顶条件，或导致闪烁）
+affix_roffset = {top : affix_rtop};
+}
+
+$("#right_affix").affix({offset : affix_roffset});
+
+// 左侧固顶区的顶部固顶条件，当滚动至此时，本区域以顶部固顶
+//affix_ltop = $("#add_comment").offset().top - affix_topmenu;
+//affix_loffset = {top : affix_ltop};
+
+//$("#add_comment").affix({offset : affix_loffset});
+
+// 文章内插图及注释
+
+var max_width = $("#article_content").width() - 60;
+var imgp = $("#article_content P IMG").parents("P");
+imgp.each(function(){
+$(this).addClass("article_img");
+var img = $(this).find("IMG");
+// 如果有图片描述
+var desc = null;
+if ((desc = $(this).next("P")) && desc && desc.contents() && desc.contents().first().is("EM") ) {
+  					desc.addClass("article_img_desc");
+  					desc_txt = desc.contents().first().text();
+  					img.attr({"title":desc_txt,"alt":desc_txt});
+  				} else if ((desc = img.next("BR").next("EM")) && desc.text()) {
+  					var desc_txt = desc.text();
+  					img.next("BR").remove();
+  					img.next("EM").remove();
+  					$(this).after("<p class='article_img_desc'><em>" + desc_txt + "</em></p>");
+} else {
+var desc_txt = img.attr("title") || img.attr("alt");
+if (desc_txt != '') {
+$(this).after("<p class='article_img_desc'><em>" + desc_txt + "</em></p>");
+}
+}
+if (img.attr("width") > max_width) {
+img.attr("width",'');
+img.attr("height",'');
+if (! img.parent("A").is("A")) {
+img.css("cursor","pointer");
+    img.click(function(){window.open(img.attr("src"));});
+}
+} else if (img.width() > max_width) {
+img.css("height",parseInt(img.height() * (max_width / img.attr("width"))));
+img.css("width",max_width);
+if (! img.parent("A").is("A")) {
+img.css("cursor","pointer");
+img.click(function(){window.open(img.attr("src"));});
+}
+}
+});
+
+// 链接
+var re_sitelink = /^https?:\/\/(www.)?linux(.net)?.cn\//i;
+$("#article_content a").map(function(){
+if (re_sitelink.test($(this).attr('href'))) {
+if ($(this).text() == 'Linux中国') $(this).attr('href',$(location).attr('href'));
+} else {
+$(this).addClass("ext").attr({"rel":"external nofollow","target":"_blank"});
+}
+});
+
+// 视频
+$("video").map(function() {
+width = $(this).attr("width");
+height = $(this).attr("height");
+$(this).wrap("<div class='videoContainer'></div>").parent()
+.css({width: width,height : height});
+});
+})
+})(jQuery);
+</script>
+<div class="drag">
+<!--[diy=diy2]--><div id="diy2" class="area"></div><!--[/diy]-->
+</div>
+
+
+</div>
+</div>
+
+
+<div class="wp mtn">
+<!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+</div>
+<input type="hidden" id="portalview" value="1">
+
+<link rel="stylesheet" href="https://dn-linuxcn.qbox.me/static/js/prettify/prettify.css?R99" type="text/css" />
+<script src="https://dn-linuxcn.qbox.me/static/js/prettify/prettify.min.js?R99" type="text/javascript"></script>
+<script type="text/javascript">
+var sourceBaseUrl = "https://dn-linuxcn.qbox.me/static/js/tinymce/plugins/prettify";
+prettyPrint();
+</script>	</div>
+
+
+    <div id="footer">
+        <p>
+            <span>Linux.CN &copy; 2003-2016 Linux中国</span>
+            <span class="line">|</span>
+            <span>Powered by <strong>DX</strong> | 图片存储于<a href="http://www.qiniu.com/" target="_blank">七牛云存储</a></span>
+        </p>
+        <p>
+            <a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备05083684号-1</a>            京公网安备110105001595
+        </p>
+        <p>
+        <a href="https://linux.cn/legal.html">服务条款</a> |
+        除特别申明外，本站原创内容版权遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank">CC-BY-NC-SA 协议规定</a></p>
+        <p>
+        <a href="https://linux.cn/"><img src="https://dn-linuxcn.qbox.me/static/image/common/linuxcn_logo_mini.png" align="absmiddle" /></a>
+        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank"><img src="https://dn-linuxcn.qbox.me/static/image/common/cc.png" align="absmiddle" /></a>
+        </p>
+<p>
+</p>
+</div>
+
+<div id="ft" class="cl"></div>
+<div id="scrolltop">
+<span>
+<a href="javascript:void();" class="wxicon" onmouseover="show_qrcode(event,'#qrcode', SITEURL + 'article-6816-1-wx.html');" onmouseout="show_qrcode(event,'#qrcode','');"></a>
+<a title="分享到新浪微博" href="javascript:void( share_tsina(SITEURL + 'article-6816-1.html','article_title','article_content','https://dn-linuxcn.qbox.me/data/attachment/album/201512/30/005645e40qio8ijrj7xc88.jpg.large.jpg') );" class="tsina"></a>
+<a title="收藏" href="home.php?mod=spacecp&amp;ac=favorite&amp;type=article&amp;id=6816&amp;handlekey=favoritearticlehk_6816" id="a_favorite" onclick="showWindow(this.id, this.href, 'get', 0);" class="favorite" title="收藏"></a>
+</span>
+<span hidefocus="true"><a title="返回顶部" onclick="window.scrollTo('0','0')" class="scrolltopa" ><b>返回顶部</b></a></span>
+</div>
+<script type="text/javascript">_attachEvent(window, 'scroll', function () { showTopLink(); });</script>
+<div id="qrcode">
+<p>分享到微信朋友圈</p>
+<div id="canvas"></div>
+<p><em>打开微信，点击底部的“发现”，<br />
+使用“扫一扫”将网页分享至朋友圈。</em></p></div>
+</body>
+</html>

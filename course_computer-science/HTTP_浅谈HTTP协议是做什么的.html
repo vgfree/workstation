@@ -1,0 +1,976 @@
+
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>从日常开发说起，浅谈HTTP协议是做什么的 - OPEN 开发经验库</title>
+	<meta content="text/html; charset=utf-8" http-equiv=content-type>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name=keywords content="HTTP,Web服务器">
+	<meta name=description content="HTTP协议作为Web开发的基础一直被大多数人所熟知，不过相信有很多人只知其一不知其二。比如咱们经常用到的session会话机制是如何实现的，可能很多人都说不出来吧。其实session会话就是HTTP协议中的一个header属性cookie所支持的，在你了解了HTTP协议之后，其实这些都非常容易理解。">
+	<link rel="shortcut icon" href="/lib/favicon.ico">
+	<link rel=copyright href="http://www.open-open.com/">
+
+	<link href="//cdn.bootcss.com/highlight.js/9.2.0/styles/idea.min.css" rel="stylesheet">
+
+	
+	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="http://www.open-open.com/resource/styles.css" rel="stylesheet">
+
+	<style type="text/css" media="screen, projection">
+		/*<![CDATA[*/
+		@import "/lib/css/common.css";
+		@import "/lib/css/main.css";
+		@import "/lib/css/jGrowl.css";
+		@import "/lib/css/thickbox.css";
+		@import "/lib/css/jquery.ui.css";
+		/*]]>*/
+	</style>
+	<style type="text/css">
+.topheader h1{font-size: 24px;}
+
+	</style>
+
+	<script type="text/javascript">
+		if(window.location.toString().indexOf('pref=padindex') != -1){
+		}else{
+			if(/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))){
+				if(window.location.href.indexOf("?mobile")<0){
+					try{
+						if(/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1454844279855.html";
+						}else if(/iPad/i.test(navigator.userAgent)){
+							window.location.href="http://m.open-open.com/m/lib/view/1454844279855.html"
+						}else{
+							window.location.href="http://m.open-open.com/m/lib/view/1454844279855.html"
+						}
+					}catch(e){}
+				}
+			}
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		var rooturl="/lib";
+		var wgDocKey='1454844279855';
+		var wgDocTitle='从日常开发说起，浅谈HTTP协议是做什么的';
+		var wgDocStatusFlag='';
+		var wgUserFolders=null;
+		var wgDownFrame=null;
+		var wgCostByUser=null;
+		var wgDocFavoriteByUser=false;
+		var wgDocScoreByUser=null;
+		var wgUserLogined=0;
+		var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+	</script>
+
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?4b19e5cc155fe555484434d8338ee0af";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+
+</head>
+<body id=view>
+
+
+
+
+
+
+<header class="site-header">
+	<div class="header-top ">
+		<div class="header-top-inner">
+			<div class="" style="margin: 0 30px;">
+				<div class="row">
+					<div class="header-top-left col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="header-talet">
+							<a  href="http://www.open-open.com/">首页</a> &nbsp;
+							<a class="" href="http://www.open-open.com/code/">OPEN代码</a> &nbsp;<img src="http://www.open-open.com/image/new.gif" alt='最新上线'/> &nbsp;
+							<a class="" href="http://www.open-open.com/doc/">OPEN文档</a> &nbsp;
+							<a title='OPEN论坛频道' href="http://www.open-open.com/bbs">OPEN问答</a> &nbsp;
+							<a title="OPEN资讯" class="" href="http://www.open-open.com/news/">OPEN资讯</a> &nbsp;
+							<a title="OPEN经验库" class="active" href="http://www.open-open.com/lib/" >OPEN经验</a> &nbsp;
+							<a title="GitHub日报" class="" href="http://www.open-open.com/github/">GitHub日报</a>
+							&nbsp;
+						</div>
+					</div>
+					<div class="header-top-right col-lg-6 col-md-6 col-sm-6 col-xs-12 v-grid">
+						<div class="user-info pull-right" id="Personal">
+							
+								<a href="/lib/members/login?keepThis=true&TB_iframe=true&height=177&width=280" title="登录OPEN经验库" class="thickbox">登录</a>&nbsp;&nbsp;
+								<a href="/lib/members/register?keepThis=true&TB_iframe=true&height=460&width=710" title="注册新的账号" class="thickbox">注册</a>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar ">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-hamburger"></span>
+					<span aria-hidden="true" class="glyphicon glyphicon-menu-up"></span>
+				</button>
+				<a class="top-logo" href="//www.open-open.com/lib"><span>www.open-open.com/lib</span></a>
+				<span style="font-size: 30px;color: #b5b5b5">经验</span>
+				<span style="font-size: 12px;color: #b5b5b5"></span>
+			</div>
+			<div id="search" class="navbar-collapse navbar-right collapse ">
+				<form onsubmit="document.charset='utf-8';" accept-charset="utf-8" method="post" action="/lib/query" name="sf">
+					<input type="hidden" value="all" name="site">
+					<div class="input-group">
+						<input type="text" x-webkit-speech="" placeholder="经验搜索" class="form-control" name="q" id="kw">
+                      <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                      </span>
+
+					</div>
+				</form>
+
+				<!-- /input-group -->
+
+			</div>
+
+		</div>
+	</nav>
+</header>
+
+
+
+
+<div class="topheader" style="background: #eee;padding-bottom: 10px;">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 id="articleTitle" >从日常开发说起，浅谈HTTP协议是做什么的</h1>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div id=content>
+	<div id=content-nav>
+		<a href="/lib/list/all">所有分类</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/75">服务器软件</a>
+		
+			&nbsp;&gt;&nbsp;
+			<a href="/lib/list/77">Web服务器</a>
+		
+	</div>
+
+
+	<div id=view-main>
+
+
+		<div id=view-titleh>
+
+			<div id=view-summary>
+				<table>
+					<tbody>
+					<tr>
+						<td><strong>您的评价</strong>:</td>
+						<td>
+							<div id=rate class=rate-container><span id=star1 class=star-big-off title=很差>&nbsp;</span><span id=star2 class=star-big-off title=较差>&nbsp;</span><span id=star3 class=star-big-off title=还行>&nbsp;</span><span
+									id=star4 class=star-big-off title=不错>&nbsp;</span><span id=star5 class=star-big-off title=力荐>&nbsp;</span></div>
+						</td>
+						<td width=30>
+							<span id=score-num>0.0</span>
+						</td>
+						<td width=30>
+							<div id=rate-tip></div>
+						</td>
+
+						<td>
+							<div id=favorite-container><span class="icon favorite">&nbsp;</span><a id=favorite href="javascript:void(0)"><strong>收藏该经验</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+							<span class=item>收藏：0人</span>
+
+							<span class=item>发布时间1：2016-02-07 19:25:10</span>
+							</div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<div id=favorite-box>
+					<table>
+						<tbody>
+						<tr>
+							<td width=70 align=right>文件夹</td>
+							<td><select id=fav_folderlist name=folder>
+								<option selected value=0>请选择...</option>
+								<option id=newfolder-sp disabled value="">-------------</option>
+								<option value=-1>新增文件夹...</option>
+							</select></td>
+						</tr>
+						<tr style="display: none" id=newfolder-input>
+							<td align=right>新增文件夹</td>
+							<td><input id=fav_newfolder maxlength=50 type=text name=newfolder></td>
+						</tr>
+						<tr>
+							<td align=right>标签</td>
+							<td><input id=fav_tags maxlength=135 size=20 type=text name=tags></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan=2>(多个标签用逗号分隔)</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div id=readercontainer>
+
+
+			<div id="toc"></div>
+
+
+			<!-- google_ad_section_start -->
+			<p>来自： <a href="http://blog.jobbole.com/97857/" rel="nofollow" target="_blank">http://blog.jobbole.com/97857/</a></p>
+<div>
+<h3>引言 </h3>
+<p>HTTP协议作为Web开发的基础一直被大多数人所熟知，不过相信有很多人只知其一不知其二。比如咱们经常用到的session会话机制是如何实现的，可能很多人都说不出来吧。其实session会话就是HTTP协议中的一个header属性cookie所支持的，在你了解了HTTP协议之后，其实这些都非常容易理解。 <br />
+</p>
+<p>本文会尝试从各位的日常开发去解释一下HTTP到底是做什么的，文章篇幅有限，如果有什么本文没有提到的，各位请自行百度或者看书补脑。接下来，咱们先来看一个小A和小B的故事。</p>
+<h3>小故事：两个人的任务 </h3>
+<p>小A和小B是中国著名的互联网公司BAT的两个员工，时间走到2015年4月15日下午6点半，北京风沙漫天，仿佛是妖怪来临，小A和小B兴奋的正准备收拾回家，顺便享受一下免费的风沙晚餐。</p>
+<p>就在这时，项目经理大S的声音不合时宜的响了起来，“小A，小B，你们俩先别走，给你们俩一个任务”。</p>
+<p>两人听到这个声音，苦逼的相视一笑，之后便异口同声的说道，“头儿，有事儿您说话”。</p>
+<p>“你俩也别不乐意，自从来到BAT，你俩单身问题解决了，房子也买了，存款也有了，加会班也是应该的”。大S注意到二人苦逼的眼神，淡定的说道。看到二人心悦诚服的点了点头，大S也就不再多说，吩咐道：“咱们项目里有不少地方需要判断String是否为空，是否为空串等等，小B你写一个工具类，小A你把调用的地方改一下。”</p>
+<p>两人一听，这还不简单，赶紧点头哈腰的说，“包在我俩身上”。</p>
+<p>看到二人的反应，大S满意的点了点头，正色说道：“记得我一直教导你们的，bug毁一时，重复毁一生，重构要趁早。”说完这句话，大S便头也不回的离开二人，数十秒后便钻进了风沙之中。</p>
+<p>小A和小B简单商量了一下，由小B来编写String的工具类，小A来调用小B的工具类方法。工具类名叫StringUtils，里面共有两个方法，一个叫isNull，一个叫isEmpty，参数都是一个String，返回值都是一个boolean。</p>
+<p>由于这个类非常简单，小B很快就搞定了它，代码如下。</p>
+<pre class="brush:java; toolbar: true; auto-links: false;">/**
+ * 工具类
+ *
+ * @author 小B
+ * &lt;a href="http://www.jobbole.com/members/chchxinxinjun"&gt;@since&lt;/a&gt; 4/17/2015 2:47 PM
+ */
+public abstract class StringUtils {
+
+    public static boolean isNull(String s) {
+        return s == null;
+    }
+
+    public static boolean isEmpty(String s) {
+        return isNull(s) || s.length() == 0;
+    }
+
+}</pre> <p>小B把工具类写好以后，小A也很快把其中一个用于验证身份证号的类改成了调用小B工具类的方式，代码如下。</p>
+<pre class="brush:java; toolbar: true; auto-links: false;">/**
+ * 身份证号验证工具类
+ *
+ * @author 小A
+ * &lt;a href="http://www.jobbole.com/members/chchxinxinjun"&gt;@since&lt;/a&gt; 4/17/2015 2:50 PM
+ */
+public class CardNumberValidator {
+
+    /**
+     * 判断身份证号是否有效 (忽略身份证号复杂的判断规则)
+     */
+    public boolean valid(String cardNumber) {
+        if (StringUtils.isNull(cardNumber)) {
+            throw new NullPointerException("cardNumber is null!");
+        } else if (StringUtils.isEmpty(cardNumber)) {
+            throw new IllegalArgumentException("cardNumber is empty!");
+        } else if (cardNumber.length() == 18) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("the length of cardNumber must be 18!");
+        }
+    }
+
+}</pre> <p>最后小A又写了一个简单的测试类测试了一下，测试类如下。</p>
+<pre class="brush:java; toolbar: true; auto-links: false;">/**
+ * 客户端
+ *
+ * &lt;a href="http://www.jobbole.com/members/chchxinxinjun"&gt;@since&lt;/a&gt; 4/17/2015 3:01 PM
+ */
+public class Client {
+
+    /**
+     * 主函数
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        CardNumberValidator validator = new CardNumberValidator();
+        String cardNumber = "433182198803211232";
+        if (validator.valid(cardNumber)) {
+            System.out.println(cardNumber + "是一个有效的身份证号！");
+        } else {
+            System.out.println(cardNumber + "是一个无效的身份证号！");
+        }
+    }
+
+}</pre> <p>运行之后，程序运行的结果为正确的，如下。</p>
+<pre>433182198803211232是一个有效的身份证号！</pre> <p>看到程序很快就正确运行，小A和小B都欣喜不已，感觉自己的技术水平又得到了质的提升。由于两人住的比较近，于是干完活之后，二人便一同钻进了风沙之中。</p>
+<h3>花絮与故事分析 </h3>
+<p>一个小小的京城故事，两个快乐的2B程序员。没有复杂的故事情节，没有高深的技术含量，但却蕴含着一个像极了WEB资源请求的过程。回想一下刚才小A的程序调用小B程序的过程，其实包含了以下三个步骤。</p>
+<p>1，小A的程序通过【类名.方法名(参数列表)】的形式找到了小B程序当中的方法。</p>
+<p>2，小A的程序传给小B的程序一个参数，小B的程序对这个请求进行相应的处理，比如判断是否为空等等。</p>
+<p>3，小B的程序根据处理结果返回给小A的程序，小A的程序根据返回结果进行后续的处理。</p>
+<p>这整个过程与一个简单的WEB资源请求如出一撤，具体的内容咱们在接下来的过程中再去讨论。这里，咱们先简单的回顾一下，小A和小B都商量了哪些东西以后，开始了各自的编程。</p>
+<p>1，首先小A和小B定义了类名，方法名和参数类型。根据这三个内容，小A就可以通过命名找到小B的两个方法（比如StringUtils.isNull）。那么简单点说，类名,方法名以及参数类型就可以解决“小A怎么找到小B的方法”。</p>
+<p>2，其次，由于规定了小A需要给小B传送String类型的数据，那么小B就可以按照String类型进行相应的处理。因此，小A和小B对于方法参数类型的约定，就可以解决“小A传什么数据和小B接到以后按照什么类型去处理”。</p>
+<p>3，最后，小B和小A约定返回的类型为boolean，那么小A这边收到结果以后就可以按照boolean类型去处理。返回结果的约定，就可以解决“小B返回什么数据和小A接收到以后按照什么类型去处理结果”。</p>
+<h3>HTTP与小故事 </h3>
+<p>一次WEB资源请求的过程，其实就和一次方法调用特别相似，上面小A的程序其实就相当于浏览器，小B的程序就相当于服务器，而小B提供的方法就相当于服务器上的资源。上面咱们分析了方法调用的过程，咱们来看看一次WEB资源请求大致分为哪三步。</p>
+<p>1，浏览器需要根据某种字符串格式（类似于故事当中的【类名.方法(参数列表)】的方式）找到服务器当中的资源。</p>
+<p>2，浏览器传给服务器一个请求，服务器对这个请求进行相应的处理（比如增删改查）。</p>
+<p>3，服务器根据处理结果返回给浏览器，浏览器根据返回结果进行相应的处理（比如显示网页，显示图片等）。</p>
+<p>可以看出，这三个步骤是非常相似的。既然是相似的步骤，那么就会存在相似的问题。接下来，咱们简单的分析一下都有哪些问题，以及这些问题如何处理。</p>
+<p>【1】 <strong>如何找到服务器当中的资源</strong> </p>
+<p>故事当中，小A根据【类名.方法(参数列表)】的方式找到小B的方法，那么在WEB资源请求当中，浏览器如何找到服务器的资源呢？</p>
+<p>相信大部分人脑子里已经浮现出了那三个字母。</p>
+<p>是的，就是URL。URL就是专门用来定位资源的。URL的一般格式如下。</p>
+<pre>protocol :// hostname[:port] / path / [;parameters][?query]#fragment</pre> <p>其中各个部分的含义相信大部分人都知道，这里咱们就不过多解释了。最重要的就是protocol，hostname和port，分别代表着应用层的协议（比如http，https，ftp等等），主机名或IP以及服务端口。</p>
+<p>【2】 <strong>浏览器和服务器互相传输的数据如何解析</strong> </p>
+<p>这个问题其实就是第二和第三步所面临的问题，浏览器要给服务器发请求，但是服务器哪知道你发的是什么玩意。同理，如果服务器给浏览器返回数据，浏览器同样也不知道服务器返回的是什么东西。</p>
+<p>在故事当中，小A和小B商量好了，小A给小B传String，小B给小A返回boolean，这就很好的解决了程序之间数据交换的解析工作。当然，由于上面的程序非常简单，所以解析的工作还不是体现的特别明显。</p>
+<p>假设小B的方法是一个save(Map user)的形式，返回值也是一个Map。这时候，如果小B和小A不商量好Map里面都需要put点啥东西的话，估计这程序也没法写下去了。</p>
+<p>所以问题就出现在这里，如果不给浏览器和服务器制定好一个规则的话，不管是开发浏览器的程序员，还是开发服务的程序员，都会出现程序不知道怎么写的情况。最可怕的是，开发浏览器的程序员和开发服务的程序员可不一定是同事，他们无法面对面或者通过通讯工具去商量你给我传什么，我给你传什么这种问题。</p>
+<p>所以HTTP协议就应运而生了，这是一群外国人勾搭以后产生的（听说这群外国人叫World Wide Web Consortium和Internet Engineering Task Force）。HTTP协议自出现以来，主要解决的就是浏览器和服务器数据交换的格式问题。</p>
+<p>既然是解决数据交换的格式问题，所以不用去想，也知道HTTP其实是定义了一套数据格式。咱们来看一个实际的例子，一个HTTP请求到底都有哪些数据，以及这些数据是什么格式。</p>
+<pre class="brush:java; toolbar: true; auto-links: false;">GET http://www.cnblogs.com/mvc/Follow/GetFollowStatus.aspx HTTP/1.1
+Host: www.cnblogs.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0
+Accept: text/plain, */*; q=0.01
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+Referer: http://www.cnblogs.com
+Cookie: _ga=GA1.2.1892107667.1429258898; __gads=ID=ab3bc12f51ce0821:T=1429258914:S=ALNI_MYk8_dptVuXGkQkQbTMuiNN4DdPcA; .CNBlogsCookie=D84CF73E03B7891789045C601A78AAF52AB67268B93E15C1138FE9A9CE858E98FE769CE0249E5C5C68D6E84DB2CBC9D9BA77ACA3993260AA8671E17F2C3AC7B3267298C6160C09A737AF94A353F58D0B7FF5C0AD6287EFC4DBE122883CBDD2CB42C3052C; _gat=1; CNZZDATA1684828=cnzz_eid%3D1208659555-1429265886-%26ntime%3D1429265886
+Connection: keep-alive</pre> <p>可以看到，最上面的那一行其实是协议当中定义的首行。第一个GET代表的是，这是一个get请求。后面紧跟着的是访问的URL，最后是HTTP协议版本。</p>
+<p>再往下就是HTTP当中定义的header了，具体每个header都代表什么意思这里就不一一解释了，这不是本文的重点，可以去参考网络上其它的文章。这些Header其实就相当于HTTP协议提供的一些方便的功能，你设置相应的header，可以让服务器产生相应的行为。</p>
+<p>举个例子，比如Cookie这个header，大家应该再熟悉不过。它的作用就是告诉服务器当前请求者的身份，而大部分的服务器也都会自动去管理Cookie。</p>
+<p>除了上面出现的首行和header以外，对于一些特定的请求，HTTP还有特定的数据格式。比如post请求的时候，在【Connection: keep-alive】下面会多出来一个json格式的字符串，这个字符串就是post请求时所发送的表单数据。</p>
+<p>同样的，服务器返回的数据格式也是相似的。一个比较实际的例子如下。</p>
+<pre class="brush:java; toolbar: true; auto-links: false;">HTTP/1.1 200 OK
+Date: Fri, 17 Apr 2015 10:18:06 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 128
+Connection: keep-alive
+Cache-Control: private
+X-UA-Compatible: IE=10
+
+&lt;a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('83f9460b-63cf-dd11-9e4d-001cf0cd104b')"&gt;+加关注&lt;/a&gt;</pre> <p>响应当中依然有首行，而首行就是协议版本，加上状态码和状态描述。接下来就是一堆header，这点与请求相同。不同的是，请求和响应所支持的header并不一样。比如请求的时候，浏览器给服务器传送Cookie时使用的header是Cookie。但是当服务器返回响应给浏览器时，如果要更新Cookie的话，对应的header是Set-Cookie。最后一行则是服务器所返回的内容，格式是由Content-Type所指定的，类型为html，字符编码为UTF-8。对于其它的header这里就不一一解释了，请各位自行补脑。</p>
+<h3>HTTP与WEB开发的联系 </h3>
+<p>说到这里，需要简单提一下HTTP与WEB开发的联系。比如大家在做J2EE开发时所熟知的request和response对象，咱们来看一下request和response接口都有哪些方法。</p>
+<pre class="brush:java; toolbar: true; auto-links: false;">public interface HttpServletRequest extends ServletRequest {
+    String BASIC_AUTH = "BASIC";
+    String FORM_AUTH = "FORM";
+    String CLIENT_CERT_AUTH = "CLIENT_CERT";
+    String DIGEST_AUTH = "DIGEST";
+
+    String getAuthType();
+
+    Cookie[] getCookies();
+
+    long getDateHeader(String var1);
+
+    String getHeader(String var1);
+
+    Enumeration getHeaders(String var1);
+
+    Enumeration getHeaderNames();
+
+    int getIntHeader(String var1);
+
+    String getMethod();
+
+    String getPathInfo();
+
+    String getPathTranslated();
+
+    String getContextPath();
+
+    String getQueryString();
+
+    String getRemoteUser();
+
+    boolean isUserInRole(String var1);
+
+    Principal getUserPrincipal();
+
+    String getRequestedSessionId();
+
+    String getRequestURI();
+
+    StringBuffer getRequestURL();
+
+    String getServletPath();
+
+    HttpSession getSession(boolean var1);
+
+    HttpSession getSession();
+
+    boolean isRequestedSessionIdValid();
+
+    boolean isRequestedSessionIdFromCookie();
+
+    boolean isRequestedSessionIdFromURL();
+
+    /** @deprecated */
+    boolean isRequestedSessionIdFromUrl();
+}</pre><pre class="brush:java; toolbar: true; auto-links: false;">public interface HttpServletResponse extends ServletResponse {
+    int SC_CONTINUE = 100;
+    int SC_SWITCHING_PROTOCOLS = 101;
+    int SC_OK = 200;
+    int SC_CREATED = 201;
+    int SC_ACCEPTED = 202;
+    int SC_NON_AUTHORITATIVE_INFORMATION = 203;
+    int SC_NO_CONTENT = 204;
+    int SC_RESET_CONTENT = 205;
+    int SC_PARTIAL_CONTENT = 206;
+    int SC_MULTIPLE_CHOICES = 300;
+    int SC_MOVED_PERMANENTLY = 301;
+    int SC_MOVED_TEMPORARILY = 302;
+    int SC_FOUND = 302;
+    int SC_SEE_OTHER = 303;
+    int SC_NOT_MODIFIED = 304;
+    int SC_USE_PROXY = 305;
+    int SC_TEMPORARY_REDIRECT = 307;
+    int SC_BAD_REQUEST = 400;
+    int SC_UNAUTHORIZED = 401;
+    int SC_PAYMENT_REQUIRED = 402;
+    int SC_FORBIDDEN = 403;
+    int SC_NOT_FOUND = 404;
+    int SC_METHOD_NOT_ALLOWED = 405;
+    int SC_NOT_ACCEPTABLE = 406;
+    int SC_PROXY_AUTHENTICATION_REQUIRED = 407;
+    int SC_REQUEST_TIMEOUT = 408;
+    int SC_CONFLICT = 409;
+    int SC_GONE = 410;
+    int SC_LENGTH_REQUIRED = 411;
+    int SC_PRECONDITION_FAILED = 412;
+    int SC_REQUEST_ENTITY_TOO_LARGE = 413;
+    int SC_REQUEST_URI_TOO_LONG = 414;
+    int SC_UNSUPPORTED_MEDIA_TYPE = 415;
+    int SC_REQUESTED_RANGE_NOT_SATISFIABLE = 416;
+    int SC_EXPECTATION_FAILED = 417;
+    int SC_INTERNAL_SERVER_ERROR = 500;
+    int SC_NOT_IMPLEMENTED = 501;
+    int SC_BAD_GATEWAY = 502;
+    int SC_SERVICE_UNAVAILABLE = 503;
+    int SC_GATEWAY_TIMEOUT = 504;
+    int SC_HTTP_VERSION_NOT_SUPPORTED = 505;
+
+    void addCookie(Cookie var1);
+
+    boolean containsHeader(String var1);
+
+    String encodeURL(String var1);
+
+    String encodeRedirectURL(String var1);
+
+    /** @deprecated */
+    String encodeUrl(String var1);
+
+    /** @deprecated */
+    String encodeRedirectUrl(String var1);
+
+    void sendError(int var1, String var2) throws IOException;
+
+    void sendError(int var1) throws IOException;
+
+    void sendRedirect(String var1) throws IOException;
+
+    void setDateHeader(String var1, long var2);
+
+    void addDateHeader(String var1, long var2);
+
+    void setHeader(String var1, String var2);
+
+    void addHeader(String var1, String var2);
+
+    void setIntHeader(String var1, int var2);
+
+    void addIntHeader(String var1, int var2);
+
+    void setStatus(int var1);
+
+    /** @deprecated */
+    void setStatus(int var1, String var2);
+}</pre> <p>可以看到，request和response里面有好几个方法都和header有关，使用这些方法就可以取到相应的HTTP请求当中的header内容，也可以返回相应的header内容给浏览器。还有一点，就是response接口当中定义了一大把状态码和状态描述，比如200对应OK，404对应NOT_FOUND，500对应内部错误等等。</p>
+<p>可以预见的是，在编写HttpServletRequest和HttpServletResponse这两个接口的时候，一定是参照HTTP协议去定义的，而且每当HTTP协议进行一次大的变更，这两个接口都要跟着进行相应的变化。</p>
+<p>总的来说，把对HTTP的了解和日常的开发联系起来，更加有助于你理解HTTP协议，而且有时候也可以利用HTTP协议扩展一些功能，比如授权服务，自定义的状态保持等等。</p>
+<h3>小结 </h3>
+<p>到此，大家应该基本上了解HTTP主要是用来做什么的了，具体HTTP协议当中都规定了哪些内容，大家可以去找各种资料翻阅。个人觉得，只要深刻理解HTTP协议是做什么的，了解一些常用的协议内容就行了，你并不需要把HTTP所有的header都给背下来并记住它们的作用。</p>
+<p>最后，重复一下那句与HTTP无关的话：bug毁一时，重复毁一生，重构要趁早。 <br />
+</p>
+</div>
+
+
+		</div>
+		
+
+
+		<table width='100%'><tr>
+			<td  valign='top' width="49%" class="Related">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关资讯</strong> 　—　<a href="http://www.open-open.com/news" target="_blank" rel="nofollow">更多</a></div>
+				<ul>
+					
+						<li><a href="http://www.open-open.com/news/view/ddb9d" target="_blank" rel="nofollow" title="Web开发牛人访谈：你们都在用什么？">Web开发牛人访谈：你们都在用什么？</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1ffe534" target="_blank" rel="nofollow" title="Android开发技术周报 Issue#60">Android开发技术周报 Issue#60</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/8cca0c" target="_blank" rel="nofollow" title="从 Nginx 默认不压缩 HTTP/1.0 说起">从 Nginx 默认不压缩 HTTP/1.0 说起</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1e07cdd" target="_blank" rel="nofollow" title="我为什么放弃Go语言">我为什么放弃Go语言</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/cb0f23" target="_blank" rel="nofollow" title="为什么HTTP有时候比HTTPS好？">为什么HTTP有时候比HTTPS好？</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1b4919" target="_blank" rel="nofollow" title="HTTP API自动化测试从手工到平台的演变">HTTP API自动化测试从手工到平台的演变</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1f1b507" target="_blank" rel="nofollow" title="Tomcat 对 HTTP/2 协议支持的开发进度报告">Tomcat 对 HTTP/2 协议支持的开发进度报告</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1203810" target="_blank" rel="nofollow" title="如何把iOS代码编译为Android应用 - iOS移动开发周报">如何把iOS代码编译为Android应用 - iOS移动开发周报</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/a3d311" target="_blank" rel="nofollow" title="Android开发周报：Android Studio取代Eclipse，MVP架构解析">Android开发周报：Android Studio取代Eclipse，MVP架构解析</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/555beb" target="_blank" rel="nofollow" title="前端开发工程师如何在新的一年里提升自己">前端开发工程师如何在新的一年里提升自己</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/183d6db" target="_blank" rel="nofollow" title="Google与微软想要改进HTTP">Google与微软想要改进HTTP</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/50fa53" target="_blank" rel="nofollow" title="我为什么更喜欢用git">我为什么更喜欢用git</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/14be569" target="_blank" rel="nofollow" title="我是如何成为一个Java Web开发者的">我是如何成为一个Java Web开发者的</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/22c9c6" target="_blank" rel="nofollow" title="Chrome 将跟 SPDY 说再见，拥抱 HTTP/2">Chrome 将跟 SPDY 说再见，拥抱 HTTP/2</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/312c8b" target="_blank" rel="nofollow" title="入行建议:我如何从一名QA成为了开发者">入行建议:我如何从一名QA成为了开发者</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1e70020" target="_blank" rel="nofollow" title="专访微信WeUI主程江剑锋：对微信Web App开发的建议">专访微信WeUI主程江剑锋：对微信Web App开发的建议</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/b0f8a2" target="_blank" rel="nofollow" title="HTTP/2 常见问题回答">HTTP/2 常见问题回答</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/101c5ab" target="_blank" rel="nofollow" title="[译]使用HTTP/2提升性能的7个建议">[译]使用HTTP/2提升性能的7个建议</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/104f96c" target="_blank" rel="nofollow" title="Web性能优化与HTTP/2">Web性能优化与HTTP/2</a></li>
+					
+						<li><a href="http://www.open-open.com/news/view/1f48460" target="_blank" rel="nofollow" title="Android N 有多好？看这 10 项新功能就知道了">Android N 有多好？看这 10 项新功能就知道了</a></li>
+					
+
+				</ul>
+				<div style="clear: both; font-size: 1px; line-height: 0;"></div>
+			</td>
+			<td width="5px"></td>
+			<td valign='top' width="49%" class="Relatedb">
+				<div style="border-bottom: 1px #ccc solid;margin-top: 5px"><strong>相关文档</strong> 　—　<a href="http://www.open-open.com/doc" rel="nofollow" target="_blank">更多</a></div>
+				<ul >
+					
+						<li><a  href="http://www.open-open.com/doc/view/1a58dcc34a9b4bcdbe38b6d52037d433" rel="nofollow" target="_blank" title="http响应头的管理 提升网站访问速度.doc">http响应头的管理 提升网站访问速度.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/4df25580f3fe40f7882e5927cd46b950" rel="nofollow" target="_blank" title="HTTP协议工作原理.ppt">HTTP协议工作原理.ppt</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/c0bc3f5b07ae4c5486e96713b421ea59" rel="nofollow" target="_blank" title="O&#039;reilly - HTTP - 权威指南.pdf">O&#039;reilly - HTTP - 权威指南.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/bd638432c16641b7a6499c6bd1d01b54" rel="nofollow" target="_blank" title="http 协议与缓存简述.ppt">http 协议与缓存简述.ppt</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/2e3cbdea9cd94f0a85c501357bd2dd37" rel="nofollow" target="_blank" title="http协议与缓存简述.ppt">http协议与缓存简述.ppt</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/0bd6f23d4f124f17a60cf897ebbde670" rel="nofollow" target="_blank" title="Apache使用指南与实现原理.pdf">Apache使用指南与实现原理.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/98449d7985604b59b0d33ca9c00d7b3a" rel="nofollow" target="_blank" title="Apache 使用指南与实现原理（文字版）.pdf">Apache 使用指南与实现原理（文字版）.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/1fad302cda3a4c829119026b30130386" rel="nofollow" target="_blank" title="02 HTTP协议.ppt">02 HTTP协议.ppt</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/ae496cc6ab8f431489c6dbc84d73fb4b" rel="nofollow" target="_blank" title="http协议.doc">http协议.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/7ad2b3947a944cc8ae8d5fa9897664e7" rel="nofollow" target="_blank" title="HTTP 协议介绍.pdf">HTTP 协议介绍.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/03cfa7e0cf9847f7a3f735ebc2448899" rel="nofollow" target="_blank" title="HttpURLConnection和HttpClient和json.docx">HttpURLConnection和HttpClient和json.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/ab4e1d960f074cb08e1871d2a8dc5690" rel="nofollow" target="_blank" title="HTTP 协议详解.pdf">HTTP 协议详解.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/4416f56d963d4583b135631d7b3efc1e" rel="nofollow" target="_blank" title="HTTP协议详解.pdf">HTTP协议详解.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/cb87bd5b1cf843f784b4c4d0d59b6f30" rel="nofollow" target="_blank" title="http协议详解.doc">http协议详解.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/4278c91a60c9402bb7581bacf6f0d9d7" rel="nofollow" target="_blank" title="HTTP协议分析.doc">HTTP协议分析.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/f5124d3c048a4767a88981257f01ecde" rel="nofollow" target="_blank" title="HTTP 协议的头信息详解.doc">HTTP 协议的头信息详解.doc</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/a12e0946b834461293c738addb1619c2" rel="nofollow" target="_blank" title="HTTP 协议简介.pdf">HTTP 协议简介.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/96b3c3663bfc46a4b5bc85f0a5c7a251" rel="nofollow" target="_blank" title="HTTP协议中文版.pdf">HTTP协议中文版.pdf</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/9d17661533e347b2a29244f343c8e9d8" rel="nofollow" target="_blank" title="TCP/IP和http网络协议介绍.docx">TCP/IP和http网络协议介绍.docx</a></li>
+					
+						<li><a  href="http://www.open-open.com/doc/view/013ef01247a24819ae392b3601cd7082" rel="nofollow" target="_blank" title="轻松学java web开发.pdf">轻松学java web开发.pdf</a></li>
+					
+				</ul>
+			</td>
+		</tr></table>
+		<div style="margin-top: 10px;margin-bottom: 10px;">
+			<div id="baiduad1" style="margin-bottom: 5px;">
+			</div>
+
+		</div>
+
+
+
+
+
+	</div>
+
+	<div id=view-side>
+		<div id=upload-box class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-body><a id=upload class=upload href="#"></a>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div id=view-tag class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>经验标签</div>
+				<div id=tag-list class=box-body>
+					
+						<a href="/lib/tag/HTTP">HTTP</a>
+					
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+
+		<div id=view-topic class="box-blue angle">
+			<div class=box-bg>
+				<div class=box-title>同类热门经验</div>
+				<div class=box-body>
+					<ul id=topic-list class=file-shortlist>
+						
+							<li>
+								<span class="samelist"></span><a title=Apache2+Tomcat7负载均衡配置（超详细整合文档） href="/lib/view/open1350612892352.html"><span class=title>Apache2+Tomcat7负载均衡配置（超详细整合文档）</span></a>
+								<div class=attribute><span>39275次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=基于Nginx和Lua的Web应用服务器 OpenResty href="/lib/view/open1323571567655.html"><span class=title>基于Nginx和Lua的Web应用服务器 OpenResty</span></a>
+								<div class=attribute><span>32280次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=淘宝Web服务器 Tengine href="/lib/view/open1322869904827.html"><span class=title>淘宝Web服务器 Tengine</span></a>
+								<div class=attribute><span>26341次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Java WebSocket 和 HTTP 服务器 - NettoSphere href="/lib/view/open1330697345749.html"><span class=title>Java WebSocket 和 HTTP 服务器 - NettoSphere</span></a>
+								<div class=attribute><span>22317次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=Java Web服务器 tamacat href="/lib/view/open1332646085264.html"><span class=title>Java Web服务器 tamacat</span></a>
+								<div class=attribute><span>18085次浏览</span></div>
+							</li>
+						
+							<li>
+								<span class="samelist"></span><a title=nginx+tomcat+memcached负载均衡集群搭建详细笔记(下)  href="/lib/view/open1435117281169.html"><span class=title>nginx+tomcat+memcached负载均衡集群搭建详细笔记(下) </span></a>
+								<div class=attribute><span>16041次浏览</span></div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关经验</div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li><span class="samelist"></span><a title=可靠消息队列浅谈 href="/lib/view/open1429583249182.html" target=_blank><span
+									class=title>可靠消息队列浅谈</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=自己动手开发一个 Web 服务器（一） href="/lib/view/open1451735765839.html" target=_blank><span
+									class=title>自己动手开发一个 Web 服务器（一）</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=总结整理下一个快速开发MVVM框架 href="/lib/view/open1456792712406.html" target=_blank><span
+									class=title>总结整理下一个快速开发MVVM框架</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=从启用 HTTP/2 导致网站无法访问说起 href="/lib/view/open1452990787433.html" target=_blank><span
+									class=title>从启用 HTTP/2 导致网站无法访问说起</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Java开发必装的IntelliJ IDEA插件 href="/lib/view/open1452728958105.html" target=_blank><span
+									class=title>Java开发必装的IntelliJ IDEA插件</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=使用 UIKit 进行面向协议的编程 href="/lib/view/open1453970176214.html" target=_blank><span
+									class=title>使用 UIKit 进行面向协议的编程</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Android 开发小贴士 href="/lib/view/open1453898074230.html" target=_blank><span
+									class=title>Android 开发小贴士</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Objective-C Runtime 消息机制 - 代码背后发生的事情 href="/lib/view/open1452991086448.html" target=_blank><span
+									class=title>Objective-C Runtime 消息机制 - 代码背后发生的事情</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=浅谈 RxAndroid + Retrofit + Databinding  href="/lib/view/open1454244612917.html" target=_blank><span
+									class=title>浅谈 RxAndroid + Retrofit + Databinding </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=webgiisoo  - Java 快速开发框架 href="/lib/view/open1456739264609.html" target=_blank><span
+									class=title>webgiisoo  - Java 快速开发框架</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=Linux为什么卡住了 href="/lib/view/open1456992051234.html" target=_blank><span
+									class=title>Linux为什么卡住了</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=应用jprotobuf类库实现基于http协议的RPC开发组件：jprotobuf-rpc-http href="/lib/view/open1413255088309.html" target=_blank><span
+									class=title>应用jprotobuf类库实现基于http协议的RPC开发组件：jprotobuf-rpc-http</span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=【http协议2】 深入理解HTTP协议  href="/lib/view/open1452777012167.html" target=_blank><span
+									class=title>【http协议2】 深入理解HTTP协议 </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+							<li><span class="samelist"></span><a title=悠然推荐：你的架构是如何一步步腐化的？  href="/lib/view/open1452913233355.html" target=_blank><span
+									class=title>悠然推荐：你的架构是如何一步步腐化的？ </span></a><br>
+								<div class=attribute><span class="score stars-small-0" title=经验评价得分：0.0分>&nbsp;</span> <span>0人评</span>
+								</div>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+
+
+		<div id=view-top-category class="box-blue angle-header">
+			<div class=box-bg>
+				<div class=box-title>相关讨论 - <a href="http://www.open-open.com/bbs" target="_blank" rel="nofollow">更多</a></div>
+				<div class=box-body>
+					<ul id=top-list class=file-shortlist>
+						
+							<li >
+								<span class="samelist"></span><a title=21 种代码的坏味道 href="http://www.open-open.com/bbs/view/1411528194187" rel="nofollow" target=_blank><span class=title>21 种代码的坏味道</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=http协议格式基础教程 href="http://www.open-open.com/bbs/view/1455864112026" rel="nofollow" target=_blank><span class=title>http协议格式基础教程</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=各种开源协议介绍 BSD、Apache Licence、GPL V2 、GPL V3 、LGPL、MIT href="http://www.open-open.com/bbs/view/1319816219625" rel="nofollow" target=_blank><span class=title>各种开源协议介绍 BSD、Apache Licence、GPL V2 、GPL V3 、LGPL、MIT</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=Scrum 实施经验 href="http://www.open-open.com/bbs/view/1318383108640" rel="nofollow" target=_blank><span class=title>Scrum 实施经验</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=从事前端开发必须要了解的CSS原理 href="http://www.open-open.com/bbs/view/1348305538150" rel="nofollow" target=_blank><span class=title>从事前端开发必须要了解的CSS原理</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=10年软件测试工作总结 href="http://www.open-open.com/bbs/view/1410531213055" rel="nofollow" target=_blank><span class=title>10年软件测试工作总结</span></a>
+							</li>
+						
+							<li >
+								<span class="samelist"></span><a title=PHP程序员的技术成长规划 href="http://www.open-open.com/bbs/view/1414478644325" rel="nofollow" target=_blank><span class=title>PHP程序员的技术成长规划</span></a>
+							</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class=box_3></div>
+			<div class=box_2></div>
+			<div class=box_1></div>
+
+		</div>
+
+		<!-- end top list--></div>
+</div>
+
+
+
+
+<div id=footer>
+	<div id=footer-menu><a href="http://www.open-open.com/home/1">联系我们</a> - <a href="http://www.open-open.com/home/1">问题反馈</a> - 微信公众号:openopen </div>
+	<p>2005-2015 OPEN-OPEN, all rights reserved.</p>
+</div>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript" src="/lib/js/thickbox.patch.js"></script>
+
+<script type="text/javascript" src="/lib/js/app.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript">
+	var rooturl="/lib";
+	var tb_pathToImage = "/lib/images/loadingAnimation.gif";
+
+
+</script>
+<script type="text/javascript" src="http://libs.baidu.com/jqueryui/1.8.22/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/lib/js/scrolltopcontrol.js"></script>
+<script type="text/javascript" src="/lib/js/view.js"></script>
+
+<script type="text/javascript" src="/lib/js/jquery.jgrowl_minimized.js"></script>
+
+<script type="text/javascript">
+	scrolltotop.offset(95,165);
+	scrolltotop.init();
+</script>
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script language="javascript" type="text/javascript">
+	//生成目录索引列表
+	function GenerateContentList()
+	{
+		var jquery_h3_list = $('#readercontainer h3');//如果你的章节标题不是h3,只需要将这里的h3换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#readercontainer')[0]).prepend(content);
+			}
+		}else{
+			GenerateContentList2()
+		}
+	}
+
+	function GenerateContentList2()
+	{
+		var jquery_h3_list = $('#readercontainer h2');//如果你的章节标题不是h2,只需要将这里的h2换掉即可
+		if(jquery_h3_list.length>0)
+		{
+			var content = '<a name="_labelTop"></a>';
+			content    += '<div id="navCategory" style="border-bottom:1px #dfdfdf solid;margin-bottom:5px">';
+			content    += '<p style="font-size:18px;margin:0"><b>阅读目录</b></p>';
+			content    += '<ul>';
+			for(var i =0;i<jquery_h3_list.length;i++)
+			{
+				if(i==0){
+					//var go_to_top = '<div style="text-align: right"><a name="_label' + i + '"></a></div>';
+				}else
+				{
+					//var go_to_top = '<div style="text-align: right"><a href="#_labelTop">回到顶部</a><a name="_label' + i + '"></a></div>';
+				}
+				//$(jquery_h3_list[i]).before(go_to_top);
+				var li_content = '<li><a href="#_label' + i + '">' + $(jquery_h3_list[i]).text() + '</a></li>';
+				content += li_content;
+			}
+			content    += '</ul>';
+			content    += '</div>';
+			if($('#readercontainer').length != 0 )
+			{
+				$($('#toc')[0]).prepend(content);
+			}
+		}
+	}
+
+	GenerateContentList();
+</script>
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		bp.src = '//push.zhanzhang.baidu.com/push.js';
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+</script>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=6734290" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config={"bdTop":256};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+</script>
+<!-- Baidu Button END -->
+
+</body>
+</html>

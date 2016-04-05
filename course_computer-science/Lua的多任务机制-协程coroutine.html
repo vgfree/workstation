@@ -1,0 +1,493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  xml:lang="zh-CN" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="content-language" content="gb2312" />
+<meta name="description" content="" />
+<meta name="keywords" content="Lua的多任务机制——协程(coroutine) - 技术频道| IT168" />
+
+
+<title>Lua的多任务机制——协程(coroutine) - 
+技术门户
+| ITPUB | </title>
+<link rel="StyleSheet" href="http://publish.it168.com/2007new_include/style.css" type="text/css" media="screen" />
+<script language="javascript" src="/2007new_include/ycncommon.js"></script>
+<script language="javascript" src="/2007new_include/ycnevent.js"></script>
+<script language="javascript" src="/2007new_include/loginAndEmail.js"></script>
+<script type="text/javascript" src="http://adshow.it168.com/files/chkFrom.asp?From=publish"></script>
+<script language="javascript" src="http://publish.it168.com/2007new_include/nav.js"></script>
+<SCRIPT language=javascript src="/2007new_include/resize.js"></script> 
+</head>
+<body>
+
+<!-- 信箱 -->
+
+<div id="emailf" class="emailf">
+	<div class="t14">商讯信箱</div>	 
+	<form action="http://mail.it168.com/mail/login.csp" method=post target="_blank">
+		<div>用户名：<input name="user" type="text" class="inp11" size="6" /> @ 
+			<select name="host" style="width:100px">
+                              <option selected>vip.it168.com</option>
+                              <option>free.it168.com</option>
+                              <option>udc.it168.com</option>
+                              <option>staff.it168.com</option>
+                              <option>it168.com</option>
+                            </select>
+		   <img id="emailfClose" src='http://publish.it168.com/images/close.gif' />
+		</div>
+		
+		
+		<div>密&nbsp;&nbsp;码：<input name="pass" type="password" class="inp11" size="10" />&nbsp;&nbsp;&nbsp;<a href="http://register.it168.com/xieyi.asp" target="_blank">注册</a>|<a href="http://register.it168.com/backpwd.asp" target="_blank">忘记密码</a></div>
+		<div style="width:100%;text-align:center"><input type="image" src="http://publish.it168.com/images/dlbut2.gif" align="absmiddle"/></div>
+	</form>
+</div>
+
+
+<div id="loginf" class="loginf" style="z-index:2000">
+	<div class="t15">登录</div>
+	<div class="loginb"><a href="javascript:void(0);" id="personT" class="dl1">个人用户</a><a href="javascript:void(0);" id="corpT" class="dl01">经销商</a><img id="loginfClose" src='http://publish.it168.com/images/close.gif' style='float:right' /></div>
+	<div class="lbg" id="login_con">
+	</div>
+	<div id="person_login_con" style="display:none;">
+		<form action="http://sso.it168.com/sso/login.do?cmd=0" target="_blank" method="post">
+			<div>用户名：<input name="login_name" type="text" class="inp11" size="10" /> <input type="image" alt="登录" src="http://publish.it168.com/images/dlbut2.gif" align="absmiddle"/></div>
+			<div>密&nbsp;&nbsp;码：<input name="password" type="password" class="inp11" size="10" />&nbsp;<a href="http://sso.it168.com/sso/reg_term.jsp">注册</a>|<a href="http://sso.it168.com/sso/forgetPassword.jsp">忘记密码</a></div>
+			<div>验证码：<input name="rand" type="text" class="inp11" size="6" /><span id="yanzhenImg"><img border=0 id="yzimg" src="http://sso.it168.com/sso/Image" align="absmiddle"></span><input type="hidden" name="return_url" value=""> <a href="javascript:ReloadCheckCode();">看不清？</a></div>
+			<iframe id=zxj4 src='javascript:void(0)'   frameborder="0" style="position:absolute; visibility:inherit; top:35px; left:10px;width:254px;height:110px; z-index:-1; filter='progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)';"></iframe>
+<!-- 登陆 -->
+		</form>
+	</div>
+	<div id="corp_login_con" style="display:none">
+		<form action="http://business.it168.com/loginFromOther.aspx" target="_blank" method="post">
+			<BR>
+			<div>用户名：<input name="username" type="text" class="inp11" size="10" /> <input type="image" alt="登录" src="http://publish.it168.com/images/dlbut2.gif" align="absmiddle"/></div>
+			<div>密&nbsp;&nbsp;码：<input name="pwd" type="password" class="inp11" size="10" />&nbsp;<a href="http://business.it168.com/register.asp">注册</a>|<a href="http://business.it168.com/getpwd.asp">忘记密码</a></div>
+			<br>
+			<iframe id=zxj4 src='javascript:void(0)'   frameborder="0" style="position:absolute; visibility:inherit; top:35px; left:10px;width:254px;height:110px; z-index:-1; filter='progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)';"></iframe>
+		</form>
+	</div>
+</div>
+
+
+<script language="JavaScript">
+            function ReloadCheckCode(){ 
+                var CodeArea=document.getElementById("yanzhenImg"); 
+                var rnum=RndNum(10); 
+                CodeArea.innerHTML="<IMG id=\"yzimg\" alt=\"\" align=\"absmiddle\" src=\"http://sso.it168.com/sso/Image?random="+ rnum +"\" />"; 
+             } 
+		
+            function RndNum(n){ 
+                var rnd=""; 
+                for(var i=0;i<n;i++)
+                     rnd+=Math.floor(Math.random()*10);
+                return rnd;
+            }
+
+init_loginTab();
+</script>
+
+
+
+<div id="tl"><!--ADV|顶通--><span id="ADV_TOPTL"></span><!--ADV|顶通-->
+<!--ADV|通栏--><div id="ADV_TL"><div class="divad_clear"></div></div><!--ADV|通栏-->
+</div>
+<div class="c_rim2">
+<!-- 导航 -->
+<style>
+/* 头部 */
+#header{ width:980px; margin:0px auto 0px; }
+#header .right{ width:812px; height:75px; padding:3px 5px 0 15px; background:url(/images2007/bg01.gif) no-repeat; }
+.logon{ width:100%; clear:both; height:23px; }
+.logon li{ float:left; }
+.logon li.one{ background:url(/images2007/icon03.gif) no-repeat left; padding-left:14px; padding-top:6px; margin-right:10px;  }
+.logon li.two{ background:url(/images2007/icon04.gif) no-repeat left; padding-left:19px; padding-top:6px;}
+.logon li a{ color:#0010e6; }
+.logon li.three{ float:right; background:url(/images2007/it-04.jpg) no-repeat left; padding-left:15px; padding-top:5px;  }
+.logon li.three a{ color:#195381; }
+.nav{ color:#000; padding-top:4px; word-spacing:6px; height:18px;  }
+.nav a{ color:#000; }
+.nav a.here{ color:#f00; }
+.subNav{ padding-top:6px;  color:#f4f8fc; word-spacing:6px;  }
+.subNav a{ color:#f4f8fc; }
+</style>
+<div id="header">
+	<a href="http://www.itpub.net" target="_blank"><img class="left" border="0" src="/images2007/logo.gif" width="148" height="78"  /></a>
+	<div class="right">
+		<ul class="logon">
+			<li class="one"><a href="http://sso.itpub.net/Login?return_url=http://www.itpub.net/list.html">登录</a></li>
+			<li class="two"><a href="http://sso.itpub.net/Register">注册</a></li>
+			<li class="three"><a href="http://publish.itpub.net">返回首页</a></li>
+		</ul>
+		<div class="clear"></div>
+		
+		<div class="nav">
+			<a href="http://publish.itpub.net" target="_blank">门户</a>  |  <a href="http://www.itpub.net/list.html">论坛</a>  |  <a href="http://weblog.itpub.net" target="_blank">Blog</a>  |<a href="http://publish.itpub.net/more/1211_1.shtml" target="_blank" target="_blank">新闻</a>  |  <a href="http://publish.itpub.net/more/1214_1.shtml" target="_blank">文档</a>  |  <a href="http://publish.itpub.net/tagsearch.aspx" target="_blank">Tag</a>  |  <a href="resource.shtml" target="_blank">下载</a>  |  <a href="http://publish.itpub.net/KnowledgeBase/default.aspx" target="_blank">搜索</a>  |  <a href="http://edu.itpub.net/" target="_blank">培训</a>  |  <a href="http://wiki.itpub.net/" target="_blank">WiKi</a>  |  <a href="http://www.ixpub.net/" target="_blank">IXPUB</a>  |  <a href="http://publish.itpub.net/tougao/" target="_blank">投稿</a>  |  <a href="http://publish.itpub.net/zt/tech-zt/index.html" target="_blank">专题</a> 
+		</div>
+		
+		<div class="subNav">
+			频道: <a href="http://publish.itpub.net/oracle.shtm" target="_blank">Oracle</a> | <a href="http://publish.itpub.net/DB2.shtm" target="_blank">DB2</a> | <a href="http://publish.itpub.net/database/sqlserver.shtml" target="_blank">SQL Server</a> | <a href="http://publish.itpub.net/erp.aspx" target="_blank">ERP</a> | <a href="http://publish.itpub.net/scm.aspx" target="_blank">SCM</a> | <a href="http://publish.itpub.net/java.shtm" target="_blank">Java</a> | <a href="http://publish.itpub.net/Microsoft.shtm" target="_blank">微软技术</a> | <a href="http://publish.itpub.net/opensource.shtm" target="_blank">开源</a> | <a href="http://publish.itpub.net/manage.shtm" target="_blank">项目管理</a> | <a href="http://publish.itpub.net/soa.shtm" target="_blank">SOA</a> | <a href="http://publish.itpub.net/bi.shtm" target="_blank">商业智能</a> |<a href="http://www.itpub.net/ibm/" target="_blank">IBM软件技术</a> 
+		</div>
+	
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- 当前位置 -->
+<div class="top02">
+	<div class="dqwz">您的位置：<a href="http://www.it168.com">首页</a> &gt; <a href="http://tech.it168.com">技术频道</a> &gt; 正文</div>
+</div>
+</div>
+<!-- 内容开始 -->
+<div class="w_rim">
+	<!-- left -->
+	<div class="l1">
+	<!-- 广告 -->
+	<!--ADV|标题通栏--><div id="ADV_BTTL"><div class="divad_clear"></div></div><!--ADV|标题通栏-->
+	<!--ADV|文字链接--><div id="ADVTXT"><span id="ADV_TXT1"></span><span id="ADV_TXT2"></span><div class="divad_clear"></div></div><!--ADV|文字链接-->
+	<div class="w_c1">
+			<div class="w_t1">
+				<div class="w_c2">
+					<div class="l2 f16"><h1>Lua的多任务机制——协程(coroutine)</h1></div>
+					<div class="r2 top8">[<a href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(keyit=window.open('http://www.365key.com/storeit.aspx?t='+escape(d.title)+'&u='+escape(d.location.href)+'&c='+escape(t),'keyit','scrollbars=no,width=475,height=575,left=75,top=20,status=no,resizable=yes'));keyit.focus();">收藏此页</a>] [<a href="javascript:window.print();">打印</a>]</div>
+				</div>
+				<div class="top11">
+								</div>
+
+				<div class="w_c2">
+					<div class="l2">
+				
+					作者：<b class="red">来自ITPUB论坛</b>&nbsp;&nbsp;2008-02-14
+					<b id="AbortBBS"></b>
+					</div>
+				
+					<div class="r2">
+						<div><b>内容导航：</b></div>
+						<a id="Nav1" href="javascript:;" class="sel">
+																						Lua的多任务机制——协程(coro...
+																											</a>
+
+
+<div  class="pp">
+  <div id="Nav1Menu" class="p">
+			<a href="200802141556818.shtml" title="Lua的多任务机制——协程(coroutine)" class="hov1">第1页：<span>
+		Lua的多任务机制——协程(coroutine)
+		
+		</span></a>
+	  </div>
+</div>
+
+					</div>
+					<script>init_Nav();</script>		
+				
+				
+				</div>
+			</div>
+			
+			<div class="memo"><div id="1"><p>　　<strong>【IT168 技术文档】</strong>并发是现实世界的本质特征，而聪明的计算机科学家用来模拟并发的技术手段便是多任务机制。大致上有这么两种多任务技术，一种是抢占式多任务(preemptive multitasking)，它让操作系统来决定何时执行哪个任务。另外一种就是协作式多任务(cooperative multitasking)，它把决定权交给任务，让它们在自己认为合适的时候自愿放弃执行。这两种多任务方式各有优缺点，前者固有的同步问题使得程序经常有不可预知的行为，而后者则要求任务具备相当的自律精神。</p>
+<p>　　协程(coroutine)技术是一种程序控制机制，早在上世纪60年代就已提出，用它可以很方便地实现协作式多任务。在主流的程序语言(如C++、Java、Pascal等)里我们很少能看到协程的身影，但是现在不少动态脚本语言(Python、Perl)却都提供了协程或与之相似的机制，其中最突出的便是Lua。</p>
+<p>　　Lua语言实现的协程是一种非对称式(asymmetric)协程，或称半对称式(semi-symmetric)协程，又或干脆就叫半协程(semi-coroutine)。这种协程机制之所以被称为非对称的，是因为它提供了两种传递程序控制权的操作：一种是(重)调用协程(通过coroutine.resume);另一种是挂起协程并将程序控制权返回给协程的调用者(通过coroutine.yield)。一个非对称协程可以看做是从属于它的调用者的，二者的关系非常类似于例程(routine)与其调用者之间的关系。既然有非对称式协程，当然也就有对称式(symmetric)协程了，它的特点是只有一种传递程序控制权的操作，即将控制权直接传递给指定的协程。曾经有这么一种说法，对称式和非对称式协程机制的能力并不等价，但事实上很容易根据前者来实现后者。接下来我们就用代码来证明这个事实。</p>
+<div style="scrollbar-highlight-color :threedhighlight; overflow:auto; width: 500px;"><pre style="BORDER-RIGHT: black 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: black 1px solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #ededed">
+<div><!--
+Code highlighting produced by Actipro CodeHighlighter (freeware)
+http://www.CodeHighlighter.com/
+--><span style="COLOR: #000000">　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">对称式协程库coro.lua
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">代码摘自论文</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">Coroutines in Lua</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">www.inf.puc</span><span style="COLOR: #000000">-</span><span style="COLOR: #000000">rio.br</span><span style="COLOR: #000000">/~</span><span style="COLOR: #000000">roberto</span><span style="COLOR: #000000">/</span><span style="COLOR: #000000">docs</span><span style="COLOR: #000000">/</span><span style="COLOR: #000000">corosblp.pdf
+　　coro </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> {}
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">coro.main用来标识程序的主函数
+　　coro.main </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> function() end
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000"> coro.current变量用来标识拥有控制权的协程，
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000"> 也即正在运行的当前协程
+　　coro.current </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.main
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000"> 创建一个新的协程
+　　function coro.create(f)
+　　</span><span style="COLOR: #0000ff">return</span><span style="COLOR: #000000"> coroutine.wrap(function(val)
+　　</span><span style="COLOR: #0000ff">return</span><span style="COLOR: #000000"> nil,f(val)
+　　end)
+　　end
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000"> 把控制权及指定的数据val传给协程k
+　　function coro.transfer(k,val)
+　　</span><span style="COLOR: #0000ff">if</span><span style="COLOR: #000000"> coro.current </span><span style="COLOR: #000000">~=</span><span style="COLOR: #000000"> coro.main then
+　　</span><span style="COLOR: #0000ff">return</span><span style="COLOR: #000000"> coroutine.yield(k,val)
+　　</span><span style="COLOR: #0000ff">else</span><span style="COLOR: #000000">
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000"> 控制权分派循环
+　　</span><span style="COLOR: #0000ff">while</span><span style="COLOR: #000000"> k </span><span style="COLOR: #0000ff">do</span><span style="COLOR: #000000">
+　　coro.current </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> k
+　　</span><span style="COLOR: #0000ff">if</span><span style="COLOR: #000000"> k </span><span style="COLOR: #000000">==</span><span style="COLOR: #000000"> coro.main then
+　　</span><span style="COLOR: #0000ff">return</span><span style="COLOR: #000000"> val
+　　end
+　　k,val </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> k(val)
+　　end
+　　error(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">coroutine ended without transfering control...</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">)
+　　end
+　　end</span></div>
+</pre></div>
+<p>　　如果暂时还弄不懂上面的程序，没关系，看看如何使用这个库后再回头分析。下面是使用示例：</p>
+<div style="scrollbar-highlight-color :threedhighlight; overflow:auto; width: 500px;"><pre style="BORDER-RIGHT: black 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: black 1px solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: black 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #ededed">
+<div><!--
+Code highlighting produced by Actipro CodeHighlighter (freeware)
+http://www.CodeHighlighter.com/
+--><span style="COLOR: #000000">　　require(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">coro.lua</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">)
+　　function foo1(n)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">1: foo1 received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　n </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.transfer(foo2,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">2: foo1 received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　n </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.transfer(coro.main,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">3: foo1 received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　coro.transfer(coro.main,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　end
+　　function foo2(n)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">1: foo2 received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　n </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.transfer(coro.main,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">2: foo2 received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　coro.transfer(foo1,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　end
+　　function main()
+　　foo1 </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.create(foo1)
+　　foo2 </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.create(foo2)
+　　local n </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.transfer(foo1,</span><span style="COLOR: #000000">0</span><span style="COLOR: #000000">)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">1: main received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　n </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.transfer(foo2,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">2: main received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　n </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.transfer(foo1,n </span><span style="COLOR: #000000">+</span><span style="COLOR: #000000"> </span><span style="COLOR: #000000">10</span><span style="COLOR: #000000">)
+　　print(</span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">3: main received value </span><span style="COLOR: #000000">"</span><span style="COLOR: #000000">..n)
+　　end
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">把main设为主函数(协程)
+　　coro.main </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> main
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">将coro.main设为当前协程
+　　coro.current </span><span style="COLOR: #000000">=</span><span style="COLOR: #000000"> coro.main
+　　</span><span style="COLOR: #000000">--</span><span style="COLOR: #000000">开始执行主函数(协程)
+　　coro.main()</span></div>
+</pre></div>
+<p>　　上面的示例定义了一个名为main的主函数，整个程序由它而始，也因它而终。为什么需要一个这样的主函数呢?上面说了，程序控制权可以在对称式协程之间自由地直接传递，它们之间无所谓谁从属于谁的问题，都处于同一个层级，但是应用程序必须有一个开始点，所以我们定义一个主函数，让它点燃程序运行的导火线。虽说各个协程都是平等的，但做为程序运行原动力的主函数仍然享有特殊的地位(这个世上哪有绝对的平等!)，为此我们的库专门用了一个coro.main变量来保存主函数，并且在它执行之前要将它设为当前协程(虽然上面的main实际只是一个普通函数而非一个真正的协程，但这并无太大的关系，以后主函数也被称为主协程)。示例运行的结果是：</p>
+<p>　　1: foo1 received value 0</p>
+<p>　　1: foo2 received value 10</p>
+<p>　　1: main received value 20</p>
+<p>　　2: foo2 received value 30</p>
+<p>　　2: foo1 received value 40</p>
+<p>　　2: main received value 50</p>
+<p>　　3: foo1 received value 60</p>
+<p>　　3: main received value 70</p>
+<p>　　协程的执行序列是：main-&gt;foo1-&gt;foo2-&gt;main-&gt;foo2-&gt;foo1-&gt;main-&gt;foo1-&gt;main。</p>
+<p>　　coro.transfer(k,val)函数中k是将要接收程序控制权的协程，而val是传递给k的数据。如果当前协程不是主协程，tansfer(k,val)就简单地利用coroutine.yield(k,val)将当前协程挂起并传回两项数据，即程序控制权的下一站和传递给它的数据;否则进入一个控制权分派(dispatch)循环，该循环(重)启动(resume)k协程，等待它执行到挂起(suspend)，并根据此时协程传回的数据来决定下一个要(重)启动的协程。从应用示例来看，协程与协程之间似乎是用transfer直接传递控制权的，但实际上这个传递还是通过了主协程。每一个在主协程里被调用(比较coro.current和coro.main是否相同即可判断出)的transfer都相当于一个协程管理器，它不断地(重)启动一个协程，将控制权交出去，然后等那个协程挂起时又将控制权收回，然后再(重)启动下一个协程...，这个动作不会停止，除非&lt;1&gt;将(重)启动的协程是主协程;&lt;2&gt;某个协程没有提供控制权的下一个目的地。很显然，每一轮分派循环开始时都由主协程把握控制权，在循环过程中如果控制权的下一站又是主协程的话就意味着这个当初把控制权交出去的主协程transfer操作应该结束了，所以函数直接返回val从而结束这轮循环。对于情况&lt;2&gt;，因为coro.create(f)创建的协程的体函数(body function)实际是function(val) return nil,f(val) end，所以当函数f的最后一条指令不是transfer时，这个协程终将执行完毕并把nil和函数f的返回值一起返回。如果k是这样的协程，transfer执行完k,val = k(val)语句后k值就成了nil，这被视为一个错误，因为程序此时没法确定下一个应该(重)启动的协程到底是谁。所以在对称式模型下，每一个协程(当然主协程除外)最后都必须显式地将控制权传递给其它的协程。根据以上分析，应用示例的控制权的分派应为：</p>
+<p>　　第一轮分派: main-&gt;foo1-&gt;main-&gt;foo2-&gt;main-&gt;main(结束)</p>
+<p>　　第二轮分派: main-&gt;foo2-&gt;main-&gt;foo1-&gt;main-&gt;main(结束)</p>
+<p>　　第三轮分派: main-&gt;foo1-&gt;main-&gt;main(结束)</p>
+<p>　　由于可以直接指定控制权传递的目标，对称式协程机制拥有极大的自由，但得到这种自由的代价却是牺牲程序结构。如果程序稍微复杂一点，那么即使是非常有经验的程序员也很难对程序流程有全面而清晰的把握。这非常类似goto语句，它能让程序跳转到任何想去的地方，但人们却很难理解充斥着goto的程序。非对称式协程具有良好的层次化结构关系，(重)启动这些协程与调用一个函数非常类似：被(重)启动的协程得到控制权开始执行，然后挂起(或结束)并将控制权返回给协程调用者，这与计算机先哲们倡导的结构化编程风格完全一致。</p>
+<p>　　综上所述，Lua提供的非对称式协程不但具有与对称式协程一样强大的能力，而且还能避免程序员滥用机制写出结构混乱的程序。</p></div><div style="display: none; " id="ParagraphCount">1</div></div>
+
+
+			<div class="w_c2 top12">
+				<div class="l2 r" style="float:right;">
+
+									<img src="http://publish.it168.com/images/new_54.gif" width="63" height="23" alt="" align="absmiddle"/>
+				
+
+				<span class="f14">
+        					<a href="200802141556818.shtml"><b>1</b></a>
+			
+				</span>
+									<img src="http://publish.it168.com/images/new_56.gif" width="63" height="23" alt="" align="absmiddle"/>
+				
+				
+				</div>
+
+			</div>
+			<div class="contdh">
+				<div class="c2">
+					【内容导航】
+					<table>
+					<tr>
+																							<td>第1页：<b>
+						<a href="200802141556818.shtml" title='Lua的多任务机制——协程(coroutine)'>
+												Lua的多任务机制——协程(coroutine)
+												</a>
+						
+						</b></td>
+																</tr>
+					</table>
+				</div>
+			</div>
+
+
+
+
+
+
+			<div class="w_c2 top12">
+				<div class="l2">&copy;版权所有。未经许可，不得转载。</div>
+				<div class="r2 r">
+					[责任编辑：<b class="bl"><a href="http://paimai.it168.com/gzmailbox/input.asp?sendto=cynthia" target='_blank'>cynthia</a></b>]
+				</div>
+			</div>
+
+			
+			<!-- 网友点评 -->
+
+			<div id="iframetd1">
+			
+			</div>
+<script language="javascript">
+function resetIframeHeight(){
+try{
+var str=window.clipboardData.getData('text');
+var obj=document.getElementById('iframetd1');
+if(str.match(/^frameHeight=\d+$/)){
+obj.style.height=parseInt(str.match(/\d+/))+'px';
+window.clipboardData.setData('text','null');
+}
+}catch(e){}
+setTimeout(resetIframeHeight,100);
+}
+resetIframeHeight();
+</script>
+			<!--ADV|底通栏--><div id="ADV_DTL"><div class="divad_clear"></div></div><!--ADV|底通栏-->
+			<div class='bai'>
+				<!-- 相关文章 -->
+				<!-- 相关论坛贴 -->
+				<div class='top12'></div>
+<div class='pl'><span><a href='http://www.itpub.net/' target='_blank'>进入论坛&gt;&gt;</a></span>相关论坛贴</div>
+<div class='li'>
+<ul>
+<li><a href='http://www.itpub.net/thread-1016639-1-1.html' target='_blank' title='求供货商行项目明细的相关BAPI'>求供货商行项目明细的相关BAPI</a></li>
+<li><a href='http://www.itpub.net/thread-1016619-1-1.html' target='_blank' title='如何將兩個PARAMETERS放在一行?'>如何將兩個PARAMETERS放在一行?</a></li>
+<li><a href='http://www.itpub.net/thread-1016611-1-1.html' target='_blank' title='问个简单的问题，account type有什么控制作用？'>问个简单的问题，account type有什么控制作用？</a></li>
+<li><a href='http://www.itpub.net/thread-1016491-1-1.html' target='_blank' title='abap中select 怎麼取SY-DATUM的年月'>abap中select 怎麼取SY-DATUM的年月</a></li>
+<li><a href='http://www.itpub.net/thread-1016353-1-1.html' target='_blank' title='大家来列举一下查找同一内表中重复记录的最优化的算法'>大家来列举一下查找同一内表中重复记录的最优化...</a></li>
+<li><a href='http://www.itpub.net/thread-1016327-1-1.html' target='_blank' title='如何控制已开发票不能跨两个月或以上进行冲销'>如何控制已开发票不能跨两个月或以上进行冲销</a></li>
+</ul>
+</div>
+
+				
+
+				<!-- 精彩友情推荐 -->
+				
+			</div>
+		</div>
+	</div>
+	<!-- right -->
+	<div class="r1">
+		<!--ADV|画中画--><div id="ADV_HZH"><div class="divad_clear"></div></div><!--ADV|画中画-->
+		·<a href='http://www.it168.com/a2009/1001/753/000000753758.shtml' title="LoadRunner创建测试脚本" target='_blank'>LoadRunner创建测试脚本</a><br/>
+·<a href='http://www.it168.com/a2009/1001/753/000000753759.shtml' title="用LoadRunner编写socket应用的测试脚本" target='_blank'>用LoadRunner编写socket应用的测试脚本</a><br/>
+·<a href='http://www.it168.com/a2009/1001/753/000000753762.shtml' title="使用LoadRunner 编写JAVA 测试脚本" target='_blank'>使用LoadRunner 编写JAVA 测试脚本</a><br/>
+·<a href='http://www.it168.com/a2009/1001/753/000000753763.shtml' title="LoadRunner脚本编程 " target='_blank'>LoadRunner脚本编程 </a><br/>
+·<a href='http://tech.it168.com/focus/200902/cto090227/index.html' title="【高端访谈】寻找下一代CTO向冠军冲刺 " target='_blank'>【高端访谈】寻找下一代CTO向冠军冲刺 </a><br/>
+·<a href='http://tech.it168.com/focus/200902/sql2008wajue/index.html' title="【技术专题】SQL Server 2008数据挖掘指南 " target='_blank'>【技术专题】SQL Server 2008数据挖掘指南 </a><br/>
+·<a href='http://tech.it168.com/focus/200901/ctohelendu/index.html' title="【高端访谈】畅谈“寻找下一代CTO”" target='_blank'>【高端访谈】畅谈“寻找下一代CTO”</a><br/>
+·<a href='http://tech.it168.com/focus/200902/net2008/index.html' title="【热点专题】08年.NET最受欢迎的图书" target='_blank'>【热点专题】08年.NET最受欢迎的图书</a><br/>
+
+		<!--ADV|立柱1--><div id="ADV_LZ1"><div class="divad_clear"></div></div><!--ADV|立柱1-->		
+		<!-- 热点文章排行 -->
+		<ul>
+			<li class='li001'><a href='http://tech.it168.com/a2011/0810/1230/000001230301.shtml' title="整洁的程序和好的程序 鱼和熊掌兼得?" target='_blank'>整洁的程序和好的程序 鱼和熊掌兼得?</a></li>
+
+			<li class='li002'><a href='http://tech.it168.com/a2011/0801/1225/000001225688.shtml' title="开发者需知：优秀程序设计的18大原则" target='_blank'>开发者需知：优秀程序设计的18大原则</a></li>
+
+			<li class='li003'><a href='http://tech.it168.com/a2011/0801/1225/000001225659.shtml' title="开发者必知 学习SQL的九个理由" target='_blank'>开发者必知 学习SQL的九个理由</a></li>
+
+			<li class='li004'><a href='http://tech.it168.com/a2011/0726/1222/000001222865.shtml' title="社交之战已经结束 HTML5将会改变一切" target='_blank'>社交之战已经结束 HTML5将会改变一切</a></li>
+
+			<li class='li005'><a href='http://tech.it168.com/a2011/0712/1216/000001216539.shtml' title="追求自由竞争市场 浅析开放平台的本质" target='_blank'>追求自由竞争市场 浅析开放平台的本质</a></li>
+
+			<li class='li006'><a href='http://tech.it168.com/a2011/0711/1215/000001215971.shtml' title="国产软件优先采购权取消 欧美施压所致" target='_blank'>国产软件优先采购权取消 欧美施压所致</a></li>
+
+			<li class='li007'><a href='http://tech.it168.com/a2011/0711/1215/000001215876.shtml' title="7月编程排行：Objective-C将成年度语言" target='_blank'>7月编程排行：Objective-C将成年度语言</a></li>
+
+			<li class='li008'><a href='http://tech.it168.com/a2011/0616/1205/000001205529.shtml' title="最新30佳：HTML5 网站设计案例欣赏" target='_blank'>最新30佳：HTML5 网站设计案例欣赏</a></li>
+
+			<li class='li009'><a href='http://tech.it168.com/a2011/0615/1204/000001204894.shtml' title="新手神器：MySQL-Cluster架构图文详解" target='_blank'>新手神器：MySQL-Cluster架构图文详解</a></li>
+
+			<li class='li010'><a href='http://tech.it168.com/a2011/0613/1203/000001203361.shtml' title="9个重要习惯 极大提升工作和时间效率" target='_blank'>9个重要习惯 极大提升工作和时间效率</a></li>
+
+</ul>
+		<!--ADV|立柱2--><div id="ADV_LZ2"><div class="divad_clear"></div></div><!--ADV|立柱2-->
+		<!--ADV|供应商--><div id="ADV_GYS"><div class="divad_clear"></div></div><!--ADV|供应商-->
+		<!--ADV|立柱3--><div id="ADV_LZ3"><div class="divad_clear"></div></div><!--ADV|立柱3-->
+		<!-- 近期热评文章 -->
+		<div id="iframetd2">
+				
+		</div>
+		<!--ADV|立柱4--><div id="ADV_LZ4"><div class="divad_clear"></div></div><!--ADV|立柱4-->
+		<!--ADV|立柱5--><div id="ADV_LZ5"><div class="divad_clear"></div></div><!--ADV|立柱5-->
+
+		
+		</div>
+	</div>
+</div>
+<!-- 内容结束 -->
+<div class="line1"></div>
+<!-- foot -->
+<div class="top8"></div>
+<DIV class=btm>
+<UL class=btmlink>
+  <LI class=copytxt>CopyRight 1999-2006 itpub.net All Right Reserved.&nbsp;&nbsp;&nbsp;&nbsp;E-mail:Webmaster@itpub.net</LI>
+  <LI class=copytxt>北京皓辰广域网络信息技术有限公司.&nbsp;版权所有&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.miibeian.gov.cn/" target="_blank">京ICP证:010037号</a>&nbsp;&nbsp;&nbsp;<a href="http://www.itpub.net/contactus.php" target="_blank">联系我们</a>&nbsp;&nbsp;&nbsp;<a href="http://www.itpub.net/flgw.php" target="_blank">法律顾问</a><img width=1 height=1 src=http://logcount.itpub.net/itpub.gif?publish border=0><img width=1 height=1 src=http://log.tigerbar.net/itpub.gif?publish border=0></LI>
+</UL>
+<A class=border1 href="http://www.bj.cyberpolice.cn/alarm/alarm.htm" target=_blank>
+<IMG height=47 src="/images2007/police.jpg" width=118 border=0></A> <A class=border1 href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202006092100005" target=_blank><IMG height=48 src="/images2007/hd315.gif" width=40 border=0></A></DIV>
+<script language="javascript" src="http://stat.it168.com/pv.js"></script>
+<script>
+function sendPV(){
+    var pvTrack = new PvTrack();
+    pvTrack.type = 11; // 频道类别ID
+    pvTrack.channel =24; // 频道ID
+    pvTrack.pageType = 0;
+    pvTrack.track();
+}
+window.setTimeout("sendPV()", 3);
+</script>
+
+<!-- START WRating v1.0 -->
+<script type="text/javascript" src="http://it168.wrating.com/a1.js">
+</script>
+<script type="text/javascript">
+var vjAcc="860010-2083110200";
+var wrUrl="http://it168.wrating.com/";
+vjTrack("");
+</script>
+<noscript><img src="http://it168.wrating.com/a.gif?a=&c=860010-2083110200" width="1" height="1"/></noscript>
+<!-- END WRating v1.0 -->
+<!--Publish AD START-->
+<script type='text/javascript' src='http://adshow.it168.com/adfile/js/advs_publish_v3.js?rnd=0523'></script>
+<script type='text/javascript' src='http://adshow.it168.com/adfile/js/advtmp_v1.js'></script>
+<script type="text/javascript">
+var adv_c="publish"//信息化专区文章页
+var adv_date="2007-03-19"
+var adv_debug="0";
+//$import("/cad/v07_adv_js_idlist.js","js")
+//$import("/cad/v07_adv_js_public.js","js")
+//$import("/cad/v07_adv_js_gys.js","js")
+</script>
+
+<input name="revurl" id="revurl" type="hidden">
+<script type="text/javascript">
+firsturl=document.referrer;
+//firsturl="ublish.itpub.net/";
+var objxx=document.getElementById("revurl");
+objxx.value=firsturl;
+
+//暂时广告添加
+document.getElementById('ADV_HZH').innerHTML="<div id=46838><div style='position:absolute; z-index:2; width:300; height: 250'><a href='http://adshow.it168.com/manager/files/icount.asp?cid=46838&cUrl=http://211.94.190.80/html.ng/params.styles=clickcmd&adspec=Flash&adtype=crazyAD&affiliate=it168&campaignid=1504&channel=cai_jing&log=0?' target=_blank><img border=0 width=300 height=250  src='http://adshow.it168.com/newImage/23.gif'></a></div><OBJECT classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0' WIDTH=300 HEIGHT=250> <PARAM NAME=movie VALUE='http://adshow.it168.com/newImage/20080618/ad_115256.swf'> <PARAM NAME=quality VALUE=high> <PARAM NAME=wmode VALUE=transparent>  <EMBED src='http://adshow.it168.com/newImage/20080618/ad_115256.swf' TYPE='application/x-shockwave-flash'  PLUGINSPAGE='http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwavFlash' wmode='transparent'  WIDTH=300 HEIGHT=250></EMBED></OBJECT></div>"
+
+document.getElementById('ADV_LZ1').innerHTML="<div id=43514><div style='position:absolute; z-index:2; width:300; height: 240'><a href='http://adshow.it168.com/manager/files/icount.asp?cid=43514&cUrl=http://mccannafa7.allyes.com/main/adfclick?user=MccannAfa7|fy08sql_it168|it168_TechnologyArticle_PIP_bonus&db=mccannafa7&log=on&ip=59.151.56.230&bid=17755&cid=855555&sid=17095&kv=&exp1=-278766978&exp2=6213872680&cache=627411&url=http://www.microsoft.com/china/sql/default.mspx' target=_blank><img border=0 width=300 height=240  src='http://adshow.it168.com/newImage/23.gif'></a></div><OBJECT classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0' WIDTH=300 HEIGHT=240> <PARAM NAME=movie VALUE='http://adshow.it168.com/newImage/20080409/ad_154413.swf'> <PARAM NAME=quality VALUE=high> <PARAM NAME=wmode VALUE=transparent>  <EMBED src='http://adshow.it168.com/newImage/20080409/ad_154413.swf' TYPE='application/x-shockwave-flash'  PLUGINSPAGE='http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwavFlash' wmode='transparent'  WIDTH=300 HEIGHT=240></EMBED></OBJECT></div>"
+
+document.getElementById('ADV_DTL').innerHTML="<div id=47226><div style='position:absolute; z-index:2; width:670; height: 120'><a href='http://adshow.it168.com/manager/files/icount.asp?cid=47226&cUrl=http://ad.cn.doubleclick.net/clk;202117953;26633996;n?http://dellstorecn.sg.dell.com/public/default.jsp?c=cn&s=dhs&l=cn&rflag=AP&aflag=A&siteid=it168vostroDT' target=_blank><img border=0 width=670 height=120  src='http://adshow.it168.com/newImage/23.gif'></a></div><OBJECT classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0' WIDTH=670 HEIGHT=120> <PARAM NAME=movie VALUE='http://adshow.it168.com/newImage/20080714/47226_124622.swf'> <PARAM NAME=quality VALUE=high> <PARAM NAME=wmode VALUE=transparent>  <EMBED src='http://adshow.it168.com/newImage/20080714/47226_124622.swf' TYPE='application/x-shockwave-flash'  PLUGINSPAGE='http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwavFlash' wmode='transparent'  WIDTH=670 HEIGHT=120></EMBED></OBJECT></div>"
+
+document.getElementById('ADV_LZ3').innerHTML="<table border='0' cellspacing='0' cellpadding='0'><tr><td><a href='http://adshow.it168.com/manager/files/icount.asp?cid=35780&cUrl=http://solmigprc.bizcom.com.cn/software/solaris/index.jsp?source=SOL07_IT168_BUTT7' target=_blank><img src='http://adshow.it168.com/newImage/20070926/ad_1603.gif' border=0 width=300 height=120></a></td></tr></table>"
+
+document.getElementById('ADV_LZ4').innerHTML="<table border='0' cellspacing='0' cellpadding='0'><tr><td><a href='http://adshow.it168.com/manager/files/icount.asp?cid=47907&cUrl=http://ad.cn.doubleclick.net/clk;205701376;28352587;k?http://www.dell.com.cn/virtual' target=_blank><img src='http://adshow.it168.com/newImage/20080714/ad_104210.jpg' border=0 width=300 height=240></a></td></tr></table>"
+
+//ADV_BTTL.innerHTML="<IFRAME MARGINHEIGHT=0 MARGINWIDTH=0 FRAMEBORDER=0 WIDTH=670 HEIGHT=120  SCROLLING=NO SRC=http://adshow.it168.com/corpImage/Intel/2008023/2008023_1417.html></IFRAME>"
+
+//ADV_TL.innerHTML="<div id=43165><div style='position:absolute; z-index:2; width:980; height: 90'><a href='http://adshow.it168.com/manager/files/icount.asp?cid=43165&cUrl=http://mccannafa7.allyes.com/main/adfclick?user=MccannAfa7|intel_ITopia_IT168|IT168_TechITPUBarticlepage_Leaderboard_980x90_53_Xeon&db=mccannafa7&log=on&ip=61.4.182.2&bid=20253&cid=1086964&sid=19417&kv=&exp1=-864941564&exp2=6961162167&cache=273810&url=http://prcappzone.intel.com/ITopia/xeon_2.htm?cid=CPXIto1H08cn_35' target=_blank><img border=0 width=980 height=90  src='http://adshow.it168.com/newImage/23.gif'></a></div><OBJECT classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0' WIDTH=980 HEIGHT=90> <PARAM NAME=movie VALUE='http://adshow.it168.com/newImage/20080428/43165_11728.swf'> <PARAM NAME=quality VALUE=high> <PARAM NAME=wmode VALUE=transparent>  <EMBED src='http://adshow.it168.com/newImage/20080428/43165_11728.swf' TYPE='application/x-shockwave-flash'  PLUGINSPAGE='http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwavFlash' wmode='transparent'  WIDTH=980 HEIGHT=90></EMBED></OBJECT></div>"
+</script>
+<!--Publish AD END-->
+<script type="text/javascript" src='http://head.it168.com/92/count.js'></script>
+
+<script>
+   document.write("<img width=1 height=1 src=http://count.it168.com/count.dll?Type=Img2&add=1&id=93&refer="+escape(top.document.referrer)+" border=0>");
+</script>
+<div style='display:none'><script src="http://s22.cnzz.com/stat.php?id=5863886&web_id=5863886" language="JavaScript"></script></div></body>
+</html> 
+
