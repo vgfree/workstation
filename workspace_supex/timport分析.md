@@ -23,11 +23,60 @@ key 存储格式: `gps`
   /tsdb/data00/config.json查看配置 	
 	可以找到zk_server配置 `172.16.71.121:2181`
 
-> 3. ./zkCli.sh -server 172.16.71.121:2181 远程连接 	
-	$ls /tsdb/RW:20160111200000:-1 	
-	[5120:6144, 4096:5120, 7168:8192, 0:1024, 3072:4096, 6144:7168, 2048:3072, 1024:2048]
-
-
+> 3. ./zkCli.sh -server 172.16.71.121:2181 远程连接  			
+	```
+[root@node6 bin]# ./zkCli.sh -server 192.168.1.14:2181
+[zk: 192.168.1.14:2181(CONNECTED) 1] ls /
+[YINSHI.MONITOR.ALIVE.CHECK, tsdb, root, driview, zookeeper, a]
+[zk: 192.168.1.14:2181(CONNECTED) 2] ls /tsdb
+[RW:20150525210000:-1]
+[zk: 192.168.1.14:2181(CONNECTED) 3] ls /tsdb/RW:20150525210000:-1
+[0:4096]
+[zk: 192.168.1.14:2181(CONNECTED) 4] ls /tsdb/RW:20150525210000:-1/0:4096
+[RW:10000:MASTER:192.168.1.12:7001:7002:20150525210000:-1]
+	```
+从上面可以看出配置信息
+192.168.1.12:/data/chenxijun/tsdb/data00/tsdb_conf.json
+```
+1 {
+2     "smart_hander_counts": 2,
+3     "smart_worker_counts": 4,
+4     "smart_tasker_counts": 32,
+5     "smart_monitor_times": 30,
+6     "smart_protocol": "redis",
+7     "swift_worker_counts": 1,
+8     "swift_protocol": "redis",
+9     "max_req_size": 32768,
+10
+11     "log_path": "./var/logs",
+12     "log_file": "tsdb",
+13     "log_level": 1,
+14
+15     "node_type": "CLUSTER",
+16     "mode": "RW",
+17     "ds_id": 10000,
+18     "key_set": [0,4096],
+19     "time_range": [20150525210000, -1],
+20     "zk_server": "192.168.1.14:2181,192.168.1.14:2182,192.168.1.14:2183,192.168.1.14:2184,192.168.1.14:2185",
+21
+22     "ip": "192.168.1.12",
+23     "w_port": 7001,
+24     "r_port": 7002,
+25
+26     "work_path": "./var",
+27
+28     "ldb_write_buffer_size": 67108864,
+29     "ldb_block_size": 32768,
+30     "ldb_cache_lru_size": 1073741824,
+31     "ldb_bloom_key_size": 10,
+32     "ldb_compaction_speed": 1000,
+33
+34     "has_slave": 1,
+35     "role": "MASTER",
+36     "slave_ip": "192.168.1.12",
+37     "slave_wport": 7001
+38 }
+```
 
 ### 环境搭建
 
