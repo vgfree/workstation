@@ -24,7 +24,7 @@ key 存储格式: `gps`
 	可以找到zk_server配置 `172.16.71.121:2181`
 
 > 3. ./zkCli.sh -server 172.16.71.121:2181 远程连接  			
-	```
+```
 [root@node6 bin]# ./zkCli.sh -server 192.168.1.14:2181
 [zk: 192.168.1.14:2181(CONNECTED) 1] ls /
 [YINSHI.MONITOR.ALIVE.CHECK, tsdb, root, driview, zookeeper, a]
@@ -34,7 +34,7 @@ key 存储格式: `gps`
 [0:4096]
 [zk: 192.168.1.14:2181(CONNECTED) 4] ls /tsdb/RW:20150525210000:-1/0:4096
 [RW:10000:MASTER:192.168.1.12:7001:7002:20150525210000:-1]
-	```
+```
 从上面可以看出配置信息
 192.168.1.12:/data/chenxijun/tsdb/data00/tsdb_conf.json
 ```
@@ -84,7 +84,7 @@ key 存储格式: `gps`
 timport(192.168.1.12) 从redis(192.168.1.12)中读取数据存放到tsdb(192.168.1.12)中,
 tsdb的匹配文件保存在zookeeper(192.168.1.14)中
 
-*****timport**
+**timport** 	
 Q1. timport 如何获取从哪个redis读取数据
 > 配置文件: timport/timport_conf.h
 ```
@@ -111,10 +111,10 @@ server.3=127.0.0.1:8883:7773
 server.4=127.0.0.1:8884:7774
 server.5=127.0.0.1:8885:7775
 ```
-********TSDB**
-> * ****配置文件: tsdb_conf.json
-配置读取key的范围
-配置zk_server地址
+**TSDB**
+> * 配置文件: tsdb_conf.json 	
+配置读取key的范围		
+配置zk_server地址		
 ```
 "node_type": "CLUSTER",
 "mode": "RW",
@@ -122,7 +122,6 @@ server.5=127.0.0.1:8885:7775
 "key_set": [6144,7168],
 "time_range": [20160111200000, -1],
 "zk_server": "172.16.71.121:2181,172.16.71.151:2181,172.16.71.152:2181",
-
 "ip": "172.16.71.124",
 "w_port": 17051,
 "r_port": 17052,
@@ -206,3 +205,9 @@ key = string.format("RGPS:%s:%s", imei, timeinterval)
 -->> set redis.                                                         
 ok, ret = redis_api.hash_cmd("tsdb_hash",imei,"sadd",key,unpack(gps_tab['list']))
 ```
+
+
+
+
+
+1460340509|nt=0&mt=22032&gps=110416020809,11438.68035E,3336.86140N,-1,0,42;110416020808,11438.68035E,3336.86140N,-1,0,42;110416020807,11438.68035E,3336.86140N,-1,0,42;110416020806,11438.68035E,3336.86140N,-1,0,42;110416020805,11438.68035E,3336.86140N,-1,0,42&tokencode=Tov6sZ4TWw&imsi=460012372767955&imei=643349633678069&mod=SG900|172.16.51.7|555
