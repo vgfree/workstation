@@ -1,0 +1,107 @@
+module(..., package.seeall)
+
+OWN_POOL = {
+    redis = {
+        public = {
+            host = '172.16.21.44', 
+            port = 6349,
+        },
+        private = {
+            host = '172.16.21.41',
+            port = 6319,
+        },
+       weibo = {
+            host = '172.16.21.42',
+            port = 6329,
+        },
+	statistic = {
+            host = '172.16.21.43',
+            port = 6339,
+        },
+	--weibo ={
+        --    host = '172.16.21.157',
+        --    port = 4120,
+        --},
+	message_redis0= {
+            host = '172.16.31.171',
+            port = 6329,
+        },
+        message_redis1= {
+            host = '172.16.31.171',
+            port = 6329,
+        },
+        message_redis2= {
+            host = '172.16.31.171',
+            port = 6329,
+        },
+        message_redis3= {
+            host = '172.16.31.171',
+            port = 6329,
+        },
+
+
+	mapGridOnePercent = { 
+            host = '172.16.21.61',
+            port = 5071,
+        },
+
+    },
+    mysql = {
+        app_weibo___weibo = {
+            host = '172.16.21.24',
+            port = 3306,
+            database = 'app_weibo',
+            user = 'app_weibo',
+            password ='258MTweibo',
+        },
+        app_usercenter___usercenter = { 
+            host = '172.16.21.21',
+            port = 3306,
+            database = 'userCenter',
+            user = 'app_user',
+            password ='DKuser751',
+        },
+	app_roadmap___roadmap = {
+            host = '172.16.21.104',
+            port = 3306,
+            database = 'roadMap',
+            user = 'app_roadmap',
+            password ='MTrmap369',
+        },
+    },
+}
+
+
+OWN_DIED = {
+    redis = {
+    },
+    mysql = {
+ 
+    },
+
+    http = {
+        dfsapi_txt2voice = {
+            host = '172.16.21.176',
+            port = 80,
+        },
+        dfsapi_save_sound = {
+            host = 'api.daoke.io',
+            port = 80,
+       },
+        -- send personal weibo
+        weiboapi = {
+            host = 'api.daoke.io',
+            port = 80,
+        },
+	-- this is the host and port of callback api
+        callbackapi = {
+            host = 'api.daoke.io',
+            port = 80,
+        },
+
+
+    },
+}
+
+
+setmetatable(_M, { __index = _M })

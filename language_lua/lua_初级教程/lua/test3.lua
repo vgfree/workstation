@@ -1,0 +1,1 @@
+print(getstring("AAA"))

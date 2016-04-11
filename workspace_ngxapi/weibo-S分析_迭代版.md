@@ -16,7 +16,7 @@ local function handle()
         local req_body = ngx.req.get_body_data()
         local ip = ngx.var.remote_addr
 
-        local body_args = utils.parse_form_data(req_heads, req_body)            
+        local body_args = utils.parse_form_data(req_heads, req_body)
         ------------------------------------------------------------------------------------
         -- 2. 校验参数
         check_parameters(body_args)
@@ -51,8 +51,8 @@ end
 ## supex weibo-S
 
 ### weibo_send_single_message.lua
-> * 获取请求`args = supex.get_our_body_table()`
-> * 获取UID message label level
+> * 获取请求`args = supex.get_our_body_table()` 
+> * 获取UID message label level 
 > * 以上四个参数都存在时
 	```
 	tasks = {
@@ -64,7 +64,7 @@ end
 	```
 	coro:addtask(work_redis_one, coro, tasks[1])                            
 	coro:addtask(work_redis_two, coro, tasks[2])
-	```
+	``` 
 > * 函数` work_redis_two( coro, usr )`
 	```
 	redis_api.cmd('weibo', "", 'ZADD', usr.UID .. ":weiboPriority",
@@ -72,8 +72,14 @@ end
 	```
 > * 函数`work_redis_one( coro, usr )`
 	```
-	redis_api.cmd('weibo', "", 'SETEX', usr.label .. ":weibo", 300,
+	redis_api.cmd('weibo', "", 'SETEX', usr.label .. ":weibo", 300, 
 			usr.message)
 	```
 > * 在two中存储的都是UID相关的标志位信息等,再通过label可以找到message,并且one是
     定时的,超时时间段内没有被调用执行就会销毁
+
+
+
+
+
+

@@ -1,0 +1,181 @@
+#weibo interfaces
+
+location /weiboapi/v2/sendPersonalWeibo{
+    lua_need_request_body on;
+    default_type 'text/plain';
+    set $API_NAME "sendPersonalWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_personal_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+location /weiboapi/v2/sendGroupWeibo{
+    lua_need_request_body on;
+    default_type 'text/plain';
+    set $API_NAME "sendGroupWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_group_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/sendMultimediaPersonalWeibo {
+    lua_need_request_body on;
+    default_type 'text/plain';
+    set $API_NAME "sendMultimediaPersonalWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_multimedia_personal_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+
+location /weiboapi/v2/sendMultimediaGroupWeibo {
+    lua_need_request_body on;
+    default_type 'text/plain';
+    set $API_NAME "sendMultimediaGroupWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_multimedia_group_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+   
+location /weiboapi/v2/sendMultimediaOnlineWeibo {
+    lua_need_request_body on; 
+    default_type 'text/plain';
+    set $API_NAME "sendMultimediaOnlineWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_multimedia_online_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+location /weiboapi/v2/sendMultimediaOnlineCityWeibo {
+    lua_need_request_body on; 
+    default_type 'text/plain';
+    set $API_NAME "sendMultimediaOnlineCityWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_multimedia_online_city_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+location /weiboapi/v2/sendMultimediaOnlineGroupWeibo {
+    lua_need_request_body on; 
+    default_type 'text/plain';
+    set $API_NAME "sendMultimediaOnlineGroupWeibo";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_send_multimedia_online_group_weibo.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+# end of weibo
+# group
+location /weiboapi/v2/createGroup {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "createGroup";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_create_group.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/addGroupMember {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "addGroupMember";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_add_group_member.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/deleteGroupMember {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "deleteGroupMember";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_delete_group_member.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/getGroupMember {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "getGroupMember";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_get_group_member.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+location /weiboapi/v2/getUserGroup {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "getUserGroup";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_get_user_group.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/queryGroup {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "queryGroup";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_query_group.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+location /weiboapi/v2/applyJoinGroup {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "applyJoinGroup";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_apply_join_group.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/fetchApplyJoiningMember {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "fetchApplyJoiningMember";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_fetch_apply_joining_member.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/verifyApplyJoiningMember {
+    lua_need_request_body on;
+    default_type 'application/json';
+    set $API_NAME "verifyApplyJoiningMember";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_verify_apply_joining_member.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+# end of group
+
+#add by jzs 2014-03-18
+#user can query and delete collect rss news and local news
+#query news list and delete news by id , add two api config
+location /weiboapi/v2/fetchCollectionNews {
+	lua_need_request_body on;
+	default_type 'application/json';
+	set $API_NAME "fetchColloectionNews";
+	rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+	content_by_lua_file weiboapi/api/api_fetch_collection_news.lua;
+	log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+location /weiboapi/v2/deleteCollectionNews {
+	lua_need_request_body on;
+	default_type 'application/json';
+	set $API_NAME "deleteCollectionNews";
+	rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+	content_by_lua_file weiboapi/api/api_delete_collection_news.lua;
+	log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+
+#--查询频道所有用户 2014.5.16
+location /weiboapi/v2/getChannelUserList {
+    lua_need_request_body on;
+    default_type 'text/plain';
+    set $API_NAME "getChannelUserList";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_get_channel_userlist.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
+
+location /weiboapi/v2/setUserDefaultGroup {
+    lua_need_request_body on;
+    default_type 'text/plain';
+    set $API_NAME "setUserDefaultGroup";
+    rewrite_by_lua_file open/ngxstep/ngx_rewrite.lua;
+    content_by_lua_file weiboapi/api/api_set_user_default_group.lua;
+    log_by_lua_file open/ngxstep/ngx_log.lua;
+}
