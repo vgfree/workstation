@@ -1,0 +1,832 @@
+
+local utils = require 'utils'
+local app_utils = require('app_utils')
+local link = require 'link'
+local http_short_api = require 'http_short_api'
+local gosay = require 'gosay'
+local msg = require 'msg'
+local dfs_srv_save_sound = link["OWN_DIED"]["http"]["dfsapi_save_sound"] 
+local cutils    = require('cutils')
+-- update by chenjf
+local only = require 'only'
+local mysql_pool_api = require 'mysql_pool_api'
+local redis_pool_api = require 'redis_pool_api'
+-- end
+
+
+local mapGrid = 'mapGridOnePercent'
+
+module('weibo_fun', package.seeall)
+--FILE 小于300字节,过滤掉
+FILE_MIN_SIZE = 300
+---- 下发音频文件最大长度 50kb
+MAX_NEWSTATUS_FILE_LENGTH  = 51200
+---- 图片文件最大100kb 2014-11-05
+MAX_PHOTO_LENGTH         = 102400
+
+---微博存储的服务器的台数
+HASH_NUMBER = 4
+
+function string_to_error_code(bizid,url_info)
+	
+	if string.match(bizid,"error") then
+		--only.log('D',bizid)
+		local st,ed = string.find(bizid,'%a+')
+		local tmp = string.sub(bizid,st,ed)
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], tmp)
+	end
+    
+	if string.match(bizid,"redis") then
+		only.log('D',bizid)
+		gosay.go_false(url_info, msg["MSG_DO_REDIS_FAILED"])
+	end
+	
+	if string.match(bizid,"http") then
+		only.log('D',bizid)
+		gosay.go_false(url_info, msg["MSG_DO_HTTP_FAILED"])
+	end
+	
+	if string.match(bizid,"json") then
+		only.log('D',bizid)
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_BAD_JSON"])
+	end
+
+	if string.match(bizid,"data") then
+	         only.log('D',bizid)
+	         gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"],"data")
+	end
+	 
+	only.log('D',bizid)
+	gosay.go_false(url_info, msg["SYSTEM ERROR"])
+			 
+end
+
+function check_geometry_attr2(lon, lat, alt, dist,dir,sped,owner)
+
+    if lon then
+        lon = tonumber(lon)
+        if not lon or lon<-180 or lon>180 then
+            return false, owner .. "Longitude"
+        end
+	
+	if not lat then
+            return false, owner .. "Latitude"
+	end
+    end
+
+    if lat then
+        lat = tonumber(lat)
+        if not lat or lat<-90 or lat>90 then
+            return false, owner .. "Latitude"
+        end
+	if not lon then
+            return false, owner .. "Longitude"
+	end
+    end
+
+    if alt then
+        alt = tonumber(alt)
+        if not alt or alt<-9999 or alt>9999 then
+            return false, owner .. "Altitude"
+        end
+    end
+
+    if dist then
+        dist = tonumber(dist)
+        if not dist or dist < 0 then
+            return false, owner .. "Distance"
+        end
+    end
+   
+    if dir then  
+        dir = tonumber(dir)
+        if not dir or dir < 0 or dir >360 then
+            return false, owner .. "Direction"
+        end
+    end
+
+   if sped then  
+        sped = tonumber(sped)
+        if not sped or sped  < 0  then
+            return false, owner .. "Speed"
+        end
+    end
+
+	return true
+end
+
+function check_geometry_attr(lon, lat, alt, dist, dir, sped, owner, tab)
+
+    if lon then
+        lon = tonumber(lon)
+        if not lon or lon<-180 or lon>180 then
+            return false, owner .. "Longitude"
+        end
+	if not lat then
+            return false, owner .. "Latitude"
+	end
+    end
+
+    if lat then
+        lat = tonumber(lat)
+        if not lat or lat<-90 or lat>90 then
+            return false, owner .. "Latitude"
+        end
+	
+	if not lon then
+            return false, owner .. "Longitude"
+	end
+    end
+
+    if alt then
+        alt = tonumber(alt)
+        if not alt or alt<-9999 or alt>9999 then
+            return false, owner .. "Altitude"
+        end
+    end
+
+    if dist then
+        dist = tonumber(dist)
+        if not dist or dist < 0 then
+            return false, owner .. "Distance"
+        end
+    end
+
+	if owner == 'receiver' and lon and lat and not dist then
+		return false, owner .. "Distance"
+	end
+
+    local dir_tab, speed_tab
+    if dir then
+        local ok, direction = utils.json_decode(dir)
+        if not ok or type(direction) ~= 'table' then
+            return false, owner .. "Direction"
+        end
+        if not direction[1] or (direction[1]<0 or direction[1]>360) and direction[1]~=-1 then
+            return false, owner .. "Direction"
+        end
+        dir_tab = direction
+    end
+
+    if sped then
+        local ok, speed = utils.json_decode(sped)
+        if not ok or type(speed)~='table' then
+            return false, owner .. "Speed"
+        end
+        if #speed==0 or #speed>2 then
+            return false, owner .. "Speed"
+        end
+        if tonumber(speed[1])==nil or tonumber(speed[1])<0 then
+            return false, owner .. "Speed"
+        end
+        if speed[2] and (tonumber(speed[2])==nil or tonumber(speed[2])<0) then
+            return false, owner .. "Speed"
+        end
+        speed[2] = speed[2] or 999
+        speed_tab = speed
+    end
+
+    return true, dir_tab, speed_tab
+end
+
+function create_bizid(flag)
+    local uuid = utils.create_uuid()
+    local bizid = flag .. uuid
+    return bizid
+end
+
+function get_dfs_url(tab, app_key)
+
+    if not tab.data then
+        return nil
+    end
+
+    local tab = {
+        appKey = app_key,
+        length = #tab.data,
+    }
+
+    local ok, secret = redis_pool_api.cmd('public', 'hget', wb['appKey'] .. ':appKeyInfo', secret)
+    if not ok or not secret then
+        return nil
+    end
+
+    wb['sign'] = app_utils.gen_sign(tab, secret)
+
+    local http_req = utils.post_data(dfs_srv_save_sound['host'], dfs_srv_save_sound['port'], 'dfsapi/v2/saveSound', tab.file_name, tab.data)
+
+    local ret = http_short_api.http(dfs_srv_save_sound, http_req, true)
+    if not ret then
+        return nil
+    end
+
+    local body = string.match(ret, '.-\r\n\r\n(.+)')
+
+    only.log('D', body)
+    local ok, data = utils.json_decode(body)
+
+    if not ok then
+        only.log('E', info)
+        return nil
+    end
+
+    if tonumber(data["ERRORCODE"]) ~= 0 then
+        only.log('E', body)
+        return nil
+    end
+
+    return data['RESULT']['fileID'], data['RESULT']['url']
+end
+
+function touch_media_redis(args_tab)
+
+    -- %s is special in redis, we should escape it
+
+    local media_url = utils.escape_redis_text(args_tab['multimediaURL'])
+
+    local js_tab = {
+        multimediaFileURL = media_url,
+        time = {args_tab['start_time'], args_tab['end_time']},
+        tokenCode = args_tab['tokenCode'],
+
+        content = args_tab['content'],
+        bizid = args_tab['bizid'],
+        level = args_tab['level'],
+        type = args_tab['messageType'] or 1,
+        longitude = args_tab['receiverLongitude'],
+        latitude = args_tab['receiverLatitude'],
+        distance = args_tab['receiverDistance'],
+        direction = args_tab['direction_tab'],
+        speed = args_tab['speed_tab'],
+        tipType = args_tab['tipType'],
+	
+    }
+
+
+    local key = string.format('%s:%s', args_tab['receiverAccountID'], 'weiboPriority')
+
+    only.log('D', string.format('zadd %s %s %s', key, args_tab['level'] .. js_tab['time'][1],  js_tab['bizid']))
+    local ok, ret = redis_pool_api.cmd('weibo', 'zadd', key, args_tab['level'].. js_tab['time'][1],  js_tab['bizid'])
+    if not ok then
+        only.log('E', string.format('zadd %s %s %s', key, args_tab['level'] .. js_tab['time'][1],  js_tab['bizid']))
+        return false
+    end
+
+    key = string.format('%s:%s', js_tab['bizid'], 'weibo')
+    local ok, val = utils.json_encode(js_tab)
+    local expire_time  = args_tab['interval'] or 300
+    --fix houyaqian 2015-09-29
+    --redis memory warning
+    --"set" is changed to "setex"
+    --add a expire time
+    
+    only.log('D', string.format('setex key:%s time:%s value:%s', key, expire_time ,val))
+    ok, ret = redis_pool_api.cmd('weibo', 'setex', key, expire_time, val)
+    if not ok then
+    	only.log('E', string.format('setex key:%s time:%s value:%s', key, expire_time, val))
+        return false
+    end
+
+
+    local sender_info = {
+        senderAccountID = args_tab['senderAccountID'],
+        callbackURL = args_tab['callbackURL'],
+        sourceID = args_tab['sourceID'],
+        fileID = args_tab['fileID'],
+        appKey = args_tab['appKey'],
+        commentID = args_tab['commentID'],
+    }
+
+    if next(sender_info) then
+        local ok, json_string = utils.json_encode(sender_info)
+        if not ok then
+            return false
+        end
+	local key  = string.format("%s:senderInfo",args_tab['bizid']) 
+	local value  = json_string
+
+        only.log('D', string.format('setex key:%s expire_time:%s value:%s', key ,expire_time,value))
+        ok, ret = redis_pool_api.cmd('weibo', 'setex', key , expire_time , value)
+        if not ok then
+            only.log('E', string.format('setex key:%s expire_time:%s value:%s', key ,expire_time,value))
+            return false
+        end
+
+    end
+
+    return true
+end
+
+
+function touch_media_db(args)
+
+    
+    local sql_fmt = "INSERT personalMultimediaWeibo_%s SET appKey=%s,sourceID='%s',sourceType=%s,geometryType=%d,fileID='%s',multimediaURL='%s'," ..
+    "senderAccountID='%s',senderLongitude=%s,senderLatitude=%s,senderDirection='%s',senderSpeed='%s',senderAltitude=%s,commentID='%s'," ..
+    "receiverAccountID='%s',receiverLongitude=%s,receiverLatitude=%s,receiverDirection='%s',receiverSpeed='%s',receiverDistance=%s,content='%s'," ..
+    "startTime=%d,endTime=%d,level=%d,checkTokenCode=%d,tokenCode='%s',callbackURL='%s',createTime=%d,bizid='%s',cityCode=%s,cityName='%s',senderType=%d, messageType=%d"
+
+    local cur_month = os.date('%Y%m')
+
+    local media_url = utils.escape_mysql_text(args['multimediaURL'])
+    local sender_lon = args['senderLongitude'] and args['senderLongitude'] * 10000000 or 0 
+    local sender_lat = args['senderLatitude'] and args['senderLatitude'] * 10000000 or 0 
+    local receiver_lon = args['receiverLongitude'] and args['receiverLongitude'] * 10000000 or 0 
+    local receiver_lat = args['receiverLatitude'] and args['receiverLatitude'] * 10000000 or 0 
+
+    local city_code, city_name, json_tab
+    if sender_lon~=0 and sender_lat~=0 then
+        local grid_no = string.format('%d&%d', math.floor(args['senderLongitude']*100), math.floor(args['senderLatitude'] * 100))
+
+        only.log('D', grid_no)
+        local ok, ret = redis_pool_api.cmd(mapGrid, 'get', grid_no)
+        if ok then
+            ok, json_tab = utils.json_decode(ret)
+        end
+        if ok then
+            city_code, city_name = json_tab['cityCode'], json_tab['cityName']
+        end
+    end
+    
+
+    local sql = string.format(sql_fmt, cur_month, args['appKey'], args['sourceID'] or '', args['sourceType'], args['geometryType'] or 0,
+    args['fileID'] or '', media_url, args['senderAccountID'] or '', sender_lon, sender_lat,
+    args['senderDirection'] or 0, args['senderSpeed'] or 0, args['senderAltitude'] or -9999, args['commentID'] or '',
+    args['receiverAccountID'] or '', receiver_lon, receiver_lat, args['receiverDirection'] or '', args['receiverSpeed'] or 0,
+    args['receiverDistance'] or 0, args['content'] or '', args['start_time'], args['end_time'], args['level'], args['checkTokenCode'] or 0,
+    args['tokenCode'] or '', args['callbackURL'] or '', args['start_time'], args['bizid'], city_code or 0, city_name or '', args['senderType'] or 3, args['messageType'] or 1)
+
+    only.log('D', sql)
+    local ok, ret = mysql_pool_api.cmd('app_weibo___weibo', 'INSERT', sql)
+    if not ok then
+        only.log('E', sql)
+        return false
+    end
+
+    return true
+end
+
+
+function touch_comment_db(args)
+
+    local sql_fmt = "INSERT multimediaCommentInfo_%s SET senderAccountID='%s',receiverAccountID='%s',fileURL='%s'," ..
+                    "sourceID='%s',appKey='%s',callbackURL='%s',createTime=%d,longitude=%s,latitude=%s,direction='%s'," ..
+                    "speed='%s',altitude=%s,bizid='%s',fileID='%s',commentID='%s'"
+
+    local cur_month = os.date('%Y%m')
+
+    local media_url = utils.escape_mysql_text(args['multimediaURL'])
+    local sender_lon = args['senderLongitude'] and args['senderLongitude'] * 10000000 or 0 
+    local sender_lat = args['senderLatitude'] and args['senderLatitude'] * 10000000 or 0 
+
+    local sql = string.format(sql_fmt, cur_month, args['senderAccountID'] or '', args['receiverAccountID'] or '', media_url,
+    args['sourceID'] or '', args['appKey'], args['callbackURL'] or '', args['start_time'], sender_lon, sender_lat, args['senderDirection'] or 0,
+    args['senderSpeed'] or 0, args['senderAltitude'] or -9999, args['bizid'], args['fileID'] or '', args['commentID'] or '')
+
+    only.log('D', sql)
+    local ok, ret = mysql_pool_api.cmd('app_weibo___weibo', 'INSERT', sql)
+    if not ok then
+        only.log('E', sql)
+        return false
+    end
+    return true
+end
+
+function get_region_name(region_code)
+    if not region_code then
+        return nil
+    end
+    local sql = string.format("SELECT name FROM chinaDistrictInfo WHERE code = %d",region_code)
+    only.log('D',sql)
+    local ok,ret = mysql_pool_api.cmd("app_roadmap___roadmap", "select", sql)
+
+    if not ok or #ret < 1 then
+        only.log('E', "select mysql daokemap  chinaDistrictInfo error!")
+        return nil
+    else
+        return ret[1]['name']
+    end
+
+end
+
+------统计变量修改时间2014-10-16---------
+----统计所有appKey发送微博的总记录数
+function incrby_appkey(appKey, cur_month, cur_day)
+    --HINCRBY myhashtable field 1
+    --201410:weiboAppKeyTotalInfo
+    local ok = redis_pool_api.cmd('statistic','HINCRBY', string.format('%s:weiboAppKeyTotalInfo', cur_day) , string.format("%s:totalNum", appKey ) , 1 )
+    if not ok then
+        only.log('E',string.format("incrby_appkey  %s  cur_month: %s  cur_day:%s failed! ", appKey ,cur_month, cur_day))
+    end
+end
+
+----统计群组集团微博发送次数
+function incrby_groupid( groupid, cur_month, cur_day )
+    --201410:weiboGroupIDTotalInfo
+    local ok = redis_pool_api.cmd('statistic','HINCRBY', string.format('%s:weiboGroupIDTotalInfo', cur_day) , string.format("%s:totalNum", groupid ) , 1 )
+    if not ok then
+        only.log('E',string.format("incrby_groupid  %s  cur_month: %s  cur_day:%s failed! ", groupid ,cur_month, cur_day))
+    end
+end
+
+----统计发送个人区域微博发送次数
+function incrby_citycode( city_code, cur_month, cur_day )
+    --201410:weiboGroupIDTotalInfo
+    local ok = redis_pool_api.cmd('statistic','HINCRBY', string.format('%s:weiboCityCodeTotalInfo', cur_day) , string.format("%s:totalNum", city_code ) , 1 )
+    if not ok then
+        only.log('E',string.format("incrby_citycode  %s  cur_month: %s  cur_day:%s failed! ", groupid ,cur_month, cur_day))
+    end
+end
+
+---- 统计发送个人微博总数
+function incrby_personal( cur_month, cur_day , cur_count)
+    --201410:weiboGroupIDTotalInfo
+    local ok = redis_pool_api.cmd('statistic','HINCRBY', string.format('%s:weiboPersonalTotalInfo', cur_month) , string.format("%s:totalNum", cur_day ) , tonumber(cur_count) or 1 )
+    if not ok then
+        only.log('E',string.format("incrby_personal  %s  cur_month: %s  cur_day:%s failed! ", groupid ,cur_month, cur_day))
+    end
+end
+
+---- 群组最后一次说话时间
+function groupid_update_timestamp( groupid )
+    local ok = redis_pool_api.cmd('statistic','hmset', "groupIDUpdateTimestamp", string.format("%s:timestamp" , groupid ) ,os.time())
+    if not ok then
+        only.log('E',string.format("incrby_personal  %s  cur_month: %s  cur_day:%s failed! ", groupid ,cur_month, cur_day))
+    end
+end
+
+
+-----the data is  saved  to MySQL before,but now is changed to redis
+-----weibo data is too big ,so we can get any data is so hard.
+-----redis save is to solve the question --2015-07-24
+--HASH 函数
+function hash_function(key)
+    local index = cutils.custom_hash(key,HASH_NUMBER,0)
+    local message_redis_name = string.format("message_redis%s",index)
+    return message_redis_name
+end
+
+function message_info_key(args,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+	local value = string.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s",
+            args['appKey'],
+            args['sourceID'] or '',
+            args['sourceType'],
+            args['fileID'] or '',
+            media_url,
+            args['senderAccountID'] or '',
+            sender_lon, 
+            sender_lat,
+            args['senderDirection'] or 0,
+            args['senderSpeed'] or 0,
+            args['senderAltitude'] or -9999,
+            city_code or 0,
+            city_name or '',
+            receiver_lon,
+            receiver_lat,
+            args['receiverDirection'] or '', 
+            args['receiverSpeed'] or 0,
+            args['receiverDistance'] or 0, 
+            args['content'] or '',
+            args['start_time'], 
+            args['end_time'],
+            args['level'],
+            args['checkTokenCode'] or 0,
+            args['tokenCode'] or '',
+            args['callbackURL'] or '',
+            args['start_time'], 
+            args['bizid'],
+            args['messageType']
+        )
+	return value
+end
+
+function save_geography_message_info(args,cur_time,user)
+    
+    ---将经纬度改成整数存入redis中
+    local media_url = utils.escape_mysql_text(args['multimediaURL'])
+    local sender_lon = args['senderLongitude'] and args['senderLongitude'] * 10000000 or 0 
+    local sender_lat = args['senderLatitude'] and args['senderLatitude'] * 10000000 or 0 
+    local receiver_lon = args['receiverLongitude'] and args['receiverLongitude'] * 10000000 or 0 
+    local receiver_lat = args['receiverLatitude'] and args['receiverLatitude'] * 10000000 or 0 
+        
+    local city_code, city_name, json_tab
+    if sender_lon~=0 and sender_lat~=0 then
+	
+    	---获得城市的编号和城市名
+	local grid_no = string.format('%d&%d', math.floor(args['senderLongitude']*100), math.floor(args['senderLatitude'] * 100))
+
+	only.log('D', grid_no)
+    	local ok, ret = redis_pool_api.cmd(mapGrid, 'get', grid_no)
+    	if ok then
+        	ok, json_tab = utils.json_decode(ret)
+    	end
+	
+    	if ok then
+        	city_code, city_name = json_tab['cityCode'], json_tab['cityName']
+    	end
+    	--  根据百分之一格网存储微博编号
+    	--KEY：gridID:time:GEOtoMessage value:bizid
+    	local key = string.format("GEOtoMessage:%s:%s",grid_no,cur_time)
+    	
+	local hash_key = (args['senderLongitude']+ args['senderLatitude'])*100
+    	local message_redis_name = hash_function(hash_key)
+
+    	local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,args['bizid'])
+
+    	if not ok then 
+        	only.log('E',string.format(" **save %s message to redis failed! key:%s ,value:%s **",user, key, args['bizid']))
+    	end
+    	--KEY：time:GEOtomessage value:gridID
+	local key = string.format("GEOtoMessage:%s",cur_time)
+
+    	local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,grid_no)
+
+    	if not ok then 
+        	only.log('E',string.format(" **save %s message to redis failed! key:%s ,value:%s **",user, key, grid_no))
+    	end
+    end
+	return media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name 
+end
+
+function save_group_message_info(args,cur_time,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+    
+    --将集团微博具体信息存入redis中
+    --KEY: bizid:sendInfo vaule:
+    local message_redis_name = hash_function(args['bizid'])
+    local key = string.format("sendInfo:%s",args['bizid'])
+    args['messageType'] = args['messageType'] or 0
+
+    local value  = message_info_key(args,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+
+    value  = string.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s",
+                            value,
+			    '',
+			    '',
+			    '',
+			    '',
+			    '',
+			    '',
+                            args['groupID'] or '',
+                            args['receiveCrowd'] or '',
+                            args['receiveSelf']
+                            )
+    
+    local ok = redis_pool_api.cmd(message_redis_name,'SET',key,value)
+    
+    -- local ok = redis_pool_api.cmd(message_redis_name,'HMSET',key,
+    --                             "appKey",args['appKey'],
+    --                             "sourceID",args['sourceID'],
+    --                             "sourceType",args['sourceType'],
+    --                             "fileID",args['fileID'] or '',
+    --                             "multimediaURL",media_url,
+    --                             "senderAccountID",args['senderAccountID'] or '',
+    --                             "senderLongitude",sender_lon,
+    --                             "senderLatitude",sender_lat,
+    --                             "senderDirection",args['senderDirection'] or '',
+    --                             "senderSpeed",args['senderSpeed'] or '',
+    --                             "senderAltitude",args['senderAltitude'] or -9999,
+    --                             "cityCode",city_code or 0,
+    --                             "cityName", city_name or '',
+    --                             "groupID",args['groupID'] or '',
+    --                             "receiveCrowd",args['receiveCrowd'] or '',
+    --                             "receiveSelf",args['receiveSelf'],
+    --                             "receiverLongitude",receiver_lon,
+    --                             "receiverLatitude",receiver_lat,
+    --                             "receiverDirection",args['receiverDirection'] or '',
+    --                             "receiverSpeed",args['receiverSpeed'] or 0,
+    --                             "receiverDistance",args['receiverDistance'] or 0,
+    --                             "content",args['content'] or '',
+    --                             "startTime",args['start_time'],
+    --                             "endTime",args['end_time'],
+    --                             "level",args['level'],
+    --                             "checkTokenCode",args['checkTokenCode'] or 0,
+    --                             "tokenCode",args['tokenCode'] or '',
+    --                             "callbackURL",args['callbackURL'] or '',
+    --                             "createTime",args['start_time'],
+    --                             "bizid",args['bizid'],
+    --                             "messageType",args['messageType'] or 0
+    --                             )
+
+        if not ok then 
+            only.log('E',string.format(" **save group message to redis failed! key:%s **", key ))
+        end
+
+end
+
+function group_save_message_to_msgredis(args)
+
+    local cur_time = os.date("%Y%m%d%H%M")
+    local cur_time = math.floor(cur_time/10)
+    
+    --当senderAccountID存在时，按照senderAccountID进行HASH
+    --当senderAccountID不存在时，按照appKey进行HASH,同时senderAccountID 的值用常量“unknow”替换
+    
+    if args['senderAccountID'] then
+    	message_redis_name = hash_function(args['senderAccountID'])
+    else
+    	message_redis_name = hash_function(args['appKey'])
+    end
+    
+    local senderAccountID = args['senderAccountID'] or  "unknow"	
+
+    --一个用户发送消息的记录
+    --KEY:sendmessage:[senderAccountID:appkey:time] value:time|bizid
+    local key = string.format("sendMessage:%s:%s:%s",senderAccountID,args['appKey'],cur_time)
+    local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,string.format("%s|%s",os.time(),args['bizid']))
+
+    if not ok then 
+    	only.log('E',string.format(" **save group message to redis failed! key:%s ,value:%s **", key, args['bizid']))
+    end
+
+    --KEY:sendmessage:time value:senderAccountID:appkey
+    local key = string.format("sendMessage:%s",cur_time)
+    local value = string.format("%s:%s",senderAccountID,args['appKey'])
+    local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,value)
+
+    if not ok then 
+    	only.log('E',string.format(" **save group message to redis failed! key:%s ,value:%s **", key, value))
+    end
+
+    if args['groupID'] then
+
+  	-- KEY:[accountid:appkey:groupID:time]:sendmessage value: time|URL
+    	local key = string.format("voice:%s:%s:%s:%s",senderAccountID,args['appKey'],args['groupID'],cur_time)
+	local value = string.format("%s|%s",os.time(),args['multimediaURL'])
+   	local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,value) 
+
+    	if not ok then 
+	    only.log('E',string.format(" **save group message to redis failed! key:%s ,value:%s **", key, value))
+    	end
+	
+	-- KEY:time:sendmessage value: accountid:appkey:groupID
+	local key = string.format("voice:%s",cur_time)
+	local value = string.format("%s:%s:%s",senderAccountID,args['appKey'],args['groupID'])
+	local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,value) 
+
+	if not ok then 
+		only.log('E',string.format(" **save group message to redis failed! key:%s ,value:%s **", key, value))
+	end
+
+	--KEY:bizid:fileLocation value:multimediaURL
+	--数据类型为集合
+	local message_redis_name = hash_function(args['bizid'])
+	local key = string.format("fileLocation:%s",args['bizid'])
+	local ok = redis_pool_api.cmd(message_redis_name,'SET',key,args['multimediaURL'])
+
+	if not ok then 
+		only.log('E',string.format(" **save group message to redis failed! key:%s ,value:%s **", key,args['multimediaURL'] ))
+	end
+
+	--save geography message
+	local media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name = save_geography_message_info(args,cur_time,"group")
+
+	--存储集团微博的具体信息
+	save_group_message_info(args,cur_timei,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+
+    end
+	return true
+end
+
+
+function save_personal_message_info(args,cur_time,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+    
+    --将个人微博具体信息存入redis中
+    --KEY: bizid:sendInfo vaule:
+    local message_redis_name = hash_function(args['bizid'])
+    local key = string.format("sendInfo:%s",args['bizid'])
+
+    args['messageType'] = args['messageType'] or 1
+
+    local value  = message_info_key(args,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+
+    value  = string.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s",
+                            value,
+                            args['senderType'] or 3,
+                            args['geometryType'] or 0,
+                            args['commentID'] or '',
+                            args['receiverAccountID'] or '', 
+                            args['adTalkId'] or '', 
+                            args['POITD'] or '',
+			    '',
+			    '',
+			    '')
+     
+    local ok = redis_pool_api.cmd(message_redis_name,'SET',key,value)
+
+    -- local ok = redis_pool_api.cmd(message_redis_name,'HMSET',key,
+    --                         "appKey",args['appKey'],
+    --                         "sourceID",args['sourceID'] or '',
+    --                         "sourceType",args['sourceType'],
+    --                         "geometryType",args['geometryType'] or 0,
+    --                         "fileID",args['fileID'] or '',
+    --                         "multimediaURL",media_url,
+    --                         "senderAccountID",args['senderAccountID'] or '',
+    --                         "senderLongitude",sender_lon, 
+    --                         "senderLatitude",sender_lat,
+    --                         "senderDirection",args['senderDirection'] or 0, 
+    --                         "senderSpeed",args['senderSpeed'] or 0,
+    --                         "senderAltitude",args['senderAltitude'] or -9999,
+    --                         "commentID",args['commentID'] or '',
+    --                         "receiverAccountID",args['receiverAccountID'] or '', 
+    --                         "receiverLongitude",receiver_lon,
+    --                         "receiverLatitude",receiver_lat,
+    --                         "receiverDirection",args['receiverDirection'] or '', 
+    --                         "receiverSpeed",args['receiverSpeed'] or 0,
+    --                         "receiverDistance",args['receiverDistance'] or 0, 
+    --                         "content",args['content'] or '',
+    --                         "startTime",args['start_time'], 
+    --                         "endTime",args['end_time'], 
+    --                         "level",args['level'], 
+    --                         "checkTokenCode",args['checkTokenCode'] or 0,
+    --                         "tokenCode",args['tokenCode'] or '',
+    --                         "callbackURL",args['callbackURL'] or '',
+    --                         "createTime",args['start_time'], 
+    --                         "bizid",args['bizid'], 
+    --                         "cityCode",city_code or 0, 
+    --                         "cityName",city_name or '',
+    --                         "senderType", args['senderType'] or 3,
+    --                         "messageType",args['messageType'] or 1,
+    --                         "adTalkId",args['adTalkId'] or '',
+    --                         "POITD", args['POITD'] or ''
+    --                         )
+
+    if not ok then 
+            only.log('E',string.format(" **save group message to redis failed! key:%s **", key ))
+    end
+   
+end
+
+function personal_save_message_to_msgredis(args)
+    
+    local cur_time = os.date("%Y%m%d%H%M")
+    local cur_time = math.floor(cur_time/10)
+
+    --当senderAccountID存在时，按照senderAccountID进行HASH
+    --当senderAccountID不存在时，按照appKey进行HASH,同时senderAccountID 的值用常量“unknow”替换
+    
+    if args['senderAccountID'] then
+    	only.log('D',"key:%s",args['senderAccountID'])
+    	message_redis_name = hash_function(args['senderAccountID'])
+    else
+	message_redis_name = hash_function(args['appKey'])
+    end
+    
+    senderAccountID = args['senderAccountID'] or  "unknow"
+
+    --一个用户发送消息的记录
+    --KEY:[senderAccountID:appkey:time]:sendmessage value:time|bizid
+    local key = string.format("sendMessage:%s:%s:%s",senderAccountID,args['appKey'],cur_time)
+    local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,string.format("%s|%s",os.time(),args['bizid']))
+
+    if not ok then 
+    	only.log('E',string.format(" **save personal message to redis failed! key:%s ,value:%s **", key, args['bizid']))
+    end
+
+    --KEY:time:sendmessage VALUE:senderAccountID:appkey
+    local key = string.format("sendMessage:%s",cur_time)
+    local value = string.format("%s:%s",senderAccountID,args['appKey'])
+    local ok = redis_pool_api.cmd(message_redis_name,'SADD',key,value)
+
+    if not ok then 
+    	only.log('E',string.format(" **save personal message to redis failed! key:%s ,value:%s **", key, value))
+    end
+
+    --KEY : bizid:fileLocation Value: URL
+    --按照bizid 进行HASH
+    local key = string.format("fileLocation:%s",args['bizid'])
+    local message_redis_name = hash_function(args['bizid'])
+    local ok = redis_pool_api.cmd(message_redis_name,'SET',key,args['multimediaURL'])
+
+    if not ok then 
+    	only.log('E',string.format(" **save personal message to redis failed! key:%s ,value:%s **", key,args['multimediaURL'] ))
+    end
+   
+     --存储地理有关的信息
+    --KEY: gridID:time:GEOtoMessage
+    local media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name = save_geography_message_info(args,cur_time,"personal")
+    
+    --存储个人微博的具体信息
+    save_personal_message_info(args,cur_time,media_url,sender_lon,sender_lat,receiver_lon,receiver_lat,city_code,city_name)
+
+    return true
+end
+
+
+function city_save_message_to_msgredis(args,city_name,count)
+   
+	 return true
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,3 @@
+--> shows tables;
+--> describe checkSecretChannelInfo;
+--> select accountID from checkSecretChannelInfo;
