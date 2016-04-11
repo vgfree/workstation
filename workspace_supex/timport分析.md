@@ -70,8 +70,8 @@ key 存储格式: `gps`
 30     "ldb_cache_lru_size": 1073741824,
 31     "ldb_bloom_key_size": 10,
 32     "ldb_compaction_speed": 1000,
-33
-34     "has_slave": 1,
+33	// 表示是否有从服务器
+34     "has_slave": 1,  
 35     "role": "MASTER",
 36     "slave_ip": "192.168.1.12",
 37     "slave_wport": 7001
@@ -207,7 +207,16 @@ ok, ret = redis_api.hash_cmd("tsdb_hash",imei,"sadd",key,unpack(gps_tab['list'])
 ```
 
 
+### 注意事项
+在192.168.1.12://data/chenxijun/tsdb/data00 上运行tsdb
+nohup ./tsdb &
+记得要删除var 下的tsdb.pid
+
+线上timport 172.16.71.123 		
+
+使用zookeeper可以方便进行扩容
+
+为什么设为8192 ? 
+见timport/src/tsdb.c 这是在define中写死的
 
 
-
-1460340509|nt=0&mt=22032&gps=110416020809,11438.68035E,3336.86140N,-1,0,42;110416020808,11438.68035E,3336.86140N,-1,0,42;110416020807,11438.68035E,3336.86140N,-1,0,42;110416020806,11438.68035E,3336.86140N,-1,0,42;110416020805,11438.68035E,3336.86140N,-1,0,42&tokencode=Tov6sZ4TWw&imsi=460012372767955&imei=643349633678069&mod=SG900|172.16.51.7|555
