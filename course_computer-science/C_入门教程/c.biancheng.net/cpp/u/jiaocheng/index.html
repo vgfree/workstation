@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+ <html lang="zh-cn">
+ <head>
+<!-- Original URL: http://c.biancheng.net/cpp/u/jiaocheng/
+Date Downloaded: 2016/4/11 19:55:30 !-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta charset="gb2312" />
+ <meta http-equiv="pragma" content="no-cache" /> 
+ <meta http-equiv="Cache-Control" content="no-store, must-revalidate" /> 
+ <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" /> 
+ <meta http-equiv="expires" content="0" />
+ <link rel="shortcut icon" href="../../favicon_fc906f43.ico" />
+ <link href="../../templets/default/style/freshgray_fc906f43.css" rel="stylesheet" type="text/css" />
+ <title>C语言入门教程：c语言从入门到精通(2016最新版)_C语言中文网 </title>
+ <meta name="keywords" content="" />
+ <meta name="description" content="C语言入门经典教程，适合从零开始学习C语言的读者，详解C语言基础知识和编程技巧，带领读者深入了解程序设计的编程思想和编程方法，帮您学习C语言从入门到精通，成为C语言编程高手，也提供C程序设计语言电子书下载。" />
+ </head>
+ <body><div style="z-index: 9999; position: fixed; width: 100%; border: 0px; padding: 5px; margin: 0px; background-color: transparent;  font-size: 12pt; font-family: sans-serif;" id="web2disk_nag" onclick="javascript: document.getElementById('web2disk_nag').style.display = 'none';">
+		<div style="color: #000000; background-color:#F1F1F1; margin-left: auto; margin-right: auto; border-width: 2px; border-style: solid; width: 550px; ">
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">Hey, where did my words go? (Click to hide)</div>
+			<p>In the trial version of Web2Disk every fifth word is blanked out. 
+			To copy this site with all the words, please upgrade to the full version and copy this website again.</p>
+			<div style="width: 100%; text-align: center; font-weight: bold; border: 0px; margin: 0px; padding: 0px">
+				<a href="http://www.inspyder.com/products/Web2Disk/">Inspyder Web2Disk: The Website Downloader</a>
+			</div>
+		</div>
+	</div>
+ <div id="topbar-wrap" class="clearfix">
+	 <div id="topbar">
+		 <ul id="nav-top" class="left clearfix hover-none">
+			 <li><a class="this" href="../../index.html">C语言 </a></li>
+			 <li><a href="/cpp/biancheng/cpp/rumen/">C++教程 </a></li>
+			 <li><a href="http://www.weixueyuan.net/java/rumen/" target="_blank">Java教程 </a></li>
+			 <li><a href="/cpp/danpianji/">单片机 </a></li>
+			 <li><a href="/cpp/linux/">Linux </a></li>
+		 </ul>
+		 <!-- <ul id="ad-link-top" class="left hover-none">
+			<li class="fudaoban"><a href="/cpp/html/2906.html" target="_blank">C语言中文网会员，低至9.9元/月，还能送资料！</a></li>
+		</ul> -->
+		 <div class="right clearfix" id="user-info"></div>
+	 </div>
+ </div>
+ <div id="header_wrap" class="clearfix">
+	 <div id="header" class="hover-none">
+		 <a id="logo" class="left" href="../../index.html"><img src="../../templets/default/images/logo_c.jpg" alt="C语言中文网" /></a>
+		 <ul id="nav-main" class="left clearfix">
+			 <li><a href="../../index.html">首页 </a></li>
+			 <li><a href="index.html">入门教程 </a></li>
+			 <li><a href="/cpp/u/xiangmu/">项目实践 </a></li>
+			 <li><a href="../../fudao/index.html" target="_blank" style="color:#D33428">辅导班 </a></li>
+			 <li><a href="../../dayi/index.html" target="_blank" style="color:#D33428">一对一答疑 </a></li>
+			 <li><a href="/cpp/u/yuanma/">源码分享 </a></li>
+			 <li><a href="/cpp/windows/">Windows编程 </a></li>
+			 <li><a href="/cpp/socket/">Socket编程 </a></li>
+			 <li class="sub-menu">更多 <span class="icon">&nbsp;&nbsp;&nbsp;&nbsp; </span>
+				 <ul>
+					 <li><a href="/cpp/u/shipin/">视频教程 </a></li>
+					 <li><a href="/cpp/u/xitong/">操作系统 </a></li>
+					 <li><a href="/cpp/u/hanshu/">函数手册 </a></li>
+					 <li><a href="/cpp/u/zhuanti/">专题列表 </a></li>
+					 <li><a href="/cpp/u/shuju/">数据结构 </a></li>
+					 <li><a href="/cpp/u/vc60/">VC6.0教程 </a></li>
+					 <li><a href="/cpp/u/erji/">二级C语言 </a></li>
+					 <li><a href="/cpp/u/wenti/">C语言常见问题 </a></li>
+				 </ul>
+			 </li>
+		 </ul>
+	 </div>
+ </div>
+
+ <div id="position" class="clearfix"><a href='../../index.html'>首页 </a><span>&nbsp;&nbsp;/&nbsp;&nbsp; </span><a href='index.html'>C语言入门教程 </a></div>
+
+
+ <script text="text/javascript">
+var shareParam = {};
+shareParam.desc = '各位土豪，推荐给大家一个不错的学习C语言的网站，教程很详细，有代码高亮，有函数手册，还有老师免费回答问题，nice，点赞！';
+shareParam.summary_qzone = 'C语言中文网是国内最专业的C语言在线学习平台，包含入门教程、进阶教程、函数手册、专题讲解等栏目，有老师免费回答问题。';
+shareParam.summary_douban = 'C语言中文网是国内最专业的C语言在线学习平台，包含入门教程、进阶教程、函数手册、专题讲解等栏目，如果您在学习中遇到问题，会有专门的教师帮您答疑解惑！。';
+shareParam.title = 'C语言中文网：C语言一站式学习平台！ ';
+shareParam.url = '../../index.html';
+shareParam.pic_qzone = '../../uploads/shareimg/c_qzone.jpg';
+shareParam.pic_tweibo = '../../uploads/shareimg/c_tweibo.jpg';
+shareParam.pic_douban = '../../uploads/shareimg/c_douban.jpg';
+</script>
+ <div id="main" class="clearfix sidebar-on-right">
+ <div id="article" class="article">
+	 <h1>C语言入门教程：c语言从入门到精通(2016最新版) </h1>
+	 <div class="art-info clearfix">
+	 <dl class="share left"></dl>
+ </div>
+	 <div class="ad-art-body-top">
+	 <script async="" src="../../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- 单片机中文网-729-90 -->
+		 <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-1879607319104103" data-ad-slot="1362048227"></ins>
+		 <script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+ </div>
+ <div id="ad-arc-top-diy"></div>
+	 <div id="art-body" class="clearfix">这部教程由C语言中文网站长亲自执笔，将多年的编程经验灌输其中，典型的实践派。 <br />
+ <br />
+本教程将带你做出 <a href="/cpp/html/2956.html" target="_blank">贪吃蛇小游戏 </a>和 <a href="/cpp/html/3137.html" target="_blank">学生信息管理系统 </a>，让你学以致用，培养编程思维，请 <a href="/cpp/u/xiangmu/" target="_blank">猛击这里 </a>进行预览。 <br />
+ <br />
+说明： <span style="color:#08c;">蓝色链接 </span>为初级教程，大学课堂、网络上的书籍和视频大都会涉及这些知识，我们将其免费，但我们做得更好。 <span style="color:#b22222;">红色链接 </span>为高级教程或项目实践，能够让读者认识到C语言的本质，开发出实用的项目，需要 <a href="../../../../vip.biancheng.net/index.html" target="_blank">开通VIP会员 </a>才能阅读。 <br />
+ <div id="art-list-index">
+	 <div class="clearfix">
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c18/" target="_blank">第1章 编程基础 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2709.html" target="_blank">1.为什么首选C语言 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2844.html" target="_blank">2.初学者最常问的几个问题 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3161.html" target="_blank">3.C和C++到底有什么关系 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3165.html" target="_blank">4.学了C语言能做什么，找什么工作 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2837.html" target="_blank">5.与编程相关的计算机硬件 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2838.html" target="_blank">6.载入内存，让程序运行起来 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2839.html" target="_blank">7.二进制思想以及数据的存储 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2854.html" target="_blank">8.八进制和十六进制 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2855.html" target="_blank">9.进制之间的转换 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2840.html" target="_blank">10.ASCII编码与Unicode编码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/1721.html" target="_blank">11.什么是编程语言 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2842.html" target="_blank">12.程序员的发展方向和薪水 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2937.html" target="_blank">13.不要这样学习C语言，这是个坑！ </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2938.html" target="_blank">14.明白了这点才能拿高薪！ </a></dd>
+		 </dl>
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c1/" target="_blank">第2章 C语言初探 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2882.html" target="_blank">1.C语言在屏幕上显示内容 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2886.html" target="_blank">2.C语言编译器和IDE的选择 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2887.html" target="_blank">3.在C-Free下运行C语言程序 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2888.html" target="_blank">4.在VC6.0下运行C语言程序 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3079.html" target="_blank">5.在VS下运行C语言程序 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2759.html" target="_blank">6.在Linux下运行C语言程序 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3160.html" target="_blank">7.在苹果电脑上运行C语言程序 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3164.html" target="_blank">8.在手机上运行C语言程序 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3163.html" target="_blank">9.制作安装包，让用户安装程序 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2889.html" target="_blank">10.C语言程序的错误和警告 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3081.html" target="_blank">11.分析第一个C语言程序(重点) </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2890.html" target="_blank">12.C语言转义字符 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3080.html" target="_blank">13.C语言中的空白符 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2939.html" target="_blank">14.彩色版的C语言，让文字更漂亮 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2940.html" target="_blank">15.一个真正带界面的C语言程序 </a></dd>
+		 </dl>
+		 <dl class="right0">
+			 <dt>
+				 <a href="/cpp/u/c3/" target="_blank">第3章 变量和数据类型 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2891.html" target="_blank">1.大话C语言变量和数据类型 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2892.html" target="_blank">2.在屏幕上输出各种类型的数据 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3092.html" target="_blank">3.C语言中的整数（short,int,long） </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3098.html" target="_blank">4.整数在内存中是如何存储的 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3093.html" target="_blank">5.C语言中的小数（float,double） </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3099.html" target="_blank">6.小数在内存中是如何存储的 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3096.html" target="_blank">7.C语言中的字符（char） </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2927.html" target="_blank">8.C语言标识符、关键字和注释 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2897.html" target="_blank">9.C语言加减乘除运算 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3097.html" target="_blank">10.C语言自增(++)和自减(--) </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3170.html" target="_blank">11.变量的定义位置以及初始值 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3171.html" target="_blank">12.C语言的两套标准 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2901.html" target="_blank">13.运算符的优先级和结合性 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/24.html" target="_blank">14.C语言数据类型转换 </a></dd>
+		 </dl>
+	 </div>
+	 <div class="clearfix">
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c22/" target="_blank">第4章 C语言输入输出 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/3100.html" target="_blank">1.C语言在显示器上输出数据 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2941.html" target="_blank">2.在屏幕的任意位置输出字符 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2899.html" target="_blank">3.从键盘输入数据 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2413.html" target="_blank">4.C语言缓冲区（缓存） </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3101.html" target="_blank">5.结合缓冲区谈scanf()函数 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3102.html" target="_blank">6.C语言清空缓冲区 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2414.html" target="_blank">7.结合缓冲区谈字符的输入 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3103.html" target="_blank">8.C语言程序的暂停 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3138.html" target="_blank">9.C语言模拟密码输入(显示星号) </a></dd>
+		 </dl>
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c5/" target="_blank">第5章 分支结构和循环结构 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2908.html" target="_blank">1.C语言关系运算符 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2909.html" target="_blank">2.C语言逻辑运算符 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2910.html" target="_blank">3.C语言if else语句 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2911.html" target="_blank">4.C语言switch语句 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2912.html" target="_blank">5.C语言条件运算符 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2915.html" target="_blank">6.C语言while语句 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2917.html" target="_blank">7.C语言for循环 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2918.html" target="_blank">8.C语言跳出循环 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3104.html" target="_blank">9.C语言循环结构的嵌套 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2919.html" target="_blank">10.C语言循环总结以及实例讲解 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2832.html" target="_blank">11.设计循环菜单，让程序一直运行 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2827.html" target="_blank">12.一个内存溢出的例子 </a></dd>
+		 </dl>
+		 <dl class="right0">
+			 <dt>
+				 <a href="/cpp/u/c7/" target="_blank">第6章 C语言数组 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2900.html" target="_blank">1.C语言数组的概念 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2920.html" target="_blank">2.C语言二维数组 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3151.html" target="_blank">2.C语言数组元素的查询 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2921.html" target="_blank">3.C语言字符数组和字符串 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2922.html" target="_blank">4.C语言字符串处理函数 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/3106.html" target="_blank">5.C语言字符串的输入输出 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3105.html" target="_blank">6.数组的静态性、越界以及溢出 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3107.html" target="_blank">7.C语言变长数组 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2923.html" target="_blank">8.对数组的总结以及实例讲解 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2943.html" target="_blank">9.非阻塞式键盘监听 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2758.html" target="_blank">10.C语言获取随机数 </a></dd>
+		 </dl>
+	 </div>
+	 <div class="clearfix">
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c8/" target="_blank">第7章 C语言函数 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2902.html" target="_blank">1.C语言函数概述 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2903.html" target="_blank">2.C语言函自定义函数 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/57.html" target="_blank">3.函数的参数和返回值 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/58.html" target="_blank">4.函数的调用 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/60.html" target="_blank">5.函数的递归调用 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/62.html" target="_blank">6.局部变量和全局变量 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/55.html" target="_blank">7.对函数的总结 </a></dd>
+		 </dl>
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c9/" target="_blank">第8章 预处理命令 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/64.html" target="_blank">1.预处理概述和文件包含命令 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/65.html" target="_blank">2.C语言宏定义 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/66.html" target="_blank">3.C语言带参数宏定义 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2929.html" target="_blank">4.带参宏定义和函数的区别 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3154.html" target="_blank">5.宏参数的字符串化和宏参数的连接 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3152.html" target="_blank">6.C语言中几个预定义宏 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/68.html" target="_blank">7.C语言条件编译 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3153.html" target="_blank">8.#error命令，阻止程序编译 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/69.html" target="_blank">9.预处理指令总结 </a></dd>
+		 </dl>
+		 <dl class="right0">
+			 <dt>
+				 <a href="/cpp/u/c10/" target="_blank">第9章 C语言指针 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/71.html" target="_blank">1.C语言指针的概念 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/72.html" target="_blank">2.C语言指针变量 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/74.html" target="_blank">3.C语言指针变量作为函数参数 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/75.html" target="_blank">4.C语言指针变量的运算 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/76.html" target="_blank">5.C语言数组指针 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/78.html" target="_blank">6.C语言用数组作函数参数 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/80.html" target="_blank">7.C语言字符串指针 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/83.html" target="_blank">8.C语言指针型函数和函数指针变量 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2930.html" target="_blank">9.C语言指针与二维数组 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/85.html" target="_blank">10.C语言指向指针的指针 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2931.html" target="_blank">11.空指针NULL以及void指针 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/87.html" target="_blank">12.关于指针的总结 </a></dd>
+		 </dl>
+	 </div>
+	 <div class="clearfix">
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c11/" target="_blank">第10章 结构体、共用体和位运算 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/88.html" target="_blank">1.结构体的定义和使用 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/93.html" target="_blank">2.C语言结构体数组 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/94.html" target="_blank">3.C语言结构体和指针 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/95.html" target="_blank">4.结构体数组指针以及函数 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/99.html" target="_blank">5.C语言枚举类型 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2932.html" target="_blank">6.C语言共用体(共同体) </a></dd>
+			 <dd>
+				 <a href="/cpp/html/100.html" target="_blank">7.C语言类型定义符typedef </a></dd>
+			 <dd>
+				 <a href="/cpp/html/101.html" target="_blank">8.C语言位运算 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/102.html" target="_blank">9.C语言位域(位段) </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2831.html" target="_blank">10.对数据或文件内容进行加密 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2945.html" target="_blank">11.贪吃蛇完整设计思路和代码详解 </a></dd>
+		 </dl>
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c13/" target="_blank">第11章 文件操作 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/104.html" target="_blank">1.C语言文件概述 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/106.html" target="_blank">2.C语言文件的打开与关闭 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2423.html" target="_blank">3.文本文件与二进制文件的区别 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2933.html" target="_blank">4.以字符形式读写文件 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2934.html" target="_blank">5.以字符串的形式读写文件 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2935.html" target="_blank">6.以数据块的形式读写文件 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2936.html" target="_blank">7.C语言格式化读写文件 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/108.html" target="_blank">8.C语言文件的随机读写 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2822.html" target="_blank">9.C语言实现文件复制功能 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2416.html" target="_blank">10.FILE结构体以及缓冲区深入探讨 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3119.html" target="_blank">11.C语言获取文件大小（长度） </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3120.html" target="_blank">12.插入、删除、更改文件内容 </a></dd>
+		 </dl>
+		 <dl class="right0">
+			 <dt>
+				 <a href="/cpp/u/c14/" target="_blank">第12章 C语言排序和查找 </a></dt>
+			 <dd>
+				 <a href="/cpp/html/2442.html" target="_blank">1.C语言选择排序算法及代码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2443.html" target="_blank">2.C语言冒泡排序算法及代码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2492.html" target="_blank">3.C语言插入排序算法及代码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2741.html" target="_blank">4.C语言快速排序算法及代码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2742.html" target="_blank">5.C语言归并排序算法及代码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2743.html" target="_blank">6.C语言顺序查找算法及代码 </a></dd>
+			 <dd>
+				 <a href="/cpp/html/2744.html" target="_blank">7.C语言二分查找算法及代码 </a></dd>
+		 </dl>
+	 </div>
+	 <div class="clearfix">
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c23/" target="_blank">第13章 C语言调试 </a></dt>
+			 <dd class="vip">
+				 <a href="/cpp/html/3123.html" target="_blank">1.调试的概念以及调试器的选择 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3125.html" target="_blank">2.设置断点，开始调试 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3126.html" target="_blank">3.查看和修改变量的值 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3131.html" target="_blank">4.单步调试 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3130.html" target="_blank">5.即时窗口的使用 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3132.html" target="_blank">6.查看、修改运行时的内存 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3129.html" target="_blank">7.有条件断点的设置 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3133.html" target="_blank">8.assert断言函数 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3134.html" target="_blank">9.调试信息输出 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/3136.html" target="_blank">10.VS调试的总结以及技巧 </a></dd>
+		 </dl>
+		 <dl>
+			 <dt>
+				 <a href="/cpp/u/c20/" target="_blank">第14章 动态内存分配及变量存储 </a></dt>
+			 <dd class="vip">
+				 <a href="/cpp/html/2856.html" target="_blank">1.C语言动态内存分配的概念 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2857.html" target="_blank">2.C语言内存模型（内存组织方式） </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2858.html" target="_blank">3.C语言动态内存空间的分配 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2860.html" target="_blank">4.C语言内存泄露（内存丢失） </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2861.html" target="_blank">5.C语言变量的存储类别和生存期 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2862.html" target="_blank">6.C语言extern变量和函数 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2863.html" target="_blank">7.C语言static变量和函数 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2864.html" target="_blank">8.C语言register变量 </a></dd>
+		 </dl>
+		 <dl class="right0">
+			 <dt>
+				 <a href="/cpp/u/c16/" target="_blank">第15章 C语言模块化编程 </a></dt>
+			 <dd class="vip">
+				 <a href="/cpp/html/2865.html" target="_blank">1.多文件编译、链接的原理 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2570.html" target="_blank">2.模块化编程中的头文件 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2866.html" target="_blank">3.标准库以及标准头文件 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2867.html" target="_blank">4.头文件的特性和规范 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2868.html" target="_blank">5.头文件的路径 </a></dd>
+			 <dd class="vip">
+				 <a href="/cpp/html/2749.html" target="_blank">6.一个比较规范的多文件的例子 </a></dd>
+		 </dl>
+	 </div>
+ </div>
+ <br />
+ </div>
+	 <div class="art-info clearfix">
+	 <dl class="share left"></dl>
+ </div>
+	 <div class="ds-thread"></div>
+ </div>
+
+ <script type="text/javascript">
+// 多说评论插件
+var duoshuoQuery = {short_name:"xidian-see"};
+</script>
+ <div id="sidebar" class="sidebar">
+		 <div class="ad-google">
+		 <script async="" src="../../../../pagead2.googlesyndication.com/pagead/js/f.txt.js"></script>
+		 <!-- C语言—250_250 -->
+		 <ins class="adsbygoogle" style="display:inline-block;width:250px;height:250px" data-ad-client="ca-pub-1879607319104103" data-ad-slot="9494111365"></ins>
+		 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+	 </div>
+	 <!-- 推荐文章 TOP10 -->
+	 <dl class="arc-list arc-c">
+		 <dt class="clearfix"><h4><span>推荐文章 TOP10 </span></h4></dt>
+		 <dd><a href='/cpp/html/2822.html' target="_blank">C语言实现文件复制功能(包括文本文件和二进制文件) </a></dd>
+ <dd><a href='/cpp/html/104.html' target="_blank">C语言文件概述 </a></dd>
+ <dd><a href='/cpp/html/106.html' target="_blank">C语言文件的打开与关闭 </a></dd>
+ <dd><a href='/cpp/html/71.html' target="_blank">C语言指针的概念 </a></dd>
+ <dd><a href='/cpp/html/65.html' target="_blank">C语言宏定义 </a></dd>
+ <dd><a href='/cpp/html/62.html' target="_blank">C语言局部变量和全局变量 </a></dd>
+ <dd><a href='/cpp/html/58.html' target="_blank">C语言函数的调用 </a></dd>
+ <dd><a href='/cpp/html/57.html' target="_blank">C语言函数的参数和返回值 </a></dd>
+ <dd><a href='/cpp/html/2938.html' target="_blank">明白了这点才能拿高薪 </a></dd>
+ <dd><a href='/cpp/html/74.html' target="_blank">C语言指针变量作为函数参数 </a></dd>
+
+	 </dl>
+	 <!-- 随机文章 原来的typeid为 1,105,111,125,130,169,126,94,73,18,31,60,48,56,60,64,149,185 -->
+	 <dl class="arc-list arc-rank">
+		 <dt class="clearfix"><h4><span>随机文章 </span></h4></dt>
+		 <dd><a href='/cpp/html/2794.html' target="_blank">C语言strlen()以NUL作为字符串结束标记，自定义一个字符串长度统 </a></dd>
+ <dd><a href='/cpp/html/2601.html' target="_blank">经典进程同步问题2：读者-写者问题 </a></dd>
+ <dd><a href='/cpp/html/2547.html' target="_blank">C语言判断一个数是否是素数 </a></dd>
+ <dd><a href='/cpp/html/2619.html' target="_blank">文件的属性、基本操作以及文件的打开和关闭 </a></dd>
+ <dd><a href='/cpp/html/2589.html' target="_blank">进程的状态与转换 </a></dd>
+ <dd><a href='/cpp/html/2633.html' target="_blank">I/O子系统概述和I/O调度的概念 </a></dd>
+ <dd><a href='/cpp/html/2627.html' target="_blank">磁盘调度算法 </a></dd>
+ <dd><a href='/cpp/html/2821.html' target="_blank">C语言统计输入的字符串的长度 </a></dd>
+ <dd><a href='/cpp/html/2572.html' target="_blank">C语言结构体简单应用范例 </a></dd>
+ <dd><a href='/cpp/html/2824.html' target="_blank">C语言数组灵活多变的访问形式 </a></dd>
+
+	 </dl>
+ </div>
+ </div>
+ <div id="footer-wrap" class="clearfix">
+     <div id="footer" class="clearfix">
+         <div class="left" style="_width: 600px;">
+             <ul id="nav-bottom" class="clearfix">
+                 <li>
+                     <a href="/cpp/html/1013.html" target="_blank" rel="nofollow">关于我们 </a>
+                     <span class="blank">| </span>
+                 </li>
+                 <li>
+                     <a href="/cpp/html/1015.html" target="_blank" rel="nofollow">版权声明 </a>
+                     <span class="blank">| </span>
+                 </li>
+                 <li>
+                     <a href="/cpp/html/1524.html" target="_blank" rel="nofollow">文章评论注意事项 </a>
+                     <span class="blank">| </span>
+                 </li>
+                 <li>
+                     <a href="/cpp/html/1014.html" target="_blank" rel="nofollow">联系我们 </a>
+                 </li>
+             </ul>
+             <p>
+                精美而实用的网站，关注编程技术，追求极致，让您轻松愉快的学习。 <br />
+                Copyright &copy;2011-2015 biancheng.net, ___ Rights Reserved，陕ICP备15000209号
+             </p>
+         </div>
+         <img id="logo-bottom" class="right" src="../../templets/default/images/logo_bottom.jpg" alt="底部Logo" />
+     </div>
+ </div>
+
+ <script type="text/javascript">
+	var cmsPath = '/cpp', // CMS安装目录，不带 /
+		cmsTemplets = '../../templets/default/index.html', // 模板目录，不带 /
+        cmsTempletsVer = 3.85;  // 版本号
+</script>
+ <script src="../../templets/default/script/jquery.min_fc906f43.js" type="text/javascript"></script>
+ <script src="../../templets/default/script/common_fc906f43.js" type="text/javascript"></script>
+ <span id="cnzz-wrap">
+     <script type="text/javascript">
+        var cnzz = {};
+
+        cnzz.positionHref = $("#position").children('a')[1];
+        cnzz.positionHref && ( cnzz.positionHref = cnzz.positionHref.getAttribute('href') );
+        cnzz.protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        cnzz.webName = 'c';
+
+        cnzz.webIdObj = {
+            'c': '3875484',
+            'cpp': '4153548',
+            'swift': '5937701',
+            'shell': '5809059',
+            'danpianji': '5867261'
+        };
+
+        if(cnzz.positionHref) if( /^\/cpp\/biancheng/.test(cnzz.positionHref) ){
+            cnzz.webName = 'cpp';
+        }else if( /^\/cpp\/swift/.test(cnzz.positionHref) ){
+            cnzz.webName = 'swift';
+        }else if( /^\/cpp\/shell/.test(cnzz.positionHref) ){
+            cnzz.webName = 'shell';
+        }else if( /^\/cpp\/danpianji/.test(cnzz.positionHref) ){
+            cnzz.webName = 'danpianji';
+        }
+
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_"+ cnzz.webIdObj[cnzz.webName] +"'%3E%3C/span%3E%3Cscript src='" + cnzz.protocol + "s6.cnzz.com/stat.php%3Fid%3D"+ cnzz.webIdObj[cnzz.webName] +"' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+ </span>
+ </body>
+ </html>l>
