@@ -1,4 +1,68 @@
-### 目录功能
+### 目录
+
+> * zookeeper 分析
+
+
+
+#### zookeeper分析		
+功能: 集群管理tsdb配置信息, 可以实现集群扩容和缩减	
+
+`zookeeper/server001/data/myid`		
+myid数字对应第几个server	
+
+`zookeeper/server001/zookeeper-3.4.6/conf/zoo.cfg`
+```		
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/data/zookeeper/server001/data
+dataLogDir=/data/zookeeper/server001/logs
+// 每个server clientPort不同
+clientPort=2181
+// server.X 对应myid 
+// 第一个端口用来集群成员的信息交换
+// 第二个端口用来leader挂掉时选举使用
+server.1=127.0.0.1:8881:7771
+server.2=127.0.0.1:8882:7772
+server.3=127.0.0.1:8883:7773
+server.4=127.0.0.1:8884:7774
+```
+
+`zookeeper 命令查看`	
+```
+[zookeeper/server001/zookeeper-3.4.6/bin]$ ./zkCli.sh –server 127.0.0.1:2181
+[zk: 127.0.0.1:2181(CONNECTED) 4] ls /tsdb/RW:20160101010000:-1/0:4096
+[RW:10000:MASTER:192.168.1.12:7001:7002:20160101010000:-1]
+```
+这里看到的是tsdb的注册信息,tsdb配置信息来自	
+`tsdb/data00/tsdb_/conf.json`
+
+WARNING:	
+每次运行前请删除`zookeeper/server001/data/zookeeper_server.pid`
+
+
+
+#### tsdb 分析
+在网上暂时没找到更详细的讲解,是OpenTSDB吗	
+
+`tsdb/data01/tsdb_conf.json` 配置分析	
+
+`"key_set": [4096,8192]` : 对key % 8192 取模,结果落在此区间则数据存储在此data	
+`"time_range": [20160101010000, -1]` : 存储数据的时间范围	
+`has_slave` : 是否有slave	
+
+
+#### 向redis 中写入数据
+`ngxapi/transit/test/test_newstat_BMR.sh` 运行,执行写入操作
+
+
+```
+
+```
+
+
+
+
 #### TSDB lib
 > * jmalloc 内存管理性能优于malloc
 > * leveldb 高效k-v数据库
@@ -10,6 +74,11 @@
 ###
 
 key 存储格式: `gps`		
+
+
+
+
+
 
 
 
@@ -216,4 +285,3 @@ nohup ./tsdb &
 
 使用zookeeper可以方便进行扩容
 
-1460340509|nt=0&mt=22032&gps=110416020809,11438.68035E,3336.86140N,-1,0,42;110416020808,11438.68035E,3336.86140N,-1,0,42;110416020807,11438.68035E,3336.86140N,-1,0,42;110416020806,11438.68035E,3336.86140N,-1,0,42;110416020805,11438.68035E,3336.86140N,-1,0,42&tokencode=Tov6sZ4TWw&imsi=460012372767955&imei=643349633678069&mod=SG900|172.16.51.7|555
