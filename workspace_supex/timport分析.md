@@ -54,7 +54,7 @@ WARNING:
 
 #### 向redis 中写入数据
 `ngxapi/transit/test/test_newstat_BMR.sh` 运行,执行写入操作
-
+注意需要修改token值
 
 ```
 
