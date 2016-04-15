@@ -1,0 +1,787 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>我使用过的Linux命令之curl - 强大的网络传输工具 - Bash @ Linux - ITeye技术网站</title>
+    <meta name="description" content="我使用过的Linux命令之curl - 强大的网络传输工具  本文链接：http://codingstandards.iteye.com/blog/807844     （转载请注明出处）  用途说明  curl命令是一个功能强大的网络工具，它能够通过http、ftp等方式下载文件，也能够上传文件。其实curl远不止前面所说的那些功能，大家可以通过man curl阅读手册页获取更多的信息。类似的工具 ..." />
+    <meta name="keywords" content="Linux, Tomcat, Ajax, Mobile, 电子商务 我使用过的Linux命令之curl - 强大的网络传输工具" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="Bash @ Linux" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1460544463" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/green.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1448702469" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">Bash @ Linux</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://codingstandards.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://codingstandards.iteye.com" class="p-author" target="_blank">codingstandards</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/807844">我使用过的Linux命令之curl - 强大的网络传输工具</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/126457">Linux命令</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/Linux">Linux</a><a href="http://www.iteye.com/blogs/tag/Tomcat">Tomcat</a><a href="http://www.iteye.com/blogs/tag/Ajax">Ajax</a><a href="http://www.iteye.com/blogs/tag/Mobile">Mobile</a><a href="http://www.iteye.com/blogs/tag/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1">电子商务</a>&nbsp;</div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    <h1>我使用过的Linux命令之curl - 强大的网络传输工具<br>
+</h1>
+<p>本文链接：<a href="/blog/807844">http://codingstandards.iteye.com/blog/807844</a>
+   （转载请注明出处）</p>
+<h2>用途说明</h2>
+<p>curl命令是一个功能强大的网络工具，它能够通过http、ftp等方式下载文件，也能够上传文件。其实curl远不止前面所说的那些功能，大家可以通过man curl阅读手册页获取更多的信息。类似的工具还有wget。</p>
+<p>curl命令使用了libcurl库来实现，libcurl库常用在C程序中用来处理HTTP请求，curlpp是libcurl的一个C++封装，这几个东西可以用在抓取网页、网络监控等方面的开发，而curl命令可以帮助来解决开发过程中遇到的问题。</p>
+<h2>常用参数</h2>
+<p>curl命令参数很多，这里只列出我曾经用过、特别是在shell脚本中用到过的那些。</p>
+<p>-v/--verbose 小写的v参数，用于打印更多信息，包括发送的请求信息，这在调试脚本是特别有用。</p>
+<p>-m/--max-time &lt;seconds&gt; 指定处理的最大时长</p>
+<p>-H/--header &lt;header&gt; 指定请求头参数</p>
+<p>-s/--slient 减少输出的信息，比如进度</p>
+<p>--connect-timeout &lt;seconds&gt; 指定尝试连接的最大时长</p>
+<p>-x/--proxy &lt;proxyhost[:port]&gt; 指定代理服务器地址和端口，端口默认为1080</p>
+<p>-T/--upload-file &lt;file&gt; 指定上传文件路径</p>
+<p>-o/--output &lt;file&gt; 指定输出文件名称</p>
+<p>-d/--data/--data-ascii &lt;data&gt; 指定POST的内容</p>
+<p>--retry &lt;num&gt; 指定重试次数</p>
+<p>-e/--referer &lt;URL&gt; 指定引用地址</p>
+<p>-I/--head 仅返回头部信息，使用HEAD请求</p>
+<h2>使用示例</h2>
+<h3>示例一 获取指定网页<br>
+</h3>
+<p>[root@jfht ~]# <span style="color: #0000ff;">curl http://www.sunrisecorp.net/</span>
+
+<br>
+
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;<br>
+
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;<br>
+
+&lt;head&gt;<br>
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=gbk" /&gt;<br>
+
+&lt;meta name="title" content="欢迎您 - 上海腾一" /&gt;<br>
+
+&lt;meta name="keyword" content="上海腾一，融合通信，电子商务，语音通信，数据通信，基站工程外包托管，物联网，网站建设，电子商务解决方案，移动互联网，短信，彩信，呼叫中心，多方会议，PBX，IVR，电子商务策划方案，设备代维，网络优化，通信工程，电信增值，3G" /&gt;<br>
+
+&lt;meta name="description" content="上海腾一信息技术有限公司专注于电信增值、通信工程、电子商务等领域，拥有近十年的经验。" /&gt;<br>
+
+&lt;title&gt;<br>
+
+欢迎您 - 上海腾一<br>
+
+&lt;/title&gt;</p>
+<p> </p>
+<p><span style="color: #ff0000;">插播一下广告：上海腾一信息技术有限公司是一家致力于通信工程、电子商务和电信增值业务的公司，请访问官方网址：</span>
+
+<a href="http://www.sunrisecorp.net/">http://www.sunrisecorp.net/</a>
+
+。</p>
+<p> </p>
+<p> </p>
+<p>
+<span style="color: #ff0000;">此处省略掉网页内容</span>
+
+。</p>
+<p><br>
+
+&lt;/body&gt;<br>
+
+&lt;/html&gt;[root@jfht ~]#</p>
+<h3>示例二 查看响应头信息</h3>
+<p>[root@jfht ~]# curl -I http://www.sunrisecorp.net/<br>
+
+HTTP/1.1 200 OK<br>
+
+Server: Apache-Coyote/1.1<br>
+
+Accept-Ranges: bytes<br>
+
+ETag: W/"17801-1285643951000"<br>
+
+Last-Modified: Tue, 28 Sep 2010 03:19:11 GMT<br>
+
+Content-Type: text/html<br>
+
+Content-Length: 17801<br>
+
+Date: Tue, 12 Oct 2010 12:49:20 GMT<br><br>
+
+[root@jfht ~]# </p>
+<p> </p>
+<h3>示例三 检查网页是否可正常访问</h3>
+<p>以下是一个tomcat监控脚本的部分内容。</p>
+<pre class="Bash" name="code"># usage: check_once &lt;port&gt; &lt;path&gt;
+# 使用curl检查网页是否可以正常访问，如果不能访问就重启tomcat。
+check_once()
+{
+        echo
+        echo "$(date)  Tomcat check once"
+        # 2008.08.21 -I/--head -s/--silent
+        #if curl -s -I --connect-timeout 5 --max-time 10 http://localhost:$1/; then
+        # 2010.02.16 add 200 OK test
+        if curl -s -I --connect-timeout 5 --max-time 10 http://localhost:$1/$2 | grep -q '200 OK';
+
+
+ then
+                echo "$(date)  Tomcat maybe OK"
+        else
+                echo "$(date)  Tomcat maybe FAULT"
+                restart
+        fi
+}
+
+# usage: check_loop &lt;port&gt; &lt;path&gt;
+# 每隔一分钟检查一次网页是否正常
+check_loop()
+{
+        while true;
+        do
+                sleep 60
+                check_once $1 $2 &gt;&gt; $CATALINA_HOME/logs/check.$(date +%Y-%m-%d).log
+        done
+}
+
+# usage: monitor &lt;path&gt;
+# 对path指定的本机网页进行监控
+# 2008.06.26
+# 2010.09.20 add path parameter
+monitor()
+{
+        PORT=80
+        if grep 'Connector port="80"' $CATALINA_HOME/conf/server.xml; then
+                PORT=80
+        elif grep 'Connector port="8080"' $CATALINA_HOME/conf/server.xml; then
+                PORT=8080
+        else
+                echo "Cannot detect server port for Tomcat"
+                return 12
+        fi
+        echo "Tomcat server port is $PORT"
+
+        if status; then
+                check_loop $PORT "$1" &amp;
+                #check_loop $PORT "$1"
+        fi
+}
+ </pre>
+<p> </p>
+<p>这个脚本的执行方式是 monitor &lt;path&gt;，比如monitor main/index.html。下面是执行时输出的日志信息片段。</p>
+<p> </p>
+<p>2010年 10月 09日 星期六 15:20:38 CST  Tomcat check once<br>
+
+2010年 10月 09日 星期六 15:20:46 CST  Tomcat maybe OK<br><br>
+
+2010年 10月 09日 星期六 15:21:46 CST  Tomcat check once<br>
+
+2010年 10月 09日 星期六 15:21:57 CST  Tomcat maybe FAULT<br>
+
+Tomcat is now running, not stopped: 0<br>
+
+Tomcat is now running, not stopped: 1<br>
+
+Tomcat is now running, not stopped: 2<br>
+
+Tomcat is now running, not stopped: 3<br>
+
+Tomcat is now running, not stopped: 4<br>
+
+Tomcat is now running, not stopped: 5<br>
+
+Tomcat is now running, not stopped: 6<br>
+
+Tomcat is now running, not stopped: 7<br>
+
+Tomcat is now running, not stopped: 8<br>
+
+Tomcat is now running, not stopped: 9<br>
+
+Tomcat killed use SIGKILL<br>
+
+Tomcat stopped<br>
+
+      Starting tomcat<br><br>
+
+2010年 10月 09日 星期六 15:23:09 CST  Tomcat check once<br>
+
+2010年 10月 09日 星期六 15:23:09 CST  Tomcat maybe OK<br><br>
+
+2010年 10月 09日 星期六 15:24:09 CST  Tomcat check once<br>
+
+2010年 10月 09日 星期六 15:24:09 CST  Tomcat maybe OK</p>
+<p> </p>
+<h3>示例四 另一个检查网页是否正常的脚本</h3>
+<p> </p>
+<pre class="Bash" name="code"># 要检查的网页地址
+URL="http://www.sunrisecorp.net/"
+
+# usage: 
+curlit()
+{
+        curl --connect-timeout 15 --max-time 30 --head --silent "$URL" | grep 'HTTP/1.1 200 OK'
+}
+
+# 只有MIN_ALARM次访问失败时才告警
+MIN_ALARM=10
+
+# 
+doit()
+{
+	echo "===== $(now) ====="
+	if ! curlit; then
+			echo "$(now)  bbdx nss access failed"
+			N=1
+			if [ -e curlit_error ]; then
+					N="$(cat curlit_error)"
+					N=$[N+1]
+			fi
+			echo "$(now)  N=$N"
+			echo $N &gt;curlit_error
+			if [ "$N" == "$MIN_ALARM" ]; then
+					echo "$(now)  do notify"
+					touch curlit_error
+					notify_curlit_error
+			fi
+	else
+			if [ -e curlit_error ]; then
+					echo "$(now)  recovered"
+					N=$(cat curlit_error)
+					echo "$(now)  N=$N"
+					rm -f curlit_error
+					if [ "$N" -ge "$MIN_ALARM" ]; then
+							notify_curlit_recovered
+					fi
+			fi
+	fi
+}
+
+doit &gt;&gt;log/curlit.log 2&gt;&amp;1
+ </pre>
+<p> </p>
+<h3>示例五 使用HttpPost上传数据</h3>
+<p>一个用于http post的脚本。</p>
+<pre class="Bash" name="code">#!/bin/sh
+
+MS=1350514xxxx
+
+TM=$(date +"%Y%m%d%H%M%S")
+DT=$(date +"%Y%m%d")
+
+cat &lt;&lt;EOF &gt;reqtmp.xml
+&lt;?xml version="1.0" encoding="GBK" ?&gt;
+&lt;OwnPlatForm&gt;
+        &lt;OrigDomain&gt;QZT&lt;/OrigDomain&gt;
+        &lt;HomeDomain&gt;BOSS&lt;/HomeDomain&gt;
+        &lt;ActivityCode&gt;T5100001&lt;/ActivityCode&gt;
+        &lt;ActionCode&gt;0&lt;/ActionCode&gt;
+        &lt;TransIDO&gt;$TM&lt;/TransIDO&gt;
+        &lt;TransIDH&gt;&lt;/TransIDH&gt;
+        &lt;ProcessTime&gt;$TM&lt;/ProcessTime&gt;
+        &lt;CutOffDay&gt;$DT&lt;/CutOffDay&gt;
+        &lt;TestFlag&gt;0&lt;/TestFlag&gt;
+        &lt;Content&gt;
+                &lt;![CDATA[
+                        &lt;BizProcReq&gt;
+                                &lt;IDType&gt;01&lt;/IDType&gt;
+                                &lt;IDValue&gt;$MS&lt;/IDValue&gt;
+                                &lt;UserCity&gt;14&lt;/UserCity&gt;
+                                &lt;UserCounty&gt;1419&lt;/UserCounty&gt;
+                                &lt;OprCode&gt;01&lt;/OprCode&gt;
+                                &lt;BizType&gt;51&lt;/BizType&gt;
+                                &lt;OprTime&gt;$TM&lt;/OprTime&gt;
+                                &lt;OprSrc&gt;27&lt;/OprSrc&gt;
+                                &lt;ProductInfo&gt;
+                                        &lt;PrdCode&gt;510001&lt;/PrdCode&gt;
+                                &lt;/ProductInfo&gt;
+                        &lt;/BizProcReq&gt;
+                ]]&gt;
+        &lt;/Content&gt;
+&lt;/OwnPlatForm&gt;
+EOF
+
+cat reqtmp.xml
+
+
+URL="http://10.32.140.230:7092/fcgi-bin/UIG_NEWINT"
+
+curl --verbose --upload-file reqtmp.xml  --header "Content-Type: text/xml" "$URL" --output rsptmp.xml
+
+cat rsptmp.xml
+
+
+</pre>
+ 
+<h3>示例六 使用proxy的脚本</h3>
+<pre class="Bash" name="code"># usage: do_sync_once &lt;mobile&gt; &lt;codes&gt; &lt;area_id&gt; &lt;opening&gt;
+do_sync_once()
+{
+        mobile=$1
+        codes=$2
+        area_id=$3
+        opening=$4  
+        
+
+
+curl --silent --max-time 60 --proxy http://10.32.187.170:8080 "http://host/boss/sync.jsp?seq=1251747862492&amp;mobile=$mobile&amp;serviceCodes=$codes&amp;areaId=$area_id&amp;opening=$opening"
+
+}
+
+
+</pre>
+ 
+<h3>示例七 使用Google AJAX Search API进行搜索</h3>
+<pre class="Bash" name="code"># usage: google_search &lt;STR&gt;
+# Google搜索
+google_search()
+{
+        REF="http://codingstandards.iteye.com/"
+        KEY="ABQIAAAAHg_ENG5Yq9pOZd19v64gyxTMcdcN4KfyGCBxustvF1FXdNe4WBQOej_ZiBgIK6-a4M3hTxcVfSkt2g"
+        STR="$1"
+        # 采用网页搜索
+        curl --retry 5 -e "$REF" "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&amp;q=$STR&amp;hl=zh-CN&amp;key=$KEY" 2&gt;/dev/null
+        # 采用博客搜索
+        #curl -e $REF "http://ajax.googleapis.com/ajax/services/search/blogs?v=1.0&amp;q=$STR&amp;hl=zh-CN" 2&gt;/dev/null
+        #curl --retry 5 -e $REF "http://ajax.googleapis.com/ajax/services/search/blogs?v=1.0&amp;q=$STR&amp;hl=zh-CN" 2&gt;/dev/null
+        #curl --retry 5 -e "$REF" "http://ajax.googleapis.com/ajax/services/search/blogs?v=1.0&amp;q=$STR&amp;hl=zh-CN&amp;key=$KEY" 2&gt;/dev/null
+}</pre>
+ 
+<h2>问题思考</h2>
+<h2>相关资料</h2>
+<p>【1】Linux公社 <a href="http://www.linuxidc.com/Linux/2008-01/10891.htm" target="_blank">Linux curl使用简单介绍</a>
+</p>
+<p> </p>
+<p>返回 <a href="/blog/786653">我使用过的Linux命令系列总目录</a>
+</p>
+<p> </p>
+  </div>
+
+  
+
+  
+  
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=680 HEIGHT=90 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>1</strong> <br/>顶</div><div class='digged'><strong>0</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/807962" class="next" title="我使用过的Linux命令之cal - 显示日历">我使用过的Linux命令之cal - 显示日历</a>
+      |
+      <a href="/blog/807077" class="pre" title="我使用过的Linux命令之iconv - 字符编码转换工具">我使用过的Linux命令之iconv - 字符编码转 ...</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2010-11-10 17:21</li>
+      <li>浏览 26211</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/os">操作系统</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/807844" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/28"><img src="http://img.knowledge.csdn.net/upload/base/1460535308634_634.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/28" classs="title">Git知识库</a>
+              <span>
+                 <em>169</em>&nbsp;&nbsp;关注 <i>|</i> <em>288</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/22"><img src="http://img.knowledge.csdn.net/upload/base/1459143634568_568.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/22" classs="title">jQuery知识库</a>
+              <span>
+                 <em>394</em>&nbsp;&nbsp;关注 <i>|</i> <em>227</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/16"><img src="http://img.knowledge.csdn.net/upload/base/1458091865915_915.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/16" classs="title">大型网站架构知识库</a>
+              <span>
+                 <em>1163</em>&nbsp;&nbsp;关注 <i>|</i> <em>532</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/23"><img src="http://img.knowledge.csdn.net/upload/base/1458526868366_366.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/23" classs="title">AngularJS知识库</a>
+              <span>
+                 <em>568</em>&nbsp;&nbsp;关注 <i>|</i> <em>262</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 807844;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', '我使用过的Linux命令之curl - 强大的网络传输工具');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', '我使用过的Linux命令之curl - 强大的网络传输工具');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://codingstandards.iteye.com'><img alt="codingstandards的博客" class="logo" src="http://www.iteye.com/upload/logo/user/210206/4a0c99e4-45c7-353e-9273-7e05051ff0a1.jpg?1267260855" title="codingstandards的博客: Bash @ Linux" width="" /></a></div>
+  <div id="blog_owner_name">codingstandards</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 2122106 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1448702469" title="男" /></li>
+              <li>来自: 上海</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://xszhang911.iteye.com' target='_blank'><img alt="xszhang911的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="xszhang911的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://xszhang911.iteye.com' target='_blank' title='xszhang911'>xszhang911</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://program---madman.iteye.com' target='_blank'><img alt="program___madman的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="program___madman的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://program---madman.iteye.com' target='_blank' title='program___madman'>program___madman</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://pengzai512.iteye.com' target='_blank'><img alt="pengzai512的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="pengzai512的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://pengzai512.iteye.com' target='_blank' title='pengzai512'>pengzai512</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://yuaccp2.iteye.com' target='_blank'><img alt="yuaccp2的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="yuaccp2的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://yuaccp2.iteye.com' target='_blank' title='yuaccp2'>yuaccp2</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (225)</a></li>
+                
+                  <li><a href="/category/126457">Linux命令 (121)</a></li>
+                
+                  <li><a href="/category/96957">Bash脚本 (14)</a></li>
+                
+                  <li><a href="/category/173253">Bash问答 (4)</a></li>
+                
+                  <li><a href="/category/132834">Server配置 (11)</a></li>
+                
+                  <li><a href="/category/130387">超越IT (7)</a></li>
+                
+                  <li><a href="/category/175241">Bash基础 (30)</a></li>
+                
+                  <li><a href="/category/179464">Linux问题 (14)</a></li>
+                
+                  <li><a href="/category/181603">MySQL管理 (4)</a></li>
+                
+                  <li><a href="/category/182657">Linux基础 (2)</a></li>
+                
+                  <li><a href="/category/183919">MongoDB使用 (4)</a></li>
+                
+                  <li><a href="/category/184152">Linux学习 (2)</a></li>
+                
+                  <li><a href="/category/196236">MySQL要点 (0)</a></li>
+                
+                  <li><a href="/category/200930">MySQL问题 (2)</a></li>
+                
+                  <li><a href="/category/200931">MySQL优化 (1)</a></li>
+                
+                  <li><a href="/category/226728">MySQL配置 (1)</a></li>
+                
+                  <li><a href="/category/228011">Nginx使用 (1)</a></li>
+                
+                  <li><a href="/category/259460">Remote Bridge (2)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (0)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (0)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2013-02">2013-02</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2013-01">2013-01</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2012-12">2012-12</a> (2)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://107x.iteye.com' target='_blank' title='107x'>107x</a>： 
+                  不错，谢谢！<br />
+                  <a href="/blog/934928#bc2384497">我使用过的Linux命令之base64 - 用base64编解码</a>
+                </li>
+                
+                <li>
+                  <a href='http://107x.iteye.com' target='_blank' title='107x'>107x</a>： 
+                  不错，谢谢！<br />
+                  <a href="/blog/975686#bc2362073">我使用过的Linux命令之mysql - MySQL客户端命令行工具</a>
+                </li>
+                
+                <li>
+                  <a href='http://linuxfs.iteye.com' target='_blank' title='linuxfs'>linuxfs</a>： 
+                  declare -p var,这个只有在var被赋值的情况下才 ...<br />
+                  <a href="/blog/1150109#bc2357415">我使用过的Linux命令之declare - 声明shell变量（不知道没关系、知道了就更好的内建命令）</a>
+                </li>
+                
+                <li>
+                  <a href='http://zzzyyyy999.iteye.com' target='_blank' title='zzzyyyy999'>zzzyyyy999</a>： 
+                  博主加油哇！你坚持写，我们坚持看！<br />
+                  <a href="/blog/786653#bc2357298">我使用过的Linux命令系列总目录（4.17更新，94篇）</a>
+                </li>
+                
+                <li>
+                  <a href='http://miaojihao.iteye.com' target='_blank' title='miaojihao'>miaojihao</a>： 
+                  说的很有道理<br />
+                  <a href="/blog/1344833#bc2353893">MySQL性能优化小记：MySQL子查询很慢的问题</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19005601-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>

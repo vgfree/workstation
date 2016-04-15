@@ -1,0 +1,1109 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>   
+   
+
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>Linux命令CURL用法 - zzzmmmkkk的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="这里演示了加密文本，利用特定字符来定位位置sockdata=PHIDOHBBNIEFMNDIBJLENNEBBODILAEAPMIHHKMKBOKILJOJHGPDDBEOPMCEMLAPJNFDLOJCPHEAMEDNPINODFMBMLFPFHLLGBNPPHEEMNFMNMCGNFEJFKIDOGBECBFJEBICBBLPMNHJAHJPCLNHKKEJMBLLNKFFKMPJJH" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+      <script type="text/javascript" src="http://static.blog.csdn.net/scripts/jquery-version.js"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/tracking.js"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/zzzmmmkkk/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+</head>
+<body>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/zzzmmmkkk">zzzmmmkkk的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/zzzmmmkkk?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/zzzmmmkkk?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/zzzmmmkkk/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "zzzmmmkkk";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/zzzmmmkkk";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://bbs.csdn.net/topics/391926027">
+<font color=red>2016攒课第二期之你听课我买单，快来攒你想听的课！
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://edu.csdn.net/huiyiCourse/detail/85 
+">
+<font color=blue>架构免费公开课报名</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://huiyi.csdn.net/activity/product/goods_list?project_id=2895">
+<font color=red>【UDN沙龙】Intel大拿分享HTML5时代的跨平台开发解
+</font></a>
+
+</font></a>
+</div>                        </div>
+                        
+
+
+
+<!-- 广告位开始 -->
+<ins data-revive-zoneid="72" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<!-- 广告位结束 -->
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+
+ <script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/replace.min.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/zzzmmmkkk/article/details/38569057">
+        Linux命令CURL用法            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/CURL' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">CURL</a><a href='http://www.csdn.net/tag/curl%e5%91%bd%e4%bb%a4' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">curl命令</a><a href='http://www.csdn.net/tag/linux%e4%b8%8b%e6%95%b0%e6%8d%ae%e4%bc%a0%e8%be%93%e5%b7%a5%e5%85%b7' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">linux下数据传输工具</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2014-08-14 23:45</span>
+            <span class="link_view" title="阅读次数">8483人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(1)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('Linux命令CURL用法','38569057');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(38569057,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            var lib = eval("("+$("#lib").attr("value")+")");
+            var html = "";
+            if (lib.err == 0) {
+                $.each(lib.data, function (i) {
+                    var obj = lib.data[i];
+                    //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                    html += ' <a href="' + obj.url + '" target="_blank">';
+                    html += ' <img src="' + obj.logo + '">';
+                    html += ' <em><b>' + obj.name + '</b></em>';
+                    html += ' </a>';
+                });
+                if (html != "") {
+                    setTimeout(function () {
+                        $("#lib").html(html);
+                        /*
+                        var testhtml = "";
+                        testhtml += '<a href="#">';
+                        testhtml += '<img src="http://img.knowledge.csdn.net/upload/base/1455589744328_328.jpg">';
+                        testhtml += '<em>Android知识库</em>';
+                        testhtml += '</a>';
+                        $(".embody_c").html(testhtml);
+                        */
+                        $("#embody").show();
+                    }, 100);
+                }
+            }          
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('574523','zzzmmmkkk','top','38569057');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">linux操作系统知识<em>（3）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/zzzmmmkkk/article/category/574523"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_574523">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<p style="text-align:center; margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<img src="http://img.blog.csdn.net/20140814235446314?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenp6bW1ta2tr/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>
+</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+Curl是一个命令行方式下传输数据的开源传输工具，支持多种协议包括：FTP,HTTP,HTTPS,IMAP,POP3,TELNET等。同样支持HTTP POST方法，PUT方法，FTP上传，cookie，用户名/密码认证，下载文件端点续传等，功能十分强大。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important"><span style="max-width:100%; word-wrap:break-word!important; background-color:rgb(227,108,9); color:rgb(255,255,255)">1. 先来试试</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl http://www.baidu.com ,回车之后，HTML内容就显示在屏幕上了。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important"><span style="max-width:100%; word-wrap:break-word!important; background-color:rgb(227,108,9); color:rgb(255,255,255)">2. 下载</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl –o baidu.html http://www.baidu.com ,执行后还可以看到下载进度提示，完成100%后会自动退出了，把网页保存到baidu.html中了。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+它还有一个大写O的选项，是按照服务器上的文件名保存到本地，如果执行curl –O http://www.baidu.com ，是会报错的，提示找不到文件名，如果换成curl –O http://baike.baidu.com/view/1326315.htm , 就自动保存文件为1326315.html。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+Windows下像flashget这样的工具还支持分块以及断点续传，curl也毫不示弱。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-C或--continue-at：断点续传，用法如下：</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -C http://www.example.com</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-r或--range：分块下载，用法：</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -r 0-10240 -o &quot;example.part1&quot; http://www.example.com/example.zip &amp;</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -r 10241-20480 -o &quot;example.part2&quot; </p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+http://www.example.com/example.zip </p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+其中加&amp;表示在后台执行，需要按CTRL&#43;C才能退出。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+不过下载完后需要自己把这些破碎的文件合并起来</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+如果你用UNIX或苹果，用 cat example.part* &gt; example.zip就可以</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+如果用的是Windows，用copy /b example.part1&#43;example.part2 example.zip来解决</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">3. 上传</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-T/--upload-file：往服务器上传文件，用法：</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -T &quot;img[1-1000].png&quot; ftp://example.com/upload/</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+或上传多个文件</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -T &quot;{file1,file2}&quot; http://www.example.com</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">4. POST方法</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-d或--data参数：post请求，用法为curl -d “id=1&amp;name=test” http://example.com/example.php ，</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+需把请求的参数和URL分开，同时可以使用curl -d “id=1” -d “name=test” http://example.com/example.php ，相当于提交了两个参数。当提交的参数&#20540;中有特殊字符就需要先转义。如空&#26684;时，就需要转义成%20。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+--data-urlencode参数：就可以自动转义特殊字符，无需人工事先转义。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-F或--form：将本地文件上传到服务器，用法为：curl -F “filename=@/home/test/test.pic” http://example.com/example.php 。千万不能漏掉@符号。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">5. 设置referer</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+有时候我们如果直接请求某个URL不能成功，它需要判断referer是否正确，那就可以通过-e或--referer参数模拟</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl --referer http://www.example.com http://www.example.com</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">6. 指定User Agent</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-A/--user-agent：伪装成指定的浏览器Chrome访问，用法：</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -A “Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36” http://www.example.com</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">7. 伪造cookie</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-b或--cookie: 有两种用法，一是指定参数和&#20540;：curl --cookie &quot;name=xxx&quot; http://www.example.com ；二是从文件读取：curl -b /cookie.txt http://www.example.com</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">8. 保存cookie</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-c/--cookie-jar：curl命令执行后保存操作时生成的cookie到文件：</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -c ./cookie.txt -d username=aaaa -d pwd=****** http://www.example.com </p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<span style="max-width:100%; word-wrap:break-word!important; color:rgb(255,255,255); background-color:rgb(227,108,9)"><span style="max-width:100%; word-wrap:break-word!important">9. 定义输出显示内容</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+现在为止对它的崇拜已经是犹如滔滔江水连绵不绝了，慢！还有一个powerful的选项.</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+-w/--write-out: 可以定义输出的内容，如常用的http码，tcp连接时间，域名解析的时间，握手时间及第一时间响应时间等，非常强大。</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+用法如：</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -o /dev/null -s -w %{http_code} &quot;http://www.baidu.com&quot; 打印出返回的http码</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+curl -o /dev/null -s -w “time_total: %{time_total}\n&quot; &quot;http://www.baidu.com&quot; 打印响应时间</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+如果你对curl还有更大的兴趣，其他更多的功能请找无所不能的男人帮忙吧！</p>
+<p style="margin-top:0px; margin-bottom:0px; max-width:100%; word-wrap:normal; min-height:1em; white-space:pre-wrap; color:rgb(62,62,62); font-family:'Helvetica Neue',Helvetica,'Hiragino Sans GB','Microsoft YaHei',微软雅黑,Arial,sans-serif; font-size:16px; line-height:25px">
+<a target="_blank" target="_blank" href="http://mp.weixin.qq.com/s?__biz=MjM5ODgyNjgzMg==&amp;mid=200406415&amp;idx=1&amp;sn=5c31270869d1521aacf77f6ef07d6752#rd"><img src="http://img.blog.csdn.net/20140406111657359?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvenp6bW1ta2tr/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></a><br>
+</p>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.14-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" ArticleId="38569057">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/zzzmmmkkk/article/details/38392709';">上一篇</span><a href="/zzzmmmkkk/article/details/38392709" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">我所经历的京东618</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/zzzmmmkkk/article/details/38622661';">下一篇</span><a href="/zzzmmmkkk/article/details/38622661" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">再谈浏览器兼容性测试</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('574523','zzzmmmkkk','foot','38569057');">linux操作系统知识<em>（3）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('574523', 'zzzmmmkkk','foot','38569057');
+        });
+    </script>
+      
+</div>
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/zzzmmmkkk/svc/GetSuggestContent/38569057",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="http://static.blog.csdn.net/css/replace.css"/>
+<div id="relate">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+                    </div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "38569057",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'Linux命令CURL用法' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+    <div id="ad_cen">        
+<!-- 广告位开始 -->
+<ins data-revive-zoneid="71" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+<!-- 广告位结束 -->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '38569057';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/zzzmmmkkk/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>      
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/zzzmmmkkk" target="_blank">
+    <img src="http://avatar.csdn.net/9/5/F/1_zzzmmmkkk.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/zzzmmmkkk" class="user_name" target="_blank">zzzmmmkkk</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=zzzmmmkkk','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>326380次</span></li>
+    <li>积分：<span>3075</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：3075 </div>
+        </span>  </li>
+    <li>排名：<span>第6969名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>82篇</span></li>
+    <li>转载：<span>18篇</span></li>
+    <li>译文：<span>3篇</span></li>
+    <li>评论：<span>53条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/574522" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">C/C++编程语言</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/574523" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux操作系统知识</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/646671" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Loadrunner性能测试</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/715882" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">QTP及功能自动化测试</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/599525" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">WEB技术</a><span>(17)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/574521" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库知识</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/574527" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">脚本语言</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/574524" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">软件测试理论</a><span>(23)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/861507" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">工作随想</a><span>(23)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/1451479" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Selenium及WebDriver自动化</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/1598719" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">经验之谈</a><span>(22)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/1608707" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">安全测试</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/zzzmmmkkk/article/category/5601373" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">自动化测试</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/zzzmmmkkk/article/month/2015/08">2015年08月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2015/06">2015年06月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2015/05">2015年05月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2015/04">2015年04月</a><span>(3)</span></li><li><a href="/zzzmmmkkk/article/month/2014/12">2014年12月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2014/10">2014年10月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2014/09">2014年09月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2014/08">2014年08月</a><span>(5)</span></li><li><a href="/zzzmmmkkk/article/month/2014/07">2014年07月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2014/06">2014年06月</a><span>(3)</span></li><li><a href="/zzzmmmkkk/article/month/2014/05">2014年05月</a><span>(3)</span></li><li><a href="/zzzmmmkkk/article/month/2014/04">2014年04月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2014/03">2014年03月</a><span>(3)</span></li><li><a href="/zzzmmmkkk/article/month/2013/11">2013年11月</a><span>(5)</span></li><li><a href="/zzzmmmkkk/article/month/2013/10">2013年10月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2013/09">2013年09月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2013/08">2013年08月</a><span>(3)</span></li><li><a href="/zzzmmmkkk/article/month/2013/07">2013年07月</a><span>(3)</span></li><li><a href="/zzzmmmkkk/article/month/2013/06">2013年06月</a><span>(5)</span></li><li><a href="/zzzmmmkkk/article/month/2013/05">2013年05月</a><span>(6)</span></li><li><a href="/zzzmmmkkk/article/month/2011/11">2011年11月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2011/09">2011年09月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2011/08">2011年08月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2011/03">2011年03月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2010/11">2010年11月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2010/10">2010年10月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2010/07">2010年07月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2010/05">2010年05月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2010/02">2010年02月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2010/01">2010年01月</a><span>(4)</span></li><li><a href="/zzzmmmkkk/article/month/2009/12">2009年12月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2009/11">2009年11月</a><span>(5)</span></li><li><a href="/zzzmmmkkk/article/month/2009/10">2009年10月</a><span>(2)</span></li><li><a href="/zzzmmmkkk/article/month/2009/09">2009年09月</a><span>(1)</span></li><li><a href="/zzzmmmkkk/article/month/2009/08">2009年08月</a><span>(6)</span></li><li><a href="/zzzmmmkkk/article/month/2009/07">2009年07月</a><span>(5)</span></li><li><a href="/zzzmmmkkk/article/month/2009/06">2009年06月</a><span>(11)</span></li><li><a href="/zzzmmmkkk/article/month/2009/05">2009年05月</a><span>(2)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/zzzmmmkkk/article/details/4266888" title="C++ 排序函数 sort(),qsort()的用法">C++ 排序函数 sort(),qsort()的用法</a><span>(128373)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/10862949" title="使用HttpOnly提升Cookie安全性">使用HttpOnly提升Cookie安全性</a><span>(17303)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4339656" title="查看文件命令cat,more,less,tail,tac,nl,od---linux学习笔记">查看文件命令cat,more,less,tail,tac,nl,od---linux学习笔记</a><span>(11273)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/5248955" title="Loadrunner连接负载机失败,提示&quot;Failed to connect to the load generator.Check the output window for more detail">Loadrunner连接负载机失败,提示&quot;Failed to connect to the load generator.Check the output window for more detail</a><span>(10758)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4288980" title="单元测试基本路径覆盖法">单元测试基本路径覆盖法</a><span>(8599)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/38569057" title="Linux命令CURL用法">Linux命令CURL用法</a><span>(8429)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/5248655" title="Loadrunner中的IP欺骗的设置以及误区">Loadrunner中的IP欺骗的设置以及误区</a><span>(6003)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4282204" title="堆栈,静态变量和普通变量,静态函数和普通函数的区别">堆栈,静态变量和普通变量,静态函数和普通函数的区别</a><span>(5735)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4250958" title="mysql中transaction的实现">mysql中transaction的实现</a><span>(4242)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4400557" title="MySQL存储过程和触发器的实现--数据库学习笔记">MySQL存储过程和触发器的实现--数据库学习笔记</a><span>(4232)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/zzzmmmkkk/article/details/4266888" title="C++ 排序函数 sort(),qsort()的用法">C++ 排序函数 sort(),qsort()的用法</a><span>(19)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4288980" title="单元测试基本路径覆盖法">单元测试基本路径覆盖法</a><span>(4)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4314021" title="C/C++中strlen(),strcpy(),strcat()以及strcmp()的代码实现--学习笔记">C/C++中strlen(),strcpy(),strcat()以及strcmp()的代码实现--学习笔记</a><span>(4)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/16818103" title="测试新人如何提高工作效率">测试新人如何提高工作效率</a><span>(4)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/10862949" title="使用HttpOnly提升Cookie安全性">使用HttpOnly提升Cookie安全性</a><span>(2)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/9274781" title="Selenium 1.0的历史及工作原理">Selenium 1.0的历史及工作原理</a><span>(2)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4974979" title="搜索引擎之---Apache solr的实现">搜索引擎之---Apache solr的实现</a><span>(2)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4849110" title="HTML中GET与POST的区别">HTML中GET与POST的区别</a><span>(1)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4421394" title="性能测试，负载测试，压力测试以及容量测试的联系与区别--网搜及总结">性能测试，负载测试，压力测试以及容量测试的联系与区别--网搜及总结</a><span>(1)</span>
+</li>
+<li>
+<a href="/zzzmmmkkk/article/details/4404495" title="实施自动化测试的六个目标和意义">实施自动化测试的六个目标和意义</a><span>(1)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/jonstank2013/article/details/51118563" 
+
+target="_blank">*Android从启动到程序运行发生的事情</a></li>
+<li><a href="http://blog.csdn.net/loveyaozu/article/details/51149467" 
+target="_blank">*Android杂谈之RadioGroup+ViewPager制作的底部导航栏</a></li>
+<li><a href="http://blog.csdn.net/fanyun_01/article/details/50921678" 
+
+target="_blank">*浅谈Storm流式处理框架</a></li>
+<li><a 
+
+href="http://blog.csdn.net/xoyojank/article/details/50927572"target="_blank">*Oculus Rift, HTC Vive, SONY PSVR的全面对比</a></li>
+<li><a href="http://blog.csdn.net/apksafe/article/details/51038646#comments" 
+target="_blank">*Android移动应用开发中常见的经验技巧总结</a></li>
+<li><a href="http://blog.csdn.net/jonstank2013/article/details/50981404" target="_blank">*Rxjava原理探索：切换线程，变换</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/10862949#comments">使用HttpOnly提升Cookie安全性</a>
+    <p style="margin:0px;"><a href="/weizhe86" class="user_name">weizhe86</a>:
+楼上听说过中间人攻击吗?
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4266888#comments">C++ 排序函数 sort(),qsort()的用法</a>
+    <p style="margin:0px;"><a href="/sinat_34231260" class="user_name">sinat_34231260</a>:
+为什么要返回两个的差值呢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4266888#comments">C++ 排序函数 sort(),qsort()的用法</a>
+    <p style="margin:0px;"><a href="/Tao_222" class="user_name">Tao_222</a>:
+STL的很多都还不了解，一点点学习，谢谢分享~
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4266888#comments">C++ 排序函数 sort(),qsort()的用法</a>
+    <p style="margin:0px;"><a href="/CODE0758" class="user_name">CODE0758</a>:
+好文章
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4266888#comments">使用HttpOnly提升Cookie安全性</a>
+    <p style="margin:0px;"><a href="/strangefay" class="user_name">strangefay</a>:
+引用：HttpOnly 主要是为了限制web页面程序的browser端script程序读取cooki...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4266888#comments">C++ 排序函数 sort(),qsort()的用法</a>
+    <p style="margin:0px;"><a href="/Li_Doers" class="user_name">Li_Doers</a>:
+很清晰
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4266888#comments">C++ 排序函数 sort(),qsort()的用法</a>
+    <p style="margin:0px;"><a href="/QingHuan520" class="user_name">QingHuan520</a>:
+http://www.cnblogs.com/A-Song/archive/2012/02/02/2...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/38569057#comments">Linux命令CURL用法</a>
+    <p style="margin:0px;"><a href="/baidu_32912749" class="user_name">baidu_32912749</a>:
+curl -F “filename=@/home/test/test.pic” http://exa...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4288980#comments">单元测试基本路径覆盖法</a>
+    <p style="margin:0px;"><a href="/sinat_27088253" class="user_name">sinat_27088253</a>:
+为什么123 10 12 13不是一个线性无关基本路径呢，求解答，真的困扰很久了，问老师老师只是笼统...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/zzzmmmkkk/article/details/4288980#comments">C++ 排序函数 sort(),qsort()的用法</a>
+    <p style="margin:0px;"><a href="/supermaryrio" class="user_name">supermaryrio</a>:
+赞！
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=589723"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+</body>
+</html>   
+ 
