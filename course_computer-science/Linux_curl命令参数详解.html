@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Linux curl命令参数详解--转载 - 一天不进步，就是退步 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=8F6jO9aWZhOryqKsIFGUkSbXpyPVKDwgWwvpie3eJis1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/arrow/bundle-arrow.css?v=pAFc9CTjQ3X6S6IlkhC7h-AHdfI56xopjvGTJOuYoNg1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/davidwang456/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/davidwang456/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/davidwang456/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'davidwang456', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ceHMEpeJXcR_f7TCJnXeZQRG1UsC0_cpwDJRs_oVInY1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="header">
+	
+<!--done-->
+<div class="header">
+	<div class="headerText">
+		<a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/davidwang456/">一天不进步，就是退步!</a><br>
+		专注但要有大局观（先大后小，思路为先，实验为辅），一个人一生只要做好一件事就够了！记住：凡事预则立，不预则废。
+	</div>
+</div>
+
+</div>
+<div id="mylinks">
+<!--done-->
+<a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a>&nbsp;&nbsp;&nbsp;
+<a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/davidwang456/">首页</a>&nbsp;&nbsp;&nbsp;
+<a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a>&nbsp;&nbsp;&nbsp;
+<a id="MyLinks1_ContactLink" accesskey="9" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/%E4%B8%80%E5%A4%A9%E4%B8%8D%E8%BF%9B%E6%AD%A5%EF%BC%8C%E5%B0%B1%E6%98%AF%E9%80%80%E6%AD%A5">联系</a>&nbsp;&nbsp;&nbsp;
+<a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/davidwang456/rss">订阅</a><a id="MyLinks1_XMLLink" href="http://www.cnblogs.com/davidwang456/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>&nbsp;&nbsp;&nbsp;
+<a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a>
+</div>
+<div id="mytopmenu">
+	
+		
+<div class="blogStats">随笔 - 1109&nbsp;
+文章 - 28&nbsp;评论 - 149&nbsp;trackbacks - 0
+</div>
+	
+</div>
+<div id="leftcontent">
+	
+		<DIV id="leftcontentcontainer">
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script><br>
+			
+<!--done-->
+<div class="newsItem">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script></DIV>		
+	
+</div>
+<div id="centercontent">
+	
+<div id="post_detail">
+<!--done-->
+<div class = "post">
+	<div class = "postTitle">
+		<h1><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/davidwang456/p/4266867.html">Linux curl命令参数详解--转载</a></h1>
+	</div>
+	<div id="cnblogs_post_body"><div class="content">
+<p><span class="wp_keywordlink"><a title="Linux系统相关文章" href="http://www.aiezu.com/category/system/linux" target="_blank">linux</a>&nbsp;<span class="wp_keywordlink_affiliate"><a title="查看 curl 中的全部文章" href="http://www.aiezu.com/tag/curl" target="_blank">curl</a>是通过url语法在命令行下上传或下载文件的工具软件，它支持http,https,ftp,ftps,telnet等多种协议，常被用来抓取网页和监控Web服务器状态。</span></span></p>
+<h5>一、Linux curl用法举例：</h5>
+<h6>1. linux curl抓取网页：</h6>
+<p>抓取百度：</p>
+<p>&nbsp;</p>
+<div id="crayon-54ced3a098531297109663" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098531297109663-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098531297109663-1" class="crayon-line"><span class="crayon-e">curl <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com </span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>如发现乱码，可以使用<span class="wp_keywordlink"><a title="iconv相关技术文章" href="http://www.aiezu.com/tag/iconv" target="_blank">iconv</a>转码：</span></p>
+<p>&nbsp;</p>
+<div id="crayon-54ced3a098543339551470" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098543339551470-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098543339551470-1" class="crayon-line"><span class="crayon-e">curl <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//iframe.ip138.com/ic.asp|<span class="wp_keywordlink_affiliate"><a title="查看 iconv 中的全部文章" href="http://www.aiezu.com/tag/iconv" target="_blank">iconv</a> -fgb2312</span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>iconv的用法请参阅：<a class="external" href="http://www.aiezu.com/system/linux/linux_iconv_code.html">在Linux/Unix系统下用iconv命令处理文本文件中文乱码问题</a></p>
+<p>&nbsp;</p>
+<h6>2. Linux curl使用<span class="wp_keywordlink_affiliate"><a title="查看 代理 中的全部文章" href="http://www.aiezu.com/tag/%e4%bb%a3%e7%90%86" target="_blank">代理</a>：</span></h6>
+<p>linux curl使用http代理抓取页面：</p>
+<div id="crayon-54ced3a098549383643036" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098549383643036-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a098549383643036-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098549383643036-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">x<span class="crayon-h"> <span class="crayon-cn">111.95.243.36<span class="crayon-o">:<span class="crayon-cn">80<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//iframe.ip138.com/ic.asp|iconv -fgb2312</span></span></span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a098549383643036-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">x<span class="crayon-h"> <span class="crayon-cn">111.95.243.36<span class="crayon-o">:<span class="crayon-cn">80<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">U<span class="crayon-h"> <span class="crayon-i">aiezu<span class="crayon-o">:<span class="crayon-e">password <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>使用socks代理抓取页面：</p>
+<div id="crayon-54ced3a09854d186105162" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a09854d186105162-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a09854d186105162-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a09854d186105162-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">--<span class="crayon-i">socks4<span class="crayon-h"> <span class="crayon-cn">202.113.65.229<span class="crayon-o">:<span class="crayon-cn">443<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//iframe.ip138.com/ic.asp|iconv -fgb2312</span></span></span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a09854d186105162-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">--<span class="crayon-i">socks5<span class="crayon-h"> <span class="crayon-cn">202.113.65.229<span class="crayon-o">:<span class="crayon-cn">443<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//iframe.ip138.com/ic.asp|iconv -fgb2312</span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p class="noindent">代理服务器地址可以从<a class="external" href="http://pachong.org/" rel="external nofollow" target="_blank">爬虫代理</a>上获取。</p>
+<p>&nbsp;</p>
+<h6>3. linux curl处理<span class="wp_keywordlink_affiliate"><a title="查看 cookies 中的全部文章" href="http://www.aiezu.com/tag/cookies" target="_blank">cookies</a></span></h6>
+<p>接收cookies:</p>
+<div id="crayon-54ced3a098552349611656" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098552349611656-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098552349611656-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">c<span class="crayon-h"> <span class="crayon-o">/<span class="crayon-i">tmp<span class="crayon-o">/<span class="crayon-e">cookies <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #cookies保存到/tmp/cookies文件</span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>发送cookies:</p>
+<div id="crayon-54ced3a098556600112928" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098556600112928-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a098556600112928-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098556600112928-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">b<span class="crayon-h"> <span class="crayon-s">"key1=val1;key2=val2;"<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #发送cookies文本</span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a098556600112928-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">b<span class="crayon-h"> <span class="crayon-o">/<span class="crayon-i">tmp<span class="crayon-o">/<span class="crayon-e">cookies <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #从文件中读取cookies</span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h6>4. linux curl发送数据：</h6>
+<p>linux curl&nbsp;<span class="wp_keywordlink_affiliate"><a title="查看 get 中的全部文章" href="http://www.aiezu.com/tag/get" target="_blank">get</a>方式提交数据：</span></p>
+<div id="crayon-54ced3a09855b167908817" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a09855b167908817-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a09855b167908817-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">G<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">d<span class="crayon-h"> <span class="crayon-s">"name=value&amp;name2=value2"<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com </span></span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>linux curl&nbsp;<span class="wp_keywordlink_affiliate"><a title="查看 post 中的全部文章" href="http://www.aiezu.com/tag/post" target="_blank">post</a>方式提交数据：</span></p>
+<div id="crayon-54ced3a09855f185015122" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a09855f185015122-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a09855f185015122-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a09855f185015122-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">d<span class="crayon-h"> <span class="crayon-s">"name=value&amp;name2=value2"<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #post数据</span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a09855f185015122-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">d<span class="crayon-h"> <span class="crayon-v">a<span class="crayon-o">=<span class="crayon-i">b<span class="crayon-o">&amp;<span class="crayon-v">c<span class="crayon-o">=<span class="crayon-i">d<span class="crayon-o">&amp;<span class="crayon-i">txt<span class="crayon-sy">@<span class="crayon-o">/<span class="crayon-i">tmp<span class="crayon-o">/<span class="crayon-e">txt <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com&nbsp;&nbsp;#post文件</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>以表单的方式上传文件：</p>
+<div id="crayon-54ced3a098563861324653" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098563861324653-1">1</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098563861324653-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">F<span class="crayon-h"> <span class="crayon-v">file<span class="crayon-o">=<span class="crayon-sy">@<span class="crayon-o">/<span class="crayon-i">tmp<span class="crayon-o">/<span class="crayon-v">me<span class="crayon-sy">.<span class="crayon-e">txt <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.aiezu.com</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p class="noindent">相当于设置form表单的method="POST"和enctype='multipart/form-data'两个属性。</p>
+<p>&nbsp;</p>
+<h6>5. linux curl http header处理：</h6>
+<p>设置http请求头信息：</p>
+<div id="crayon-54ced3a098567101177960" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098567101177960-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a098567101177960-2">2</div>
+<div class="crayon-num" data-line="crayon-54ced3a098567101177960-3">3</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098567101177960-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">A<span class="crayon-h"> <span class="crayon-s">"Mozilla/5.0 Firefox/21.0"<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #设置http请求头User-Agent</span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a098567101177960-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">e<span class="crayon-h"> <span class="crayon-s">"http://pachong.org/"<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #设置http请求头Referer</span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a098567101177960-3" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">H<span class="crayon-h"> <span class="crayon-s">"Connection:keep-alive \n User-Agent: Mozilla/5.0"<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.aiezu.com</span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>设置http响应头处理：</p>
+<div id="crayon-54ced3a09856c582583277" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a09856c582583277-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a09856c582583277-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a09856c582583277-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">I<span class="crayon-h"> <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.aiezu.com #仅仅返回header</span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a09856c582583277-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">D<span class="crayon-h"> <span class="crayon-o">/<span class="crayon-i">tmp<span class="crayon-o">/<span class="crayon-e">header <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.aiezu.com #将http header保存到/tmp/header文件</span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h6>6. linux curl认证：</h6>
+<p>&nbsp;</p>
+<div id="crayon-54ced3a098570218333192" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098570218333192-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a098570218333192-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098570218333192-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">u<span class="crayon-h"> <span class="crayon-i">aiezu<span class="crayon-o">:<span class="crayon-e">password <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.aiezu.com #用户名密码认证</span></span></span></span></span></span></span></span></span></span></span></div>
+<div id="crayon-54ced3a098570218333192-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">E<span class="crayon-h"> <span class="crayon-v">mycert<span class="crayon-sy">.<span class="crayon-e">pem <span class="crayon-i">https<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #采用证书认证</span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h6>6. 其他：</h6>
+<p>&nbsp;</p>
+<div id="crayon-54ced3a098575481608488" class="crayon-syntax crayon-theme-classic crayon-font-monaco crayon-os-pc print-yes crayon-wrapped" data-settings=" minimize scroll-mouseover wrap">
+<div class="crayon-plain-wrap">&nbsp;</div>
+<div class="crayon-main">
+<table class="crayon-table">
+<tbody>
+<tr class="crayon-row">
+<td class="crayon-nums " data-settings="show">
+<div class="crayon-nums-content">
+<div class="crayon-num" data-line="crayon-54ced3a098575481608488-1">1</div>
+<div class="crayon-num crayon-striped-num" data-line="crayon-54ced3a098575481608488-2">2</div>
+</div>
+</td>
+<td class="crayon-code">
+<div class="crayon-pre">
+<div id="crayon-54ced3a098575481608488-1" class="crayon-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-p"># http://www.baidu.com #以&ldquo;#&rdquo;号输出进度条</span></span></span></span></div>
+<div id="crayon-54ced3a098575481608488-2" class="crayon-line crayon-striped-line"><span class="crayon-i">curl<span class="crayon-h"> <span class="crayon-o">-<span class="crayon-i">o<span class="crayon-h"> <span class="crayon-o">/<span class="crayon-i">tmp<span class="crayon-o">/<span class="crayon-e">aiezu <span class="crayon-i">http<span class="crayon-o">:<span class="crayon-c">//www.baidu.com #保存http响应到/tmp/aiezu</span></span></span></span></span></span></span></span></span></span></span></span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="fixed">&nbsp;</div>
+</div>
+<div class="under">&nbsp;原文地址：http://www.aiezu.com/system/linux/linux_curl_syntax.html</div>
+<div class="under">&nbsp;</div>
+<div class="under">linux 使用curl小经验教训：</div>
+<div class="under"><span style="color: #ff0000;">http请求地址的url要使用""括起来</span>。当有存在多个参数使用&amp;连接时可能会出错。</div>
+<div class="under">&nbsp;</div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+	<div class = "postDesc">posted on <span id="post-date">2015-02-02 09:44</span> <a href='http://www.cnblogs.com/davidwang456/'>一天不进步，就是退步</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=4266867" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(4266867);return false;">收藏</a></div>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=138600,cb_entryId=4266867,cb_blogApp=currentBlogApp,cb_blogUserGuid='3183fc7e-1f56-e211-aa8f-842b2b196315',cb_entryCreatedDate='2015/2/2 9:44:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+	
+<!--done-->
+<div class="footer">
+	
+	Copyright &copy;2016 一天不进步，就是退步 Powered by: <a href="http://www.cnblogs.com" class=footerlink>博客园</a> 模板提供：<a href="http://blog.hjenglish.com" class=footerlink>沪江博客</a><br>
+</div>
+</div>
+
+
+
+<!--PageEndHtml Block Begin-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?4e17ff51730e4ef6af191fd287efc2d2";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!--PageEndHtml Block End-->
+</body>
+</html>
