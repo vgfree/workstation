@@ -1,0 +1,608 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+
+<title>详解关于Lua源码分析学习教程 - 51CTO.COM</title>
+<meta name="description" content="关于Lua源码分析学习教程是本文要介绍的内容，主要来了解LUA中源码的使用方法。Lua首先将源程序编译成为字节码,然后交由虚拟机解释执行.对于每一个函数,Lua的编译器将创建一个原型."/>
+<meta name="keywords" content="Lua,源码"/>
+<base target="_blank" />
+<link href="http://images.51cto.com/images/art1105/css/grid.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="http://images.51cto.com/images/art/css/art_master_top.css" />
+<link href="http://book.51cto.com/images/bookspec/css/css3.css" rel="stylesheet" type="text/css" />
+<script language="javaScript" src="http://www.51cto.com/php/base_art.js"></SCRIPT>
+<script src="http://www.51cto.com/images/homepage/index_1_down.js"></script>
+<style type="text/css">
+.bds_tools a{ padding:0; margin:0;}
+</style>
+</head>
+<body >
+<!-- 导航 开始-->
+<script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/a3b9823c927173ada250e3f2f84f4703/allmobilize.min.js"></script><meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+<div id="home_top">    <div class="top_nav">        <div class="left" style="width:400px"><div class="logo_51cto" title="51CTO.COM - 技术成就梦想 -  中国领先的IT技术网站"></div><a href="http://www.51cto.com/">首页</a><img width="16" height="25" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="padding-top: 2px;"><a onmouseover="show(1,this);" onmouseout="popupClose();" href="http://www.51cto.com/col/35/" target="_blank">技术频道<img align="absmiddle" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif" style="padding-left: 4px;"></a><img width="16" height="25" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif"><a onmouseover="show(2,this);" onmouseout="popupClose();" href="http://www.51cto.com" target="_blank">51CTO旗下网站<img align="absmiddle" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif" style="padding-left: 4px;"></a><img width="16" height="25" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif"><a href="http://www.51cto.com/about/map.htm" target="_blank">地图</a> <a href="http://www.51cto.com/about/rss.html" target="_blank"><img src="http://images.51cto.com/files/uploadimg/20110922/143749870.gif" style="vertical-align:middle; margin-bottom: 5px; margin-left:5px;"></a>       </div>        <div class="right">            <div class="more"><img width="27" height="16" align="absmiddle" src="http://home.51cto.com/public/themes/blue/images/top_shequ.gif"><a href="http://gaozhao.51cto.com/" target="_blank" style="color:#CC0000">招聘</a><a href="http://edu.51cto.com/" target="_blank" style="color:#CC0000">学院</a><a href="http://down.51cto.com" target="_blank">下载</a><a href="http://bbs.51cto.com" target="_blank">论坛</a><a href="http://blog.51cto.com" target="_blank">博客</a><a onmouseover="show(3,this)" onmouseout="popupClose()" href="javascript:viod(0);">更多<img align="absmiddle" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif" style="padding-left: 4px;"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+<div class="subMenu1" id="s1" onmouseover="popupNoClose();" onmouseout="popupClose();">
+<ul>
+<li><a href="http://network.51cto.com" target="_blank">网络</a></li>
+<li><a href="http://netsecurity.51cto.com" target="_blank">安全</a></li>
+<li><a href="http://developer.51cto.com" target="_blank">开发</a></li>
+<li><a href="http://database.51cto.com" target="_blank">数据库</a></li>
+<li><a href="http://server.51cto.com" target="_blank">服务器</a></li>
+<li><a href="http://os.51cto.com" target="_blank">系统</a></li>
+<li><a href="http://virtual.51cto.com" target="_blank">虚拟化</a></li>
+<li><a href="http://cloud.51cto.com" target="_blank">云计算</a></li>
+<li><a href="http://developer.51cto.com/embed/" target="_blank">嵌入式</a></li>
+<li><a href="http://mobile.51cto.com/" target="_blank">移动开发</a></li>
+</ul>
+</div> 
+<div class="subMenu2" id="s2" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://www.51cto.com" target="_blank" title="中国领先的IT技术网站">51CTO.COM</a></li>
+<li><a href="http://www.cioage.com" target="_blank" title="中国首个专门服务于CIO的专业网站">CIOage.com</a></li>
+<li><a href="http://www.watchstor.com/" target="_blank"  title="领先的中文存储网络媒体">WatchStor.com</a></li>
+<li><a href="http://www.hc3i.cn/" target="_blank"  title="中国首家专注于数字医疗及医疗信息化的专业网站">HC3i.cn</a></li>
+</ul>
+</div>
+<script src="http://www.51cto.com/js/jquery-1.8.3.min.js"></script>
+<script>
+$(function(){
+	$(".bann").height(265);	 
+	$(".bann").css("background-color","white");
+	$(".hot").css("top","450px");
+	//$(".fixfloat").css("height","640px");
+	$(".g_13").find(".focus").css("height","640px");
+});
+var edunum=2;
+$(function(){
+	$("#change").click(function(){
+		$("#edu > ul").css("display","none");
+		var eduid='edu'+edunum;
+		$("#" + eduid).css("display","block");	
+		if(edunum<4){
+			edunum++;	
+		}else{
+			edunum=1;	
+		}							
+	});  
+});
+</script>
+
+<script src="http://www.51cto.com/head_art_more1.js"></script>
+<!-- 登陆信息 -->
+<!-- 导航 结束--> 
+ <div class="g_39 mb10">
+	<div id="tonglanad" class="fl"></div>
+	<div id="list4" class="fr">
+		<ul>
+			<li id="wordlinkad1"></li>
+			<li id="wordlinkad2"></li>
+			<li id="wordlinkad3"></li>
+			<li id="wordlinkad4"></li>
+		</ul>
+	</div>
+<br class="dle"/>
+</div>
+
+<div class="g_39 menu">
+<DIV class=subNav_logo><A href="http://mobile.51cto.com/" title="移动开发"><IMG src="http://images.51cto.com/files/uploadimg/20100825/143329156.gif"></A></DIV>
+<DIV class=subNav_l><A href="http://mobile.51cto.com/">首页</A> | <A href="http://mobile.51cto.com/android/">Android</A> | <A href="http://mobile.51cto.com/iphone/">iOS</A> | <A href="http://mobile.51cto.com/windows-phone/">Windows Phone</A> | <A href="http://mobile.51cto.com/blackberry/">BlackBerry</A> | <A href="http://mobile.51cto.com/webos/">webOS</A> | <A href="http://mobile.51cto.com/symbian/">Symbian</A> | <A href="http://mobile.51cto.com/bada/">bada</A> | <A href="http://mobile.51cto.com/ophone/">OPhone</A> | <A href="http://mobile.51cto.com/others/" target=_blank>其他</A></DIV>  
+<div class="search fr">
+<dl>
+<form name=searchform action="http://www.51cto.com/php/search.php" target="_blank" method=post style="margin:0px; padding:0px;">
+<dt class="fl"><input name="keyword" type="text" class="searchInput f14 input" value="请输入关键字" onfocus="doempty(this, '请输入关键字');" onblur="doempty(this, '请输入关键字');" /></dt>
+<dd class="fl"><input type="image" src="http://images.51cto.com/images/art/newart1012/images/search.gif" /></dd></form>
+</dl>
+</div>
+<br class="dle"/>
+</div>
+<div class="g_39 b3-s-4273B3 rel">
+<!--width : 26*25 - 15 = 635px-->
+<div class="g_26 fl m_l">
+<div class="brief bgF8F8F8">
+<p class="crumb ">您所在的位置：<a href='http://mobile.51cto.com'><b>移动开发</b></a> &gt; <a href='http://mobile.51cto.com/iphone/'><b>iOS</b></a> &gt;  <b>详解关于Lua源码分析学习教程</b> </p>
+<h1>详解关于Lua源码分析学习教程</h1>
+<div class="msg">
+<div>2011-08-25 15:41  佚名  互联网 <span class="f12-a"><a href="#commment" target="_self"></a></span> 字号：<span class="f14-b"><a href="javascript:setfont(12);" target="_self">T</a></span> | <span class="f16-b"><a href="javascript:setfont(16);" target="_self">T</a></span></div>
+<div class='artHd' id='books' style='padding:5px 25px;display:none;'></div>
+<div class="fav"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！" target="_self"><img src="http://images.51cto.com/images/art/newart1012/images/Fav.gif" alt="一键收藏，随时查看，分享好友！" border="0" /></a></div>
+</div>
+<div class="brieftext">
+<p class="f14 green">关于Lua源码分析学习教程是本文要介绍的内容，主要来了解LUA中源码的使用方法。Lua首先将源程序编译成为字节码,然后交由虚拟机解释执行.对于每一个函数,Lua的编译器将创建一个原型.</p>
+<p class="ad">AD：<script src="http://www.51cto.com/js/article/keywords_ad_new.js"></script>
+</p>
+</div>
+</div>
+<div class="tag bgF8F8F8" id="indexlist" style="display:none;">
+<ul id="indexliststr">
+</ul>
+<br class="dle"/>
+</div>
+<div class="content bgF8F8F8 f14">
+<div id="content">
+<p><p>关于<strong>Lua源码</strong>分析学习教程是本文要介绍的内容，主要来了解<strong>LUA</strong>中<strong>源码</strong>的使用方法。<strong>Lua</strong>首先将源程序编译成为字节码,然后交由虚拟机解释执行.对于每一个函数,<strong>Lua</strong>的编译器将创建一个原型(prototype),它由一组指令及其使用到的常量组成[1].最初的<strong>Lua</strong>虚拟机是基于栈的.到1993年,Lua5.0版本,采用了基于寄存器的虚拟机,使得<strong>Lua</strong>的解释效率得到提升,</p>
+<p><strong>体系结构与指令系统</strong></p>
+<p>与虚拟机和指令相关的文件主要有两个: lopcodes.c 和 lvm.c. 从名称可以看出来,这两个文件分别用于描述操作码(指令)和虚拟机.<br />
+首先来看指令:</p>
+<p>Lua共有38条指令, 在下面两处地方分别描述了这些指令的名称和模式, 如下:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lopcodes.c:16 &nbsp;</span></span></li><li><span>const&nbsp;char&nbsp;*const&nbsp;luaP_opnames[NUM_OPCODES+1]&nbsp;=&nbsp;{ &nbsp;</span></li><li class="alt"><span>&quot;MOVE&quot;, &nbsp;</span></li><li><span>&quot;LOADK&quot;, &nbsp;</span></li><li class="alt"><span>&quot;LOADBOOL&quot;, &nbsp;</span></li><li><span>&quot;LOADNIL&quot;, &nbsp;</span></li><li class="alt"><span>&quot;GETUPVAL&quot;, &nbsp;</span></li><li><span>&quot;GETGLOBAL&quot;, &nbsp;</span></li><li class="alt"><span>&quot;GETTABLE&quot;, &nbsp;</span></li><li><span>&quot;SETGLOBAL&quot;, &nbsp;</span></li><li class="alt"><span>&quot;SETUPVAL&quot;, &nbsp;</span></li><li><span>&quot;SETTABLE&quot;, &nbsp;</span></li><li class="alt"><span>&quot;NEWTABLE&quot;, &nbsp;</span></li><li><span>&quot;SELF&quot;, &nbsp;</span></li><li class="alt"><span>&quot;ADD&quot;, &nbsp;</span></li><li><span>&quot;SUB&quot;, &nbsp;</span></li><li class="alt"><span>&quot;MUL&quot;, &nbsp;</span></li><li><span>&quot;DIV&quot;, &nbsp;</span></li><li class="alt"><span>&quot;MOD&quot;, &nbsp;</span></li><li><span>&quot;POW&quot;, &nbsp;</span></li><li class="alt"><span>&quot;UNM&quot;, &nbsp;</span></li><li><span>&quot;NOT&quot;, &nbsp;</span></li><li class="alt"><span>&quot;LEN&quot;, &nbsp;</span></li><li><span>&quot;CONCAT&quot;, &nbsp;</span></li><li class="alt"><span>&quot;JMP&quot;, &nbsp;</span></li><li><span>&quot;EQ&quot;, &nbsp;</span></li><li class="alt"><span>&quot;LT&quot;, &nbsp;</span></li><li><span>&quot;LE&quot;, &nbsp;</span></li><li class="alt"><span>&quot;TEST&quot;, &nbsp;</span></li><li><span>&quot;TESTSET&quot;, &nbsp;</span></li><li class="alt"><span>&quot;CALL&quot;, &nbsp;</span></li><li><span>&quot;TAILCALL&quot;, &nbsp;</span></li><li class="alt"><span>&quot;RETURN&quot;, &nbsp;</span></li><li><span>&quot;FORLOOP&quot;, &nbsp;</span></li><li class="alt"><span>&quot;FORPREP&quot;, &nbsp;</span></li><li><span>&quot;TFORLOOP&quot;, &nbsp;</span></li><li class="alt"><span>&quot;SETLIST&quot;, &nbsp;</span></li><li><span>&quot;CLOSE&quot;, &nbsp;</span></li><li class="alt"><span>&quot;CLOSURE&quot;, &nbsp;</span></li><li><span>&quot;VARARG&quot;, &nbsp;</span></li><li class="alt"><span>NULL &nbsp;</span></li><li><span>}; &nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span>#define&nbsp;opmode(t,a,b,c,m)&nbsp;(((t)</span><span class="tag">&lt;</span><span class="tag">&lt;</span><span class="tag-name">7</span><span>)&nbsp;|&nbsp;((a)</span><span class="tag">&lt;</span><span class="tag">&lt;</span><span class="tag-name">6</span><span>)&nbsp;|&nbsp;((b)</span><span class="tag">&lt;</span><span class="tag">&lt;</span><span class="tag-name">4</span><span>)&nbsp;|&nbsp;((c)</span><span class="tag">&lt;</span><span class="tag">&lt;</span><span class="tag-name">2</span><span>)&nbsp;|&nbsp;(m)) &nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span>const&nbsp;lu_byte&nbsp;luaP_opmodes[NUM_OPCODES]&nbsp;=&nbsp;{ &nbsp;</span></li><li class="alt"><span>/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T&nbsp;A&nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;opcode&nbsp;&nbsp;&nbsp;&nbsp;*/ &nbsp;</span></li><li><span>opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_MOVE&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgN,&nbsp;iABx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_LOADK&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_LOADBOOL&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_LOADNIL&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_GETUPVAL&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgN,&nbsp;iABx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_GETGLOBAL&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_GETTABLE&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;0,&nbsp;OpArgK,&nbsp;OpArgN,&nbsp;iABx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_SETGLOBAL&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;0,&nbsp;OpArgU,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_SETUPVAL&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;0,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_SETTABLE&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_NEWTABLE&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_SELF&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_ADD&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_SUB&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_MUL&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_DIV&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_MOD&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_POW&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_UNM&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_NOT&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_LEN&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgR,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_CONCAT&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;0,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iAsBx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_JMP&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(1,&nbsp;0,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_EQ&nbsp;*/ &nbsp;</span></li><li><span>,opmode(1,&nbsp;0,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_LT&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(1,&nbsp;0,&nbsp;OpArgK,&nbsp;OpArgK,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_LE&nbsp;*/ &nbsp;</span></li><li><span>,opmode(1,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_TEST&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(1,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_TESTSET&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_CALL&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_TAILCALL&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;0,&nbsp;OpArgU,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_RETURN&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iAsBx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_FORLOOP&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgR,&nbsp;OpArgN,&nbsp;iAsBx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_FORPREP&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(1,&nbsp;0,&nbsp;OpArgN,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_TFORLOOP&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;0,&nbsp;OpArgU,&nbsp;OpArgU,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_SETLIST&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;0,&nbsp;OpArgN,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_CLOSE&nbsp;*/ &nbsp;</span></li><li><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgN,&nbsp;iABx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_CLOSURE&nbsp;*/ &nbsp;</span></li><li class="alt"><span>,opmode(0,&nbsp;1,&nbsp;OpArgU,&nbsp;OpArgN,&nbsp;iABC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;OP_VARARG&nbsp;*/ &nbsp;</span></li><li><span>};&nbsp;</span></li></ol></pre>
+<p>前面一个数组容易理解, 表示了每条指令的名称. 后面一个数组表示的是指令的模式. 奇怪的符号让人有些费解. 在看模式之前, 首先来看Lua指令的格式，如图:</p>
+<p><a href="http://images.51cto.com/files/uploadimg/20110825/1548050.jpg" target="_blank"><img  class='fit-image' onload='javascript:if(this.width>498)this.width=498;' onmousewheel = 'javascript:return big(this)' height="217" alt="详解关于Lua源码分析学习教程" src="http://images.51cto.com/files/uploadimg/20110825/1548050.jpg" width="341" border="0" /></a></p>
+<p>如上图, Lua的指令可以分成三种形式. 即在上面的模式数组中也可以看到的iABC, iABx 和 iAsBx. 对于三种形式的指令来说, 前两部分都是一样的, 分别是6位的操作码和8位A操作数; 区别在于, 后面部是分割成为两个长度为9位的操作符(B, C),一个无符号的18位操作符Bx还是有符号的18位操作符sBx. 这些定义的代码如下:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lopcodes.c&nbsp;:&nbsp;34 &nbsp;</span></span></li><li><span>/* &nbsp;</span></li><li class="alt"><span>**&nbsp;size&nbsp;and&nbsp;position&nbsp;of&nbsp;opcode&nbsp;arguments. &nbsp;</span></li><li><span>*/ &nbsp;</span></li><li class="alt"><span>#define&nbsp;SIZE_C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9 &nbsp;</span></li><li><span>#define&nbsp;SIZE_B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9 &nbsp;</span></li><li class="alt"><span>#define&nbsp;SIZE_Bx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SIZE_C&nbsp;+&nbsp;SIZE_B) &nbsp;</span></li><li><span>#define&nbsp;SIZE_A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8 &nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span>#define&nbsp;SIZE_OP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 &nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span>#define&nbsp;POS_OP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 &nbsp;</span></li><li class="alt"><span>#define&nbsp;POS_A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(POS_OP&nbsp;+&nbsp;SIZE_OP) &nbsp;</span></li><li><span>#define&nbsp;POS_C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(POS_A&nbsp;+&nbsp;SIZE_A) &nbsp;</span></li><li class="alt"><span>#define&nbsp;POS_B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(POS_C&nbsp;+&nbsp;SIZE_C) &nbsp;</span></li><li><span>#define&nbsp;POS_Bx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;POS_C&nbsp;</span></li></ol></pre>
+<p>再来看指令的操作模式, <strong>Lua</strong>使用一个字节来表示指令的操作模式. 具体的含义如下:</p>
+<p>1、使用最高位来表示是否是一条测试指令. 之所以将这一类型的指令特别地标识出来, 是因为Lua的指令长度是32位,对于分支指令来说, 要想在这32位中既表示两个操作数来做比较, 同时还要表示一个跳转的地址, 是很困难的. 因此将这种指令分成两条, 第一条是测试指令, 紧接着一条无条件跳转. 如果判断条件成立则将PC(Program Counter, 指示下一条要执行的指令)加一, 跳过下一条无条件跳转指令, 继续执行; 否则跳转.</p>
+<p>2、第二位用于表示A操作数是否被设置</p>
+<p>3、接下来的二位用于表示操作数B的格式,OpArgN表示操作数未被使用, OpArgU表示操作数被使用(立即数?), OpArgR表示表示操作数是寄存器或者跳转的偏移量, OpArgK表示操作数是寄存器或者常量.</p>
+<p>最后, 给出Lua虚拟机的体系结构图(根据源代码分析得出):</p>
+<p><a href="http://images.51cto.com/files/uploadimg/20110825/1548051.jpg" target="_blank"><img  class='fit-image' onload='javascript:if(this.width>498)this.width=498;' onmousewheel = 'javascript:return big(this)' style="width: 592px; height: 497px" height="499" alt="详解关于Lua源码分析学习教程" src="http://images.51cto.com/files/uploadimg/20110825/1548051.jpg" width="600" border="0" /></a></p>
+<p>首先, 我们注意到, Lua的解释器还是一个以栈为中心的结构. 在lua_State这个结构中,有许多个字段用于描述这个结构.stack用于指向绝对栈底, 而base指向了当前正在执行的函数的第一个参数, 而top指向栈顶的第一个空元素.</p>
+<p>我们可以看到,这个体系结构中并没有独立出来的寄存器. 从以下代码来看:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:343 &nbsp;</span></span></li><li><span>#define&nbsp;RA(i)&nbsp;&nbsp;&nbsp;&nbsp;(base+GETARG_A(i)) &nbsp;</span></li><li class="alt"><span>/*&nbsp;to&nbsp;be&nbsp;used&nbsp;after&nbsp;possible&nbsp;stack&nbsp;reallocation&nbsp;*/ &nbsp;</span></li><li><span>#define&nbsp;RB(i)&nbsp;&nbsp;&nbsp;&nbsp;check_exp(getBMode(GET_OPCODE(i))&nbsp;==&nbsp;OpArgR,&nbsp;base+GETARG_B(i)) &nbsp;</span></li><li class="alt"><span>#define&nbsp;RC(i)&nbsp;&nbsp;&nbsp;&nbsp;check_exp(getCMode(GET_OPCODE(i))&nbsp;==&nbsp;OpArgR,&nbsp;base+GETARG_C(i)) &nbsp;</span></li><li><span>#define&nbsp;RKB(i)&nbsp;&nbsp;&nbsp;&nbsp;check_exp(getBMode(GET_OPCODE(i))&nbsp;==&nbsp;OpArgK,&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;ISK(GETARG_B(i))&nbsp;?&nbsp;k+INDEXK(GETARG_B(i))&nbsp;:&nbsp;base+GETARG_B(i)) &nbsp;</span></li><li><span>#define&nbsp;RKC(i)&nbsp;&nbsp;&nbsp;&nbsp;check_exp(getCMode(GET_OPCODE(i))&nbsp;==&nbsp;OpArgK,&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;ISK(GETARG_C(i))&nbsp;?&nbsp;k+INDEXK(GETARG_C(i))&nbsp;:&nbsp;base+GETARG_C(i)) &nbsp;</span></li><li><span>#define&nbsp;KBx(i)&nbsp;&nbsp;&nbsp;&nbsp;check_exp(getBMode(GET_OPCODE(i))&nbsp;==&nbsp;OpArgK,&nbsp;k+GETARG_Bx(i))&nbsp;</span></li></ol></pre>
+<p>当指令操作数的类型是寄存器时,它的内容是以base为基址在栈上的索引值.如图所示.寄存器实际是base之上栈元素的别名;当指令操作数的类型的常数时, 它首先判断B操作数的最位是否为零.如果是零,则按照和寄存器的处理方法一样做,如果不是零,则在常数表中找相应的值.</p>
+<p>我们知道<strong>Lua</strong>中函数的执行过程是这样的. 首先将函数压栈,然后依次将参数压栈,形成图中所示的栈的内容. 因此R[0]到R[n]也分别表示了Arg[1]到Arg[N+1].在第一个参数之下,就是当前正在执行的函数,对于<strong>Lua</strong>的函数(相对C函数)来说,它是指向类型为 Prototype的TValue, 在Prototype中字段code指向了一个数组用来表示组成这个函数的所有指令,字段k指向一个数组来表示这个函数使用到的所有常量.最后,<strong>Lua</strong>在解释执行过程中有专门的变量pc来指向下一条要执行的指令.</p>
+<p><strong>指令解释器</strong></p>
+<p>有了前面对指令格式和体系结构的介绍,现在我们可以进入正题, 来看看Lua的指令是如何执行的了.主函数如下:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:373 &nbsp;</span></span></li><li><span>void&nbsp;luaV_execute&nbsp;(lua_State&nbsp;*L,&nbsp;int&nbsp;nexeccalls)&nbsp;{ &nbsp;</span></li><li class="alt"><span>LClosure&nbsp;*cl; &nbsp;</span></li><li><span>StkId&nbsp;base; &nbsp;</span></li><li class="alt"><span>TValue&nbsp;*k; &nbsp;</span></li><li><span>const&nbsp;Instruction&nbsp;*pc; &nbsp;</span></li><li class="alt"><span>reentry:&nbsp;/*&nbsp;entry&nbsp;point&nbsp;*/ &nbsp;</span></li><li><span>lua_assert(isLua(L-</span><span class="tag">&gt;</span><span>ci)); &nbsp;</span></li><li class="alt"><span class="attribute">pc</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">L</span><span>-</span><span class="tag">&gt;</span><span>savedpc; &nbsp;</span></li><li><span class="attribute">cl</span><span>&nbsp;=&nbsp;&amp;clvalue(L-</span><span class="tag">&gt;</span><span>ci-</span><span class="tag">&gt;</span><span>func)-</span><span class="tag">&gt;</span><span>l; &nbsp;</span></li><li class="alt"><span class="attribute">base</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">L</span><span>-</span><span class="tag">&gt;</span><span>base; &nbsp;</span></li><li><span class="attribute">k</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">cl</span><span>-</span><span class="tag">&gt;</span><span>p-</span><span class="tag">&gt;</span><span>k;&nbsp;</span></li></ol></pre>
+<p>这是最开始的初始化过程.其中, pc被初始化成为了L-&gt;savedpc,base被初始化成为了L-&gt;base, 即程序从L-&gt;savedpc开始执行 (在下一篇专题中,将会介绍到 L-&gt;savedpc在函数调用的预处理过程中指向了当前函数的code),而L-&gt;base指向栈中当前函数的下一个位置.cl表示当前正在执行闭包(当前可以理解成为函数),k指向当前闭包的常量表.</p>
+<p>接下来(注意,为了专注主要逻辑, 我将其中用于Debugger支持,断言等代码省略了):</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>/*&nbsp;main&nbsp;loop&nbsp;of&nbsp;interpreter&nbsp;*/ &nbsp;</span></span></li><li><span>for&nbsp;(;;)&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;Instruction&nbsp;</span><span class="attribute">i</span><span>&nbsp;=&nbsp;*pc++; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;StkId&nbsp;ra; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;省略Debugger支持和Coroutine支持*/ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;warning!!&nbsp;several&nbsp;calls&nbsp;may&nbsp;realloc&nbsp;the&nbsp;stack&nbsp;and&nbsp;invalidate&nbsp;`ra'&nbsp;*/ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">ra</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">RA</span><span>(i); &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;省略断言&nbsp;*/ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;switch&nbsp;(GET_OPCODE(i))&nbsp;{&nbsp;</span></li></ol></pre>
+<p>进入到解释器的主循环,处理很简单,取得当前指令,pc递增,初始化ra,然后根据指令的操作码进行选择. 接下来的代码是什么样的, 估计大家都能想到,一大串的case来指示每条指令的执行.具体的实现可以参考源码, 在这里不对每一条指令展开, 只是对其中有主要的几类指令进行说明:</p>
+<p><strong>传值类的指令,与MOVE为代表:</strong></p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:403 &nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;OP_MOVE:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setobjs2s(L,&nbsp;ra,&nbsp;RB(i)); &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li><span>lopcodes:154 &nbsp;</span></li><li class="alt"><span>OP_MOVE,/*&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;R(A)&nbsp;</span><span class="attribute">:</span><span>=&nbsp;</span><span class="attribute-value">R</span><span>(B)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/ &nbsp;</span></li><li><span>lobject.h:161 &nbsp;</span></li><li class="alt"><span>#define&nbsp;setobj(L,obj1,obj2)&nbsp;\ &nbsp;</span></li><li><span>{&nbsp;const&nbsp;TValue&nbsp;*</span><span class="attribute">o2</span><span>=(obj2);&nbsp;TValue&nbsp;*</span><span class="attribute">o1</span><span>=(obj1);&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;o1-</span><span class="tag">&gt;</span><span class="attribute">value</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">o2</span><span>-</span><span class="tag">&gt;</span><span>value;&nbsp;o1-</span><span class="tag">&gt;</span><span class="attribute">tt</span><span>=</span><span class="attribute-value">o2</span><span>-</span><span class="tag">&gt;</span><span>tt;&nbsp;\ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;checkliveness(G(L),o1);&nbsp;} &nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span>/* &nbsp;</span></li><li class="alt"><span>**&nbsp;different&nbsp;types&nbsp;of&nbsp;sets,&nbsp;according&nbsp;to&nbsp;destination &nbsp;</span></li><li><span>*/ &nbsp;</span></li><li class="alt"><span>/*&nbsp;from&nbsp;stack&nbsp;to&nbsp;(same)&nbsp;stack&nbsp;*/ &nbsp;</span></li><li><span>#define&nbsp;setobjs2s&nbsp;&nbsp;&nbsp;&nbsp;setobj&nbsp;</span></li></ol></pre>
+<p>从注释来看, 这条指令是将操作数A,B都做为寄存器,然后将B的值给A. 而实现也是简单明了,只使用了一句. 宏展开以后, 可以看到, R[A],R[B]的类型是TValue, 只是将这两域的值传过来即可. 对于可回收对象来说,真实值不会保存在栈上,所以只是改了指针,而对于非可回收对象来说,则是直接将值从R[B]赋到R[A].</p>
+<p><strong>数值运算类指令,与ADD为代表:</strong></p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:470 &nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;OP_ADD:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arith_op(luai_numadd,&nbsp;TM_ADD); &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li><span>lvm.c:360 &nbsp;</span></li><li class="alt"><span>#define&nbsp;arith_op(op,tm)&nbsp;{&nbsp;\ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TValue&nbsp;*</span><span class="attribute">rb</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">RKB</span><span>(i);&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TValue&nbsp;*</span><span class="attribute">rc</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">RKC</span><span>(i);&nbsp;\ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(ttisnumber(rb)&nbsp;&amp;&amp;&nbsp;ttisnumber(rc))&nbsp;{&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lua_Number&nbsp;</span><span class="attribute">nb</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">nvalue</span><span>(rb),&nbsp;</span><span class="attribute">nc</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">nvalue</span><span>(rc);&nbsp;\ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setnvalue(ra,&nbsp;op(nb,&nbsp;nc));&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;\ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;\ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Protect(Arith(L,&nbsp;ra,&nbsp;rb,&nbsp;rc,&nbsp;tm));&nbsp;\ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li class="alt"><span>lopcodes.c:171 &nbsp;</span></li><li><span>OP_ADD,/*&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;B&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;R(A)&nbsp;</span><span class="attribute">:</span><span>=&nbsp;</span><span class="attribute-value">RK</span><span>(B)&nbsp;+&nbsp;RK(C)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;</span></li></ol></pre>
+<p>如果两个操作数都是数值的话,关键的一行是:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>setnvalue(ra,op(nb,nc));&nbsp;</span></span></li></ol></pre>
+<p>即两个操作数相加以后,把值赋给R[A].值得注意的是,操作数B,C都是RK, 即可能是寄存器也可能是常量,这最决于最B和C的最高位是否为1,如果是1,则是常量,反之则是寄存器.具体可以参考宏ISK的实现.</p>
+<p>如果两个操作数不是数值,即调用了Arith函数,它尝试将两个操作转换成数值进行计算,如果无法转换,则使用元表机制.该函数的实现如下:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:313 &nbsp;</span></span></li><li><span>static&nbsp;void&nbsp;Arith&nbsp;(lua_State&nbsp;*L,&nbsp;StkId&nbsp;ra,&nbsp;const&nbsp;TValue&nbsp;*rb, &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;TValue&nbsp;*rc,&nbsp;TMS&nbsp;op)&nbsp;{ &nbsp;</span></li><li><span>TValue&nbsp;tempb,&nbsp;tempc; &nbsp;</span></li><li class="alt"><span>const&nbsp;TValue&nbsp;*b,&nbsp;*c; &nbsp;</span></li><li><span>if&nbsp;((</span><span class="attribute">b</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">luaV_tonumber</span><span>(rb,&nbsp;&amp;tempb))&nbsp;!=&nbsp;NULL&nbsp;&amp;&amp; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span><span class="attribute">c</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">luaV_tonumber</span><span>(rc,&nbsp;&amp;tempc))&nbsp;!=&nbsp;NULL)&nbsp;{ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;lua_Number&nbsp;</span><span class="attribute">nb</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">nvalue</span><span>(b),&nbsp;</span><span class="attribute">nc</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">nvalue</span><span>(c); &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;switch&nbsp;(op)&nbsp;{ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_ADD:&nbsp;setnvalue(ra,&nbsp;luai_numadd(nb,&nbsp;nc));&nbsp;break; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_SUB:&nbsp;setnvalue(ra,&nbsp;luai_numsub(nb,&nbsp;nc));&nbsp;break; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_MUL:&nbsp;setnvalue(ra,&nbsp;luai_nummul(nb,&nbsp;nc));&nbsp;break; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_DIV:&nbsp;setnvalue(ra,&nbsp;luai_numdiv(nb,&nbsp;nc));&nbsp;break; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_MOD:&nbsp;setnvalue(ra,&nbsp;luai_nummod(nb,&nbsp;nc));&nbsp;break; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_POW:&nbsp;setnvalue(ra,&nbsp;luai_numpow(nb,&nbsp;nc));&nbsp;break; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;TM_UNM:&nbsp;setnvalue(ra,&nbsp;luai_numunm(nb));&nbsp;break; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;lua_assert(0);&nbsp;break; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li class="alt"><span>} &nbsp;</span></li><li><span>else&nbsp;if&nbsp;(!call_binTM(L,&nbsp;rb,&nbsp;rc,&nbsp;ra,&nbsp;op)) &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;luaG_aritherror(L,&nbsp;rb,&nbsp;rc); &nbsp;</span></li><li><span>}&nbsp;</span></li></ol></pre>
+<p>在上面call_binTM用于调用到元表中的元方法,因为在Lua以前的版本中元方法也被叫做tag method, 所以函数最后是以TM结尾的.</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm:163 &nbsp;</span></span></li><li><span>static&nbsp;int&nbsp;call_binTM&nbsp;(lua_State&nbsp;*L,&nbsp;const&nbsp;TValue&nbsp;*p1,&nbsp;const&nbsp;TValue&nbsp;*p2, &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StkId&nbsp;res,&nbsp;TMS&nbsp;event)&nbsp;{ &nbsp;</span></li><li><span>const&nbsp;TValue&nbsp;*</span><span class="attribute">tm</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">luaT_gettmbyobj</span><span>(L,&nbsp;p1,&nbsp;event);&nbsp;/*&nbsp;try&nbsp;first&nbsp;operand&nbsp;*/ &nbsp;</span></li><li class="alt"><span>if&nbsp;(ttisnil(tm)) &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">tm</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">luaT_gettmbyobj</span><span>(L,&nbsp;p2,&nbsp;event);&nbsp;/*&nbsp;try&nbsp;second&nbsp;operand&nbsp;*/ &nbsp;</span></li><li class="alt"><span>if&nbsp;(!ttisfunction(tm))&nbsp;return&nbsp;0; &nbsp;</span></li><li><span>callTMres(L,&nbsp;res,&nbsp;tm,&nbsp;p1,&nbsp;p2); &nbsp;</span></li><li class="alt"><span>return&nbsp;1; &nbsp;</span></li><li><span>}&nbsp;</span></li></ol></pre>
+<p>在 这个函数中,试着从二个操作数中找到其中一个操作数的元方法(第一个操作数优先), 这里event表示具体哪一个元方法,找到了之后,再使用函数callTMres()去调用相应的元方法. callTMres()的实现很简单,只是将元方法,第一,第二操作数先后压栈,再调用并取因返回值.具体如下:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:82 &nbsp;</span></span></li><li><span>static&nbsp;void&nbsp;callTMres&nbsp;(lua_State&nbsp;*L,&nbsp;StkId&nbsp;res,&nbsp;const&nbsp;TValue&nbsp;*f, &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;TValue&nbsp;*p1,&nbsp;const&nbsp;TValue&nbsp;*p2)&nbsp;{ &nbsp;</span></li><li><span>ptrdiff_t&nbsp;</span><span class="attribute">result</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">savestack</span><span>(L,&nbsp;res); &nbsp;</span></li><li class="alt"><span>setobj2s(L,&nbsp;L-</span><span class="tag">&gt;</span><span>top,&nbsp;f);&nbsp;/*&nbsp;push&nbsp;function&nbsp;*/ &nbsp;</span></li><li><span>setobj2s(L,&nbsp;L-</span><span class="tag">&gt;</span><span>top+1,&nbsp;p1);&nbsp;/*&nbsp;1st&nbsp;argument&nbsp;*/ &nbsp;</span></li><li class="alt"><span>setobj2s(L,&nbsp;L-</span><span class="tag">&gt;</span><span>top+2,&nbsp;p2);&nbsp;/*&nbsp;2nd&nbsp;argument&nbsp;*/ &nbsp;</span></li><li><span>luaD_checkstack(L,&nbsp;3); &nbsp;</span></li><li class="alt"><span>L-</span><span class="tag">&gt;</span><span>top&nbsp;+=&nbsp;3; &nbsp;</span></li><li><span>luaD_call(L,&nbsp;L-</span><span class="tag">&gt;</span><span>top&nbsp;-&nbsp;3,&nbsp;1); &nbsp;</span></li><li class="alt"><span class="attribute">res</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">restorestack</span><span>(L,&nbsp;result); &nbsp;</span></li><li><span>L-</span><span class="tag">&gt;</span><span>top--; &nbsp;</span></li><li class="alt"><span>setobjs2s(L,&nbsp;res,&nbsp;L-</span><span class="tag">&gt;</span><span>top); &nbsp;</span></li><li><span>}&nbsp;</span></li></ol></pre>
+<p>逻辑运算类指令,与EQ为代表:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:541 &nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;OP_EQ:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TValue&nbsp;*</span><span class="attribute">rb</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">RKB</span><span>(i); &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TValue&nbsp;*</span><span class="attribute">rc</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">RKC</span><span>(i); &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Protect( &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(equalobj(L,&nbsp;rb,&nbsp;rc)&nbsp;==&nbsp;GETARG_A(i)) &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dojump(L,&nbsp;pc,&nbsp;GETARG_sBx(*pc)); &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pc++; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li><span>lopcodes.c:185 &nbsp;</span></li><li class="alt"><span>OP_EQ,/*&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;B&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;((RK(B)&nbsp;==&nbsp;RK(C))&nbsp;~=&nbsp;A)&nbsp;then&nbsp;pc++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/&nbsp;</span></li></ol></pre>
+<p>在 这条指令实现的过程中,equalobj与之前的算术运算类似,读者可以自行分析.关键看它是如果实现中跳转的,如果RK[B]==RK[C]并且A为1 的情况下(即条件为真),则会使用pc取出下一条指令,调用dojump进行跳转,否则pc++,挂空紧接着的无条件跳转指令. dojump的实现如下:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:354 &nbsp;</span></span></li><li><span>#define&nbsp;dojump(L,pc,i)&nbsp;&nbsp;&nbsp;&nbsp;{(pc)&nbsp;+=&nbsp;(i);&nbsp;luai_threadyield(L);}&nbsp;</span></li></ol></pre>
+<p>luai_threadyield只是顺序地调用lua_unlock和lua_lock,这里为释放一次锁,使得别的线程可以得到调度.</p>
+<p>函数调用类指令,与CALL为代表:</p>
+<pre><ol class="dp-xml"><li class="alt"><span><span>lvm.c:582 &nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;OP_CALL:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span><span class="attribute">b</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">GETARG_B</span><span>(i); &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;</span><span class="attribute">nresults</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">GETARG_C</span><span>(i)&nbsp;-&nbsp;1; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(b&nbsp;!=&nbsp;0)&nbsp;L-</span><span class="tag">&gt;</span><span class="attribute">top</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">ra</span><span>+b;&nbsp;/*&nbsp;else&nbsp;previous&nbsp;instruction&nbsp;set&nbsp;top&nbsp;*/ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L-</span><span class="tag">&gt;</span><span class="attribute">savedpc</span><span>&nbsp;=&nbsp;pc; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch&nbsp;(luaD_precall(L,&nbsp;ra,&nbsp;nresults))&nbsp;{ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;PCRLUA:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nexeccalls++; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;goto&nbsp;reentry;&nbsp;/*&nbsp;restart&nbsp;luaV_execute&nbsp;over&nbsp;new&nbsp;Lua&nbsp;function&nbsp;*/ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;PCRC:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;it&nbsp;was&nbsp;a&nbsp;C&nbsp;function&nbsp;(`precall'&nbsp;called&nbsp;it);&nbsp;adjust&nbsp;results&nbsp;*/ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(nresults&nbsp;</span><span class="tag">&gt;</span><span>=&nbsp;0)&nbsp;L-</span><span class="tag">&gt;</span><span class="attribute">top</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">L</span><span>-</span><span class="tag">&gt;</span><span>ci-</span><span class="tag">&gt;</span><span>top; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="attribute">base</span><span>&nbsp;=&nbsp;</span><span class="attribute-value">L</span><span>-</span><span class="tag">&gt;</span><span>base; &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue; &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:&nbsp;{ &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;&nbsp;/*&nbsp;yield&nbsp;*/ &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} &nbsp;</span></li><li class="alt"><span>lopcodes.c:192 &nbsp;</span></li><li><span>&nbsp;</span></li><li class="alt"><span>OP_CALL,/*&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;B&nbsp;C&nbsp;&nbsp;&nbsp;&nbsp;R(A),&nbsp;...&nbsp;,R(A+C-2)&nbsp;</span><span class="attribute">:</span><span>=&nbsp;</span><span class="attribute-value">R</span><span>(A)(R(A+1),&nbsp;...&nbsp;,R(A+B-1))&nbsp;*/&nbsp;</span></li></ol></pre>
+<p>这一条指令将在下一个介绍<strong>Lua</strong>函数调用规范的专题中详细介绍. 在这里只是简单地说明CALL指令的R[A]表示的是即将要调用的函数,而B和C则分别表示参数个数加1,和返回值个数加1. 之所以这里需要加1,其原因是:B和C使用零来表示变长的参数和变长的返回值,而实际参数个数就向后推了一个.</p>
+<p>指令的介绍就先到此为止了, 其它的指令的实现也比较类似.仔细阅读<strong>源码</strong>就可很容易地分析出它的意义来. 下一篇将是一个专题, 详细地介绍<strong>Lua</strong>中函数的调用是如何实现的.</p>
+<p>小结：详解关于<strong>Lua源码</strong>分析学习教程的内容介绍完了，希望通过本文的学习能对你有所帮助！</p><p>【编辑推荐】</p><div><ol><li><a href=http://mobile.51cto.com/iphone-286462.htm target='_blank'>魔兽世界超级助手Lua脚本语言</a></li><li><a href=http://mobile.51cto.com/iphone-286496.htm target='_blank'>LUA学习笔记：魔兽世界自定义界面插件</a></li><li><a href=http://mobile.51cto.com/iphone-286515.htm target='_blank'>如何在CEGUI中使用Lua脚本入门学习</a></li><li><a href=http://mobile.51cto.com/iphone-286519.htm target='_blank'>详解LUA特性之私有性Privacy学习笔记</a></li><li><a href=http://mobile.51cto.com/iphone-286528.htm target='_blank'>解析LUA下载和测试编程环境学习教程</a></li><li><a href=http://mobile.51cto.com/iphone-286542.htm target='_blank'>详解LUA开发工具及其环境配置</a></li></ol></div><DIV align=right>【责任编辑：<A class=ln href="mailto:licz@51cto.com">李程站</A> TEL：（010）68476606】</DIV><br> 
+<p class="blank10"></p> 
+ 
+ 
+
+<p class="blank10"></p>
+<div class="f12"> <span class="fl">原文：<a href="http://mobile.51cto.com/iphone-286631.htm" class="blue"><b>详解关于Lua源码分析学习教程</b></a></span> <span class="fr"><a href="http://mobile.51cto.com">返回移动开发首页</a></span> </div>
+<p class="blank1"></p>
+</div>
+<hr style="border-top: #555555 1px solid; height: 1px; border-right: medium none; border-bottom: medium none; border-left: medium none"  />
+<div style="width: 600px; background: #ffffff"><img width="600" height="140" alt="" src="http://s3.51cto.com/wyfs02/M01/76/4A/wKioL1ZOwrbDjDqxAABJOr5GFjU021.png" border="0"  /></div>
+<hr style="border-top: #555555 1px solid; height: 1px; border-right: medium none; border-bottom: medium none; border-left: medium none"  />
+<iframe width="600" height="239" src="http://widget.weibo.com/relationship/bulkfollow.php?language=zh_cn&amp;uids=1927494533,1708729084,1706976420,1888399833,1422974343,1734475394&amp;wide=0&amp;color=C2D9F2,FFFFFF,0082CB,666666&amp;showtitle=1&amp;showinfo=1&amp;sense=0&amp;verified=1&amp;count=6&amp;refer='+encodeURIComponent(location.href)+'&amp;dpc=1" frameborder="0" scrolling="no"></iframe>
+<div class="tips">
+<div style="float:left;">
+<span style="float:left; margin-top:4px;">分享到：</span>
+<!-- Baidu Button BEGIN -->
+    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="margin-right:5px; float:left;">
+        <a class="bds_qzone"></a>
+        <a class="bds_tsina"></a>
+        <a class="bds_tqq"></a>
+        <a class="bds_renren"></a>
+        <a class="bds_t163"></a>
+        <span class="bds_more"></span>
+		<a class="shareCount"></a>
+
+</div>
+<!--<div class="fl"> 
+    </div>
+--><script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=585532" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+	var bds_config = {'snsKey':{'tsina':'2378297317'}};
+	document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?t=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+
+
+
+</div><div class="fr blue"><a href="javascript:AddFavorite(document.location.href,document.title);" target="_self">收藏</a>|<a href="javascript:window.print();" target="_self">打印</a>|<a id="msnqqcopy" title="分享本资源给好友" target="_self">复制</a></div>
+</div>
+</div>
+<!--内容 end-->
+<div class="topbiaoqing">
+<div class="biaoqing fixfloat pad" >
+<ul>
+<li><a href='javascript:getcountscom(286631,1)' target="_self"><img src="http://images.51cto.com/images/art1105/images/bq1.jpg" /></a>
+<div><a href='javascript:getcountscom(286631,1)' target="_self">给力</a></div>
+<span id="286631_1">(0票)</span></li>
+<li><a href='javascript:getcountscom(286631,2)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq2.jpg" /></a>
+<div><a href='javascript:getcountscom(286631,2)'  target="_self">动心</a></div>
+<span id="286631_2">(0票)</span></li>
+<li><a href='javascript:getcountscom(286631,3)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq3.jpg" /></a>
+<div><a href='javascript:getcountscom(286631,3)'  target="_self">废话</a></div>
+<span id="286631_3">(0票)</span></li>
+<li><a href='javascript:getcountscom(286631,4)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq4.jpg" /></a>
+<div><a href='javascript:getcountscom(286631,4)'  target="_self">专业</a></div>
+<span id="286631_4">(0票)</span></li>
+<li><a href='javascript:getcountscom(286631,5)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq5.jpg" /></a>
+<div><a href='javascript:getcountscom(286631,5)'  target="_self">标题党</a></div>
+<span id="286631_5">(0票)</span></li>
+<li><a href='javascript:getcountscom(286631,6)'  target="_self"><img src="http://images.51cto.com/images/art1105/images/bq6.jpg" /></a>
+<div><a href='javascript:getcountscom(286631,6)'  target="_self">路过</a></div>
+<span id="286631_6">(0票)</span></li>
+</ul>
+</div>
+<script language="javascript"> 
+getcountscom(286631,11);
+
+</script>
+</div>
+<p class="blank10"></p>
+<!--reltag end-->
+
+<p class="blank10"></p>
+<div class="uyan">
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1609262"></script>
+</div>
+<!--box end-->
+
+<div class="bor">
+<div class="titbg pl15">关于<a href='http://www.51cto.com/php/search.php?keyword=Lua' target='_blank' class='underline'>Lua</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=%D4%B4%C2%EB' target='_blank' class='underline'>源码</a>的更多文章</div>
+<div class="reltag">
+<ul class="fl list02">
+  <li><a href="http://mobile.51cto.com/hot-410547.htm" title="开发者必备的6款源码搜索引擎">开发者必备的6款源码搜索引擎</a></li><li><a href="http://mobile.51cto.com/anews-408324.htm" title="Android系统无法获得更新 44%设备有安全问题">Android系统无法获得更新 44%设备有安全问</a></li><li><a href="http://mobile.51cto.com/news-406847.htm" title="谷歌公布Nexus 7二代镜像源码">谷歌公布Nexus 7二代镜像源码</a></li><li><a href="http://mobile.51cto.com/abased-406236.htm" title="Android 4.3源码下载">Android 4.3源码下载</a></li><li><a href="http://mobile.51cto.com/abased-405166.htm" title="Android和iOS中Cocos2dx的横屏竖屏设置">Android和iOS中Cocos2dx的横屏竖屏设置</a></li>
+</ul>
+<div class="fr">
+<div class="h5 f12"><a href="http://mobile.51cto.com/windows-phone-399223.htm" title="Windows Phone源码下载大全"><b>Windows Phone源码下载大全</b></a></div>
+<a href="http://mobile.51cto.com/windows-phone-399223.htm" title="Windows Phone源码下载大全"><img src="http://s5.51cto.com/wyfs01/M01/0F/52/wKioJlHACi2QddVxAABLFhNO9Do474.jpg" alt="Windows Phone源码下载大全" width="100" height="80" border="0" /></a>
+<p class="c666">本专题Windows Phone源码下载大全为51cto的各位网友朋友分享了一<a class="blue"href="http://mobile.51cto.com/windows-phone-399223.htm" title="Windows Phone源码下载大全">[详细]</a></p>
+</div>
+</div></div>
+
+<p class="blank10"></p>
+<div class="relart fl bor">
+<div class="titbg">
+<h3 class="fl t1">栏目热门</h3>
+<a href="http://mobile.51cto.com/col/1542/click1.htm" class="tmore">更多&gt;&gt;</a></div>
+<ul>
+  
+	  <li><a href="http://mobile.51cto.com/hot-409995.htm" title="开源免费天气预报接口API以及全国所有地区代码！">开源免费天气预报接口API以及全国所有地区</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/iOS7-411721.htm" title="玩转iOS7 系统使用技巧集锦">玩转iOS7 系统使用技巧集锦</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/hot-411695.htm" title="十大iOS7系统使用技巧">十大iOS7系统使用技巧</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/iphone-410553.htm" title="iOS开发各类顶级资源集锦">iOS开发各类顶级资源集锦</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/hot-412500.htm" title="iOS 7: 如何为iPhone 5S编译64位应用">iOS 7: 如何为iPhone 5S编译64位应用</a></li>
+	  
+</ul>
+</div>
+<div class="cathot fr bor">
+<div class="titbg">
+<h3 class="fl t1">同期最新</h3>
+<a href="http://mobile.51cto.com/col/1542" class="tmore">更多&gt;&gt;</a></div>
+<ul>
+	
+	  <li><a href="http://mobile.51cto.com/iphone-286627.htm" title="详解如何把C++对象绑定到Lua轻量级">详解如何把C++对象绑定到Lua轻量级</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/iphone-286620.htm" title="详解关于Lua栈介绍以及实例">详解关于Lua栈介绍以及实例</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/iphone-286609.htm" title="详细了解LUA及在Windows下环境配置">详细了解LUA及在Windows下环境配置</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/iphone-286605.htm" title="详解Lua环境搭建之利用EditPlus搭建Lua开发环境">详解Lua环境搭建之利用EditPlus搭建Lua开发</a></li>
+	  
+	  <li><a href="http://mobile.51cto.com/iphone-286580.htm" title="关于LUA程序设计对象序列化学习笔记">关于LUA程序设计对象序列化学习笔记</a></li>
+	  
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="fl t1"><a href="http://mobile.51cto.com">移动开发</a></h3>
+<span class="pl10">频道导航</span></div>
+ <ul class="xtlist">
+<li><span class="tit">平台</span>
+<div><a href="http://mobile.51cto.com/web/">移动Web</a>|<a href="http://mobile.51cto.com/android/">Android</a>|<a href="http://mobile.51cto.com/iphone/">iOS</a>|<a href="http://mobile.51cto.com/windows-phone/">Windows Phone</a></div>
+</li>
+
+<li><span class="tit">应用</span>
+<div><a href="http://mobile.51cto.com/app-show/">移动应用</a>|<a href="http://mobile.51cto.com/team/">移动团队</a>|<a href="http://mobile.51cto.com/market/">应用商店</a>|<a href="http://mobile.51cto.com/speclist/">专题汇总</a>|<a href="http://mobile.51cto.com/1603/">Phone Club</a></div>
+</li>
+
+<li><span class="tit">观察</span>
+<div><a href="http://mobile.51cto.com/comment/">业界观察</a>|<a href="http://mobile.51cto.com/data/">调查数据</a>|<a href="http://mobile.51cto.com/informatization/">移动信息化</a></div>
+</li>
+
+<li class="last"><span class="tit">Android</span>
+<div><a href="http://mobile.51cto.com/ahot/">热点</a>|<a href="http://mobile.51cto.com/anews/">资讯</a>|<a href="http://mobile.51cto.com/android/abased/">基础</a>|<a href="http://mobile.51cto.com/android/amedia/">多媒体</a>|<a href="http://mobile.51cto.com/android/adatabase/">数据库</a>|<a href="http://mobile.51cto.com/android/design/">设计</a>|<a href="http://mobile.51cto.com/android/aengine/">工具</a>|<a href="http://mobile.51cto.com/android/aprogram/">编译</a></div>
+</li>
+</ul> 
+</div> 
+<p class="blank10"></p>
+<p class=blank10></p>
+<DIV class=leftbotcon>
+<DIV class="bor jdlist">
+<DIV class=titbg>
+<H3 class=t2>热点推荐</H3></DIV>
+<UL>
+<LI><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://mobile.51cto.com/mobile-182392.htm"><IMG src="http://images.51cto.com/files/uploadimg/20100202/153546162.jpg"></A> 
+<DIV class=name><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://mobile.51cto.com/mobile-182392.htm">Android开发应用详解</A></DIV></LI>
+<LI><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://developer.51cto.com/art/201106/266369.htm"><IMG src="http://images.51cto.com/files/uploadimg/20110608/133620622.jpg"></A> 
+<DIV class=name><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-t-4']);" href="http://developer.51cto.com/art/201106/266369.htm">那些性感的让人尖叫的程序员</A></DIV></LI>
+<LI><A href="http://developer.51cto.com/art/200907/133407.htm"><IMG src="http://images.51cto.com/files/uploadimg/20090702/134217922.jpg"></A> 
+<DIV class=name><A href="http://developer.51cto.com/art/200907/133407.htm">HTML5 下一代Web开发标准详解</A></DIV></LI>
+<LI><A href="http://developer.51cto.com/art/201104/257581.htm"><IMG src="http://images.51cto.com/files/uploadimg/20110426/123123954.jpg"></A> 
+<DIV class=name><A href="http://developer.51cto.com/art/201104/257581.htm">高性能WEB开发应用指南</A></DIV></LI>
+<LI><A href="http://os.51cto.com/art/200706/49181.htm"><IMG src="http://images.51cto.com/files/uploadimg/20070613/195816929.jpg"></A> 
+<DIV class=name><A href="http://os.51cto.com/art/200706/49181.htm">Ubuntu开源技术交流频道</A></DIV></LI></UL></DIV>
+<P class=blank10></P>
+<DIV class="bor hotTag"><STRONG>热门标签：</STRONG> <A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-2]);" href="http://os.51cto.com/windows/">windows频道</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://mobile.51cto.com/">移动开发</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://cloud.51cto.com/">云计算</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://mobile.51cto.com/mobile/objc/">objective-c</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://network.51cto.com/art/200909/151122.htm">tp-link路由器设置图解</A><A onclick="javascript: _gaq.push(['_trackPageview', '/51cto/neirong/d-w']);" href="http://developer.51cto.com/art/200907/133407.htm">html5</A> </DIV></DIV>
+<div class="leftbotbox"> </div>
+</div>
+<!--left end-->
+<div class="g_13 fr">
+<div class="focus fixfloat"> 
+ <img width="298" style="border: 1px solid #CCCCCC; margin:5px 0px 5px;" src="http://www.51cto.com/images/weixin.jpg"><div class="hot">
+<ul>
+<li class="tit"><em>专题</em> <a href="http://mobile.51cto.com/aengine-448169.htm">Android Studio上手攻略</a> </li>
+<li class="con"><dl><dt><a href="http://mobile.51cto.com/aengine-448169.htm"><img border="0" src="http://s6.51cto.com/wyfs02/M01/47/BB/wKioL1P--2OjD6MyAABa0wWx5Fs253.jpg"/></a></dt>
+<dd>既然强大的Android Studio来了，有什么理由不去用呢？</dd>
+</dl></li></ul><ol class="hotlist"><li><a href="http://mobile.51cto.com/iphone-441694.htm">iOS新语言swift上手指南</a></li><li><a href="http://mobile.51cto.com/anews-449279.htm">MIUI 6 测评：细节的量变</a></li></ol></div>
+<p>
+<script language="JavaScript" src="http://www.51cto.com/ad/art/hzh/ad.js" type="text/javascript"></script>
+</p>
+</div>
+<div class="rank">
+<div class="tlt">
+      <h3>文章排行</h3>
+      <a onmouseover="change_top10(3);" id="top_3">本月</a><a onmouseover="change_top10(2);" id="top_2">本周</a><a onmouseover="change_top10(1);" class="myon" id="top_1">24小时</a> </div>
+ <div id="top10_1" style="display: block;" class="list"><ul>
+<li><a href="http://mobile.51cto.com/design-250037.htm" target="_blank" title="21个免费的UI界面设计工具、资源及网站">21个免费的UI界面设计工具、资源及网站</a>
+<li><a href="http://mobile.51cto.com/android-227548.htm" target="_blank" title="在Eclipse下搭建Android开发环境教程">在Eclipse下搭建Android开发环境教程</a>
+<li><a href="http://mobile.51cto.com/hot-292923.htm" target="_blank" title="人人都是开发者：5款傻瓜式APP开发工具">人人都是开发者：5款傻瓜式APP开发工具</a>
+<li><a href="http://mobile.51cto.com/web-321296.htm" target="_blank" title="三大移动Web开发框架哪个适合你？">三大移动Web开发框架哪个适合你？</a>
+<li><a href="http://mobile.51cto.com/hot-464776.htm" target="_blank" title="哪个市场最挣钱，腾讯告诉你！">哪个市场最挣钱，腾讯告诉你！</a>
+<li><a href="http://mobile.51cto.com/news-464843.htm" target="_blank" title="阿里：这是全世界最大的打假团队">阿里：这是全世界最大的打假团队</a>
+<li><a href="http://mobile.51cto.com/design-464603.htm" target="_blank" title="Android应当从iOS处窃取的五大最佳功能">Android应当从iOS处窃取的五大最佳功能</a>
+<li><a href="http://mobile.51cto.com/iphone-464809.htm" target="_blank" title="iOS 8出色的跨应用通信效果：解读Actio">iOS 8出色的跨应用通信效果：解读Actio</a>
+<li><a href="http://mobile.51cto.com/comment-464778.htm" target="_blank" title="看库克如何干掉Android">看库克如何干掉Android</a>
+<li><a href="http://mobile.51cto.com/news-464748.htm" target="_blank" title="为什么说2015年将是微服务架构元年？">为什么说2015年将是微服务架构元年？</a>
+</ul></div>
+<div id="top10_2" style="display: none;" class="list"><ul>
+<li><a href="http://mobile.51cto.com/comment-464398.htm" target="_blank" title="漫画迎2015：用幽默的语言解读2014年IT">漫画迎2015：用幽默的语言解读2014年IT</a>
+<li><a href="http://mobile.51cto.com/aengine-464479.htm" target="_blank" title="盘点50款最实用的开源移动工具">盘点50款最实用的开源移动工具</a>
+<li><a href="http://mobile.51cto.com/news-464536.htm" target="_blank" title="微信正式推出Windows版客户端">微信正式推出Windows版客户端</a>
+<li><a href="http://mobile.51cto.com/design-464603.htm" target="_blank" title="Android应当从iOS处窃取的五大最佳功能">Android应当从iOS处窃取的五大最佳功能</a>
+<li><a href="http://mobile.51cto.com/aprogram-464570.htm" target="_blank" title="android一分钟学会可视化操作数据库（">android一分钟学会可视化操作数据库（</a>
+<li><a href="http://mobile.51cto.com/app-show-464555.htm" target="_blank" title="Facebook坏了谁干的？是我！是我！">Facebook坏了谁干的？是我！是我！</a>
+<li><a href="http://mobile.51cto.com/hot-464499.htm" target="_blank" title="聊科技：预测2015年手机六大技术趋势">聊科技：预测2015年手机六大技术趋势</a>
+<li><a href="http://mobile.51cto.com/abased-464571.htm" target="_blank" title="如何编写高效android代码">如何编写高效android代码</a>
+<li><a href="http://mobile.51cto.com/news-464389.htm" target="_blank" title="这才多久谷歌Project Ara就被玩坏了">这才多久谷歌Project Ara就被玩坏了</a>
+<li><a href="http://mobile.51cto.com/app-show-464374.htm" target="_blank" title="朋友圈的广告！改名叫商圈算了">朋友圈的广告！改名叫商圈算了</a>
+</ul></div>
+<div id="top10_3" style="display: none;" class="list"><ul>
+<li><a href="http://mobile.51cto.com/aengine-463841.htm" target="_blank" title="2014年 Java 工具和技术概览">2014年 Java 工具和技术概览</a>
+<li><a href="http://mobile.51cto.com/comment-464398.htm" target="_blank" title="漫画迎2015：用幽默的语言解读2014年IT">漫画迎2015：用幽默的语言解读2014年IT</a>
+<li><a href="http://mobile.51cto.com/aengine-463132.htm" target="_blank" title="跨平台开发移动应用程序的五大工具">跨平台开发移动应用程序的五大工具</a>
+<li><a href="http://mobile.51cto.com/aengine-464479.htm" target="_blank" title="盘点50款最实用的开源移动工具">盘点50款最实用的开源移动工具</a>
+<li><a href="http://mobile.51cto.com/web-463667.htm" target="_blank" title="开发移动应用程序的三种选择：原生、HT">开发移动应用程序的三种选择：原生、HT</a>
+<li><a href="http://mobile.51cto.com/iphone-463665.htm" target="_blank" title="最全面 iOS 语言学习资料整理">最全面 iOS 语言学习资料整理</a>
+<li><a href="http://mobile.51cto.com/anews-464161.htm" target="_blank" title="谷歌 Ara 项目究竟是何方神圣？">谷歌 Ara 项目究竟是何方神圣？</a>
+<li><a href="http://mobile.51cto.com/web-463939.htm" target="_blank" title="如何在Linux上开发跨平台的移动应用程">如何在Linux上开发跨平台的移动应用程</a>
+<li><a href="http://mobile.51cto.com/windows-phone-464288.htm" target="_blank" title="关于win10发布会，你必须知道的十件事">关于win10发布会，你必须知道的十件事</a>
+<li><a href="http://mobile.51cto.com/news-464536.htm" target="_blank" title="微信正式推出Windows版客户端">微信正式推出Windows版客户端</a>
+</ul></div>
+ 
+ </div>
+<p class="blank1"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="fl t1">热点职位</h3>
+<a href="http://gaozhao.51cto.com/job-search/list" class="tmore">更多&gt;&gt;</a></div>
+	<div class="rmzwn_xx"></div>
+</div>
+<div class="blank10"></div>
+<script src="http://www.51cto.com/images/home_2015/js/51cto_sha1.js"></script>
+<div class="bor">
+<div class="titbg">
+<h3 class="fl t1">热点专题</h3>
+<a href="http://mobile.51cto.com/col/1542/spec1.htm" class="tmore">更多&gt;&gt;</a></div>
+<ul class="plist01">
+<li><a href="http://mobile.51cto.com/news-413108.htm" title="移动周回顾：微软surface 2遭吐槽 三星土豪金死磕iPhone 5s"><img src="http://s2.51cto.com/wyfs01/M02/30/C4/wKioOVJc0A-yCIMVAAAjixOF_qg096.jpg" alt="移动周回顾：微软surface 2遭吐槽 三星土豪金死磕iPhone 5s" width="100" height="80" /></a>
+<h5><a href="http://mobile.51cto.com/news-413108.htm" title="移动周回顾：微软surface 2遭吐槽 三星土豪金死磕iPhone 5s">移动周回顾：微软surf</a></h5>
+<div class="c666">现在的天气越来越冷了，感觉跟冬天似的，小编现在在发</div>
+</li><li><a href="http://mobile.51cto.com/iOS7-411721.htm" title="玩转iOS7 系统使用技巧集锦"><img src="http://s4.51cto.com/wyfs01/M01/2F/BA/wKioJlJD-kHRzhOzAAAwVTLMBIc453.png" alt="玩转iOS7 系统使用技巧集锦" width="100" height="80" /></a>
+<h5><a href="http://mobile.51cto.com/iOS7-411721.htm" title="玩转iOS7 系统使用技巧集锦">玩转iOS7 系统使用技</a></h5>
+<div class="c666">在经过数月以及6个测试版本的体验后，iOS 7正式版终于</div>
+</li><li><a href="http://mobile.51cto.com/news-411291.htm" title="微软Surface 2发布 效仿苹果软硬棋局布阵"><img src="http://s3.51cto.com/wyfs01/M01/2D/A2/wKioJlJBKHCSJ-zVAABOKiQnMYw653.jpg" alt="微软Surface 2发布 效仿苹果软硬棋局布阵" width="100" height="80" /></a>
+<h5><a href="http://mobile.51cto.com/news-411291.htm" title="微软Surface 2发布 效仿苹果软硬棋局布阵">微软Surface 2发布 效</a></h5>
+<div class="c666">微软的思路很明确。一个消费者需要拥有几款电子设备？</div>
+</li> 
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="tagCloud">
+<div class="tlt">
+<h3>热点标签</h3>
+</div>
+<div class="taglist"><A title="iOS开发" href="http://mobile.51cto.com/mobile/objc/">iOS开发</A>  <A title="Android开发" href="http://mobile.51cto.com/mobile-182392.htm">Android开发</A> <A title="Symbian开发" href="http://mobile.51cto.com/mobile-220581.htm">Symbian开发</A>  <A title="MeeGo开发" href="http://mobile.51cto.com/meego-208013.htm">MeeGo开发</A>  <A title="BlackBerry开发" href="http://mobile.51cto.com/blackberry-255350.htm">BlackBerry开发</A>  <A title="Windows Phone开发" href="http://mobile.51cto.com/mobile-219051.htm">Windows Phone开发</A>  <A title="Phone Club" href="http://mobile.51cto.com/1603/">Phone Club</A>  <A title="Android 4.0" href="http://mobile.51cto.com/android-297987.htm" class="imp" >Android 4.0</A>  <A title="webOS 3.0" href="http://mobile.51cto.com/webos-256291.htm">webOS 3.0</A>  <A title="智能手机" href="http://www.linkphone.cn/">智能手机</A> <A title="软件下载" href="http://download.linkphone.cn/">软件下载</A> </div>
+</div>
+<div class="rss">
+<ul>
+<li class="lin f12-c"><a href="http://news.51cto.com/col/1323/"><strong>点击这里查看样刊</strong></a></li>
+<li>
+<dl>
+<dt> </dt>
+<dd><a href="http://home.51cto.com/index.php?s=/Subscribe"><img src="http://images.51cto.com/images/art0910/images/dingy.gif" /></a></dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="bor">
+<div class="titbg">
+<h3 class="t1">全站热点</h3>
+</div>
+<div class="webhot fixfloat">
+<ul>
+
+<li>
+  <a href="http://network.51cto.com/network/content2013/100G/"  title="路满荆棘 艰难挺进100G"><img src="http://s2.51cto.com/wyfs01/M01/32/21/wKioJlJ4eU-x4twaAABrukQpmu4308.jpg" /></a>
+  <div><a href="http://network.51cto.com/network/content2013/100G/"  title="路满荆棘 艰难挺进100G">路满荆棘 艰难挺进100G</a></div>
+</li>
+
+<li>
+  <a href="http://developer.51cto.com/art/201308/408999.htm"  title="《开发月刊》2013年8月刊发布"><img src="http://s4.51cto.com/wyfs01/M00/20/C8/wKioOVI3xsLRpXaWAAAiW6KPesQ279.jpg" /></a>
+  <div><a href="http://developer.51cto.com/art/201308/408999.htm"  title="《开发月刊》2013年8月刊发布">《开发月刊》2013年8月刊发布</a></div>
+</li>
+
+</ul>
+</div>
+<p class="blank1"></p>
+<ul class="list03">
+
+<li><a href="http://server.51cto.com/sCollege-405310.htm"  title="如何评估传统关键任务应用的云迁移?">如何评估传统关键任务应用的云迁移?</a></li>
+
+<li><a href="http://server.51cto.com/NGDC-405309.htm"  title="亚马逊 苹果 谷歌 数据中心谁最环保?">亚马逊 苹果 谷歌 数据中心谁最环保?</a></li>
+
+<li><a href="http://server.51cto.com/Review-405307.htm"  title="Facebook服务器对惠普思科造成威胁？">Facebook服务器对惠普思科造成威胁？</a></li>
+
+<li><a href="http://server.51cto.com/Storage-405306.htm"  title="西数拉大与希捷差距：已领先11％">西数拉大与希捷差距：已领先11％</a></li>
+
+<li><a href="http://os.51cto.com/art/201307/405268.htm"  title="系统频道7月第4周热点推荐：你应该了解的Linux发行版">系统频道7月第4周热点推荐：你应该了</a></li>
+
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="t1">读书</h3>
+</div>
+  
+<div class="catbook"><a href="http://book.51cto.com/art/200704/46264.htm" title=".NET for Flash动态网站开发手札"><img src="http://images.51cto.com/files/uploadimg/20070420/193633326.jpg" width="66" height="98" border="0" /></a>
+<h5><a href="http://book.51cto.com/art/200704/46264.htm">.NET for Flash动态网站开发手札</a></h5>
+<div class="c666 text">本书深入浅出地说明了如何利用.NET、Flash及XML来辅助Flash富媒体应用程序的开发。
+本书首先介绍了Flash影片应用程序与.NET应用</div>
+</div>
+
+
+<ul class="list03">
+
+<li><a href="http://book.51cto.com/art/200712/62661.htm" title="Cisco CCNA 640-802题库">Cisco CCNA 640-802题库</a></li>
+
+<li><a href="http://book.51cto.com/art/200712/62749.htm" title="网络渗透测试——保护网络安全的技术、工具和过程">网络渗透测试——保护网络安全的技术、工具和过程</a></li>
+
+<li><a href="http://book.51cto.com/art/200712/62793.htm" title="Web服务安全">Web服务安全</a></li>
+
+<li><a href="http://book.51cto.com/art/200712/62907.htm" title="Linux安全体系分析与编程">Linux安全体系分析与编程</a></li>
+
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="bor">
+<div class="titbg">
+<h3 class="t1 fl">博文推荐</h3>
+<a class="tmore" href="http://blog.51cto.com/">更多&gt;&gt;</a></div>
+<div class="blogtj">
+<ul>
+<li> <a href="http://nowpaper.blog.51cto.com/"><img width="60" height="65" src="http://img1.51cto.com/image/upload/3893223_1320825949.jpg" /></a>
+<h5><a href="http://nowpaper.blog.51cto.com/">nowpaper</a></h5>
+Windows Phone专家</li>
+<li> <a href="http://xiaominghimi.blog.51cto.com/"><img width="60" height="65" src="http://images.51cto.com/files/uploadimg/20120102/125657389.jpg" /></a>
+<h5><a href="http://xiaominghimi.blog.51cto.com/">himi</a></h5>
+<p>Android开发专家</p>
+</li>
+</ul>
+</div>
+<ul class="list03">
+ <li><a href="http://luckcy.blog.51cto.com/1037681/367805/" target="_blank" title="从世界杯阿根廷队和德国队失利，看团队的平衡发展">从世界杯阿根廷队和德国队失利，看团</a></li><li><a href="http://johnemoney.blog.51cto.com/23744/367741/" target="_blank" title="windows 2003 服务器加固使用scw打造安全的铜墙铁壁">windows 2003 服务器加固使用scw打造</a></li><li><a href="http://johnwang.blog.51cto.com/474770/367688/" target="_blank" title="XEN环境中的VLAN实现">XEN环境中的VLAN实现</a></li><li><a href="http://zhen521g.blog.51cto.com/858551/367659/" target="_blank" title="浙江午饭线下聚会专题报告">浙江午饭线下聚会专题报告</a></li>
+</ul>
+</div>
+<p class="blank10"></p>
+<div class="tj">
+<div class="tlt">
+<h3>最新热帖</h3>
+<a class="more" href="http://bbs.51cto.com/hotthreads.php">更多&gt;&gt;</a></div>
+<ul>
+<li><a href="http://bbs.51cto.com/thread-26429-1.html" target="_blank" title="通用WAP网站生成系统(PowerDiamond) v.1">通用WAP网站生成系统(PowerDiamond) </a></li><li><a href="http://bbs.51cto.com/thread-11063-1.html" target="_blank" title="八类大学毕业生求职时不受欢迎">八类大学毕业生求职时不受欢迎</a></li><li><a href="http://bbs.51cto.com/thread-6946-1.html" target="_blank" title="IT人为什么难以拿到高薪？【转帖】">IT人为什么难以拿到高薪？【转帖】</a></li><li><a href="http://bbs.51cto.com/thread-4333-1.html" target="_blank" title="想去外企上班">想去外企上班</a></li>
+</ul>
+</div>
+<div class="picAD">
+<iframe class="bann" frameborder="0" src="http://www.51cto.com/iframe/article/baidu.htm" scrolling="No" style=" background-color:#DBDBDB; height:250px; width:300px; padding:0px;margin:0px;overflow:hidden;"></iframe>
+</div>
+</div>
+<p class="blank1"></p> 
+<!--leftbotcon end-->
+</div> 
+<div style="width:960px; margin:0 auto;">
+<script type="text/javascript">
+    /*960*90 创建于 2015-11-05文章页 旗下网站上方通栏*/
+    var cpro_id = "u2386966";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>
+<div class="subweb">
+<h4>51CTO旗下网站</h4>
+<div>
+<a target="_blank" href="http://www.51cto.com/">领先的IT技术网站 51CTO</a>
+<a target="_blank" href="http://www.watchstor.com/">领先的中文存储媒体 WatchStor</a>
+<a target="_blank" href="http://www.cioage.com/">中国首个CIO网站 CIOage</a>
+<a target="_blank" href="http://www.hc3i.cn/">中国首家数字医疗网站 HC3i</a>
+</div>
+</div>
+<div id="ft"><div id="foot" align="center"><script src="http://images.51cto.com/images/copy_right/copy_right.js"></script></div></div>
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+<script type="text/javascript">
+	$("#uyan_cmt_list").next().remove();	
+	$("#uyan_cmt_list").next().css("display","none");	
+</script>
+<style>
+.Nfloat { position: fixed; right: 2%; top: 35%; z-index: 801; }
+</style>
+
+
+
+<!-- 新监测代码 -->
+<!-- 新监测代码 -->
+<div id="MyMoveAd" style="display:none">
+<span id="wordlink_1"><script src="http://www.51cto.com/ad/art/wordlink/wordlink1.js"></script></span>
+<span id="wordlink_2"><script src="http://www.51cto.com/ad/art/wordlink/wordlink2.js"></script></span>
+<span id="wordlink_3"><script src="http://www.51cto.com/ad/art/wordlink/wordlink3.js"></script></span>
+<span id="wordlink_4"><script src="http://www.51cto.com/ad/art/wordlink/wordlink4.js"></script></span>
+<span id="pinglun"><script language="JavaScript" src="http://www.51cto.com/php/getArtCount.php?artid=286631&type=all"></script></span>
+<span id="tonglan"><script language="JavaScript" src="http://www.51cto.com/ad/art/tonglan/ad.js"></script></span>
+<span id="wordlink"><script language="JavaScript" src="http://www.51cto.com/ad/art/wordlink/ad.js"></script></span>
+<script src="http://www.51cto.com/ad/art/wordlink/ad.js"></script>
+<span id="bookss"><script language="JavaScript" src="http://www.51cto.com/php/getBookData.php?artid="></script></span>
+</div>   
+<script language="javascript" src="http://www.51cto.com/js/article/favorite.js"></script>
+
+<script language="javaScript" src="http://www.51cto.com/php/dialog_utf8.js"></SCRIPT>
+<script language="javaScript" src="http://www.51cto.com/mail.js"></script>  
+<script type="text/javascript" src="http://home.51cto.com/apps/favorite/Tpl/default/Public/js/favorbox.js"></script>
+<script language="javascript" src="http://images.51cto.com/images/art/newart1012/clipboard.js"></script>
+<script language="javaScript"> 
+	var thistid=286631; 
+	
+	//收藏按钮
+	var favor_url = 'http://mobile.51cto.com/iphone-286631.htm';  // 如：http://bbs.51cto.com/thread-789649-1.html
+	var favor_title = '详解关于Lua源码分析学习教程';       //  
+	
+	//绑定复制按钮
+	copy('msnqqcopy', 'http://mobile.51cto.com/iphone-286631.htm', '分享到MSN/QQ的链接复制成功!');
+//	copy('bbscopy', '[url=http://mobile.51cto.com/iphone-286631.htm][u]详解关于Lua源码分析学习教程[/u][/url]', '分享到论坛的UBB代码复制成功!');
+
+</script> 
+<script src=" http://home.51cto.com/index.php?s=/Index/getLoginStatus/reback/http%253A%252F%252Fmobile.51cto.com%252Fiphone-286631.htm" charset='utf-8'></script>
+<script src="http://www.51cto.com/php/count.php?view=yes&artID=286631" language="javascript"></script>
+<script language="javascript">
+document.getElementById('books').innerHTML = document.getElementById("bookss").innerHTML; 
+</script>
+
+</body>
+</html>

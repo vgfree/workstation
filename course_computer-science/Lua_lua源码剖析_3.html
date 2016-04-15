@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>lua源码剖析(三) - 但行好事 莫问前程 - ITeye技术网站</title>
+    <meta name="description" content="这次简单的补充一下前面类型部分剩下的东西。 首先我们要知道当我们想为lua来编写扩展的时候，有时候可能需要一些全局变量。可是这样会有问题，这是因为这样的话，我们就无法用于多个lua状态(也就是new 多个state). 于是lua提供了三种可以代替全局变量的方法。分别是注册表，环境变量和upvalue。 其中注册表和环境变量都是table。而upvalue也就是我们前面介绍的用来和指定函数关联的一些 ..." />
+    <meta name="keywords" content="Lua, C, C++, C#, 活动 lua源码剖析(三)" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="但行好事 莫问前程" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1460544463" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/green.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1448702469" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">但行好事 莫问前程</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://simohayha.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://simohayha.iteye.com" class="p-author" target="_blank">simohayha</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/552391">lua源码剖析(三)</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/84720">lua</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/Lua">Lua</a><a href="http://www.iteye.com/blogs/tag/C">C</a><a href="http://www.iteye.com/blogs/tag/C++">C++</a><a href="http://www.iteye.com/blogs/tag/C%23">C#</a><a href="http://www.iteye.com/blogs/tag/%E6%B4%BB%E5%8A%A8">活动</a></div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    这次简单的补充一下前面类型部分剩下的东西。<br /><br />首先我们要知道当我们想为lua来编写扩展的时候，有时候可能需要一些全局变量。可是这样会有问题，这是因为这样的话，我们就无法用于多个lua状态(也就是new 多个state).<br /><br />于是lua提供了三种可以代替全局变量的方法。分别是注册表，环境变量和upvalue。<br /><br />其中注册表和环境变量都是table。而upvalue也就是我们前面介绍的用来和指定函数关联的一些值。<br /><br />由于lua统一了从虚拟的栈上存取数据的接口，而这三个值其实并不是在栈上保存，而lua为了统一接口，通过伪索引来存取他们。接下来我们就会通过函数index2adr的代码片断来分析这三个类型。<br /><br />其实还有一种也是伪索引来存取的，那就是全局状态。也就是state的l_gt域。<br /><br />ok，我们来看这几种伪索引的表示，每次传递给index2adr的索引就是下面这几个：<br /><br /><pre class="java" name="code">
+
+#define LUA_REGISTRYINDEX	(-10000)
+#define LUA_ENVIRONINDEX	(-10001)
+#define LUA_GLOBALSINDEX	(-10002)
+
+///这个就是来存取upvalue。
+#define lua_upvalueindex(i)	(LUA_GLOBALSINDEX-(i))
+</pre><br /><br />来看代码,这个函数我们前面有分析过，只不过跳过了伪索引这部分，现在我们来看剩下的部分。<br /><br />其实很简单，就是通过传递进来的index来确定该到哪部分处理。<br /><br />这里他们几个处理有些不同，这是因为注册表是全局的（不同模块也能共享)，环境变量可以是整个lua_state共享，也可以只是这个函数所拥有。而upvalue只能属于某个函数。<br /><br />看下它们所在的位置，他们的作用域就很一目了然了。<br /><br />其中注册表包含在global_State中，环境变量 closure和state都有，upvalue只在closure中包含。<br /><br /><pre class="java" name="code">
+
+static TValue *index2adr (lua_State *L, int idx) {
+....................
+  else switch (idx) {  /* pseudo-indices */
+///注册表读取
+    case LUA_REGISTRYINDEX: return registry(L);
+///环境变量的存取
+    case LUA_ENVIRONINDEX: {
+///先得到当前函数
+      Closure *func = curr_func(L);
+///将当前函数的env设置为整个state的env。这样整个模块都可以共享。
+      sethvalue(L, &amp;L-&gt;env, func-&gt;c.env);
+      return &amp;L-&gt;env;
+    }
+///用来取global_State。
+    case LUA_GLOBALSINDEX: return gt(L);
+
+///取upvalue
+    default: {
+///取得当前函数
+      Closure *func = curr_func(L);
+///转换索引
+      idx = LUA_GLOBALSINDEX - idx;
+///从upvalue数组中取得对应的值。
+      return (idx &lt;= func-&gt;c.nupvalues)
+                ? &amp;func-&gt;c.upvalue[idx-1]
+                : cast(TValue *, luaO_nilobject);
+    }
+  }
+}</pre><br /><br />下面就是取得环境变量和注册表的对应的宏。<br /><br /><pre class="java" name="code">
+#define registry(L)	(&amp;G(L)-&gt;l_registry)
+#define gt(L)	(&amp;L-&gt;l_gt)
+</pre><br /><br />我们一个个的来看，首先是注册表。由于注册表是全局的，所以我们需要很好的选择key，尽量避免冲突，而在选择key中，不能使用数字类型的key，这是因为在lua中，数字类型的key是被引用系统所保留的。<br /><br />来看引用系统，我们编写lua模块时可以看到所有的值，函数，table，都是在栈上保存着，也就是说它们都是由lua来管理，我们要存取只能通过栈来存取。可是lua为了我们能够在c这边保存一个lua的值的指针，提供了luaL_ref这个函数。<br /><br />引用也就是在c这边保存lua的值对象。<br /><br />来看引用的实现，可以看到它是传递LUA_REGISTRYINDEX给luaL_ref函数，也就是说引用也是全局的，保存在注册表中的。<br /><pre class="java" name="code">
+#define lua_ref(L,lock) ((lock) ? luaL_ref(L, LUA_REGISTRYINDEX) : \
+      (lua_pushstring(L, "unlocked references are obsolete"), lua_error(L), 0))
+</pre><br /><br />然后来看它的key的计算。<br /><br />可以看到当要引用的值是nil时，直接返回LUA_REFNIL这个常量，并不会创建新的引用。<br /><br />还有一个要注意的就是这里注册表有个FREELIST_REF的key，这个key所保存的值就是我们最后一次unref掉的那个key。我们接下来看luaL_unref的时候会看到。<br /><br />这里为什么要这么做呢，这是因为在注册表中key是不能重复的，因此这里的key的选择是通过注册表这个table的大小来做key的，而这里每次unref之后我们通过设置t[FREELIST_REF]的值为上一次被unref掉的引用的key。这样当我们再次需要引用的时候，我们就不需要增长table的大小并且也不需要再次计算key，而是直接将上一次被unref掉得key返回就可以了。<br /><br />而这里上上一次被unref掉得ref的key是被保存在t[ref]中的。我们先来看luaL_unref的实现。<br /><br /><pre class="java" name="code">
+LUALIB_API void luaL_unref (lua_State *L, int t, int ref) {
+  if (ref &gt;= 0) {
+///取出注册表的table
+    t = abs_index(L, t);
+///得到t[FREELIST_REF];
+    lua_rawgeti(L, t, FREELIST_REF);
+///这里可以看到如果再次unref的话t[ref]就保存就的是上上一次的key的值。
+    lua_rawseti(L, t, ref);  /* t[ref] = t[FREELIST_REF] */
+
+///将ref压入栈
+    lua_pushinteger(L, ref);
+///设置t[FREELIST_REF］为ref。
+    lua_rawseti(L, t, FREELIST_REF);  /* t[FREELIST_REF] = ref */
+  }
+}</pre><br /><br />通过上面可以看到lua这里实现得很巧妙，通过表的t[FREELIST_REF]来保存最新的被unref掉得key，t[ref]来保存上一次被unref掉得key.然后我们就可以通过这个递归来得到所有已经被unref掉得key。接下来的luaL_ref就可以清晰的看到这个操作。也就是说t[FREELIST_REF]相当于一个表头。<br /><br /><br />来看luaL_ref,这个流程很简单，就是先取出注册表的那个table，然后将得到t[FREELIST_REF]来看是否有已经unref掉得key，如果有则进行一系列的操作(也就是上面所说的，将这个ref从freelist中remove，然后设置t[FREELIST_REF]为上上一次unref掉得值(t[ref])),最后设置t[ref]的值。这样我们就不需要遍历链表什么的。<br /><br />这里要注意就是调用这个函数之前栈的最顶端保存的就是我们要引用的值。<br /><pre class="java" name="code">
+
+LUALIB_API int luaL_ref (lua_State *L, int t) {
+  int ref;
+///取得索引
+  t = abs_index(L, t);
+  if (lua_isnil(L, -1)) {
+    lua_pop(L, 1);  /* remove from stack */
+///如果为nil，则直接返回LUA_REFNIL.
+    return LUA_REFNIL;  
+  }
+///得到t[FREELIST_REF].
+  lua_rawgeti(L, t, FREELIST_REF);
+///设置ref = t[FREELIST_REF] 
+  ref = (int)lua_tointeger(L, -1); 
+///弹出t[FREELIST_REF] 
+  lua_pop(L, 1);  /* remove it from stack */
+
+///如果ref不等于0,则说明有已经被unref掉得key。
+  if (ref != 0) {  /* any free element? */
+///得到t[ref]，这里t[ref]保存就是上上一次被unref掉得那个key。
+    lua_rawgeti(L, t, ref);  /* remove it from list */
+///设置t[FREELIST_REF] = t[ref],这样当下次再进来，我们依然可以通过freelist来直接返回key。
+    lua_rawseti(L, t, FREELIST_REF); 
+  }
+  else {  /* no free elements */
+///这里是通过注册表的大小来得到对应的key
+    ref = (int)lua_objlen(L, t);
+    ref++;  /* create new reference */
+  }
+
+//设置t[ref]=value;
+  lua_rawseti(L, t, ref);
+  return ref;
+}</pre><br /><br />所以我们可以看到我们如果要使用注册表的话，尽量不要使用数字类型的key，不然的话就很容易和引用系统冲突。<br /><br />不过在PIL中介绍了一个很好的key的选择，那就是使用代码中静态变量的地址（也就是用light userdata)，因为c链接器可以保证key的唯一性。详细的东西可以去看PIL.<br /><br />然后我们来看LUA_ENVIRONINDEX,环境是可以被整个模块共享的。可以先看PIL中的例子代码：<br /><br /><pre class="java" name="code">int luaopen_foo(lua_State *L)
+{
+     lua_newtable(L);
+     lua_replace(L,LUA_ENVIRONIDEX);
+     luaL_register(L,&lt;lib name&gt;,&lt;func list&gt;);
+..........................................
+}</pre><br /><br />可以看到我们一般都是为当前模块创建一个新的table，然后当register注册的所有函数就都能共享这个env了。<br /><br />来看代码片断，register最终会调用luaI_openlib：<br /><br /><pre class="java" name="code">LUALIB_API void luaI_openlib (lua_State *L, const char *libname,const luaL_Reg *l, int nup) {
+ ...........................
+///遍历模块内的所有函数。
+  for (; l-&gt;name; l++) {
+    int i;
+    for (i=0; i&lt;nup; i++)  /* copy upvalues to the top */
+      lua_pushvalue(L, -nup);
+///这里将函数压入栈，这个函数我们前面分析过，他最终会把当前state的env赋值给新建的closure，也就是说这里最终模块内的所有函数都会共享当前的state的env。
+    lua_pushcclosure(L, l-&gt;func, nup);
+    lua_setfield(L, -(nup+2), l-&gt;name);
+  }
+  lua_pop(L, nup);  /* remove upvalues */
+}</pre><br /><br />通过我们一开始分析的代码，我们知道当我们要存取环境的时候每次都是将当前调用的函数的env指针赋值给state的env，然后返回state的env(&amp;L-&gt;env)。这是因为state是被整个模块共享的，每个函数修改后必须与state的那个同步。<br /><br />最后我们来看upvalue。这里指的是c函数的upvalue，我们知道在lua中closure分为两个类型，一个是c函数，一个是lua函数，我们现在主要就是来看c函数。<br /><br />c函数的upvalue和lua的类似，也就是将我们以后函数调用所需要得一些值保存在upvalue中。<br /><br />这里一般都是通过lua_pushcclosure这个函数来做的。下面先来看个例子代码：<br /><br /><pre class="java" name="code">
+
+static int counter(lua_state *L);
+
+int newCounter(lua_State *L)
+{
+    lua_pushinteger(L,0);
+    lua_pushcclosure(L,&amp;counter,1);
+    return 1;
+}</pre><br /><br />上面的代码很简单，就是先push进去一个整数0,然后再push一个closure，这里closure的第三个参数就是upvalue的个数(这里要注意在lua中的upvalue的个数只有一个字节，因此你太多upvalue会被截断)。<br /><br /><br />lua_pushcclosure的代码前面已经分析过了，我们这里简单的再介绍一下。<br /><br />这个函数每次都会新建一个closure，然后将栈上的对应的value拷贝到closure的upvalue中，这里个数就是它的第三个参数来确定的。<br /><br />而取得upvalue也很简单，就是通过index2adr来计算对应的upvalue中的索引值，最终返回对应的值。<br /><br /><br />然后我们来看light userdata，这种userdata和前面讲得userdata的区别就是这种userdata的管理是交给c函数这边来管理的。<br /><br />这个实现很简单，由于它只是一个指针，因此只需要将这个值压入栈就可以了。<br /><pre class="java" name="code">
+LUA_API void lua_pushlightuserdata (lua_State *L, void *p) {
+  lua_lock(L);
+///设置对应的值。
+  setpvalue(L-&gt;top, p);
+  api_incr_top(L);
+  lua_unlock(L);
+}</pre><br /><br />最后我们来看元表。我们知道在lua中每个值都有一个元表，而table和userdata可以有自己独立的元表，其他类型的值共享所属类型的元表。在lua中可以使用setmetatable.而在c中我们是通过luaL_newmetatable来创建一个元表。<br /><br />元表其实也就是保存了一种类型所能进行的操作。<br /><br />这里要知道在lua中元表是保存在注册表中的。<br /><br />因此我们来看luaL_newmetatable的实现。<br />这里第二个函数就是当前所要注册的元表的名字。这里一般都是类型名字。这个是个key，因此我们一般要小心选择类型名。<br /><br /><pre class="java" name="code">
+LUALIB_API int luaL_newmetatable (lua_State *L, const char *tname) {
+///首先从注册表中取得key为tname的元表
+  lua_getfield(L, LUA_REGISTRYINDEX, tname);  
+///如果存在则失败，返回0
+  if (!lua_isnil(L, -1))  /* name already in use? */
+    return 0; 
+  lua_pop(L, 1);
+///创建一个元表
+  lua_newtable(L);  /* create metatable */
+///压入栈
+  lua_pushvalue(L, -1);
+///设置注册表中的对应的元表。
+  lua_setfield(L, LUA_REGISTRYINDEX, tname);  
+  return 1;
+}</pre><br /><br />当我们设置完元表之后我们就可以通过调用luaL_checkudata来检测栈上的userdata的元表是否和指定的元表匹配。<br />这里第二个参数是userdata的位置，tname是要匹配的元表的名字。<br /><br />这里我们要知道在lua中，Table和userdata中都包含一个metatable域，这个也就是他们对应的元表，而基本类型的元表是保存在global_State的mt中的。这里mt是一个数组。<br /><br />这里我们先来看lua_getmetatable,这个函数返回当前值的元表。<br />这里代码很简单，就是取值，然后判断类型。最终返回设置元表。<br /><pre class="java" name="code">
+
+LUA_API int lua_getmetatable (lua_State *L, int objindex) {
+  const TValue *obj;
+  Table *mt = NULL;
+  int res;
+  lua_lock(L);
+///取得对应索引的值
+  obj = index2adr(L, objindex);
+///开始判断类型。
+  switch (ttype(obj)) {
+///table类型
+    case LUA_TTABLE:
+      mt = hvalue(obj)-&gt;metatable;
+      break;
+///userdata类型
+    case LUA_TUSERDATA:
+      mt = uvalue(obj)-&gt;metatable;
+      break;
+    default:
+///这里是基础类型
+      mt = G(L)-&gt;mt[ttype(obj)];
+      break;
+  }
+  if (mt == NULL)
+    res = 0;
+  else {
+///设置元表到栈的top
+    sethvalue(L, L-&gt;top, mt);
+    api_incr_top(L);
+    res = 1;
+  }
+  lua_unlock(L);
+  return res;
+}</pre><br /><br /><br />接下来来看checkudata的实现。他就是取得当前值的元表，然后取得tname对应的元表，最后比较一下。<br /><br /><pre class="java" name="code">
+
+LUALIB_API void *luaL_checkudata (lua_State *L, int ud, const char *tname) {
+  void *p = lua_touserdata(L, ud);
+  if (p != NULL) {  /* value is a userdata? */
+///首先取得当前值的元表。
+    if (lua_getmetatable(L, ud)) { 
+///然后取得taname对应的元表。
+      lua_getfield(L, LUA_REGISTRYINDEX, tname);  
+//比较。
+      if (lua_rawequal(L, -1, -2)) {  
+        lua_pop(L, 2);  /* remove both metatables */
+        return p;
+      }
+    }
+  }
+  luaL_typerror(L, ud, tname);  /* else error */
+  return NULL;  /* to avoid warnings */
+}</pre><br /><br /><br /><br /><br /><br /><br />
+  </div>
+
+  
+
+  
+  
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=680 HEIGHT=90 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>2</strong> <br/>顶</div><div class='digged'><strong>1</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/556168" class="next" title="linux内核sk_buff的结构分析">linux内核sk_buff的结构分析</a>
+      |
+      <a href="/blog/550976" class="pre" title="tcp的输入段的处理">tcp的输入段的处理</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2009-12-20 17:35</li>
+      <li>浏览 10533</li>
+      <li><a href="#comments">评论(4)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/552391" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/18"><img src="http://img.knowledge.csdn.net/upload/base/1458106113412_412.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/18" classs="title">JavaScript知识库</a>
+              <span>
+                 <em>1581</em>&nbsp;&nbsp;关注 <i>|</i> <em>516</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/10"><img src="http://img.knowledge.csdn.net/upload/base/1453368118762_762.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/10" classs="title">Apache Spark知识库</a>
+              <span>
+                 <em>2868</em>&nbsp;&nbsp;关注 <i>|</i> <em>257</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/4"><img src="http://img.knowledge.csdn.net/upload/base/1452500466484_484.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/4" classs="title">Docker知识库</a>
+              <span>
+                 <em>2253</em>&nbsp;&nbsp;关注 <i>|</i> <em>187</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc1302200">
+  <div class="comment_title">
+    4 楼
+    <a href='http://simohayha.iteye.com' target='_blank' title='simohayha'>simohayha</a>
+    2009-12-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">lua 写道</div><div class="quote_div"><br />看过那篇，实际上也跟着读了一部分（见我的博客http://sunxiunan.com），但是总感觉这种读法有些光读不练（缺乏实际运行状态分析）。<br /><br />我准备是一边调试一边阅读相应碰到的代码，这也是我接触一个新project时候的做法。这样运行时的状态值以及堆栈信息、相关信息就都一目了然了，整个Lua系统也是活动而不是死的。</div><br /><br />恩.一般都是平时写扩展什么比较多了,才能更好的理解源码里的一些东西..或者说直接开gdb,加调试信息也是个好办法..</div>
+</div>
+
+<div id="bc1302044">
+  <div class="comment_title">
+    3 楼
+    <a href='http://lua.iteye.com' target='_blank' title='lua'>lua</a>
+    2009-12-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">simohayha 写道</div><div class="quote_div"><div class="quote_title">lua 写道</div><div class="quote_div">尽管我也读了一些lua代码，但是看着还是比较费劲。<br /><br />是否能够动静结合分析会更好一些？</div><br /><br />你可以看下这个阅读顺序.<br /><br />http://www.reddit.com/comments/63hth/ask_reddit_which_oss_codebases_out_there_are_so/c02pxbp<br /><br />还有就是lua 5.1实现的那篇文档了,以及PIL的第四部分...</div><br /><br />看过那篇，实际上也跟着读了一部分（见我的博客http://sunxiunan.com），但是总感觉这种读法有些光读不练（缺乏实际运行状态分析）。<br /><br />我准备是一边调试一边阅读相应碰到的代码，这也是我接触一个新project时候的做法。这样运行时的状态值以及堆栈信息、相关信息就都一目了然了，整个Lua系统也是活动而不是死的。</div>
+</div>
+
+<div id="bc1301954">
+  <div class="comment_title">
+    2 楼
+    <a href='http://simohayha.iteye.com' target='_blank' title='simohayha'>simohayha</a>
+    2009-12-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content"><div class="quote_title">lua 写道</div><div class="quote_div">尽管我也读了一些lua代码，但是看着还是比较费劲。<br /><br />是否能够动静结合分析会更好一些？</div><br /><br />你可以看下这个阅读顺序.<br /><br />http://www.reddit.com/comments/63hth/ask_reddit_which_oss_codebases_out_there_are_so/c02pxbp<br /><br />还有就是lua 5.1实现的那篇文档了,以及PIL的第四部分...</div>
+</div>
+
+<div id="bc1301946">
+  <div class="comment_title">
+    1 楼
+    <a href='http://lua.iteye.com' target='_blank' title='lua'>lua</a>
+    2009-12-22&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">尽管我也读了一些lua代码，但是看着还是比较费劲。<br /><br />是否能够动静结合分析会更好一些？</div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 552391;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'lua源码剖析(三)');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'lua源码剖析(三)');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://simohayha.iteye.com'><img alt="simohayha的博客" class="logo" src="http://www.iteye.com/upload/logo/user/145151/42eaf10f-47d3-3408-86bc-ff2932f36a86.jpg?1252629645" title="simohayha的博客: 但行好事 莫问前程" width="" /></a></div>
+  <div id="blog_owner_name">simohayha</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 1022842 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1448702469" title="男" /></li>
+              <li>来自: 火星</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://maikgpan.iteye.com' target='_blank'><img alt="maikgpan的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="maikgpan的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://maikgpan.iteye.com' target='_blank' title='maikgpan'>maikgpan</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://jack-liubing.iteye.com' target='_blank'><img alt="jack_liubing的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="jack_liubing的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://jack-liubing.iteye.com' target='_blank' title='jack_liubing'>jack_liubing</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://xiaohui6636.iteye.com' target='_blank'><img alt="xiaohui6636的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="xiaohui6636的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://xiaohui6636.iteye.com' target='_blank' title='xiaohui6636'>xiaohui6636</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://xway569.iteye.com' target='_blank'><img alt="xway569的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="xway569的博客: xway569" width="48px" /></a></div>
+                <div class="left"><a href='http://xway569.iteye.com' target='_blank' title='xway569'>xway569</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (249)</a></li>
+                
+                  <li><a href="/category/10946">c/c++ (30)</a></li>
+                
+                  <li><a href="/category/53824">kernel (42)</a></li>
+                
+                  <li><a href="/category/101180">服务器设计 (11)</a></li>
+                
+                  <li><a href="/category/84183">算法 (1)</a></li>
+                
+                  <li><a href="/category/84720">lua (3)</a></li>
+                
+                  <li><a href="/category/85319">asm (1)</a></li>
+                
+                  <li><a href="/category/25100">erlang (1)</a></li>
+                
+                  <li><a href="/category/15272">ruby (40)</a></li>
+                
+                  <li><a href="/category/7170">python (15)</a></li>
+                
+                  <li><a href="/category/7169">java (8)</a></li>
+                
+                  <li><a href="/category/13620">FP (5)</a></li>
+                
+                  <li><a href="/category/27325">javascript (4)</a></li>
+                
+                  <li><a href="/category/2938">音乐 (8)</a></li>
+                
+                  <li><a href="/category/5989">电影 (13)</a></li>
+                
+                  <li><a href="/category/6012">读书 (3)</a></li>
+                
+                  <li><a href="/category/7052">心情 (34)</a></li>
+                
+                  <li><a href="/category/7174">体育 (5)</a></li>
+                
+                  <li><a href="/category/12224">连岳语录 (7)</a></li>
+                
+                  <li><a href="/category/14136">其他 (11)</a></li>
+                
+                  <li><a href="/category/9827">转帖 (6)</a></li>
+                
+                  <li><a href="/category/46403">嵌入式 (1)</a></li>
+                
+                  <li><a href="/category/46404">翻译 (0)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (8)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (1520)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (1)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2010-08">2010-08</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2010-07">2010-07</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2010-06">2010-06</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://ahtest.iteye.com' target='_blank' title='ahtest'>ahtest</a>： 
+                  赞一下~~<br />
+                  <a href="/blog/167111#bc2352024">一个简单的ruby Metaprogram的例子</a>
+                </li>
+                
+                <li>
+                  <a href='http://itiprocareer.iteye.com' target='_blank' title='itiProCareer'>itiProCareer</a>： 
+                   简直胡说八道，误人子弟啊。。。。谁告诉你 Ruby 1.9  ...<br />
+                  <a href="/blog/165269#bc2349636">ruby中的类变量与类实例变量</a>
+                </li>
+                
+                <li>
+                  <a href='http://dear531.iteye.com' target='_blank' title='dear531'>dear531</a>： 
+                  还得补充一句，惊群了之后，数据打印显示，只有一个子线程继续接受 ...<br />
+                  <a href="/blog/561424#bc2348423">linux已经不存在惊群现象</a>
+                </li>
+                
+                <li>
+                  <a href='http://dear531.iteye.com' target='_blank' title='dear531'>dear531</a>： 
+                  我用select试验了，用的ubuntu12.10,内核3.5 ...<br />
+                  <a href="/blog/561424#bc2348422">linux已经不存在惊群现象</a>
+                </li>
+                
+                <li>
+                  <a href='http://dear531.iteye.com' target='_blank' title='dear531'>dear531</a>： 
+                  我也很想知道，楼主说的，可以看到，是怎么看才能看到accept ...<br />
+                  <a href="/blog/561424#bc2348409">linux已经不存在惊群现象</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-9745836-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>

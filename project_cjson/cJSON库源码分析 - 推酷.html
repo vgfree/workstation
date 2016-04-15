@@ -1,0 +1,1755 @@
+<!DOCTYPE HTML>
+
+<!--
+ ______________ 
+< TUICOOL.COM >
+ -------------- 
+        \   ^__^
+         \  (**)\__$__$__
+            (__)\       )\/\
+             U  ||------|
+                ||     ||
+-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="/PqwWkVmQ6N4dU7FyKf7rCSMHkj42GpVreOe1fOleCw=" name="csrf-token" />
+    <title>
+            cJSON库源码分析 - 推酷
+   </title>
+    <meta name="description" content="cJSON库源码分析"/>
+  <link rel="shortcut icon" href="http://static0.tuicool.com/favicon.ico" type="image/x-icon" />
+  <link href="http://static0.tuicool.com/images/icon114.png" rel="Bookmark" />
+  <link rel="apple-touch-icon" sizes="57x57" href="http://static1.tuicool.com/images/icon57.png" /> 
+  <link rel="apple-touch-icon" sizes="72x72" href="http://static2.tuicool.com/images/icon72.png" />  
+  <link rel="apple-touch-icon" sizes="114x114" href="http://static0.tuicool.com/images/icon114.png" />    
+  <link rel="apple-touch-icon" sizes="144x144" href="http://static1.tuicool.com/images/icon144.png"/>  
+  <link href="http://asset.tuicool.com/assets/application-2cfd59154d46613c0d5f82142c1f6aa1.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="http://static0.tuicool.com/assets/font-awesome.min.css" rel="stylesheet">
+  <script src="http://asset.tuicool.com/assets/application-5c19f81d7795619188f5a2cb78fc7803.js" type="text/javascript"></script>
+
+  <!--[if IE 7]>
+  <link rel="stylesheet" href="http://assets.tuicool.com/assets/font-awesome-ie7.min.css">
+  <![endif]--> 
+    <script type="text/javascript" src="http://static2.tuicool.com/assets/tip.js?t=3"></script>
+  
+  <script type="text/javascript" src="http://static1.tuicool.com/assets/spin.min.js"></script>
+<link rel="stylesheet" href="http://static0.tuicool.com/assets/github.css">
+
+</head>
+<body>
+  
+  <div id="header" class="navbar-fixed-top">
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </a>
+          <a href="http://www.tuicool.com/" class="brand">推酷</a>        
+        <nav class="nav-collapse collapse">
+            <ul class="nav navbar primary-nav">                            
+              <li class="active">
+                <a href="http://www.tuicool.com/ah">
+                  文章
+                </a>
+              </li>              
+              <li class="">
+                <a href="http://www.tuicool.com/sites/hot">
+                  站点
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/topics">
+                  主题
+                </a>
+              </li>
+              <li class="">
+                <a href="http://course.tuicool.com/">
+                  公开课
+                </a>
+              </li>
+              <li class="">
+                <a href="http://huodong.tuicool.com/">
+                  活动
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/mobile">
+                  客户端
+                    <sup style="font-size:0.8em;color: #16A085;">荐</sup>
+                </a>
+              </li>
+              <li class="dropdown  ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">周刊 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tuicool.com/mags">编程狂人</a></li>
+                  <li><a href="http://www.tuicool.com/mags/design">设计匠艺</a></li> 
+                  <li><a href="http://www.tuicool.com/mags/startup">创业周刊</a></li> 
+                  <li><a href="http://www.tuicool.com/mags/tech">科技周刊</a></li>      
+                  <li><a href="http://www.tuicool.com/mags/guru">Guru Weekly</a></li> 
+                  <li><a href="http://www.tuicool.com/articles/weekly">一周拾遗</a></li>                  
+                </ul>
+              </li>
+              
+              </ul>
+            <form class="navbar-search pull-left" action="http://www.tuicool.com/search">
+              <input type="text" class="search-query span2" name="kw" placeholder="搜索">
+            </form>
+            <ul class="nav pull-right">
+                <li><a href="http://www.tuicool.com/login">登录</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+  </div>   
+</div>
+  <div id ="flash_container" class="noPrint">    
+  </div>
+  
+  <div class="container-fluid">  
+      
+<div class="row-fluid article_row_fluid">
+    <div class="span8 contant article_detail_bg">
+        <h1>cJSON库源码分析</h1>
+        <div class="article_meta">
+            <div style="margin-bottom: 5px;">
+            <span class="timestamp">时间&nbsp;2014-02-10 22:49:18
+            </span>
+            <span class="from">
+                <i class="icon-globe"></i>
+                    <a class="cut cut28 from" href="/sites/yymayiN" target="_blank">浅墨的博客
+                    </a>
+            </span>
+            </div>
+            <div class="source">
+                <i style="float:left;">原文</i>&nbsp; 
+                <a class="cut cut70" href="http://www.0xffffff.org/?p=835&amp;utm_source=tuicool&amp;utm_medium=referral" style="display:inline-block;">http://www.0xffffff.org/?p=835</a>
+            </div>
+            <div>
+                <span>主题</span>
+                <a href="/topics/11010023" target='_blank' >
+                    <span class="new-label">CJSON</span>
+                </a>
+            </div>
+        </div>
+        <div class="article_body" id="nei">
+            <div>
+  <div style="text-align:center;">
+    <p>
+      <span>
+        <strong>本文采用以下协议进行授权:</strong>
+        <strong>
+          <span>
+            <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="nofollow,noindex">自由转载-非衍生-保持署名|Creative Commons BY-NC-ND 3.0</a>
+          </span>
+          ,转载请注明作者及出处。        </strong>
+        &nbsp; &nbsp;      </span>
+      <br/>
+    </p>
+  </div>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp; cJSON是一个超轻巧，携带方便，单文件，简单的可以作为ANSI-C标准的Json格式解析库。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>那什么是Json格式？这里照搬度娘百科的说法：</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>Json(JavaScript Object Notation) 是一种轻量级的数据交换格式。它基于JavaScript（Standard ECMA-262 3rd Edition – December 1999）的一个子集。JSON采用完全独立于语言的文本格式，但是也使用了类似于C语言家族的习惯（包括C, C++, C#, Java, JavaScript, Perl, Python等）。这些特性使JSON成为理想的数据交换语言。易于人阅读和编写，同时也易于机器解析和生成。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>
+      更加详细的解释和示例请查看      <a href="http://www.json.org/" target="_blank" rel="nofollow,noindex">http://www.json.org/</a>
+      主页。    </span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>
+      其实简单说，Json就是一种信息交换格式，而cJSON其实就是对Json格式的字符串进行构建和解析的一个C语言函数库。    </span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>可以在以下地址下载到cJSON的源代码：</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>
+      <a href="http://sourceforge.net/projects/cjson/" target="_blank" rel="nofollow,noindex">http://sourceforge.net/projects/cjson/</a>
+    </span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>__MACOSX目录是提供给Mac OS的源码，我的机器运行的是Fedora 18，所以选择另外一个目录即可。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>简单的阅读下README文件，先学习cJSON库的使用方法。若是连库都还不会使用，分析源码就无从谈起了。通过简单的了解，我们得知cJSON库实际上只有cJSON.c和cJSON.h两个文件组成，绝对轻量级。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>不过，代码风格貌似有点非主流，先用indent格式化一下代码吧。我个人喜欢K&amp;R风格的代码，使用的indent命令行参数如下：</span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">indent -bad -bli 0 -ce -kr -nsob --space-after-if --space-after-while --space-after-for --use-tabs -i8</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c3c5717494779-1">1</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>
+                <span>indent</span>
+                <span>-</span>
+                <span>bad</span>
+                <span>-</span>
+                <span>bli</span>
+                <span>0</span>
+                <span>-</span>
+                <span>ce</span>
+                <span>-</span>
+                <span>kr</span>
+                <span>-</span>
+                <span>nsob</span>
+                <span>--</span>
+                <span>space</span>
+                <span>-</span>
+                <span>after</span>
+                <span>-</span>
+                <span>if</span>
+                <span>--</span>
+                <span>space</span>
+                <span>-</span>
+                <span>after</span>
+                <span>-</span>
+                <span>while</span>
+                <span>--</span>
+                <span>space</span>
+                <span>-</span>
+                <span>after</span>
+                <span>-</span>
+                <span>for</span>
+                <span>--</span>
+                <span>use</span>
+                <span>-</span>
+                <span>tabs</span>
+                <span>-</span>
+                <span>i8</span>
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>格式化之后，代码结构看起来清晰多了。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>那么，从何处下手来分析呢？打开代码文件逐行阅读么？当然不是了，有main函数的程序大都是从main函数开始分析，那么没有main函数的纯函数库呢？那就自己写main函数呗。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>cJSON作为Json格式的解析库，其主要功能无非就是构建和解析Json格式了，我们先写一个构建Json格式字符串的程序，尽可能的使其用到的类型多一点(事实上README文件里提供了不错的示例代码，我们直接借鉴一下吧)。代码如下：</span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+    
+#include &quot;cJSON.h&quot;
+    
+int main(int argc, char *argv[])
+{
+    cJSON *root, *fmt;
+    	
+    root = cJSON_CreateObject();
+    cJSON_AddStringToObject(root, &quot;name&quot;, &quot;Jack (\&quot;Bee\&quot;) Nimble&quot;);
+    fmt = cJSON_CreateObject();
+    cJSON_AddItemToObject(root, &quot;format&quot;, fmt);
+    cJSON_AddStringToObject(fmt, &quot;type&quot;, &quot;rect&quot;);
+    cJSON_AddNumberToObject(fmt, &quot;width&quot;, 1920);
+    cJSON_AddFalseToObject(fmt, &quot;interlace&quot;);
+    
+    char *result = cJSON_Print(root);
+    puts(result);
+    	
+    free(result);
+    cJSON_Delete(root);
+    
+    return EXIT_SUCCESS;
+}</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c3e6180649431-1">1</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-2">2</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-3">3</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-4">4</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-5">5</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-6">6</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-7">7</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-8">8</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-9">9</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-10">10</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-11">11</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-12">12</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-13">13</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-14">14</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-15">15</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-16">16</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-17">17</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-18">18</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-19">19</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-20">20</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-21">21</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-22">22</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-23">23</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-24">24</div>
+              <div data-line="crayon-52fa34e56c3e6180649431-25">25</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>
+                <span>#include &lt;stdio.h&gt;</span>
+              </p>
+              <p>
+                <span>#include &lt;stdlib.h&gt;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>#include &quot;cJSON.h&quot;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>int</span>
+                <span>main</span>
+                <span>(</span>
+                <span>int</span>
+                <span>argc</span>
+                <span>,</span>
+                <span>char</span>
+                <span>*</span>
+                <span>argv</span>
+                <span>[</span>
+                <span>]</span>
+                <span>)</span>
+              </p>
+              <div>
+                <span>{</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON</span>
+                <span>*</span>
+                <span>root</span>
+                <span>,</span>
+                <span>*</span>
+                <span>fmt</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>root</span>
+                <span>=</span>
+                <span>cJSON_CreateObject</span>
+                <span>(</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON_AddStringToObject</span>
+                <span>(</span>
+                <span>root</span>
+                <span>,</span>
+                <span>&quot;name&quot;</span>
+                <span>,</span>
+                <span>&quot;Jack (\&quot;Bee\&quot;) Nimble&quot;</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>fmt</span>
+                <span>=</span>
+                <span>cJSON_CreateObject</span>
+                <span>(</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON_AddItemToObject</span>
+                <span>(</span>
+                <span>root</span>
+                <span>,</span>
+                <span>&quot;format&quot;</span>
+                <span>,</span>
+                <span>fmt</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON_AddStringToObject</span>
+                <span>(</span>
+                <span>fmt</span>
+                <span>,</span>
+                <span>&quot;type&quot;</span>
+                <span>,</span>
+                <span>&quot;rect&quot;</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON_AddNumberToObject</span>
+                <span>(</span>
+                <span>fmt</span>
+                <span>,</span>
+                <span>&quot;width&quot;</span>
+                <span>,</span>
+                <span>1920</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON_AddFalseToObject</span>
+                <span>(</span>
+                <span>fmt</span>
+                <span>,</span>
+                <span>&quot;interlace&quot;</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>char</span>
+                <span>*</span>
+                <span>result</span>
+                <span>=</span>
+                <span>cJSON_Print</span>
+                <span>(</span>
+                <span>root</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>puts</span>
+                <span>(</span>
+                <span>result</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>free</span>
+                <span>(</span>
+                <span>result</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>cJSON_Delete</span>
+                <span>(</span>
+                <span>root</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>return</span>
+                <span>EXIT_SUCCESS</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>}</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    &nbsp; &nbsp; &nbsp; &nbsp;    <span>编译运行后</span>
+    <span>(</span>
+    <span>编译时注意要链接数学库，参数行要加</span>
+    <span>-lm)</span>
+    <span>，运行结果如下：</span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">{
+    &quot;name&quot;: &quot;Jack (\&quot;Bee\&quot;) Nimble&quot;,
+    &quot;format&quot;: {
+        &quot;type&quot;: &quot;rect&quot;,
+        &quot;width&quot;: 1920,
+        &quot;interlace&quot;: false
+    }
+}</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c3fa614878704-1">1</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-2">2</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-3">3</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-4">4</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-5">5</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-6">6</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-7">7</div>
+              <div data-line="crayon-52fa34e56c3fa614878704-8">8</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <div>
+                <span>{</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;name&quot;</span>
+                <span>:</span>
+                <span>&quot;Jack (\&quot;Bee\&quot;) Nimble&quot;</span>
+                <span>,</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;format&quot;</span>
+                <span>:</span>
+                <span>{</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;type&quot;</span>
+                <span>:</span>
+                <span>&quot;rect&quot;</span>
+                <span>,</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;width&quot;</span>
+                <span>:</span>
+                <span>1920</span>
+                <span>,</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;interlace&quot;</span>
+                <span>:</span>
+                <span>false</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>}</span>
+              </div>
+              <div>
+                <span>}</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp; 打开cJSON.h这个头文件，我们可以看到每一个节点，实际上都是由cJSON这个结构体来描述的：</span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">typedef struct cJSON {
+    struct cJSON *next, *prev;
+    struct cJSON *child;
+    
+    int type;
+    
+    char *valuestring;
+    int valueint;
+    double valuedouble;
+    
+    char *string;
+} cJSON;</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c40c171912979-1">1</div>
+              <div data-line="crayon-52fa34e56c40c171912979-2">2</div>
+              <div data-line="crayon-52fa34e56c40c171912979-3">3</div>
+              <div data-line="crayon-52fa34e56c40c171912979-4">4</div>
+              <div data-line="crayon-52fa34e56c40c171912979-5">5</div>
+              <div data-line="crayon-52fa34e56c40c171912979-6">6</div>
+              <div data-line="crayon-52fa34e56c40c171912979-7">7</div>
+              <div data-line="crayon-52fa34e56c40c171912979-8">8</div>
+              <div data-line="crayon-52fa34e56c40c171912979-9">9</div>
+              <div data-line="crayon-52fa34e56c40c171912979-10">10</div>
+              <div data-line="crayon-52fa34e56c40c171912979-11">11</div>
+              <div data-line="crayon-52fa34e56c40c171912979-12">12</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>
+                <span>typedef</span>
+                <span>struct</span>
+                <span>cJSON</span>
+                <span>{</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>struct</span>
+                <span>cJSON</span>
+                <span>*</span>
+                <span>next</span>
+                <span>,</span>
+                <span>*</span>
+                <span>prev</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>struct</span>
+                <span>cJSON</span>
+                <span>*</span>
+                <span>child</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>int</span>
+                <span>type</span>
+                <span>;</span>
+              </div>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>char</span>
+                <span>*</span>
+                <span>valuestring</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>int</span>
+                <span>valueint</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>double</span>
+                <span>valuedouble</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              </div>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>char</span>
+                <span>*</span>
+                <span>string</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>}</span>
+                <span>cJSON</span>
+                <span>;</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    &nbsp; &nbsp; &nbsp; &nbsp;    <span>结合这个结构体和上面相关API的调用，其实我们大概可以猜测出cJSON对于Json格式的描述和处理的方法了：</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>每一个cJSON结构都描述了一项”键-值”对的数据，其中next和prev指针显然是指向同级前后的cJSON结构，而child指针自然是指向孩子节点的cJSON结构。type类型显然是为了区分值的类型而设置的，在cJSON.h文件一开始就定义了这些类型的值：</span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">/* cJSON Types: */
+#define cJSON_False  0
+#define cJSON_True   1
+#define cJSON_NULL   2
+#define cJSON_Number 3
+#define cJSON_String 4
+#define cJSON_Array  5
+#define cJSON_Object 6</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c41f405807918-1">1</div>
+              <div data-line="crayon-52fa34e56c41f405807918-2">2</div>
+              <div data-line="crayon-52fa34e56c41f405807918-3">3</div>
+              <div data-line="crayon-52fa34e56c41f405807918-4">4</div>
+              <div data-line="crayon-52fa34e56c41f405807918-5">5</div>
+              <div data-line="crayon-52fa34e56c41f405807918-6">6</div>
+              <div data-line="crayon-52fa34e56c41f405807918-7">7</div>
+              <div data-line="crayon-52fa34e56c41f405807918-8">8</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>
+                <span>/* cJSON Types: */</span>
+              </p>
+              <p>
+                <span>#define cJSON_False&nbsp;&nbsp;0</span>
+              </p>
+              <p>
+                <span>#define cJSON_True&nbsp;&nbsp; 1</span>
+              </p>
+              <p>
+                <span>#define cJSON_NULL&nbsp;&nbsp; 2</span>
+              </p>
+              <p>
+                <span>#define cJSON_Number 3</span>
+              </p>
+              <p>
+                <span>#define cJSON_String 4</span>
+              </p>
+              <p>
+                <span>#define cJSON_Array&nbsp;&nbsp;5</span>
+              </p>
+              <p>
+                <span>#define cJSON_Object 6</span>
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    &nbsp; &nbsp; &nbsp; &nbsp;    <span>很显然通过检测这里的type字段，就很容易知道该节点的类型以及其实际存储数据的字段了。其它的字段是什么意思呢？cJSON.h文件里的注释说的很明白了，valueint，valuedouble以及valuestring保存的是相应的值，string存放的是本字段的名字。</span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+    <span>接下来分析程序的执行过程，编译参数加上-g，使用gdb调试程序，画出整个构造过程的函数调用图。具体的调试过程就不细说了，我捡一些关键点说说：</span>
+  </p>
+  <p>
+    <span>
+      &nbsp; &nbsp; &nbsp; &nbsp; 调试过程中，我们发现      <strong>cJSON_AddStringToObject()</strong>
+      等其实是宏定义，本质上调用的都是      <strong>cJSON_AddItemToObject()</strong>
+      函数，在cJSON.h文件中可以看到如下定义：    </span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">#define cJSON_AddNullToObject(object,name)      cJSON_AddItemToObject(object, name, cJSON_CreateNull())
+#define cJSON_AddTrueToObject(object,name)      cJSON_AddItemToObject(object, name, cJSON_CreateTrue())
+#define cJSON_AddFalseToObject(object,name)     cJSON_AddItemToObject(object, name, cJSON_CreateFalse())
+#define cJSON_AddBoolToObject(object,name,b)    cJSON_AddItemToObject(object, name, cJSON_CreateBool(b))
+#define cJSON_AddNumberToObject(object,name,n)  cJSON_AddItemToObject(object, name, cJSON_CreateNumber(n))
+#define cJSON_AddStringToObject(object,name,s)  cJSON_AddItemToObject(object, name, cJSON_CreateString(s))</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c431460045824-1">1</div>
+              <div data-line="crayon-52fa34e56c431460045824-2">2</div>
+              <div data-line="crayon-52fa34e56c431460045824-3">3</div>
+              <div data-line="crayon-52fa34e56c431460045824-4">4</div>
+              <div data-line="crayon-52fa34e56c431460045824-5">5</div>
+              <div data-line="crayon-52fa34e56c431460045824-6">6</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>
+                <span>#define cJSON_AddNullToObject(object,name)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cJSON_AddItemToObject(object, name, cJSON_CreateNull())</span>
+              </p>
+              <p>
+                <span>#define cJSON_AddTrueToObject(object,name)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cJSON_AddItemToObject(object, name, cJSON_CreateTrue())</span>
+              </p>
+              <p>
+                <span>#define cJSON_AddFalseToObject(object,name)&nbsp;&nbsp;&nbsp;&nbsp; cJSON_AddItemToObject(object, name, cJSON_CreateFalse())</span>
+              </p>
+              <p>
+                <span>#define cJSON_AddBoolToObject(object,name,b)&nbsp;&nbsp;&nbsp;&nbsp;cJSON_AddItemToObject(object, name, cJSON_CreateBool(b))</span>
+              </p>
+              <p>
+                <span>#define cJSON_AddNumberToObject(object,name,n)&nbsp;&nbsp;cJSON_AddItemToObject(object, name, cJSON_CreateNumber(n))</span>
+              </p>
+              <p>
+                <span>#define cJSON_AddStringToObject(object,name,s)&nbsp;&nbsp;cJSON_AddItemToObject(object, name, cJSON_CreateString(s))</span>
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    <span>
+      &nbsp; &nbsp; &nbsp; &nbsp; 另外      <strong>cJSON_CreateNull()</strong>
+      等函数都是调用      <strong>cJSON_New_Item()</strong>
+      函数申请到初始化为0的空间构造相关的节点信息。构造过程中的函数调用图如下：    </span>
+  </p>
+  <p>
+    <span>
+      <img src="http://img0.tuicool.com/nimiUj.jpg!web" alt="" />
+      <br/>
+    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      构造的Json字符串最终在内存中形成的结构如下图所示：    </span>
+  </p>
+  <p>
+    <img src="http://img0.tuicool.com/ZBZFvy.jpg!web" alt="" />
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp; 构造过程相对来说比较简单，数组类型这里没有涉及到，但是分析起来也很简单。</span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      我们最后调用      <strong>cJSON_Print()</strong>
+      函数生成这个结构所对应的字符串。生成说起来容易，遍历起整个结构并进行字符串格式控制却比较繁琐。这里相关的代码还有递归清理这个内存结构的函数不再赘述，有兴趣的同学请自行研究。    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      构造的过程我们就说到这里，明天我们研究下解析的过程。    </span>
+  </p>
+  <hr></hr>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      昨天简单的分析了一下cJSON对Json格式的构造过程，今天仔细读了读README文件，发现README其实说的已经很详细了。重复造轮子就重复造轮子吧，今天我们再一起分析解析的过程。    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      继续用之前构造的Json格式来进行解析，之前分析构造函数的时候，我们只是简单的分析了几个cJSON结构的构造过程，并没有涉及到各种类型的数组等构造。因为我觉得理解了一般的构造过程，更复杂的类型自己再简单看看源码，画画图就很容易理解。    </span>
+  </p>
+  <p>
+    <span>
+      <span>
+        &nbsp; &nbsp; &nbsp; &nbsp;        <strong>&nbsp;</strong>
+      </span>
+      <span>学习一个事物一定要先抓住主线，先掌握一个事物最常用的那50%，其他的边边角角完全可以留给实践去零敲碎打（孟岩语）。</span>
+    </span>
+  </p>
+  <p>
+    <span>闲话打住，先上一段解析使用的代码：</span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+　　
+#include &quot;cJSON.h&quot;
+　　
+int main(int argc, char *argv[])
+{
+　　char *text = &quot;{\&quot;name\&quot;: \&quot;Jack (\\\&quot;Bee\\\&quot;) Nimble\&quot;, &quot;
+　　			&quot;\&quot;format\&quot;: {\&quot;type\&quot;: \&quot;rect\&quot;, &quot;
+　　			&quot;\&quot;width\&quot;: 1920, \&quot;interlace\&quot;: false}}&quot;;
+　　
+　　cJSON *root = cJSON_Parse(text);
+　　if (!root) {
+　　　　printf(&quot;Error before: [%s]\n&quot;, cJSON_GetErrorPtr());
+　　　　return EXIT_FAILURE;
+　　}
+　　
+　　char *out = cJSON_Print(root);
+　　printf(&quot;text:\n%s\n\n&quot;, out);
+　　free(out);
+　　
+　　char *name = cJSON_GetObjectItem(root, &quot;name&quot;)-&gt;valuestring;
+　　printf(&quot;name : %s\n&quot;, name);
+　　cJSON *format = cJSON_GetObjectItem(root, &quot;format&quot;);
+　　int width = cJSON_GetObjectItem(format, &quot;width&quot;)-&gt;valueint;
+　　printf(&quot;width : %d\n&quot;, width);
+　　
+　　cJSON_Delete(root);
+　　
+　　return EXIT_SUCCESS;
+}</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c444827198598-1">1</div>
+              <div data-line="crayon-52fa34e56c444827198598-2">2</div>
+              <div data-line="crayon-52fa34e56c444827198598-3">3</div>
+              <div data-line="crayon-52fa34e56c444827198598-4">4</div>
+              <div data-line="crayon-52fa34e56c444827198598-5">5</div>
+              <div data-line="crayon-52fa34e56c444827198598-6">6</div>
+              <div data-line="crayon-52fa34e56c444827198598-7">7</div>
+              <div data-line="crayon-52fa34e56c444827198598-8">8</div>
+              <div data-line="crayon-52fa34e56c444827198598-9">9</div>
+              <div data-line="crayon-52fa34e56c444827198598-10">10</div>
+              <div data-line="crayon-52fa34e56c444827198598-11">11</div>
+              <div data-line="crayon-52fa34e56c444827198598-12">12</div>
+              <div data-line="crayon-52fa34e56c444827198598-13">13</div>
+              <div data-line="crayon-52fa34e56c444827198598-14">14</div>
+              <div data-line="crayon-52fa34e56c444827198598-15">15</div>
+              <div data-line="crayon-52fa34e56c444827198598-16">16</div>
+              <div data-line="crayon-52fa34e56c444827198598-17">17</div>
+              <div data-line="crayon-52fa34e56c444827198598-18">18</div>
+              <div data-line="crayon-52fa34e56c444827198598-19">19</div>
+              <div data-line="crayon-52fa34e56c444827198598-20">20</div>
+              <div data-line="crayon-52fa34e56c444827198598-21">21</div>
+              <div data-line="crayon-52fa34e56c444827198598-22">22</div>
+              <div data-line="crayon-52fa34e56c444827198598-23">23</div>
+              <div data-line="crayon-52fa34e56c444827198598-24">24</div>
+              <div data-line="crayon-52fa34e56c444827198598-25">25</div>
+              <div data-line="crayon-52fa34e56c444827198598-26">26</div>
+              <div data-line="crayon-52fa34e56c444827198598-27">27</div>
+              <div data-line="crayon-52fa34e56c444827198598-28">28</div>
+              <div data-line="crayon-52fa34e56c444827198598-29">29</div>
+              <div data-line="crayon-52fa34e56c444827198598-30">30</div>
+              <div data-line="crayon-52fa34e56c444827198598-31">31</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <p>
+                <span>#include &lt;stdio.h&gt;</span>
+              </p>
+              <p>
+                <span>#include &lt;stdlib.h&gt;</span>
+              </p>
+              <p>
+                <span>#include &quot;cJSON.h&quot;</span>
+              </p>
+              <p>
+                <span>int</span>
+                <span>main</span>
+                <span>(</span>
+                <span>int</span>
+                <span>argc</span>
+                <span>,</span>
+                <span>char</span>
+                <span>*</span>
+                <span>argv</span>
+                <span>[</span>
+                <span>]</span>
+                <span>)</span>
+              </p>
+              <div>
+                <span>{</span>
+              </div>
+              <p>
+                <span>char</span>
+                <span>*</span>
+                <span>text</span>
+                <span>=</span>
+                <span>&quot;{\&quot;name\&quot;: \&quot;Jack (\\\&quot;Bee\\\&quot;) Nimble\&quot;, &quot;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;\&quot;format\&quot;: {\&quot;type\&quot;: \&quot;rect\&quot;, &quot;</span>
+              </p>
+              <p>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&quot;\&quot;width\&quot;: 1920, \&quot;interlace\&quot;: false}}&quot;</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>cJSON</span>
+                <span>*</span>
+                <span>root</span>
+                <span>=</span>
+                <span>cJSON_Parse</span>
+                <span>(</span>
+                <span>text</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>if</span>
+                <span>(</span>
+                <span>!</span>
+                <span>root</span>
+                <span>)</span>
+                <span>{</span>
+              </div>
+              <p>
+                <span>printf</span>
+                <span>(</span>
+                <span>&quot;Error before: [%s]\n&quot;</span>
+                <span>,</span>
+                <span>cJSON_GetErrorPtr</span>
+                <span>(</span>
+                <span>)</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>return</span>
+                <span>EXIT_FAILURE</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>}</span>
+              </div>
+              <p>
+                <span>char</span>
+                <span>*</span>
+                <span>out</span>
+                <span>=</span>
+                <span>cJSON_Print</span>
+                <span>(</span>
+                <span>root</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>printf</span>
+                <span>(</span>
+                <span>&quot;text:\n%s\n\n&quot;</span>
+                <span>,</span>
+                <span>out</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>free</span>
+                <span>(</span>
+                <span>out</span>
+                <span>)</span>
+                <span>;</span>
+              </div>
+              <p>
+                <span>char</span>
+                <span>*</span>
+                <span>name</span>
+                <span>=</span>
+                <span>cJSON_GetObjectItem</span>
+                <span>(</span>
+                <span>root</span>
+                <span>,</span>
+                <span>&quot;name&quot;</span>
+                <span>)</span>
+                <span>-&gt;</span>
+                <span>valuestring</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>printf</span>
+                <span>(</span>
+                <span>&quot;name : %s\n&quot;</span>
+                <span>,</span>
+                <span>name</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>cJSON</span>
+                <span>*</span>
+                <span>format</span>
+                <span>=</span>
+                <span>cJSON_GetObjectItem</span>
+                <span>(</span>
+                <span>root</span>
+                <span>,</span>
+                <span>&quot;format&quot;</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>int</span>
+                <span>width</span>
+                <span>=</span>
+                <span>cJSON_GetObjectItem</span>
+                <span>(</span>
+                <span>format</span>
+                <span>,</span>
+                <span>&quot;width&quot;</span>
+                <span>)</span>
+                <span>-&gt;</span>
+                <span>valueint</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>printf</span>
+                <span>(</span>
+                <span>&quot;width : %d\n&quot;</span>
+                <span>,</span>
+                <span>width</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>cJSON_Delete</span>
+                <span>(</span>
+                <span>root</span>
+                <span>)</span>
+                <span>;</span>
+              </p>
+              <p>
+                <span>return</span>
+                <span>EXIT_SUCCESS</span>
+                <span>;</span>
+              </p>
+              <div>
+                <span>}</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      程序运行输出：    </span>
+  </p>
+  <div data-settings=" minimize scroll-always">
+    <div>
+      <textarea wrap="off" data-settings="" readonly="">text:
+{
+　　&quot;name&quot;: &quot;Jack (\&quot;Bee\&quot;) Nimble&quot;,
+　　&quot;format&quot;:{
+　　　　&quot;type&quot;: &quot;rect&quot;,
+　　　　&quot;width&quot;: 1920,
+　　　　&quot;interlace&quot;: false
+　　}
+}
+　　
+name : Jack (&quot;Bee&quot;) Nimble
+width : 1920</textarea>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td data-settings="show">
+            <div>
+              <div data-line="crayon-52fa34e56c456310382041-1">1</div>
+              <div data-line="crayon-52fa34e56c456310382041-2">2</div>
+              <div data-line="crayon-52fa34e56c456310382041-3">3</div>
+              <div data-line="crayon-52fa34e56c456310382041-4">4</div>
+              <div data-line="crayon-52fa34e56c456310382041-5">5</div>
+              <div data-line="crayon-52fa34e56c456310382041-6">6</div>
+              <div data-line="crayon-52fa34e56c456310382041-7">7</div>
+              <div data-line="crayon-52fa34e56c456310382041-8">8</div>
+              <div data-line="crayon-52fa34e56c456310382041-9">9</div>
+              <div data-line="crayon-52fa34e56c456310382041-10">10</div>
+              <div data-line="crayon-52fa34e56c456310382041-11">11</div>
+              <div data-line="crayon-52fa34e56c456310382041-12">12</div>
+            </div>
+          </td>
+          <td>
+            <div>
+              <div>
+                <span>text</span>
+                <span>:</span>
+              </div>
+              <div>
+                <span>{</span>
+              </div>
+              <p>
+                <span>&quot;name&quot;</span>
+                <span>:</span>
+                <span>&quot;Jack (\&quot;Bee\&quot;) Nimble&quot;</span>
+                <span>,</span>
+              </p>
+              <div>
+                <span>&quot;format&quot;</span>
+                <span>:</span>
+                <span>{</span>
+              </div>
+              <div>
+                <span>&quot;type&quot;</span>
+                <span>:</span>
+                <span>&quot;rect&quot;</span>
+                <span>,</span>
+              </div>
+              <div>
+                <span>&quot;width&quot;</span>
+                <span>:</span>
+                <span>1920</span>
+                <span>,</span>
+              </div>
+              <p>
+                <span>&quot;interlace&quot;</span>
+                <span>:</span>
+                <span>false</span>
+              </p>
+              <div>
+                <span>}</span>
+              </div>
+              <div>
+                <span>}</span>
+              </div>
+              <p>
+                <span>name</span>
+                <span>:</span>
+                <span>Jack</span>
+                <span>(</span>
+                <span>&quot;Bee&quot;</span>
+                <span>)</span>
+                <span>Nimble</span>
+              </p>
+              <div>
+                <span>width</span>
+                <span>:</span>
+                <span>1920</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      从这段代码中可以看到，解析过程就      <strong>cJSON_Parse()</strong>
+      一个接口，调用成功返回cJSON结构体的指针，错误返回NULL，此时调用      <strong>cJSON_GetErrorPtr()</strong>
+      可以得要错误原因的描述字符串。    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      查看      <strong>cJSON_GetErrorPtr()</strong>
+      的源码可以得知，其实错误信息就保存在全局字符串指针ep里。    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      关键就是对      <strong>cJSON_Parse()</strong>
+      过程的分析了，我们带参数-g重新编译代码并下断点开始调试跟踪。    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      首先      <strong>cJSON_Parse()</strong>
+      调用      <strong>cJSON_New_Item()</strong>
+      申请一个新的cJSON节点，然后使用函数对输入字符串进行解析（中间使用了      <strong>skip()</strong>
+      函数来跳过空格和换行符等字符）。    </span>
+  </p>
+  <p>
+    <span>
+      <strong>
+        <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+        parse_value()      </strong>
+      函数对输入字符串进行匹配和解析，检测输入数据的类型并调用      <strong>parse_string()</strong>
+      、      <strong>parse_number()</strong>
+      、      <strong>parse_array()</strong>
+      、      <strong>parse_object()</strong>
+      等函数进行解析，然后返回结束的位置。    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      函数调用的关系如下图：    </span>
+  </p>
+  <p>
+    <span>
+      <img src="http://img1.tuicool.com/eyyyInn.jpg!web" alt="" />
+      <br/>
+    </span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      这些函数之间相互调用，传递待解析的字符串直到结束或者遇见错误便返回，最后会构建出一个和之前结构一样的Json内存结构来，解析的过程就完成了。检索过程很简单      <strong>cJSON_GetObjectItem()</strong>
+      函数负责进行某个对象的自成员的名字比对和指针的返回。不过要注意这里采用了      <strong>cJSON_strcasecmp()</strong>
+      这个无视大小写的字符串比较函数，因为Json格式的键值对的名称不区分大小写。    </span>
+  </p>
+  <p>
+    <span>&nbsp; &nbsp; &nbsp; &nbsp; 这样cJSON库的整个构建和解析过程的主干内容就总结出来了，剩下的边边角角可以在这个主线分析结束之后再继续下去，比如Json格式化，解析出来的内存结构复制，从这个内存结构解析出字符串以及这个内存结构的递归删除等等留给大家自己进行吧。</span>
+  </p>
+  <p>
+    <span>
+      <span>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+      P.S.      <strong>cJSON_InitHooks()</strong>
+      这个函数不过是cJSON允许用户使用其它的内存申请和释放函数罢了（默认是malloc和free），另外啰嗦一下，这个接口也可以用来检测内存泄露。只要实现malloc和free的包装函数，在其中统计和打印内存申请释放操作就可以了。    </span>
+  </p>
+  <div style="text-align:center;">
+    <p>
+      <span>
+        <strong>若无特别声明，本站文章皆为原创，转载时烦请注明：</strong>
+        转载自      </span>
+      <a href="http://www.0xffffff.org/" style="text-decoration:underline;" rel="nofollow,noindex">
+        <span>浅墨的博客</span>
+      </a>
+    </p>
+  </div>
+  <hr></hr>
+</div>
+
+        </div>
+        <div class="article_social">
+         <div class="article_like">
+    <div class="circle circle-like" id="my_zan" data_id="6ZrIJn">
+    </div>
+</div>
+        <div id="share_weixin_image">
+            <img width="100px" height="100px" src="http://s.jiathis.com/qrcode.php?url=http://www.tuicool.com/articles/6ZrIJn?via=wechat_qr">
+        </div>
+<div class="article_share_fav">
+    <div class="share" id="ckepop">
+        <span>分享</span>
+        <button class="share_weibo" id="share_weibo_id"  title="分享到新浪微博"></button>
+        <button class="share_qq" id="share_qq_id"  title="分享到QQ空间"></button>
+        <button class="share_weixin" id="share_weixin_id"></button>
+    </div>
+    <div class="fav_correct">
+        <button id="my_fav" data_id="6ZrIJn">
+            <i class="icon icon-star-empty"></i> <span id="fav_tip">收藏</span>
+        </button>
+        <button id="article-correct" data_id="6ZrIJn" uid="0">
+            <i class="icon icon-warning-sign"></i>
+            <span>纠错</span>
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+$("#share_weibo_id").click( function() {
+   window.open("http://share.baidu.com/s?type=text&searchPic=0&sign=on&to=tsina&url=http://www.tuicool.com/articles/6ZrIJn&title=cJSON%E5%BA%93%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90++%28%E5%88%86%E4%BA%AB%E8%87%AA+%40%E6%8E%A8%E9%85%B7%E7%BD%91%29&key=3113829255");
+});
+$("#share_qq_id").click( function() {
+   window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.tuicool.com/articles/6ZrIJn&title=cJSON%E5%BA%93%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90&desc=&summary=&site=");
+});
+$("#share_weixin_id").click( function() {
+  $("#share_weixin_image").toggle();
+});
+</script>
+
+
+            <div class="bottom_ad huodong-detail-ad-banner clearfix">
+                  <a href="http://www.opensns.cn/?f=tc" target="_blank"><img src="http://static1.tuicool.com/images/ad/opensns700.jpg"/></a>
+
+            </div>
+        </div>
+        <div id="site_articles" style="clear:both;">
+              <div class="article-part-title">
+                <span>推荐文章</span>
+              </div>
+          <ul class="side_article_list">
+                <li class="side_article_list_item">
+                    1.<a href="/articles/JjqQvuz" target="_blank" title="推荐一门CMU公开课">
+                    推荐一门CMU公开课
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    2.<a href="/articles/yEFrMjZ" target="_blank" title="unity3d c#调用c++代码">
+                    unity3d c#调用c++代码
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    3.<a href="/articles/FJfQ3qe" target="_blank" title="恶意软件逆向分析系列（一）：在汇编语言中识别重要的代码结构">
+                    恶意软件逆向分析系列（一）：在汇编语言中识别重要的代码结构
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    4.<a href="/articles/neIV3i" target="_blank" title="C++及标准库中的那些大坑">
+                    C++及标准库中的那些大坑
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    5.<a href="/articles/U3aIva6" target="_blank" title="技术分享：利用异常实现反调试">
+                    技术分享：利用异常实现反调试
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    6.<a href="/articles/fMz2Mvv" target="_blank" title="GPU寄存器">
+                    GPU寄存器
+                    </a>
+                </li>
+          </ul>
+        </div>
+        <div id="kan_articles"></div>
+        <div id="article_weibo" style="display:none;">
+            <div class='article-part-title'>
+                <span>相关微博</span>
+                <sub>
+                    <a href="/articles/weibo_list/6ZrIJn" target="_blank">(<i id="weibo_num"></i>)</a> 
+               </sub>
+            </div>
+            <div class="related-weibo-list"></div>
+        </div>
+        <div class="comments">
+    <div class="comments-area">
+    <div class="comments-header">
+        <h5>我来评几句</h5>
+        <div class="alert comment-alert alert-error" style="display:none;">
+            错误
+        </div>
+            <textarea cols="60" rows="5" id="comment-body" placeholder="请输入评论内容..." style="resize: none;"></textarea>
+            <span class="btn btn-medium btn-submit"  id="comment-submit">登录后评论</span>
+        <p style="margin-top: 5px;margin-left:10px;">
+            已发表评论数(<span class="comment_cnt"></span>)
+        </p>
+    </div>
+    <div class="comments-list">
+        <div class="empty-cmts alert alert-success" style="display:none;">
+            没有更多评论了^^
+        </div>
+    </div>
+    <div class="more-comments" style="display:none;">
+        <a href="">更多评论</a>
+    </div>
+    <div class="load-fail" style="display:none;">
+        评论加载失败，<a href="javascript:reload_comments('6ZrIJn',1,0,-1);">重新加载</a>
+    </div>
+    </div>
+</div>
+
+    </div>
+        <div class="span4 article_right_side">
+            <div class="right_top">
+    <div class="article_related_site article_detail_bg">
+    <h4 class="article-part-title">相关站点</h4>
+    <div class="article_related_site_body clearfix">
+        <div class="logo">
+            <img src="http://stimg0.tuicool.com/yymayiN.png"/>
+        </div>
+        <div class="name">
+            <div>
+                <a href="/sites/yymayiN" target="_blank"> 浅墨的博客</a>
+            </div>
+            <div>
+                <div class="btn btn-success right_site_follow" id="my_follow" data_id="yymayiN">＋订阅</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="right_site_articles" class="article_detail_bg">
+    <div class="article-part-title">
+        <span>热门文章</span>
+    </div>
+    <ul class="side_article_list">
+        <li class="side_article_list_item">
+            1.<a href="/articles/JjqQvuz" target="_blank" title="推荐一门CMU公开课"> 推荐一门CMU公开课 </a>
+        </li>
+        <li class="side_article_list_item">
+            2.<a href="/articles/yEFrMjZ" target="_blank" title="unity3d c#调用c++代码"> unity3d c#调用c++代码 </a>
+        </li>
+        <li class="side_article_list_item">
+            3.<a href="/articles/FJfQ3qe" target="_blank" title="恶意软件逆向分析系列（一）：在汇编语言中识别重要的代码结构"> 恶意软件逆向分析系列（一）：在汇编语言中识别重要的代码结构 </a>
+        </li>
+        <li class="side_article_list_item">
+            4.<a href="/articles/neIV3i" target="_blank" title="C++及标准库中的那些大坑"> C++及标准库中的那些大坑 </a>
+        </li>
+        <li class="side_article_list_item">
+            5.<a href="/articles/U3aIva6" target="_blank" title="技术分享：利用异常实现反调试"> 技术分享：利用异常实现反调试 </a>
+        </li>
+    </ul>
+</div>
+<div class="right-ad">
+      <a href="http://www.opensns.cn/?f=tc" target="_blank"><img src="http://static1.tuicool.com/images/ad/opensns120.jpg"/></a>
+
+</div>
+<div class="right-ad" style="margin-top: 5px">
+      <a href="https://www.jpush.cn/?f=tc" target="_blank"><img src="http://static1.tuicool.com/images/ad/jpush120.jpg"/></a>
+
+</div>
+<div class="right-ad" style="margin-top: 5px">
+      <a href="http://click.aliyun.com/m/3714/" target="_blank"><img src="http://static1.tuicool.com/images/ad/aliyun120.jpg"/></a>
+
+</div>
+<div class="right-ad" style="margin-top: 0px">
+      <a href="https://www.leangoo.com/?f=tc" target="_blank"><img src="http://static0.tuicool.com/images/ad/leangoo120.jpg"/></a>
+
+</div>
+<div class="right-ad" style="margin-top: 5px">
+      <a href="http://www.jiankongbao.com?f=tuicool" target="_blank"><img src="http://static1.tuicool.com/images/ad/jiankongbao120.jpg"/></a>
+
+</div>
+</div>
+
+<div class="operate_zone">
+    <div class="right-ad" style="margin-top: 5px">
+          <a href="https://www.teambition.com/?utm_source=tuicool&utm_medium=banner01" target="_blank"><img src="http://static2.tuicool.com/images/ad/teambition120.jpg"/></a>
+
+    </div>
+        <div class="frd_pos">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-7054762349007490"
+     data-ad-slot="5705695566"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+</div>
+         </div>
+</div>
+
+<div class="read-later-alert">
+</div>
+<div>
+   <a href="#add-article-to-kan" id="add-article-to-kan-btn" class="btn" data-toggle="modal" style="display:none;">添加到推刊</a>
+   <!-- add_article to kan -->
+<div id="add-article-to-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <span class="add-title">收藏到推刊</span>
+    <a href="#new-kan" class="btn pull-right" data-toggle="modal">创建推刊</a>
+    <i class="clearfix"></i>
+  </div>
+  <div class="modal-body">
+    <ul id="add-kan-list">
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <input type="hidden" value="6ZrIJn" class="article-id" /> 
+    <button class="btn btn-primary pull-left add-to-btn">  收 藏  </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+<div class="add-article-to-kan-alert">
+  已收藏到推刊！
+</div>
+
+   <div id="new-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <input type="text" name="name" id="new-kan-name"  placeholder="推刊名(必填)" required data-validation-required-message="请填写推刊名" />
+    <span class="new-ness-name">请填写推刊名</span>
+    <br/>
+    <textarea name="desc" id="desc" rows="6" placeholder="推刊描述"></textarea>
+    <span class="new-ness-desc">描述不能大于100个字符!</span>
+    <br/>
+    权限设置：<input type="radio" name="type" value="1" checked="checked" /> 公开
+    <input type="radio" name="type" value="0"> 仅自己可见
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary pull-left create-kan-btn" disabled>创建</button>
+    <button class="btn dismiss-new-kan" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+
+
+</div>
+<div id="article-correct-modal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h3>文章纠错</h3>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" value="6ZrIJn" id="article-correct-source">
+        <div>
+            <label for="article-correct-email">
+                邮箱地址
+            </label>
+            <input type="email" id="article-correct-email" class="input-large" />
+        </div>
+        <div>
+            <label for="article-correct-select">
+                错误类型
+            </label>
+            <select id="article-correct-select">
+                <option value="正文不准确">正文不准确</option>
+                <option value="标题不准确">标题不准确</option>
+                <option value="排版有问题">排版有问题</option>
+                <option value="没有分页内容">没有分页内容</option>
+                <option value="图片无法显示">图片无法显示</option>
+                <option value="视频无法显示">视频无法显示</option>
+                <option value="与原文不一致">与原文不一致</option>
+            </select>
+        </div>
+        <div>
+            <label for="article-correct-other">
+                补充信息
+            </label>
+            <textarea id="article-correct-other" class="span6"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary pull-right huodong_correct_submit" id="article-correct-submit">
+            &nbsp;&nbsp;提交&nbsp;&nbsp;
+        </button>
+    </div>
+</div>
+
+<style type="text/css">
+    .btn-large {
+        padding: 0;
+    }
+    .load-fail {
+        display: none;
+    }
+</style>
+<script src="http://static1.tuicool.com//assets/highlight.pack.js"></script>
+<script type="text/javascript">
+    $('table').each(function(i) {
+        var size = $(this).children().size();
+        if (size > 1) {
+            $(this).attr('class',"table table-bordered");
+        } else if (size == 1) {
+            var e11 = $(this).children(":first");
+            var e1 = e11[0];
+            var name = e1.nodeName.toLowerCase();
+            if ("tbody" == name) {
+                if (e1.children.length > 1) {
+                    $(this).attr('class',"table table-bordered");
+                } else if (e1.children.length == 1){
+                    var e12 = e1.children[0];
+                    var name2 = e12.nodeName.toLowerCase();
+                    if ("tr" == name2) {
+                       if (e12.children.length > 1) {
+                         $(this).attr('class',"table table-bordered");
+                       }
+                    }
+                }
+            }
+        }
+    });
+            related_kan("6ZrIJn");
+        window.page = 0;
+        window.last = 0;    
+        window.first = true;
+        resize_article_image('#nei', 550);
+                load_comments("6ZrIJn",1,0,-1);
+                window.uid = -1;
+        open_add_article_to_kan("false");
+        async_do_zan_article(); 
+        $('pre').each(function(i, e) {
+            hljs.highlightBlock(e, "<span class='indent'>  </span>", false)
+        });
+       
+          
+       handle_follow_site("#my_follow","已订阅","+ 订阅");
+</script>
+
+
+  </div>
+
+    <div class="footer">
+    <div class="footer-inner">
+    <dl class="about-link site-link">
+        <dt>
+            网站相关
+        </dt>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/about">关于我们</a>
+        </dd>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/mobile">移动应用</a>
+        </dd>
+        <dd>
+            <a target="_blank" href="http://www.tuicool.com/bbs/go/issues">建议反馈</a>
+        </dd>
+    </dl>
+    <dl class="site-link follow-link">
+        <dt>
+            关注我们
+        </dt>
+        <dd>
+            <a target="_blank" href="http://e.weibo.com/tuicool2012"><img src="http://static1.tuicool.com/images/weibo-32.png">推酷网</a>
+        </dd>
+        <dd><img src="http://static1.tuicool.com/images/weixin-32.png">tuicool2012
+        </dd>
+    </dl>
+    <dl class="site-link links">
+        <dt>
+            友情链接
+        </dt>
+        <dd>
+                <a href="http://www.woshipm.com/" title="人人都是产品经理" target="_blank">人人都是产品经理</a>
+                <a href="http://www.pm265.com/" title="PM256" target="_blank">PM256</a>
+                <a href="http://www.yidonghua.com/" title="移动信息化" target="_blank">移动信息化</a>
+                <a href="http://www.snsiu.com/" title="行晓网" target="_blank">行晓网</a>
+                <a href="http://code4app.com/" title="Code4App" target="_blank">Code4App</a>
+                <a href="http://www.taskcity.com/" title="智城外包网" target="_blank">智城外包网</a>
+                <a href="http://www.huxiu.com/" title="虎嗅" target="_blank">虎嗅</a>
+                <a href="http://www.iterduo.com/" title="IT耳朵" target="_blank">IT耳朵</a>
+                <a href="http://www.iresearch.cn/" title="艾瑞网" target="_blank">艾瑞网</a>
+                <a href="http://mediaworks.caixin.com/" title="创媒工场" target="_blank">创媒工场</a>
+                <a href="http://www.managershare.com/" title="经理人分享" target="_blank">经理人分享</a>
+                <a href="http://www.shichangbu.com/" title="市场部网" target="_blank">市场部网</a>
+                <a href="http://www.ikanchai.com/" title="砍柴网" target="_blank">砍柴网</a>
+                <a href="http://www.cocoachina.com/" title="CocoaChina" target="_blank">CocoaChina</a>
+                <a href="http://www.ibeifeng.com/" title="北风网" target="_blank">北风网</a>
+                <a href="http://www.jiankongbao.com/" title="云智慧" target="_blank">云智慧</a>
+                <a href="http://www.wyzc.com" title="我赢职场" target="_blank">我赢职场</a>
+                <a href="http://www.thebigdata.cn/" title="大数据时代" target="_blank">大数据时代</a>
+                <a href="http://www.qidic.com/" title="奇笛网" target="_blank">奇笛网</a>
+                <a href="http://www.cngulu.com/" title="咕噜网" target="_blank">咕噜网</a>
+                <a href="http://www.linuxdiyf.com/" title="红联linux" target="_blank">红联linux</a>
+                <a href="http://win10.ithome.com" title="Win10之家" target="_blank">Win10之家</a>
+                <a href="http://www.niaogebiji.com/" title="鸟哥笔记" target="_blank">鸟哥笔记</a>
+                <a href="http://www.play.cn" title="爱游戏" target="_blank">爱游戏</a>
+                <a href="http://www.investide.cn/" title="投资潮" target="_blank">投资潮</a>
+                <a href="http://www.31huiyi.com/" title="31会议网" target="_blank">31会议网</a>
+                <a href="https://www.jpush.cn/" title="极光推送" target="_blank">极光推送</a>
+                <a href="https://www.teambition.com/" title="Teambition" target="_blank">Teambition</a>
+                <a href="http://www.guigu.org/" title="硅谷网" target="_blank">硅谷网</a>
+                <a href="https://home.leangoo.com/" title="leangoo" target="_blank">leangoo</a>
+                <a href="https://www.huoban.com/" title="伙伴云表格" target="_blank">伙伴云表格</a>
+                <a href="http://www.zealer.com/" title="ZEALER中国" target="_blank">ZEALER中国</a>
+                <a href="http://www.opensns.cn/" title="OpenSNS" target="_blank">OpenSNS</a>
+            <a href="/links">更多链接>></a>&nbsp;&nbsp;
+        </dd>
+    </dl>
+    <div class="clear"></div>
+    </div>
+</div>
+
+<div style="display:none;">
+   <script src="http://s22.cnzz.com/stat.php?id=5541078&web_id=5541078&show=pic" language="JavaScript"></script>
+</div>
+
+
+</body>
+</html>

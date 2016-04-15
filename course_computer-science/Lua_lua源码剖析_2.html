@@ -1,0 +1,697 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>lua源码剖析(二) - 但行好事 莫问前程 - ITeye技术网站</title>
+    <meta name="description" content="这次紧接着上次的，将gc类型的数据分析完毕。 谢谢老朱同学的指正,这里CClosure和LClosure理解有误. 先来看闭包: 可以看到闭包也是会有两种类型，这是因为在lua中，函数不过是一种特殊的闭包而已。 更新:这里CClosure表示是c函数,也就是和lua外部交互传递进来的c函数以及内部所使用的c函数. LClosure表示lua的函数,这些函数是由lua虚拟机进行管理的.. typede ..." />
+    <meta name="keywords" content="Lua, C, C++, C#, 虚拟机 lua源码剖析(二)" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="但行好事 莫问前程" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1460544581" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/green.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1448702469" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">但行好事 莫问前程</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://simohayha.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://simohayha.iteye.com" class="p-author" target="_blank">simohayha</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/540546">lua源码剖析(二)</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/84720">lua</a></li> </ul>
+        <div class='news_tag'><a href="http://www.iteye.com/blogs/tag/Lua">Lua</a><a href="http://www.iteye.com/blogs/tag/C">C</a><a href="http://www.iteye.com/blogs/tag/C++">C++</a><a href="http://www.iteye.com/blogs/tag/C%23">C#</a><a href="http://www.iteye.com/blogs/tag/%E8%99%9A%E6%8B%9F%E6%9C%BA">虚拟机</a></div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    这次紧接着上次的，将gc类型的数据分析完毕。<br /><br /><br />谢谢<a target="_blank" href="http://www.zhuzhaoyuan.com">老朱</a>同学的指正,这里CClosure和LClosure理解有误.<br /><br /><br />先来看闭包:<br /><br />可以看到闭包也是会有两种类型，这是因为在lua中，函数不过是一种特殊的闭包而已。<br /><br /><span style="color: red;">更新:这里CClosure表示是c函数,也就是和lua外部交互传递进来的c函数以及内部所使用的c函数.<br /><br />LClosure表示lua的函数,这些函数是由lua虚拟机进行管理的..</span><br /><br /><br /><pre name="code" class="java">typedef union Closure {
+  CClosure c;
+  LClosure l;
+} Closure;</pre><br /><br />接下来来看这个两个结构。<br /><br />在看着两个结构之前，先来看宏ClosureHeader，这个也就是每个闭包(函数的头).它包括了一些全局的东西:<br /><br /><span style="color: red;">更新 :<br />isC:如果是c函数这个值为1,为lua的函数则为0.</span><br />nupvalues:表示upvalue或者upvals的大小(闭包和函数里面的)。<br />gclist:链接到全局的gc链表。<br />env:环境，可以看到它是一个table类型的，他里面保存了一些全局变量等。<br /><br /><pre name="code" class="java">#define ClosureHeader \
+	CommonHeader; lu_byte isC; lu_byte nupvalues; GCObject *gclist; \
+	struct Table *env</pre><br /><br />ok接下来先来看 CClosure的实现.他很简单,就是保存了一个函数原型,以及一个参数列表<br /><br /><span style="color: red;">更新:<br />lua_CFunction f: 这个表示所要执行的c函数的原型.<br />TValue upvalue[1]:这个表示函数运行所需要的一些参数(比如string 的match函数,它所需要的几个参数都会保存在upvalue里面</span><br /><br /><pre name="code" class="java">
+typedef struct CClosure {
+  ClosureHeader;
+  lua_CFunction f;
+  TValue upvalue[1];
+} CClosure;
+</pre><br /><br /><span style="color: red;">更新:<br />这里我们只简要的介绍CClosure ,主要精力我们还是放在LClosure上.我来简要介绍下CClosure 的操作.一般当我们将CClosure 压栈,然后还有一些对应的调用函数f所需要的一些参数,此时我们会将参数都放到upvalue中,然后栈中只保存cclosure本身,这样当我们调用函数的时候(有一个全局的指针指向当前的调用函数),能够直接得到所需参数,然后调用函数.</span><br /><br /><br /><pre name="code" class="java">LUA_API void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n) {
+  Closure *cl;
+  lua_lock(L);
+  luaC_checkGC(L);
+  api_checknelems(L, n);
+///new一个cclosure
+  cl = luaF_newCclosure(L, n, getcurrenv(L));
+  cl-&gt;c.f = fn;
+  L-&gt;top -= n;
+///开始将参数值放到upvalue中.
+  while (n--)
+    setobj2n(L, &amp;cl-&gt;c.upvalue[n], L-&gt;top+n);
+  setclvalue(L, L-&gt;top, cl);
+  lua_assert(iswhite(obj2gco(cl)));
+  api_incr_top(L);
+  lua_unlock(L);
+}</pre><br /><br /><br />然后来看LClosure 的实现。<br /><br />在lua中闭包和函数是原型是一样的,只不过函数的upvalue为空罢了,而闭包upvalue包含了它所需要的局部变量值.<br /><br /><br />这里我们要知道在lua中闭包的实现。Lua 用一种称为upvalue 的结构来实现闭包。对任何外层局部变量的存取间接地通过upvalue来进行，也就是说当函数创建的时候会有一个局部变量表upvals（下面会介绍到).然后当闭包创建完毕，它就会复制upvals的值到upvalue。详细的描述可以看the implementation of lua 5.0(云风的blog上有提供下载).<br /><br />struct Proto *p：这个指针包含了很多的属性，比如变量，比如嵌套函数等等。<br />UpVal *upvals[1]：这个数组保存了指向外部的变量也就是我们闭包所需要的局部变量。<br /><br /><br />下面会详细分析这个东西。<br /><br /><pre name="code" class="java">typedef struct LClosure {
+  ClosureHeader;
+  struct Proto *p;
+  UpVal *upvals[1];
+} LClosure;</pre><br /><br />这里我摘录一段the implementation of lua 5.0里面的描述：<br /><br /><div class="quote_title">引用</div><div class="quote_div">通过为每个变量至少创建一个upvalue 并按所需情况进行重复利用，保证了未决状态（是否超过生存期）的局部变量（pending vars）能够在闭包间正确地<br />共享。为了保证这种唯一性，Lua 为整个运行栈保存了一个链接着所有正打开着<br />的upvalue（那些当前正指向栈内局部变量的upvalue）的链表（图4 中未决状态<br />的局部变量的链表）。当Lua 创建一个新的闭包时，它开始遍历所有的外层局部<br />变量，对于其中的每一个，若在上述upvalue 链表中找到它，就重用此upvalue，<br />否则，Lua 将创建一个新的upvalue 并加入链表中。注意，一般情况下这种遍历<br />过程在探查了少数几个节点后就结束了，因为对于每个被内层函数用到的外层局<br />部变量来说，该链表至少包含一个与其对应的入口（upvalue）。一旦某个关闭的<br />upvalue 不再被任何闭包所引用，那么它的存储空间就立刻被回收。</div><br />下面是示意图：<br /><br /><br /><img src="http://dl.iteye.com/upload/attachment/176044/f558a896-89f0-321a-a9da-8fd1adb76467.jpg" /><br /><br />这里的未决状态（是否超过生存期）的局部变量指的就是我们下面的UpVal，其中：<br />TValue *v:指向栈内的自己的位置或者自己(这里根据是否这个uvalue被关闭）。<br />union u:这里可以看到如果是被关闭则直接保存value。如果打开则为一个链表。<br /><br /><pre name="code" class="java">typedef struct UpVal {
+  CommonHeader;
+  TValue *v;  /* points to stack or to its own value */
+  union {
+    TValue value;  /* the value (when closed) */
+    struct {  /* double linked list (when open) */
+      struct UpVal *prev;
+      struct UpVal *next;
+    } l;
+  } u;
+} UpVal;</pre><br /><br />然后来看luaF_newLclosure的实现，它与cclosure类似。<br /><br /><pre name="code" class="java">
+
+Closure *luaF_newLclosure (lua_State *L, int nelems, Table *e) {
+  Closure *c = cast(Closure *, luaM_malloc(L, sizeLclosure(nelems)));
+  luaC_link(L, obj2gco(c), LUA_TFUNCTION);
+  c-&gt;l.isC = 0;
+  c-&gt;l.env = e;
+///更新upvals。
+  c-&gt;l.nupvalues = cast_byte(nelems);
+  while (nelems--) c-&gt;l.upvals[nelems] = NULL;
+  return c;
+}</pre><br /><br /><br />ok，接下来我们就通过一些函数来更详细的理解闭包的实现。<br /><br />先分析CClosure。我们来看luaF_newCclosure的实现，这个函数创建一个CClosure,也就是创建一个所需要执行的c函数.<br /><br />这个函数实现比较简单，就是malloc一个Closure，然后链接到全局gc，最后初始化Closure 。<br /><pre name="code" class="java">
+Closure *luaF_newCclosure (lua_State *L, int nelems, Table *e) {
+///分配内存
+  Closure *c = cast(Closure *, luaM_malloc(L, sizeCclosure(nelems)));
+///链接到全局的gc链表
+  luaC_link(L, obj2gco(c), LUA_TFUNCTION);
+///开始初始化。
+  c-&gt;c.isC = 1;
+  c-&gt;c.env = e;
+  c-&gt;c.nupvalues = cast_byte(nelems);
+  return c;
+}</pre><br /><br />在lua_State中它里面包含有GCObject 类型的域叫openupval，这个域也就是当前的栈上的所有open的uvalue。可以看到这里是gcobject类型的，这里我们就知道为什么gcobvject中为什么还要包含struct UpVal uv了。而在global_State中的UpVal uvhead则是整个lua虚拟机里面所有栈的upvalue链表的头。<br /><br />然后我们来看lua中如何new一个upval。<br /><br />它很简单就是malloc一个UpVal然后链接到gc链表里面。这边要注意，每次new的upval都是close的。<br /><br /><pre name="code" class="java">
+UpVal *luaF_newupval (lua_State *L) {
+///new一个upval
+  UpVal *uv = luaM_new(L, UpVal);
+///链接到全局的gc中
+  luaC_link(L, obj2gco(uv), LUA_TUPVAL);
+///可以看到这里的upval是close的。
+  uv-&gt;v = &amp;uv-&gt;u.value;
+  setnilvalue(uv-&gt;v);
+  return uv;
+}</pre><br /><br />接下来我们来看闭包如何来查找到对应的upval，所有的实现就在函数luaF_findupval中。我们接下来来看这个函数的实现。<br />这个函数的流程是这样的。<br /><br />1 首先遍历lua_state的openupval，也就是当前栈的upval，然后如果能找到对应的值，则直接返回这个upval。<br /><br />2 否则新建一个upval（这里注意new的是open的)，然后链接到openupval以及uvhead中。而且每次新的upval的插入都是插入到链表头的。而且这里插入了两次。这里为什么要有两个链表，那是因为有可能会有多个栈，而uvhead就是用来管理多个栈的upvalue的（也就是多个openupval)。<br /><br /><pre name="code" class="java">
+UpVal *luaF_findupval (lua_State *L, StkId level) {
+  global_State *g = G(L);
+///得到openupval链表
+  GCObject **pp = &amp;L-&gt;openupval;
+  UpVal *p;
+  UpVal *uv;
+///开始遍历open upvalue。
+  while (*pp != NULL &amp;&amp; (p = ngcotouv(*pp))-&gt;v &gt;= level) {
+    lua_assert(p-&gt;v != &amp;p-&gt;u.value);
+///发现已存在。
+    if (p-&gt;v == level) {  
+      if (isdead(g, obj2gco(p)))  /* is it dead? */
+        changewhite(obj2gco(p));  /* ressurect it */
+///直接返回
+      return p;
+    }
+    pp = &amp;p-&gt;next;
+  }
+///否则new一个新的upvalue
+  uv = luaM_new(L, UpVal);  /* not found: create a new one */
+  uv-&gt;tt = LUA_TUPVAL;
+  uv-&gt;marked = luaC_white(g);
+///设置值
+  uv-&gt;v = level;  /* current value lives in the stack */
+///首先插入到lua_state的openupval域
+  uv-&gt;next = *pp;  /* chain it in the proper position */
+  *pp = obj2gco(uv);
+///然后插入到global_State的uvhead（这个也就是双向链表的头)
+  uv-&gt;u.l.prev = &amp;g-&gt;uvhead;  /* double link it in `uvhead' list */
+  uv-&gt;u.l.next = g-&gt;uvhead.u.l.next;
+  uv-&gt;u.l.next-&gt;u.l.prev = uv;
+  g-&gt;uvhead.u.l.next = uv;
+  lua_assert(uv-&gt;u.l.next-&gt;u.l.prev == uv &amp;&amp; uv-&gt;u.l.prev-&gt;u.l.next == uv);
+  return uv;
+}</pre><br /><br /><span style="color: red;">更新:<br />上面可以看到我们new的upvalue是open的,那么什么时候我们关闭这个upvalue呢,当函数关闭的时候,我们就会unlink掉upvalue,从全局的open upvalue表中:</span><br /><br /><pre name="code" class="java">
+
+void luaF_close (lua_State *L, StkId level) {
+  UpVal *uv;
+  global_State *g = G(L);
+///开始遍历open upvalue
+  while (L-&gt;openupval != NULL &amp;&amp; (uv = ngcotouv(L-&gt;openupval))-&gt;v &gt;= level) {
+    GCObject *o = obj2gco(uv);
+    lua_assert(!isblack(o) &amp;&amp; uv-&gt;v != &amp;uv-&gt;u.value);
+    L-&gt;openupval = uv-&gt;next;  /* remove from `open' list */
+    if (isdead(g, o))
+      luaF_freeupval(L, uv);  /* free upvalue */
+    else {
+///unlink掉当前的uv.
+      unlinkupval(uv);
+      setobj(L, &amp;uv-&gt;u.value, uv-&gt;v);
+      uv-&gt;v = &amp;uv-&gt;u.value;  /* now current value lives here */
+      luaC_linkupval(L, uv);  /* link upvalue into `gcroot' list */
+    }
+  }
+}
+
+static void unlinkupval (UpVal *uv) {
+  lua_assert(uv-&gt;u.l.next-&gt;u.l.prev == uv &amp;&amp; uv-&gt;u.l.prev-&gt;u.l.next == uv);
+  uv-&gt;u.l.next-&gt;u.l.prev = uv-&gt;u.l.prev;  /* remove from `uvhead' list */
+  uv-&gt;u.l.prev-&gt;u.l.next = uv-&gt;u.l.next;
+}
+</pre><br />接下来来看user data。这里首先我们要知道，在lua中，创建一个userdata，其实也就是分配一块内存紧跟在Udata的后面。后面我们分析代码的时候就会看到。也就是说Udata相当于一个头。<br /><br /><pre name="code" class="java">
+
+typedef union Udata {
+  L_Umaxalign dummy;  
+  struct {
+///gc类型的都会包含这个头，前面已经描述过了。
+    CommonHeader;
+///元标
+    struct Table *metatable;
+///环境
+    struct Table *env;
+///当前user data的大小。
+    size_t len;
+  } uv;
+} Udata;</pre><br /><br />ok，接下来我们来看代码，我们知道调用lua_newuserdata能够根据指定大小分配一块内存，并将对应的userdata压入栈。<br /><br />这里跳过了一些代码，跳过的代码以后会分析到。<br /><pre name="code" class="java">
+
+LUA_API void *lua_newuserdata (lua_State *L, size_t size) {
+  Udata *u;
+  lua_lock(L);
+  luaC_checkGC(L);
+///new一个新的user data，然后返回地址
+  u = luaS_newudata(L, size, getcurrenv(L));
+///将u压入压到栈中。
+  setuvalue(L, L-&gt;top, u);
+///更新栈顶指针
+  api_incr_top(L);
+  lua_unlock(L);
+///返回u+1,也就是去掉头(Udata)然后返回。
+  return u + 1;
+}</pre><br /><br />我们可以看到具体的实现都包含在luaS_newudata中，这个函数也满简单的，malloc一个size+sizeof(Udata)的内存，然后初始化udata。<br /><br />我们还要知道在全局状态，也就是global_State中包含一个struct lua_State *mainthread，这个主要是用来管理userdata的。它也就是表示当前的栈，因此下面我们会将新建的udata链接到它上面。<br /><br /><pre name="code" class="java">
+
+Udata *luaS_newudata (lua_State *L, size_t s, Table *e) {
+  Udata *u;
+
+///首先检测size，userdata是由大小限制的。
+  if (s &gt; MAX_SIZET - sizeof(Udata))
+    luaM_toobig(L);
+///然后malloc一块内存。
+  u = cast(Udata *, luaM_malloc(L, s + sizeof(Udata)));
+///这里gc相关的东西，以后分析gc时再说。
+  u-&gt;uv.marked = luaC_white(G(L));  /* is not finalized */
+///设置类型
+  u-&gt;uv.tt = LUA_TUSERDATA;
+
+///设置当前udata大小
+  u-&gt;uv.len = s;
+  u-&gt;uv.metatable = NULL;
+  u-&gt;uv.env = e;
+  /* chain it on udata list (after main thread) */
+///然后链接到mainthread中
+  u-&gt;uv.next = G(L)-&gt;mainthread-&gt;next;
+  G(L)-&gt;mainthread-&gt;next = obj2gco(u);
+
+///然后返回。
+  return u;
+}</pre><br /><br />还剩下两个gc类型，一个是proto(函数包含的一些东西)一个是lua_State（也就是协程).<br /><br />我们来简单看一下lua_state,顾名思义，它就代表了状态，一个lua栈(或者叫做线程也可以)，每次c与lua交互都会新建一个lua_state,然后才能互相通过交互。可以看到在new state的时候它的tt就是LUA_TTHREAD。<br /><br />并且每个协程也都有自己独立的栈。<br /><br />我们就来看下我们前面已经触及到的一些lua-state的域：<br /><br /><pre name="code" class="java">struct lua_State {
+  CommonHeader;
+ 
+///栈相关的
+  StkId top;  /* first free slot in the stack */
+  StkId base;  /* base of current function */
+  StkId stack_last;  /* last free slot in the stack */
+  StkId stack;  /* stack base */
+///指向全局的状态。
+  global_State *l_G;
+
+///函数相关的
+  CallInfo *ci;  /* call info for current function */
+  const Instruction *savedpc;  /* `savedpc' of current function */
+  CallInfo *end_ci;  /* points after end of ci array*/
+  CallInfo *base_ci;  /* array of CallInfo's */
+  lu_byte status;
+///一些要用到的len，栈大小，c嵌套的数量，等。
+  int stacksize;
+  int size_ci;  /* size of array `base_ci' */
+  unsigned short nCcalls;  /* number of nested C calls */
+  unsigned short baseCcalls;  /* nested C calls when resuming coroutine */
+  lu_byte hookmask;
+  lu_byte allowhook;
+  int basehookcount;
+  int hookcount;
+  lua_Hook hook;
+
+///一些全局(这个状态)用到的东西，比如env等。
+  TValue l_gt;  /* table of globals */
+  TValue env;  /* temporary place for environments */
+
+///gc相关的东西。
+  GCObject *openupval;  /* list of open upvalues in this stack */
+  GCObject *gclist;
+
+///错误处理相关。
+  struct lua_longjmp *errorJmp;  /* current error recover point */
+  ptrdiff_t errfunc;  /* current error handling function (stack index) */
+};</pre><br /><br />而global_State主要就是包含了gc相关的东西。<br /><br />现在基本类型的分析就告一段落了，等到后面分析parse以及gc的时候会再回到这些类型。<br /><br /><br /><br /><br /><br />
+  </div>
+
+  
+
+  
+  
+  <IFRAME SRC="/iframe_ggbd/794" SCROLLING=no WIDTH=680 HEIGHT=90 FRAMEBORDER=0></IFRAME>
+  
+  <div id="bottoms" class="clearfix">
+    <div id="digg_bottom" class="clearfix"><div class='digged'><strong>2</strong> <br/>顶</div><div class='digged'><strong>0</strong> <br/>踩</div></div>
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/545192" class="next" title="nginx的内存管理">nginx的内存管理</a>
+      |
+      <a href="/blog/532450" class="pre" title="内核协议栈tcp层的内存管理">内核协议栈tcp层的内存管理</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2009-12-04 00:22</li>
+      <li>浏览 5461</li>
+      <li><a href="#comments">评论(1)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/language">编程语言</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/540546" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/18"><img src="http://img.knowledge.csdn.net/upload/base/1458106113412_412.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/18" classs="title">JavaScript知识库</a>
+              <span>
+                 <em>1581</em>&nbsp;&nbsp;关注 <i>|</i> <em>516</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/10"><img src="http://img.knowledge.csdn.net/upload/base/1453368118762_762.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/10" classs="title">Apache Spark知识库</a>
+              <span>
+                 <em>2868</em>&nbsp;&nbsp;关注 <i>|</i> <em>257</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/4"><img src="http://img.knowledge.csdn.net/upload/base/1452500466484_484.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/4" classs="title">Docker知识库</a>
+              <span>
+                 <em>2253</em>&nbsp;&nbsp;关注 <i>|</i> <em>187</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    <div id="bc1293804">
+  <div class="comment_title">
+    1 楼
+    <a href='http://joshzhu.iteye.com' target='_blank' title='joshzhu'>joshzhu</a>
+    2009-12-15&nbsp;&nbsp;
+    
+    
+  </div>
+  <div class="comment_content">bobo,isC是用来标示它是C函数还是Lua函数的<img src="/images/smiles/icon_biggrin.gif" /> </div>
+</div>
+
+
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 540546;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'lua源码剖析(二)');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'lua源码剖析(二)');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://simohayha.iteye.com'><img alt="simohayha的博客" class="logo" src="http://www.iteye.com/upload/logo/user/145151/42eaf10f-47d3-3408-86bc-ff2932f36a86.jpg?1252629645" title="simohayha的博客: 但行好事 莫问前程" width="" /></a></div>
+  <div id="blog_owner_name">simohayha</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 1022841 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1448702469" title="男" /></li>
+              <li>来自: 火星</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://maikgpan.iteye.com' target='_blank'><img alt="maikgpan的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="maikgpan的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://maikgpan.iteye.com' target='_blank' title='maikgpan'>maikgpan</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://jack-liubing.iteye.com' target='_blank'><img alt="jack_liubing的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="jack_liubing的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://jack-liubing.iteye.com' target='_blank' title='jack_liubing'>jack_liubing</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://xiaohui6636.iteye.com' target='_blank'><img alt="xiaohui6636的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="xiaohui6636的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://xiaohui6636.iteye.com' target='_blank' title='xiaohui6636'>xiaohui6636</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://xway569.iteye.com' target='_blank'><img alt="xway569的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="xway569的博客: xway569" width="48px" /></a></div>
+                <div class="left"><a href='http://xway569.iteye.com' target='_blank' title='xway569'>xway569</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (249)</a></li>
+                
+                  <li><a href="/category/10946">c/c++ (30)</a></li>
+                
+                  <li><a href="/category/53824">kernel (42)</a></li>
+                
+                  <li><a href="/category/101180">服务器设计 (11)</a></li>
+                
+                  <li><a href="/category/84183">算法 (1)</a></li>
+                
+                  <li><a href="/category/84720">lua (3)</a></li>
+                
+                  <li><a href="/category/85319">asm (1)</a></li>
+                
+                  <li><a href="/category/25100">erlang (1)</a></li>
+                
+                  <li><a href="/category/15272">ruby (40)</a></li>
+                
+                  <li><a href="/category/7170">python (15)</a></li>
+                
+                  <li><a href="/category/7169">java (8)</a></li>
+                
+                  <li><a href="/category/13620">FP (5)</a></li>
+                
+                  <li><a href="/category/27325">javascript (4)</a></li>
+                
+                  <li><a href="/category/2938">音乐 (8)</a></li>
+                
+                  <li><a href="/category/5989">电影 (13)</a></li>
+                
+                  <li><a href="/category/6012">读书 (3)</a></li>
+                
+                  <li><a href="/category/7052">心情 (34)</a></li>
+                
+                  <li><a href="/category/7174">体育 (5)</a></li>
+                
+                  <li><a href="/category/12224">连岳语录 (7)</a></li>
+                
+                  <li><a href="/category/14136">其他 (11)</a></li>
+                
+                  <li><a href="/category/9827">转帖 (6)</a></li>
+                
+                  <li><a href="/category/46403">嵌入式 (1)</a></li>
+                
+                  <li><a href="/category/46404">翻译 (0)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (8)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (1520)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (1)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2010-08">2010-08</a> (1)</li>
+                
+                  <li><a href="/blog/monthblog/2010-07">2010-07</a> (2)</li>
+                
+                  <li><a href="/blog/monthblog/2010-06">2010-06</a> (1)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://ahtest.iteye.com' target='_blank' title='ahtest'>ahtest</a>： 
+                  赞一下~~<br />
+                  <a href="/blog/167111#bc2352024">一个简单的ruby Metaprogram的例子</a>
+                </li>
+                
+                <li>
+                  <a href='http://itiprocareer.iteye.com' target='_blank' title='itiProCareer'>itiProCareer</a>： 
+                   简直胡说八道，误人子弟啊。。。。谁告诉你 Ruby 1.9  ...<br />
+                  <a href="/blog/165269#bc2349636">ruby中的类变量与类实例变量</a>
+                </li>
+                
+                <li>
+                  <a href='http://dear531.iteye.com' target='_blank' title='dear531'>dear531</a>： 
+                  还得补充一句，惊群了之后，数据打印显示，只有一个子线程继续接受 ...<br />
+                  <a href="/blog/561424#bc2348423">linux已经不存在惊群现象</a>
+                </li>
+                
+                <li>
+                  <a href='http://dear531.iteye.com' target='_blank' title='dear531'>dear531</a>： 
+                  我用select试验了，用的ubuntu12.10,内核3.5 ...<br />
+                  <a href="/blog/561424#bc2348422">linux已经不存在惊群现象</a>
+                </li>
+                
+                <li>
+                  <a href='http://dear531.iteye.com' target='_blank' title='dear531'>dear531</a>： 
+                  我也很想知道，楼主说的，可以看到，是怎么看才能看到accept ...<br />
+                  <a href="/blog/561424#bc2348409">linux已经不存在惊群现象</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-9745836-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+      
+    
+  </body>
+</html>
