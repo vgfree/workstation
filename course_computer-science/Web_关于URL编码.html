@@ -1,0 +1,2315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2010/02/who_is_malicious_software.html" title="【活在中国】谁是恶意软件？" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2010/02/a_taiwan_ad.html" title="推荐一支台湾广告《蔡莺妹的故事》" />
+    
+    <title>关于URL编码 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1341" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2010/02/who_is_malicious_software.html" title="【活在中国】谁是恶意软件？">【活在中国】谁是恶意软</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2010/02/a_taiwan_ad.html" title="推荐一支台湾广告《蔡莺妹的故事》">推荐一支台湾广告《蔡莺</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/developer/" rel="tag">开发者手册</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">关于URL编码</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2010/02/"><abbr class="published" title="2010-02-11T18:06:52+08:00">2010年2月11日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p><strong>一、问题的由来</strong></p>
+
+<p>URL就是网址，只要上网，就一定会用到。</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p><img alt="bg2010021101.jpg" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021101.jpg" /></p>
+
+<p>一般来说，URL只能使用英文字母、阿拉伯数字和某些标点符号，不能使用其他文字和符号。比如，世界上有英文字母的网址"http://www.abc.com"，但是没有希腊字母的网址"http://www.aβγ.com"（读作阿尔法-贝塔-伽玛.com）。这是因为网络标准<a href="http://www.ietf.org/rfc/rfc1738.txt" target="_blank">RFC 1738</a>做了硬性规定：</p>
+
+<blockquote><div>
+
+<p>"...Only alphanumerics [0-9a-zA-Z], the special characters "$-_.+!*'()," [not including the quotes - ed], and reserved characters used for their reserved purposes may be used unencoded within a URL."</p>
+
+<p>"只有字母和数字[0-9a-zA-Z]、一些特殊符号"$-_.+!*'(),"[不包括双引号]、以及某些保留字，才可以不经过编码直接用于URL。"</p>
+
+</div></blockquote>
+
+<p>这意味着，如果URL中有汉字，就必须编码后使用。但是麻烦的是，RFC 1738没有规定具体的编码方法，而是交给应用程序（浏览器）自己决定。这导致"URL编码"成为了一个混乱的领域。</p>
+
+<p>下面就让我们看看，"URL编码"到底有多混乱。我会依次分析四种不同的情况，在每一种情况中，浏览器的URL编码方法都不一样。把它们的差异解释清楚之后，我再说如何用Javascript找到一个统一的编码方法。</p>
+
+<p><strong>二、情况1：网址路径中包含汉字</strong></p>
+
+<p>打开IE（我用的是8.0版），输入网址"<strong>http://zh.wikipedia.org/wiki/春节</strong>"。注意，"春节"这两个字此时是网址路径的一部分。</p>
+
+<p><img alt="bg2010021102.jpg" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021102.jpg" /></p>
+
+<p>查看HTTP请求的头信息，会发现IE实际查询的网址是"<strong>http://zh.wikipedia.org/wiki/%E6%98%A5%E8%8A%82</strong>"。也就是说，IE自动将"春节"编码成了"%E6%98%A5%E8%8A%82"。</p>
+
+<p><img alt="bg2010021103.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021103.png" /></p>
+
+<p>我们知道，"春"和"节"的utf-8编码分别是"E6 98 A5"和"E8 8A 82"，因此，"%E6%98%A5%E8%8A%82"就是按照顺序，在每个字节前加上%而得到的。（具体的转码方法，请参考我写的<a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank">《字符编码笔记》</a>。）</p>
+
+<p>在Firefox中测试，也得到了同样的结果。所以，<strong>结论1就是，网址路径的编码，用的是utf-8编码。</strong></p>
+
+<p><strong>三、情况2：查询字符串包含汉字</strong></p>
+
+<p>在IE中输入网址"<strong>http://www.baidu.com/s?wd=春节</strong>"。注意，"春节"这两个字此时属于查询字符串，不属于网址路径，不要与情况1混淆。</p>
+
+<p><img alt="bg2010021104.jpg" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021104.jpg" /></p>
+
+<p>查看HTTP请求的头信息，会发现IE将"春节"转化成了一个乱码。</p>
+
+<p><img alt="bg2010021105.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021105.png" /></p>
+
+<p>切换到十六进制方式，才能清楚地看到，"春节"被转成了"B4 BA BD DA"。</p>
+
+<p><img alt="bg2010021106.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021106.png" /></p>
+
+<p>我们知道，"春"和"节"的GB2312编码（我的操作系统"Windows XP"中文版的默认编码）分别是"B4 BA"和"BD DA"。因此，IE实际上就是将查询字符串，以GB2312编码的格式发送出去。</p>
+
+<p>Firefox的处理方法，略有不同。它发送的HTTP Head是"wd=%B4%BA%BD%DA"。也就是说，同样采用GB2312编码，但是在每个字节前加上了%。</p>
+
+<p><img alt="bg2010021107.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021107.png" /></p>
+
+<p>所以，<strong>结论2就是，查询字符串的编码，用的是操作系统的默认编码。</strong></p>
+
+<p><strong>四、情况3：Get方法生成的URL包含汉字</strong></p>
+
+<p>前面说的是直接输入网址的情况，但是更常见的情况是，在已打开的网页上，直接用Get或Post方法发出HTTP请求。</p>
+
+<p>根据台湾中兴大学<a href="http://web.nchu.edu.tw/~jlu/classes/xml/ajax/urlencoding.shtml" target="_blank">吕瑞麟老师的试验</a>，这时的编码方法由网页的编码决定，也就是由HTML源码中字符集的设定决定。</p>
+
+<p>　　&lt;meta http-equiv="Content-Type" content="text/html;charset=xxxx"&gt;</p>
+
+<p>如果上面这一行最后的charset是UTF-8，则URL就以UTF-8编码；如果是GB2312，URL就以GB2312编码。</p>
+
+<p>举例来说，百度是GB2312编码，Google是UTF-8编码。因此，从它们的搜索框中搜索同一个词"春节"，生成的查询字符串是不一样的。</p>
+
+<p>百度生成的是%B4%BA%BD%DA，这是GB2312编码。</p>
+
+<p><img alt="bg2010021109.jpg" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021109.jpg" /></p>
+
+<p>Google生成的是%E6%98%A5%E8%8A%82，这是UTF-8编码。</p>
+
+<p><img alt="bg2010021108.jpg" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021108.jpg" /></p>
+
+<p>所以，<strong>结论3就是，GET和POST方法的编码，用的是网页的编码。</strong></p>
+
+<p><strong>五、情况4：Ajax调用的URL包含汉字</strong></p>
+
+<p>前面三种情况都是由浏览器发出HTTP请求，最后一种情况则是由Javascript生成HTTP请求，也就是Ajax调用。还是根据吕瑞麟老师的文章，在这种情况下，IE和Firefox的处理方式完全不一样。</p>
+
+<p>举例来说，有这样两行代码：</p>
+
+<p>　　url = url + "?q=" +document.myform.elements[0].value; // 假定用户在表单中提交的值是"春节"这两个字</p>
+
+<p>　　http_request.open('GET', url, true);</p>
+
+<p>那么，无论网页使用什么字符集，IE传送给服务器的总是"q=%B4%BA%BD%DA"，而Firefox传送给服务器的总是"q=%E6%98%A5%E8%8A%82"。也就是说，<strong>在Ajax调用中，IE总是采用GB2312编码（操作系统的默认编码），而Firefox总是采用utf-8编码。这就是我们的结论4。</strong></p>
+
+<p><strong>六、Javascript函数：escape()</strong></p>
+
+<p>好了，到此为止，四种情况都说完了。</p>
+
+<p>假定前面你都看懂了，那么此时你应该会感到很头痛。因为，实在太混乱了。不同的操作系统、不同的浏览器、不同的网页字符集，将导致完全不同的编码结果。如果程序员要把每一种结果都考虑进去，是不是太恐怖了？有没有办法，能够保证客户端只用一种编码方法向服务器发出请求？</p>
+
+<p>回答是有的，就是使用Javascript先对URL编码，然后再向服务器提交，不要给浏览器插手的机会。因为Javascript的输出总是一致的，所以就保证了服务器得到的数据是格式统一的。</p>
+
+<p>Javascript语言用于编码的函数，一共有三个，最古老的一个就是escape()。虽然这个函数现在已经不提倡使用了，但是由于历史原因，很多地方还在使用它，所以有必要先从它讲起。</p>
+
+<p>实际上，escape()不能直接用于URL编码，它的真正作用是返回一个字符的Unicode编码值。比如"春节"的返回结果是%u6625%u8282，也就是说在Unicode字符集中，"春"是第6625个（十六进制）字符，"节"是第8282个（十六进制）字符。</p>
+
+<p><img alt="bg2010021110.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021110.png" /></p>
+
+<p>它的具体规则是，除了ASCII字母、数字、标点符号"@ * _ + - . /"以外，对其他所有字符进行编码。在\u0000到\u00ff之间的符号被转成%xx的形式，其余符号被转成%uxxxx的形式。对应的解码函数是unescape()。</p>
+
+<p>所以，"Hello World"的escape()编码就是"Hello%20World"。因为空格的Unicode值是20（十六进制）。</p>
+
+<p><img alt="bg2010021111.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021111.png" /></p>
+
+<p>还有两个地方需要注意。</p>
+
+<p>首先，无论网页的原始编码是什么，一旦被Javascript编码，就都变为unicode字符。也就是说，Javascipt函数的输入和输出，默认都是Unicode字符。这一点对下面两个函数也适用。</p>
+
+<p><img alt="bg2010021112.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021112.png" /></p>
+
+<p>其次，escape()不对"+"编码。但是我们知道，网页在提交表单的时候，如果有空格，则会被转化为+字符。服务器处理数据的时候，会把+号处理成空格。所以，使用的时候要小心。</p>
+
+<p><strong>七、Javascript函数：encodeURI()</strong></p>
+
+<p>encodeURI()是Javascript中真正用来对URL编码的函数。</p>
+
+<p>它着眼于对整个URL进行编码，因此除了常见的符号以外，对其他一些在网址中有特殊含义的符号"; / ? : @ & = + $ , #"，也不进行编码。编码后，它输出符号的utf-8形式，并且在每个字节前加上%。</p>
+
+<p><img alt="bg2010021113.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021113.png" /></p>
+
+<p>它对应的解码函数是decodeURI()。 </p>
+
+<p><img alt="bg2010021114.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021114.png" /></p>
+
+<p>需要注意的是，它不对单引号'编码。</p>
+
+<p><strong>八、Javascript函数：encodeURIComponent()</strong></p>
+
+<p>最后一个Javascript编码函数是encodeURIComponent()。与encodeURI()的区别是，它用于对URL的组成部分进行个别编码，而不用于对整个URL进行编码。</p>
+
+<p>因此，"; / ? : @ & = + $ , #"，这些在encodeURI()中不被编码的符号，在encodeURIComponent()中统统会被编码。至于具体的编码方法，两者是一样。</p>
+
+<p><img alt="bg2010021115.png" src="http://www.ruanyifeng.com/blog/upload/2010/02/bg2010021115.png" /></p>
+
+<p>它对应的解码函数是decodeURIComponent()。</p>
+
+<p>（完）</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2010-02-11T18:06:52+08:00">2010年2月11日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/developer/"> 开发者手册</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2016.03.08: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd 入门教程：实战篇</a></strong>
+
+                           <div class="entry-body">
+                              上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.03.07: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程：命令篇</a></strong>
+
+                           <div class="entry-body">
+                              Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.02.28: <a href="http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html">Linux 守护进程的启动方法</a></strong>
+
+                           <div class="entry-body">
+                              "守护进程"（daemon）就是一直在后台运行的进程（daemon）。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.01.06: <a href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html">Commit message 和 Change log 编写指南</a></strong>
+
+                           <div class="entry-body">
+                              Git 每次提交代码，都要写 Commit message（提交说明），否则就不允许提交。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（53条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-200668" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">猪头四</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200668">
+            <p>提前祝阮大哥虎年好啊。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 11, 2010  7:59 PM">2010年2月11日 19:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200668">#</a>
+ | <a href="#comment-text" title="引用猪头四的这条留言" onclick="return CommentQuote('comment-quote-200668','猪头四');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200673" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://bulaoge.com/?g3g4" href="http://bulaoge.com/?g3g4" target="_blank" rel="nofollow">Jinjiang</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200673">
+            <p>网页里的form编码其实不完全取决于网页编码，form标记中有一个accept-charset属性，在非ie浏览器种，如果将其赋值(比如accept-charset="UTF-8")，则表单会按照这个值表示的编码方式进行提交。<br />
+在ie下，我的兼容解决办法是：<br />
+form1.onsubmit=function(){<br />
+    document.charset=this.getAttribute('accept-charset');<br />
+}</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 11, 2010  8:58 PM">2010年2月11日 20:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200673">#</a>
+ | <a href="#comment-text" title="引用Jinjiang的这条留言" onclick="return CommentQuote('comment-quote-200673','Jinjiang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200676" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">amazing_life</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200676">
+            <p>拜读完毕，解我心头大惑，十分感谢。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 11, 2010  9:38 PM">2010年2月11日 21:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200676">#</a>
+ | <a href="#comment-text" title="引用amazing_life的这条留言" onclick="return CommentQuote('comment-quote-200676','amazing_life');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200680" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ruan YiFeng</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200680">
+            <blockquote>
+<pre>引用Jinjiang的发言：</pre>
+
+<p> 网页里的form编码其实不完全取决于网页编码，form标记中有一个accept-charset属性，在非ie浏览器种，如果将其赋值(比如accept-charset="UTF-8")，则表单会按照这个值表示的编码方式进行提交。</p>
+
+</blockquote>
+
+<p>谢谢指出啊。虽然以前看到过这个属性，但是早忘了，你说了才想起来。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  1:21 AM">2010年2月12日 01:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200680">#</a>
+ | <a href="#comment-text" title="引用Ruan YiFeng的这条留言" onclick="return CommentQuote('comment-quote-200680','Ruan YiFeng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200682" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dylanklc</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200682">
+            <p>瀏覽器JS在解釋字符編碼時可以選擇,(不是統一按操作系統語言)瀏覽器的JS和網頁JS兩個概念.一個能調用組件,另一個不能調用組件. </p>
+
+<p>參考:<br />
+[firefox] about:config 下如下選項<br />
+Network.http.accept-encoding<br />
+Network.http.accept.default<br />
+intl. accept_charsets<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  1:48 AM">2010年2月12日 01:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200682">#</a>
+ | <a href="#comment-text" title="引用dylanklc的这条留言" onclick="return CommentQuote('comment-quote-200682','dylanklc');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200691" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">XjAcKs</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200691">
+            <p>长知识了！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  9:04 AM">2010年2月12日 09:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200691">#</a>
+ | <a href="#comment-text" title="引用XjAcKs的这条留言" onclick="return CommentQuote('comment-quote-200691','XjAcKs');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200693" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://shuqun.com/" href="http://shuqun.com/" target="_blank" rel="nofollow">Sutra</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200693">
+            <p>结论2的推断不严谨，你不能说某个东西和某个东西一致，它就是按照这个东西来的，小蝌蚪找妈妈呀？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  9:51 AM">2010年2月12日 09:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200693">#</a>
+ | <a href="#comment-text" title="引用Sutra的这条留言" onclick="return CommentQuote('comment-quote-200693','Sutra');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200694" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">想~~~~</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200694">
+            <p>写的很不错！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010 10:12 AM">2010年2月12日 10:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200694">#</a>
+ | <a href="#comment-text" title="引用想~~~~的这条留言" onclick="return CommentQuote('comment-quote-200694','想~~~~');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200697" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dulao5</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200697">
+            <p>前面的几个情况，都和特定浏览器的特定版本、操作系统本地环境变量等情况有关系，做出结论似乎不太严谨。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010 10:42 AM">2010年2月12日 10:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200697">#</a>
+ | <a href="#comment-text" title="引用dulao5的这条留言" onclick="return CommentQuote('comment-quote-200697','dulao5');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200700" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.efrees.com" href="http://blog.efrees.com" target="_blank" rel="nofollow">M</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200700">
+            <p>补充点我的结果</p>
+
+<p>情况3里，我用firefox在地址栏输入“http://www.baidu.com/s?wd=春节“访问，http header里发送的“春节”是UTF8的，然后百度就傻了，页面搜索框里显示的关键词是:鏄ヨ妭。<br />
+实际效果大概等同于 <a href="http://www.baidu.com/s?wd=%E6%98%A5%E8%8A%82，" rel="nofollow">http://www.baidu.com/s?wd=%E6%98%A5%E8%8A%82，</a><br />
+baidu不会识别这种UTF8码的输入。</p>
+
+<p>而在google，这两个地址都是可用的，等效的：<br />
+<a href="http://www.google.com/search?q=春节" rel="nofollow">http://www.google.com/search?q=春节</a><br />
+<a href="http://www.google.com/search?q=%E6%98%A5%E8%8A%82" rel="nofollow">http://www.google.com/search?q=%E6%98%A5%E8%8A%82</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010 11:43 AM">2010年2月12日 11:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200700">#</a>
+ | <a href="#comment-text" title="引用M的这条留言" onclick="return CommentQuote('comment-quote-200700','M');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200701" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.efrees.com" href="http://blog.efrees.com" target="_blank" rel="nofollow">M</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200701">
+            <p>我的浏览器是Firefox 3.5.7 for ubuntu.<br />
+Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.7) Gecko/20100106 Ubuntu/9.10 (karmic) Firefox/3.5.7 GTB6</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010 11:44 AM">2010年2月12日 11:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200701">#</a>
+ | <a href="#comment-text" title="引用M的这条留言" onclick="return CommentQuote('comment-quote-200701','M');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200704" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ruan YiFeng</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200704">
+            <blockquote>
+<pre>引用M的发言：</pre>
+
+<p>情况3里，我用firefox在地址栏输入“http://www.baidu.com/s?wd=春节“访问<br />
+</p></blockquote>
+
+<p>这属于情况2，不属于情况3。</p>
+
+<blockquote>
+<pre>引用dulao5的发言：</pre>
+
+<p> 前面的几个情况，都和特定浏览器的特定版本、操作系统本地环境变量等情况有关系，做出结论似乎不太严谨。</p>
+
+</blockquote>
+
+<p>接受你的批评，我的样本确实少了点。不过，最常见的情况应该都讨论到了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  1:26 PM">2010年2月12日 13:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200704">#</a>
+ | <a href="#comment-text" title="引用Ruan YiFeng的这条留言" onclick="return CommentQuote('comment-quote-200704','Ruan YiFeng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200705" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.est.im/" href="http://blog.est.im/" target="_blank" rel="nofollow">est</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200705">
+            <p>阮兄noob了。。。这个是网页自己指定的charset，指定gb2312什么就提交gb2312，指定utf8就提交utf8</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  1:36 PM">2010年2月12日 13:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200705">#</a>
+ | <a href="#comment-text" title="引用est的这条留言" onclick="return CommentQuote('comment-quote-200705','est');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200706" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ruan YiFeng</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200706">
+            <p>To est:</p>
+
+<p>你说的是情况3。</p>
+
+<p>情况1、情况2和情况4都与网页本身指定的charset无关。尤其是前两种情况，这时浏览器还不知道网页本身的编码呢。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  1:52 PM">2010年2月12日 13:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200706">#</a>
+ | <a href="#comment-text" title="引用Ruan YiFeng的这条留言" onclick="return CommentQuote('comment-quote-200706','Ruan YiFeng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200712" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://bulaoge.com/?g3g4" href="http://bulaoge.com/?g3g4" target="_blank" rel="nofollow">Jinjiang</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200712">
+            <blockquote>
+<pre>引用Ruan YiFeng的发言：</pre>
+
+<p> </p>
+
+<p>谢谢指出啊。虽然以前看到过这个属性，但是早忘了，你说了才想起来。</p>
+
+<p><br />
+</p></blockquote><br />
+不客气~<br />
+我也是最近写了一个可以登录各种邮箱和社区的表单时，为了应付各个站点要求不同编码方式的表单提交，才注意到这个属性的，今天看到您在此讨论编码问题，所以拿出来分享一下~ 呵呵
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  4:16 PM">2010年2月12日 16:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200712">#</a>
+ | <a href="#comment-text" title="引用Jinjiang的这条留言" onclick="return CommentQuote('comment-quote-200712','Jinjiang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200713" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lhb2002200000</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200713">
+            <p>提前祝阮大哥虎年好啊。。。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  4:31 PM">2010年2月12日 16:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200713">#</a>
+ | <a href="#comment-text" title="引用lhb2002200000的这条留言" onclick="return CommentQuote('comment-quote-200713','lhb2002200000');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200715" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://janlay.com" href="http://janlay.com" target="_blank" rel="nofollow">janlay</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200715">
+            <p>情况1和2本质上是一样的，在web server内部会把1转换成2的形式。其实使用何种编码，都是取决与如何“约定”————服务器对客户端提交的数据使用何种编码有约定，客户端只有按约定的编码发送信息，才会被正确decode.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  5:21 PM">2010年2月12日 17:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200715">#</a>
+ | <a href="#comment-text" title="引用janlay的这条留言" onclick="return CommentQuote('comment-quote-200715','janlay');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200716" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://brucegao.org" href="http://brucegao.org" target="_blank" rel="nofollow">BruceGAO</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200716">
+            <p>解决了我一直以来的困惑</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  5:50 PM">2010年2月12日 17:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200716">#</a>
+ | <a href="#comment-text" title="引用BruceGAO的这条留言" onclick="return CommentQuote('comment-quote-200716','BruceGAO');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200717" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">234</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200717">
+            <p>太好了，编码用于争取夺走的权利</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 12, 2010  6:36 PM">2010年2月12日 18:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200717">#</a>
+ | <a href="#comment-text" title="引用234的这条留言" onclick="return CommentQuote('comment-quote-200717','234');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200747" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.est.im/" href="http://blog.est.im/" target="_blank" rel="nofollow">est</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200747">
+            <blockquote>
+<pre>引用Ruan YiFeng的发言：</pre>
+
+<p> To est:</p>
+
+<p>你说的是情况3。</p>
+
+<p>情况1、情况2和情况4都与网页本身指定的charset无关。尤其是前两种情况，这时浏览器还不知道网页本身的编码呢。</p>
+
+</blockquote>
+
+<p>HTTP头也可以直接指定charset的。用抓包软件看看 Content-Type: text/html; charset=utf-8</p>
+
+<p>如果HTTP头也没有指定，那就和浏览器设置有关。如果浏览器也没有设置，那就和当前进程系统设置(codepage)有关。如果和当前进程无关，那么就是操作系统默认编码了。编码和URL并没有绝对关系。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 13, 2010  2:14 PM">2010年2月13日 14:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200747">#</a>
+ | <a href="#comment-text" title="引用est的这条留言" onclick="return CommentQuote('comment-quote-200747','est');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200748" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://1m1.org" href="http://1m1.org" target="_blank" rel="nofollow">ok s</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200748">
+            <p>这样的文章,读起来舒服!!!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 13, 2010  2:16 PM">2010年2月13日 14:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200748">#</a>
+ | <a href="#comment-text" title="引用ok s的这条留言" onclick="return CommentQuote('comment-quote-200748','ok s');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-200759" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Tony</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-200759">
+            <p>新年快乐！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 13, 2010 11:13 PM">2010年2月13日 23:13</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-200759">#</a>
+ | <a href="#comment-text" title="引用Tony的这条留言" onclick="return CommentQuote('comment-quote-200759','Tony');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-205706" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hi.baidu.com/zhuguoneng" href="http://hi.baidu.com/zhuguoneng" target="_blank" rel="nofollow">gallen</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-205706">
+            <p>情况一不是很明白<br />
+情况二的话，在IE中用wireshark抓包，貌似变成了“\264\272\275\332\”并非传说中的URL“%B4%BA%BD%DA”虽然只是表示有点不一样，可就是不明白为啥没有“%”这个百分号了呢？<br />
+不吝赐教~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 21, 2010  1:49 PM">2010年5月21日 13:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-205706">#</a>
+ | <a href="#comment-text" title="引用gallen的这条留言" onclick="return CommentQuote('comment-quote-205706','gallen');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-206530" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">cst</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-206530">
+            <p>结论二的推论是有问题的<br />
+用一个utf-8的网站反而更有说服力</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July  9, 2010 10:32 AM">2010年7月 9日 10:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-206530">#</a>
+ | <a href="#comment-text" title="引用cst的这条留言" onclick="return CommentQuote('comment-quote-206530','cst');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-208322" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.ahui.net" href="http://www.ahui.net" target="_blank" rel="nofollow">ahui</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-208322">
+            <p>确实挺乱的，也许将来会出一个统一的标准吧！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 10, 2010 10:58 AM">2010年10月10日 10:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-208322">#</a>
+ | <a href="#comment-text" title="引用ahui的这条留言" onclick="return CommentQuote('comment-quote-208322','ahui');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-209098" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">沐沐</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-209098">
+            <p>原创否？<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 16, 2010  3:58 PM">2010年11月16日 15:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-209098">#</a>
+ | <a href="#comment-text" title="引用沐沐的这条留言" onclick="return CommentQuote('comment-quote-209098','沐沐');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-209223" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">weixing</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-209223">
+            <p>我是菜鸟，想请教一下你前面看他们的编码工具是什么啊？怎么查看的啊？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 21, 2010 11:35 PM">2010年11月21日 23:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-209223">#</a>
+ | <a href="#comment-text" title="引用weixing的这条留言" onclick="return CommentQuote('comment-quote-209223','weixing');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-209936" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://zyj.me" href="http://zyj.me" target="_blank" rel="nofollow">江哥</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-209936">
+            <p>有一点问题：<br />
+URL编码是否正确，跟选用的服务器有关。<br />
+你可以尝试http://www.google.com.hk/search?hl=zh-CN&q=%E6%98%A5%E8%8A%82跟http://www.google.com.hk/search?hl=zh-CN&q=%B4%BA%BD%DA，均可以正常解析。<br />
+显然，Google的服务器内置了编码转换。<br />
+对目前最流行的Apache服务器来说，URL的编码跟页面的编码保持一致。你所说的第1种情况跟第2种情况，不过是由于wiki采用UTF-8，而Baidu采用GBK编码的原因。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 12, 2010  3:08 PM">2010年12月12日 15:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-209936">#</a>
+ | <a href="#comment-text" title="引用江哥的这条留言" onclick="return CommentQuote('comment-quote-209936','江哥');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-210065" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ch</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-210065">
+            <p>请交一下搜索繁体字的时候浏览器是真么编码的？<br />
+比如搜索“商業網站”， 百度的搜索引擎会出现%C9%CC%98I%BEW%D5%BE这样的编码。 开头的“%C9%CC就是“商”，结尾的“%D5%BE”就是“站”，而中间的两个繁体字URL编码成了“%98I%BEW”。 一般%号后面都是两个字母，繁体怎么会有三个字母呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 17, 2010  2:57 PM">2010年12月17日 14:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-210065">#</a>
+ | <a href="#comment-text" title="引用ch的这条留言" onclick="return CommentQuote('comment-quote-210065','ch');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-216186" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">大名</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-216186">
+            <p>还是不懂， 那你用不同的编码，服务器是什么解析的</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 13, 2011 10:17 PM">2011年4月13日 22:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-216186">#</a>
+ | <a href="#comment-text" title="引用大名的这条留言" onclick="return CommentQuote('comment-quote-216186','大名');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-225997" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.baidu.com" href="http://www.baidu.com" target="_blank" rel="nofollow">Qujer</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-225997">
+            <p>初学PHP，感觉很受用！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 21, 2011  8:59 PM">2011年8月21日 20:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-225997">#</a>
+ | <a href="#comment-text" title="引用Qujer的这条留言" onclick="return CommentQuote('comment-quote-225997','Qujer');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228567" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://dddspace.com" href="http://dddspace.com" target="_blank" rel="nofollow">alswl</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228567">
+            <p>感谢阮老师，解决了一个大问题</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  4:50 PM">2011年9月19日 16:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-228567">#</a>
+ | <a href="#comment-text" title="引用alswl的这条留言" onclick="return CommentQuote('comment-quote-228567','alswl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-232178" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">清晨的来客</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-232178">
+            <p>对于结论2，我觉得有点问题，用谷歌www.google.com.hk查询时，URL的编码为UTF-8，我觉得是网站使用的编码有关的吧。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 26, 2011  1:22 PM">2011年9月26日 13:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-232178">#</a>
+ | <a href="#comment-text" title="引用清晨的来客的这条留言" onclick="return CommentQuote('comment-quote-232178','清晨的来客');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-236437" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">sking7</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-236437">
+            <p>凭某个测试结果总结出来的规则是不严谨的。。。<br />
+仅我知道的，在tomcat里，结论3未必是正确的，get的编码是否和网页编码一致取决于tomcat是否设置了某个属性<br />
+<br />
+结论3就是，GET和POST方法的编码，用的是网页的编码。<br />
+</p>
+
+<p><br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  9, 2011 11:10 AM">2011年10月 9日 11:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-236437">#</a>
+ | <a href="#comment-text" title="引用sking7的这条留言" onclick="return CommentQuote('comment-quote-236437','sking7');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-238797" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zz</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-238797">
+            <p>好文章啊  很详细！  </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  4, 2011 10:07 AM">2011年11月 4日 10:07</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-238797">#</a>
+ | <a href="#comment-text" title="引用zz的这条留言" onclick="return CommentQuote('comment-quote-238797','zz');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-238923" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">飞龙</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-238923">
+            <p>不管结论如何，讨论问题的思路还是很清楚的。<br />
+愿意研究，依次尝试下来，都会有写收获</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  5, 2011  3:22 PM">2011年11月 5日 15:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-238923">#</a>
+ | <a href="#comment-text" title="引用飞龙的这条留言" onclick="return CommentQuote('comment-quote-238923','飞龙');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-240273" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.grick.net" href="http://www.grick.net" target="_blank" rel="nofollow">grick</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-240273">
+            <p>这个问题或许没那么简单，因为服务器端比如 IIS, APACHE 还会对 URL 中的字符进行解码处理。头疼啊，为什么这么棘手的问题很少有人深入讨论？ 编码问题绝对是个毒瘤。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 20, 2011  9:30 PM">2011年11月20日 21:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-240273">#</a>
+ | <a href="#comment-text" title="引用grick的这条留言" onclick="return CommentQuote('comment-quote-240273','grick');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-248888" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://695002458@qq.com" href="http://695002458@qq.com" target="_blank" rel="nofollow">xin</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-248888">
+            <p>总结的很好，很喜欢。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 21, 2012  2:38 PM">2012年2月21日 14:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-248888">#</a>
+ | <a href="#comment-text" title="引用xin的这条留言" onclick="return CommentQuote('comment-quote-248888','xin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-251941" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wang20061040</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-251941">
+            <p>url编码的确是个头痛的事</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  5, 2012 11:25 AM">2012年4月 5日 11:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-251941">#</a>
+ | <a href="#comment-text" title="引用wang20061040的这条留言" onclick="return CommentQuote('comment-quote-251941','wang20061040');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255252" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yutianhuo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255252">
+            <p>哥们，你的文章太值得读了，拜谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 22, 2012  2:41 PM">2012年5月22日 14:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-255252">#</a>
+ | <a href="#comment-text" title="引用yutianhuo的这条留言" onclick="return CommentQuote('comment-quote-255252','yutianhuo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-261180" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">chorles</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-261180">
+            <p>我想问一下下面这个地址中波浪线“~”在URL中起什么作用啊？<br />
+<a href="http://www.cs.tut.fi/~jkorpela/html/strict.html" rel="nofollow">http://www.cs.tut.fi/~jkorpela/html/strict.html</a></p>
+
+<p><br />
+p.s.请邮件告知，多谢！<br />
+chorles#sohu.com #->@</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 13, 2012  1:25 AM">2012年8月13日 01:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-261180">#</a>
+ | <a href="#comment-text" title="引用chorles的这条留言" onclick="return CommentQuote('comment-quote-261180','chorles');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-262783" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ltn</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-262783">
+            <p>请问下怎么把URL转化为&#X0055&#X0052这类型的？<br />
+请问有工具直接转换吗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  5, 2012  1:53 PM">2012年9月 5日 13:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-262783">#</a>
+ | <a href="#comment-text" title="引用Ltn的这条留言" onclick="return CommentQuote('comment-quote-262783','Ltn');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-264025" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">广告位不招租</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-264025">
+            <p>干货，赞！<br />
+使用encodeURI输出的是UTF8编码格式的，如果是通过get方式发出请求，但请求地址是第三方GB2312的页面，可能会出现乱码情况，该如何处理？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 28, 2012  1:22 PM">2012年9月28日 13:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-264025">#</a>
+ | <a href="#comment-text" title="引用广告位不招租的这条留言" onclick="return CommentQuote('comment-quote-264025','广告位不招租');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270501" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">00_悦</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270501">
+            <p>写得很详细，受教了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  8, 2013 10:55 AM">2013年4月 8日 10:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-270501">#</a>
+ | <a href="#comment-text" title="引用00_悦的这条留言" onclick="return CommentQuote('comment-quote-270501','00_悦');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272696" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.csdn.net/qianguozheng" href="http://blog.csdn.net/qianguozheng" target="_blank" rel="nofollow">qianguozheng</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272696">
+            <p>关于将网页提交表单时将 空格转换为+，在哪里有比较官方的声明呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 17, 2013  9:38 AM">2013年7月17日 09:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-272696">#</a>
+ | <a href="#comment-text" title="引用qianguozheng的这条留言" onclick="return CommentQuote('comment-quote-272696','qianguozheng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273224" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">出来忘吃药了</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273224">
+            <p>捐款完毕2元（汗颜）！真正帮助了我解决了实际问题。如果不捐，过去因这个问题而痛苦挣扎的我，会恨自己。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 24, 2013  5:41 PM">2013年8月24日 17:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-273224">#</a>
+ | <a href="#comment-text" title="引用出来忘吃药了的这条留言" onclick="return CommentQuote('comment-quote-273224','出来忘吃药了');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-278012" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">苹果</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-278012">
+            <p>我对情况2做了练习，在地址栏里直接输入：“http://www.baidu.com/s?wd=春节”。结果在firebug中看到的是：<br />
+GET /s?wd=%E6%98%A5%E8%8A%82 HTTP/1.1<br />
+Host: www.baidu.com<br />
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Firefox/24.0<br />
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br />
+Accept-Language: zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3<br />
+Accept-Encoding: gzip, deflate<br />
+Cookie: BAIDUID=414B5AFB67FF1218D91F5FDBF032143E:FG=1<br />
+Connection: keep-alive<br />
+“春节”两个汉字被用UTF-8编码了，而不是GB2312<br />
+请问：是我做的过程有问题，还是Firefox升级，造成的？到底该怎么对待地址重写中汉字的编码？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 10, 2013  7:10 PM">2013年10月10日 19:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-278012">#</a>
+ | <a href="#comment-text" title="引用苹果的这条留言" onclick="return CommentQuote('comment-quote-278012','苹果');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323508" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://weibo.com/linchen1987" href="http://weibo.com/linchen1987" target="_blank" rel="nofollow">林晨</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323508">
+            <p>从内容和表达都很到位。 alipay不支持pc捐款了，阮老师给个二维码吧</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 15, 2014 12:06 PM">2014年5月15日 12:06</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-323508">#</a>
+ | <a href="#comment-text" title="引用林晨的这条留言" onclick="return CommentQuote('comment-quote-323508','林晨');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323543" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">FM</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323543">
+            <p>写的详实，很不错</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 15, 2014  5:44 PM">2014年5月15日 17:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-323543">#</a>
+ | <a href="#comment-text" title="引用FM的这条留言" onclick="return CommentQuote('comment-quote-323543','FM');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-344766" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hello</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-344766">
+            <p>"只有字母和数字[0-9a-zA-Z]、一些特殊符号"$-_.+!*'(),"[不包括双引号]、以及某些保留字，才可以不经过编码直接用于URL。"<br />
+这句话中特殊符号那里是不是有问题，难道%，/，=，这几个符号都不能直接用于url？这些都是常见的啊</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 24, 2014  7:41 PM">2014年11月24日 19:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-344766">#</a>
+ | <a href="#comment-text" title="引用hello的这条留言" onclick="return CommentQuote('comment-quote-344766','hello');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-345417" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">junfx</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-345417">
+            <p>我想在C中进行url编码, 解码, 搜到了这里.<br />
+根据自己的观察, 结合你文章的几个结论, 发现 *可能* 的原则是:</p>
+
+<p>对于中文, 文本框的编码是GBK/Unicode/xxx, 那么URL编码用的就是GBK/Unicode/xxx.<br />
+这里的文本框可以是地址栏, 表单输入, 文件, ...</p>
+
+<p><br />
+未验证.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  2, 2014  1:24 PM">2014年12月 2日 13:24</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-345417">#</a>
+ | <a href="#comment-text" title="引用junfx的这条留言" onclick="return CommentQuote('comment-quote-345417','junfx');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351711" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Twistack</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351711">
+            <p>谢谢，您的很多文章都帮我大忙了:)</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 16, 2015  4:32 PM">2015年9月16日 16:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-351711">#</a>
+ | <a href="#comment-text" title="引用Twistack的这条留言" onclick="return CommentQuote('comment-quote-351711','Twistack');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353218" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://zgbeam.github.io" href="http://zgbeam.github.io" target="_blank" rel="nofollow">微笑</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353218">
+            <p>chrome中情况2用的是utf-8，请阮大牛确认</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 11, 2015 11:02 AM">2015年12月11日 11:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html#comment-353218">#</a>
+ | <a href="#comment-text" title="引用微笑的这条留言" onclick="return CommentQuote('comment-quote-353218','微笑');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1341" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

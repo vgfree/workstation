@@ -1,0 +1,1125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2009/03/differences_between_mid_and_umpc.html" title="MID和UMPC的区别" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2009/03/economics_is_useless.html" title="经济学是无用的" />
+    
+    <title>TCP/IP模型的一个简单解释 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1208" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2009/03/differences_between_mid_and_umpc.html" title="MID和UMPC的区别">MID和UMPC的区别</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2009/03/economics_is_useless.html" title="经济学是无用的">经济学是无用的&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/developer/" rel="tag">开发者手册</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">TCP/IP模型的一个简单解释</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2009/03/"><abbr class="published" title="2009-03-20T21:36:05+08:00">2009年3月20日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>TCP/IP模型是互联网的基础。</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>想要理解互联网，就必须理解<a href="http://en.wikipedia.org/wiki/TCP/IP_model" target="_blank">这个模型</a>。但是，它不好懂，我就从来没有搞懂过。</p>
+
+<p>前几天，<a href="http://betterexplained.com/articles/a-simple-introduction-to-computer-networking/" target="_blank">BetterExplained</a>上有一篇文章，很通俗地解释了这个模型。我读后有一种恍然大悟的感觉，第一次感到自己理解了互联网的总体架构。</p>
+
+<p>下面，我按照自己的理解，写一下互联网到底是怎么搭建起来的。说得不对的地方，欢迎指正。</p>
+
+<p><strong>什么是TCP/IP模型？</strong></p>
+
+<p>TCP/IP模型是一系列网络协议的总称，这些协议的目的，就是使计算机之间可以进行信息交换。</p>
+
+<p>所谓"协议"可以理解成机器之间交谈的语言，每一种协议都有自己的目的。TCP/IP模型一共包括几百种协议，对互联网上交换信息的各个方面都做了规定。</p>
+
+<p><strong>TCP/IP模型的四层结构</strong></p>
+
+<p>这些协议可以大致分成四个层次，上一层的协议都以下一层的协议为基础。就像下面这张图：</p>
+
+<p><img src="http://lh4.ggpht.com/_6p3hNkUNWrQ/ScObKm-azpI/AAAAAAAAA78/52k38xkD9j4/s800/bg2009032002.jpg" /></p>
+
+<p>从下到上的四层，分别为连接层（Link Layer）、网络层（Internet Layer）、传输层（Transport Layer）、应用层（Application Layer）。</p>
+
+<p>可以这样理解它们的作用：</p>
+
+<blockquote><div>
+
+<p>1）连接层负责建立<strong>电路连接</strong>，是整个网络的物理基础，典型的协议包括以太网、ADSL等等；</p>
+
+<p>2）网络层负责分配地址和传送<strong>二进制数据</strong>，主要协议是IP协议；</p>
+
+<p>3）传输层负责传送<strong>文本数据</strong>，主要协议是TCP协议；</p>
+
+<p>4）应用层负责传送各种<strong>最终形态的数据</strong>，是直接与用户打交道的层，典型协议是HTTP、FTP等。</p>
+
+</div></blockquote>
+
+<p>理解这个结构的关键，在于理解科学家在70年代设计互联网的原始目的，就是为了传输文本。所有协议最初都是为了这个目标而设计的，互联网架构的核心就是文本对话。</p>
+
+<p><strong>实例：用Telnet建立HTTP对话</strong></p>
+
+<p>为了观察文本在互联网上是如何传输的，我们做一个小实验。</p>
+
+<p><strong>第一步：在"开始"菜单中，点击"运行"命令，输入"telnet google.com 80"。</strong></p>
+
+<p><img src="http://lh6.ggpht.com/_6p3hNkUNWrQ/ScObKQOp_yI/AAAAAAAAA70/8qHj3eH9SOQ/s800/bg2009032001.jpg" /></p>
+
+<p>telnet命令本身就是一个应用层协议，它的作用是在两台主机间，建立一个TCP连接，也就是打开两台主机间文本传输的一个通道。</p>
+
+<p>"telnet google.com 80"表示建立本机与google.com在80端口的一个文本传输通道。所谓"端口"其实是TCP协议的一个参数，用来帮助TCP协议判断对方主机传来的文本，到底使用的是哪一种应用层协议。80端口是HTTP协议的端口，就是我们平时浏览网页的端口。常见端口列表可以参考<a href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers" target="_blank">这里</a>。</p>
+
+<p>另外，与Windows 2000和Windows XP不同，Vista系统默认没有安装Telnet客户端，大家可以参考微软公司的<a href="http://windowshelp.microsoft.com/Windows/zh-CN/Help/81b6d4b7-905e-4d70-8379-7934913fedb02052.mspx" target="_blank">安装说明</a>自行安装。如果你使用的是Linux系统，那么可以直接在命令行窗口中，输入上面的命令。</p>
+
+<p><strong>第二步：打开本地显示。</strong>（非Windows系统跳过此步。）</p>
+
+<p>请按以下步骤操作：在Telnet窗口中按下"Ctrl+]"；然后，输入"set localecho"命令，再连续按下两次回车键。</p>
+
+<p><img src="http://lh4.ggpht.com/_6p3hNkUNWrQ/ScObKqQ2ixI/AAAAAAAAA8E/y_bni9WGzUo/s800/bg2009032003.jpg" /></p>
+
+<p>好了，这个时候你就可以直接同google.com主机进行对话了。</p>
+
+<p><strong>第三步：你可以试着同Google随便说句话，看看有什么反应。</strong></p>
+
+<p>我输入了"Hello World！"。</p>
+
+<p><img src="http://lh6.ggpht.com/_6p3hNkUNWrQ/ScObKqqEFiI/AAAAAAAAA8M/q7S2Htybp0k/s800/bg2009032004.jpg" /></p>
+
+<p>结果，Google的回答是这样的：</p>
+
+<p><img src="http://lh5.ggpht.com/_6p3hNkUNWrQ/ScObK-x6ZBI/AAAAAAAAA8U/MZnptNO4lHg/s800/bg2009032005.jpg" /></p>
+
+<p>"400 Bad Request"说明Google看不懂你的发言。这是毫不奇怪的，因为这时你是在TCP文本通道中，进行HTTP对话。所以，你的发言必须遵守HTTP协议，这样Google才能看懂。</p>
+
+<p><strong>第四步：输入"GET / HTTP/1.1"，表示向google索要首页根文件，使用的协议是HTTP的1.1版本。</strong></p>
+
+<p>Google的回应如下：</p>
+
+<p><img src="http://lh6.ggpht.com/_6p3hNkUNWrQ/ScObYMDOWuI/AAAAAAAAA8c/q5xB9qzAfyM/s800/bg2009032006.jpg" /></p>
+
+<p>"200 OK"表示要求数据成功。在头部信息的下面，就是google在浏览器中显示的首页文件的源代码。</p>
+
+<p><strong>总结</strong></p>
+
+<p>上面这个例子用的是HTTP协议，如果要使用其他"应用层协议"与主机进行对话，你只要改变端口就行了。比如，"telnet ftp.website.com 21"，表示用ftp协议进行对话。</p>
+
+<p>所有这些对话的底层协议，都是TCP协议，因为这是负责文本传输的协议；而TCP协议又必须依靠IP协议，进行二进制数据的传输；而二进制数据的传输，离不开最底层负责网络连接的物理协议。</p>
+
+<p>所以，通过这样四层的网络架构，就实现了整个互联网的通信。</p>
+
+<p>（完）</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2009-03-20T21:36:05+08:00">2009年3月20日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/developer/"> 开发者手册</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2016.03.08: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd 入门教程：实战篇</a></strong>
+
+                           <div class="entry-body">
+                              上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.03.07: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程：命令篇</a></strong>
+
+                           <div class="entry-body">
+                              Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.02.28: <a href="http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html">Linux 守护进程的启动方法</a></strong>
+
+                           <div class="entry-body">
+                              "守护进程"（daemon）就是一直在后台运行的进程（daemon）。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.01.06: <a href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html">Commit message 和 Change log 编写指南</a></strong>
+
+                           <div class="entry-body">
+                              Git 每次提交代码，都要写 Commit message（提交说明），否则就不允许提交。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（19条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-176127" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Nicky</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176127">
+            <p>和OSI的标准模型对应着讲，对比会更加清楚</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 21, 2009  3:22 AM">2009年3月21日 03:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176127">#</a>
+ | <a href="#comment-text" title="引用Nicky的这条留言" onclick="return CommentQuote('comment-quote-176127','Nicky');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176203" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hi.baidu.com/humdragon" href="http://hi.baidu.com/humdragon" target="_blank" rel="nofollow">Daniel</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176203">
+            <p>不懂的还是不懂····</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 21, 2009  4:01 PM">2009年3月21日 16:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176203">#</a>
+ | <a href="#comment-text" title="引用Daniel的这条留言" onclick="return CommentQuote('comment-quote-176203','Daniel');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176207" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">花心开未</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176207">
+            <p>请经济学博士讨论一下经济问题。<br />
+    请简要的评论一下美国印1万亿美元票子来救市的行为。以及会对中国经济和中国股市造成的影响。<br />
+    由于美元暴跌，美国股市狂涨，由于近期中美股市走势一直是相反的。所以美国股市暴涨，是不是会导致在中国股市投资的美国投资者的资产回流，流动性收紧，股市进入新一轮下跌。<br />
+    另外，由于美元强势贬值，人民币可能再次扩大M2的供应量，也即人民币跟随美元贬值，避险的措施是买入大宗商品期货，黄金，还是把手头人民币换成日元？</p>
+
+<p>    </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 21, 2009  5:27 PM">2009年3月21日 17:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176207">#</a>
+ | <a href="#comment-text" title="引用花心开未的这条留言" onclick="return CommentQuote('comment-quote-176207','花心开未');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176239" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">chao</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176239">
+            <p>我觉得您对TCP的理解有误，而且似乎跟Transport Layer 混淆了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 21, 2009 11:16 PM">2009年3月21日 23:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176239">#</a>
+ | <a href="#comment-text" title="引用chao的这条留言" onclick="return CommentQuote('comment-quote-176239','chao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176248" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hehe</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176248">
+            <p>难道阮老师的blog真的变成仅仅是技术一类的东西了。。。</p>
+
+<p>不会吧。。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 22, 2009  1:11 AM">2009年3月22日 01:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176248">#</a>
+ | <a href="#comment-text" title="引用hehe的这条留言" onclick="return CommentQuote('comment-quote-176248','hehe');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176284" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ruan YiFeng</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176284">
+            <blockquote>
+<pre>引用Nicky的发言：</pre>
+
+<p> 和OSI的标准模型对应着讲，对比会更加清楚</p>
+
+</blockquote>
+
+<p>OSI的七层模型，我到现在还没有搞懂……<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 22, 2009  7:25 AM">2009年3月22日 07:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176284">#</a>
+ | <a href="#comment-text" title="引用Ruan YiFeng的这条留言" onclick="return CommentQuote('comment-quote-176284','Ruan YiFeng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176309" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">anonymous</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176309">
+            <p>理解TCP/IP模型和OSI参考模型的关键在于理解封装和解包<br />
+同时首部中的类型字段指定了解包后的处理方式</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 22, 2009 11:49 AM">2009年3月22日 11:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176309">#</a>
+ | <a href="#comment-text" title="引用anonymous的这条留言" onclick="return CommentQuote('comment-quote-176309','anonymous');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176361" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Bourne</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176361">
+            <p>理解了又能怎样？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 22, 2009  7:50 PM">2009年3月22日 19:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176361">#</a>
+ | <a href="#comment-text" title="引用Bourne的这条留言" onclick="return CommentQuote('comment-quote-176361','Bourne');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176458" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.cnblogs.com/kuber" href="http://www.cnblogs.com/kuber" target="_blank" rel="nofollow">kuber</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176458">
+            <p>真佩服你, 学经济的能这样花精力去了解计算机方面的知识. 说的差不离. <br />
+OSI 就没有必要了, 那都是学究气的, 从来就没有实用过.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 23, 2009 10:12 AM">2009年3月23日 10:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176458">#</a>
+ | <a href="#comment-text" title="引用kuber的这条留言" onclick="return CommentQuote('comment-quote-176458','kuber');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-176576" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">峰粉</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-176576">
+            <p><br />
+写得很简单，应该很多人可以因此读懂。</p>
+
+<p>回一下楼上，Ruan始终是一个经济学人，他做了很多IT的东西，但很多专业的人一看，就觉得门外的。</p>
+
+<p>Ruan更写了很多有趣的专业的事情，如果写在我专业头上的，更觉得幼稚。</p>
+
+<p>可以说，我相信Ruan说的经济学，语言学的所有，因为我相信他是专家。但，此外的，我很赞赏他的表达能力，但并不认同所有。</p>
+
+<p>就上面的贴，他说的没错，但不是全部。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 24, 2009  1:19 PM">2009年3月24日 13:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-176576">#</a>
+ | <a href="#comment-text" title="引用峰粉的这条留言" onclick="return CommentQuote('comment-quote-176576','峰粉');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-178582" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">杨丽永</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-178582">
+            <p>tcp协议负责文本传输,ip协议负责二进字传输?<br />
+老大不是这样简单的吧,ip协议是无连接,不保证传输安全性的协议,tcp是以它为基础,进行了封装,让它传输的数据不会丢失</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 11, 2009  7:19 PM">2009年4月11日 19:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-178582">#</a>
+ | <a href="#comment-text" title="引用杨丽永的这条留言" onclick="return CommentQuote('comment-quote-178582','杨丽永');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-179854" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">任我行不行</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-179854">
+            <p>峰粉说得很对！不过，学习对有些人来说，有时候是一种乐趣，从未知到了解的过程是一个探索，学习的过程，很让人着迷。但是要想达到精通甚至顶尖的境界，之前是要付出太多的时间和精力，而且未必能达到。阮的心态其实很好，自娱自乐之余，还能给大家提供一个氛围，至少交了一些朋友，大家可以讨论一些问题。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 23, 2009  9:27 AM">2009年4月23日 09:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-179854">#</a>
+ | <a href="#comment-text" title="引用任我行不行的这条留言" onclick="return CommentQuote('comment-quote-179854','任我行不行');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-180319" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fallwithme</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-180319">
+            <p>所谓的OSI标准模型，根本就是个笑话，出现以后一直就没有得到业界的认可，而TCP/IP早就成了事实的标准。有人认为OSI还应该再加上经济层和政治层，现在互联网系统协会（ISC.org）的网站上还在出售这个9层OSI模型的T恤衫：<br />
+<a href="https://www.isc.org/logoware/isc-9-layer-osi-model-cotton-t-shirt" rel="nofollow">https://www.isc.org/logoware/isc-9-layer-osi-model-cotton-t-shirt</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 27, 2009  6:39 PM">2009年4月27日 18:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-180319">#</a>
+ | <a href="#comment-text" title="引用fallwithme的这条留言" onclick="return CommentQuote('comment-quote-180319','fallwithme');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-204941" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Mooy</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-204941">
+            <p>分析的已经很好了<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 20, 2010  4:31 PM">2010年4月20日 16:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-204941">#</a>
+ | <a href="#comment-text" title="引用Mooy的这条留言" onclick="return CommentQuote('comment-quote-204941','Mooy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-217989" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hr-no.blogspot.com" href="http://hr-no.blogspot.com" target="_blank" rel="nofollow">darkman</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-217989">
+            <blockquote>
+<pre>引用花心开未的发言：</pre>
+
+<p>由於美元強勢貶值，人民幣可能再次擴大M2的供應量，也即人民幣跟隨美元貶值，避險的措施是買入大宗商品期貨，黃金，還是把手頭人民幣換成日元？</p>
+
+</blockquote>
+
+<p>真正的重點：不是去印鈔票！而是去證明「錢」消失去哪裡了。</p>
+
+<p>市場上流通得貨幣，為何會消失？</p>
+
+<p>經常「金融巨惡」不是來自外部經濟，而是內部經濟？在資本主立場上，從「大幅囤積物資」轉為「大幅的囤積貨幣」，使得整體經濟？發生中轉困難！而這種中轉價值，多半發生在「民生消費」，極少發生在「企業資金」的需求。</p>
+
+<p>然後？就會發生「國家」必須在提供「大量籌碼」給「民生賭局」去運用，這時候？「大量囤積貨幣、大量囤積物資」的商人，就能夠再次提高「市場價格」，使得整體消費，再次吞食「民生消費」，很自然！這種手段是「經濟回收：賭局莊家思想」的事實。</p>
+
+<p>閒家？要能夠不失敗？唯一的方式是「避免使用貨幣」，及減少「貨幣使用率」。但仍會發生「喪失信用」的背景。</p>
+
+<p>有興趣？</p>
+
+<p>可以來拜訪我的 Blog <a href="http://hr-no.blogspot.com" rel="nofollow">http://hr-no.blogspot.com</a></p>
+
+<p>經濟控制，已經成為一種「社會操作」的統治手段！<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  4, 2011  3:07 PM">2011年5月 4日 15:07</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-217989">#</a>
+ | <a href="#comment-text" title="引用darkman的这条留言" onclick="return CommentQuote('comment-quote-217989','darkman');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-243682" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yuhai</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-243682">
+            <blockquote>
+<pre>引用博主的章节：</pre>
+“400 Bad Request”说明Google看不懂你的发言。这是毫不奇怪的，因为这时你是在TCP文本通道中，进行HTTP对话。所以，你的发言必须遵守HTTP协议，这样Google才能看懂。
+第四步：输入“GET / HTTP/1.1”，表示向google索要首页根文件，使用的协议是HTTP的1.1版本。
+</blockquote>
+文章中大部分内容我经常看到，总觉得自己是理解了，而当我看到这段说明时却有了更深刻地认识.尤其是 "你的发言必须遵守HTTP协议，这样Google才能看懂"。
+
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 28, 2011  9:59 PM">2011年12月28日 21:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-243682">#</a>
+ | <a href="#comment-text" title="引用yuhai的这条留言" onclick="return CommentQuote('comment-quote-243682','yuhai');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-328291" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">no</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-328291">
+            <p>图片都看不了了～～</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 12, 2014  6:42 PM">2014年6月12日 18:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-328291">#</a>
+ | <a href="#comment-text" title="引用no的这条留言" onclick="return CommentQuote('comment-quote-328291','no');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342370" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Testtt</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342370">
+            <blockquote>
+<pre>引用no的发言：</pre>
+
+<p>图片都看不了了～～</p>
+
+</blockquote>
+
+<p>翻墙再看文章就看得到图片了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 31, 2014 10:13 AM">2014年10月31日 10:13</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-342370">#</a>
+ | <a href="#comment-text" title="引用Testtt的这条留言" onclick="return CommentQuote('comment-quote-342370','Testtt');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350722" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">李驰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350722">
+            <p>GET HTTP/1.1没有反应，提示无效。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 10, 2015 11:09 AM">2015年7月10日 11:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/03/tcp-ip_model.html#comment-350722">#</a>
+ | <a href="#comment-text" title="引用李驰的这条留言" onclick="return CommentQuote('comment-quote-350722','李驰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1208" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

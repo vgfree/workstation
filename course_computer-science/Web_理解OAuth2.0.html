@@ -1,0 +1,3514 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2014/04/ecmascript_6_primer.html" title="《ECMAScript 6入门》上线了" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" title="RESTful API 设计指南" />
+    
+    <title>理解OAuth 2.0 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1804" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2014/04/ecmascript_6_primer.html" title="《ECMAScript 6入门》上线了">《ECMAScript</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" title="RESTful API 设计指南">RESTful&nbsp;API</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/developer/" rel="tag">开发者手册</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">理解OAuth 2.0</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2014/05/"><abbr class="published" title="2014-05-12T21:07:52+08:00">2014年5月12日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p><a href="http://en.wikipedia.org/wiki/OAuth">OAuth</a>是一个关于授权（authorization）的开放网络标准，在全世界得到广泛应用，目前的版本是2.0版。</p>
+
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>本文对OAuth 2.0的设计思路和运行流程，做一个简明通俗的解释，主要参考材料为<a href="http://www.rfcreader.com/#rfc6749">RFC 6749</a>。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051201.png" alt="OAuth Logo" title="" /></p>
+
+<h2>一、应用场景</h2>
+
+<p>为了理解OAuth的适用场合，让我举一个假设的例子。</p>
+
+<p>有一个"云冲印"的网站，可以将用户储存在Google的照片，冲印出来。用户为了使用该服务，必须让"云冲印"读取自己储存在Google上的照片。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051202.png" alt="云冲印" title="" /></p>
+
+<p>问题是只有得到用户的授权，Google才会同意"云冲印"读取这些照片。那么，"云冲印"怎样获得用户的授权呢？</p>
+
+<p>传统方法是，用户将自己的Google用户名和密码，告诉"云冲印"，后者就可以读取用户的照片了。这样的做法有以下几个严重的缺点。</p>
+
+<blockquote>
+  <p>（1）"云冲印"为了后续的服务，会保存用户的密码，这样很不安全。</p>
+
+<p>（2）Google不得不部署密码登录，而我们知道，单纯的密码登录并不安全。</p>
+
+<p>（3）"云冲印"拥有了获取用户储存在Google所有资料的权力，用户没法限制"云冲印"获得授权的范围和有效期。</p>
+
+<p>（4）用户只有修改密码，才能收回赋予"云冲印"的权力。但是这样做，会使得其他所有获得用户授权的第三方应用程序全部失效。</p>
+
+<p>（5）只要有一个第三方应用程序被破解，就会导致用户密码泄漏，以及所有被密码保护的数据泄漏。</p>
+</blockquote>
+
+<p>OAuth就是为了解决上面这些问题而诞生的。</p>
+
+<h2>二、名词定义</h2>
+
+<p>在详细讲解OAuth 2.0之前，需要了解几个专用名词。它们对读懂后面的讲解，尤其是几张图，至关重要。</p>
+
+<blockquote>
+  <p>（1） <strong>Third-party application</strong>：第三方应用程序，本文中又称"客户端"（client），即上一节例子中的"云冲印"。</p>
+
+<p>（2）<strong>HTTP service</strong>：HTTP服务提供商，本文中简称"服务提供商"，即上一节例子中的Google。</p>
+
+<p>（3）<strong>Resource Owner</strong>：资源所有者，本文中又称"用户"（user）。</p>
+
+<p>（4）<strong>User Agent</strong>：用户代理，本文中就是指浏览器。</p>
+
+<p>（5）<strong>Authorization server</strong>：认证服务器，即服务提供商专门用来处理认证的服务器。</p>
+
+<p>（6）<strong>Resource server</strong>：资源服务器，即服务提供商存放用户生成的资源的服务器。它与认证服务器，可以是同一台服务器，也可以是不同的服务器。</p>
+</blockquote>
+
+<p>知道了上面这些名词，就不难理解，OAuth的作用就是让"客户端"安全可控地获取"用户"的授权，与"服务商提供商"进行互动。</p>
+
+<h2>三、OAuth的思路</h2>
+
+<p>OAuth在"客户端"与"服务提供商"之间，设置了一个授权层（authorization layer）。"客户端"不能直接登录"服务提供商"，只能登录授权层，以此将用户与客户端区分开来。"客户端"登录授权层所用的令牌（token），与用户的密码不同。用户可以在登录的时候，指定授权层令牌的权限范围和有效期。</p>
+
+<p>"客户端"登录授权层以后，"服务提供商"根据令牌的权限范围和有效期，向"客户端"开放用户储存的资料。</p>
+
+<h2>四、运行流程</h2>
+
+<p>OAuth 2.0的运行流程如下图，摘自RFC 6749。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051203.png" alt="OAuth运行流程" title="" /></p>
+
+<blockquote>
+  <p>（A）用户打开客户端以后，客户端要求用户给予授权。</p>
+
+<p>（B）用户同意给予客户端授权。</p>
+
+<p>（C）客户端使用上一步获得的授权，向认证服务器申请令牌。</p>
+
+<p>（D）认证服务器对客户端进行认证以后，确认无误，同意发放令牌。</p>
+
+<p>（E）客户端使用令牌，向资源服务器申请获取资源。</p>
+
+<p>（F）资源服务器确认令牌无误，同意向客户端开放资源。</p>
+</blockquote>
+
+<p>不难看出来，上面六个步骤之中，B是关键，即用户怎样才能给于客户端授权。有了这个授权以后，客户端就可以获取令牌，进而凭令牌获取资源。</p>
+
+<p>下面一一讲解客户端获取授权的四种模式。</p>
+
+<h2>五、客户端的授权模式</h2>
+
+<p>客户端必须得到用户的授权（authorization grant），才能获得令牌（access token）。OAuth 2.0定义了四种授权方式。</p>
+
+<ul>
+<li>授权码模式（authorization code）</li>
+<li>简化模式（implicit）</li>
+<li>密码模式（resource owner password credentials）</li>
+<li>客户端模式（client credentials）</li>
+</ul>
+
+<h2>六、授权码模式</h2>
+
+<p>授权码模式（authorization code）是功能最完整、流程最严密的授权模式。它的特点就是通过客户端的后台服务器，与"服务提供商"的认证服务器进行互动。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051204.png" alt="授权码模式" title="" /></p>
+
+<p>它的步骤如下：</p>
+
+<blockquote>
+  <p>（A）用户访问客户端，后者将前者导向认证服务器。</p>
+
+<p>（B）用户选择是否给予客户端授权。</p>
+
+<p>（C）假设用户给予授权，认证服务器将用户导向客户端事先指定的"重定向URI"（redirection URI），同时附上一个授权码。</p>
+
+<p>（D）客户端收到授权码，附上早先的"重定向URI"，向认证服务器申请令牌。这一步是在客户端的后台的服务器上完成的，对用户不可见。</p>
+
+<p>（E）认证服务器核对了授权码和重定向URI，确认无误后，向客户端发送访问令牌（access token）和更新令牌（refresh token）。</p>
+</blockquote>
+
+<p>下面是上面这些步骤所需要的参数。</p>
+
+<p>A步骤中，客户端申请认证的URI，包含以下参数：</p>
+
+<ul>
+<li>response_type：表示授权类型，必选项，此处的值固定为"code"</li>
+<li>client_id：表示客户端的ID，必选项</li>
+<li>redirect_uri：表示重定向URI，可选项</li>
+<li>scope：表示申请的权限范围，可选项</li>
+<li>state：表示客户端的当前状态，可以指定任意值，认证服务器会原封不动地返回这个值。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz
+        &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
+Host: server.example.com
+
+</code></pre></blockquote>
+
+<p>C步骤中，服务器回应客户端的URI，包含以下参数：</p>
+
+<ul>
+<li>code：表示授权码，必选项。该码的有效期应该很短，通常设为10分钟，客户端只能使用该码一次，否则会被授权服务器拒绝。该码与客户端ID和重定向URI，是一一对应关系。</li>
+<li>state：如果客户端的请求中包含这个参数，认证服务器的回应也必须一模一样包含这个参数。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+HTTP/1.1 302 Found
+Location: https://client.example.com/cb?code=SplxlOBeZQQYbYS6WxSbIA
+          &state=xyz
+
+</code></pre></blockquote>
+
+<p>D步骤中，客户端向认证服务器申请令牌的HTTP请求，包含以下参数：</p>
+
+<ul>
+<li>grant_type：表示使用的授权模式，必选项，此处的值固定为"authorization_code"。</li>
+<li>code：表示上一步获得的授权码，必选项。</li>
+<li>redirect_uri：表示重定向URI，必选项，且必须与A步骤中的该参数值保持一致。</li>
+<li>client_id：表示客户端ID，必选项。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+POST /token HTTP/1.1
+Host: server.example.com
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code=SplxlOBeZQQYbYS6WxSbIA
+&redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+
+</code></pre></blockquote>
+
+<p>E步骤中，认证服务器发送的HTTP回复，包含以下参数：</p>
+
+<ul>
+<li>access_token：表示访问令牌，必选项。</li>
+<li>token_type：表示令牌类型，该值大小写不敏感，必选项，可以是bearer类型或mac类型。</li>
+<li>expires_in：表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。</li>
+<li>refresh_token：表示更新令牌，用来获取下一次的访问令牌，可选项。</li>
+<li>scope：表示权限范围，如果与客户端申请的范围一致，此项可省略。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+     HTTP/1.1 200 OK
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "access_token":"2YotnFZFEjr1zCsicMWpAA",
+       "token_type":"example",
+       "expires_in":3600,
+       "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+       "example_parameter":"example_value"
+     }
+
+</code></pre></blockquote>
+
+<p>从上面代码可以看到，相关参数使用JSON格式发送（Content-Type: application/json）。此外，HTTP头信息中明确指定不得缓存。</p>
+
+<h2>七、简化模式</h2>
+
+<p>简化模式（implicit grant type）不通过第三方应用程序的服务器，直接在浏览器中向认证服务器申请令牌，跳过了"授权码"这个步骤，因此得名。所有步骤在浏览器中完成，令牌对访问者是可见的，且客户端不需要认证。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051205.png" alt="简化模式" title="" /></p>
+
+<p>它的步骤如下：</p>
+
+<blockquote>
+  <p>（A）客户端将用户导向认证服务器。</p>
+
+<p>（B）用户决定是否给于客户端授权。</p>
+
+<p>（C）假设用户给予授权，认证服务器将用户导向客户端指定的"重定向URI"，并在URI的Hash部分包含了访问令牌。</p>
+
+<p>（D）浏览器向资源服务器发出请求，其中不包括上一步收到的Hash值。</p>
+
+<p>（E）资源服务器返回一个网页，其中包含的代码可以获取Hash值中的令牌。</p>
+
+<p>（F）浏览器执行上一步获得的脚本，提取出令牌。</p>
+
+<p>（G）浏览器将令牌发给客户端。</p>
+</blockquote>
+
+<p>下面是上面这些步骤所需要的参数。</p>
+
+<p>A步骤中，客户端发出的HTTP请求，包含以下参数：</p>
+
+<ul>
+<li>response_type：表示授权类型，此处的值固定为"token"，必选项。</li>
+<li>client_id：表示客户端的ID，必选项。</li>
+<li>redirect_uri：表示重定向的URI，可选项。</li>
+<li>scope：表示权限范围，可选项。</li>
+<li>state：表示客户端的当前状态，可以指定任意值，认证服务器会原封不动地返回这个值。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+    GET /authorize?response_type=token&client_id=s6BhdRkqt3&state=xyz
+        &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
+    Host: server.example.com
+
+</code></pre></blockquote>
+
+<p>C步骤中，认证服务器回应客户端的URI，包含以下参数：</p>
+
+<ul>
+<li>access_token：表示访问令牌，必选项。</li>
+<li>token_type：表示令牌类型，该值大小写不敏感，必选项。</li>
+<li>expires_in：表示过期时间，单位为秒。如果省略该参数，必须其他方式设置过期时间。</li>
+<li>scope：表示权限范围，如果与客户端申请的范围一致，此项可省略。</li>
+<li>state：如果客户端的请求中包含这个参数，认证服务器的回应也必须一模一样包含这个参数。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+     HTTP/1.1 302 Found
+     Location: http://example.com/cb#access_token=2YotnFZFEjr1zCsicMWpAA
+               &state=xyz&token_type=example&expires_in=3600
+
+</code></pre></blockquote>
+
+<p>在上面的例子中，认证服务器用HTTP头信息的Location栏，指定浏览器重定向的网址。注意，在这个网址的Hash部分包含了令牌。</p>
+
+<p>根据上面的D步骤，下一步浏览器会访问Location指定的网址，但是Hash部分不会发送。接下来的E步骤，服务提供商的资源服务器发送过来的代码，会提取出Hash中的令牌。</p>
+
+<h2>八、密码模式</h2>
+
+<p>密码模式（Resource Owner Password Credentials Grant）中，用户向客户端提供自己的用户名和密码。客户端使用这些信息，向"服务商提供商"索要授权。</p>
+
+<p>在这种模式中，用户必须把自己的密码给客户端，但是客户端不得储存密码。这通常用在用户对客户端高度信任的情况下，比如客户端是操作系统的一部分，或者由一个著名公司出品。而认证服务器只有在其他授权模式无法执行的情况下，才能考虑使用这种模式。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051206.png" alt="密码模式" title="" /></p>
+
+<p>它的步骤如下：</p>
+
+<blockquote>
+  <p>（A）用户向客户端提供用户名和密码。</p>
+
+<p>（B）客户端将用户名和密码发给认证服务器，向后者请求令牌。</p>
+
+<p>（C）认证服务器确认无误后，向客户端提供访问令牌。</p>
+</blockquote>
+
+<p>B步骤中，客户端发出的HTTP请求，包含以下参数：</p>
+
+<ul>
+<li>grant_type：表示授权类型，此处的值固定为"password"，必选项。</li>
+<li>username：表示用户名，必选项。</li>
+<li>password：表示用户的密码，必选项。</li>
+<li>scope：表示权限范围，可选项。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=password&username=johndoe&password=A3ddj3w
+
+</code></pre></blockquote>
+
+<p>C步骤中，认证服务器向客户端发送访问令牌，下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+     HTTP/1.1 200 OK
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "access_token":"2YotnFZFEjr1zCsicMWpAA",
+       "token_type":"example",
+       "expires_in":3600,
+       "refresh_token":"tGzv3JOkF0XG5Qx2TlKWIA",
+       "example_parameter":"example_value"
+     }
+
+</code></pre></blockquote>
+
+<p>上面代码中，各个参数的含义参见《授权码模式》一节。</p>
+
+<p>整个过程中，客户端不得保存用户的密码。</p>
+
+<h2>九、客户端模式</h2>
+
+<p>客户端模式（Client Credentials Grant）指客户端以自己的名义，而不是以用户的名义，向"服务提供商"进行认证。严格地说，客户端模式并不属于OAuth框架所要解决的问题。在这种模式中，用户直接向客户端注册，客户端以自己的名义要求"服务提供商"提供服务，其实不存在授权问题。</p>
+
+<p><img src="http://image.beekka.com/blog/2014/bg2014051207.png" alt="客户端模式" title="" /></p>
+
+<p>它的步骤如下：</p>
+
+<blockquote>
+  <p>（A）客户端向认证服务器进行身份认证，并要求一个访问令牌。</p>
+
+<p>（B）认证服务器确认无误后，向客户端提供访问令牌。</p>
+</blockquote>
+
+<p>A步骤中，客户端发出的HTTP请求，包含以下参数：</p>
+
+<ul>
+<li>grant<em>type：表示授权类型，此处的值固定为"client</em>credentials"，必选项。</li>
+<li>scope：表示权限范围，可选项。</li>
+</ul>
+
+<blockquote><pre><code class="language-http">
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=client_credentials
+
+</code></pre></blockquote>
+
+<p>认证服务器必须以某种方式，验证客户端身份。</p>
+
+<p>B步骤中，认证服务器向客户端发送访问令牌，下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+     HTTP/1.1 200 OK
+     Content-Type: application/json;charset=UTF-8
+     Cache-Control: no-store
+     Pragma: no-cache
+
+     {
+       "access_token":"2YotnFZFEjr1zCsicMWpAA",
+       "token_type":"example",
+       "expires_in":3600,
+       "example_parameter":"example_value"
+     }
+
+</code></pre></blockquote>
+
+<p>上面代码中，各个参数的含义参见《授权码模式》一节。</p>
+
+<h2>十、更新令牌</h2>
+
+<p>如果用户访问的时候，客户端的"访问令牌"已经过期，则需要使用"更新令牌"申请一个新的访问令牌。</p>
+
+<p>客户端发出更新令牌的HTTP请求，包含以下参数：</p>
+
+<ul>
+<li>grant<em>type：表示使用的授权模式，此处的值固定为"refresh</em>token"，必选项。</li>
+<li>refresh_token：表示早前收到的更新令牌，必选项。</li>
+<li>scope：表示申请的授权范围，不可以超出上一次申请的范围，如果省略该参数，则表示与上一次一致。</li>
+</ul>
+
+<p>下面是一个例子。</p>
+
+<blockquote><pre><code class="language-http">
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+     Content-Type: application/x-www-form-urlencoded
+
+     grant_type=refresh_token&refresh_token=tGzv3JOkF0XG5Qx2TlKWIA
+
+</code></pre></blockquote>
+
+<p>（完）</p>
+
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2014-05-12T21:07:52+08:00">2014年5月12日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/developer/"> 开发者手册</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAKOWlDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanZZ3VFTXFofPvXd6oc0wAlKG3rvAANJ7k15FYZgZYCgDDjM0sSGiAhFFRJoiSFDEgNFQJFZEsRAUVLAHJAgoMRhFVCxvRtaLrqy89/Ly++Osb+2z97n77L3PWhcAkqcvl5cGSwGQyhPwgzyc6RGRUXTsAIABHmCAKQBMVka6X7B7CBDJy82FniFyAl8EAfB6WLwCcNPQM4BOB/+fpFnpfIHomAARm7M5GSwRF4g4JUuQLrbPipgalyxmGCVmvihBEcuJOWGRDT77LLKjmNmpPLaIxTmns1PZYu4V8bZMIUfEiK+ICzO5nCwR3xKxRoowlSviN+LYVA4zAwAUSWwXcFiJIjYRMYkfEuQi4uUA4EgJX3HcVyzgZAvEl3JJS8/hcxMSBXQdli7d1NqaQffkZKVwBALDACYrmcln013SUtOZvBwAFu/8WTLi2tJFRbY0tba0NDQzMv2qUP91829K3NtFehn4uWcQrf+L7a/80hoAYMyJarPziy2uCoDOLQDI3fti0zgAgKSobx3Xv7oPTTwviQJBuo2xcVZWlhGXwzISF/QP/U+Hv6GvvmckPu6P8tBdOfFMYYqALq4bKy0lTcinZ6QzWRy64Z+H+B8H/nUeBkGceA6fwxNFhImmjMtLELWbx+YKuGk8Opf3n5r4D8P+pMW5FonS+BFQY4yA1HUqQH7tBygKESDR+8Vd/6NvvvgwIH554SqTi3P/7zf9Z8Gl4iWDm/A5ziUohM4S8jMX98TPEqABAUgCKpAHykAd6ABDYAasgC1wBG7AG/iDEBAJVgMWSASpgA+yQB7YBApBMdgJ9oBqUAcaQTNoBcdBJzgFzoNL4Bq4AW6D+2AUTIBnYBa8BgsQBGEhMkSB5CEVSBPSh8wgBmQPuUG+UBAUCcVCCRAPEkJ50GaoGCqDqqF6qBn6HjoJnYeuQIPQXWgMmoZ+h97BCEyCqbASrAUbwwzYCfaBQ+BVcAK8Bs6FC+AdcCXcAB+FO+Dz8DX4NjwKP4PnEIAQERqiihgiDMQF8UeikHiEj6xHipAKpAFpRbqRPuQmMorMIG9RGBQFRUcZomxRnqhQFAu1BrUeVYKqRh1GdaB6UTdRY6hZ1Ec0Ga2I1kfboL3QEegEdBa6EF2BbkK3oy+ib6Mn0K8xGAwNo42xwnhiIjFJmLWYEsw+TBvmHGYQM46Zw2Kx8lh9rB3WH8vECrCF2CrsUexZ7BB2AvsGR8Sp4Mxw7rgoHA+Xj6vAHcGdwQ3hJnELeCm8Jt4G749n43PwpfhGfDf+On4Cv0CQJmgT7AghhCTCJkIloZVwkfCA8JJIJKoRrYmBRC5xI7GSeIx4mThGfEuSIemRXEjRJCFpB+kQ6RzpLuklmUzWIjuSo8gC8g5yM/kC+RH5jQRFwkjCS4ItsUGiRqJDYkjiuSReUlPSSXK1ZK5kheQJyeuSM1J4KS0pFymm1HqpGqmTUiNSc9IUaVNpf+lU6RLpI9JXpKdksDJaMm4ybJkCmYMyF2TGKQhFneJCYVE2UxopFykTVAxVm+pFTaIWU7+jDlBnZWVkl8mGyWbL1sielh2lITQtmhcthVZKO04bpr1borTEaQlnyfYlrUuGlszLLZVzlOPIFcm1yd2WeydPl3eTT5bfJd8p/1ABpaCnEKiQpbBf4aLCzFLqUtulrKVFS48vvacIK+opBimuVTyo2K84p6Ss5KGUrlSldEFpRpmm7KicpFyufEZ5WoWiYq/CVSlXOavylC5Ld6Kn0CvpvfRZVUVVT1Whar3qgOqCmrZaqFq+WpvaQ3WCOkM9Xr1cvUd9VkNFw08jT6NF454mXpOhmai5V7NPc15LWytca6tWp9aUtpy2l3audov2Ax2yjoPOGp0GnVu6GF2GbrLuPt0berCehV6iXo3edX1Y31Kfq79Pf9AAbWBtwDNoMBgxJBk6GWYathiOGdGMfI3yjTqNnhtrGEcZ7zLuM/5oYmGSYtJoct9UxtTbNN+02/R3Mz0zllmN2S1zsrm7+QbzLvMXy/SXcZbtX3bHgmLhZ7HVosfig6WVJd+y1XLaSsMq1qrWaoRBZQQwShiXrdHWztYbrE9Zv7WxtBHYHLf5zdbQNtn2iO3Ucu3lnOWNy8ft1OyYdvV2o/Z0+1j7A/ajDqoOTIcGh8eO6o5sxybHSSddpySno07PnU2c+c7tzvMuNi7rXM65Iq4erkWuA24ybqFu1W6P3NXcE9xb3Gc9LDzWepzzRHv6eO7yHPFS8mJ5NXvNelt5r/Pu9SH5BPtU+zz21fPl+3b7wX7efrv9HqzQXMFb0ekP/L38d/s/DNAOWBPwYyAmMCCwJvBJkGlQXlBfMCU4JvhI8OsQ55DSkPuhOqHC0J4wybDosOaw+XDX8LLw0QjjiHUR1yIVIrmRXVHYqLCopqi5lW4r96yciLaILoweXqW9KnvVldUKq1NWn46RjGHGnIhFx4bHHol9z/RnNjDn4rziauNmWS6svaxnbEd2OXuaY8cp40zG28WXxU8l2CXsTphOdEisSJzhunCruS+SPJPqkuaT/ZMPJX9KCU9pS8Wlxqae5Mnwknm9acpp2WmD6frphemja2zW7Fkzy/fhN2VAGasyugRU0c9Uv1BHuEU4lmmfWZP5Jiss60S2dDYvuz9HL2d7zmSue+63a1FrWWt78lTzNuWNrXNaV78eWh+3vmeD+oaCDRMbPTYe3kTYlLzpp3yT/LL8V5vDN3cXKBVsLBjf4rGlpVCikF84stV2a9021DbutoHt5turtn8sYhddLTYprih+X8IqufqN6TeV33zaEb9joNSydP9OzE7ezuFdDrsOl0mX5ZaN7/bb3VFOLy8qf7UnZs+VimUVdXsJe4V7Ryt9K7uqNKp2Vr2vTqy+XeNc01arWLu9dn4fe9/Qfsf9rXVKdcV17w5wD9yp96jvaNBqqDiIOZh58EljWGPft4xvm5sUmoqbPhziHRo9HHS4t9mqufmI4pHSFrhF2DJ9NProje9cv+tqNWytb6O1FR8Dx4THnn4f+/3wcZ/jPScYJ1p/0Pyhtp3SXtQBdeR0zHYmdo52RXYNnvQ+2dNt293+o9GPh06pnqo5LXu69AzhTMGZT2dzz86dSz83cz7h/HhPTM/9CxEXbvUG9g5c9Ll4+ZL7pQt9Tn1nL9tdPnXF5srJq4yrndcsr3X0W/S3/2TxU/uA5UDHdavrXTesb3QPLh88M+QwdP6m681Lt7xuXbu94vbgcOjwnZHokdE77DtTd1PuvriXeW/h/sYH6AdFD6UeVjxSfNTws+7PbaOWo6fHXMf6Hwc/vj/OGn/2S8Yv7ycKnpCfVEyqTDZPmU2dmnafvvF05dOJZ+nPFmYKf5X+tfa5zvMffnP8rX82YnbiBf/Fp99LXsq/PPRq2aueuYC5R69TXy/MF72Rf3P4LeNt37vwd5MLWe+x7ys/6H7o/ujz8cGn1E+f/gUDmPP8kcBa2wAAADxQTFRFAAAAAAAAAgICBAQEBQUFBgYGBwcHCAgICQkJCgoKDQ0NExMTOTk5c3NzdXV1eHh4eXl5enp6e3t7fHx8rr9WJAAAAAF0Uk5TAEDm2GYAAAABYktHRACIBR1IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYMADMaKH8BrQAAAGVJREFUGNONkI0KwCAIhE+32n/b2vu/6yqYCRnshMCPS/SA/6Ikk5vQWXQ7gpL6H1KV54OMbCiuCk0n9rOdma3i1JteuIGIJ1bI60Se2dG4qFWDddQsSeiZpRkILfQ6Hcmvk2NPLzksA4TnEeNNAAAAAElFTkSuQmCC" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2016.03.08: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd 入门教程：实战篇</a></strong>
+
+                           <div class="entry-body">
+                              上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.03.07: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程：命令篇</a></strong>
+
+                           <div class="entry-body">
+                              Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.02.28: <a href="http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html">Linux 守护进程的启动方法</a></strong>
+
+                           <div class="entry-body">
+                              "守护进程"（daemon）就是一直在后台运行的进程（daemon）。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.01.06: <a href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html">Commit message 和 Change log 编写指南</a></strong>
+
+                           <div class="entry-body">
+                              Git 每次提交代码，都要写 Commit message（提交说明），否则就不允许提交。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（78条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-322940" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://mengkang.net/" href="http://mengkang.net/" target="_blank" rel="nofollow">周梦康</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-322940">
+            <p>阮老师的文章都是精品，真正做到深入浅出。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 12, 2014 10:10 PM">2014年5月12日 22:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-322940">#</a>
+ | <a href="#comment-text" title="引用周梦康的这条留言" onclick="return CommentQuote('comment-quote-322940','周梦康');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-322952" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hutusi.com" href="http://hutusi.com" target="_blank" rel="nofollow">hutusi</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-322952">
+            <p>留名，慢慢看~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 12, 2014 10:58 PM">2014年5月12日 22:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-322952">#</a>
+ | <a href="#comment-text" title="引用hutusi的这条留言" onclick="return CommentQuote('comment-quote-322952','hutusi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-322957" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">chility</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-322957">
+            <p>今天培训老师讲了这部分，恰好阮老师写了这篇文章介绍，加深理解。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2014 12:31 AM">2014年5月13日 00:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-322957">#</a>
+ | <a href="#comment-text" title="引用chility的这条留言" onclick="return CommentQuote('comment-quote-322957','chility');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-322960" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">phi</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-322960">
+            <p>那什么，没看懂。能不能用位图。ASCII图看的很不习惯。谢谢</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2014  1:24 AM">2014年5月13日 01:24</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-322960">#</a>
+ | <a href="#comment-text" title="引用phi的这条留言" onclick="return CommentQuote('comment-quote-322960','phi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-322994" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">WhatDoesTheFoxSay</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-322994">
+            <p>授权码模式这部分中的“E步骤中，客户端发送的HTTP回复，包含以下参数“这句话，是否应为”认证服务器发送的HTTP回复“？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2014  5:00 AM">2014年5月13日 05:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-322994">#</a>
+ | <a href="#comment-text" title="引用WhatDoesTheFoxSay的这条留言" onclick="return CommentQuote('comment-quote-322994','WhatDoesTheFoxSay');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323002" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://sexywp.com" href="http://sexywp.com" target="_blank" rel="nofollow">Charles</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323002">
+            <p>本文关于state参数的解释，是语焉不详的。事实上，绝大多数的互联网中文文档对这个参数都语焉不详。我想，对于造成近期互联网上危害广泛的OAuth漏洞来说，众多中文技术资料对这个参数解释不到位，对这个参数的实现没有给出清晰的指导，也是成因的一部分。原文是这么说的：RECOMMENDED. An opaque value used by the client to maintain state between the request and callback. The authorization server includes this value when redirecting the user-agent back to the client. The parameter SHOULD be used for preventing cross-site request forgery as described in Section 10.12.如果阮老师只是翻译为什么“客户端状态”之类的话，还有什么“可以随便填”，这算不上一种到位的解释。首先，这个参数是“RECOMMENDED”，并非什么可有可无的东西，事实是很多厂商都实现成了可有可无，其次，这个参数是“SHOULD”，为啥“SHOULD”呢，因为会引发“CSRF”。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2014  7:41 AM">2014年5月13日 07:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-323002">#</a>
+ | <a href="#comment-text" title="引用Charles的这条留言" onclick="return CommentQuote('comment-quote-323002','Charles');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323009" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323009">
+            <blockquote>
+<pre>引用WhatDoesTheFoxSay的发言：</pre>
+
+<p>授权码模式这部分中的“E步骤中，客户端发送的HTTP回复，包含以下参数“这句话，是否应为”认证服务器发送的HTTP回复“？</p>
+
+</blockquote>
+
+<p>谢谢指出，已经改过来了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2014  8:44 AM">2014年5月13日 08:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-323009">#</a>
+ | <a href="#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote('comment-quote-323009','阮一峰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323011" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://houcoder.github.io" href="http://houcoder.github.io" target="_blank" rel="nofollow">Tonni</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323011">
+            <p>阮兄的博客又更新了，前几天买的《黑客与画家》昨天到了，很不错的书。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2014  9:05 AM">2014年5月13日 09:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-323011">#</a>
+ | <a href="#comment-text" title="引用Tonni的这条留言" onclick="return CommentQuote('comment-quote-323011','Tonni');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323237" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://gangyou.me" href="http://gangyou.me" target="_blank" rel="nofollow">YG</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323237">
+            <p>看了这么多OAuth的文章，阮老师的这篇是最好懂的，拜读了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 14, 2014  8:19 AM">2014年5月14日 08:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-323237">#</a>
+ | <a href="#comment-text" title="引用YG的这条留言" onclick="return CommentQuote('comment-quote-323237','YG');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-323850" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">M16</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-323850">
+            <p>说白了oauth就是一个网络版的usbkey</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 17, 2014  1:50 PM">2014年5月17日 13:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-323850">#</a>
+ | <a href="#comment-text" title="引用M16的这条留言" onclick="return CommentQuote('comment-quote-323850','M16');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324040" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">洋子</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324040">
+            <p>支付宝链接已失效</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 18, 2014 10:56 PM">2014年5月18日 22:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324040">#</a>
+ | <a href="#comment-text" title="引用洋子的这条留言" onclick="return CommentQuote('comment-quote-324040','洋子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324236" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Nicole</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324236">
+            <p>非常感谢老师的分享，收益了。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 20, 2014  9:13 AM">2014年5月20日 09:13</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324236">#</a>
+ | <a href="#comment-text" title="引用Nicole的这条留言" onclick="return CommentQuote('comment-quote-324236','Nicole');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324238" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">匆匆过客</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324238">
+            <blockquote>
+<pre>引用Charles的发言：</pre>
+
+<p>本文关于state参数的解释，是语焉不详的。事实上，绝大多数的互联网中文文档对这个参数都语焉不详。我想，对于造成近期互联网上危害广泛的OAuth漏洞来说，众多中文技术资料对这个参数解释不到位，对这个参数的实现没有给出清晰的指导，也是成因的一部分。原文是这么说的：RECOMMENDED. An opaque value used by the client to maintain state between the request and callback. The authorization server includes this value when redirecting the user-agent back to the client. The parameter SHOULD be used for preventing cross-site request forgery as described in Section 10.12.如果阮老师只是翻译为什么“客户端状态”之类的话，还有什么“可以随便填”，这算不上一种到位的解释。首先，这个参数是“RECOMMENDED”，并非什么可有可无的东西，事实是很多厂商都实现成了可有可无，其次，这个参数是“SHOULD”，为啥“SHOULD”呢，因为会引发“CSRF”。</p>
+
+</blockquote>
+
+<p>仔细一看，确实，如果state项不用动态数据的话会存在CSRF漏洞</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 20, 2014  9:39 AM">2014年5月20日 09:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324238">#</a>
+ | <a href="#comment-text" title="引用匆匆过客的这条留言" onclick="return CommentQuote('comment-quote-324238','匆匆过客');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324450" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">smilexu</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324450">
+            <p>（E）客户端使用令牌，向资源服务器申请获取资源。</p>
+
+<p>令牌就可以？整个过程都没有用户名和密码的获得，那资源服务器又是如何确认用户的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 21, 2014 12:01 PM">2014年5月21日 12:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324450">#</a>
+ | <a href="#comment-text" title="引用smilexu的这条留言" onclick="return CommentQuote('comment-quote-324450','smilexu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324482" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">万文婷</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324482">
+            <p>我是比较文学与世界文学的硕士生，希望您能联系我，探讨一下卡尔维诺。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 21, 2014  4:19 PM">2014年5月21日 16:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324482">#</a>
+ | <a href="#comment-text" title="引用万文婷的这条留言" onclick="return CommentQuote('comment-quote-324482','万文婷');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324809" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">niannian</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324809">
+            <p>授权码模式中，D步骤，文中说client_id是必选项，但是随后的例子中没有这项</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 23, 2014  2:12 PM">2014年5月23日 14:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324809">#</a>
+ | <a href="#comment-text" title="引用niannian的这条留言" onclick="return CommentQuote('comment-quote-324809','niannian');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324975" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">spojus</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324975">
+            <p>收款主页下线啦</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 24, 2014 11:01 PM">2014年5月24日 23:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324975">#</a>
+ | <a href="#comment-text" title="引用spojus的这条留言" onclick="return CommentQuote('comment-quote-324975','spojus');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-324977" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">loddit</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-324977">
+            <p>同ls的niannian<br />
+另外 granttype authorizationcode 都没加 _ 下划线</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 24, 2014 11:20 PM">2014年5月24日 23:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-324977">#</a>
+ | <a href="#comment-text" title="引用loddit的这条留言" onclick="return CommentQuote('comment-quote-324977','loddit');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-325078" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ike</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-325078">
+            <blockquote>
+<pre>引用phi的发言：</pre>
+
+<p>那什么，没看懂。能不能用位图。ASCII图看的很不习惯。谢谢</p>
+
+</blockquote>
+
+<p>話說，RFC本來就是純文字檔案，這樣的圖其實看了很親切。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 25, 2014  4:14 PM">2014年5月25日 16:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-325078">#</a>
+ | <a href="#comment-text" title="引用Ike的这条留言" onclick="return CommentQuote('comment-quote-325078','Ike');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-327535" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">rhgb</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-327535">
+            <blockquote>
+<pre>引用smilexu的发言：</pre>
+
+<p>（E）客户端使用令牌，向资源服务器申请获取资源。</p>
+
+<p>令牌就可以？整个过程都没有用户名和密码的获得，那资源服务器又是如何确认用户的？</p>
+
+</blockquote>
+使用oauth本来就是为了避免客户端获得用户名和密码……
+资源服务器如何用用户名密码来确认用户，就如何用令牌来确认用户。令牌就是一种包含（隐含）用户id的一次性的密码
+
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2014  4:47 PM">2014年6月 7日 16:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-327535">#</a>
+ | <a href="#comment-text" title="引用rhgb的这条留言" onclick="return CommentQuote('comment-quote-327535','rhgb');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-328221" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">king</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-328221">
+            <p>如果客户端做一个假的验证授权页面，来套取用户，用户名和密码，是有可能的吧？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 12, 2014 11:30 AM">2014年6月12日 11:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-328221">#</a>
+ | <a href="#comment-text" title="引用king的这条留言" onclick="return CommentQuote('comment-quote-328221','king');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-328876" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://jucelin.com" href="http://jucelin.com" target="_blank" rel="nofollow">jucelin</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-328876">
+            <blockquote>
+<pre>引用king的发言：</pre>
+
+<p>如果客户端做一个假的验证授权页面，来套取用户，用户名和密码，是有可能的吧？</p>
+
+</blockquote>
+
+<p>我也有此疑问。weibo.com提供的都提示"请认准本页URL地址必须以 api.weibo.com 开头"，这提示基本上没用。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 16, 2014  8:41 PM">2014年6月16日 20:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-328876">#</a>
+ | <a href="#comment-text" title="引用jucelin的这条留言" onclick="return CommentQuote('comment-quote-328876','jucelin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-329069" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">mll</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-329069">
+            <p>协议中的 SHOULD，应该等同于 MUST 来对待。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2014  5:25 PM">2014年6月19日 17:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-329069">#</a>
+ | <a href="#comment-text" title="引用mll的这条留言" onclick="return CommentQuote('comment-quote-329069','mll');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-331286" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://songjinghe.byethost7.com" href="http://songjinghe.byethost7.com" target="_blank" rel="nofollow">sjh</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-331286">
+            <blockquote>
+<pre>引用jucelin的发言：</pre>
+
+<p></p>
+
+<p>我也有此疑问。weibo.com提供的都提示"请认准本页URL地址必须以 api.weibo.com 开头"，这提示基本上没用。</p>
+
+</blockquote>
+
+<p>工商银行的网银在开通时要求用户自己说一句话，每次使用网银付款时网站会向用户出示这句话以证明网站的合法性。这个感觉要好些吧~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 18, 2014  5:27 PM">2014年7月18日 17:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-331286">#</a>
+ | <a href="#comment-text" title="引用sjh的这条留言" onclick="return CommentQuote('comment-quote-331286','sjh');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-332867" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lvqiuyi</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-332867">
+            <p>有两点不太明白<br />
+1.授权码授权里，为什么要两次传递重定向url呢？有什么好处？<br />
+2.D步骤里，传递的参数有Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW，什么作用呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August  5, 2014 11:24 AM">2014年8月 5日 11:24</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-332867">#</a>
+ | <a href="#comment-text" title="引用lvqiuyi的这条留言" onclick="return CommentQuote('comment-quote-332867','lvqiuyi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-332891" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lvqiuyi</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-332891">
+            <p>懂了，Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW，应该是对于应用client的授权认证，这样就相当于有两层保护，一层是认证客户端，一层是认证用户，不过basic的加密方式，是不是不太安全呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August  5, 2014  2:44 PM">2014年8月 5日 14:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-332891">#</a>
+ | <a href="#comment-text" title="引用lvqiuyi的这条留言" onclick="return CommentQuote('comment-quote-332891','lvqiuyi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-336963" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">suolaiwo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-336963">
+            <p>请问一下，授权码code，其作用是什么？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  8, 2014  2:29 PM">2014年9月 8日 14:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-336963">#</a>
+ | <a href="#comment-text" title="引用suolaiwo的这条留言" onclick="return CommentQuote('comment-quote-336963','suolaiwo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-338157" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">guest</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-338157">
+            <blockquote>
+<pre>引用suolaiwo的发言：</pre>
+
+<p>请问一下，授权码code，其作用是什么？</p>
+
+</blockquote>
+
+<p>本质的作用是避免Access Token通过URL返回，有篇视频讲这个比较详细《[开放平台]一步一步理解OAuth2协议-全网首发》<br />
+<a href="http://edu.51cto.com/index.php?do=course&m=addlession&course_id=2035" rel="nofollow">http://edu.51cto.com/index.php?do=course&m=addlession&course_id=2035</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 16, 2014  2:30 PM">2014年9月16日 14:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-338157">#</a>
+ | <a href="#comment-text" title="引用guest的这条留言" onclick="return CommentQuote('comment-quote-338157','guest');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-338437" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zhiwen</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-338437">
+            <p>请问你这个是使用什么框架实现的OAuth的相关服务器端的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2014  1:55 PM">2014年9月18日 13:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-338437">#</a>
+ | <a href="#comment-text" title="引用zhiwen的这条留言" onclick="return CommentQuote('comment-quote-338437','zhiwen');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341907" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://pinbaijia.cn" href="http://pinbaijia.cn" target="_blank" rel="nofollow">陈伟</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341907">
+            <p>正在学习OAuth2，写得太好了！非常容易理解！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 21, 2014  4:57 PM">2014年10月21日 16:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-341907">#</a>
+ | <a href="#comment-text" title="引用陈伟的这条留言" onclick="return CommentQuote('comment-quote-341907','陈伟');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341942" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hebidu</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341942">
+            <p>我想知道 如何  生成access_token ，refresh_token 。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 22, 2014 12:45 PM">2014年10月22日 12:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-341942">#</a>
+ | <a href="#comment-text" title="引用hebidu的这条留言" onclick="return CommentQuote('comment-quote-341942','hebidu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342264" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">James</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342264">
+            <blockquote>
+<pre>引用hebidu的发言：</pre>
+
+<p>我想知道 如何生成access_token ，refresh_token 。</p>
+
+</blockquote>
+
+<p>生成access_token ，refresh_token 很简单,取一唯一的随机信息再做BASE64编码即可,它本身不包含任何有效信息的;服务端把它和用户受权关联以校验其受权的有效性.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 29, 2014 10:45 AM">2014年10月29日 10:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-342264">#</a>
+ | <a href="#comment-text" title="引用James的这条留言" onclick="return CommentQuote('comment-quote-342264','James');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-343428" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">惜今草</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-343428">
+            <p>请问，OAuth2.0客户端认证模式怎么限制客户端到认证服务器申请权限的范围(Scope)？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 12, 2014  4:11 PM">2014年11月12日 16:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-343428">#</a>
+ | <a href="#comment-text" title="引用惜今草的这条留言" onclick="return CommentQuote('comment-quote-343428','惜今草');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-343516" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yxwoods</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-343516">
+            <p>通俗易懂！感觉如等到风来吹开京都雾霾，重见蓝天白云！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 13, 2014  9:25 AM">2014年11月13日 09:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-343516">#</a>
+ | <a href="#comment-text" title="引用yxwoods的这条留言" onclick="return CommentQuote('comment-quote-343516','yxwoods');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-344513" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">jinlong</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-344513">
+            <p>引导用户到授权界面，用户会先登录后授权，整个授权过程中没有提到究竟是为“谁”授权的啊？ 那token是怎么和userid进行映射的呢？<br />
+我开始理解的是，用户同意授权后，会告诉授权服务器client_id等参数外还会有userid。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 21, 2014  4:12 PM">2014年11月21日 16:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-344513">#</a>
+ | <a href="#comment-text" title="引用jinlong的这条留言" onclick="return CommentQuote('comment-quote-344513','jinlong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-346024" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">HM</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-346024">
+            <p>阮老师为啥只发文而不答复上面技术性的探讨呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2014 12:47 PM">2014年12月 9日 12:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-346024">#</a>
+ | <a href="#comment-text" title="引用HM的这条留言" onclick="return CommentQuote('comment-quote-346024','HM');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-346077" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">feiniu5566</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-346077">
+            <blockquote>
+<pre>引用jinlong的发言：</pre>
+
+<p>引导用户到授权界面，用户会先登录后授权，整个授权过程中没有提到究竟是为“谁”授权的啊？ 那token是怎么和userid进行映射的呢？<br />
+我开始理解的是，用户同意授权后，会告诉授权服务器client_id等参数外还会有userid。</p>
+
+</blockquote>
+
+<p>你要知道这个授权的目的是给第三方应用授权，让他有权利去获取用户放在服务器上的资源，所以你应该站在第三方应用的角度来看待这篇文章，你的目的就是获取用户<br />
+QQ空间里的图片，就这么理解吧，差不想为那个什么讯发广告</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  9, 2014  4:31 PM">2014年12月 9日 16:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-346077">#</a>
+ | <a href="#comment-text" title="引用feiniu5566的这条留言" onclick="return CommentQuote('comment-quote-346077','feiniu5566');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-347506" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yuandghn</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-347506">
+            <blockquote>
+<pre>引用匆匆过客的发言：</pre>
+
+<p></p>
+
+<p>仔细一看，确实，如果state项不用动态数据的话会存在CSRF漏洞</p>
+
+</blockquote>
+
+<p>确实是这样的，很多时候大家都忽略了这个state参数存在的意义。企鹅家的OAuth2.0文档里倒是把这个参数说的很详细(非广告，实话实说)。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 25, 2015  6:00 PM">2015年1月25日 18:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-347506">#</a>
+ | <a href="#comment-text" title="引用yuandghn的这条留言" onclick="return CommentQuote('comment-quote-347506','yuandghn');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-347587" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">smithfox</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-347587">
+            <p>密码模式的例子中Request Header 中的 Authorization 是怎么来的？<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 28, 2015 12:39 PM">2015年1月28日 12:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-347587">#</a>
+ | <a href="#comment-text" title="引用smithfox的这条留言" onclick="return CommentQuote('comment-quote-347587','smithfox');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-348327" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.tigerbull.info" href="http://www.tigerbull.info" target="_blank" rel="nofollow">xiaozi0lei</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-348327">
+            <p><b>文章写的不错，深入浅出，正好在找Oauth 2.0相关的介绍文章，有帮助，多谢！</b></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March  3, 2015  3:49 PM">2015年3月 3日 15:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-348327">#</a>
+ | <a href="#comment-text" title="引用xiaozi0lei的这条留言" onclick="return CommentQuote('comment-quote-348327','xiaozi0lei');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-348463" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">alleme</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-348463">
+            <blockquote>
+<pre>引用yuandghn的发言：</pre>
+
+<p></p>
+
+<p>确实是这样的，很多时候大家都忽略了这个state参数存在的意义。企鹅家的OAuth2.0文档里倒是把这个参数说的很详细(非广告，实话实说)。</p>
+
+</blockquote>
+
+<p>确实,刚查了腾讯文档  "state	可选	client端的状态值。用于第三方应用防止CSRF攻击，成功授权后回调时会原样带回。"</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 11, 2015 11:05 AM">2015年3月11日 11:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-348463">#</a>
+ | <a href="#comment-text" title="引用alleme的这条留言" onclick="return CommentQuote('comment-quote-348463','alleme');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349016" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Shion</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349016">
+            <p>拿到访问令牌（access token）后，是不是每次请求资源都必须附上访问令牌？OAuth2是不是只适合Http，基于OAuth2的都只能通过客户端轮询来获取最新状态而不能由服务端进行推送？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 10, 2015  4:38 PM">2015年4月10日 16:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-349016">#</a>
+ | <a href="#comment-text" title="引用Shion的这条留言" onclick="return CommentQuote('comment-quote-349016','Shion');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349078" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">test</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349078">
+            <p>简化模式中：<br />
+C）假设用户给予授权，认证服务器将用户导向客户端指定的"重定向URI"，并在URI的Hash部分包含了访问令牌。</p>
+
+<p>（D）浏览器向资源服务器发出请求，其中不包括上一步收到的Hash值。</p>
+
+<p>（E）资源服务器返回一个网页，其中包含的代码可以获取Hash值中的令牌。<br />
+c处的hash有没有多余呢？谢谢</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 14, 2015  8:21 AM">2015年4月14日 08:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-349078">#</a>
+ | <a href="#comment-text" title="引用test的这条留言" onclick="return CommentQuote('comment-quote-349078','test');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349137" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">许广辉</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349137">
+            <p>每次看到你这儿，东西就看明白了，简单清晰</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 16, 2015  3:52 PM">2015年4月16日 15:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-349137">#</a>
+ | <a href="#comment-text" title="引用许广辉的这条留言" onclick="return CommentQuote('comment-quote-349137','许广辉');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349185" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://shengzhaoli.com" href="http://shengzhaoli.com" target="_blank" rel="nofollow">shengzhao</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349185">
+            <p>具体的参考实现:  <a href="http://git.oschina.net/shengzhao/spring-oauth-server" rel="nofollow"><a href="http://git.oschina.net/shengzhao/spring-oauth-server" rel="nofollow">http://git.oschina.net/shengzhao/spring-oauth-server</a></a></p>
+
+<p>整合Spring Security与Oauth2 的完整代码.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 20, 2015  3:00 PM">2015年4月20日 15:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-349185">#</a>
+ | <a href="#comment-text" title="引用shengzhao的这条留言" onclick="return CommentQuote('comment-quote-349185','shengzhao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349639" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">song</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349639">
+            <p>描述的很好，不错。多谢了！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 13, 2015  5:46 PM">2015年5月13日 17:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-349639">#</a>
+ | <a href="#comment-text" title="引用song的这条留言" onclick="return CommentQuote('comment-quote-349639','song');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350107" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小正</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350107">
+            <p>首先谢谢阮老师，学习了，我想问下token存在数据库还是session里好呢<br />
+存数据库是不是存一个过期时间(或者之类的)，还有如果用户操作了，这个token就延长时间还是固定死的(几个小时就几小时几天就几天)之后过期再用refresh取</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  3, 2015  3:18 PM">2015年6月 3日 15:18</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-350107">#</a>
+ | <a href="#comment-text" title="引用小正的这条留言" onclick="return CommentQuote('comment-quote-350107','小正');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350119" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小正</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350119">
+            <blockquote>
+<pre>引用小正的发言：</pre>
+
+<p>首先谢谢阮老师，学习了，我想问下token存在数据库还是session里好呢<br />
+存数据库是不是存一个过期时间(或者之类的)，还有如果用户操作了，这个token就延长时间还是固定死的(几个小时就几小时几天就几天)之后过期再用refresh取</p>
+
+</blockquote>
+
+<p>我查了一些资料，基本捋顺了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  4, 2015  9:37 AM">2015年6月 4日 09:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-350119">#</a>
+ | <a href="#comment-text" title="引用小正的这条留言" onclick="return CommentQuote('comment-quote-350119','小正');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350904" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">杨鹏</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350904">
+            <p>感谢分享！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 18, 2015  9:49 AM">2015年7月18日 09:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-350904">#</a>
+ | <a href="#comment-text" title="引用杨鹏的这条留言" onclick="return CommentQuote('comment-quote-350904','杨鹏');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350923" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小超人</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350923">
+            <p>授权码模式,为什么不能通过一次请求获取访问令牌?为什么非要加上一次授权码请求呢?现在授权码的作用是指定访问范围,那为什么不可以把访问范围作为参数传给认证服务器通过一次请求获取访问令牌呢?</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 20, 2015 10:09 AM">2015年7月20日 10:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-350923">#</a>
+ | <a href="#comment-text" title="引用小超人的这条留言" onclick="return CommentQuote('comment-quote-350923','小超人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350924" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小超人</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350924">
+            <blockquote>
+<pre>引用小超人的发言：</pre>
+
+<p>授权码模式,为什么不能通过一次请求获取访问令牌?为什么非要加上一次授权码请求呢?现在授权码的作用是指定访问范围,那为什么不可以把访问范围作为参数传给认证服务器通过一次请求获取访问令牌呢?</p>
+
+</blockquote>
+
+<p>授权码模式比简化模式好在哪里呢?求路过大神指点</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 20, 2015 10:19 AM">2015年7月20日 10:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-350924">#</a>
+ | <a href="#comment-text" title="引用小超人的这条留言" onclick="return CommentQuote('comment-quote-350924','小超人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350925" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小超人</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350925">
+            <blockquote>
+<pre>引用小超人的发言：</pre>
+
+<p></p>
+
+<p>授权码模式比简化模式好在哪里呢?求路过大神指点</p>
+
+</blockquote>
+是安全性高吗?安全性高在哪里呢?求举例说明...
+
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 20, 2015 10:23 AM">2015年7月20日 10:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-350925">#</a>
+ | <a href="#comment-text" title="引用小超人的这条留言" onclick="return CommentQuote('comment-quote-350925','小超人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351108" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.dplor.com" href="http://www.dplor.com" target="_blank" rel="nofollow">卡萨布兰卡</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351108">
+            <p>有一处clientcredentials，应该改为：client_credentials</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August  3, 2015  4:58 PM">2015年8月 3日 16:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351108">#</a>
+ | <a href="#comment-text" title="引用卡萨布兰卡的这条留言" onclick="return CommentQuote('comment-quote-351108','卡萨布兰卡');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351247" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.newnius.com" href="http://blog.newnius.com" target="_blank" rel="nofollow">newnius</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351247">
+            <blockquote>
+<pre>引用jinlong的发言：</pre>
+
+<p>引导用户到授权界面，用户会先登录后授权，整个授权过程中没有提到究竟是为“谁”授权的啊？ 那token是怎么和userid进行映射的呢？<br />
+我开始理解的是，用户同意授权后，会告诉授权服务器client_id等参数外还会有userid。</p>
+
+</blockquote>
+
+<p>这个token可以是惟一的，也就是说，token唯一确定一个用户，像@feiniu5566 说的，客户端可以通过令牌请求用户信息，包括userid，所以没有必要额外发送。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 13, 2015  5:35 PM">2015年8月13日 17:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351247">#</a>
+ | <a href="#comment-text" title="引用newnius的这条留言" onclick="return CommentQuote('comment-quote-351247','newnius');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351330" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">williamwue</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351330">
+            <p>写得十分清楚明白，多谢博主！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2015  4:20 PM">2015年8月19日 16:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351330">#</a>
+ | <a href="#comment-text" title="引用williamwue的这条留言" onclick="return CommentQuote('comment-quote-351330','williamwue');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351369" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">helm</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351369">
+            <p>阮老师，授权码模式中A步骤中的redirect_uri写的是可选项，D步骤说的是必选项，这里是不是有矛盾</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 22, 2015 12:15 PM">2015年8月22日 12:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351369">#</a>
+ | <a href="#comment-text" title="引用helm的这条留言" onclick="return CommentQuote('comment-quote-351369','helm');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351695" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">damon</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351695">
+            <p>大学的时候接触淘宝API，也碰到：授权码模式， 但是知道看了这篇文章才系统的理解。。<br />
+谢了！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 15, 2015  6:01 PM">2015年9月15日 18:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351695">#</a>
+ | <a href="#comment-text" title="引用damon的这条留言" onclick="return CommentQuote('comment-quote-351695','damon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351794" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yiwanbaqianli.com" href="http://yiwanbaqianli.com" target="_blank" rel="nofollow">xiaoC</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351794">
+            <p>最近在搞第三方登入，虽然已经按文档弄好了，但是并不懂OAuth为何物，看了楼主介绍总结，很是详细，多谢楼主</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 20, 2015  1:27 AM">2015年9月20日 01:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351794">#</a>
+ | <a href="#comment-text" title="引用xiaoC的这条留言" onclick="return CommentQuote('comment-quote-351794','xiaoC');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351993" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">我爱demo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351993">
+            <p>最近要弄这个， 虽然几天了还是没什么进度，不过看了这篇文章感觉很详细，虽然并不懂。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  6, 2015  4:35 PM">2015年10月 6日 16:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-351993">#</a>
+ | <a href="#comment-text" title="引用我爱demo的这条留言" onclick="return CommentQuote('comment-quote-351993','我爱demo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352071" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">aehyok</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352071">
+            <p>灰常好，学到了很多，谢谢大拿</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 10, 2015  3:22 PM">2015年10月10日 15:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-352071">#</a>
+ | <a href="#comment-text" title="引用aehyok的这条留言" onclick="return CommentQuote('comment-quote-352071','aehyok');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352570" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.baidu.com" href="http://www.baidu.com" target="_blank" rel="nofollow">分崩离析</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352570">
+            <blockquote>
+<pre>引用smilexu的发言：</pre>
+
+<p>（E）客户端使用令牌，向资源服务器申请获取资源。</p>
+
+<p>令牌就可以？整个过程都没有用户名和密码的获得，那资源服务器又是如何确认用户的？</p>
+
+</blockquote>
+
+<p>令牌就可以代表用户，资源服务器只负责提供资源<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  4, 2015 10:39 AM">2015年11月 4日 10:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-352570">#</a>
+ | <a href="#comment-text" title="引用分崩离析的这条留言" onclick="return CommentQuote('comment-quote-352570','分崩离析');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352800" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">陈柏成</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352800">
+            <p>（C）假设用户给予授权，认证服务器将用户导向客户端事先指定的"重定向URI"（redirection URI），同时附上一个授权码。</p>
+
+<p>我不明白这个URI是用来跳转到认证服务器的url 还是指向前面例子说的云冲印的图片  谢谢了^^</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 16, 2015 11:40 AM">2015年11月16日 11:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-352800">#</a>
+ | <a href="#comment-text" title="引用陈柏成的这条留言" onclick="return CommentQuote('comment-quote-352800','陈柏成');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353333" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ddd" href="http://ddd" target="_blank" rel="nofollow">h</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353333">
+            <blockquote>
+<pre>引用分崩离析的发言：</pre>
+
+<p></p>
+
+<p>令牌就可以代表用户，资源服务器只负责提供资源</p>
+
+<p><br />
+</p></blockquote>
+
+<p><br />
+这个令牌是一个字符串，资源服务器如何鉴别这个字符串不是伪造的呢？需要资源服务器到认证服务器上去鉴别吗，还是两边约定一种鉴别机制(比如鉴别RMB一样)</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 16, 2015 10:08 AM">2015年12月16日 10:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353333">#</a>
+ | <a href="#comment-text" title="引用h的这条留言" onclick="return CommentQuote('comment-quote-353333','h');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353336" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ddd" href="http://ddd" target="_blank" rel="nofollow">h</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353336">
+            <blockquote>
+<pre>引用h的发言：</pre>
+
+<p></p>
+
+<p><br />
+这个令牌是一个字符串，资源服务器如何鉴别这个字符串不是伪造的呢？需要资源服务器到认证服务器上去鉴别吗，还是两边约定一种鉴别机制(比如鉴别RMB一样)</p>
+
+</blockquote>
+
+<p></p>
+
+<p>看了 RFC 文档<br />
+<a href="http://tools.ietf.org/html/rfc6749" rel="nofollow">http://tools.ietf.org/html/rfc6749</a><br />
+明白了，还是需要在 AS 和 RS 之间有个交互。</p>
+
+<p>7.  Accessing Protected Resources</p>
+
+<p>   The client accesses protected resources by presenting the access<br />
+   token to the resource server.  The resource server MUST validate the<br />
+   access token and ensure that it has not expired and that its scope<br />
+   covers the requested resource.  The methods used by the resource<br />
+   server to validate the access token (as well as any error responses)<br />
+   are beyond the scope of this specification but generally involve an<br />
+   interaction or coordination between the resource server and the<br />
+   authorization server.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 16, 2015 11:42 AM">2015年12月16日 11:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353336">#</a>
+ | <a href="#comment-text" title="引用h的这条留言" onclick="return CommentQuote('comment-quote-353336','h');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353337" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://kkk" href="http://kkk" target="_blank" rel="nofollow">h</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353337">
+            <blockquote>
+<pre>引用h的发言：</pre>
+
+<p></p>
+
+<p><br />
+这个令牌是一个字符串，资源服务器如何鉴别这个字符串不是伪造的呢？需要资源服务器到认证服务器上去鉴别吗，还是两边约定一种鉴别机制(比如鉴别RMB一样)</p>
+
+</blockquote>
+
+<p><br />
+<a href="http://tools.ietf.org/html/rfc6749" rel="nofollow">http://tools.ietf.org/html/rfc6749</a></p>
+
+<p> Accessing Protected Resources</p>
+
+<p>   The client accesses protected resources by presenting the access<br />
+   token to the resource server.  The resource server MUST validate the<br />
+   access token and ensure that it has not expired and that its scope<br />
+   covers the requested resource.  The methods used by the resource<br />
+   server to validate the access token (as well as any error responses)<br />
+   are beyond the scope of this specification but generally involve an<br />
+   interaction or coordination between the resource server and the<br />
+   authorization server.</p>
+
+<p>少不了 RS 到 AS 之间交互认证 access_token，这个 Oauth 没有规定啊,可以随意发挥啊。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 16, 2015 11:45 AM">2015年12月16日 11:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353337">#</a>
+ | <a href="#comment-text" title="引用h的这条留言" onclick="return CommentQuote('comment-quote-353337','h');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353382" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">兴杰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353382">
+            <p>看了好几次，今天终于明白第一种模式了，谢谢老师 ^^ </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 18, 2015  7:00 PM">2015年12月18日 19:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353382">#</a>
+ | <a href="#comment-text" title="引用兴杰的这条留言" onclick="return CommentQuote('comment-quote-353382','兴杰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353472" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ans</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353472">
+            <p>不错，好文章！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 23, 2015 11:01 AM">2015年12月23日 11:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353472">#</a>
+ | <a href="#comment-text" title="引用Ans的这条留言" onclick="return CommentQuote('comment-quote-353472','Ans');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353483" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Laughing_Lz</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353483">
+            <p>restful一头雾水，老师太深奥，还是不懂，泪奔啊</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 23, 2015  5:56 PM">2015年12月23日 17:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353483">#</a>
+ | <a href="#comment-text" title="引用Laughing_Lz的这条留言" onclick="return CommentQuote('comment-quote-353483','Laughing_Lz');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353492" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">喵喵</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353492">
+            <blockquote>
+<pre>引用陈柏成的发言：</pre>
+
+<p>（C）假设用户给予授权，认证服务器将用户导向客户端事先指定的"重定向URI"（redirection URI），同时附上一个授权码。</p>
+
+<p>我不明白这个URI是用来跳转到认证服务器的url 还是指向前面例子说的云冲印的图片谢谢了^^</p>
+
+</blockquote>
+
+<p>AS完成授权之后 把授权码和state附在重定向URI之后 再把浏览器重定向回这个地址  redirection URI是client提供的一个地址  做这一步是为了让Client能够获得授权码</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015 10:25 AM">2015年12月24日 10:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353492">#</a>
+ | <a href="#comment-text" title="引用喵喵的这条留言" onclick="return CommentQuote('comment-quote-353492','喵喵');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353493" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">喵喵</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353493">
+            <p>请教阮老师和路过大神：</p>
+
+<p><br />
+我一直对implicit grant中的web-hosted client resource的作用感到疑惑<br />
+为什么需要先向web-hosted client resource请求一个包含JS代码html 然后再用JS来读取access_token in Fragment(Hash)最后获得access_token 为什么不直接在本地用JS代码来读取呢？  我在stackoverflow上看到人说这是重定向的常用做法 并没有涉及到安全性的考虑  但是为什么要这样做呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015 10:36 AM">2015年12月24日 10:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353493">#</a>
+ | <a href="#comment-text" title="引用喵喵的这条留言" onclick="return CommentQuote('comment-quote-353493','喵喵');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353496" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">喵喵</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353496">
+            <blockquote>
+<pre>引用小超人的发言：</pre>
+
+<p>授权码模式,为什么不能通过一次请求获取访问令牌?为什么非要加上一次授权码请求呢?现在授权码的作用是指定访问范围,那为什么不可以把访问范围作为参数传给认证服务器通过一次请求获取访问令牌呢?</p>
+
+</blockquote>
+
+<blockquote>
+<pre>引用小超人的发言：</pre>
+
+<p>授权码模式比简化模式好在哪里呢?求路过大神指点</p>
+
+</blockquote>
+
+<p>恩 先说为什么implicit grant不需要Authorization code吧 首先因为Authorization code和client secret是不会暴露给用户的 这个是服务器与服务器之间通信才需要的 所以implicit grant是通过user-agent（web browser）来与AS交互 你加上这两个东西之后 还是会暴露给用户看到的 所以没有必要在简化模式中增加他的复杂性</p>
+
+<p>现在回到你问的 为什么授权码模式需要这个授权码 当然是为了安全性 首先在OAuth体系中access_token是作为访问获取资源的唯一凭据 如果在AS授权完成之后 直接通过重定向传回access_token 那么HTTP 302不是安全的 Attacker有可能会获取到access_token 但是如果只返回Authorization code 就算别人获得了也没什么卵用 因为Authorization code不能获取到资源  在client向AS请求access_token的过程中 是通过HTTPS来保证安全的 而且获得access_token是需要client secret与Authorization code一起的 Attacker知道了Authorization code但并不知道client secret 同样也不能获得到access_token  所以client与AS是有责任保护好client secret的</p>
+
+<p>获得了access_token之后 向RS发起请求 RS其实会与AS交互 来校验access_token 所以你想直接伪造一个access_token 那也是不ok的</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015 11:03 AM">2015年12月24日 11:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353496">#</a>
+ | <a href="#comment-text" title="引用喵喵的这条留言" onclick="return CommentQuote('comment-quote-353496','喵喵');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353498" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">存在感为零的人</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353498">
+            <p>很透彻</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015 11:59 AM">2015年12月24日 11:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353498">#</a>
+ | <a href="#comment-text" title="引用存在感为零的人的这条留言" onclick="return CommentQuote('comment-quote-353498','存在感为零的人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353502" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">喵喵</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353502">
+            <p>突然想到漏说了一块  关于为什么不直接用HTTPS重定向回client<br />
+是因为不是所有client server都支持HTTPS~所以为了通用性 和安全性 才衍生出来这么一个Auth code</p>
+
+<p>但是AS肯定是实现HTTPS的 所以在client向AS提起request 是木有问题的~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 24, 2015  2:54 PM">2015年12月24日 14:54</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353502">#</a>
+ | <a href="#comment-text" title="引用喵喵的这条留言" onclick="return CommentQuote('comment-quote-353502','喵喵');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353913" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.baidu.com" href="http://www.baidu.com" target="_blank" rel="nofollow">李先森</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353913">
+            <p>不太明白 为什么使用auth_code换取access_token的时候 还要传redirect_uri</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 10, 2016  1:39 PM">2016年1月10日 13:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-353913">#</a>
+ | <a href="#comment-text" title="引用李先森的这条留言" onclick="return CommentQuote('comment-quote-353913','李先森');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-354535" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">北言</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-354535">
+            <p>最近在学习oauth2,看了阮老师的文章,很透彻,明白了.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2016 11:33 AM">2016年2月17日 11:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-354535">#</a>
+ | <a href="#comment-text" title="引用北言的这条留言" onclick="return CommentQuote('comment-quote-354535','北言');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-354621" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">看法</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-354621">
+            <p>写的很好，有参考价值</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 22, 2016  5:37 PM">2016年2月22日 17:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-354621">#</a>
+ | <a href="#comment-text" title="引用看法的这条留言" onclick="return CommentQuote('comment-quote-354621','看法');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-355249" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">雅爱</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-355249">
+            <p>您好，想谈论下，在更新资源令牌的时候为什么要使用专门的更新令牌来更新资源令牌？为何不直接用资源令牌来更新资源令牌？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 25, 2016  8:51 AM">2016年3月25日 08:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-355249">#</a>
+ | <a href="#comment-text" title="引用雅爱的这条留言" onclick="return CommentQuote('comment-quote-355249','雅爱');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-355374" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">popwar</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-355374">
+            <p>有些解释不够详细，看看这个tutorial更容易理解http://tutorials.jenkov.com/oauth2/index.html</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  1, 2016  1:40 PM">2016年4月 1日 13:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html#comment-355374">#</a>
+ | <a href="#comment-text" title="引用popwar的这条留言" onclick="return CommentQuote('comment-quote-355374','popwar');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1804" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

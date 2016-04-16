@@ -1,0 +1,3658 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2011/09/restful.html" title="理解RESTful架构" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2011/09/germany_pirate_party_s_victory.html" title="德国盗版党选举获胜的感想" />
+    
+    <title>学习C语言的教材 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1676" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2011/09/restful.html" title="理解RESTful架构">理解RESTful架构</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2011/09/germany_pirate_party_s_victory.html" title="德国盗版党选举获胜的感想">德国盗版党选举获胜的感</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/developer/" rel="tag">开发者手册</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">学习C语言的教材</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2011/09/"><abbr class="published" title="2011-09-18T15:12:18+08:00">2011年9月18日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>我的C语言是自学的，这些年看过不少教材。</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>下面，我对其中一些教材做个点评。</p>
+
+<p><strong>1. How to Think Like a Computer Scientist: C version</strong></p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091801.jpg" /></p>
+
+<p>这是我读过最易懂的C语言教材。</p>
+
+<p>虽然它只讲解最基本的语法，但是写得特别好懂，深入浅出，读起来不觉得累，而且它还允许免费下载。我认为，这是C语言的首选入门教材。</p>
+
+<p>下载网址：<a href="http://prof.beuth-hochschule.de/scheffler/lehre/programmieren-in-c/">http://prof.beuth-hochschule.de/scheffler/lehre/programmieren-in-c/</a></p>
+
+<p><strong>2. C Primer Plus</strong>和<strong>C Programming: A Modern Approach</strong></p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091802.jpg" /></p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091803.jpg" /></p>
+
+<p>上面这两本，都是著名的C语言初级教材，都是厚厚的大部头。</p>
+
+<p>我通读过它们，感觉都写得不错，都值得推荐。但是因为这两本书定位类似，内容重复，相比之下，我觉得C Primer Plus可能更适合中国读者的思维，更易读一些。</p>
+
+<p><strong>3. C Programming Language (2nd Edition)</strong></p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091804.jpg" /></p>
+
+<p>这是最著名的C语言书籍。</p>
+
+<p>但是，它不是写给初学者看的，更偏重C语言的编程技巧和算法思维。我读过两遍，还是觉得很多地方没读懂。</p>
+
+<p><strong>4. 国产教材</strong></p>
+
+<p>通常来说，国产教材质量不高，不值得推荐。但是有两本，我想特别提一下。</p>
+
+<p><strong>《零基础学C语言》</strong>，康莉等著，机械工业出版社，2009。</p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091805.jpg" /></p>
+
+<p>这本是我在图书馆里偶然捡起来的，翻了几页，发现是原创的，而且写得比较认真，代码解释详尽，行文错误少，就把它读完了。我认为，在国产教材中，这本书的质量很高，值得推荐。</p>
+
+<p><strong>《Linux C编程一站式学习》</strong></p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091806.jpg" /></p>
+
+<p>这本书在国产书籍中罕见地采用了GFDL许可证，<a href="http://learn.akae.cn">http://learn.akae.cn</a>有在线阅读，可以免费下载。这一点值得高度肯定。</p>
+
+<p>但是，正如前言所说，它的主要资料来源是两本英语教材《How To Think Like A Computer Scientist: Learning with C++》和《Programming from the Ground Up》，以及一些教师的上课讲义，然后拼在一起，做成一本书。所以，造成它的体系比较生硬，缺乏整体感，衔接得不好，很多地方没有做到由潜入深、循序渐进。所以，我觉得这本书不适合初学者，可以当做手册查资料。</p>
+
+<p><strong>5. Beginning Linux Programming</strong></p>
+
+<p><img src="http://image.beekka.com/blog/201109/bg2011091807.jpg" /></p>
+
+<p>这是我现在正在阅读的书。我看它在Amazon上排名Linux C编程的第一位，就选了它。</p>
+
+<p>它主要讲解如何用C语言调用Linux的系统API，偏重基本概念的解释，我已经读了两章，感觉还不错。</p>
+
+<p>=================================</p>
+
+<p>下面想听听大家的意见。</p>
+
+<p>我现在的C语言，到了这样一个水平：语法已经基本掌握了，可以独立开发一些小程序。下一步，我想进一步提高C语言水平，主要用于Linux开发。</p>
+
+<p>大家能不能推荐一些C语言的中级教材？</p>
+
+<p>（完）<br />
+</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2011-09-18T15:12:18+08:00">2011年9月18日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/developer/"> 开发者手册</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2016.03.08: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">Systemd 入门教程：实战篇</a></strong>
+
+                           <div class="entry-body">
+                              上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.03.07: <a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">Systemd 入门教程：命令篇</a></strong>
+
+                           <div class="entry-body">
+                              Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.02.28: <a href="http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html">Linux 守护进程的启动方法</a></strong>
+
+                           <div class="entry-body">
+                              "守护进程"（daemon）就是一直在后台运行的进程（daemon）。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2016.01.06: <a href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html">Commit message 和 Change log 编写指南</a></strong>
+
+                           <div class="entry-body">
+                              Git 每次提交代码，都要写 Commit message（提交说明），否则就不允许提交。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（94条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-228382" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lithium</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228382">
+            <p>直接上系统编程，停留在语言层面没什么意思。<br />
+《unix环境高级编程》 </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  3:53 PM">2011年9月18日 15:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228382">#</a>
+ | <a href="#comment-text" title="引用lithium的这条留言" onclick="return CommentQuote('comment-quote-228382','lithium');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228383" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">3345678</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228383">
+            <p>语言就像窗户，可以让你看到不同的世界</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:00 PM">2011年9月18日 16:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228383">#</a>
+ | <a href="#comment-text" title="引用3345678的这条留言" onclick="return CommentQuote('comment-quote-228383','3345678');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228384" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">kk</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228384">
+            <p>没看过K&R也敢说你会C？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:13 PM">2011年9月18日 16:13</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228384">#</a>
+ | <a href="#comment-text" title="引用kk的这条留言" onclick="return CommentQuote('comment-quote-228384','kk');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228387" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://无" href="http://无" target="_blank" rel="nofollow">levin</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228387">
+            <p>这位说话很不客气啊，为什么没看过你说的那个就不能会C了？你很牛逼呗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:25 PM">2011年9月18日 16:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228387">#</a>
+ | <a href="#comment-text" title="引用levin的这条留言" onclick="return CommentQuote('comment-quote-228387','levin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228389" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://cndj.tk" href="http://cndj.tk" target="_blank" rel="nofollow">cndj</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228389">
+            <p>K&R必看, 如果你要学linux编程, 直接买《unix环境高级编程》. 然后开始在写自己需要的程序, 有什么不会再看书. 在初学阶段是要看书没错, 但是过了那个阶段, 要提高就只能多写程序, 遇到不会再来查.</p>
+
+<p>还有, 其实C语言很简单, 完全没必要看那么多这类入门书. 有精力就看   这类书比较好.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:45 PM">2011年9月18日 16:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228389">#</a>
+ | <a href="#comment-text" title="引用cndj的这条留言" onclick="return CommentQuote('comment-quote-228389','cndj');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228390" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Neutralevil</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228390">
+            <p>C是一个比较小的语言，明面上的语法特性您上面看的那些书已经足够。进阶主要在一些技法和陷阱方面。这些书我觉得比较好：C Traps and Pitfalls、Pointers on C、Expert C Programming。其中最后那本涉及到挺多底层细节，如果您觉得看K&R有点吃力，那可能Expert C Programming也比较有难度。还有一本国内没有上市：C Programming FAQs，不过在网上可以找到内容：http://c-faq.com/。</p>
+
+<p>关键还是要多读多写代码。读的方面可以看看The Standard C Library，学习C标准库是怎么实现的。还有本可能不太出名但其实非常好的书是Linux Programming by Example: The Fundamentals，它的一个特点是很多例子基于真实的GNU或UNIX代码讲解。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:55 PM">2011年9月18日 16:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228390">#</a>
+ | <a href="#comment-text" title="引用Neutralevil的这条留言" onclick="return CommentQuote('comment-quote-228390','Neutralevil');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228391" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yanng</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228391">
+            <p>国内的《c程序设计》谭浩强，好像是最经典的一个。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:56 PM">2011年9月18日 16:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228391">#</a>
+ | <a href="#comment-text" title="引用yanng的这条留言" onclick="return CommentQuote('comment-quote-228391','yanng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228392" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fleuria</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228392">
+            <p>国产教材的话裘宗燕老师的《从问题到程序》也挺不错，很适合编程的初学者。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  4:59 PM">2011年9月18日 16:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228392">#</a>
+ | <a href="#comment-text" title="引用fleuria的这条留言" onclick="return CommentQuote('comment-quote-228392','fleuria');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228393" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://lxd.me" href="http://lxd.me" target="_blank" rel="nofollow">lxd</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228393">
+            <p>The C Book<br />
+<a href="http://publications.gbdirect.co.uk/c_book/" rel="nofollow">http://publications.gbdirect.co.uk/c_book/</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  5:18 PM">2011年9月18日 17:18</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228393">#</a>
+ | <a href="#comment-text" title="引用lxd的这条留言" onclick="return CommentQuote('comment-quote-228393','lxd');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228395" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ning</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228395">
+            <p>Unix环境高级编程，+1。10年Linux C编程，看完和没看完的也有几百本了，手头留下的开发用的实体书只有Unix环境高级编程，TCP/IP详解，和Unix网络编程，都是Richard Stevens的。好些书看过了就再也不需要了，接口的东西网上有的是，而这几本书讲的是机制，是Unix C开发的生态环境。面试的时候经常听人说熟悉C开发，了解Haskell，精通Java，熟练Python，可是什么叫精通，熟练一门语言呢，还是生态系统。编译器，编译环境，运行环境，测试工具，性能评测，解释器扩展，GUI等各种支持库的框架。至于语法和标准库，这些只是用来入门的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  5:23 PM">2011年9月18日 17:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228395">#</a>
+ | <a href="#comment-text" title="引用ning的这条留言" onclick="return CommentQuote('comment-quote-228395','ning');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228402" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Jeff</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228402">
+            <p>C语言四书五经：<br />
+《C和指针》<br />
+《C语言陷阱与缺陷》<br />
+《C专家编程》<br />
+《C语言接口与实现》</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  7:11 PM">2011年9月18日 19:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228402">#</a>
+ | <a href="#comment-text" title="引用Jeff的这条留言" onclick="return CommentQuote('comment-quote-228402','Jeff');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228405" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">booster</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228405">
+            <p>SICP，看看语言设计背后的东西你就会知道，c语言有现在这样简洁的面貌是设计上的自觉，它把理论性的东西和工程上的脏东西处理的很好，好到大部分人甚至都不知道有这事情，一切都是那么自然。<br />
+然后就是UNIX高级编程之类都工具书啦，当然，这个和c语言本身没什么关系，离体了，不过要拿c语言干活倒是必须知道这些<br />
+如果相当语言专家都话，直接看c99标准吧。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  7:31 PM">2011年9月18日 19:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228405">#</a>
+ | <a href="#comment-text" title="引用booster的这条留言" onclick="return CommentQuote('comment-quote-228405','booster');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228407" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yuhao600.blogbus.com/" href="http://yuhao600.blogbus.com/" target="_blank" rel="nofollow">于小鱼</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228407">
+            <p>C Programming Language可以当工具书用，很薄，但是很多细节的小东西不确定了都可以查到。Beginning Linux Programming国内英文版的要170多，据说中文版翻译巨烂，我现在看英文电子书呢，很好。千万别看谭浩强的书，错误很多，坑人，还不如哈工大出的那本教材用来入门。接下来可以看看Unix网络编程，还有C专家编程什么的吧，我也还在看。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  7:49 PM">2011年9月18日 19:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228407">#</a>
+ | <a href="#comment-text" title="引用于小鱼的这条留言" onclick="return CommentQuote('comment-quote-228407','于小鱼');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228411" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">missingplant</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228411">
+            <p>关于C语言的教材，我推荐The GNU C Programming Tutorial。<br />
+据说Richard Stallman有一次遇到了作者，要求他将这本书开源，他就照办了。<br />
+这本书也许深度有所不及，但是作为入门的教材是相当的好。章节安排合理，结构清晰，很短时间内就可以读完。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  8:14 PM">2011年9月18日 20:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228411">#</a>
+ | <a href="#comment-text" title="引用missingplant的这条留言" onclick="return CommentQuote('comment-quote-228411','missingplant');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228412" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://talk2unix.com" href="http://talk2unix.com" target="_blank" rel="nofollow">刺猬</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228412">
+            <p>我认为看书对于补充理论来说很有意义，现阶段阮一峰可以多读下C的经典代码吧，这个对于提升能力非常快。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  8:25 PM">2011年9月18日 20:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228412">#</a>
+ | <a href="#comment-text" title="引用刺猬的这条留言" onclick="return CommentQuote('comment-quote-228412','刺猬');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228413" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zicjin</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228413">
+            <p>KK都还有很多地方没懂不应该，先把KK弄个底朝天再说</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  8:25 PM">2011年9月18日 20:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228413">#</a>
+ | <a href="#comment-text" title="引用zicjin的这条留言" onclick="return CommentQuote('comment-quote-228413','zicjin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228419" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://tumutanzi.com" href="http://tumutanzi.com" target="_blank" rel="nofollow">土木坛子@比利时</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228419">
+            <p>峰哥推荐，值得信赖。<br />
+其实现在不是缺少资料，是缺少耐心。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  8:49 PM">2011年9月18日 20:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228419">#</a>
+ | <a href="#comment-text" title="引用土木坛子@比利时的这条留言" onclick="return CommentQuote('comment-quote-228419','土木坛子@比利时');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228420" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">kk</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228420">
+            <p>恩，我是不懂。<br />
+那再说一句：没看过CC也敢说你是程序猿？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  8:54 PM">2011年9月18日 20:54</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228420">#</a>
+ | <a href="#comment-text" title="引用kk的这条留言" onclick="return CommentQuote('comment-quote-228420','kk');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228421" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Karl</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228421">
+            <p>你说你看不太懂K&R，这样应该不是语言层面的问题，而是对计算机硬件和OS的理解不足导致的。我觉得，要理解C语言，需要理解计算机原理和汇编，才能明白C语言为啥设计成那个样子。</p>
+
+<p>从这个角度，推荐《深入理解计算机系统》，能让你更好的理解计算机和OS，同时这书也是很好的linux下的C语言开发入门教材。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  9:22 PM">2011年9月18日 21:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228421">#</a>
+ | <a href="#comment-text" title="引用Karl的这条留言" onclick="return CommentQuote('comment-quote-228421','Karl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228422" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://sunxiunan.com" href="http://sunxiunan.com" target="_blank" rel="nofollow">sagasw</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228422">
+            <p><a href="http://sunxiunan.com/?p=1661" rel="nofollow">http://sunxiunan.com/?p=1661</a><br />
+漫谈C语言及如何学习C语言</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  9:23 PM">2011年9月18日 21:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228422">#</a>
+ | <a href="#comment-text" title="引用sagasw的这条留言" onclick="return CommentQuote('comment-quote-228422','sagasw');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228423" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">rrandom</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228423">
+            <p>嗯...c专家编程<br />
+<a href="http://book.douban.com/subject/2377310/" rel="nofollow">http://book.douban.com/subject/2377310/</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  9:25 PM">2011年9月18日 21:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228423">#</a>
+ | <a href="#comment-text" title="引用rrandom的这条留言" onclick="return CommentQuote('comment-quote-228423','rrandom');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228424" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">John Doe</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228424">
+            <p>感谢推荐！我一直想找一本入门的书，您推荐的第一本看了几页，觉得作者的确是很有针对性的给初学者写的！百度知道那些求助都不适合我，哈哈。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011  9:48 PM">2011年9月18日 21:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228424">#</a>
+ | <a href="#comment-text" title="引用John Doe的这条留言" onclick="return CommentQuote('comment-quote-228424','John Doe');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228425" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.xuying.org" href="http://www.xuying.org" target="_blank" rel="nofollow">Vix</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228425">
+            <blockquote>
+<pre>引用土木坛子@比利时的发言：</pre>
+
+<p>峰哥推荐，值得信赖。<br />
+其实现在不是缺少资料，是缺少耐心。</p>
+
+</blockquote>
+
+<p>土木君！没想到在这里遇到了~~~非常赞同你的说法~~缺的就是耐心啊……而且现在信息量大反而不能够很好的汲取。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011 10:27 PM">2011年9月18日 22:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228425">#</a>
+ | <a href="#comment-text" title="引用Vix的这条留言" onclick="return CommentQuote('comment-quote-228425','Vix');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228428" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">bigfoot</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228428">
+            <p>其实国产的入门教材有一本值得一推，裘宗燕老师著作，比起他的译作来籍籍无名。<br />
+实际上写得很好，深入浅出。我通读过。<br />
+从问题到程序:程序设计与C语言引论(第2版)<br />
+<a href="http://images.china-pub.com/ebook195001-200000/198062/zcover.jpg" rel="nofollow">http://images.china-pub.com/ebook195001-200000/198062/zcover.jpg</a><br />
+<a href="http://product.china-pub.com/198062" rel="nofollow">http://product.china-pub.com/198062</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011 10:40 PM">2011年9月18日 22:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228428">#</a>
+ | <a href="#comment-text" title="引用bigfoot的这条留言" onclick="return CommentQuote('comment-quote-228428','bigfoot');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228433" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">s7evenz</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228433">
+            <blockquote>
+<pre>引用yanng的发言：</pre>
+
+<p>国内的《c程序设计》谭浩强，好像是最经典的一个。</p>
+
+</blockquote>
+
+<p>这本恰恰是C入门比较糟糕的一本书。如果不是高校垄断使用也不可能有这么高的发行量。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011 11:08 PM">2011年9月18日 23:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228433">#</a>
+ | <a href="#comment-text" title="引用s7evenz的这条留言" onclick="return CommentQuote('comment-quote-228433','s7evenz');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228437" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://twitter/wangchao2009" href="http://twitter/wangchao2009" target="_blank" rel="nofollow">Chao</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228437">
+            <p>推荐《Computer Systems: A Programmer's Perspective》 2ed，建议可以参考一下CMU的课程的online Notes。 CMU系统编程的三门课：15123 15213 15410。 上面本书是15213的课本。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011 11:46 PM">2011年9月18日 23:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228437">#</a>
+ | <a href="#comment-text" title="引用Chao的这条留言" onclick="return CommentQuote('comment-quote-228437','Chao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228438" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">呆子</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228438">
+            <p>可以推荐fortran方面的吗?支持峰哥。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2011 11:58 PM">2011年9月18日 23:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228438">#</a>
+ | <a href="#comment-text" title="引用呆子的这条留言" onclick="return CommentQuote('comment-quote-228438','呆子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228441" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">神僧</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228441">
+            <p><a href="http://book.douban.com/subject/3012360/" rel="nofollow">http://book.douban.com/subject/3012360/</a><br />
+人民邮电出版社《c和指针》，Kenneth A.Reek著，徐波译。<br />
+在经历了谭浩强等国内的烂教材的蹂躏之后，我对c语言倍感迷茫，借由此书，才终于在某些地方豁然开朗，从此走上真正的C学习之路。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011 12:16 AM">2011年9月19日 00:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228441">#</a>
+ | <a href="#comment-text" title="引用神僧的这条留言" onclick="return CommentQuote('comment-quote-228441','神僧');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228443" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">熊力</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228443">
+            <p>Expert C programming<br />
+强烈建议看看中文版, 我见过的翻译书中, 最正点的中文翻译了!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011 12:57 AM">2011年9月19日 00:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228443">#</a>
+ | <a href="#comment-text" title="引用熊力的这条留言" onclick="return CommentQuote('comment-quote-228443','熊力');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228469" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">湍流の梦想</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228469">
+            <p>C语言是个比较小的语言。楼上Neutralevil的意见靠谱。</p>
+
+<p>K&R讲的是C语言的语法和语义，是针对编程老手的，不是准备来教新手如何编程的。这本书，最好是买本英文本备查。新手学C，最好用把语言和基本编程方法结合在一起教的教材。</p>
+
+<p>C语言与机器结合比较紧密，所以，很多概念最好是懂点汇编语言，才容易理解，最好是知道C语言中的某个特性在对应的汇编中是怎么样的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  5:49 AM">2011年9月19日 05:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228469">#</a>
+ | <a href="#comment-text" title="引用湍流の梦想的这条留言" onclick="return CommentQuote('comment-quote-228469','湍流の梦想');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228475" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Xtrats</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228475">
+            <p>学语言，《C专家编程》<br />
+学Linux编程，《Unix环境高级编程》</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  8:04 AM">2011年9月19日 08:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228475">#</a>
+ | <a href="#comment-text" title="引用Xtrats的这条留言" onclick="return CommentQuote('comment-quote-228475','Xtrats');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228477" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">tylr42</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228477">
+            <p><a href="http://prof.beuth-hochschule.de/fileadmin/user/scheffler/lehre/think-c_v1.05_g.pdf" rel="nofollow">http://prof.beuth-hochschule.de/fileadmin/user/scheffler/lehre/think-c_v1.05_g.pdf</a></p>
+
+<p>峰哥推荐的第一本在网站上下不下来呀</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  8:16 AM">2011年9月19日 08:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228477">#</a>
+ | <a href="#comment-text" title="引用tylr42的这条留言" onclick="return CommentQuote('comment-quote-228477','tylr42');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228485" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hqs</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228485">
+            <p>用c做整个软件的构架设计是最难的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  9:09 AM">2011年9月19日 09:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228485">#</a>
+ | <a href="#comment-text" title="引用hqs的这条留言" onclick="return CommentQuote('comment-quote-228485','hqs');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228493" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lldld</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228493">
+            <p>我觉得你看的已经够了,开始做具体的项目吧.<br />
+有不清楚的就上网查,查查就会知道还缺少哪方面的知识需要去学习,很可能并不是C语言本身的知识.</p>
+
+<p>c,linux的很多资料我都是直接去查linux man page的,比如: <a href="http://www.linuxmanpages.com/" rel="nofollow">http://www.linuxmanpages.com/</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  9:57 AM">2011年9月19日 09:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228493">#</a>
+ | <a href="#comment-text" title="引用lldld的这条留言" onclick="return CommentQuote('comment-quote-228493','lldld');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228494" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">poet</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228494">
+            <p>编程语言不是用来学的，是用来用的（少数语言例如lisp除外）。K&R是C作者写的东西，当然值得读，就如同说你学C++必须要读BS的书一样，通常只有读发明者的书才能更深刻的理解这个语言，不过一般而言，发明者的书不适合初学者。</p>
+
+<p>我想象不出有什么语言需要看5本书之多，以我二十多年的编程经验来说，似乎没有什么语言有必要看超过两本书。直接上手开始做，才能真正掌握，而这些是看100本书都无法得到的。</p>
+
+<p>对于每个语言来说，入门书有一本就够了，至于提高书，当你有了一定的编程经验后有一本也就够了。这就是我认为不需要超过两本书的原因。</p>
+
+<p>至于工具书，我个人认为意义不大，因为绝大多数用于查API和基本概念的东西都有电子版，也都可以直接在网上搜到，没有必要收藏一本书（收藏一个页面或者一个google关键字要比收藏一本书方便得多）</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011 10:01 AM">2011年9月19日 10:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228494">#</a>
+ | <a href="#comment-text" title="引用poet的这条留言" onclick="return CommentQuote('comment-quote-228494','poet');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228499" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yaoweibin</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228499">
+            <p>《Unix环境高级编程》，现在linux作C开发，这本是必看的。C的语法其实很简单，看几本语法书就行了，主要是要多实践。现在c主要用在效率要求的比较高的地方和嵌入式方面，这本书主要是用于学习c跟系统的交互。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011 10:09 AM">2011年9月19日 10:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228499">#</a>
+ | <a href="#comment-text" title="引用yaoweibin的这条留言" onclick="return CommentQuote('comment-quote-228499','yaoweibin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228503" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://cutenotes.wordpress.com" href="http://cutenotes.wordpress.com" target="_blank" rel="nofollow">ls zhao</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228503">
+            <p>恩，最主要的是要去写。我们老板就是说，不要把东西都学会了再去干。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011 10:20 AM">2011年9月19日 10:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228503">#</a>
+ | <a href="#comment-text" title="引用ls zhao的这条留言" onclick="return CommentQuote('comment-quote-228503','ls zhao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228534" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fnu1984</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228534">
+            <p>有个错别字:"由潜入深"</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011 11:39 AM">2011年9月19日 11:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228534">#</a>
+ | <a href="#comment-text" title="引用fnu1984的这条留言" onclick="return CommentQuote('comment-quote-228534','fnu1984');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228537" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">柚子</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228537">
+            <p>好多搞C的大拿啊。<br />
+有两个事希望大家或者博主介绍一下：<br />
+1.国内目前做C开发的都做哪些应用？<br />
+2.能够做一个类似的C++的推介？<br />
+谢啦</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  1:08 PM">2011年9月19日 13:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228537">#</a>
+ | <a href="#comment-text" title="引用柚子的这条留言" onclick="return CommentQuote('comment-quote-228537','柚子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228539" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ho</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228539">
+            <p>问下各位大大，如果是在校的非计算机专业的本科生，能怎么找到写C代码的机会呢？<br />
+我唯一想到的就是看STL，然后自己写下基本的lib。<br />
+请指教。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  2:15 PM">2011年9月19日 14:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228539">#</a>
+ | <a href="#comment-text" title="引用ho的这条留言" onclick="return CommentQuote('comment-quote-228539','ho');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228542" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">kysnail</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228542">
+            <blockquote>
+<pre>引用kk的发言：</pre>
+
+<p>没看过K&amp;R也敢说你会C？</p>
+
+</blockquote>
+老兄，就你这水平也敢在这里丢人现眼。还不赶紧查查 K&R C 到底说的是那本书。
+<blockquote>
+<pre>The C Programming Language[1] (aka "K&R") is the seminal book on C.</pre>
+</blockquote>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  2:42 PM">2011年9月19日 14:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228542">#</a>
+ | <a href="#comment-text" title="引用kysnail的这条留言" onclick="return CommentQuote('comment-quote-228542','kysnail');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228543" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">YetAnother无证程序员</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228543">
+            <p>一们语言的繁荣往往得益于它所寄生的平台的繁荣。C语言生于Unix，介绍Unix的经典书籍也就那些，如上面有人提到过的“Unix环境高级编程，TCP/IP详解，和Unix网络编程，都是Richard Stevens的”。要往深处了解一们语言，就要掌握这们语言的平台和生态系统。</p>
+
+<p>其实我觉得你对C语言本身的掌握到了这个程度已经足够了，那些介绍所谓C语言的各种奇技赢巧的书大可不必看，浪费时间好处又不是很多。目前我觉得另一本书更适合你《Computer Systems: A Programmer's perspective》，目前已经出了第二版了。我觉得这本书可以弥补C语言本身以及Linux编程之间的知识空缺。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  2:49 PM">2011年9月19日 14:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228543">#</a>
+ | <a href="#comment-text" title="引用YetAnother无证程序员的这条留言" onclick="return CommentQuote('comment-quote-228543','YetAnother无证程序员');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228555" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">larmbr</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228555">
+            <p>学汇编，尤其是AT&T语法的汇编，学链接与装载，学习c标准库，每一个的学习难度都比C上不止一个台阶，但如果拿下了,你的C，或者说你的计算机功底，能让你轻松胜任很多工作，对计算机或者说语言的理解层次上几层台阶。我觉得这是学习一门语言的要义，我个人认为不能把语言纯当作一门工具，用它来工作在我看来是在有深刻理解后一种自然而然顺带的事。欢迎一起学习.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  4:08 PM">2011年9月19日 16:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228555">#</a>
+ | <a href="#comment-text" title="引用larmbr的这条留言" onclick="return CommentQuote('comment-quote-228555','larmbr');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228556" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">skyscribe</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228556">
+            <p>同推荐Richard Stevens系列，字字珠玑，Unix/Linux必备。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  4:11 PM">2011年9月19日 16:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228556">#</a>
+ | <a href="#comment-text" title="引用skyscribe的这条留言" onclick="return CommentQuote('comment-quote-228556','skyscribe');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228674" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">san</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228674">
+            <p>经典书籍上面都有列出了,,,(共三卷),K&R C作者既是C语言的创立者,是难得的一本好书.其他教材入门即可以扔掉.c primer plus可以作手册用,里面写的很详细..</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  8:51 PM">2011年9月19日 20:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228674">#</a>
+ | <a href="#comment-text" title="引用san的这条留言" onclick="return CommentQuote('comment-quote-228674','san');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228695" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">leevi</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228695">
+            <p>不用教材，写程序就好。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2011  9:52 PM">2011年9月19日 21:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228695">#</a>
+ | <a href="#comment-text" title="引用leevi的这条留言" onclick="return CommentQuote('comment-quote-228695','leevi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228926" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.aikanwx.com" href="http://www.aikanwx.com" target="_blank" rel="nofollow">爱看文学</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228926">
+            <p>博主推荐的那本蓝色的零基础学C，这个系列的书都很不错的，比如学习PHP，JAVA，MYSQL等等，都有，而且写的都挺好。不过我们学校用的是清华大学出版社的一本书，谭浩强写的，绿色封皮的，忘了叫啥名了，感觉也没啥特色。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 20, 2011  9:31 AM">2011年9月20日 09:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228926">#</a>
+ | <a href="#comment-text" title="引用爱看文学的这条留言" onclick="return CommentQuote('comment-quote-228926','爱看文学');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228935" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://a-shi.org" href="http://a-shi.org" target="_blank" rel="nofollow">阿四</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228935">
+            <p>这里的评论真是个宝库，就像楼上几位高手说的，阮兄书看多了。K&R的开篇就说了：the best to learn a language is using it.(大意如此)。我也觉得一两本书就够了，然后就是看代码，写代码。有一些*nix上的小工具代码据说挺适合阅读一下，比如coreutils的代码。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 20, 2011  9:52 AM">2011年9月20日 09:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228935">#</a>
+ | <a href="#comment-text" title="引用阿四的这条留言" onclick="return CommentQuote('comment-quote-228935','阿四');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-228955" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.7hao.org" href="http://www.7hao.org" target="_blank" rel="nofollow">grants</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-228955">
+            <p>唉。。。今天遇到个女计算机硕士 只会写printf.........</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 20, 2011 11:09 AM">2011年9月20日 11:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-228955">#</a>
+ | <a href="#comment-text" title="引用grants的这条留言" onclick="return CommentQuote('comment-quote-228955','grants');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-229046" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://fifarzh.com/" href="http://fifarzh.com/" target="_blank" rel="nofollow">fifar</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-229046">
+            <p>认真看完了所有评论，评论意义大于文章，受教了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 20, 2011  8:40 PM">2011年9月20日 20:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-229046">#</a>
+ | <a href="#comment-text" title="引用fifar的这条留言" onclick="return CommentQuote('comment-quote-229046','fifar');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-229172" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Mead  Lai</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-229172">
+            <p>《C专家编程》<br />
+《linux程序设计》<br />
+C就这两本就够了...基本熟悉linux下面的文件,网络,线程,信号量...<br />
+基础就有了,再选一个UI(随便),就可以开发小工具了...<br />
+其实吧,你把这两本书看完,练习做完,就很不错了...<br />
+我反正现在对语言都没概念了,学哪个都是coding...<br />
+木激情,</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 21, 2011 12:42 PM">2011年9月21日 12:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-229172">#</a>
+ | <a href="#comment-text" title="引用Mead  Lai的这条留言" onclick="return CommentQuote('comment-quote-229172','Mead  Lai');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-229329" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://twitter.com/nobush" href="http://twitter.com/nobush" target="_blank" rel="nofollow">bush</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-229329">
+            <p>該推薦的樓上諸位都說了～<br />
+不過我覺得博主看第三本還有許多沒讀懂，說明基礎仍然不扎實，需要的是更多思考揣摩。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 21, 2011  9:58 PM">2011年9月21日 21:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-229329">#</a>
+ | <a href="#comment-text" title="引用bush的这条留言" onclick="return CommentQuote('comment-quote-229329','bush');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-229787" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ganquan.info" href="http://ganquan.info" target="_blank" rel="nofollow">风吟</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-229787">
+            <p>哈哈，锋哥，我刚整理完一个C语言速查，就看见你整理C语的书。。</p>
+
+<p><a href="https://ganquan.info/standard-c/" rel="nofollow">https://ganquan.info/standard-c/</a></p>
+
+<p>C语言算法比较难，其他还好。现代的语言很多语法都跟它类似的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 22, 2011 10:31 AM">2011年9月22日 10:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-229787">#</a>
+ | <a href="#comment-text" title="引用风吟的这条留言" onclick="return CommentQuote('comment-quote-229787','风吟');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-230053" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">willbbetter</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-230053">
+            <p>我感觉如果想用C语言开发程序，《C语言详解第六版》十分精彩，它的特别之处就是在于能够用软件工程的思想来介绍C语言，而且难得可贵之处就是其中很多例子举得十分其当，看的时候都会十分的敬佩作者怎么会想的如此得体，后来想想也是，已经出了六版了，而且它其中会涉及到项目，项目都是实战型的，还有代码解析，每个例子都是以实践为基础的，所以也让人看起来津津有味。<br />
+从刚开始学习C语言就被很多人告诉它属于中级语言（介于汇编与高级语言之间），特长在于底层开发，尤其它的精髓在于指针，后来随着学习的深入才发现这话的确是太对了，《C与指针》这本书也适合强化指针，如果已经有了许多基础在看就会如鱼得水一般，会对自己的指针能力得到强化，全书都是贯穿指针来讲解的。《C陷阱与缺陷》应该说是咱们的枕边书了，该书是为数不多的这么多年了，都维持原版原貌，没再版而又一直经典的书籍呀，书中介绍的许多编程技巧都太值得思考了，比如说开篇就介绍的 ==技巧，几乎好像所有人都犯过这个毛病（将=写到条件里），一个简单的变换 1==i ，就解决了，网上对谭浩强老师的书籍攻击，有很大一部分都是因为编程风格，养成一种好的编程风格确实好处太多，尤其是在编写大程序的时候。我感觉如果可以尝试编写1000行代码的程序，就尽量写的大一些，写小程序和大程序的感觉是不一样的，1000行代码的程序和10个100行的感觉可真是没法比的，乐趣当然也没法比较，也许是阶乘的关系吧。有些很有趣的算法书也可以尝试，但是初期最好看源码的，虽然很多人说源码影响理解算法精髓，当刚开始个人感觉最好还是从源码入手。数据结构也可以有效强化C语言。<br />
+ 非常感谢您的博客，一直在订阅，说实话，您的好多文章都对我帮助许多，给我了莫大的启示，您的好多话语也在影响我——让一名普通的大学生不断的得到成长与反思，一直都不知道怎么感谢您，也借助这个机会，想和您说句:谢谢。大学时间我一直热衷C语言编程和底层编程，希望这些文字可以给您一些参考。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 22, 2011  9:17 PM">2011年9月22日 21:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-230053">#</a>
+ | <a href="#comment-text" title="引用willbbetter的这条留言" onclick="return CommentQuote('comment-quote-230053','willbbetter');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-230478" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">屋顶的蓬蒿</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-230478">
+            <p>看了那些书，c语言层面的东西就足够了，下一步就是牛逼加班敲代码，api调用看系统文档，程序结构看软件设计书，这阶段跟具体语言关系不大。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 23, 2011  1:09 PM">2011年9月23日 13:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-230478">#</a>
+ | <a href="#comment-text" title="引用屋顶的蓬蒿的这条留言" onclick="return CommentQuote('comment-quote-230478','屋顶的蓬蒿');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-231238" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.199so.com" href="http://www.199so.com" target="_blank" rel="nofollow">黄耀鑫</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-231238">
+            <p>《C Programming Language (2nd Edition)》 这本不就是 K&R C的了吗？怎么还有评论者说没有K&R？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 24, 2011  2:26 PM">2011年9月24日 14:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-231238">#</a>
+ | <a href="#comment-text" title="引用黄耀鑫的这条留言" onclick="return CommentQuote('comment-quote-231238','黄耀鑫');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-231825" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">qs</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-231825">
+            <p>在补上一本，“微软C编程精粹”，关于C设计的书。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 25, 2011 11:59 AM">2011年9月25日 11:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-231825">#</a>
+ | <a href="#comment-text" title="引用qs的这条留言" onclick="return CommentQuote('comment-quote-231825','qs');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-232214" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hchaojie</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-232214">
+            <p>K&R 作为入门是必须要看完的，其他的都不需要。有的例子不太好理解，但是书很薄，完全能啃完。习惯了你就会发现看这本书的乐趣。不懂的可以发邮件问我：）</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 26, 2011  6:02 PM">2011年9月26日 18:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-232214">#</a>
+ | <a href="#comment-text" title="引用hchaojie的这条留言" onclick="return CommentQuote('comment-quote-232214','hchaojie');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-232296" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.douban.com/people/popovich/" href="http://www.douban.com/people/popovich/" target="_blank" rel="nofollow">popovich</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-232296">
+            <p>其实我也是想推荐《深入理解计算机系统》（最近出第三版了）。这本书一共有三部分，第一部分以C语言为例介绍了一些计算机系统里面的基本问题，对理解C语言和计算机系统特别有启发性，虽然不难，但很细致，肯定能满足你这阶段学习的需要。后面两部分基本上都是系统编程的东西，也都是以UNIX为例讲的，整个大流程的东西都讲到了，个人感觉看完后两部分就能开始动手在 UNIX上面用C做一些小东西了。<br />
+这本书整体都讲的都很清楚，中文版译的也很好，而且书中习题设计的也很好，如果遇到比较难懂而且不太容易动手做的部分（比如链接那部分，对于新手来说基本没有省时省力的动手实践的方法），还可以通过做题增加感性认识。还想深入学习或者对更具体的问题有疑问的话看参考文献就成了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 26, 2011 10:07 PM">2011年9月26日 22:07</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-232296">#</a>
+ | <a href="#comment-text" title="引用popovich的这条留言" onclick="return CommentQuote('comment-quote-232296','popovich');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-232606" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lovekonakona</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-232606">
+            <p>推荐了很多好教材, 万分感谢</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 28, 2011  9:04 AM">2011年9月28日 09:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-232606">#</a>
+ | <a href="#comment-text" title="引用lovekonakona的这条留言" onclick="return CommentQuote('comment-quote-232606','lovekonakona');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-234189" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">李超</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-234189">
+            <p>来过好多次了，今天发现博主要学C，本人是程序员,自己主要用C++,说说体会供你参考。<br />
+个人感觉，教材有一两本好的就够了,你前边列的应该都够用了。我是好多都没看过，C语言的我主要就一本教材，是上面3号的中文版，说实话，初学者一两遍看懂倒是不正常了。<br />
+我当初入门的时候也是不懂，现在想想，其实开始不清楚的地方可以放一阵再看，一些相关的知识只看一点是很难理解的，要联系起来理解。<br />
+《Programming from the Ground Up》看过前面一点，理解内存结构对C很有帮助，后面就没怎么看了，本人英文水平也不太好，汇编也用不到。</p>
+
+<p>比较重要的是要实践，多写多练。<br />
+建议你写自己用得着的小程序，少写那种写完就扔的（初学实验代码除外）练习，可以持续改进，不断完善。遇到问题查查书上的解释，直接Google一下也挺方便的。这个过程中，许多知识慢慢就掌握了。<br />
+那时候再看相关的书，就不全是“哦，原来如此”了，而是经常要“这个我也知道”呵；以博主的水平，以后可以考虑自己写一本入门书啊。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 30, 2011 11:46 PM">2011年9月30日 23:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-234189">#</a>
+ | <a href="#comment-text" title="引用李超的这条留言" onclick="return CommentQuote('comment-quote-234189','李超');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-235735" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">int3</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-235735">
+            <p>很遗憾，我是那种和C语言结婚的人。</p>
+
+<p>如果你打算只是用C写一些小工具，或者没什么过高的需求，从楼上各位的回复也基本能推敲出来：看上一两本书，然后就是写代码实践之。</p>
+
+<p>如果你也想成为和C语言结婚的人，除了上面大家已列出来的经典书籍必读外(国内的书我始终不推荐），我建议尝试写一些代码练练手，慢慢地写一些基本的库，然后自己实现整个标准库。</p>
+
+<p>最后我想说的是，掌握汇编，至少要很轻松地读懂汇编语言写的代码（那种格式的无所谓）。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  3, 2011  8:47 PM">2011年10月 3日 20:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-235735">#</a>
+ | <a href="#comment-text" title="引用int3的这条留言" onclick="return CommentQuote('comment-quote-235735','int3');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-236136" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Z</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-236136">
+            <p>在amazon上搜“linux programming”，出来的第一条是The Linux Programming Interface: A Linux and UNIX System Programming Handbook。作者是linux man-page的maintainer。此书无论从权威性到可读性都堪称一流。另外推荐同样是nostarch出版的autotools一书。这俩本书算包括了在source tarball里能够看到的全部内容。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  7, 2011  3:45 PM">2011年10月 7日 15:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-236136">#</a>
+ | <a href="#comment-text" title="引用Z的这条留言" onclick="return CommentQuote('comment-quote-236136','Z');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-236356" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://haipo.me" href="http://haipo.me" target="_blank" rel="nofollow">haiyang</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-236356">
+            <p>留言的都是牛人！<br />
+我学生一个，目前自学计算机，主要编程语言也是C。<br />
+大一时学过谭浩强的，带我入门。虽然网上骂的很多，但毕竟这本书对我来说还是带来了价值。幸亏当时学的不太好，后来看K&R相当于重新学习C。接下来看了《C专家编程》和《C陷阱与缺陷》。个人觉得学C语言上的东西这么多已经足够了。学C一定要学Linux，前面人都推荐过了，《深入理解计算机系统》（CSAPP），《UNIX环境高级编程》（APUE）,两本书非常推荐。还有Richard Steven其他的《TCP/IP详解》，《UNIX网络编程》都是很好的书。《UNIX编程艺术》，《编程珠玑》也值得一看。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  8, 2011  8:46 PM">2011年10月 8日 20:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-236356">#</a>
+ | <a href="#comment-text" title="引用haiyang的这条留言" onclick="return CommentQuote('comment-quote-236356','haiyang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-237093" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">围城观者</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-237093">
+            <p>《你必须知道的495个C语言问题》。关注于编写代码时语法等相关细节问题的小书。很多人推荐的都是大部头，我表示不能理解，实际写代码时，书都是拿来翻的，不是拿来看的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 15, 2011 11:05 PM">2011年10月15日 23:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-237093">#</a>
+ | <a href="#comment-text" title="引用围城观者的这条留言" onclick="return CommentQuote('comment-quote-237093','围城观者');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-237967" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://abloz.com" href="http://abloz.com" target="_blank" rel="nofollow">ablozhou</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-237967">
+            <p>劝阮兄别深入学C语言了。C语言是个泥潭，陷进去了出不来。虽然阮兄很好学，但也不必样样精通。就算你很精通，也敌不过一个三年C语言编程的程序员。<br />
+我觉得您的价值还是多思考，而不是都去实践一番。人的精力毕竟有限。要做什么事情说一声，程序员一大把。<br />
+这是一个兴趣太广范的人的心声：)</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 25, 2011  2:32 PM">2011年10月25日 14:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-237967">#</a>
+ | <a href="#comment-text" title="引用ablozhou的这条留言" onclick="return CommentQuote('comment-quote-237967','ablozhou');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-239217" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://没有" href="http://没有" target="_blank" rel="nofollow">黑色会小混混</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-239217">
+            <p>C语言其实是最难的一门编程语言，难再它灵活的应用，它的底层结构。如果对硬件，计算机系统等等不是很了解的话是很难学好C的。如果仅仅需要编写一些电脑上的应用的话。建议可以尝试其他的语言</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  9, 2011  3:23 PM">2011年11月 9日 15:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-239217">#</a>
+ | <a href="#comment-text" title="引用黑色会小混混的这条留言" onclick="return CommentQuote('comment-quote-239217','黑色会小混混');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-239224" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">vx13</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-239224">
+            <p>《如何学好C语言》 ： <a href="http://coolshell.cn/articles/4102.html" rel="nofollow">http://coolshell.cn/articles/4102.html</a><br />
+阮一峰先生，您可以看看这个，最好订阅这个博客，会有些帮助。不知道您是出于何种目的学习 C 语言，应该根据自己的目的选择教材。在这里留言的人，包括本人，往往是有自己的专职工作，被经验限制住了自己的看法，并不一定可靠。<br />
+C 语言最权威的文档是上面网友说的 C99 标准，该文档可以在下面的地址下载：<br />
+<a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf" rel="nofollow">http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf</a><br />
+这个文档适合编译出错的时候查询。<br />
+学习使用 C 语言，要养成良好的习惯，就要选择好编程环境，还要有氛围良好的交流空间。尤其是对于您这样的自学者，可能会缺少一些系统性的基础知识，才产生了障碍。上面也有网友指出， K&R 是入门的书，吃透这本书不是必要的，但是可以减小以后产生基础盲点的可能性。<br />
+我的建议是，您先设计一个有一定难度的项目，并完成它。根据您的兴趣，设计一个桌面程序或网络服务，然后搜索类似的项目的源代码，在其基础上修改，完成自己的项目。这个过程中，发现什么不知道的，再去查对应的文档。查文档，看手册，要比看些教程更实用。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  9, 2011  5:59 PM">2011年11月 9日 17:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-239224">#</a>
+ | <a href="#comment-text" title="引用vx13的这条留言" onclick="return CommentQuote('comment-quote-239224','vx13');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-239483" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">jamesprite</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-239483">
+            <p>Next：<br />
+《C语言程序设计:现代方法(第2版)》（可选）<br />
+《C专家编程》<br />
+《C陷阱与缺陷》<br />
+Next：<br />
+《UNIX环境高级编程》</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 13, 2011  3:25 AM">2011年11月13日 03:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-239483">#</a>
+ | <a href="#comment-text" title="引用jamesprite的这条留言" onclick="return CommentQuote('comment-quote-239483','jamesprite');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-239747" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dd</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-239747">
+            <p>Expert C Programming</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 15, 2011 10:16 PM">2011年11月15日 22:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-239747">#</a>
+ | <a href="#comment-text" title="引用dd的这条留言" onclick="return CommentQuote('comment-quote-239747','dd');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-242703" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">silent sojourner</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-242703">
+            <p>1.学计算机语言和学英语一样，可以分成两个层次。第一个层次是未入门的层次，表现为：不知道哪本书对自己有用；学了不少，感觉好像进步不大；感觉好像掌握了不少知识，但是碰到实际问题，需要真刀真枪地上，感觉还是不行；如果一段时间不用，感觉忘得很快。。。<br />
+第二个层次是入门的层次，表现在：能对各种资料自由取舍，为我所用；碰到实际问题，虽然不一定立刻就知道解决办法，但是心里有底，适当查些资料，很快就能适应；不容易遗忘，即使很长时间不搞，需要的时候，稍微热热身，就能重新捡起来。<br />
+所以，阮兄的C语言，应该还是未入门的水平。入门未入门，不是用写了多少行程序来衡量的。不要以为能看懂所谓的中级或者高级教程，就以为自己的水平就是中级或者高级了。其实中级和高级的差距，远远没有未入门和已入门的差距大。<br />
+2.学计算机语言，一定要自己动手写代码，才能真正理解。楼上几位说得很多了。<br />
+3.C语言的难度，我的理解，其实未必是语言本身。纯从语言来讲，可能Prolog还更难一些。因为C语言主要用于系统编程，所以难度主要在于理解系统的实现细节。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 18, 2011  8:49 AM">2011年12月18日 08:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-242703">#</a>
+ | <a href="#comment-text" title="引用silent sojourner的这条留言" onclick="return CommentQuote('comment-quote-242703','silent sojourner');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-243867" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">richter</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-243867">
+            <p>我时时关注你的blog，也买了两本实体书:) </p>
+
+<p>这里对你学习c的目标有些疑问。我本人是DBA，工作中基本没有用c写程序的需求。在这里谈谈我学习使用c的一些感想，希望对你有些帮助。</p>
+
+<p>1)通过c，逐渐了解OS。<br />
+2)利用对c的熟悉，阅读一些程序源码，进而学习到一些设计方法。<br />
+3)三不五时用c写一些小程序，热热身，将很多os的知识点温习。<br />
+4)偶尔用c写一些算法关联的小程序。<br />
+大概有这么几条。<br />
+之前项目中用c写过一批设备驱动(应用层)的移植(windows->linux)，开发的感想是必需在工作中将程序所经历的各个知识点(包括语言层面、OS层面)都需要尽量的掌握。这样就会越做越熟。能把遭遇的每个知识点讲清楚其实不简单。</p>
+
+<p>楼上的许多朋友开了很多书单，不少我都有。有一部分作了细读。很多经典书我都在淘宝上卖了盗版:)论斤买:)手上有实体书，偶尔翻一翻，都有收获。特别是2、3本书对同一个知识点用不同的角度阐述，收获较多。</p>
+
+<p>最后作个总结:)<br />
+c就像打开os的一把钥匙、一个电筒，没这个，很难成为系统程序员。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 31, 2011 10:04 AM">2011年12月31日 10:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-243867">#</a>
+ | <a href="#comment-text" title="引用richter的这条留言" onclick="return CommentQuote('comment-quote-243867','richter');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-245153" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ThunderQ</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-245153">
+            <p>我觉得Accelerated C++很不错，学了那个，再学习C的内存管理（指针之类的）会有快速入门的效果！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 13, 2012  3:46 PM">2012年1月13日 15:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-245153">#</a>
+ | <a href="#comment-text" title="引用ThunderQ的这条留言" onclick="return CommentQuote('comment-quote-245153','ThunderQ');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-246371" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://weibo.com/kandr" href="http://weibo.com/kandr" target="_blank" rel="nofollow">K&amp;R</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-246371">
+            <p>博猪就是传说中的猪脑了吧，看什么也没用。这些书都是相当基础的了，这些也看不懂还搞什么C</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 26, 2012  2:39 PM">2012年1月26日 14:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-246371">#</a>
+ | <a href="#comment-text" title="引用K&R的这条留言" onclick="return CommentQuote('comment-quote-246371','K&R');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-246511" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">田</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-246511">
+            <p>我现在想学习网络攻防的东西 但是我的c语言太差了我想从头开始学习，请问那本书比较全面的讲解c  谭浩强的入门书籍我看过</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 28, 2012  1:52 PM">2012年1月28日 13:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-246511">#</a>
+ | <a href="#comment-text" title="引用田的这条留言" onclick="return CommentQuote('comment-quote-246511','田');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-246855" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">兵临城下</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-246855">
+            <blockquote>
+<pre>引用Vix的发言：</pre>
+
+<p></p>
+
+<p>土木君！没想到在这里遇到了~~~非常赞同你的说法~~缺的就是耐心啊……而且现在信息量大反而不能够很好的汲取。</p>
+
+</blockquote>
+
+<p>很赞同</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February  1, 2012  5:05 PM">2012年2月 1日 17:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-246855">#</a>
+ | <a href="#comment-text" title="引用兵临城下的这条留言" onclick="return CommentQuote('comment-quote-246855','兵临城下');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-252062" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">duyiwuer</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-252062">
+            <p>博主看的都是英文版的，这说明博主已经是一个高手了，《Unix环境高级编程》不错，我之前看过一段时间，看得很吃力，不过书的确不错，现在因为其它事情就停下来了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  7, 2012  6:48 PM">2012年4月 7日 18:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-252062">#</a>
+ | <a href="#comment-text" title="引用duyiwuer的这条留言" onclick="return CommentQuote('comment-quote-252062','duyiwuer');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-252064" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">duyiwuer</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-252064">
+            <blockquote>
+<pre>引用cndj的发言：</pre>
+
+<p>其实C语言很简单, 完全没必要看那么多这类入门书. 有精力就看 这类书比较好.</p>
+
+</blockquote>
+
+<p>这位兄弟说的我赞同，停留在语言层面没什么意思，也没有意义，用它来做东西才是意义所在，我是计划学完第一遍《Unix环境高级编程》后就开始参考Apache或Nginx写Http服务器的，但是因为其它一些事情就停下来</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  7, 2012  7:09 PM">2012年4月 7日 19:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-252064">#</a>
+ | <a href="#comment-text" title="引用duyiwuer的这条留言" onclick="return CommentQuote('comment-quote-252064','duyiwuer');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-252065" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">duyiwuer</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-252065">
+            <blockquote>
+<pre>引用ning的发言：</pre>
+
+<p>Unix环境高级编程，+1。10年Linux C编程，看完和没看完的也有几百本了，手头留下的开发用的实体书只有Unix环境高级编程，TCP/IP详解，和Unix网络编程，都是Richard Stevens的。</p>
+
+</blockquote>
+
+<p>这位前辈是高手啊，已经有10年Linux C编程经验了<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  7, 2012  7:12 PM">2012年4月 7日 19:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-252065">#</a>
+ | <a href="#comment-text" title="引用duyiwuer的这条留言" onclick="return CommentQuote('comment-quote-252065','duyiwuer');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-254302" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">ivan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-254302">
+            <blockquote>
+<pre>引用hqs的发言：</pre>
+
+<p>用c做整个软件的构架设计是最难的。</p>
+
+</blockquote>
+
+<p>非常赞同你的说法，看过一些大型程序的源代码，架构设计的确是最难和最有最有创造性的</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  8, 2012  8:03 PM">2012年5月 8日 20:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-254302">#</a>
+ | <a href="#comment-text" title="引用ivan的这条留言" onclick="return CommentQuote('comment-quote-254302','ivan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270843" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">王伟</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270843">
+            <p>unix/linux 编程实践  这本不知名的书籍要强烈推荐。 <br />
+其它就是著名的 unix环境编程  unix网络编程<br />
+如果都会了，我觉得可以再来学pyhon, python+python库具备c+ c各种库的所有功能，好用易懂优雅，是快速开发的良好选择，因为有了C 和 unix 的基础， 对python各种库也能很轻松掌握。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 17, 2013 11:45 PM">2013年4月17日 23:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-270843">#</a>
+ | <a href="#comment-text" title="引用王伟的这条留言" onclick="return CommentQuote('comment-quote-270843','王伟');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270941" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://renrenshang.com" href="http://renrenshang.com" target="_blank" rel="nofollow">renrensahng</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270941">
+            <blockquote>
+<pre>引用YetAnother无证程序员的发言：</pre>
+
+<p>其实我觉得你对C语言本身的掌握到了这个程度已经足够了，那些介绍所谓C语言的各种奇技赢巧的书大可不必看，浪费时间好处又不是很多。目前我觉得另一本书更适合你《Computer Systems: A Programmer's perspective》，目前已经出了第二版了。我觉得这本书可以弥补C语言本身以及Linux编程之间的知识空缺。</p>
+
+</blockquote>
+
+<p>支持，实践才是最好的证明。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 23, 2013  9:19 PM">2013年4月23日 21:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-270941">#</a>
+ | <a href="#comment-text" title="引用renrensahng的这条留言" onclick="return CommentQuote('comment-quote-270941','renrensahng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272902" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Frank</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272902">
+            <p>之前在图书馆看过两本书《C语言的科学和艺术》（《The Art and Science of C》），《C程序设计的抽象思维》(《Programming Abstractions in C》)，都是罗伯茨写的，是斯坦福大学的教材，非常不错，尤其是第二本，这两本不能算是语法书，总结了程序设计的思想，各种数据结构的实现，通过头文件作为接口，几乎实现了面向对象，代码也很规范，命名很地道，读起来很舒服，两本书我都买来珍藏了。<br />
+PS:相比之下，谭浩强的那本简直弱爆了，纯粹误人子弟啊。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August  1, 2013 11:12 AM">2013年8月 1日 11:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-272902">#</a>
+ | <a href="#comment-text" title="引用Frank的这条留言" onclick="return CommentQuote('comment-quote-272902','Frank');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273518" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://programonkey.me" href="http://programonkey.me" target="_blank" rel="nofollow">peach5460</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273518">
+            <p>C Programming Language<br />
+这本蛮好的,我在网上下的PDF看了中文以后...去买了一本英文实体书...</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  4, 2013  9:34 AM">2013年9月 4日 09:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-273518">#</a>
+ | <a href="#comment-text" title="引用peach5460的这条留言" onclick="return CommentQuote('comment-quote-273518','peach5460');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-279392" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Lee</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-279392">
+            <blockquote>
+<pre>引用K&R的发言：</pre>
+
+<p>博猪就是传说中的猪脑了吧，看什么也没用。这些书都是相当基础的了，这些也看不懂还搞什么C</p>
+
+</blockquote>
+
+<p>您这么说，我等都是石头脑子了，当然也不曾想望您项背。本来一个讨论式的回帖，竟招来如此喷子。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 20, 2013  2:01 PM">2013年10月20日 14:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-279392">#</a>
+ | <a href="#comment-text" title="引用Lee的这条留言" onclick="return CommentQuote('comment-quote-279392','Lee');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-279393" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Lee</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-279393">
+            <blockquote>
+<pre>引用风吟的发言：</pre>
+
+<p>哈哈，锋哥，我刚整理完一个C语言速查，就看见你整理C语的书。。</p>
+
+<p><a href="https://ganquan.info/standard-c/" rel="nofollow">https://ganquan.info/standard-c/</a></p>
+
+<p>C语言算法比较难，其他还好。现代的语言很多语法都跟它类似的。</p>
+
+</blockquote>
+
+<p>已经加入收藏夹，非常感谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 20, 2013  2:04 PM">2013年10月20日 14:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-279393">#</a>
+ | <a href="#comment-text" title="引用Lee的这条留言" onclick="return CommentQuote('comment-quote-279393','Lee');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-292563" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">刘江</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-292563">
+            <blockquote>
+<pre>引用Neutralevil的发言：</pre>
+
+<p>还有一本国内没有上市：C Programming FAQs，不过在网上可以找到内容：http://c-faq.com/。<br />
+</p></blockquote>
+
+<p>这书图灵出过，中文版的名字是《你必须知道的495个C语言问题》：http://book.douban.com/subject/3422332/</p>
+
+<blockquote>
+<pre>引用Neutralevil的发言：</pre>
+关键还是要多读多写代码。读的方面可以看看The Standard C Library，学习C标准库是怎么实现的。
+</blockquote>
+
+<p>图灵的中文版《C标准库》：http://www.ituring.com.cn/book/317</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 12, 2013  7:12 AM">2013年12月12日 07:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-292563">#</a>
+ | <a href="#comment-text" title="引用刘江的这条留言" onclick="return CommentQuote('comment-quote-292563','刘江');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-295353" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">优雅C</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-295353">
+            <blockquote>
+<pre>引用kk的发言：</pre>
+
+<p>没看过K&amp;R也敢说你会C？</p>
+
+</blockquote>
+
+<p>C Programming Language  这个不就是么</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 31, 2013  3:18 PM">2013年12月31日 15:18</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-295353">#</a>
+ | <a href="#comment-text" title="引用优雅C的这条留言" onclick="return CommentQuote('comment-quote-295353','优雅C');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-295389" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">冰与火</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-295389">
+            <p>看《黑客与画家》里面作者格雷厄姆就说过C语言的教材"The C Programming Language"是写得非常好的，语法用示例阐述得很明白。我看过两遍，觉得有它就够打基础的了。精力有限，没有必有看那么多书</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 31, 2013  5:49 PM">2013年12月31日 17:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-295389">#</a>
+ | <a href="#comment-text" title="引用冰与火的这条留言" onclick="return CommentQuote('comment-quote-295389','冰与火');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-298386" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://roadstarteam.com" href="http://roadstarteam.com" target="_blank" rel="nofollow">Axl</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-298386">
+            <p>语言仅仅是个工具，重要的还是原理吧？</p>
+
+<p>看了你的文章，认为你提的这个应该不是一个能困惑到你的问题了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 20, 2014  1:45 AM">2014年1月20日 01:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-298386">#</a>
+ | <a href="#comment-text" title="引用Axl的这条留言" onclick="return CommentQuote('comment-quote-298386','Axl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350490" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小D</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350490">
+            <p>范磊老师的《零起点学通C语言》这本不错</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 29, 2015 12:00 AM">2015年6月29日 00:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-350490">#</a>
+ | <a href="#comment-text" title="引用小D的这条留言" onclick="return CommentQuote('comment-quote-350490','小D');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351880" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">jiaming</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351880">
+            <p>非常强烈推荐地你看看这本《C语言其实很简单》，新出版的书。确实很接地气，很好玩，很另类的书。漫画顺口溜还一大堆，还有很独特的学习方法。看了指针那章，那些方法简直从未听说过（我也读了不少书都没有），没费什么劲指针我感觉指针就掌握到高手的境界了，简直是一绝！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 26, 2015  9:18 PM">2015年9月26日 21:18</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-351880">#</a>
+ | <a href="#comment-text" title="引用jiaming的这条留言" onclick="return CommentQuote('comment-quote-351880','jiaming');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351949" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">我说我是个包子</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351949">
+            <p>最近买了一本《C语言其实很简单》，读了几章，那叫眼前一亮的说，讲的太好了！学习方法很独特，看过这么多C语言教材是我从未见过的，可谓经典的一本！这样的方法和叙述风格初学者学起来会很轻松。这是刚刚新出版的书，你应该吧这本也加上介绍或评论</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  1, 2015  3:27 PM">2015年10月 1日 15:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-351949">#</a>
+ | <a href="#comment-text" title="引用我说我是个包子的这条留言" onclick="return CommentQuote('comment-quote-351949','我说我是个包子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351950" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">我说我是个包子</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351950">
+            <p>楼上的也看过这本？英雄所见略同的说，握手：）</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  1, 2015  3:29 PM">2015年10月 1日 15:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2011/09/c_programming_language_textbooks.html#comment-351950">#</a>
+ | <a href="#comment-text" title="引用我说我是个包子的这条留言" onclick="return CommentQuote('comment-quote-351950','我说我是个包子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1676" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

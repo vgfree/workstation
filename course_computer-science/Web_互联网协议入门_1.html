@@ -1,0 +1,5512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2012/05/ray_huang_s_memoir.html" title="失败的总和----读《黄河青山：黄仁宇回忆录》" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2012/06/internet_protocol_suite_part_ii.html" title="互联网协议入门（二）" />
+    
+    <title>互联网协议入门（一） - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1724" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2012/05/ray_huang_s_memoir.html" title="失败的总和----读《黄河青山：黄仁宇回忆录》">失败的总和----读《</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2012/06/internet_protocol_suite_part_ii.html" title="互联网协议入门（二）">互联网协议入门（二）&nbsp;</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/computer/" rel="tag">理解计算机</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">互联网协议入门（一）</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2012/05/"><abbr class="published" title="2012-05-31T12:44:03+08:00">2012年5月31日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>我们每天使用互联网，你是否想过，它是如何实现的？</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>全世界几十亿台电脑，连接在一起，两两通信。上海的某一块网卡送出信号，洛杉矶的另一块网卡居然就收到了，两者实际上根本不知道对方的物理位置，你不觉得这是很神奇的事情吗？</p>
+
+<p>互联网的核心是一系列协议，总称为"互联网协议"（Internet Protocol Suite）。它们对电脑如何连接和组网，做出了详尽的规定。理解了这些协议，就理解了互联网的原理。</p>
+
+<p>下面就是我的学习笔记。因为这些协议实在太复杂、太庞大，我想整理一个简洁的框架，帮助自己从总体上把握它们。为了保证简单易懂，我做了大量的简化，有些地方并不全面和精确，但是应该能够说清楚互联网的原理。</p>
+
+<p>=================================================</p>
+
+<p><strong>互联网协议入门</strong></p>
+
+<p>作者：阮一峰</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052901.jpg" /></p>
+
+<p><strong>一、概述</strong></p>
+
+<p><strong>1.1 五层模型</strong></p>
+
+<p>互联网的实现，分成好几层。每一层都有自己的功能，就像建筑物一样，每一层都靠下一层支持。</p>
+
+<p>用户接触到的，只是最上面的一层，根本没有感觉到下面的层。要理解互联网，必须从最下层开始，自下而上理解每一层的功能。</p>
+
+<p>如何分层有不同的模型，有的模型分七层，有的分四层。我觉得，把互联网分成五层，比较容易解释。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052902.png" /></p>
+
+<p>如上图所示，最底下的一层叫做"实体层"（Physical Layer），最上面的一层叫做"应用层"（Application Layer），中间的三层（自下而上）分别是"链接层"（Link Layer）、"网络层"（Network Layer）和"传输层"（Transport Layer）。越下面的层，越靠近硬件；越上面的层，越靠近用户。</p>
+
+<p>它们叫什么名字，其实并不重要。只需要知道，互联网分成若干层就可以了。</p>
+
+<p><strong>1.2 层与协议</strong></p>
+
+<p>每一层都是为了完成一种功能。为了实现这些功能，就需要大家都遵守共同的规则。</p>
+
+<p>大家都遵守的规则，就叫做"协议"（protocol）。</p>
+
+<p>互联网的每一层，都定义了很多协议。这些协议的总称，就叫做"互联网协议"（Internet Protocol Suite）。它们是互联网的核心，下面介绍每一层的功能，主要就是介绍每一层的主要协议。</p>
+
+<p><strong>二、实体层</strong></p>
+
+<p>我们从最底下的一层开始。</p>
+
+<p>电脑要组网，第一件事要干什么？当然是先把电脑连起来，可以用光缆、电缆、双绞线、无线电波等方式。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052903.png" /></p>
+
+<p><strong>这就叫做"实体层"，它就是把电脑连接起来的物理手段。它主要规定了网络的一些电气特性，作用是负责传送0和1的电信号。</strong></p>
+
+<p><strong>三、链接层</strong></p>
+
+<p><strong>3.1 定义</strong></p>
+
+<p>单纯的0和1没有任何意义，必须规定解读方式：多少个电信号算一组？每个信号位有何意义？</p>
+
+<p><strong>这就是"链接层"的功能，它在"实体层"的上方，确定了0和1的分组方式。</strong></p>
+
+<p><strong>3.2 以太网协议</strong></p>
+
+<p>早期的时候，每家公司都有自己的电信号分组方式。逐渐地，一种叫做<a href="http://zh.wikipedia.org/wiki/%E4%BB%A5%E5%A4%AA%E7%BD%91">"以太网"</a>（Ethernet）的协议，占据了主导地位。</p>
+
+<p>以太网规定，一组电信号构成一个数据包，叫做"帧"（Frame）。每一帧分成两个部分：标头（Head）和数据（Data）。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052904.png" /></p>
+
+<p>"标头"包含数据包的一些说明项，比如发送者、接受者、数据类型等等；"数据"则是数据包的具体内容。</p>
+
+<p>"标头"的长度，固定为18字节。"数据"的长度，最短为46字节，最长为1500字节。因此，整个"帧"最短为64字节，最长为1518字节。如果数据很长，就必须分割成多个帧进行发送。</p>
+
+<p><strong>3.3 MAC地址</strong></p>
+
+<p>上面提到，以太网数据包的"标头"，包含了发送者和接受者的信息。那么，发送者和接受者是如何标识呢？</p>
+
+<p>以太网规定，连入网络的所有设备，都必须具有"网卡"接口。数据包必须是从一块网卡，传送到另一块网卡。网卡的地址，就是数据包的发送地址和接收地址，这叫做MAC地址。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052905.jpg" /></p>
+
+<p>每块网卡出厂的时候，都有一个全世界独一无二的MAC地址，长度是48个二进制位，通常用12个十六进制数表示。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052906.png" /></p>
+
+<p>前6个十六进制数是厂商编号，后6个是该厂商的网卡流水号。有了MAC地址，就可以定位网卡和数据包的路径了。</p>
+
+<p><strong>3.4 广播</strong></p>
+
+<p>定义地址只是第一步，后面还有更多的步骤。</p>
+
+<p>首先，一块网卡怎么会知道另一块网卡的MAC地址？</p>
+
+<p>回答是有一种ARP协议，可以解决这个问题。这个留到后面介绍，这里只需要知道，以太网数据包必须知道接收方的MAC地址，然后才能发送。</p>
+
+<p>其次，就算有了MAC地址，系统怎样才能把数据包准确送到接收方？</p>
+
+<p>回答是以太网采用了一种很"原始"的方式，它不是把数据包准确送到接收方，而是向本网络内所有计算机发送，让每台计算机自己判断，是否为接收方。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052907.png" /></p>
+
+<p>上图中，1号计算机向2号计算机发送一个数据包，同一个子网络的3号、4号、5号计算机都会收到这个包。它们读取这个包的"标头"，找到接收方的MAC地址，然后与自身的MAC地址相比较，如果两者相同，就接受这个包，做进一步处理，否则就丢弃这个包。这种发送方式就叫做"广播"（broadcasting）。</p>
+
+<p>有了数据包的定义、网卡的MAC地址、广播的发送方式，"链接层"就可以在多台计算机之间传送数据了。</p>
+
+<p><strong>四、网络层</strong></p>
+
+<p><strong>4.1 网络层的由来</strong></p>
+
+<p>以太网协议，依靠MAC地址发送数据。理论上，单单依靠MAC地址，上海的网卡就可以找到洛杉矶的网卡了，技术上是可以实现的。</p>
+
+<p>但是，这样做有一个重大的缺点。以太网采用广播方式发送数据包，所有成员人手一"包"，不仅效率低，而且局限在发送者所在的子网络。也就是说，如果两台计算机不在同一个子网络，广播是传不过去的。这种设计是合理的，否则互联网上每一台计算机都会收到所有包，那会引起灾难。</p>
+
+<p>互联网是无数子网络共同组成的一个巨型网络，很像想象上海和洛杉矶的电脑会在同一个子网络，这几乎是不可能的。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052914.png" /></p>
+
+<p>因此，必须找到一种方法，能够区分哪些MAC地址属于同一个子网络，哪些不是。如果是同一个子网络，就采用广播方式发送，否则就采用"路由"方式发送。（"路由"的意思，就是指如何向不同的子网络分发数据包，这是一个很大的主题，本文不涉及。）遗憾的是，MAC地址本身无法做到这一点。它只与厂商有关，与所处网络无关。</p>
+
+<p><strong>这就导致了"网络层"的诞生。它的作用是引进一套新的地址，使得我们能够区分不同的计算机是否属于同一个子网络。这套地址就叫做"网络地址"，简称"网址"。</strong></p>
+
+<p>于是，"网络层"出现以后，每台计算机有了两种地址，一种是MAC地址，另一种是网络地址。两种地址之间没有任何联系，MAC地址是绑定在网卡上的，网络地址则是管理员分配的，它们只是随机组合在一起。</p>
+
+<p>网络地址帮助我们确定计算机所在的子网络，MAC地址则将数据包送到该子网络中的目标网卡。因此，从逻辑上可以推断，必定是先处理网络地址，然后再处理MAC地址。</p>
+
+<p><strong>4.2 IP协议</strong></p>
+
+<p>规定网络地址的协议，叫做IP协议。它所定义的地址，就被称为IP地址。</p>
+
+<p>目前，广泛采用的是IP协议第四版，简称IPv4。这个版本规定，网络地址由32个二进制位组成。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052908.png" /></p>
+
+<p>习惯上，我们用分成四段的十进制数表示IP地址，从0.0.0.0一直到255.255.255.255。</p>
+
+<p>互联网上的每一台计算机，都会分配到一个IP地址。这个地址分成两个部分，前一部分代表网络，后一部分代表主机。比如，IP地址172.16.254.1，这是一个32位的地址，假定它的网络部分是前24位（172.16.254），那么主机部分就是后8位（最后的那个1）。处于同一个子网络的电脑，它们IP地址的网络部分必定是相同的，也就是说172.16.254.2应该与172.16.254.1处在同一个子网络。</p>
+
+<p>但是，问题在于单单从IP地址，我们无法判断网络部分。还是以172.16.254.1为例，它的网络部分，到底是前24位，还是前16位，甚至前28位，从IP地址上是看不出来的。</p>
+
+<p>那么，怎样才能从IP地址，判断两台计算机是否属于同一个子网络呢？这就要用到另一个参数"子网掩码"（subnet mask）。</p>
+
+<p>所谓"子网掩码"，就是表示子网络特征的一个参数。它在形式上等同于IP地址，也是一个32位二进制数字，它的网络部分全部为1，主机部分全部为0。比如，IP地址172.16.254.1，如果已知网络部分是前24位，主机部分是后8位，那么子网络掩码就是11111111.11111111.11111111.00000000，写成十进制就是255.255.255.0。</p>
+
+<p>知道"子网掩码"，我们就能判断，任意两个IP地址是否处在同一个子网络。方法是将两个IP地址与子网掩码分别进行AND运算（两个数位都为1，运算结果为1，否则为0），然后比较结果是否相同，如果是的话，就表明它们在同一个子网络中，否则就不是。</p>
+
+<p>比如，已知IP地址172.16.254.1和172.16.254.233的子网掩码都是255.255.255.0，请问它们是否在同一个子网络？两者与子网掩码分别进行AND运算，结果都是172.16.254.0，因此它们在同一个子网络。</p>
+
+<p>总结一下，IP协议的作用主要有两个，一个是为每一台计算机分配IP地址，另一个是确定哪些地址在同一个子网络。</p>
+
+<p><strong>4.3 IP数据包</strong></p>
+
+<p>根据IP协议发送的数据，就叫做IP数据包。不难想象，其中必定包括IP地址信息。</p>
+
+<p>但是前面说过，以太网数据包只包含MAC地址，并没有IP地址的栏位。那么是否需要修改数据定义，再添加一个栏位呢？</p>
+
+<p>回答是不需要，我们可以把IP数据包直接放进以太网数据包的"数据"部分，因此完全不用修改以太网的规格。这就是互联网分层结构的好处：上层的变动完全不涉及下层的结构。</p>
+
+<p>具体来说，IP数据包也分为"标头"和"数据"两个部分。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052909.png" /></p>
+
+<p>"标头"部分主要包括版本、长度、IP地址等信息，"数据"部分则是IP数据包的具体内容。它放进以太网数据包后，以太网数据包就变成了下面这样。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052910.png" /></p>
+
+<p>IP数据包的"标头"部分的长度为20到60字节，整个数据包的总长度最大为65,535字节。因此，理论上，一个IP数据包的"数据"部分，最长为65,515字节。前面说过，以太网数据包的"数据"部分，最长只有1500字节。因此，如果IP数据包超过了1500字节，它就需要分割成几个以太网数据包，分开发送了。</p>
+
+<p><strong>4.4 ARP协议</strong></p>
+
+<p>关于"网络层"，还有最后一点需要说明。</p>
+
+<p>因为IP数据包是放在以太网数据包里发送的，所以我们必须同时知道两个地址，一个是对方的MAC地址，另一个是对方的IP地址。通常情况下，对方的IP地址是已知的（后文会解释），但是我们不知道它的MAC地址。</p>
+
+<p>所以，我们需要一种机制，能够从IP地址得到MAC地址。</p>
+
+<p>这里又可以分成两种情况。第一种情况，如果两台主机不在同一个子网络，那么事实上没有办法得到对方的MAC地址，只能把数据包传送到两个子网络连接处的"网关"（gateway），让网关去处理。</p>
+
+<p>第二种情况，如果两台主机在同一个子网络，那么我们可以用ARP协议，得到对方的MAC地址。ARP协议也是发出一个数据包（包含在以太网数据包中），其中包含它所要查询主机的IP地址，在对方的MAC地址这一栏，填的是FF:FF:FF:FF:FF:FF，表示这是一个"广播"地址。它所在子网络的每一台主机，都会收到这个数据包，从中取出IP地址，与自身的IP地址进行比较。如果两者相同，都做出回复，向对方报告自己的MAC地址，否则就丢弃这个包。</p>
+
+<p>总之，有了ARP协议之后，我们就可以得到同一个子网络内的主机MAC地址，可以把数据包发送到任意一台主机之上了。</p>
+
+<p><strong>五、传输层</strong></p>
+
+<p><strong>5.1 传输层的由来</strong></p>
+
+<p>有了MAC地址和IP地址，我们已经可以在互联网上任意两台主机上建立通信。</p>
+
+<p>接下来的问题是，同一台主机上有许多程序都需要用到网络，比如，你一边浏览网页，一边与朋友在线聊天。当一个数据包从互联网上发来的时候，你怎么知道，它是表示网页的内容，还是表示在线聊天的内容？</p>
+
+<p>也就是说，我们还需要一个参数，表示这个数据包到底供哪个程序（进程）使用。这个参数就叫做"端口"（port），它其实是每一个使用网卡的程序的编号。每个数据包都发到主机的特定端口，所以不同的程序就能取到自己所需要的数据。</p>
+
+<p>"端口"是0到65535之间的一个整数，正好16个二进制位。0到1023的端口被系统占用，用户只能选用大于1023的端口。不管是浏览网页还是在线聊天，应用程序会随机选用一个端口，然后与服务器的相应端口联系。</p>
+
+<p><strong>"传输层"的功能，就是建立"端口到端口"的通信。相比之下，"网络层"的功能是建立"主机到主机"的通信。只要确定主机和端口，我们就能实现程序之间的交流。</strong>因此，Unix系统就把主机+端口，叫做"套接字"（socket）。有了它，就可以进行网络应用程序开发了。</p>
+
+<p><strong>5.2 UDP协议</strong></p>
+
+<p>现在，我们必须在数据包中加入端口信息，这就需要新的协议。最简单的实现叫做UDP协议，它的格式几乎就是在数据前面，加上端口号。</p>
+
+<p>UDP数据包，也是由"标头"和"数据"两部分组成。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052911.png" /></p>
+
+<p>"标头"部分主要定义了发出端口和接收端口，"数据"部分就是具体的内容。然后，把整个UDP数据包放入IP数据包的"数据"部分，而前面说过，IP数据包又是放在以太网数据包之中的，所以整个以太网数据包现在变成了下面这样：</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052912.png" /></p>
+
+<p>UDP数据包非常简单，"标头"部分一共只有8个字节，总长度不超过65,535字节，正好放进一个IP数据包。</p>
+
+<p><strong>5.3 TCP协议</strong></p>
+
+<p>UDP协议的优点是比较简单，容易实现，但是缺点是可靠性较差，一旦数据包发出，无法知道对方是否收到。</p>
+
+<p>为了解决这个问题，提高网络可靠性，TCP协议就诞生了。这个协议非常复杂，但可以近似认为，它就是有确认机制的UDP协议，每发出一个数据包都要求确认。如果有一个数据包遗失，就收不到确认，发出方就知道有必要重发这个数据包了。</p>
+
+<p>因此，TCP协议能够确保数据不会遗失。它的缺点是过程复杂、实现困难、消耗较多的资源。</p>
+
+<p>TCP数据包和UDP数据包一样，都是内嵌在IP数据包的"数据"部分。TCP数据包没有长度限制，理论上可以无限长，但是为了保证网络的效率，通常TCP数据包的长度不会超过IP数据包的长度，以确保单个TCP数据包不必再分割。</p>
+
+<p><strong>六、应用层</strong></p>
+
+<p>应用程序收到"传输层"的数据，接下来就要进行解读。由于互联网是开放架构，数据来源五花八门，必须事先规定好格式，否则根本无法解读。</p>
+
+<p><strong>"应用层"的作用，就是规定应用程序的数据格式。</strong></p>
+
+<p>举例来说，TCP协议可以为各种各样的程序传递数据，比如Email、WWW、FTP等等。那么，必须有不同协议规定电子邮件、网页、FTP数据的格式，这些应用程序协议就构成了"应用层"。</p>
+
+<p>这是最高的一层，直接面对用户。它的数据就放在TCP数据包的"数据"部分。因此，现在的以太网的数据包就变成下面这样。</p>
+
+<p><img src="http://image.beekka.com/blog/201205/bg2012052913.png" /></p>
+
+<p>至此，整个互联网的五层结构，自下而上全部讲完了。这是从系统的角度，解释互联网是如何构成的。<a href="http://www.ruanyifeng.com/blog/2012/06/internet_protocol_suite_part_ii.html">下一篇</a>，我反过来，从用户的角度，自上而下看看这个结构是如何发挥作用，完成一次网络数据交换的。</p>
+
+<p>（完）</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2012-05-31T12:44:03+08:00">2012年5月31日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/computer/"> 理解计算机</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2015.09.28: <a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></strong>
+
+                           <div class="entry-body">
+                              《计算机原理》课本说，启动时，主引导记录会存入内存地址0x7C00。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2015.07.16: <a href="http://www.ruanyifeng.com/blog/2015/07/monad.html">图解 Monad</a></strong>
+
+                           <div class="entry-body">
+                              函数式编程有一个重要概念，叫做Monad。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.11.11: <a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html">编译器的工作过程</a></strong>
+
+                           <div class="entry-body">
+                              源码要运行，必须先转成二进制的机器码。这是编译器的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.09.07: <a href="http://www.ruanyifeng.com/blog/2014/09/information-entropy.html">数据压缩与信息熵</a></strong>
+
+                           <div class="entry-body">
+                              1992年，美国佐治亚州的WEB Technology公司，宣布做出了重大的技术突破。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（145条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-255808" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">刘永新</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255808">
+            <p>上学时候学过，忘记差不多了；<br />
+今天又来阮老师这学一遍！<br />
+阮老师概括的就是精炼！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  1:03 PM">2012年5月31日 13:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255808">#</a>
+ | <a href="#comment-text" title="引用刘永新的这条留言" onclick="return CommentQuote('comment-quote-255808','刘永新');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255810" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.zhangyuchang.com" href="http://www.zhangyuchang.com" target="_blank" rel="nofollow">不纯粹文人</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255810">
+            <p>计算机网络课程教的<br />
+该好好看一看了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  1:27 PM">2012年5月31日 13:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255810">#</a>
+ | <a href="#comment-text" title="引用不纯粹文人的这条留言" onclick="return CommentQuote('comment-quote-255810','不纯粹文人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255812" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://log4d.com" href="http://log4d.com" target="_blank" rel="nofollow">alswl</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255812">
+            <p>大学学过网络基础，现在看看文章正好可以复习复习。</p>
+
+<p>阮老师，提个建议：「文章的标题和子标题都是加粗显示的，改为 h2 / h3 更合适」。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  1:45 PM">2012年5月31日 13:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255812">#</a>
+ | <a href="#comment-text" title="引用alswl的这条留言" onclick="return CommentQuote('comment-quote-255812','alswl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255814" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://weibo.com/hackerlisp" href="http://weibo.com/hackerlisp" target="_blank" rel="nofollow">南拳nuanquan</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255814">
+            <p>浅显易懂，受益良多。坐等下一篇！！！！！！！！！！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  1:47 PM">2012年5月31日 13:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255814">#</a>
+ | <a href="#comment-text" title="引用南拳nuanquan的这条留言" onclick="return CommentQuote('comment-quote-255814','南拳nuanquan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255815" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">leme</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255815">
+            <p>haha，最近一大批无聊也没什么价值（抱歉）的排序文章后，终于有一篇比较好看的了，似乎还是个系列</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  1:49 PM">2012年5月31日 13:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255815">#</a>
+ | <a href="#comment-text" title="引用leme的这条留言" onclick="return CommentQuote('comment-quote-255815','leme');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255816" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">一朵云</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255816">
+            <p>不错。这个分层真是有点蛋疼，tcp/ip是四层，osi七层。。其实五层也很好</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  1:49 PM">2012年5月31日 13:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255816">#</a>
+ | <a href="#comment-text" title="引用一朵云的这条留言" onclick="return CommentQuote('comment-quote-255816','一朵云');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255817" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.zhanggang.net" href="http://www.zhanggang.net" target="_blank" rel="nofollow">张刚</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255817">
+            <blockquote>
+<pre>引用alswl的发言：</pre>
+
+<p>大学学过网络基础，现在看看文章正好可以复习复习。</p>
+
+<p>阮老师，提个建议：「文章的标题和子标题都是加粗显示的，改为 h2 / h3 更合适」。</p>
+
+</blockquote>
+
+<p>又看见你了，你是前端设计吗</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  2:11 PM">2012年5月31日 14:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255817">#</a>
+ | <a href="#comment-text" title="引用张刚的这条留言" onclick="return CommentQuote('comment-quote-255817','张刚');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255818" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.chenwang.net" href="http://www.chenwang.net" target="_blank" rel="nofollow">GameXG</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255818">
+            <p>回答是以太网采用了一种很"原始"的方式，它不是把数据包准确送到接收方，而是向本网络内所有计算机发送，让每台计算机自己判断，是否为接收方。</p>
+
+<p><br />
+老式的的集线器(市面上已经不存在了)才是这种模式，现在交换机会记录并缓存各个交换机端口连接的设备的MAC地址，转发包时会按缓存的地址表转发到特定的交换机端口，除非地址表里面没有目的MAC地址，不然不会广播包的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  2:21 PM">2012年5月31日 14:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255818">#</a>
+ | <a href="#comment-text" title="引用GameXG的这条留言" onclick="return CommentQuote('comment-quote-255818','GameXG');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255819" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">keke</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255819">
+            <p>写的太棒了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  2:24 PM">2012年5月31日 14:24</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255819">#</a>
+ | <a href="#comment-text" title="引用keke的这条留言" onclick="return CommentQuote('comment-quote-255819','keke');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255821" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">方及道</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255821">
+            <p>简单的文字后，大脑就基本呈现出了层次图。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  2:32 PM">2012年5月31日 14:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255821">#</a>
+ | <a href="#comment-text" title="引用方及道的这条留言" onclick="return CommentQuote('comment-quote-255821','方及道');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255826" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.callmewind.info" href="http://www.callmewind.info" target="_blank" rel="nofollow">wind</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255826">
+            <p>正在学这方面的知识，强烈期待下一篇</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  2:57 PM">2012年5月31日 14:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255826">#</a>
+ | <a href="#comment-text" title="引用wind的这条留言" onclick="return CommentQuote('comment-quote-255826','wind');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255828" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">vx13</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255828">
+            <p>我觉得阮一峰先生最好在写些专业性的东西前，做一些系统的学习。<br />
+文中的“实体层”应该是台湾的说法，大陆的翻译一般是叫“物理层”的。而“链接层”一般翻译作“链路层”或“数据链路层”。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  3:31 PM">2012年5月31日 15:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255828">#</a>
+ | <a href="#comment-text" title="引用vx13的这条留言" onclick="return CommentQuote('comment-quote-255828','vx13');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255831" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Aphantee</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255831">
+            <p>阮先生讲的非常精彩。其实head first讲网络的书也挺不错的，但是叙事没有你这么简洁明了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  4:15 PM">2012年5月31日 16:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255831">#</a>
+ | <a href="#comment-text" title="引用Aphantee的这条留言" onclick="return CommentQuote('comment-quote-255831','Aphantee');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255832" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Mr.ape man</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255832">
+            <p>学习了。最近刚好要考计算机网络....</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  4:41 PM">2012年5月31日 16:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255832">#</a>
+ | <a href="#comment-text" title="引用Mr.ape man的这条留言" onclick="return CommentQuote('comment-quote-255832','Mr.ape man');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255833" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://coolxing.iteye.com/" href="http://coolxing.iteye.com/" target="_blank" rel="nofollow">xing</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255833">
+            <p>多谢阮先生简洁明晰的讲述, 本人受益匪浅.<br />
+@vx13 我想有所欠缺是非常正常的, 写文章是一种非常不容易的事, 如果行文有漏洞, 指出就是了, 没有必要打击他人. </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  4:41 PM">2012年5月31日 16:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255833">#</a>
+ | <a href="#comment-text" title="引用xing的这条留言" onclick="return CommentQuote('comment-quote-255833','xing');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255834" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">cpluse</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255834">
+            <p>之前的留言不礼貌，被删了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  4:55 PM">2012年5月31日 16:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255834">#</a>
+ | <a href="#comment-text" title="引用cpluse的这条留言" onclick="return CommentQuote('comment-quote-255834','cpluse');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255846" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.tonyseek.com/" href="http://blog.tonyseek.com/" target="_blank" rel="nofollow">TonySeek</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255846">
+            <p>貌似大陆的习惯一般把 Physical Layer 翻译成“物理层”，把 Link Layer 翻译成“链路层”吧……</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  7:34 PM">2012年5月31日 19:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255846">#</a>
+ | <a href="#comment-text" title="引用TonySeek的这条留言" onclick="return CommentQuote('comment-quote-255846','TonySeek');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255847" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://vsean.net/" href="http://vsean.net/" target="_blank" rel="nofollow">vibbow</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255847">
+            <p>貌似我们老师教的OSI是七层的...</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  7:34 PM">2012年5月31日 19:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255847">#</a>
+ | <a href="#comment-text" title="引用vibbow的这条留言" onclick="return CommentQuote('comment-quote-255847','vibbow');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255848" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.tonyseek.com/" href="http://blog.tonyseek.com/" target="_blank" rel="nofollow">TonySeek</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255848">
+            <blockquote>
+<pre>引用vibbow的发言：</pre>
+
+<p>貌似我们老师教的OSI是七层的...</p>
+
+</blockquote>
+
+<p>OSI 是七层的，但是主流工业实现是五层模型。我觉得区别不是非常大，七层的区别只是把应用层细分了而已。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  7:35 PM">2012年5月31日 19:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255848">#</a>
+ | <a href="#comment-text" title="引用TonySeek的这条留言" onclick="return CommentQuote('comment-quote-255848','TonySeek');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255856" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://wuguoren.com" href="http://wuguoren.com" target="_blank" rel="nofollow">wugr</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255856">
+            <p>讲的深入浅出，比很多书强哦！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  8:40 PM">2012年5月31日 20:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255856">#</a>
+ | <a href="#comment-text" title="引用wugr的这条留言" onclick="return CommentQuote('comment-quote-255856','wugr');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255857" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://tangzhan.li" href="http://tangzhan.li" target="_blank" rel="nofollow">AlsoTang</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255857">
+            <p>这学期刚好有计算机网络这门课</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012  8:48 PM">2012年5月31日 20:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255857">#</a>
+ | <a href="#comment-text" title="引用AlsoTang的这条留言" onclick="return CommentQuote('comment-quote-255857','AlsoTang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255859" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://acgtyrant.com" href="http://acgtyrant.com" target="_blank" rel="nofollow">御宅暴君</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255859">
+            <p>阮老师可不可以直接给个参考书籍呢？启蒙固然很好，但我还是更喜欢直接去啃砖头书。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012 10:03 PM">2012年5月31日 22:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255859">#</a>
+ | <a href="#comment-text" title="引用御宅暴君的这条留言" onclick="return CommentQuote('comment-quote-255859','御宅暴君');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255863" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">makefool</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255863">
+            <p>MAC地址可不是世界上独一无二的，只是其散列足够大，使得在同一个子网中MAC地址碰巧相同的两块网卡几率很小很小而已。使用网络15年来，已经碰到过两次网卡MAC相同的事了。</p>
+
+<p>而且MAC相同有两个方法解决：<br />
+1、网卡厂商提供有配置程序，可以直接改硬件MAC。如果使用二层网络系统就只能用此法解决，<br />
+2、各种操作系统也都提供伪造MAC地址的方式来解决三层系统中MAC冲突的问题。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012 10:52 PM">2012年5月31日 22:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255863">#</a>
+ | <a href="#comment-text" title="引用makefool的这条留言" onclick="return CommentQuote('comment-quote-255863','makefool');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255864" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">David Liu</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255864">
+            <p>简明扼要，很多以前模糊的概念，现在都很清晰了，谢谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012 10:54 PM">2012年5月31日 22:54</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255864">#</a>
+ | <a href="#comment-text" title="引用David Liu的这条留言" onclick="return CommentQuote('comment-quote-255864','David Liu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255865" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hErvey</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255865">
+            <p>写的浅显易懂，让我这个学网络搞网络的人也说不了这么清楚透彻，汗颜。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012 10:54 PM">2012年5月31日 22:54</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255865">#</a>
+ | <a href="#comment-text" title="引用hErvey的这条留言" onclick="return CommentQuote('comment-quote-255865','hErvey');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255866" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://2.gy/csKG" href="http://2.gy/csKG" target="_blank" rel="nofollow">三三</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255866">
+            <p>看了你的翻译的两本书，都很不错，从中可以看出你做事的认真状态，这真的是值得我去学习，还有也就是感觉外国人认真的态度，人家的是很接地气</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 31, 2012 10:56 PM">2012年5月31日 22:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255866">#</a>
+ | <a href="#comment-text" title="引用三三的这条留言" onclick="return CommentQuote('comment-quote-255866','三三');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255869" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">砖家</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255869">
+            <blockquote>
+<pre>引用御宅暴君的发言：</pre>
+
+<p>阮老师可不可以直接给个参考书籍呢？启蒙固然很好，但我还是更喜欢直接去啃砖头书。</p>
+
+</blockquote>
+
+<p>俺大学用的教材不错：《数据通信与计算机网络》</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012 12:09 AM">2012年6月 1日 00:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255869">#</a>
+ | <a href="#comment-text" title="引用砖家的这条留言" onclick="return CommentQuote('comment-quote-255869','砖家');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255870" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://weibo.com/zwj7107" href="http://weibo.com/zwj7107" target="_blank" rel="nofollow">Joe</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255870">
+            <p>简单明了，懂了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012 12:18 AM">2012年6月 1日 00:18</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255870">#</a>
+ | <a href="#comment-text" title="引用Joe的这条留言" onclick="return CommentQuote('comment-quote-255870','Joe');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255885" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">王丁</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255885">
+            <p>比如，已知 IP 地址 172.16.254.1 和 172.16.254.233 的子网掩码都是 255.255.255.0，请问它们是否在同一个子网络？两者与子网掩码分别进行 AND 运算，结果都是 172.16.254.0，因此它们在同一个子网络。</p>
+
+<p>LZ 这里我不太懂哟 到底是怎么比呀 两个IP地址相减？ 还是子网掩码分别减去他们的IP地址？</p>
+
+<p>求解</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  9:23 AM">2012年6月 1日 09:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255885">#</a>
+ | <a href="#comment-text" title="引用王丁的这条留言" onclick="return CommentQuote('comment-quote-255885','王丁');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255886" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://aizaoqi.com" href="http://aizaoqi.com" target="_blank" rel="nofollow">爱早起</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255886">
+            <p>网络基础知识，还不错，我学过，再看一遍又何妨？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  9:27 AM">2012年6月 1日 09:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255886">#</a>
+ | <a href="#comment-text" title="引用爱早起的这条留言" onclick="return CommentQuote('comment-quote-255886','爱早起');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255887" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.adaiw.com" href="http://www.adaiw.com" target="_blank" rel="nofollow">阿戴</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255887">
+            <p>等了好多天，终于等到大作。</p>
+
+<p>正需要复习这样的知识，谢谢，向你学习。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  9:42 AM">2012年6月 1日 09:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255887">#</a>
+ | <a href="#comment-text" title="引用阿戴的这条留言" onclick="return CommentQuote('comment-quote-255887','阿戴');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255888" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.sina.com.cn/hautchengli" href="http://blog.sina.com.cn/hautchengli" target="_blank" rel="nofollow">zuiaimitang</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255888">
+            <p>分享支持新浪轻博，但不支持新浪博客啊。我是老师一枚，想转载到教学博客上，目前还不行啊~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  9:46 AM">2012年6月 1日 09:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255888">#</a>
+ | <a href="#comment-text" title="引用zuiaimitang的这条留言" onclick="return CommentQuote('comment-quote-255888','zuiaimitang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255889" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://shanewfx.github.com/" href="http://shanewfx.github.com/" target="_blank" rel="nofollow">Shane</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255889">
+            <p>讲解很清晰，受教了！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012 10:00 AM">2012年6月 1日 10:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255889">#</a>
+ | <a href="#comment-text" title="引用Shane的这条留言" onclick="return CommentQuote('comment-quote-255889','Shane');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255890" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://weibo.com/hackerlisp" href="http://weibo.com/hackerlisp" target="_blank" rel="nofollow">南拳nuanquan</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255890">
+            <blockquote>
+<pre>引用leme的发言：</pre>
+
+<p>haha，最近一大批无聊也没什么价值（抱歉）的排序文章后，终于有一篇比较好看的了，似乎还是个系列</p>
+
+</blockquote>
+
+<p>很奇怪，你怎么会对排序文章如此评价？ 相当优秀的系列文章呀。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012 11:15 AM">2012年6月 1日 11:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255890">#</a>
+ | <a href="#comment-text" title="引用南拳nuanquan的这条留言" onclick="return CommentQuote('comment-quote-255890','南拳nuanquan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255897" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">thx</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255897">
+            <p>原理都懂的，但是能表达的这么简单明了，清晰，大赞啊。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  1:23 PM">2012年6月 1日 13:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255897">#</a>
+ | <a href="#comment-text" title="引用thx的这条留言" onclick="return CommentQuote('comment-quote-255897','thx');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255908" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wyw</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255908">
+            <blockquote>
+<pre>引用王丁的发言：</pre>
+
+<p>比如，已知 IP 地址 172.16.254.1 和 172.16.254.233 的子网掩码都是 255.255.255.0，请问它们是否在同一个子网络？两者与子网掩码分别进行 AND 运算，结果都是 172.16.254.0，因此它们在同一个子网络。</p>
+
+<p>LZ 这里我不太懂哟 到底是怎么比呀 两个IP地址相减？ 还是子网掩码分别减去他们的IP地址？</p>
+
+<p>求解</p>
+
+</blockquote>
+
+<p>IP地址与子网掩码进行“按位与”运算，得到网络地址。</p>
+
+<p>第一个IP地址的网络地址：<br />
+  172. 16.254.1<br />
+& 255.255.255.0<br />
+= 172. 16.254.0</p>
+
+<p>第二个IP地址的网络地址：<br />
+  172. 16.254.233<br />
+& 255.255.255.0<br />
+= 172. 16.254.0</p>
+
+<p>所谓“掩码”，就是掩去主机部分，保留网络部分。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  2:43 PM">2012年6月 1日 14:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255908">#</a>
+ | <a href="#comment-text" title="引用wyw的这条留言" onclick="return CommentQuote('comment-quote-255908','wyw');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255916" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">seth</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255916">
+            <p>简洁明了，把《计算机网络》课程最精简的东西都罗列出来了，复习一下。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012  4:47 PM">2012年6月 1日 16:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255916">#</a>
+ | <a href="#comment-text" title="引用seth的这条留言" onclick="return CommentQuote('comment-quote-255916','seth');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255947" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">瑜伽清茶</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255947">
+            <p>谢谢您，虽然从未学过这方面的知识，但这篇文章让我这样的外行人也看得津津有味，我想这和您翻译的作品一样，简洁明了，非常喜欢。黑客与画家，除了作品本身，详细的注释也非常有益，您的努力为作品增添了更多价值，值得推荐的好书！<br />
+感谢分享。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  1, 2012 10:53 PM">2012年6月 1日 22:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255947">#</a>
+ | <a href="#comment-text" title="引用瑜伽清茶的这条留言" onclick="return CommentQuote('comment-quote-255947','瑜伽清茶');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255969" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">shawn</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255969">
+            <p>您的基础类文章真是叫人受益匪浅！<br />
+以前在公司写程序的时候，经常遇到完全不懂原理，问別人人家就会说"就那样用吧，别抠得太细！＂的情况，想自己研究又忙得完全没有时间和心情。您的文章解除了我的好多根源上的疑惑，因此真是从心底感谢！<br />
+计算机网络在大学时也学过，那时要是就看到这篇文章，以它为概论，我一定会学得更深入细致些吧：）<br />
+您的文章都以最有效率的形式传达知识，使得大家接受起来非常容易。这是非常有价值的，和科技发展同属于生产力的一部分。因此不管是不是专业相关，每篇我都会仔细读个几遍,要是有以最快速度学到知识的途径，为何不去利用呢？<br />
+最后再次感谢，期待系列下一篇！<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  2, 2012 11:56 AM">2012年6月 2日 11:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255969">#</a>
+ | <a href="#comment-text" title="引用shawn的这条留言" onclick="return CommentQuote('comment-quote-255969','shawn');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255975" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://andyliu.net" href="http://andyliu.net" target="_blank" rel="nofollow">andy</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255975">
+            <p>受益匪浅，谢谢。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  2, 2012 12:46 PM">2012年6月 2日 12:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255975">#</a>
+ | <a href="#comment-text" title="引用andy的这条留言" onclick="return CommentQuote('comment-quote-255975','andy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255981" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">何小刚</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255981">
+            <p>你总能把东西讲得很明白</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  2, 2012  3:46 PM">2012年6月 2日 15:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255981">#</a>
+ | <a href="#comment-text" title="引用何小刚的这条留言" onclick="return CommentQuote('comment-quote-255981','何小刚');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255983" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Demon</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255983">
+            <p>不是OSI七层模型么？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  2, 2012  4:52 PM">2012年6月 2日 16:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255983">#</a>
+ | <a href="#comment-text" title="引用Demon的这条留言" onclick="return CommentQuote('comment-quote-255983','Demon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-255988" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">siikee</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-255988">
+            <p>看的让人赏心悦目啊！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  2, 2012  6:01 PM">2012年6月 2日 18:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-255988">#</a>
+ | <a href="#comment-text" title="引用siikee的这条留言" onclick="return CommentQuote('comment-quote-255988','siikee');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256028" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">abellong</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256028">
+            <blockquote>
+<pre>引用王丁的发言：</pre>
+
+<p>比如，已知 IP 地址 172.16.254.1 和 172.16.254.233 的子网掩码都是 255.255.255.0，请问它们是否在同一个子网络？两者与子网掩码分别进行 AND 运算，结果都是 172.16.254.0，因此它们在同一个子网络。</p>
+
+<p>LZ 这里我不太懂哟 到底是怎么比呀 两个IP地址相减？ 还是子网掩码分别减去他们的IP地址？</p>
+
+<p>求解</p>
+
+</blockquote>
+
+<p>ip地址172.16.254.233 换算成二进制格式: 10101100 00010000 11111110 11101001<br />
+掩码地址255.255.255.0 换算成二进制格式: 11111111 11111111 11111111 00000000<br />
+你把它们逐位进行&运算, 就可以将最后的8位全部变为0, 而前24位数字不变. 得到10101100 00010000 11111110 00000000, 即172.16.254.0</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  3, 2012  1:55 AM">2012年6月 3日 01:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256028">#</a>
+ | <a href="#comment-text" title="引用abellong的这条留言" onclick="return CommentQuote('comment-quote-256028','abellong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256029" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">abellong</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256029">
+            <p>曾经学过计算机网络, 其实这些都应该由自己来总结的. 博主的学习方法值得学习呀</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  3, 2012  1:57 AM">2012年6月 3日 01:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256029">#</a>
+ | <a href="#comment-text" title="引用abellong的这条留言" onclick="return CommentQuote('comment-quote-256029','abellong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256045" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.ros-lab.com" href="http://blog.ros-lab.com" target="_blank" rel="nofollow">SR1</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256045">
+            <blockquote>
+<pre>引用vx13的发言：</pre>
+
+<p>我觉得阮一峰先生最好在写些专业性的东西前，做一些系统的学习。<br />
+文中的“实体层”应该是台湾的说法，大陆的翻译一般是叫“物理层”的。而“链接层”一般翻译作“链路层”或“数据链路层”。</p>
+
+</blockquote>
+
+<p>名词翻译方面没必要深究这么多，只是几个名词不同，何况这只是一片科普文，光从翻译上就说缺乏系统学习这有些不妥吧。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  3, 2012 11:47 AM">2012年6月 3日 11:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256045">#</a>
+ | <a href="#comment-text" title="引用SR1的这条留言" onclick="return CommentQuote('comment-quote-256045','SR1');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256049" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://coolweblog.appspot.com/" href="http://coolweblog.appspot.com/" target="_blank" rel="nofollow">zhong</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256049">
+            <p>好文章，已付费支持。</p>
+
+<p>以前看过鸟哥的服务器篇里讲网络，感觉会详细点，可能阮老师还有后篇的原因吧。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  3, 2012  1:08 PM">2012年6月 3日 13:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256049">#</a>
+ | <a href="#comment-text" title="引用zhong的这条留言" onclick="return CommentQuote('comment-quote-256049','zhong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256063" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://lovemaple.info" href="http://lovemaple.info" target="_blank" rel="nofollow">maple</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256063">
+            <p>能否告知下图片用什么软件制作的呢？真的很漂亮。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  3, 2012  9:12 PM">2012年6月 3日 21:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256063">#</a>
+ | <a href="#comment-text" title="引用maple的这条留言" onclick="return CommentQuote('comment-quote-256063','maple');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256099" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">LiJunjie</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256099">
+            <p>我们需要一种机制，能够从IP地址得到MAC地址。<br />
+这里又可以分成两种情况。第一种情况，如果两台主机不在同一个子网络，那么事实上没有办法得到对方的MAC地址，只能把数据包传送到两个子网络连接处的"网关"（gateway），让网关去处理。<br />
+-------------<br />
+其实，大多数情况都是这种“传送到两个子网络连接处的‘网关’”，我这里有几个疑问：<br />
+1. 是将IP packet传送到gateway吗？gateway在收到IP packet后会怎样处理？<br />
+2. 怎么知道gateway的地址？<br />
+3. IP路由表在这里扮演的角色？<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  4, 2012  2:12 PM">2012年6月 4日 14:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256099">#</a>
+ | <a href="#comment-text" title="引用LiJunjie的这条留言" onclick="return CommentQuote('comment-quote-256099','LiJunjie');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256107" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">oliver</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256107">
+            <p>还是这么简洁。看完脑子里重新把大学的《计算机网络》回忆了一遍。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  4, 2012  5:08 PM">2012年6月 4日 17:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256107">#</a>
+ | <a href="#comment-text" title="引用oliver的这条留言" onclick="return CommentQuote('comment-quote-256107','oliver');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256108" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">oliver</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256108">
+            <p>问哈，你的网站到底是根据什么自动记录用户信息的呢？记得我很久之前发过的一次留言，竟然保存了用户名和电子邮件。可我已经自动删除IE的缓存好多次了啊。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  4, 2012  5:11 PM">2012年6月 4日 17:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256108">#</a>
+ | <a href="#comment-text" title="引用oliver的这条留言" onclick="return CommentQuote('comment-quote-256108','oliver');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256113" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">libmw</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256113">
+            <p>有点开始喜欢阮大侠了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  4, 2012  6:11 PM">2012年6月 4日 18:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256113">#</a>
+ | <a href="#comment-text" title="引用libmw的这条留言" onclick="return CommentQuote('comment-quote-256113','libmw');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256118" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">f3218109</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256118">
+            <p>阮兄，总是用自己精炼的语言和清晰的图文给大家温故而知新的感觉！赞</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  4, 2012 10:21 PM">2012年6月 4日 22:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256118">#</a>
+ | <a href="#comment-text" title="引用f3218109的这条留言" onclick="return CommentQuote('comment-quote-256118','f3218109');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256150" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">小喆</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256150">
+            <blockquote>
+<pre>引用一朵云的发言：</pre>
+
+<p>不错。这个分层真是有点蛋疼，tcp/ip是四层，osi七层。。其实五层也很好</p>
+
+</blockquote>
+
+<p>确实，感觉5层的分法确实不主流诶~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  5, 2012 11:03 AM">2012年6月 5日 11:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256150">#</a>
+ | <a href="#comment-text" title="引用小喆的这条留言" onclick="return CommentQuote('comment-quote-256150','小喆');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256175" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dylanklc</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256175">
+            <p>始终还是觉得在wikipedia上 一个一个协议慢慢啃最靠谱.<br />
+rfc 基础文档也是无数篇的哇</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  5, 2012  4:29 PM">2012年6月 5日 16:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256175">#</a>
+ | <a href="#comment-text" title="引用dylanklc的这条留言" onclick="return CommentQuote('comment-quote-256175','dylanklc');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256250" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://uk.linkedin.com/pub/yan-jiang/29/33/981" href="http://uk.linkedin.com/pub/yan-jiang/29/33/981" target="_blank" rel="nofollow">koijeffery@gmail.com</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256250">
+            <p>方便易读！很好，支持你！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  6, 2012  9:49 AM">2012年6月 6日 09:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256250">#</a>
+ | <a href="#comment-text" title="引用koijeffery@gmail.com的这条留言" onclick="return CommentQuote('comment-quote-256250','koijeffery@gmail.com');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256255" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yyccww123</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256255">
+            <p>请问博主，那些图是用什么工具画的，很精致。谢谢~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  6, 2012 10:49 AM">2012年6月 6日 10:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256255">#</a>
+ | <a href="#comment-text" title="引用yyccww123的这条留言" onclick="return CommentQuote('comment-quote-256255','yyccww123');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256257" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yuhai</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256257">
+            <p>当IP数据包超过1518字节时，就得包含多个以太网帧，每个帧都是以head和data构成<br />
+处在相同IP数据包里的每个帧里的head是否相同?<br />
+如果相同，这些head岂不是重复包含。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  6, 2012 11:19 AM">2012年6月 6日 11:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256257">#</a>
+ | <a href="#comment-text" title="引用yuhai的这条留言" onclick="return CommentQuote('comment-quote-256257','yuhai');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256277" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">sgsgyg</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256277">
+            <p>我靠，上学的时候一直没弄明白子网掩码是干嘛用的，现在终于懂了，泪奔啊</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  6, 2012  5:46 PM">2012年6月 6日 17:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256277">#</a>
+ | <a href="#comment-text" title="引用sgsgyg的这条留言" onclick="return CommentQuote('comment-quote-256277','sgsgyg');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256286" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.cerfly.net" href="http://www.cerfly.net" target="_blank" rel="nofollow">罗罡</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256286">
+            <p>深夜看到好文，白天刚复习过，最近在学习TCP/IP，期待下一篇。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012  1:21 AM">2012年6月 7日 01:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256286">#</a>
+ | <a href="#comment-text" title="引用罗罡的这条留言" onclick="return CommentQuote('comment-quote-256286','罗罡');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256296" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">MingLiang</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256296">
+            <p>喜欢这样的解释方式，一个技术的诞生总是伴随着一个问题的解决过程，如果把问题背景也交代清楚了，那就容易理解很多了。<br />
+现在觉得大学的教科书好枯燥。</p>
+
+<p>阮老师，在下一次的文章里面，你可不可以提一下，为什么会有不同的分层方式啊？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012 11:33 AM">2012年6月 7日 11:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256296">#</a>
+ | <a href="#comment-text" title="引用MingLiang的这条留言" onclick="return CommentQuote('comment-quote-256296','MingLiang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256298" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.yonglives.com/" href="http://www.yonglives.com/" target="_blank" rel="nofollow">Yong</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256298">
+            <p>很用心的在写文章，支持你！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012 11:40 AM">2012年6月 7日 11:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256298">#</a>
+ | <a href="#comment-text" title="引用Yong的这条留言" onclick="return CommentQuote('comment-quote-256298','Yong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256303" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">darkkgg</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256303">
+            <p>好文，通俗易懂，支持</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012  3:59 PM">2012年6月 7日 15:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256303">#</a>
+ | <a href="#comment-text" title="引用darkkgg的这条留言" onclick="return CommentQuote('comment-quote-256303','darkkgg');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256306" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://None" href="http://None" target="_blank" rel="nofollow">cloud</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256306">
+            <p>不得不说，真的太佩服你了，解释的这么通俗易懂，之前看书看好多遍也不一定能够记住哪个协议是在哪一层，完全是靠记的，而现在，理解，真是不可同日而语。如果所有的老师都能像这样传道，那对学生来说会是多么大的福音啊<br />
+偶在图书馆看到了你翻译的《Joel on Software》，非常不错，借来看了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012  4:51 PM">2012年6月 7日 16:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256306">#</a>
+ | <a href="#comment-text" title="引用cloud的这条留言" onclick="return CommentQuote('comment-quote-256306','cloud');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256311" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yuchen</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256311">
+            <p>认真看过以后，很受用</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012  7:10 PM">2012年6月 7日 19:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256311">#</a>
+ | <a href="#comment-text" title="引用yuchen的这条留言" onclick="return CommentQuote('comment-quote-256311','yuchen');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256316" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">YourFans</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256316">
+            <p>下一篇能讲“三次握手”“四次挥手”是不？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  7, 2012 10:22 PM">2012年6月 7日 22:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256316">#</a>
+ | <a href="#comment-text" title="引用YourFans的这条留言" onclick="return CommentQuote('comment-quote-256316','YourFans');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256355" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">海晓</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256355">
+            <p>很好奇博主的博学,都是用了多久的时间才积累出来,长期阅读的感受是:博古通今,单是技术方面,就已经包括了很多领域.</p>
+
+<p>佩服佩服.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  8, 2012  6:10 PM">2012年6月 8日 18:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256355">#</a>
+ | <a href="#comment-text" title="引用海晓的这条留言" onclick="return CommentQuote('comment-quote-256355','海晓');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256357" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://jcwcn.com" href="http://jcwcn.com" target="_blank" rel="nofollow">yesin</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256357">
+            <p>最喜欢能把问题的来龙去脉讲清楚的文章，期待阮兄下一篇</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  8, 2012  7:26 PM">2012年6月 8日 19:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256357">#</a>
+ | <a href="#comment-text" title="引用yesin的这条留言" onclick="return CommentQuote('comment-quote-256357','yesin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256359" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">makefool</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256359">
+            <blockquote>
+<pre>引用LiJunjie的发言：</pre>
+
+<p>其实，大多数情况都是这种“传送到两个子网络连接处的‘网关’”，我这里有几个疑问：<br />
+1. 是将IP packet传送到gateway吗？gateway在收到IP packet后会怎样处理？<br />
+2. 怎么知道gateway的地址？<br />
+3. IP路由表在这里扮演的角色？</p>
+
+</blockquote>
+
+<p>看到的这样的问题，重读了一次阮先生的教材，才知道阮先生没有把概念讲清楚。<br />
+在internet协议中，根本没有MAC地址这样的定义，操作系统层面只认识IP地址，MAC地址仅仅是在链路层（也就是网卡和交换机之间）起作用，系统程序没有必要知道MAC地址。当然从前还有支持纯以太网协议的程序，那样的系统程序就只认mac，不认ip了……我所接触过的这样的程序，大多都是用mac广播方式工作的。因为以太网协议功能太弱，要实现比较复杂的通信过程，难度不是一般的大。</p>
+
+<p>知道这个前提后，再回答这3个问题：</p>
+
+<p>1、操作系统中配置好了网关地址，凡是操作系统发现不在“掩码”范围内的地址，通通都发给gateway……不管gateway是否真的存在；gateway收到ip packet后，会根据自己内部的路由表寻找目的机器的方向……注意是方向，因为如果网关不能直接访问到目标机器，就把IP packet发给路由表上的规定方向的gateway；</p>
+
+<p>2、gateway的地址是配置在本机操作系统中的，既可以手工配置，也可以有dhcp配置；而且gateway可以配置多个，也就是说，对不同非子网IP，可以指定出不同的方向；</p>
+
+<p>3、IP路由表就是前面说的方向配置清单，典型的是静态（一经配置不再变化）。当然特殊网络环境下还有动态路由表，也就是gateway之间有配套的通信协议，能互相知会一声，自动形成路由表……这个叫动态路由协议。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  8, 2012  8:01 PM">2012年6月 8日 20:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256359">#</a>
+ | <a href="#comment-text" title="引用makefool的这条留言" onclick="return CommentQuote('comment-quote-256359','makefool');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256413" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://chinese.catchen.me/" href="http://chinese.catchen.me/" target="_blank" rel="nofollow">Cat Chen</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256413">
+            <p>问个跟本文无关的问题：1 年前你尝试使用捐赠来取代 AdSense 的事情，现在有实验结果可以公布了吗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 10, 2012 10:40 AM">2012年6月10日 10:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256413">#</a>
+ | <a href="#comment-text" title="引用Cat Chen的这条留言" onclick="return CommentQuote('comment-quote-256413','Cat Chen');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256466" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256466">
+            <p>@Cat Chen：</p>
+
+<p>请再等一下，六月底就公布。</p>
+
+<p>因为有报纸买走了这篇文章，我要等他们发表以后，才能贴到自己的blog，真是不好意思。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 11, 2012  5:23 AM">2012年6月11日 05:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256466">#</a>
+ | <a href="#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote('comment-quote-256466','阮一峰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256491" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">GeHou</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256491">
+            <p>期待大师的下一课</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 11, 2012  5:04 PM">2012年6月11日 17:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256491">#</a>
+ | <a href="#comment-text" title="引用GeHou的这条留言" onclick="return CommentQuote('comment-quote-256491','GeHou');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256501" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hi.baidu.com/eulerray" href="http://hi.baidu.com/eulerray" target="_blank" rel="nofollow">锐齿猱</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256501">
+            <p>楼主说得好，小白看了表示受益匪浅。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 11, 2012  7:49 PM">2012年6月11日 19:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256501">#</a>
+ | <a href="#comment-text" title="引用锐齿猱的这条留言" onclick="return CommentQuote('comment-quote-256501','锐齿猱');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256554" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">林花谢了春红</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256554">
+            <p>有点感觉，感谢楼主！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 12, 2012  9:46 AM">2012年6月12日 09:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256554">#</a>
+ | <a href="#comment-text" title="引用林花谢了春红的这条留言" onclick="return CommentQuote('comment-quote-256554','林花谢了春红');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256580" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Beck</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256580">
+            <p>作为入门教程真的很清晰。支持！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 12, 2012  5:27 PM">2012年6月12日 17:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256580">#</a>
+ | <a href="#comment-text" title="引用Beck的这条留言" onclick="return CommentQuote('comment-quote-256580','Beck');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256601" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">笑的自然</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256601">
+            <p>通俗易懂，赏心悦目啊！复习了一把！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 12, 2012 10:29 PM">2012年6月12日 22:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256601">#</a>
+ | <a href="#comment-text" title="引用笑的自然的这条留言" onclick="return CommentQuote('comment-quote-256601','笑的自然');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256700" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://reyesyang.info" href="http://reyesyang.info" target="_blank" rel="nofollow">reyesyang</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256700">
+            <p>作为入门教程确实简洁易懂，受益匪浅！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 14, 2012  1:33 PM">2012年6月14日 13:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256700">#</a>
+ | <a href="#comment-text" title="引用reyesyang的这条留言" onclick="return CommentQuote('comment-quote-256700','reyesyang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256716" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">luckite</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256716">
+            <p>以前简单学过，始终没有弄懂过。阮老师讲的真好啊，浅显易懂！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 14, 2012 10:15 PM">2012年6月14日 22:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256716">#</a>
+ | <a href="#comment-text" title="引用luckite的这条留言" onclick="return CommentQuote('comment-quote-256716','luckite');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256754" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Hvijia</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256754">
+            <p>你看，好多教科书说一大堆的套话博主一句就解释了。不能怪学生理解能力差吧，最起码向学生表述的时候要易懂些。这篇入门写的是极好的，通俗易懂，图文并茂，想来博主定是十分聪慧的人儿，若能让更多学了半天都不明白的人看到，那是再好不过的了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 15, 2012 11:02 AM">2012年6月15日 11:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256754">#</a>
+ | <a href="#comment-text" title="引用Hvijia的这条留言" onclick="return CommentQuote('comment-quote-256754','Hvijia');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256774" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">豆豆龙</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256774">
+            <p>阮老师真是我的神~哇哈哈，每次貌似我正好要补什么知识，你这里就有，上次是javascript，这次是网络协议~~拜谢拜谢~~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 15, 2012  2:12 PM">2012年6月15日 14:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256774">#</a>
+ | <a href="#comment-text" title="引用豆豆龙的这条留言" onclick="return CommentQuote('comment-quote-256774','豆豆龙');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256925" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.weibo.com/no20lbc" href="http://www.weibo.com/no20lbc" target="_blank" rel="nofollow">etym</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256925">
+            <p>好文</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 17, 2012  5:59 PM">2012年6月17日 17:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256925">#</a>
+ | <a href="#comment-text" title="引用etym的这条留言" onclick="return CommentQuote('comment-quote-256925','etym');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-256944" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://jeffsc.info" href="http://jeffsc.info" target="_blank" rel="nofollow">jeffstric</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-256944">
+            <p>这个教程太精彩了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2012 12:43 AM">2012年6月18日 00:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-256944">#</a>
+ | <a href="#comment-text" title="引用jeffstric的这条留言" onclick="return CommentQuote('comment-quote-256944','jeffstric');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257015" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">phnix</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257015">
+            <p>"端口"是0到65535之间的一个整数，正好16个二进制位。0到1023的端口被系统占用，用户只能选用大于1023的端口。不管是浏览网页还是在线聊天，应用程序会随机选用一个端口，然后与服务器的相应端口联系。<br />
+=================================================================<br />
+在部署一个网站是，可以使用80,88啊什么的，这不是与“0到1023的端口被系统占用”相矛盾了吗？是不是我理解错了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2012 11:02 AM">2012年6月19日 11:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257015">#</a>
+ | <a href="#comment-text" title="引用phnix的这条留言" onclick="return CommentQuote('comment-quote-257015','phnix');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257025" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">SVEN TAN</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257025">
+            <p>写的确实很简单明了。。   不过非网络研究的可以当科普复习一下了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2012  4:02 PM">2012年6月19日 16:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257025">#</a>
+ | <a href="#comment-text" title="引用SVEN TAN的这条留言" onclick="return CommentQuote('comment-quote-257025','SVEN TAN');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257097" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.smo-software.com" href="http://www.smo-software.com" target="_blank" rel="nofollow">articlesea</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257097">
+            <p>深入浅出啊，互联网协议早就想从大体上了解下，一直没有时间啃大部头啊！<br />
+今日得赏此文，幸甚幸甚！十分感谢！<br />
+加上第二篇，合在一起再稍加润色我觉得可以出一本畅销的互联网协议科普读本了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 20, 2012  3:42 PM">2012年6月20日 15:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257097">#</a>
+ | <a href="#comment-text" title="引用articlesea的这条留言" onclick="return CommentQuote('comment-quote-257097','articlesea');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257138" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">俞龙</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257138">
+            <p>说的真好！受教了，感谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 21, 2012 11:32 AM">2012年6月21日 11:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257138">#</a>
+ | <a href="#comment-text" title="引用俞龙的这条留言" onclick="return CommentQuote('comment-quote-257138','俞龙');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257213" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">webberpuma</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257213">
+            <p>太感謝你的文章了，說地很好！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 22, 2012 10:54 AM">2012年6月22日 10:54</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257213">#</a>
+ | <a href="#comment-text" title="引用webberpuma的这条留言" onclick="return CommentQuote('comment-quote-257213','webberpuma');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257405" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Chen Zhao</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257405">
+            <blockquote>
+<pre>引用GameXG的发言：</pre>
+
+<p>回答是以太网采用了一种很"原始"的方式，它不是把数据包准确送到接收方，而是向本网络内所有计算机发送，让每台计算机自己判断，是否为接收方。</p>
+
+<p><br />
+老式的的集线器(市面上已经不存在了)才是这种模式，现在交换机会记录并缓存各个交换机端口连接的设备的MAC地址，转发包时会按缓存的地址表转发到特定的交换机端口，除非地址表里面没有目的MAC地址，不然不会广播包的。</p>
+
+</blockquote>
+
+<p>顶. 以太网广播这个, 我也觉得一峰兄讲的有些模糊, 可能会让人误以为所有的以太网通信都是采用广播方式的.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 24, 2012  5:00 PM">2012年6月24日 17:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257405">#</a>
+ | <a href="#comment-text" title="引用Chen Zhao的这条留言" onclick="return CommentQuote('comment-quote-257405','Chen Zhao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-257583" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">曾四二</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-257583">
+            <p>想请教下评价网络性能的一个重要参数：带宽。 总搞不明白这个词的意思。当说带宽为100Mbps的时候，意思是什么？ 这个数据是怎么得到的。哪些事物会影响到带宽的大小？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 26, 2012  5:14 PM">2012年6月26日 17:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-257583">#</a>
+ | <a href="#comment-text" title="引用曾四二的这条留言" onclick="return CommentQuote('comment-quote-257583','曾四二');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-258269" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">U雅de凋0</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-258269">
+            <p>看几遍了 还是有一些疑惑：<br />
+1、客户机发出http请求时 DNS 解析域名 得到ip地址 ；发出 arp请求得到 mac 地址；是这样吗？<br />
+2、以太网标头 内容是 发送者与接收者的mac吗？还有哪些重要信息呢?<br />
+   ip标头 的内容是  发送者与接收者的ip地址吗？</p>
+
+<p><br />
+谁回答下 我菜鸟！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July  7, 2012 10:55 AM">2012年7月 7日 10:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-258269">#</a>
+ | <a href="#comment-text" title="引用U雅de凋0的这条留言" onclick="return CommentQuote('comment-quote-258269','U雅de凋0');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-258686" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.cnblogs.com/deng303359/" href="http://www.cnblogs.com/deng303359/" target="_blank" rel="nofollow">Daisy</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-258686">
+            <blockquote>
+<pre>引用御宅暴君的发言：</pre>
+
+<p>阮老师可不可以直接给个参考书籍呢？启蒙固然很好，但我还是更喜欢直接去啃砖头书。</p>
+
+</blockquote>
+
+<p>推荐一本我们用的教程《计算机网络-自顶向下方法》现在是第四版，挺好的书。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 13, 2012  4:43 PM">2012年7月13日 16:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-258686">#</a>
+ | <a href="#comment-text" title="引用Daisy的这条留言" onclick="return CommentQuote('comment-quote-258686','Daisy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-258860" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">qkhhwfnh861</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-258860">
+            <p>请问，你的作图时用什么软件做的呢？？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 17, 2012  5:38 PM">2012年7月17日 17:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-258860">#</a>
+ | <a href="#comment-text" title="引用qkhhwfnh861的这条留言" onclick="return CommentQuote('comment-quote-258860','qkhhwfnh861');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-258919" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lxl</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-258919">
+            <p>　"经过多个网关的转发，Google 的服务器 172.194.72.105，收到了这四个以太网数据包。"</p>
+
+<p>请问这个过程怎么实现的？<br />
+网关怎么知道对方网关的mac地址？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 18, 2012  2:12 PM">2012年7月18日 14:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-258919">#</a>
+ | <a href="#comment-text" title="引用lxl的这条留言" onclick="return CommentQuote('comment-quote-258919','lxl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-259421" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yyy</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-259421">
+            <p>上学的时候这部分没好好听。Mark！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 25, 2012  6:00 PM">2012年7月25日 18:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-259421">#</a>
+ | <a href="#comment-text" title="引用yyy的这条留言" onclick="return CommentQuote('comment-quote-259421','yyy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-260656" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">&quot;kim</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-260656">
+            <p>大哥~咋不对这些留言分页呢~还以为文章写的这么长咯~</p>
+
+<p>还有文章很好,贊个</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August  7, 2012  2:42 PM">2012年8月 7日 14:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-260656">#</a>
+ | <a href="#comment-text" title="引用"kim的这条留言" onclick="return CommentQuote('comment-quote-260656','"kim');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-261695" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Tree</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-261695">
+            <p>文章写的很赞：） 谢谢。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2012  9:08 PM">2012年8月19日 21:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-261695">#</a>
+ | <a href="#comment-text" title="引用Tree的这条留言" onclick="return CommentQuote('comment-quote-261695','Tree');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-263075" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.isnowfy.com" href="http://www.isnowfy.com" target="_blank" rel="nofollow">isnowfy</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-263075">
+            <p>有点问题，数据帧的head固定大小是14字节，有4字节是帧尾的crc校验</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  9, 2012 11:39 PM">2012年9月 9日 23:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-263075">#</a>
+ | <a href="#comment-text" title="引用isnowfy的这条留言" onclick="return CommentQuote('comment-quote-263075','isnowfy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-264242" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">王佩琪</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-264242">
+            <p>非常好的一篇文章本科的时候学习了关于网络协议等相关知识，那时候是理解了，现在通过自己的亲身体验，在看这篇文章收获非常大~感谢楼主</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  3, 2012  6:04 PM">2012年10月 3日 18:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-264242">#</a>
+ | <a href="#comment-text" title="引用王佩琪的这条留言" onclick="return CommentQuote('comment-quote-264242','王佩琪');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-264403" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">黄恒</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-264403">
+            <p>请教:上文说UDP的数据包长度最大为65,535,而IP数据包总长度最大为最长为65,515字节,是不是有时候UDP数据包就不能恰好放入一个IP地址数据包?是否就需要分割为两个IP包发送呢?</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  6, 2012  8:30 PM">2012年10月 6日 20:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-264403">#</a>
+ | <a href="#comment-text" title="引用黄恒的这条留言" onclick="return CommentQuote('comment-quote-264403','黄恒');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-265664" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">GuanMac</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-265664">
+            <blockquote>
+<pre>引用王丁的发言：</pre>
+比如，已知 IP 地址 172.16.254.1 和 172.16.254.233 的子网掩码都是 255.255.255.0，请问它们是否在同一个子网络？两者与子网掩码分别进行 AND 运算，结果都是 172.16.254.0，因此它们在同一个子网络。
+
+<p>LZ 这里我不太懂哟 到底是怎么比呀 两个IP地址相减？ 还是子网掩码分别减去他们的IP地址？</p>
+
+</blockquote>
+
+<p>就是每个地址都跟子网掩码经行AND运算，同样是1的记作1，不同的作0，然后比较两个结果，如果是相同的话，就是同一个子网。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  5, 2012  5:25 PM">2012年11月 5日 17:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-265664">#</a>
+ | <a href="#comment-text" title="引用GuanMac的这条留言" onclick="return CommentQuote('comment-quote-265664','GuanMac');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-265775" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yuanyauntang.me" href="http://yuanyauntang.me" target="_blank" rel="nofollow">Edw4rd</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-265775">
+            <p>严格来说以太网是一整套组网技术而不单单是协议</p>
+
+<p>说以太网Frame的Head固定长度为18字节也不是很严谨吧，见http://zh.wikipedia.org/wiki/%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%B8%A7%E6%A0%BC%E5%BC%8F</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  8, 2012  1:26 AM">2012年11月 8日 01:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-265775">#</a>
+ | <a href="#comment-text" title="引用Edw4rd的这条留言" onclick="return CommentQuote('comment-quote-265775','Edw4rd');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-265801" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yuanyauntang.me" href="http://yuanyauntang.me" target="_blank" rel="nofollow">Edw4rd</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-265801">
+            <p>这是由于 CSMA/CD 机制所算出来的！ 在这个机制上面可算出若要侦测碰撞，则讯框总数据量最小得要有 64bytes ，那再扣除目的地址、来源地址、检查码 (前导码不算) 后， 就可得到数据量最小得要有 46bytes 了！也就是说，如果妳要传输的数据小于 46byes ，那我们的系统会主动的填上一些填充码， 以补齐至少 46bytes 的容量才行！<br />
+一般来说以太网Frame的总数据量最小是64bytes，但是扣除的18bytes是目标地址和源地址分别6bytes，类型或长度2byte（这些数据报头），还有校验和4bytes</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  8, 2012  9:35 AM">2012年11月 8日 09:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-265801">#</a>
+ | <a href="#comment-text" title="引用Edw4rd的这条留言" onclick="return CommentQuote('comment-quote-265801','Edw4rd');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-265960" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">shellbye</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-265960">
+            <p>有人未注明出处转载了此文</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 14, 2012 10:08 PM">2012年11月14日 22:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-265960">#</a>
+ | <a href="#comment-text" title="引用shellbye的这条留言" onclick="return CommentQuote('comment-quote-265960','shellbye');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-266667" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://mindlee.net" href="http://mindlee.net" target="_blank" rel="nofollow">酷~行天下</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-266667">
+            <p>文章浅显易懂，非常受用。<br />
+问下，这里的图片是用什么做的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  4, 2012  5:27 PM">2012年12月 4日 17:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-266667">#</a>
+ | <a href="#comment-text" title="引用酷~行天下的这条留言" onclick="return CommentQuote('comment-quote-266667','酷~行天下');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-267603" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">andy zhong</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-267603">
+            <p>看了您关于互联网协议的两篇文章，写的真好！带领读者站在一定的高度俯览整体面貌，剩下具体细节让读者自己去探索。有两个问题向您请教一下：<br />
+1.您是如何将这些东西从整体上把握地如此清晰的。之前我也看过几本书，但每次都是看的一点头绪都没有。书里面介绍了很多细节，但看完后一点概念都没有，完全被淹没在细节中，不能从大的方向上建立模型。<br />
+2.关于这方面内容，您是否有后续的文章来介绍，或是有什么好的书希望可以推荐一下。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  5, 2013  6:59 PM">2013年1月 5日 18:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-267603">#</a>
+ | <a href="#comment-text" title="引用andy zhong的这条留言" onclick="return CommentQuote('comment-quote-267603','andy zhong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-267607" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-267607">
+            <p>@andy zhong：</p>
+
+<p>看一些古老的文档，我觉得很有帮助。</p>
+
+<p>推荐一篇1987年的文章《Introduction to the Internet Protocols》</p>
+
+<p><a href="http://www.uic.edu/depts/accc/network/ftp/v452.html" rel="nofollow">http://www.uic.edu/depts/accc/network/ftp/v452.html</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  5, 2013 11:11 PM">2013年1月 5日 23:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-267607">#</a>
+ | <a href="#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote('comment-quote-267607','阮一峰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269338" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zhenguanxi</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269338">
+            <p>真是受益匪浅！阮兄把你微博上这些科普文章集结出书吧，肯定很受欢迎。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March  4, 2013  5:15 PM">2013年3月 4日 17:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-269338">#</a>
+ | <a href="#comment-text" title="引用zhenguanxi的这条留言" onclick="return CommentQuote('comment-quote-269338','zhenguanxi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270005" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://saintnoah.blogspot.com/" href="http://saintnoah.blogspot.com/" target="_blank" rel="nofollow">LIANG</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270005">
+            <blockquote>
+<pre>引用Chen Zhao的发言：</pre>
+
+<p></p>
+
+<p>顶. 以太网广播这个, 我也觉得一峰兄讲的有些模糊, 可能会让人误以为所有的以太网通信都是采用广播方式的.</p>
+
+</blockquote>
+
+<p>每个IP node(主机，路由器)只要在LAN上就会有ARP table，其中存放IP/MAC的映射。<br />
+</p>
+
+<p>如果A要发送给B数据包，而B不在A的ARP TABLE中，才会广播。A得到B的MAC之后，会cache IP-MAC在自己的ARP TABLE中。</p>
+
+<p>当然了，ARP TABLE不是生来就有，都是从无到有的。所以是通过广播方式建立起来的。强调广播没有错，但是ARP TABLE也很重要。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 21, 2013 10:50 AM">2013年3月21日 10:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-270005">#</a>
+ | <a href="#comment-text" title="引用LIANG的这条留言" onclick="return CommentQuote('comment-quote-270005','LIANG');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270290" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.diguage.com/" href="http://www.diguage.com/" target="_blank" rel="nofollow">D瓜哥</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270290">
+            <blockquote>
+<pre>引用御宅暴君的发言：</pre>
+
+<p>阮老师可不可以直接给个参考书籍呢？启蒙固然很好，但我还是更喜欢直接去啃砖头书。</p>
+
+</blockquote>
+有两本书很好：
+第一本：<a href="http://book.douban.com/subject/10510747/" rel="nofollow">计算机网络（第五版）</a>。是Tanenbaum写作，潘爱民翻译；讲解的非常细致到位！强烈推荐。Tanenbaum还写了本现代操作系统也非常不错。
+第二本：<a href="http://book.douban.com/subject/1391207/" rel="nofollow">计算机网络：自顶向下方法（第四版）</a>，这本书让你更容易理解。也推荐。
+
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 31, 2013 11:31 PM">2013年3月31日 23:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-270290">#</a>
+ | <a href="#comment-text" title="引用D瓜哥的这条留言" onclick="return CommentQuote('comment-quote-270290','D瓜哥');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270484" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">HI</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270484">
+            <p>谢谢好文 帮助理解～</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  7, 2013 11:30 AM">2013年4月 7日 11:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-270484">#</a>
+ | <a href="#comment-text" title="引用HI的这条留言" onclick="return CommentQuote('comment-quote-270484','HI');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-271535" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">PY</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-271535">
+            <p>堪称大作！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 15, 2013 11:59 AM">2013年5月15日 11:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-271535">#</a>
+ | <a href="#comment-text" title="引用PY的这条留言" onclick="return CommentQuote('comment-quote-271535','PY');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272224" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://zcblog.net" href="http://zcblog.net" target="_blank" rel="nofollow">aaron chao</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272224">
+            <p>看过阮老师多篇文章，质量挺高，获益匪浅，已付费支持。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 20, 2013  1:41 PM">2013年6月20日 13:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-272224">#</a>
+ | <a href="#comment-text" title="引用aaron chao的这条留言" onclick="return CommentQuote('comment-quote-272224','aaron chao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272260" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wireless</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272260">
+            <blockquote>
+<pre>引用vx13的发言：</pre>
+
+<p>我觉得阮一峰先生最好在写些专业性的东西前，做一些系统的学习。<br />
+文中的“实体层”应该是台湾的说法，大陆的翻译一般是叫“物理层”的。而“链接层”一般翻译作“链路层”或“数据链路层”。</p>
+
+</blockquote>
+
+<p>这个很重要吗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 21, 2013 10:57 PM">2013年6月21日 22:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-272260">#</a>
+ | <a href="#comment-text" title="引用wireless的这条留言" onclick="return CommentQuote('comment-quote-272260','wireless');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273403" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.csdn.net/youxin2012" href="http://blog.csdn.net/youxin2012" target="_blank" rel="nofollow">new hander</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273403">
+            <p>？？？ 想确认下，在同一子网内， 是在IP地址中全部写入 1，进行广播，然后比较MAC地址，还是 在MAC地址中全部写入1，进行广播，然后比较IP？？？？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 31, 2013 11:03 PM">2013年8月31日 23:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-273403">#</a>
+ | <a href="#comment-text" title="引用new hander的这条留言" onclick="return CommentQuote('comment-quote-273403','new hander');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273497" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Kerwin Tsim</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273497">
+            <p>受益匪浅！！！！！谢谢！！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  3, 2013  9:48 PM">2013年9月 3日 21:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-273497">#</a>
+ | <a href="#comment-text" title="引用Kerwin Tsim的这条留言" onclick="return CommentQuote('comment-quote-273497','Kerwin Tsim');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-274995" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">skyler</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-274995">
+            <p>受益匪浅！</p>
+
+<p>从08年开始就断断续续的拜读阮老师的文章</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 20, 2013  5:19 PM">2013年9月20日 17:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-274995">#</a>
+ | <a href="#comment-text" title="引用skyler的这条留言" onclick="return CommentQuote('comment-quote-274995','skyler');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-277690" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">YJ</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-277690">
+            <p>为什么不弄个'赞'的按钮？ ：）</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  9, 2013  3:10 AM">2013年10月 9日 03:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-277690">#</a>
+ | <a href="#comment-text" title="引用YJ的这条留言" onclick="return CommentQuote('comment-quote-277690','YJ');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-293267" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">米兰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-293267">
+            <p>通常情况下，对方的IP地址是已知的（后文会解释）</p>
+
+<p>貌似这篇文章没有解释...</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 16, 2013  3:44 PM">2013年12月16日 15:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-293267">#</a>
+ | <a href="#comment-text" title="引用米兰的这条留言" onclick="return CommentQuote('comment-quote-293267','米兰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-293885" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">凡客</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-293885">
+            <blockquote>
+<pre>引用曾四二的发言：</pre>
+想请教下评价网络性能的一个重要参数：带宽。 总搞不明白这个词的意思。当说带宽为100Mbps的时候，意思是什么？ 这个数据是怎么得到的。哪些事物会影响到带宽的大小？
+</blockquote>
+
+<p>带宽，就是网络设备向通信信道中发送信息的速率，比如每秒钟我的计算机向光缆中发送100M个bit，那么我们可以说这个光缆的带宽是100Mbps（per second）注意，bit流失串行发送的，并不是线越宽，带宽就越大。<br />
+既然知道了带宽的定义，那么：带宽的影响因素有很多，你可以google一下</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 20, 2013  5:34 PM">2013年12月20日 17:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-293885">#</a>
+ | <a href="#comment-text" title="引用凡客的这条留言" onclick="return CommentQuote('comment-quote-293885','凡客');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-293893" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">凡客</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-293893">
+            <blockquote>
+<pre>引用new hander的发言：</pre>
+？？？ 想确认下，在同一子网内， 是在IP地址中全部写入 1，进行广播，然后比较MAC地址，还是 在MAC地址中全部写入1，进行广播，然后比较IP？？？？
+</blockquote>
+
+<p>据我的判断，有两种广播形式，不知道理解的对不对：<br />
+1，在本地子网广播，也就是在自己所在的子网广播，这样的广播地址应该是与mac地址相关的，也就是mac地址设为全1<br />
+2，从本地向外网广播，这样的话，应该是把那个网络的主机部分设为全1，这里用到了ip地址，这个包是发往网关的，是由网关代替你广播的 网关收到主机ip全1的包后知道这是一个向其子网发送的广播包，这样，对，就这样了。。。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 20, 2013  7:47 PM">2013年12月20日 19:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-293893">#</a>
+ | <a href="#comment-text" title="引用凡客的这条留言" onclick="return CommentQuote('comment-quote-293893','凡客');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-295141" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Dingo妹</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-295141">
+            <p>在转载处看到，特来支持。文章非常好，简介明了易懂。感觉我学计算机通信的，这会才把网络框架弄明白些。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 29, 2013 11:19 PM">2013年12月29日 23:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-295141">#</a>
+ | <a href="#comment-text" title="引用Dingo妹的这条留言" onclick="return CommentQuote('comment-quote-295141','Dingo妹');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-325689" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wind</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-325689">
+            <p>神教程,簡單易懂通俗明了,一看就會!~感謝!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 29, 2014  2:26 PM">2014年5月29日 14:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-325689">#</a>
+ | <a href="#comment-text" title="引用wind的这条留言" onclick="return CommentQuote('comment-quote-325689','wind');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-330731" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">truelove</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-330731">
+            <p>以太网最少46bytes,ip报头最少20bytes,udp报头最少8bytes,那么发UDP数据包是不是至少要18bytes才可以发送？有人说会自动填充不足46bytes的部分，那么这部分填充的数据，如果软件解析出来那不是出问题了？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 10, 2014 11:18 PM">2014年7月10日 23:18</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-330731">#</a>
+ | <a href="#comment-text" title="引用truelove的这条留言" onclick="return CommentQuote('comment-quote-330731','truelove');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-333228" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="https://github.com/phplaber" href="https://github.com/phplaber" target="_blank" rel="nofollow">Ynsong</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-333228">
+            <p>因为网络部分的长度并不都是8位的整倍数（比如：28位），所以在做与运算时，使用二进制作为结果去判断两台主机是否处在同一子网络，应该更清晰。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August  8, 2014 10:19 AM">2014年8月 8日 10:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-333228">#</a>
+ | <a href="#comment-text" title="引用Ynsong的这条留言" onclick="return CommentQuote('comment-quote-333228','Ynsong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-333414" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">云中鹤</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-333414">
+            <p>非常好的入门教材！支持阮先生<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 10, 2014  7:55 AM">2014年8月10日 07:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-333414">#</a>
+ | <a href="#comment-text" title="引用云中鹤的这条留言" onclick="return CommentQuote('comment-quote-333414','云中鹤');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-334715" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.ziqiangxuetang.com" href="http://www.ziqiangxuetang.com" target="_blank" rel="nofollow">tutu</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-334715">
+            <p>受用了，觉得写得太好了，非计算机专业的我也看得懂，非常感谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 21, 2014  9:24 PM">2014年8月21日 21:24</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-334715">#</a>
+ | <a href="#comment-text" title="引用tutu的这条留言" onclick="return CommentQuote('comment-quote-334715','tutu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-335466" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">SuperEgg</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-335466">
+            <p>写的太好了！太感动了！图片和说明都十分到位，讲的十分形象，深入浅出，思路清晰，从原因到结果都说的特别明白。真的看的特别感动！真心非常感谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 28, 2014 12:00 AM">2014年8月28日 00:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-335466">#</a>
+ | <a href="#comment-text" title="引用SuperEgg的这条留言" onclick="return CommentQuote('comment-quote-335466','SuperEgg');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-335554" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.csdn.net/angle7777" href="http://blog.csdn.net/angle7777" target="_blank" rel="nofollow">Angel Zou</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-335554">
+            <p>写的真好~膜拜中`</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 28, 2014 11:26 AM">2014年8月28日 11:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-335554">#</a>
+ | <a href="#comment-text" title="引用Angel Zou的这条留言" onclick="return CommentQuote('comment-quote-335554','Angel Zou');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-338642" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">零星</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-338642">
+            <p>内容全部知道，看完一遍瞬间感觉自己之前的知识轮廓太没有结构层次了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 19, 2014  3:46 PM">2014年9月19日 15:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-338642">#</a>
+ | <a href="#comment-text" title="引用零星的这条留言" onclick="return CommentQuote('comment-quote-338642','零星');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341098" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">原来的我</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341098">
+            <blockquote>
+<pre>引用GameXG的发言：</pre>
+
+<p>回答是以太网采用了一种很"原始"的方式，它不是把数据包准确送到接收方，而是向本网络内所有计算机发送，让每台计算机自己判断，是否为接收方。</p>
+
+<p><br />
+老式的的集线器(市面上已经不存在了)才是这种模式，现在交换机会记录并缓存各个交换机端口连接的设备的MAC地址，转发包时会按缓存的地址表转发到特定的交换机端口，除非地址表里面没有目的MAC地址，不然不会广播包的。</p>
+
+</blockquote>
+
+<p>我也这么认为的，现在的路由器和交换机应该不是这么低端了吧。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  9, 2014  6:46 PM">2014年10月 9日 18:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-341098">#</a>
+ | <a href="#comment-text" title="引用原来的我的这条留言" onclick="return CommentQuote('comment-quote-341098','原来的我');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341203" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">someOne</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341203">
+            <p>"UDP数据包非常简单，"标头"部分一共只有8个字节，总长度不超过65,535字节，正好放进一个IP数据包。"</p>
+
+<p>这句话应该是有误的，特别是“正好放进一个IP数据包”<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 11, 2014  9:31 AM">2014年10月11日 09:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-341203">#</a>
+ | <a href="#comment-text" title="引用someOne的这条留言" onclick="return CommentQuote('comment-quote-341203','someOne');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341871" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">杨过</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341871">
+            <p>明白技术也许不难，难在使别人明白技术。楼主是这方面的专家，佩服啊。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 20, 2014  6:31 PM">2014年10月20日 18:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-341871">#</a>
+ | <a href="#comment-text" title="引用杨过的这条留言" onclick="return CommentQuote('comment-quote-341871','杨过');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342253" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Bruce</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342253">
+            <p>首先谢谢楼主的分享， 网卡是一次接收一个进程相关的数据， 还是接收多个进程的相关数据呢？接收了多个进程的数据， 操作系统如何通过端口号实时传送到进程里</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 28, 2014  5:57 PM">2014年10月28日 17:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-342253">#</a>
+ | <a href="#comment-text" title="引用Bruce的这条留言" onclick="return CommentQuote('comment-quote-342253','Bruce');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-346226" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">水中月镜中花</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-346226">
+            <p>以前在学校学习过互联网协议，在看这篇文章之前都弄不太懂，今天看了阮老师的这边文章，感觉豁然开朗啊！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 12, 2014  4:10 PM">2014年12月12日 16:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-346226">#</a>
+ | <a href="#comment-text" title="引用水中月镜中花的这条留言" onclick="return CommentQuote('comment-quote-346226','水中月镜中花');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349027" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.diyxue.com/forum-40-1.html" href="http://www.diyxue.com/forum-40-1.html" target="_blank" rel="nofollow">hangjia</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349027">
+            <p>真的看的特别感动！真心非常感谢！接收了多个进程的数据， 操作系统如何通过端口号实时传送到进程里</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 10, 2015  8:46 PM">2015年4月10日 20:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-349027">#</a>
+ | <a href="#comment-text" title="引用hangjia的这条留言" onclick="return CommentQuote('comment-quote-349027','hangjia');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349333" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">陈金</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349333">
+            <p>看了那么多书，能把一个问题概括的简单清晰实在是不容易，为阮老师点个赞</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 30, 2015  1:21 PM">2015年4月30日 13:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-349333">#</a>
+ | <a href="#comment-text" title="引用陈金的这条留言" onclick="return CommentQuote('comment-quote-349333','陈金');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350933" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ivan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350933">
+            <blockquote>
+<pre>引用阮一峰的发言：</pre>
+
+<p>@andy zhong：</p>
+
+<p>看一些古老的文档，我觉得很有帮助。</p>
+
+<p>推荐一篇1987年的文章《Introduction to the Internet Protocols》</p>
+
+<p><a href="http://www.uic.edu/depts/accc/network/ftp/v452.html" rel="nofollow">http://www.uic.edu/depts/accc/network/ftp/v452.html</a></p>
+
+</blockquote>
+
+<p>看古老的文档，我觉得这个建议很好，最近在看《腾云》，里面很多新技术，但是看起来没有一种清晰的模型，正如读linux内核源码一样，有一种方法就是阅读0.12版本的，抽茧剥丝，把最核心的部分最核心的思想弄清楚，就不会被技术细节遮住眼睛。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 20, 2015  9:33 PM">2015年7月20日 21:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-350933">#</a>
+ | <a href="#comment-text" title="引用Ivan的这条留言" onclick="return CommentQuote('comment-quote-350933','Ivan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-350940" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.csdn.net/ritterliu" href="http://blog.csdn.net/ritterliu" target="_blank" rel="nofollow">Ritter Liu</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-350940">
+            <p>不得不赞，《计算机网络》啥的根本没懂，直到看到此文。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 21, 2015 10:49 AM">2015年7月21日 10:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-350940">#</a>
+ | <a href="#comment-text" title="引用Ritter Liu的这条留言" onclick="return CommentQuote('comment-quote-350940','Ritter Liu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351686" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">雷雨</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351686">
+            <p>比《鸟哥的私房菜网络基础》更加容易看得懂，赞一个！期待阮老师类似的文笔更新。谢谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 14, 2015  3:42 PM">2015年9月14日 15:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-351686">#</a>
+ | <a href="#comment-text" title="引用雷雨的这条留言" onclick="return CommentQuote('comment-quote-351686','雷雨');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351817" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.ning-hou.com" href="http://www.ning-hou.com" target="_blank" rel="nofollow">lilingshui</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351817">
+            <p>不错，写得通俗易懂，也不乏味。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 22, 2015 12:43 PM">2015年9月22日 12:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-351817">#</a>
+ | <a href="#comment-text" title="引用lilingshui的这条留言" onclick="return CommentQuote('comment-quote-351817','lilingshui');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352111" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://izhuangj.com" href="http://izhuangj.com" target="_blank" rel="nofollow">很坏的坏蛋</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352111">
+            <p>很好的很易懂文章,转载一下啊.老师!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 14, 2015  9:50 AM">2015年10月14日 09:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-352111">#</a>
+ | <a href="#comment-text" title="引用很坏的坏蛋的这条留言" onclick="return CommentQuote('comment-quote-352111','很坏的坏蛋');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352283" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://optionalswift.cn" href="http://optionalswift.cn" target="_blank" rel="nofollow">pmst</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352283">
+            <p>又来膜拜下，另外觉得有必要转载下.....求同意</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 20, 2015 10:21 PM">2015年10月20日 22:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-352283">#</a>
+ | <a href="#comment-text" title="引用pmst的这条留言" onclick="return CommentQuote('comment-quote-352283','pmst');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352377" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">查鹏</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352377">
+            <p>socket，自己进程的网络端口怎么确定？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 27, 2015 11:51 AM">2015年10月27日 11:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-352377">#</a>
+ | <a href="#comment-text" title="引用查鹏的这条留言" onclick="return CommentQuote('comment-quote-352377','查鹏');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-353669" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">kreding</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-353669">
+            <p>子网跟子网之间是如何找到对方的呢？也是类似于局域网内的广播方式吗</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 31, 2015 11:00 AM">2015年12月31日 11:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-353669">#</a>
+ | <a href="#comment-text" title="引用kreding的这条留言" onclick="return CommentQuote('comment-quote-353669','kreding');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-355235" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">melody</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-355235">
+            <p>感谢好文！！！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 24, 2016  3:08 PM">2016年3月24日 15:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html#comment-355235">#</a>
+ | <a href="#comment-text" title="引用melody的这条留言" onclick="return CommentQuote('comment-quote-355235','melody');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1724" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

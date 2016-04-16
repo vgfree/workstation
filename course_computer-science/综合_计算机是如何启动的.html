@@ -1,0 +1,3053 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2013/02/tpb.html" title="纪录片《TPB AFK》与现行版权制度" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2013/02/yumen_photo_studio.html" title="玉门人家照相馆" />
+    
+    <title>计算机是如何启动的？ - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1765" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2013/02/tpb.html" title="纪录片《TPB AFK》与现行版权制度">纪录片《TPB&nbsp;AFK</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2013/02/yumen_photo_studio.html" title="玉门人家照相馆">玉门人家照相馆&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/computer/" rel="tag">理解计算机</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">计算机是如何启动的？</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2013/02/"><abbr class="published" title="2013-02-16T13:03:38+08:00">2013年2月16日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>从打开电源到开始操作，计算机的启动是一个非常复杂的过程。</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p><img src="http://image.beekka.com/blog/201302/bg2013021501.jpg" /></p>
+
+<p>我一直搞不清楚，这个过程到底是怎么回事，只看见屏幕快速滚动各种提示...... 这几天，我查了一些资料，试图搞懂它。下面就是我整理的笔记。</p>
+
+<p><strong>零、boot的含义</strong></p>
+
+<p>先问一个问题，"启动"用英语怎么说？</p>
+
+<p>回答是boot。可是，boot原来的意思是靴子，"启动"与靴子有什么关系呢？ 原来，这里的boot是bootstrap（鞋带）的缩写，它来自一句谚语：</p>
+
+<blockquote>
+
+<p>　　"pull oneself up by one's bootstraps"</p>
+
+</blockquote>
+
+<p>字面意思是"拽着鞋带把自己拉起来"，这当然是不可能的事情。最早的时候，工程师们用它来比喻，计算机启动是一个很矛盾的过程：必须先运行程序，然后计算机才能启动，但是计算机不启动就无法运行程序！</p>
+
+<p>早期真的是这样，必须想尽各种办法，把一小段程序装进内存，然后计算机才能正常运行。所以，工程师们把这个过程叫做"拉鞋带"，久而久之就简称为boot了。</p>
+
+<p>计算机的整个启动过程分成四个阶段。</p>
+
+<p><strong>一、第一阶段：BIOS</strong></p>
+
+<p>上个世纪70年代初，"只读内存"（read-only memory，缩写为ROM）发明，开机程序被刷入ROM芯片，计算机通电后，第一件事就是读取它。</p>
+
+<p><img src="http://image.beekka.com/blog/201302/bg2013021502.jpg" /></p>
+
+<p>这块芯片里的程序叫做"基本輸出輸入系統"（Basic Input/Output System），简称为<a href="http://en.wikipedia.org/wiki/BIOS">BIOS</a>。</p>
+
+<p><strong>1.1 硬件自检</strong></p>
+
+<p>BIOS程序首先检查，计算机硬件能否满足运行的基本条件，这叫做"硬件自检"（Power-On Self-Test），缩写为<a href="http://en.wikipedia.org/wiki/Power-on_self-test">POST</a>。</p>
+
+<p>如果硬件出现问题，主板会发出不同含义的<a href="http://en.wikipedia.org/wiki/Power-on_self-test#Original_IBM_POST_beep_codes">蜂鸣</a>，启动中止。如果没有问题，屏幕就会显示出CPU、内存、硬盘等信息。</p>
+
+<p><img src="http://image.beekka.com/blog/201302/bg2013021503.png" /></p>
+
+<p><strong>1.2 启动顺序</strong></p>
+
+<p>硬件自检完成后，BIOS把控制权转交给下一阶段的启动程序。</p>
+
+<p>这时，BIOS需要知道，"下一阶段的启动程序"具体存放在哪一个设备。也就是说，BIOS需要有一个外部储存设备的排序，排在前面的设备就是优先转交控制权的设备。这种排序叫做"启动顺序"（Boot Sequence）。</p>
+
+<p>打开BIOS的操作界面，里面有一项就是"设定启动顺序"。</p>
+
+<p><img src="http://image.beekka.com/blog/201302/bg2013021504.jpg" /></p>
+
+<p><strong>二、第二阶段：主引导记录</strong></p>
+
+<p>BIOS按照"启动顺序"，把控制权转交给排在第一位的储存设备。</p>
+
+<p>这时，计算机读取该设备的第一个扇区，也就是读取最前面的512个字节。如果这512个字节的最后两个字节是0x55和0xAA，表明这个设备可以用于启动；如果不是，表明设备不能用于启动，控制权于是被转交给"启动顺序"中的下一个设备。</p>
+
+<p>这最前面的512个字节，就叫做<a href="http://en.wikipedia.org/wiki/Master_boot_record">"主引导记录"</a>（Master boot record，缩写为MBR）。</p>
+
+<p><strong>2.1 主引导记录的结构</strong></p>
+
+<p>"主引导记录"只有512个字节，放不了太多东西。它的主要作用是，告诉计算机到硬盘的哪一个位置去找操作系统。</p>
+
+<p>主引导记录由三个部分组成：</p>
+
+<blockquote>
+
+<p>　　（1） 第1-446字节：调用操作系统的机器码。</p>
+
+<p>　　（2） 第447-510字节：分区表（Partition table）。</p>
+
+<p>　　（3） 第511-512字节：主引导记录签名（0x55和0xAA）。</p>
+
+</blockquote>
+
+<p>其中，第二部分"分区表"的作用，是将硬盘分成若干个区。</p>
+
+<p><strong>2.2 分区表</strong></p>
+
+<p>硬盘分区有很多<a href="http://en.wikipedia.org/wiki/Disk_partitioning#Benefits_of_multiple_partitions">好处</a>。考虑到每个区可以安装不同的操作系统，"主引导记录"因此必须知道将控制权转交给哪个区。</p>
+
+<p>分区表的长度只有64个字节，里面又分成四项，每项16个字节。所以，一个硬盘最多只能分四个一级分区，又叫做"主分区"。</p>
+
+<p>每个主分区的16个字节，由6个部分组成：</p>
+
+<blockquote>
+
+<p>　　（1） 第1个字节：如果为0x80，就表示该主分区是激活分区，控制权要转交给这个分区。四个主分区里面只能有一个是激活的。</p>
+
+<p>　　（2） 第2-4个字节：主分区第一个扇区的物理位置（柱面、磁头、扇区号等等）。</p>
+
+<p>　　（3） 第5个字节：<a href="http://en.wikipedia.org/wiki/Partition_type">主分区类型</a>。</p>
+
+<p>　　（4） 第6-8个字节：主分区最后一个扇区的物理位置。</p>
+
+<p>　　（5） 第9-12字节：该主分区第一个扇区的逻辑地址。</p>
+
+<p>　　（6） 第13-16字节：主分区的扇区总数。</p>
+
+</blockquote>
+
+<p>最后的四个字节（"主分区的扇区总数"），决定了这个主分区的长度。也就是说，一个主分区的扇区总数最多不超过2的32次方。</p>
+
+<p>如果每个扇区为512个字节，就意味着单个分区最大不超过2TB。再考虑到扇区的逻辑地址也是32位，所以单个硬盘可利用的空间最大也不超过2TB。如果想使用更大的硬盘，只有2个方法：一是提高每个扇区的字节数，二是<a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">增加扇区总数</a>。</p>
+
+<p><strong>三、第三阶段：硬盘启动</strong></p>
+
+<p>这时，计算机的控制权就要转交给硬盘的某个分区了，这里又分成三种情况。</p>
+
+<p><strong>3.1 情况A：卷引导记录</strong></p>
+
+<p>上一节提到，四个主分区里面，只有一个是激活的。计算机会读取激活分区的第一个扇区，叫做<a href="http://en.wikipedia.org/wiki/Volume_Boot_Record">"卷引导记录</a>"（Volume boot record，缩写为VBR）。</p>
+
+<p>"卷引导记录"的主要作用是，告诉计算机，操作系统在这个分区里的位置。然后，计算机就会加载操作系统了。</p>
+
+<p><strong>3.2 情况B：扩展分区和逻辑分区</strong></p>
+
+<p>随着硬盘越来越大，四个主分区已经不够了，需要更多的分区。但是，分区表只有四项，因此规定有且仅有一个区可以被定义成"扩展分区"（Extended partition）。</p>
+
+<p>所谓"扩展分区"，就是指这个区里面又分成多个区。这种分区里面的分区，就叫做"逻辑分区"（logical partition）。</p>
+
+<p>计算机先读取扩展分区的第一个扇区，叫做<a href="http://en.wikipedia.org/wiki/Extended_partition">"扩展引导记录"</a>（Extended boot record，缩写为EBR）。它里面也包含一张64字节的分区表，但是最多只有两项（也就是两个逻辑分区）。</p>
+
+<p>计算机接着读取第二个逻辑分区的第一个扇区，再从里面的分区表中找到第三个逻辑分区的位置，以此类推，直到某个逻辑分区的分区表只包含它自身为止（即只有一个分区项）。因此，扩展分区可以包含无数个逻辑分区。</p>
+
+<p>但是，似乎很少通过这种方式启动操作系统。如果操作系统确实安装在扩展分区，一般采用下一种方式启动。</p>
+
+<p><strong>3.3 情况C：启动管理器</strong></p>
+
+<p>在这种情况下，计算机读取"主引导记录"前面446字节的机器码之后，不再把控制权转交给某一个分区，而是运行事先安装的<a href="http://en.wikipedia.org/wiki/Boot_loader#Modern_boot_loaders">"启动管理器"</a>（boot loader），由用户选择启动哪一个操作系统。</p>
+
+<p>Linux环境中，目前最流行的启动管理器是<a href="http://en.wikipedia.org/wiki/GNU_GRUB">Grub</a>。</p>
+
+<p><img src="http://image.beekka.com/blog/201302/bg2013021505.png" /></p>
+
+<p><strong>四、第四阶段：操作系统</strong></p>
+
+<p>控制权转交给操作系统后，操作系统的内核首先被载入内存。</p>
+
+<p>以Linux系统为例，先载入/boot目录下面的kernel。内核加载成功后，第一个运行的程序是/sbin/init。它根据配置文件（Debian系统是/etc/initab）产生init进程。这是Linux启动后的第一个进程，pid进程编号为1，其他进程都是它的后代。</p>
+
+<p>然后，init线程加载系统的各个模块，比如窗口程序和网络程序，直至执行/bin/login程序，跳出登录界面，等待用户输入用户名和密码。</p>
+
+<p>至此，全部启动过程完成。</p>
+
+<p>（完）<br />
+</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2013-02-16T13:03:38+08:00">2013年2月16日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/computer/"> 理解计算机</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2015.09.28: <a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></strong>
+
+                           <div class="entry-body">
+                              《计算机原理》课本说，启动时，主引导记录会存入内存地址0x7C00。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2015.07.16: <a href="http://www.ruanyifeng.com/blog/2015/07/monad.html">图解 Monad</a></strong>
+
+                           <div class="entry-body">
+                              函数式编程有一个重要概念，叫做Monad。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.11.11: <a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html">编译器的工作过程</a></strong>
+
+                           <div class="entry-body">
+                              源码要运行，必须先转成二进制的机器码。这是编译器的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.09.07: <a href="http://www.ruanyifeng.com/blog/2014/09/information-entropy.html">数据压缩与信息熵</a></strong>
+
+                           <div class="entry-body">
+                              1992年，美国佐治亚州的WEB Technology公司，宣布做出了重大的技术突破。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（74条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-268739" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.byhard.com" href="http://www.byhard.com" target="_blank" rel="nofollow">海纳百川</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268739">
+            <p>沙发，学习了。虽是计算机专业，但对底层的东西了解的不深，往往又拿透明的来搪塞自己。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  2:21 PM">2013年2月16日 14:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268739">#</a>
+ | <a href="#comment-text" title="引用海纳百川的这条留言" onclick="return CommentQuote('comment-quote-268739','海纳百川');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268742" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lvzongting</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268742">
+            <p>bios不一定存在，bios只是提供了一个固定的方式，去访问其他输入输出设备，存在的目的是可以将硬件的变化简化，这样内核就可以通过和固定的bios通信来获取基本的硬件地址信息，然后再获得更充分的硬件地址信息。没有bios的计算机，就没有这么一个固定的方式，随着硬件的改变，就要静态的改变内核内部设备的入口地址，然后重新编译。可以这么说bios是使得现在操作系统变得通用的一个利器。比如现在不同的arm手机的内核不能随便换着用，而有bios的计算机内核即使硬件不那么一样，却可以用同样的内核。还比如现在很多时候都会将硬件地址的map独立于内核写到一个单独的文件中，内核载入的时候会从这些文件中读取硬件的入口地址。<br />
+     从上电开始，处理器的指令计数器会被初始化成一个值(这个值不一定是0x0000H，因为一般还会在前面放中断向量表)，然后从这个地址开始执行程序。这些程序有可能放到片内的flash，有可能放到片外的flash，或是RAM里面。由于RAM是掉电易失的，所以可能需要先从其他存储设备中载入内存然后再从内存中调入片内进行运算。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  2:40 PM">2013年2月16日 14:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268742">#</a>
+ | <a href="#comment-text" title="引用lvzongting的这条留言" onclick="return CommentQuote('comment-quote-268742','lvzongting');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268746" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">snowqiang</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268746">
+            <p>这样来看， boot翻译成'自举'还是挺形象的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  3:53 PM">2013年2月16日 15:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268746">#</a>
+ | <a href="#comment-text" title="引用snowqiang的这条留言" onclick="return CommentQuote('comment-quote-268746','snowqiang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268751" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Wht'for</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268751">
+            <p>>>>计算机通电后，第一件事就是读取它。<br />
+我更好奇，是*什么*又是*怎么*读取的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  5:28 PM">2013年2月16日 17:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268751">#</a>
+ | <a href="#comment-text" title="引用Wht'for的这条留言" onclick="return CommentQuote('comment-quote-268751','Wht'for');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268756" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.zhanggang.net" href="http://www.zhanggang.net" target="_blank" rel="nofollow">张刚</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268756">
+            <p>MBR是个很重要的概念，在经历N次启动硬盘找不到OS的情况才能深刻了解。VBR（卷引导记录）应该是硬盘在逻辑卷（LVM）管理方式的情况，不过LVM可以是管理多个硬盘，或者是单个硬盘的某个分区。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  6:40 PM">2013年2月16日 18:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268756">#</a>
+ | <a href="#comment-text" title="引用张刚的这条留言" onclick="return CommentQuote('comment-quote-268756','张刚');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268757" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Mike</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268757">
+            <p>For UEFI, it is a different story.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  6:41 PM">2013年2月16日 18:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268757">#</a>
+ | <a href="#comment-text" title="引用Mike的这条留言" onclick="return CommentQuote('comment-quote-268757','Mike');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268763" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Canson</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268763">
+            <blockquote>
+<pre>引用Mike的发言：</pre>
+
+<p>For UEFI, it is a different story.</p>
+
+</blockquote>
+
+<p>的确，或者说即使不是UEFI，Legacy的Bios的故事也有别的变种。BIOS 工程师路过</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  7:06 PM">2013年2月16日 19:06</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268763">#</a>
+ | <a href="#comment-text" title="引用Canson的这条留言" onclick="return CommentQuote('comment-quote-268763','Canson');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268769" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">OJ77</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268769">
+            <p>很不错，解决了很多疑惑！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  8:42 PM">2013年2月16日 20:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268769">#</a>
+ | <a href="#comment-text" title="引用OJ77的这条留言" onclick="return CommentQuote('comment-quote-268769','OJ77');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268770" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://dalei.org" href="http://dalei.org" target="_blank" rel="nofollow">大磊童鞋</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268770">
+            <p>我曾经也写过一个类似的启动过程，更加注重的是linux/unix系统，如果从加电到grub1/2的执行，分别考虑到了EFI和BIOS的过程，地址是：http://www.dalei.org/linux-unix-boot-process</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  8:46 PM">2013年2月16日 20:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268770">#</a>
+ | <a href="#comment-text" title="引用大磊童鞋的这条留言" onclick="return CommentQuote('comment-quote-268770','大磊童鞋');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268772" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://iyue.us" href="http://iyue.us" target="_blank" rel="nofollow">iyue</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268772">
+            <p>boot这个说明写的真好</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013  9:44 PM">2013年2月16日 21:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268772">#</a>
+ | <a href="#comment-text" title="引用iyue的这条留言" onclick="return CommentQuote('comment-quote-268772','iyue');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268776" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">cumirror</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268776">
+            <p>谢谢阮兄的好文。</p>
+
+<p>下面这篇文章中有关于硬盘分区的详细介绍：<br />
+<a href="http://wenku.baidu.com/view/4ec485d4b9f3f90f76c61bc0.html" rel="nofollow">http://wenku.baidu.com/view/4ec485d4b9f3f90f76c61bc0.html</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2013 10:44 PM">2013年2月16日 22:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268776">#</a>
+ | <a href="#comment-text" title="引用cumirror的这条留言" onclick="return CommentQuote('comment-quote-268776','cumirror');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268780" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">goddyang</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268780">
+            <p>我印象中MBR和partition table不是包含关系，MBR只包含最前面的446个字节的内容</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013 12:15 AM">2013年2月17日 00:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268780">#</a>
+ | <a href="#comment-text" title="引用goddyang的这条留言" onclick="return CommentQuote('comment-quote-268780','goddyang');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268798" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.nomarker.com" href="http://blog.nomarker.com" target="_blank" rel="nofollow">stone</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268798">
+            <blockquote>
+<pre>引用goddyang的发言：</pre>
+
+<p>我印象中MBR和partition table不是包含关系，MBR只包含最前面的446个字节的内容</p>
+
+</blockquote>
+
+<p>有几次安装系统，分区表正常，但是不能引导，重写MBR后可以引导了，所以我也有这种感觉。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013 10:01 AM">2013年2月17日 10:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268798">#</a>
+ | <a href="#comment-text" title="引用stone的这条留言" onclick="return CommentQuote('comment-quote-268798','stone');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268799" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yegong.net/" href="http://yegong.net/" target="_blank" rel="nofollow">夜弓</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268799">
+            <p>Gpt分区的还是和以上过程有些差别</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013 10:37 AM">2013年2月17日 10:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268799">#</a>
+ | <a href="#comment-text" title="引用夜弓的这条留言" onclick="return CommentQuote('comment-quote-268799','夜弓');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268800" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://gonejack.diandia.com" href="http://gonejack.diandia.com" target="_blank" rel="nofollow">姐姐</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268800">
+            <p>Master boot record是Master boot record，Partition table是Partition table，两者没有包含关系吧……</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013 11:37 AM">2013年2月17日 11:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268800">#</a>
+ | <a href="#comment-text" title="引用姐姐的这条留言" onclick="return CommentQuote('comment-quote-268800','姐姐');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268801" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">skywalker1114</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268801">
+            <p>阮兄：Bootstrap不是鞋带的意思，应该是“鞋子背带”的意思（http://en.wiktionary.org/wiki/bootstrap）<br />
+在这里隐喻表示一种不需要外部帮助自己能够处理事情的情形。<br />
+“pull oneself up by one's bootstraps”最初来自于《The Surprising Adventures of Baron Munchausen》这本书里的一个故事：主人公Baron Munchausen不小心掉进了一片沼泽，他通过自己的bootstraps将自己拉了出来（当然有童话神奇的色彩）。事实上在19世纪初美国就有"pull oneself over a fence by one's bootstraps"的语言，意思是“做荒谬不可能完成的事情”。<br />
+参考：http://en.wikipedia.org/wiki/Bootstrapping</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013  3:14 PM">2013年2月17日 15:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268801">#</a>
+ | <a href="#comment-text" title="引用skywalker1114的这条留言" onclick="return CommentQuote('comment-quote-268801','skywalker1114');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268805" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://endle.gitcafe.com" href="http://endle.gitcafe.com" target="_blank" rel="nofollow">endle</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268805">
+            <blockquote>
+<pre>引用夜弓的发言：</pre>
+
+<p>Gpt分区的还是和以上过程有些差别</p>
+
+</blockquote>
+
+<p>请问您能讲一下区别吗？我记得GPT是可以支持大于2T的硬盘空间的吧</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013  6:09 PM">2013年2月17日 18:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268805">#</a>
+ | <a href="#comment-text" title="引用endle的这条留言" onclick="return CommentQuote('comment-quote-268805','endle');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268806" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hi.baidu.com/new/bj0629" href="http://hi.baidu.com/new/bj0629" target="_blank" rel="nofollow">bj0629</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268806">
+            <p>从逻辑和原理上来分析，BIOS是为了适应不同的操作系统。如论是DOS，Windows还是UNIX都可以通过读取 BIOS 中硬盘、软盘、键盘、显示器、日期等实现外部I/O调用，以用于实现某种计算机平台的应用。如果只是为了专用的操作系统，没BIOS也照样可以工作。就是通过 reset vector 复位矢量，一个绝对跳转去执行相应的程序。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013  6:57 PM">2013年2月17日 18:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268806">#</a>
+ | <a href="#comment-text" title="引用bj0629的这条留言" onclick="return CommentQuote('comment-quote-268806','bj0629');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268807" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dakwing</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268807">
+            <p>bios提供类似API的东西（系统中断），如果没有bios，想操作输入输出设备那只能用out和in了，哪怕只是向屏幕输出一个字符或发出beep声</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 17, 2013  8:25 PM">2013年2月17日 20:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268807">#</a>
+ | <a href="#comment-text" title="引用dakwing的这条留言" onclick="return CommentQuote('comment-quote-268807','dakwing');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268817" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://service.weibo.com/reg/ajaxlogin.php?framelogin=1&callback=parent.sinaSSOController.feedBackUrlCallBack" href="http://service.weibo.com/reg/ajaxlogin.php?framelogin=1&callback=parent.sinaSSOController.feedBackUrlCallBack" target="_blank" rel="nofollow">mk</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268817">
+            <p>讲得很深入，</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 18, 2013 10:39 AM">2013年2月18日 10:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268817">#</a>
+ | <a href="#comment-text" title="引用mk的这条留言" onclick="return CommentQuote('comment-quote-268817','mk');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268818" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">noodles</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268818">
+            <p>单个硬盘最大只能利用2T的空间</p>
+
+<p>这个不是很明白</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 18, 2013 10:42 AM">2013年2月18日 10:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268818">#</a>
+ | <a href="#comment-text" title="引用noodles的这条留言" onclick="return CommentQuote('comment-quote-268818','noodles');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268820" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">GN_ghost</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268820">
+            <p>我不知道这个署名转载时应该怎样保持署名。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 18, 2013 10:52 AM">2013年2月18日 10:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268820">#</a>
+ | <a href="#comment-text" title="引用GN_ghost的这条留言" onclick="return CommentQuote('comment-quote-268820','GN_ghost');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268826" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.imtz.info" href="http://www.imtz.info" target="_blank" rel="nofollow">Terry Zheng</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268826">
+            <blockquote>
+<pre>引用Canson的发言：</pre>
+
+<p>的确，或者说即使不是UEFI，Legacy的Bios的故事也有别的变种。BIOS 工程师路过</p>
+
+</blockquote>
+
+<p>能介绍一下BIOS 的工作过程么, 从上电~POST 完成之间都做了什么, 还有BIOS程序是怎么启动的?<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 18, 2013  4:34 PM">2013年2月18日 16:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268826">#</a>
+ | <a href="#comment-text" title="引用Terry Zheng的这条留言" onclick="return CommentQuote('comment-quote-268826','Terry Zheng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268829" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">骑驴的桑乔</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268829">
+            <blockquote>
+<pre>引用Wht'for的发言：</pre>
+
+<p>&gt;&gt;&gt;计算机通电后，第一件事就是读取它。<br />
+我更好奇，是*什么*又是*怎么*读取的。</p>
+
+</blockquote>
+
+<p>好奇。硬件通电之后就自动去读取ROM里的BIOS程序？如何做到的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 18, 2013  5:07 PM">2013年2月18日 17:07</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268829">#</a>
+ | <a href="#comment-text" title="引用骑驴的桑乔的这条留言" onclick="return CommentQuote('comment-quote-268829','骑驴的桑乔');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268831" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yuchen</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268831">
+            <p>看完，明白了自检和硬盘引导的道理。<br />
+谢谢阮兄~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 18, 2013  9:50 PM">2013年2月18日 21:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268831">#</a>
+ | <a href="#comment-text" title="引用yuchen的这条留言" onclick="return CommentQuote('comment-quote-268831','yuchen');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268845" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fromoon</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268845">
+            <p>一般cpu是有固化的自检的，然后北桥，没问题之后才读入bios。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 19, 2013  1:20 PM">2013年2月19日 13:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268845">#</a>
+ | <a href="#comment-text" title="引用fromoon的这条留言" onclick="return CommentQuote('comment-quote-268845','fromoon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268863" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">落蓝轩主</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268863">
+            <blockquote>
+<pre>引用noodles的发言：</pre>
+
+<p>单个硬盘最大只能利用2T的空间</p>
+
+<p>这个不是很明白</p>
+
+</blockquote>
+
+<p>2的32次方*512Byte得出有多少Byte，然后再转化成TB。但是我不明白分区表最后四个字节为什么能够表示最多有2的32次方个扇区。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 19, 2013 11:17 PM">2013年2月19日 23:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268863">#</a>
+ | <a href="#comment-text" title="引用落蓝轩主的这条留言" onclick="return CommentQuote('comment-quote-268863','落蓝轩主');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268885" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Jak Wings</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268885">
+            <p>《计算机奥秘》第六版，对此也有不错的简介。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 20, 2013  8:33 AM">2013年2月20日 08:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268885">#</a>
+ | <a href="#comment-text" title="引用Jak Wings的这条留言" onclick="return CommentQuote('comment-quote-268885','Jak Wings');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268887" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Jak Wings</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268887">
+            <blockquote>
+<pre>引用Jak Wings的发言：</pre>
+
+<p>《计算机奥秘》第六版，对此也有不错的简介。</p>
+
+</blockquote>
+
+<p>呃，我记错了，也只是简单的说了个过程而已……不过那本书全都是彩页，页页配图，介绍了不少计算机相关的东西。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 20, 2013  8:42 AM">2013年2月20日 08:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268887">#</a>
+ | <a href="#comment-text" title="引用Jak Wings的这条留言" onclick="return CommentQuote('comment-quote-268887','Jak Wings');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268903" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">马小超</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268903">
+            <p>对于第三段的第3小节，MBR 的446字节机器码就是 boot loader吧？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 20, 2013  2:03 PM">2013年2月20日 14:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268903">#</a>
+ | <a href="#comment-text" title="引用马小超的这条留言" onclick="return CommentQuote('comment-quote-268903','马小超');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268907" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://rickyzhang.sinaapp.com" href="http://rickyzhang.sinaapp.com" target="_blank" rel="nofollow">成仔不说话</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268907">
+            <p>对于这个话题很感兴趣，根据自己了解的补充几点内存地址的东西：<br />
+1.计算机开机时，CPU默认执行0ffffh:0000h处的指令（8086是这样，386应该类似），而此内存地址应该存放的就是bios rom<br />
+2.bios执行玩post等后，将引导设备的mbr复制到内存地址07c00h处，跳转执行此处指令，这个地址应该是规定的<br />
+3.现在一般引导设备中的mbr是grub或lilo这样的引导程序，这样的程序首先将自己复制到06c00h处执行，在主分区表中搜索活动分区，将用户选择的活动分区的第一个扇区读入到07c00h处，调转到07c00h处执行<br />
+注：以上均在实模式中执行，还未进入保护模式<br />
+4.为加载内核做准备，并将控制权交给kernel，系统启动成功<br />
+注：这一步进入保护模式<br />
+当然这是现在一般的启动流程，当然如果自己写os，可以直接在引导设备的mbr中写直接加载内核的代码，将编译的代码dd入引导设备的mbr中即可。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 20, 2013  2:57 PM">2013年2月20日 14:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268907">#</a>
+ | <a href="#comment-text" title="引用成仔不说话的这条留言" onclick="return CommentQuote('comment-quote-268907','成仔不说话');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-268949" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://demi-panda.com" href="http://demi-panda.com" target="_blank" rel="nofollow">熊猫家族</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-268949">
+            <p>平时都没怎么注意这么细节  在这里学习啦  </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 21, 2013 10:05 AM">2013年2月21日 10:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-268949">#</a>
+ | <a href="#comment-text" title="引用熊猫家族的这条留言" onclick="return CommentQuote('comment-quote-268949','熊猫家族');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269007" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">狐说</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269007">
+            <p>每种CPU固定的从一个地址开始运行，用于自举的程序必须固定装载在这个地方。形态可以是多种多样的</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 22, 2013  1:37 PM">2013年2月22日 13:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269007">#</a>
+ | <a href="#comment-text" title="引用狐说的这条留言" onclick="return CommentQuote('comment-quote-269007','狐说');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269097" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://guisheng.li" href="http://guisheng.li" target="_blank" rel="nofollow">guisheng</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269097">
+            <p>bootstrap不是鞋带的意思，应是靴子后面方便把靴子穿上的那个拉环</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 24, 2013  4:55 PM">2013年2月24日 16:55</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269097">#</a>
+ | <a href="#comment-text" title="引用guisheng的这条留言" onclick="return CommentQuote('comment-quote-269097','guisheng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269128" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.jiawin.com" href="http://www.jiawin.com" target="_blank" rel="nofollow">Javin</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269128">
+            <p>"拽着鞋带把自己拉起来" 这个很形象。对于计算机有多了一些了解，感谢。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 25, 2013 11:19 AM">2013年2月25日 11:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269128">#</a>
+ | <a href="#comment-text" title="引用Javin的这条留言" onclick="return CommentQuote('comment-quote-269128','Javin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269347" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://mazheng.org" href="http://mazheng.org" target="_blank" rel="nofollow">冰上游鱼</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269347">
+            <p>从开始学计算机到现在一直想弄明白从按下计算机的启动按钮之后，每一个部件做了什么。本文讲的是大概的过程，细节恐怕很复杂，很难一一弄明白。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March  5, 2013  1:29 AM">2013年3月 5日 01:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269347">#</a>
+ | <a href="#comment-text" title="引用冰上游鱼的这条留言" onclick="return CommentQuote('comment-quote-269347','冰上游鱼');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269420" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Amy</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269420">
+            <p>不是很详细。希望楼主继续补充。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March  6, 2013  2:02 PM">2013年3月 6日 14:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269420">#</a>
+ | <a href="#comment-text" title="引用Amy的这条留言" onclick="return CommentQuote('comment-quote-269420','Amy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269600" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Nanthon</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269600">
+            <p>原来Boot还有这个典故，有意思～</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 11, 2013 12:14 AM">2013年3月11日 00:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269600">#</a>
+ | <a href="#comment-text" title="引用Nanthon的这条留言" onclick="return CommentQuote('comment-quote-269600','Nanthon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269604" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ifeve.com" href="http://ifeve.com" target="_blank" rel="nofollow">kiral</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269604">
+            <p>赞，这种学习的态度值得学习。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 11, 2013  1:58 AM">2013年3月11日 01:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269604">#</a>
+ | <a href="#comment-text" title="引用kiral的这条留言" onclick="return CommentQuote('comment-quote-269604','kiral');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269747" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.yonglife.com/" href="http://www.yonglife.com/" target="_blank" rel="nofollow">Yong</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269747">
+            <p>终于明白计算机的启动过程了，之前装Ubuntu、Win7双系统时对启动很迷茫...</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 15, 2013  2:02 PM">2013年3月15日 14:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269747">#</a>
+ | <a href="#comment-text" title="引用Yong的这条留言" onclick="return CommentQuote('comment-quote-269747','Yong');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269763" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">如墨</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269763">
+            <p>bootstrap:a loop at the back of a boot, used to pull it on.<br />
+这不就是鞋后跟上的“鞋拔子”吗？还是应该怎么叫？</p>
+
+<p>补：查了一下叫“拔靴带”</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 16, 2013  4:56 AM">2013年3月16日 04:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269763">#</a>
+ | <a href="#comment-text" title="引用如墨的这条留言" onclick="return CommentQuote('comment-quote-269763','如墨');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-269805" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://zhaopangzi.net" href="http://zhaopangzi.net" target="_blank" rel="nofollow">赵胖子</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-269805">
+            <p>学习，往往这些事情都不明白，自己还不去研究，博主有心了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 17, 2013 11:53 AM">2013年3月17日 11:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-269805">#</a>
+ | <a href="#comment-text" title="引用赵胖子的这条留言" onclick="return CommentQuote('comment-quote-269805','赵胖子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270062" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">工士</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270062">
+            <p>建议将Power-On Self-Test 翻译为 加电自检 或 开机自检</p>
+
+<p><br />
+加电自检又称为开机自我检测（英文Power-on self-test，常用简称POST）</p>
+
+<p><a href="http://zh.wikipedia.org/wiki/%E5%8A%A0%E7%94%B5%E8%87%AA%E6%A3%80" rel="nofollow">http://zh.wikipedia.org/wiki/%E5%8A%A0%E7%94%B5%E8%87%AA%E6%A3%80</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 22, 2013  1:29 PM">2013年3月22日 13:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-270062">#</a>
+ | <a href="#comment-text" title="引用工士的这条留言" onclick="return CommentQuote('comment-quote-270062','工士');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-270469" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Francise</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-270469">
+            <blockquote>
+<pre>引用落蓝轩主的发言：</pre>
+
+<p></p>
+
+<p>2的32次方*512Byte得出有多少Byte，然后再转化成TB。但是我不明白分区表最后四个字节为什么能够表示最多有2的32次方个扇区。</p>
+
+</blockquote>
+
+<p><br />
+4个字节,每个字节8位二进制字符(0,1),所以总共32位,于是2的32次方<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  6, 2013  7:20 PM">2013年4月 6日 19:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-270469">#</a>
+ | <a href="#comment-text" title="引用Francise的这条留言" onclick="return CommentQuote('comment-quote-270469','Francise');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-271143" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.sina.com.cn/hyx910208" href="http://blog.sina.com.cn/hyx910208" target="_blank" rel="nofollow">Hunthon</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-271143">
+            <p>- 计算机入门选手路过，希望看到越来越多的精彩博文！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  1, 2013  9:21 AM">2013年5月 1日 09:21</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-271143">#</a>
+ | <a href="#comment-text" title="引用Hunthon的这条留言" onclick="return CommentQuote('comment-quote-271143','Hunthon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-271313" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://没有啊" href="http://没有啊" target="_blank" rel="nofollow">林</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-271313">
+            <p>嗯   挺深奥的。<br />
+要是更清楚知道电脑的运行原理就更好；只知道它是以电为载体，就只知道0和1的信息，到底电脑是怎样识别这些数字逻辑信息的呢？如何变电流信息为电脑识别的信息。<br />
+没电脑前就只能写信 文字信息到有了电脑后的邮箱信息。<br />
+不可思议的创造，一个新鲜的东西在几十年前就出现了，而我活了二十年了还不知道那是怎么创造出来的。<br />
+求大神能解小弟疑惑啊。<br />
+万分感谢</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  5, 2013 10:59 PM">2013年5月 5日 22:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-271313">#</a>
+ | <a href="#comment-text" title="引用林的这条留言" onclick="return CommentQuote('comment-quote-271313','林');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-271375" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">jeacon</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-271375">
+            <blockquote>
+<pre>引用林的发言：</pre>
+
+<p>嗯 挺深奥的。<br />
+要是更清楚知道电脑的运行原理就更好；只知道它是以电为载体，就只知道0和1的信息，到底电脑是怎样识别这些数字逻辑信息的呢？如何变电流信息为电脑识别的信息。<br />
+没电脑前就只能写信 文字信息到有了电脑后的邮箱信息。<br />
+不可思议的创造，一个新鲜的东西在几十年前就出现了，而我活了二十年了还不知道那是怎么创造出来的。<br />
+求大神能解小弟疑惑啊。<br />
+万分感谢</p>
+
+</blockquote>
+
+<p>对于通过计算机系统的运行情况大致如下<br />
+首先源代码经过编译器变成可执行程序，可执行程序经过加载器加载到操作系统中，作为操作系统的一个进程运行，可执行程序可以理解为一条条可以被计算机CPU识别的机器码，然后CPU运行，至于CPU为什么可以运行，就需要知道数字电路中的知识，诸如加法电路，译码电路等逻辑电路知识，关于内存和CPU中的内部寄存器就需要了解数字电路中的时序电路，时序电路具备加电记忆的特点，用来实现寄存器。<br />
+数字电路研究的是0101这种高低电平之间转换和输入输出的规律。<br />
+至于数字电路的基础就要是模拟电路了，二极管三极管等等。大量的三极管构成了一个基本的数字电路单元，例如能够存储一位二进制数的寄存器。<br />
+而模拟电路研究的是大量电子在加压后的宏观运动规律，这种宏观体现到数字电路上就是01的高低电平。<br />
+那么单个电子的运动规律是如何的呢？这就需要电子量子学的知识作为支撑了，但是现在科技能够研究到的最深的领域，也就是量子了（电子也属于量子），至于我们以前所学习过的单个量子的运行规律不见得是对的，但是这并不影响到我们研究大量量子的运行规律，单个量子不好研究，但是大量量子就会呈现出来一定的规律性。</p>
+
+<p>当你研究到量子，你也就研究到了当今科学最前沿的东西了，也就没有办法更深了。。。</p>
+
+<p>不知我说的是否容易理解。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  8, 2013  1:53 PM">2013年5月 8日 13:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-271375">#</a>
+ | <a href="#comment-text" title="引用jeacon的这条留言" onclick="return CommentQuote('comment-quote-271375','jeacon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-271458" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">techon</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-271458">
+            <p>这是计算机的常规过程，关于启动这块现在正处于老式和BIOS-MBR和UEFI-GPT的过度阶段</p>
+
+<p>wiki上 UEFI的介绍：<br />
+<a href="https://zh.wikipedia.org/wiki/UEFI" rel="nofollow">https://zh.wikipedia.org/wiki/UEFI</a></p>
+
+<p>前一阵看到的一篇文章：新一代UEFI BIOS科普和探索系列<br />
+<a href="http://sphrbeu2012.blog.163.com/blog/static/209228074201331472248600/" rel="nofollow">http://sphrbeu2012.blog.163.com/blog/static/209228074201331472248600/</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 12, 2013  1:12 AM">2013年5月12日 01:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-271458">#</a>
+ | <a href="#comment-text" title="引用techon的这条留言" onclick="return CommentQuote('comment-quote-271458','techon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272010" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">冰与火</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272010">
+            <p>从您这儿了解到，为什么只能有4个主分区了。我之前想对硬盘分更多分区的时候（Windows 7），找到的解决办法是change the basic disk to dynamic disk on Disk 0.<br />
+当时成功的实现了扩展分区，很高兴。但并没有深究这个convertion对电脑又什么影响。<br />
+我觉得应该像您学习，追根溯源。<br />
+但是，我从网上也只是了解到Basic和Dynamic之间定义的区别，并没看到转换之间的区别。Windows社区里倒是有老外问起这个问题，似乎也得到了非常满意的答案，只是我没读懂那段英文的意思。http://social.technet.microsoft.com/Forums/en-US/winservergen/thread/cc90e135-4aa3-4ba0-8b22-057566dba5ec<br />
+有对此清楚的朋友，还望赐教！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  9, 2013 10:37 AM">2013年6月 9日 10:37</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-272010">#</a>
+ | <a href="#comment-text" title="引用冰与火的这条留言" onclick="return CommentQuote('comment-quote-272010','冰与火');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272187" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">niurg</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272187">
+            <p>写的非常好，可惜没有从头至尾学过，很多环节都很模糊。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 17, 2013  1:46 PM">2013年6月17日 13:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-272187">#</a>
+ | <a href="#comment-text" title="引用niurg的这条留言" onclick="return CommentQuote('comment-quote-272187','niurg');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-272498" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">张启杰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-272498">
+            <p>有一个文档“From Power UP to Bash Prompt”很好地描述了计算机启动的过程，可以到网上搜来看看。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July  4, 2013  4:00 PM">2013年7月 4日 16:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-272498">#</a>
+ | <a href="#comment-text" title="引用张启杰的这条留言" onclick="return CommentQuote('comment-quote-272498','张启杰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273119" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">shincepu</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273119">
+            <p>高质量博文 + 高质量回复。谢谢各位了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013 11:36 PM">2013年8月17日 23:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-273119">#</a>
+ | <a href="#comment-text" title="引用shincepu的这条留言" onclick="return CommentQuote('comment-quote-273119','shincepu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-275422" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.coderpi.info" href="http://blog.coderpi.info" target="_blank" rel="nofollow">peng</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-275422">
+            <blockquote>
+<pre>引用马小超的发言：</pre>
+
+<p>对于第三段的第3小节，MBR 的446字节机器码就是 boot loader吧？</p>
+
+</blockquote>
+
+<p>我记得也是这样 ，boot loader可以执行标准的动作来启动 ，但也可以干些其他事用其他方式启动， 就像grub那样，grub就是bootloader。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 23, 2013  8:23 PM">2013年9月23日 20:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-275422">#</a>
+ | <a href="#comment-text" title="引用peng的这条留言" onclick="return CommentQuote('comment-quote-275422','peng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-276647" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">李健</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-276647">
+            <p>老师：可以把你写这些文章的时候顺便把你的那些参考资料也记载一下吧。这样在看你的文章的时候也可以多学点，真心觉得写得不错。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 30, 2013 12:45 AM">2013年9月30日 00:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-276647">#</a>
+ | <a href="#comment-text" title="引用李健的这条留言" onclick="return CommentQuote('comment-quote-276647','李健');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-277364" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">篱下殇</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-277364">
+            <p>"所以单个硬盘可利用的空间最大也不超过2TB"这个没理解，应该是硬盘分区最大为2T吧</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  6, 2013  6:26 PM">2013年10月 6日 18:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-277364">#</a>
+ | <a href="#comment-text" title="引用篱下殇的这条留言" onclick="return CommentQuote('comment-quote-277364','篱下殇');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-279236" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.melote.com" href="http://www.melote.com" target="_blank" rel="nofollow">Melo</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-279236">
+            <p>本篇博文主要还是讲述的是intel的x86架构的启动原理，实际上arm启动原理与上述过程并不相同。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 19, 2013 12:09 PM">2013年10月19日 12:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-279236">#</a>
+ | <a href="#comment-text" title="引用Melo的这条留言" onclick="return CommentQuote('comment-quote-279236','Melo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-279238" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.melote.com" href="http://www.melote.com" target="_blank" rel="nofollow">Melo</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-279238">
+            <p>x86为了兼容以前的8086CPU，所以开机时进入实模式，实模式下是16位寻址方式，此时0ffffh:0000h的物理地址指向了32位寻址范围的4G内存的最后64K的16字节处，正是BIOS的ROM代码，BIOS的存在意义主要是建立一个中断向量表，然后用这些中断去检测和读取其他的设备，比如内存，硬盘等，最后会被操作系统的代码重新覆盖这些向量。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 19, 2013 12:17 PM">2013年10月19日 12:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-279238">#</a>
+ | <a href="#comment-text" title="引用Melo的这条留言" onclick="return CommentQuote('comment-quote-279238','Melo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-290399" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">孟帅</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-290399">
+            <p>这是Linux启动后的第一个进程，pid进程编号为1，其他进程都是它的后代。<br />
+对于这句话 我不太理解 怎么叫“其他进程都是它的后代”？是不是说，电脑开着的时候，这个进程一直在运行，一直占用着内存？后代用来比喻什么？进程之间的关系哪有后代之说？那不就是线程吗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 30, 2013  8:08 PM">2013年11月30日 20:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-290399">#</a>
+ | <a href="#comment-text" title="引用孟帅的这条留言" onclick="return CommentQuote('comment-quote-290399','孟帅');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-294104" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dliyc</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-294104">
+            <p>@jeacon：</p>
+
+<p>解释到数字电路就可以了，诸如触发器，加法器之类的。量子嘛，就扯的有点远了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 22, 2013  9:28 PM">2013年12月22日 21:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-294104">#</a>
+ | <a href="#comment-text" title="引用dliyc的这条留言" onclick="return CommentQuote('comment-quote-294104','dliyc');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-296433" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">鬼鬼</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-296433">
+            <p>扩展分区可以包含无数个逻辑分区       这个有限制的吧，不是无限的</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  6, 2014  3:38 PM">2014年1月 6日 15:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-296433">#</a>
+ | <a href="#comment-text" title="引用鬼鬼的这条留言" onclick="return CommentQuote('comment-quote-296433','鬼鬼');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-297377" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Song</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-297377">
+            <p>博主的文章 + “成仔不说话”的回复，对我的帮助最大。<br />
+博主让我知道了boot的真正含义，以前确实困惑过加载时“蛋和鸡”的问题。<br />
+接着对于ROM,BIOS,MBR512,4硬盘,2TB,都能理解。<br />
+就是困惑谁执行拷贝，搬运操作系统到内存，怎么交接控制权有点模糊。<br />
+“成仔不说话”的补充回答了我这个疑惑，包括：<br />
+“CPU默认执行0ffffh:0000h处的指令，rom-bios”<br />
+“将引导设备的mbr复制到内存地址07c00h处，跳转执行此处指令”<br />
+“grub或lilo这样的引导程序，先将自己复制到06c00h处执行，搜索活动分区读入到07c00h处，调转到07c00h处执行，控制权交给kernel”<br />
+kernel开始启动自己第一个进程init...<br />
+总结：<br />
+1）拷贝都是由前一个运行的程序执行。<br />
+2）控制权的交接是拷贝后执行跳转（应该是通过CPU的PC）。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 11, 2014 12:59 PM">2014年1月11日 12:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-297377">#</a>
+ | <a href="#comment-text" title="引用Song的这条留言" onclick="return CommentQuote('comment-quote-297377','Song');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-302352" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">路易十六</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-302352">
+            <p>怎么和鸟哥说的相左。假如，我双系统都安装在主分区，咋办？？<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 10, 2014  8:09 PM">2014年3月10日 20:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-302352">#</a>
+ | <a href="#comment-text" title="引用路易十六的这条留言" onclick="return CommentQuote('comment-quote-302352','路易十六');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-303693" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">the</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-303693">
+            <p>版主写的计算机启动是针对windows系统吗？<br />
+另外，文章中提到的分区表、主分区及逻辑分区这些概念也是针对windows系统吗？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="March 19, 2014  6:29 PM">2014年3月19日 18:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-303693">#</a>
+ | <a href="#comment-text" title="引用the的这条留言" onclick="return CommentQuote('comment-quote-303693','the');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-325904" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">北平℡</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-325904">
+            <p>相当不错啊；不过，你不可以用 Linux 系统举例。毕竟，我们大部分人都是计算机菜鸟，用了一辈子 Windows :)</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 30, 2014  1:41 AM">2014年5月30日 01:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-325904">#</a>
+ | <a href="#comment-text" title="引用北平℡的这条留言" onclick="return CommentQuote('comment-quote-325904','北平℡');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-330719" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.luciux.com" href="http://www.luciux.com" target="_blank" rel="nofollow">luciuz</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-330719">
+            <blockquote>
+<pre>引用北平℡的发言：</pre>
+
+<p>相当不错啊；不过，你不可以用 Linux 系统举例。毕竟，我们大部分人都是计算机菜鸟，用了一辈子 Windows :)</p>
+
+</blockquote>
+
+<p>说反了吧您？ 看到windows就觉得务必讨厌。码农应该和我有同感吧</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 10, 2014  7:49 PM">2014年7月10日 19:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-330719">#</a>
+ | <a href="#comment-text" title="引用luciuz的这条留言" onclick="return CommentQuote('comment-quote-330719','luciuz');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-338097" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fyzjhh</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-338097">
+            <p>有个疑惑，当选择了一个启动设备之后，如何决定是 分区启动（3.1 情况A：卷引导记录） 还是 启动管理器（3.3 情况C：启动管理器） 启动呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 16, 2014 11:06 AM">2014年9月16日 11:06</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-338097">#</a>
+ | <a href="#comment-text" title="引用fyzjhh的这条留言" onclick="return CommentQuote('comment-quote-338097','fyzjhh');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341229" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fyzjhh</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341229">
+            <p>相当不错啊；不过，你不可以用 Linux 系统举例。毕竟，我们大部分人都是计算机菜鸟，用了一辈子.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 11, 2014  1:46 PM">2014年10月11日 13:46</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-341229">#</a>
+ | <a href="#comment-text" title="引用fyzjhh的这条留言" onclick="return CommentQuote('comment-quote-341229','fyzjhh');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-345969" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">loszer</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-345969">
+            <p>非常感谢，很清晰呢，受益匪浅</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  8, 2014  8:25 PM">2014年12月 8日 20:25</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-345969">#</a>
+ | <a href="#comment-text" title="引用loszer的这条留言" onclick="return CommentQuote('comment-quote-345969','loszer');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-346246" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">水中月镜中花</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-346246">
+            <p>计算机先读取扩展分区的第一个扇区，叫做"扩展引导记录"（Extended boot record，缩写为EBR）。它里面也包含一张64字节的分区表，但是最多只有两项（也就是两个逻辑分区）。<br />
+计算机接着读取第二个逻辑分区的第一个扇区，再从里面的分区表中找到第三个逻辑分区的位置，以此类推，直到某个逻辑分区的分区表只包含它自身为止（即只有一个分区项）。因此，扩展分区可以包含无数个逻辑分区。<br />
+但是，似乎很少通过这种方式启动操作系统。如果操作系统确实安装在扩展分区，一般采用下一种方式启动。<br />
+这段话没有看懂<br />
+-----前面一句话是说扩展分区的第一个扇区最多有两个逻辑分区还是说整个扩展分区最多只能有两个逻辑分区呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 12, 2014 10:08 PM">2014年12月12日 22:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-346246">#</a>
+ | <a href="#comment-text" title="引用水中月镜中花的这条留言" onclick="return CommentQuote('comment-quote-346246','水中月镜中花');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-347451" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Zhiqiang He</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-347451">
+            <p>>以Linux系统为例，先载入/boot目录下面的kernel。内核加载成功后，第一个运行的程序是/sbin/init。它根据配置文件（Debian系统是/etc/initab）产生init进程。这是Linux启动后的第一个进程，pid进程编号为1，其他进程都是它的后代。</p>
+
+<p>刚刚看了下, Debian init配置文件是 /etc/inittab ,文中应该有个小错误</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 23, 2015  7:22 PM">2015年1月23日 19:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-347451">#</a>
+ | <a href="#comment-text" title="引用Zhiqiang He的这条留言" onclick="return CommentQuote('comment-quote-347451','Zhiqiang He');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-348116" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://fishpig.org" href="http://fishpig.org" target="_blank" rel="nofollow">newbie</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-348116">
+            <p>很难让我了解了下启动的情节，厉害！！不过现在UEFI流行起来了，希望能看到有关UEFI的启动方面的文章！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="February 16, 2015  8:23 PM">2015年2月16日 20:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-348116">#</a>
+ | <a href="#comment-text" title="引用newbie的这条留言" onclick="return CommentQuote('comment-quote-348116','newbie');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-349800" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">陈siyi</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-349800">
+            <blockquote>
+<pre>引用cumirror的发言：</pre>
+
+<p>谢谢阮兄的好文。</p>
+
+<p>下面这篇文章中有关于硬盘分区的详细介绍：<br />
+<a href="http://wenku.baidu.com/view/4ec485d4b9f3f90f76c61bc0.html" rel="nofollow">http://wenku.baidu.com/view/4ec485d4b9f3f90f76c61bc0.html</a></p>
+
+</blockquote>
+
+<p>我也挺想知道物理实现过程，学软件编程这么久底层的东西反而一点都弄不清</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May 19, 2015 11:43 PM">2015年5月19日 23:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-349800">#</a>
+ | <a href="#comment-text" title="引用陈siyi的这条留言" onclick="return CommentQuote('comment-quote-349800','陈siyi');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351368" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">huangyan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351368">
+            <p>关于　“MBR的第1-446字节是调用操作系统的机器码”,　请问这是和文件系统有关的设定吗（比如ext４或者FAT系统都是这样）？　还是说和硬件有关（比如硬盘是这样，但软盘就不是）？<br />
+问这个问题是因为我看过用软盘自制操作系统的教程，并不是把第1-446字节作为调用操作系统的机器码。</p>
+
+<p>谢谢峰哥！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 21, 2015 10:54 PM">2015年8月21日 22:54</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-351368">#</a>
+ | <a href="#comment-text" title="引用huangyan的这条留言" onclick="return CommentQuote('comment-quote-351368','huangyan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-352479" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Action</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-352479">
+            <p>真是高质量博文+高质量评论。越看越迷糊。。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 31, 2015 11:29 AM">2015年10月31日 11:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html#comment-352479">#</a>
+ | <a href="#comment-text" title="引用Action的这条留言" onclick="return CommentQuote('comment-quote-352479','Action');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1765" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

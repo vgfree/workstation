@@ -1,0 +1,3035 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2013/07/how_to_make_search_engines_find_ajax_content.html" title="如何让搜索引擎抓取AJAX内容？" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2013/08/influence_the_psychology_of_persuasion.html" title="人类的心理行为模式----《影响力》笔记" />
+    
+    <title>Linux 的启动流程 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1785" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2013/07/how_to_make_search_engines_find_ajax_content.html" title="如何让搜索引擎抓取AJAX内容？">如何让搜索引擎抓取AJ</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2013/08/influence_the_psychology_of_persuasion.html" title="人类的心理行为模式----《影响力》笔记">人类的心理行为模式--</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/computer/" rel="tag">理解计算机</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">Linux 的启动流程</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2013/08/"><abbr class="published" title="2013-08-17T16:37:08+08:00">2013年8月17日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>半年前，我写了<a href="http://www.ruanyifeng.com/blog/2013/02/booting.html">《计算机是如何启动的？》</a>，探讨BIOS和主引导记录的作用。</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>那篇文章不涉及操作系统，只与主板的板载程序有关。今天，我想接着往下写，探讨操作系统接管硬件以后发生的事情，也就是操作系统的启动流程。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081701.png" /></p>
+
+<p>这个部分比较有意思。因为在BIOS阶段，计算机的行为基本上被写死了，程序员可以做的事情并不多；但是，一旦进入操作系统，程序员几乎可以定制所有方面。所以，这个部分与程序员的关系更密切。</p>
+
+<p>我主要关心的是Linux操作系统，它是目前服务器端的主流操作系统。下面的内容针对的是<a href="http://en.wikipedia.org/wiki/Debian">Debian</a>发行版，因为我对其他发行版不够熟悉。</p>
+
+<p><strong>第一步、加载内核</strong></p>
+
+<p>操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081702.png" /></p>
+
+<p>以我的电脑为例，/boot 目录下面大概是这样一些文件：</p>
+
+<blockquote><pre><code class="language-bash">
+　　$ ls /boot
+　　
+　　config-3.2.0-3-amd64
+　　config-3.2.0-4-amd64
+　　grub
+　　initrd.img-3.2.0-3-amd64
+　　initrd.img-3.2.0-4-amd64
+　　System.map-3.2.0-3-amd64
+　　System.map-3.2.0-4-amd64
+　　vmlinuz-3.2.0-3-amd64
+　　vmlinuz-3.2.0-4-amd64
+　　
+</code></pre></blockquote>
+
+<p><strong>第二步、启动初始化进程</strong></p>
+
+<p>内核文件加载以后，就开始运行第一个程序 /sbin/init，它的作用是初始化系统环境。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081703.png" /></p>
+
+<p>由于init是第一个运行的程序，它的进程编号（pid）就是1。其他所有进程都从它衍生，都是它的子进程。</p>
+
+<p><strong>第三步、确定运行级别</strong></p>
+
+<p>许多程序需要开机启动。它们在Windows叫做"服务"（service），在Linux就叫做"<a href="http://zh.wikipedia.org/wiki/%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B">守护进程</a>"（daemon）。</p>
+
+<p>init进程的一大任务，就是去运行这些开机启动的程序。但是，不同的场合需要启动不同的程序，比如用作服务器时，需要启动Apache，用作桌面就不需要。Linux允许为不同的场合，分配不同的开机启动程序，这就叫做"<a href="http://zh.wikipedia.org/wiki/%E8%BF%90%E8%A1%8C%E7%BA%A7%E5%88%AB">运行级别</a>"（runlevel）。也就是说，启动时根据"运行级别"，确定要运行哪些程序。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081704.png" /></p>
+
+<p>Linux预置七种运行级别（0-6）。一般来说，0是关机，1是单用户模式（也就是维护模式），6是重启。运行级别2-5，各个发行版不太一样，对于Debian来说，都是同样的多用户模式（也就是正常模式）。</p>
+
+<p>init进程首先读取文件 /etc/inittab，它是运行级别的设置文件。如果你打开它，可以看到第一行是这样的：</p>
+
+<blockquote><pre><code class="language-bash">
+　　id:2:initdefault:
+　　
+</code></pre></blockquote>
+
+<p>initdefault的值是2，表明系统启动时的运行级别为2。如果需要指定其他级别，可以手动修改这个值。</p>
+
+<p>那么，运行级别2有些什么程序呢，系统怎么知道每个级别应该加载哪些程序呢？......回答是每个运行级别在/etc目录下面，都有一个对应的子目录，指定要加载的程序。</p>
+
+<blockquote><pre><code class="language-bash">
+　　/etc/rc0.d
+　　/etc/rc1.d
+　　/etc/rc2.d
+　　/etc/rc3.d
+　　/etc/rc4.d
+　　/etc/rc5.d
+　　/etc/rc6.d
+　　
+</code></pre></blockquote>
+
+<p>上面目录名中的"rc"，表示run command（运行程序），最后的d表示directory（目录）。下面让我们看看 /etc/rc2.d 目录中到底指定了哪些程序。</p>
+
+<blockquote><pre><code class="language-bash">
+　　$ ls  /etc/rc2.d
+　　
+　　README
+　　S01motd
+　　S13rpcbind
+　　S14nfs-common
+　　S16binfmt-support
+　　S16rsyslog
+　　S16sudo
+　　S17apache2
+　　S18acpid
+　　...
+　　
+</code></pre></blockquote>
+
+<p>可以看到，除了第一个文件README以外，其他文件名都是"字母S+两位数字+程序名"的形式。字母S表示Start，也就是启动的意思（启动脚本的运行参数为start），如果这个位置是字母K，就代表Kill（关闭），即如果从其他运行级别切换过来，需要关闭的程序（启动脚本的运行参数为stop）。后面的两位数字表示处理顺序，数字越小越早处理，所以第一个启动的程序是motd，然后是rpcbing、nfs......数字相同时，则按照程序名的字母顺序启动，所以rsyslog会先于sudo启动。</p>
+
+<p>这个目录里的所有文件（除了README），就是启动时要加载的程序。如果想增加或删除某些程序，不建议手动修改 /etc/rcN.d 目录，最好是用一些专门命令进行管理（参考<a href="http://www.debianadmin.com/manage-linux-init-or-startup-scripts.html">这里</a>和<a href="http://www.debianadmin.com/remove-unwanted-startup-files-or-services-in-debian.html">这里</a>）。</p>
+
+<p><strong>第四步、加载开机启动程序</strong></p>
+
+<p>前面提到，七种预设的"运行级别"各自有一个目录，存放需要开机启动的程序。不难想到，如果多个"运行级别"需要启动同一个程序，那么这个程序的启动脚本，就会在每一个目录里都有一个拷贝。这样会造成管理上的困扰：如果要修改启动脚本，岂不是每个目录都要改一遍？</p>
+
+<p>Linux的解决办法，就是七个 /etc/rcN.d 目录里列出的程序，都设为链接文件，指向另外一个目录 /etc/init.d ，真正的启动脚本都统一放在这个目录中。init进程逐一加载开机启动程序，其实就是运行这个目录里的启动脚本。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081705.png" /></p>
+
+<p>下面就是链接文件真正的指向。</p>
+
+<blockquote><pre><code class="language-bash">
+　　$ ls -l /etc/rc2.d
+　　
+　　README
+　　S01motd -> ../init.d/motd
+　　S13rpcbind -> ../init.d/rpcbind
+　　S14nfs-common -> ../init.d/nfs-common
+　　S16binfmt-support -> ../init.d/binfmt-support
+　　S16rsyslog -> ../init.d/rsyslog
+　　S16sudo -> ../init.d/sudo
+　　S17apache2 -> ../init.d/apache2
+　　S18acpid -> ../init.d/acpid
+　　...
+　　
+</code></pre></blockquote>
+
+<p>这样做的另一个好处，就是如果你要手动关闭或重启某个进程，直接到目录 /etc/init.d 中寻找启动脚本即可。比如，我要重启Apache服务器，就运行下面的命令：</p>
+
+<blockquote><pre><code class="language-bash">
+　　$ sudo /etc/init.d/apache2 restart
+　　
+</code></pre></blockquote>
+
+<p>/etc/init.d 这个目录名最后一个字母d，是directory的意思，表示这是一个目录，用来与程序 /etc/init 区分。</p>
+
+<p><strong>第五步、用户登录</strong></p>
+
+<p>开机启动程序加载完毕以后，就要让用户登录了。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081706.png" /></p>
+
+<p>一般来说，用户的登录方式有三种：</p>
+
+<blockquote>
+
+<p>　　（1）命令行登录</p>
+
+<p>　　（2）ssh登录</p>
+
+<p>　　（3）图形界面登录</p>
+
+</blockquote>
+
+<p>这三种情况，都有自己的方式对用户进行认证。</p>
+
+<p>（1）命令行登录：init进程调用getty程序（意为get teletype），让用户输入用户名和密码。输入完成后，再调用login程序，核对密码（Debian还会再多运行一个身份核对程序/etc/pam.d/login）。如果密码正确，就从文件 /etc/passwd 读取该用户指定的shell，然后启动这个shell。</p>
+
+<p>（2）ssh登录：这时系统调用sshd程序（Debian还会再运行/etc/pam.d/ssh  ），取代getty和login，然后启动shell。</p>
+
+<p>（3）图形界面登录：init进程调用显示管理器，Gnome图形界面对应的显示管理器为gdm（GNOME Display Manager），然后用户输入用户名和密码。如果密码正确，就读取/etc/gdm3/Xsession，启动用户的会话。</p>
+
+<p><strong>第六步、进入 login shell</strong></p>
+
+<p>所谓shell，简单说就是命令行界面，让用户可以直接与操作系统对话。用户登录时打开的shell，就叫做login shell。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081707.png" /></p>
+
+<p>Debian默认的shell是<a href="http://zh.wikipedia.org/wiki/Bash">Bash</a>，它会读入一系列的配置文件。上一步的三种情况，在这一步的处理，也存在差异。</p>
+
+<p>（1）命令行登录：首先读入 /etc/profile，这是对所有用户都有效的配置；然后依次寻找下面三个文件，这是针对当前用户的配置。</p>
+
+<blockquote><pre><code class="language-bash">
+　　~/.bash_profile
+　　~/.bash_login
+　　~/.profile
+　　
+</code></pre></blockquote>
+
+<p>需要注意的是，这三个文件只要有一个存在，就不再读入后面的文件了。比如，要是 ~/.bash_profile 存在，就不会再读入后面两个文件了。</p>
+
+<p>（2）ssh登录：与第一种情况完全相同。</p>
+
+<p>（3）图形界面登录：只加载 /etc/profile 和 ~/.profile。也就是说，~/.bash_profile 不管有没有，都不会运行。</p>
+
+<p><strong>第七步，打开 non-login shell</strong></p>
+
+<p>老实说，上一步完成以后，Linux的启动过程就算结束了，用户已经可以看到命令行提示符或者图形界面了。但是，为了内容的完整，必须再介绍一下这一步。</p>
+
+<p>用户进入操作系统以后，常常会再手动开启一个shell。这个shell就叫做 non-login shell，意思是它不同于登录时出现的那个shell，不读取/etc/profile和.profile等配置文件。</p>
+
+<p><img src="http://image.beekka.com/blog/201308/bg2013081708.png" /></p>
+
+<p>non-login shell的重要性，不仅在于它是用户最常接触的那个shell，还在于它会读入用户自己的bash配置文件 ~/.bashrc。大多数时候，我们对于bash的定制，都是写在这个文件里面的。</p>
+
+<p>你也许会问，要是不进入 non-login shell，岂不是.bashrc就不会运行了，因此bash 也就不能完成定制了？事实上，Debian已经考虑到这个问题了，请打开文件  ~/.profile，可以看到下面的代码：</p>
+
+<blockquote><pre><code class="language-bash">
+　　if [ -n "$BASH_VERSION" ]; then
+　　　　if [ -f "$HOME/.bashrc" ]; then
+　　　　　　. "$HOME/.bashrc"
+　　　　fi
+　　fi
+　　
+</code></pre></blockquote>
+
+<p>上面代码先判断变量 $BASH_VERSION 是否有值，然后判断主目录下是否存在 .bashrc 文件，如果存在就运行该文件。第三行开头的那个点，是source命令的简写形式，表示运行某个文件，写成"source ~/.bashrc"也是可以的。</p>
+
+<p>因此，只要运行～/.profile文件，～/.bashrc文件就会连带运行。但是上一节的第一种情况提到过，如果存在～/.bash_profile文件，那么有可能不会运行～/.profile文件。解决这个问题很简单，把下面代码写入.bash_profile就行了。</p>
+
+<blockquote><pre><code class="language-bash">
+　　if [ -f ~/.profile ]; then
+　　　　. ~/.profile
+　　fi
+　　
+</code></pre></blockquote>
+
+<p>这样一来，不管是哪种情况，.bashrc都会执行，用户的设置可以放心地都写入这个文件了。</p>
+
+<p>Bash的设置之所以如此繁琐，是由于历史原因造成的。早期的时候，计算机运行速度很慢，载入配置文件需要很长时间，Bash的作者只好把配置文件分成了几个部分，阶段性载入。系统的通用设置放在 /etc/profile，用户个人的、需要被所有子进程继承的设置放在.profile，不需要被继承的设置放在.bashrc。</p>
+
+<p>顺便提一下，除了Linux以外， Mac OS X 使用的shell也是Bash。但是，它只加载.bash_profile，然后在.bash_profile里面调用.bashrc。而且，不管是ssh登录，还是在图形界面里启动shell窗口，都是如此。</p>
+
+<p><strong>参考链接</strong></p>
+
+<blockquote>
+
+<p>[1] Debian Wiki, <a href="https://wiki.debian.org/EnvironmentVariables">Environment Variables</a></p>
+
+<p>[2] Debian Wiki, <a href="https://wiki.debian.org/DotFiles">Dot Files</a></p>
+
+<p>[3] Debian Administration,  <a href="http://www.debian-administration.org/articles/212">An introduction to run-levels</a> </p>
+
+<p>[4] Debian Admin，<a href="http://www.debianadmin.com/debian-and-ubuntu-linux-run-levels.html">Debian and Ubuntu Linux Run Levels </a></p>
+
+<p>[5] Linux Information Project (LINFO), <a href="http://www.linfo.org/runlevel_def.html">Runlevel Definition</a></p>
+
+<p>[6] LinuxQuestions.org, <a href=" http://wiki.linuxquestions.org/wiki/Run_Levels">What are run levels? </a></p>
+
+<p>[7] Dalton Hubble, <a href="http://dghubble.com/.bashprofile-.profile-and-.bashrc-conventions.html">Bash Configurations Demystified</a> </p>
+
+</blockquote>
+
+<p>（完）<br />
+</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2013-08-17T16:37:08+08:00">2013年8月17日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/computer/"> 理解计算机</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2015.09.28: <a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></strong>
+
+                           <div class="entry-body">
+                              《计算机原理》课本说，启动时，主引导记录会存入内存地址0x7C00。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2015.07.16: <a href="http://www.ruanyifeng.com/blog/2015/07/monad.html">图解 Monad</a></strong>
+
+                           <div class="entry-body">
+                              函数式编程有一个重要概念，叫做Monad。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.11.11: <a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html">编译器的工作过程</a></strong>
+
+                           <div class="entry-body">
+                              源码要运行，必须先转成二进制的机器码。这是编译器的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.09.07: <a href="http://www.ruanyifeng.com/blog/2014/09/information-entropy.html">数据压缩与信息熵</a></strong>
+
+                           <div class="entry-body">
+                              1992年，美国佐治亚州的WEB Technology公司，宣布做出了重大的技术突破。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（70条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-273100" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">mizpah.</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273100">
+            <p>linux感觉突然从今年突然名声噪起。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  4:48 PM">2013年8月17日 16:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273100">#</a>
+ | <a href="#comment-text" title="引用mizpah.的这条留言" onclick="return CommentQuote('comment-quote-273100','mizpah.');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273101" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.tsnrose.com" href="http://blog.tsnrose.com" target="_blank" rel="nofollow">zhiyelee</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273101">
+            <p>perfect，豁然开朗</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  4:58 PM">2013年8月17日 16:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273101">#</a>
+ | <a href="#comment-text" title="引用zhiyelee的这条留言" onclick="return CommentQuote('comment-quote-273101','zhiyelee');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273102" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://sunweiwei.com" href="http://sunweiwei.com" target="_blank" rel="nofollow">simon</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273102">
+            <blockquote>
+<pre>引用mizpah.的发言：</pre>
+
+<p>linux感觉突然从今年突然名声噪起。</p>
+
+</blockquote>
+
+<p>linux一直很火，服务器上面的王者。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  5:00 PM">2013年8月17日 17:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273102">#</a>
+ | <a href="#comment-text" title="引用simon的这条留言" onclick="return CommentQuote('comment-quote-273102','simon');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273103" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">imorz</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273103">
+            <p>还有很多 .d 结尾的文件夹，比如 if-up.d, cron.d, pam.d, apparmor.d，但似乎不是都与 deamon 有关？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  5:12 PM">2013年8月17日 17:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273103">#</a>
+ | <a href="#comment-text" title="引用imorz的这条留言" onclick="return CommentQuote('comment-quote-273103','imorz');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273104" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">kkk</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273104">
+            <p>现在好多都改systemd了..和init不一样啊<br />
+能再讲讲systemd的流程么？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  5:20 PM">2013年8月17日 17:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273104">#</a>
+ | <a href="#comment-text" title="引用kkk的这条留言" onclick="return CommentQuote('comment-quote-273104','kkk');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273105" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">呵呵呵</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273105">
+            <blockquote>
+<pre>引用mizpah.的发言：</pre>
+
+<p>linux感觉突然从今年突然名声噪起。</p>
+
+</blockquote>
+
+<p>windown感觉突然从今年突然名声噪起。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  5:42 PM">2013年8月17日 17:42</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273105">#</a>
+ | <a href="#comment-text" title="引用呵呵呵的这条留言" onclick="return CommentQuote('comment-quote-273105','呵呵呵');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273106" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://orzfly.com" href="http://orzfly.com" target="_blank" rel="nofollow">orzFly</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273106">
+            <blockquote>
+<pre>引用imorz的发言：</pre>
+
+<p>还有很多 .d 结尾的文件夹，比如 if-up.d, cron.d, pam.d, apparmor.d，但似乎不是都与 deamon 有关？</p>
+
+</blockquote>
+
+<p><a href="http://unix.stackexchange.com/questions/4029/what-does-the-d-stand-for-in-directory-names" rel="nofollow">参考</a>：<br />
+<blockquote><br />
+The .d suffix here means directory. Of course, this would be unnecessary as Unix doesn't require a suffix to denote a file type but in that specific case, something was necessary to disambiguate the commands (/etc/init, /etc/rc0, /etc/rc1 and so on) an the directories they use (/etc/init.d, /etc/rc0.d, ...)<br />
+</blockquote></p>
+
+<p>希望博主能够重新考虑一下这个问题。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  7:02 PM">2013年8月17日 19:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273106">#</a>
+ | <a href="#comment-text" title="引用orzFly的这条留言" onclick="return CommentQuote('comment-quote-273106','orzFly');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273107" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">江南胡杨</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273107">
+            <blockquote>
+<pre>引用mizpah.的发言：</pre>
+
+<p>linux感觉突然从今年突然名声噪起。</p>
+
+</blockquote>
+
+<p>是你才开始关注Linux：）</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  7:02 PM">2013年8月17日 19:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273107">#</a>
+ | <a href="#comment-text" title="引用江南胡杨的这条留言" onclick="return CommentQuote('comment-quote-273107','江南胡杨');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273108" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">哇咔咔</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273108">
+            <p>改版了，不错</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  7:14 PM">2013年8月17日 19:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273108">#</a>
+ | <a href="#comment-text" title="引用哇咔咔的这条留言" onclick="return CommentQuote('comment-quote-273108','哇咔咔');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273109" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Anonymous</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273109">
+            <p>很多东西说的不足。<br />
+1. 普适性缺乏<br />
+现在debian自己都在讨论要不要引入systemd，RHEL7 alpha1～3(别问为啥我能拿到alpha)/Fedora/Archlinux都已经完全迁移到systemd，ubuntu用自家的upstart，大概只有debian和gentoo还在用SystemV的这一套了，因该先将通用的内容，比如init程序，然后再说各种init程序的实现，如systemV/systemd/upstart等等<br />
+由于init有不同的实现，所以那些进程脚本位置都有差别。</p>
+
+<p>2. 缺乏细节<br />
+即便这篇文章不是针对Linux内核启动的代码分析级别的细致分析，也应该更多的提到bootloader。<br />
+最误导人的是读取内核那边，明明是内核+initrd一起读取的。<br />
+并且几乎所有非嵌入式发行版通用的initrd这个细节完全没有提到。<br />
+其中提到的init程序实际上只要用了initrd都是从initrd里面起起来的。还有initrd的双rootfs等重要的排错机制没提到。</p>
+
+<p>同样第六步提到的各种配置文件，这个一样少了很多东西。<br />
+比如pam_env的pam模块就会读取/etc/environment的配置文件，对于这种可以灵活配置的东西因该介绍的是如何自己去寻找读取顺序，而不是只说有哪些。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  7:16 PM">2013年8月17日 19:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273109">#</a>
+ | <a href="#comment-text" title="引用Anonymous的这条留言" onclick="return CommentQuote('comment-quote-273109','Anonymous');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273110" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://terry.im" href="http://terry.im" target="_blank" rel="nofollow">Terry</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273110">
+            <p>这是 SysV init 别忘了提醒大家还有 Ubuntu 的 Upstart 和未来的标准 systemd （Arch Linux, Fedora 和 Suse 已经在用了）。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  7:27 PM">2013年8月17日 19:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273110">#</a>
+ | <a href="#comment-text" title="引用Terry的这条留言" onclick="return CommentQuote('comment-quote-273110','Terry');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273111" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://terry.im" href="http://terry.im" target="_blank" rel="nofollow">Terry</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273111">
+            <p>提到 initrd 不得不提一下这货从 ramdisk 到 ramfs 的转变。详见： <a href="https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt" rel="nofollow">https://www.kernel.org/doc/Documentation/filesystems/ramfs-rootfs-initramfs.txt</a></p>
+
+<p>另外 IBM DeveloperWorks 上有几篇关于 Linux 启动流程和 initrd / initramfs 的文章很不错，可以参考来补充这篇。 </p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  8:51 PM">2013年8月17日 20:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273111">#</a>
+ | <a href="#comment-text" title="引用Terry的这条留言" onclick="return CommentQuote('comment-quote-273111','Terry');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273112" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://evojimmy.com/jimmie" href="http://evojimmy.com/jimmie" target="_blank" rel="nofollow">Jimmie</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273112">
+            <blockquote>
+<pre>引用imorz的发言：</pre>
+
+<p>还有很多 .d 结尾的文件夹，比如 if-up.d, cron.d, pam.d, apparmor.d，但似乎不是都与 deamon 有关？</p>
+
+</blockquote>
+
+<p>.d可以是directory的缩写，比如我熟悉的emacs会读取配置文件.emacs，或者进入文件夹 .emacs.d 读取配置文件。加.d可能是提示这是一个文件夹吧</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  9:32 PM">2013年8月17日 21:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273112">#</a>
+ | <a href="#comment-text" title="引用Jimmie的这条留言" onclick="return CommentQuote('comment-quote-273112','Jimmie');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273113" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://baiyanhuang.cnblogs.com/" href="http://baiyanhuang.cnblogs.com/" target="_blank" rel="nofollow">lzprgmr</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273113">
+            <p>照你的图的描述好似先运行init.d中所有的程序，然后运行rcN.d里面所有的程序 - 但逻辑上判断貌似只是运行 rcN.d中的所有程序（选择性的symbolic link到init.d）- 应该是后者吧</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  9:39 PM">2013年8月17日 21:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273113">#</a>
+ | <a href="#comment-text" title="引用lzprgmr的这条留言" onclick="return CommentQuote('comment-quote-273113','lzprgmr');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273114" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://biergaizi.info" href="http://biergaizi.info" target="_blank" rel="nofollow">比尔盖子</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273114">
+            <p>其中提到的 non-login Shell 感觉容易和 nologin shell 混淆，建议注明。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013  9:44 PM">2013年8月17日 21:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273114">#</a>
+ | <a href="#comment-text" title="引用比尔盖子的这条留言" onclick="return CommentQuote('comment-quote-273114','比尔盖子');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273116" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273116">
+            <blockquote>
+<pre>引用orzFly的发言：</pre>
+
+<p>希望博主能够重新考虑一下这个问题。</p>
+
+</blockquote>
+
+<p>谢谢指出，已经改过来了。不好意思，我一直以外这个d是 daemon 的意思。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013 10:03 PM">2013年8月17日 22:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273116">#</a>
+ | <a href="#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote('comment-quote-273116','阮一峰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273117" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">henry_wu001</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273117">
+            <p>是不是文章修改过后rss里面会出现2个，上一个点出来无效了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013 10:32 PM">2013年8月17日 22:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273117">#</a>
+ | <a href="#comment-text" title="引用henry_wu001的这条留言" onclick="return CommentQuote('comment-quote-273117','henry_wu001');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273118" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.07q.net" href="http://www.07q.net" target="_blank" rel="nofollow">dcxy0</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273118">
+            <p>不错，写的非常棒，长了很多知识啊！<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 17, 2013 10:47 PM">2013年8月17日 22:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273118">#</a>
+ | <a href="#comment-text" title="引用dcxy0的这条留言" onclick="return CommentQuote('comment-quote-273118','dcxy0');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273121" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">sheep</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273121">
+            <blockquote>
+<pre>引用orzFly的发言：</pre>
+
+<p></p>
+
+<p>希望博主能够重新考虑一下这个问题。</p>
+
+</blockquote>
+
+<p>.d 结尾是代表与 SysV init相关的配置文件，init是有很多种实现的，上一代的是SysV init,现在是两种，即Ubuntu所使用的Upstart实现以及主流的systemd实现，两种新的实现都兼容老的SysV init配置文件，但实际上几乎没有什么主流distro真的在用SysV init了，都是通过兼容实现的,所以有必要看一下systemd和upstart的手册和文档（runlevel这个概念其实也是老的SysV init里面的）</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 18, 2013 12:52 AM">2013年8月18日 00:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273121">#</a>
+ | <a href="#comment-text" title="引用sheep的这条留言" onclick="return CommentQuote('comment-quote-273121','sheep');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273122" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273122">
+            <blockquote>
+<pre>引用lzprgmr的发言：</pre>
+
+<p>照你的图的描述好似先运行init.d中所有的程序，然后运行rcN.d里面所有的程序 - 但逻辑上判断貌似只是运行 rcN.d中的所有程序（选择性的symbolic link到init.d）- 应该是后者吧</p>
+
+</blockquote>
+
+<p>谢谢指出，你说得有道理，我已经改过来了，把第三步和第四步换了一下顺序，图也改了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 18, 2013  1:15 AM">2013年8月18日 01:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273122">#</a>
+ | <a href="#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote('comment-quote-273122','阮一峰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273127" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">D</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273127">
+            <p>太笼统了....而且 SystemV5的启动流程现在也不流行了...</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 18, 2013 11:27 AM">2013年8月18日 11:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273127">#</a>
+ | <a href="#comment-text" title="引用D的这条留言" onclick="return CommentQuote('comment-quote-273127','D');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273128" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">meow</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273128">
+            <p>现在已经是systemd的天下了，还一遍又一遍的介绍这些旧东西？更新一下知识库吧。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 18, 2013  2:31 PM">2013年8月18日 14:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273128">#</a>
+ | <a href="#comment-text" title="引用meow的这条留言" onclick="return CommentQuote('comment-quote-273128','meow');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273129" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zaeneas</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273129">
+            <p>指手画脚一下，我记得ssh的bash的profile读取顺序和tty的读取顺序不一样</p>
+
+<p>原因是 no_interactive shell和interactive shell的区别</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 18, 2013  3:49 PM">2013年8月18日 15:49</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273129">#</a>
+ | <a href="#comment-text" title="引用zaeneas的这条留言" onclick="return CommentQuote('comment-quote-273129','zaeneas');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273131" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hikerell.com" href="http://hikerell.com" target="_blank" rel="nofollow">hikerell</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273131">
+            <p>请教一下图片使用什么做的？我一般用debian，写文章时，再开一台windows用PS，在传到debian。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 18, 2013  6:16 PM">2013年8月18日 18:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273131">#</a>
+ | <a href="#comment-text" title="引用hikerell的这条留言" onclick="return CommentQuote('comment-quote-273131','hikerell');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273140" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Metoo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273140">
+            <p>憋了半年就整理出这点东西，真心看不下去。这是在科普DOS开机吗</p>
+
+<p>如果要将开机引导，就彻底讲透，除了上面的兄弟写的，还有很多原理没有说透，比如：Android是如何引导的，Xbox 360是如何引导的...等等。它们共同的逻辑和基本步骤是什么，各自有什么差异（什么原因造成的）？</p>
+
+<p>看了半天，觉得我们就停留在刷机商的水平，然后意淫自己开发了神器，能锤掉乔布斯...<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013  9:17 AM">2013年8月19日 09:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273140">#</a>
+ | <a href="#comment-text" title="引用Metoo的这条留言" onclick="return CommentQuote('comment-quote-273140','Metoo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273141" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">uframer</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273141">
+            <blockquote>
+<pre>引用mizpah.的发言：</pre>
+
+<p>linux感觉突然从今年突然名声噪起。</p>
+
+</blockquote>
+
+<p>村通电</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013  9:29 AM">2013年8月19日 09:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273141">#</a>
+ | <a href="#comment-text" title="引用uframer的这条留言" onclick="return CommentQuote('comment-quote-273141','uframer');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273142" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">苗苗老师</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273142">
+            <blockquote>
+<pre>引用imorz的发言：</pre>
+
+<p>还有很多 .d 结尾的文件夹，比如 if-up.d, cron.d, pam.d, apparmor.d，但似乎不是都与 deamon 有关？</p>
+
+</blockquote>
+
+<p>.d的意思是 directory，并不是deamon啊。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013  9:39 AM">2013年8月19日 09:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273142">#</a>
+ | <a href="#comment-text" title="引用苗苗老师的这条留言" onclick="return CommentQuote('comment-quote-273142','苗苗老师');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273143" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.cnfeinfo.com" href="http://www.cnfeinfo.com" target="_blank" rel="nofollow">feinfo</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273143">
+            <p>谢谢分享，对我这种linux小白来说很有用</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013 10:19 AM">2013年8月19日 10:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273143">#</a>
+ | <a href="#comment-text" title="引用feinfo的这条留言" onclick="return CommentQuote('comment-quote-273143','feinfo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273144" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ucdok.com" href="http://ucdok.com" target="_blank" rel="nofollow">老雷</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273144">
+            <p>第六步这一句“（3）图形界面登录：只加载 /etc/prfile 和 ~/.profile。也就是说，~/.bash_profile 不管有没有，都不会运行。” 的“/etc/prfile”少了一个“o”</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013 10:53 AM">2013年8月19日 10:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273144">#</a>
+ | <a href="#comment-text" title="引用老雷的这条留言" onclick="return CommentQuote('comment-quote-273144','老雷');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273148" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">godghost</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273148">
+            <blockquote>
+<pre>引用Metoo的发言：</pre>
+
+<p>憋了半年就整理出这点东西，真心看不下去。这是在科普DOS开机吗</p>
+
+</blockquote>
+
+<p>你行你上啊～不要光说不练～<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013 11:41 AM">2013年8月19日 11:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273148">#</a>
+ | <a href="#comment-text" title="引用godghost的这条留言" onclick="return CommentQuote('comment-quote-273148','godghost');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273153" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">QFAN</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273153">
+            <p>Linux发行版实在够多够乱，而且就是相同发行版也是一个版本一大改，三年彻底不认识……  GRUB为例，以前双系统改个GRUB启动顺序多容易，然后天雷一声震天响冒出个GRUB2。改文件不算数还要运行工具……  init也是，以前强切换直接init几就行，现在干脆就不好使了。/etc下各种配置文件也是，不同发行版里乱起名乱放子目录。头文件的放置位置什么的就更别提了…</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 19, 2013  5:43 PM">2013年8月19日 17:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273153">#</a>
+ | <a href="#comment-text" title="引用QFAN的这条留言" onclick="return CommentQuote('comment-quote-273153','QFAN');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273154" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://zhu.gd" href="http://zhu.gd" target="_blank" rel="nofollow">祝·广东</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273154">
+            <p>真心觉得应该讲透彻点，这些感觉真的很浮。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 20, 2013  2:16 AM">2013年8月20日 02:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273154">#</a>
+ | <a href="#comment-text" title="引用祝·广东的这条留言" onclick="return CommentQuote('comment-quote-273154','祝·广东');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273155" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阮一峰</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273155">
+            <blockquote>
+<pre>引用老雷的发言：</pre>
+
+<p>第六步这一句“（3）图形界面登录：只加载 /etc/prfile 和 ~/.profile。也就是说，~/.bash_profile 不管有没有，都不会运行。” 的“/etc/prfile”少了一个“o”</p>
+
+</blockquote>
+
+<p>谢谢指出，已经改正了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 20, 2013  4:45 AM">2013年8月20日 04:45</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273155">#</a>
+ | <a href="#comment-text" title="引用阮一峰的这条留言" onclick="return CommentQuote('comment-quote-273155','阮一峰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273161" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">总结者</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273161">
+            <p>它们在Windows叫做"服务"（service），在Linux就叫做"守护进程"（daemon）</p>
+
+<p>————————————————————————————————————————</p>
+
+<p>不对哦，我理解deamon是service的实体文件，他可以作为service执行才对，我记得鸟哥是这么说的</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 20, 2013  9:26 AM">2013年8月20日 09:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273161">#</a>
+ | <a href="#comment-text" title="引用总结者的这条留言" onclick="return CommentQuote('comment-quote-273161','总结者');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273169" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://notreadable.tumblr.com/" href="http://notreadable.tumblr.com/" target="_blank" rel="nofollow">eccstartup</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273169">
+            <p>Ubuntu系统，~/.profile 文件更改之后，想对在terminal里面让其生效，就要source一下，以后打开的terminal也要source，直到下次重启。</p>
+
+<p>有办法解决这一问题吗？</p>
+
+<p>而mac os x系统source一遍，以后打开的terminal都生效了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 20, 2013  5:11 PM">2013年8月20日 17:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273169">#</a>
+ | <a href="#comment-text" title="引用eccstartup的这条留言" onclick="return CommentQuote('comment-quote-273169','eccstartup');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273173" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">胡小侠</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273173">
+            <p>刚看文章的时候觉的不错,通俗易懂,太牛叉了.<br />
+看了楼上的评价我就不敢看了,你懂的.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 21, 2013 12:32 AM">2013年8月21日 00:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273173">#</a>
+ | <a href="#comment-text" title="引用胡小侠的这条留言" onclick="return CommentQuote('comment-quote-273173','胡小侠');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273195" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ctrlx.org" href="http://ctrlx.org" target="_blank" rel="nofollow">Ray</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273195">
+            <p>"所以第一个启动的程序是motd，然后是rpcbing、nfs......数字相同时..."</p>
+
+<p>虽然是个打字错误，为求严谨，还是说一下吧，rpcbing  (rpcbind)</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 22, 2013  1:31 PM">2013年8月22日 13:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273195">#</a>
+ | <a href="#comment-text" title="引用Ray的这条留言" onclick="return CommentQuote('comment-quote-273195','Ray');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273282" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Joseph</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273282">
+            <p>想问一下这个画图是怎么实现的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 27, 2013  2:48 PM">2013年8月27日 14:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273282">#</a>
+ | <a href="#comment-text" title="引用Joseph的这条留言" onclick="return CommentQuote('comment-quote-273282','Joseph');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273347" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://为什么会填广告连接呢？" href="http://为什么会填广告连接呢？" target="_blank" rel="nofollow">小白龙</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273347">
+            <blockquote>
+<pre>引用Metoo的发言：</pre>
+憋了半年就整理出这点东西，真心看不下去。这是在科普DOS开机吗
+</blockquote>
+
+<p>我也觉得文章写得很搞笑，他的读者定义是什么？小学生的科普文章吗？<br />
+把一些业内早已知道的基本知识定义毕恭毕敬的整整齐齐整理一下。搬运工吗？<br />
+既想要做为一个专业者或者爱好者，又要写一些科普小学生的文章。<br />
+一点在旧概念的上的新见解或者是新的认知都没有。<br />
+然后难道下一篇又是转到评论时政去了吗？<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 29, 2013  9:39 PM">2013年8月29日 21:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273347">#</a>
+ | <a href="#comment-text" title="引用小白龙的这条留言" onclick="return CommentQuote('comment-quote-273347','小白龙');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273414" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">JunkFood</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273414">
+            <blockquote>
+<pre>引用Metoo的发言：</pre>
+
+<p>憋了半年就整理出这点东西，真心看不下去。这是在科普DOS开机吗</p>
+
+</blockquote>
+
+<blockquote>
+<pre>引用小白龙的发言：</pre>
+
+<p>我也觉得文章写得很搞笑，他的读者定义是什么？小学生的科普文章吗？</p>
+
+</blockquote>
+
+<p>我去，看不下去了。。。<br />
+博主本来就不是程序员，写这篇博文也只是为了记录一下自己的学习而已<br />
+如果你们觉得水平太低，那么你们也根本不是这篇文章的目标群体，大可以去找更高水平的文章来看，何必在这里浪费时间呢？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  1, 2013  7:36 PM">2013年9月 1日 19:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273414">#</a>
+ | <a href="#comment-text" title="引用JunkFood的这条留言" onclick="return CommentQuote('comment-quote-273414','JunkFood');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-273535" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">guoqiao</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-273535">
+            <p>看了评论,发现心理扭曲的人真多.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  4, 2013  1:17 PM">2013年9月 4日 13:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-273535">#</a>
+ | <a href="#comment-text" title="引用guoqiao的这条留言" onclick="return CommentQuote('comment-quote-273535','guoqiao');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-274625" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">无家可归</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-274625">
+            <p>唉，留言真是没法看。给钱了吗？就在这里冷嘲热讽的。有没有人逼你看</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 17, 2013 10:30 PM">2013年9月17日 22:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-274625">#</a>
+ | <a href="#comment-text" title="引用无家可归的这条留言" onclick="return CommentQuote('comment-quote-274625','无家可归');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-275806" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">tkiller</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-275806">
+            <p>大家可以试试安装流行的linux发行版，现在的linux已经是非常不错的了，如果只是看看电影，上网，基本的图片和文字处理的话，完全可以脱离win了，我这就是用的排名非常靠前的linux mint发行版，呵呵非常好用，而且linux下面的中文输入法比win下的还好用，真心不错<br />
+想2005的时候折腾红帽子，插个usb移动硬盘挂上去都要整半天，现在直接识别挂载，amd 785g的芯片组安装完全不需要驱动，哈哈，所有的东西基本都给你搞好了，自己设置好软件更新源，推荐清华或者163的，更新那是嗖嗖的，试试吧，变革的时代也要不断的尝试与学习！<br />
+而且firefox在linux的字体渲染更好，硬件加速也不会字体发虚，滚动的感觉非常好，不错！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 25, 2013  6:41 PM">2013年9月25日 18:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-275806">#</a>
+ | <a href="#comment-text" title="引用tkiller的这条留言" onclick="return CommentQuote('comment-quote-275806','tkiller');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-276572" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://rongzm.com" href="http://rongzm.com" target="_blank" rel="nofollow">Ming</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-276572">
+            <blockquote>
+<pre>引用JunkFood的发言：</pre>
+
+<p></p>
+
+<p>我去，看不下去了。。。<br />
+博主本来就不是程序员，写这篇博文也只是为了记录一下自己的学习而已<br />
+如果你们觉得水平太低，那么你们也根本不是这篇文章的目标群体，大可以去找更高水平的文章来看，何必在这里浪费时间呢？</p>
+
+</blockquote>
+
+<p>即使是程序员写出来我也觉得挺好的，自己学到的不一定是全面的，正确的，学习心得写出来和大家交流一下，互相进步。牛人们有耐心的请指出不足，没耐心的请跳过，何必冷言冷语。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 29, 2013 11:17 AM">2013年9月29日 11:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-276572">#</a>
+ | <a href="#comment-text" title="引用Ming的这条留言" onclick="return CommentQuote('comment-quote-276572','Ming');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-276889" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://linchunyu.info" href="http://linchunyu.info" target="_blank" rel="nofollow">lcy</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-276889">
+            <p>謝謝樓主，有些評論真實莫名其妙！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  1, 2013 11:17 PM">2013年10月 1日 23:17</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-276889">#</a>
+ | <a href="#comment-text" title="引用lcy的这条留言" onclick="return CommentQuote('comment-quote-276889','lcy');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-277657" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.wangdongjie.com" href="http://www.wangdongjie.com" target="_blank" rel="nofollow">王东杰</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-277657">
+            <p>期待讲一下android的启动过程和这个有什么区别?</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October  8, 2013  6:29 PM">2013年10月 8日 18:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-277657">#</a>
+ | <a href="#comment-text" title="引用王东杰的这条留言" onclick="return CommentQuote('comment-quote-277657','王东杰');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-277938" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.csdn.net/wdzxl198" href="http://blog.csdn.net/wdzxl198" target="_blank" rel="nofollow">Atlas2013</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-277938">
+            <p>楼主，你好 发现你的文章中的图做的非常好 ，能请教一下用什么工具做的么？谢谢</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 10, 2013 10:40 AM">2013年10月10日 10:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-277938">#</a>
+ | <a href="#comment-text" title="引用Atlas2013的这条留言" onclick="return CommentQuote('comment-quote-277938','Atlas2013');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-278401" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">陈钢</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-278401">
+            <p>写得不错，通俗易懂。继续加油！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 13, 2013  5:52 PM">2013年10月13日 17:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-278401">#</a>
+ | <a href="#comment-text" title="引用陈钢的这条留言" onclick="return CommentQuote('comment-quote-278401','陈钢');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-278548" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">栗子壳李逵</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-278548">
+            <p>打印回寝室看~ 露珠加油 上次的Git个人主页就是看你的搞的 虽然最后没时间搞成功 但是涨了不少姿势~</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 14, 2013  9:38 PM">2013年10月14日 21:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-278548">#</a>
+ | <a href="#comment-text" title="引用栗子壳李逵的这条留言" onclick="return CommentQuote('comment-quote-278548','栗子壳李逵');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-282826" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">windywater</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-282826">
+            <p>阮老师的博文向来是通俗易懂，适于初学者，之前看过一篇讲TCP/IP的文章非常赞！评论里有些人花30块买了份肯德基套餐，吃完又指责人家没有做出五星级酒店的味道。唉！好在阮老师不跟这种人一般见识。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  2, 2013  8:29 PM">2013年11月 2日 20:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-282826">#</a>
+ | <a href="#comment-text" title="引用windywater的这条留言" onclick="return CommentQuote('comment-quote-282826','windywater');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-286374" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.lanyg.com" href="http://www.lanyg.com" target="_blank" rel="nofollow">蓝燕光</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-286374">
+            <p>哥，你用的什么画图工具</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 15, 2013 11:02 AM">2013年11月15日 11:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-286374">#</a>
+ | <a href="#comment-text" title="引用蓝燕光的这条留言" onclick="return CommentQuote('comment-quote-286374','蓝燕光');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-290707" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Sn0rt</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-290707">
+            <p>要说启动流程的话,推荐 linux内核设计的艺术,靠用启动流程为主线讲操作系统的.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December  2, 2013 12:32 PM">2013年12月 2日 12:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-290707">#</a>
+ | <a href="#comment-text" title="引用Sn0rt的这条留言" onclick="return CommentQuote('comment-quote-290707','Sn0rt');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-299014" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zzj</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-299014">
+            <p>讲的真清楚，之前的很多疑问迎刃而解，谢谢你！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 25, 2014  8:29 PM">2014年1月25日 20:29</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-299014">#</a>
+ | <a href="#comment-text" title="引用zzj的这条留言" onclick="return CommentQuote('comment-quote-299014','zzj');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-308852" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">落没古堡</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-308852">
+            <p>学究气加蛋疼的说：『确切的说init并不是真正的第一个程序，也并不是所有程序都从它衍生。』它的进程编号（pid）是1。无疑init超NB</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April  5, 2014  9:57 PM">2014年4月 5日 21:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-308852">#</a>
+ | <a href="#comment-text" title="引用落没古堡的这条留言" onclick="return CommentQuote('comment-quote-308852','落没古堡');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-327755" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="https://www.facebook.com/gshmu" href="https://www.facebook.com/gshmu" target="_blank" rel="nofollow">gshmu</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-327755">
+            <p>哈哈，写的太深入浅出了，非常易懂。<br />
+导致有些人认为他都了解Linux多年了，可是至今我也没看到结果哈。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June  9, 2014  1:09 PM">2014年6月 9日 13:09</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-327755">#</a>
+ | <a href="#comment-text" title="引用gshmu的这条留言" onclick="return CommentQuote('comment-quote-327755','gshmu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-328918" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">nudo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-328918">
+            <blockquote>
+<pre>引用Ming的发言：</pre>
+
+<p><br />
+自己学到的不一定是全面的，正确的，学习心得写出来和大家交流一下，互相进步。牛人们有耐心的请指出不足，没耐心的请跳过，何必冷言冷语。</p>
+
+</blockquote>
+
+<p>为这个“态度”点个赞。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 17, 2014 11:27 AM">2014年6月17日 11:27</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-328918">#</a>
+ | <a href="#comment-text" title="引用nudo的这条留言" onclick="return CommentQuote('comment-quote-328918','nudo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-329448" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Hebe</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-329448">
+            <p>大牛们请嘴下留情吧，坦白说这是我第一个看懂了的linux启动流程，像我这样目前什么都还不清楚的，真的不太需要代码级别的分析，起码这两天还不需要，就这个很好！！！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 24, 2014  4:03 PM">2014年6月24日 16:03</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-329448">#</a>
+ | <a href="#comment-text" title="引用Hebe的这条留言" onclick="return CommentQuote('comment-quote-329448','Hebe');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-334556" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">阿道夫</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-334556">
+            <p>我觉得这个作者写的非常好，具有大师的风范</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 20, 2014  8:50 PM">2014年8月20日 20:50</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-334556">#</a>
+ | <a href="#comment-text" title="引用阿道夫的这条留言" onclick="return CommentQuote('comment-quote-334556','阿道夫');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-338005" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">umount</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-338005">
+            <p>请教一下，操作系统刚接管硬件时，应该还没有加载文件系统吧，那Linux的GRUB是如何找到/boot下面的各种内核文件的？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 15, 2014  9:14 PM">2014年9月15日 21:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-338005">#</a>
+ | <a href="#comment-text" title="引用umount的这条留言" onclick="return CommentQuote('comment-quote-338005','umount');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-341432" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yangxuexing@csdn" href="http://yangxuexing@csdn" target="_blank" rel="nofollow">Boatman</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-341432">
+            <blockquote>
+<pre>引用mizpah.的发言：</pre>
+
+<p>linux感觉突然从今年突然名声噪起。</p>
+
+</blockquote>
+
+<p>因为Android的兴起使然。个人觉得是一个原因。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 14, 2014 10:40 AM">2014年10月14日 10:40</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-341432">#</a>
+ | <a href="#comment-text" title="引用Boatman的这条留言" onclick="return CommentQuote('comment-quote-341432','Boatman');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342257" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://linxihao.me" href="http://linxihao.me" target="_blank" rel="nofollow">0x1D</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342257">
+            <p>为什么历史不好的地方不进行更正？</p>
+
+<p>bash 存放在那么多目录，修改起来那么麻烦。如果将他简化到一个目录不是很好吗？毕竟这又不像 windows 的 C 盘命名那么无足轻重。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 28, 2014  9:47 PM">2014年10月28日 21:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-342257">#</a>
+ | <a href="#comment-text" title="引用0x1D的这条留言" onclick="return CommentQuote('comment-quote-342257','0x1D');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342326" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.veryarm.com/" href="http://www.veryarm.com/" target="_blank" rel="nofollow">ARM Linux</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342326">
+            <p>解释很有调理，看完基本明白了Linux启动过程</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 30, 2014 11:12 AM">2014年10月30日 11:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-342326">#</a>
+ | <a href="#comment-text" title="引用ARM Linux的这条留言" onclick="return CommentQuote('comment-quote-342326','ARM Linux');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342331" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dirk</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342331">
+            <p>楼主的文章最可贵的地方就是文章的篇幅不大，但内容丰富，句句重点，简明扼要，容易理解，支持.........</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="October 30, 2014 12:53 PM">2014年10月30日 12:53</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-342331">#</a>
+ | <a href="#comment-text" title="引用dirk的这条留言" onclick="return CommentQuote('comment-quote-342331','dirk');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342601" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.yd631.com" href="http://www.yd631.com" target="_blank" rel="nofollow">Alice</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342601">
+            <blockquote>
+<pre>引用mizpah.的发言：</pre>
+
+<p>linux感觉突然从今年突然名声噪起。</p>
+
+</blockquote>
+linux的桌面用户也在大幅增加！
+
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  4, 2014  6:38 PM">2014年11月 4日 18:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-342601">#</a>
+ | <a href="#comment-text" title="引用Alice的这条留言" onclick="return CommentQuote('comment-quote-342601','Alice');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-343414" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">haotian</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-343414">
+            <p>终于找到一个通俗易懂的blog了</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November 12, 2014  1:47 PM">2014年11月12日 13:47</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-343414">#</a>
+ | <a href="#comment-text" title="引用haotian的这条留言" onclick="return CommentQuote('comment-quote-343414','haotian');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-346476" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://onestraw.net" href="http://onestraw.net" target="_blank" rel="nofollow">geeksword</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-346476">
+            <p>阮老师有时间讲讲Linux启动过程中FS的挂载，initrd的作用...</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 19, 2014  3:08 PM">2014年12月19日 15:08</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-346476">#</a>
+ | <a href="#comment-text" title="引用geeksword的这条留言" onclick="return CommentQuote('comment-quote-346476','geeksword');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-347585" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">hah</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-347585">
+            <p>非常之好，正合我这初学者所需，看完之后从一头雾水一下豁然开朗！<br />
+另外，看到有些评论不能说那是刻薄<br />
+简直是人品问题～～好像他们就想关上linux大门给他们几个人玩似的，赚钱多？！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January 28, 2015 11:26 AM">2015年1月28日 11:26</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-347585">#</a>
+ | <a href="#comment-text" title="引用hah的这条留言" onclick="return CommentQuote('comment-quote-347585','hah');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351338" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">寒冰月飘霜</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351338">
+            <p>通电》BIOS》MBR引导》GRUB菜单》操作系统》加载内核》...应该是这样的，中间漏了GRUB菜单。我还停留在centos6阶段</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 20, 2015 10:11 AM">2015年8月20日 10:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-351338">#</a>
+ | <a href="#comment-text" title="引用寒冰月飘霜的这条留言" onclick="return CommentQuote('comment-quote-351338','寒冰月飘霜');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351446" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">alex_pih</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351446">
+            <p>老阮太棒了，感觉你的知识面很广。讲的风格和我需要的，一样：详细的流程 和框架 <br />
+谢谢你的分享</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="August 26, 2015  3:23 PM">2015年8月26日 15:23</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-351446">#</a>
+ | <a href="#comment-text" title="引用alex_pih的这条留言" onclick="return CommentQuote('comment-quote-351446','alex_pih');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-351931" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">lxw</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-351931">
+            <p>太赞了, 思路很清晰!</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 30, 2015 10:36 AM">2015年9月30日 10:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html#comment-351931">#</a>
+ | <a href="#comment-text" title="引用lxw的这条留言" onclick="return CommentQuote('comment-quote-351931','lxw');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1785" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>
