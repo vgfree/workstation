@@ -1,5 +1,5 @@
--- name   : api_login
--- author : louis.tin
+-- api_login
+-- author : louis
 -- date	  : 04-14-2016
 -- 登录接口
 local ngx       = require('ngx')
@@ -15,7 +15,6 @@ local safe 	= require('safe')
 -- TODO 指定base userInfo 等参数的数据库
 local app_config_db   = { [1] = 'login_config___config', [2] = 'weme_car___car'}
 
--- 用于验证参数
 local url_tab = { 
 	type_name   = 'login',
 	app_key     = '',
@@ -48,7 +47,7 @@ local function ready_execution(appKey)
 	local sql_str = string.format(G.sql_login_info, appKey)
 	only.log('W', "mysql select condfig info is :%s", sql_str)
 
-	-- TODO 指定数据库
+	-- TODO 指定执行目标数据库
 	local ok_status, ok_config = mysql_api.cmd(app_config_db[1], 'SELECT', sql_str)
 	if not ok_status  then
 		only.log('E', 'connect database failed when query sql_openconfig_info, %s ', sql_str)

@@ -1,0 +1,190 @@
+-- author:	zhouzhe
+-- date:		2015.06.08
+-- function:	userBindMobile 
+
+local msg       	= require('msg')
+local gosay     	= require('gosay')
+local utils     	= require('utils')
+local app_utils	= require('app_utils')
+local only      	= require('only')
+local msg       	= require('msg')
+local safe      	= require('safe')
+local mysql_api 	= require('mysql_pool_api')
+
+local user_resgister_dbname = 'app_usercenter___usercenter'
+local userinfo_dbname = 'app_cli___cli'
+
+local G = {
+
+	-- 验证新手机是否已经注册
+	sl_userRegister = "SELECT 1 FROM userRegisterInfo WHERE mobile = '%s' AND validity = 1 ",
+	-- 验证新手机号是否已经绑定
+	sl_userinfo = " SELECT 1 FROM  userInfo WHERE mobile = '%s' AND status >= 1 ",
+	-- 获取用户acountID
+	sl_userRegister_accountID = "SELECT accountID FROM userRegisterInfo WHERE mobile = '%s' AND validity = 1 ",
+	-- 更新数据库userRegisterInfo
+	update_userRegister = " UPDATE userRegisterInfo SET mobile = '%s', checkMobile = 1 WHERE  accountID = '%s' AND validity = 1 ",
+	-- 更新数据库userInfo
+	update_userInfo = " UPDATE userInfo SET mobile = '%s', checkMobileTime = '%s'  WHERE accountID = '%s' AND status >= 1  ",
+}
+
+local url_info = { 
+    type_name = 'system',
+    app_key = nil,
+    client_host = nil,
+    client_body = nil,
+}
+
+-- 更新数据库
+local function update_user_mobile(newmobile, accountID )
+	-- only.log('D',"newmobile %s", newmobile)
+	local sql_str = string.format(G.update_userRegister, newmobile, accountID)
+	local ok_status,result = mysql_api.cmd(user_resgister_dbname,'UPDATE',sql_str)
+	-- only.log('D',sql_str)
+	if not ok_status or result == nil then
+	    only.log('D',sql_str)
+	    gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+	end
+
+	local checkMobileTime = os.time()
+	local sql_userinfo = string.format(G.update_userInfo, newmobile, checkMobileTime, accountID)
+	local ok,result = mysql_api.cmd(userinfo_dbname,'UPDATE',sql_userinfo)
+	only.log('D',sql_userinfo)
+	if not ok or result == nil then
+	    only.log('D',sql_userinfo)
+	    gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+	end
+end
+
+-- 得到账户编号
+local function get_accountID_by_mobile( mobile )
+	if not mobile then
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "mobile")
+	end
+
+	local sql_str = string.format( G.sl_userRegister_accountID, mobile )
+	local ok_status, result = mysql_api.cmd(user_resgister_dbname,'SELECT',sql_str)
+	-- only.log('D',sql_str)
+	if not ok_status or result == nil then
+	    only.log('E',string.format("mobile:%s ,sl_userRegister_accountID failed!sql_str:%s",mobile, sql_str))
+	    gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+	end
+
+	if #result == 0 or type(result) ~= "table" then
+		only.log("E", "mysql is access but result is nil !  %s", mobile)
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "mobile")
+	end
+	return result[1]["accountID"]
+end
+
+-- 检查参数并判断用户名类型
+local function check_parameter( args)
+
+	local acounttype = ""
+	if ( not args )or type(args) ~= "table" then
+		only.log("E", " args not is table ")
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "args")
+	end
+
+	if not args['appKey'] or #args['appKey'] > 10 or not utils.is_number(args['appKey'])  then
+		gosay.go_false( url_info, msg["MSG_ERROR_REQ_ARG"], "appKey" )
+	end
+	-- only.log("D", args['appKey'], args["newmobile"])
+	if(not utils.is_number(tonumber(args["newmobile"]))) or (#args["newmobile"] ~= 11) or (string.sub(args["newmobile"], 1, 1) ~= '1') then
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], 'newmobile')
+	end
+
+	if args["mobile"] and args["mobile"] ~= "" then
+		if(not utils.is_number(tonumber(args["mobile"]))) or (#args["mobile"] ~= 11) or (string.sub(args["mobile"], 1, 1) ~= '1') then
+			only.log("E", "mobile = %s", args["mobile"])
+			gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], 'mobile')
+		end
+		acounttype = "mobile"
+	elseif args["accountID"] and args["accountID"] ~= ""  then
+		if not app_utils.check_accountID( args['accountID'])  then
+			gosay.go_false(url_info,msg['MSG_ERROR_REQ_ARG'],'accountID')
+		end
+		acounttype = "accountID"
+	else
+		only.log("E", "accountID, mobile, need at least one")
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], " accountID, mobile, need at least one")
+	end
+	url_info["app_key"] = args["appKey"]
+
+	safe.sign_check( args, url_info )
+	return acounttype
+end 
+
+-- 验证需要绑定的手机号
+local function check_mobile(newmobile, useracount )
+
+	-- 验证手机号是否已经绑定userinfo
+	local sql_str = string.format(G.sl_userinfo, newmobile)
+	local ok_status,result = mysql_api.cmd(userinfo_dbname,'SELECT',sql_str)
+	if not ok_status or result == nil then
+	    only.log('D',sql_str)
+	    only.log('E',string.format("newmobile:%s  sl_userinfo failed!",newmobile))
+	    gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+	end
+
+	if #result ~= 0 then
+		only.log("E", " mobile alread bind")
+		gosay.go_false(url_info, msg["MSG_ERROR_MOBILE_ALREAD_BIND"])
+	end
+
+	-- 验证手机是否已经注册userRegister
+	local sql_str = string.format(G.sl_userRegister, newmobile)
+	local ok_status,result = mysql_api.cmd(user_resgister_dbname,'SELECT',sql_str)
+	if not ok_status or result == nil then
+	    only.log('D',sql_str)
+	    only.log('E',string.format("newmobile:%s  sl_userinfo failed!",newmobile))
+	    gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+	end
+
+	if #result ~= 0 then
+		if tostring(newmobile) ~= tostring(useracount) then
+			only.log("E", "mobile alresd register")
+			only.log("E", "newmobile = %s , useracount = %s", newmobile, useracount)
+			gosay.go_false(url_info, msg["MSG_ERROR_MOBILE_ALREAD_REGISTER"])
+		end
+	end 
+end
+
+function handle()
+	local ip = ngx.var.remote_addr
+	local body = ngx.req.get_body_data()
+	if not body then
+		gosay.go_false(url_info, msg['MSG_ERROR_REQ_NO_BODY'])
+	end
+
+	url_info['client_host'] = ip
+	url_info['client_body'] = body
+
+	local args = utils.parse_url(body)
+	-- only.log("D", "accountID %s", args["accountID"] )
+	-- 检查参数并判断用户名类型
+	local acounttype = check_parameter(args)
+
+	-- 验证手机是否已经注册,绑定
+	check_mobile( args["newmobile"], args[acounttype] )
+	-- 根据用户名得到账户编号
+	local accountID = nil
+	if args["mobile"] and args["mobile"] ~= "" then
+		accountID = get_accountID_by_mobile( args["mobile"] )
+	else
+		accountID = args["accountID"]
+	end
+
+	if not accountID then
+		only.log("E", "accountID is nil!")
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "accountID")
+	end
+	-- 更新数据库
+	update_user_mobile( args["newmobile"], accountID )
+
+	gosay.go_success( url_info, msg['MSG_SUCCESS'] )
+end
+
+safe.main_call( handle )
+
+

@@ -12,10 +12,10 @@ local scan	= require('scan')
 local app_config_db   = { [1] = 'app_mirrtalk___config', [2] = 'app_mirrtalk___config_gc'}
 
 local url_tab = { 
-		type_name   = 'transit',
-		app_key     = '',
-		client_host = '',
-		client_body = '',
+	type_name   = 'transit',
+	app_key     = '',
+	client_host = '',
+	client_body = '',
 }
 
 
@@ -24,12 +24,12 @@ local G = {
 	req_ip    = '',
 	body      = '',
 	err_desc  = '',
-	
+
 	cur_month = nil,
 	cur_date  = nil,		----
 	cur_time  = 0,
 	appKey = nil,
-	
+
 
 	sql_openconfig_info = " select customArgs from openconfigInfo where appKey='%s'",
 }
@@ -55,7 +55,7 @@ local function ready_execution(appKey)
 	end
 
 	---------------------------------------------------------------------------------------------------
-	
+
 	return true,ok_config[1]['customArgs']
 end
 
@@ -122,7 +122,7 @@ local function handle()
 
 	G.imei      = args['imei']
 	G.appKey      = args['appKey']
-	
+
 	only.log('D', "appkey=%s",args['appKey'])
 	local appKey = args['appKey']
 	local sgin = args['sgin']

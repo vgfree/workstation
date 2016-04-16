@@ -1,0 +1,318 @@
+-->[time]: 2015-04-14
+--> 车机设备ID,获取IMEI
+
+local msg = require('msg')
+local gosay = require('gosay')
+local redis_pool_api = require('redis_pool_api')
+local mysql_pool_api = require('mysql_pool_api')
+local utils = require('utils')
+local only = require('only')
+local msg = require('msg')
+local safe = require('safe')
+local http_api  = require('http_short_api')
+local link      = require('link')
+local  app_utils = require('app_utils')
+
+local chg_status = link["OWN_DIED"]["http"]["payUserDeposit"]
+
+local G = {
+    
+    sl_model = " SELECT businessID,isThirdModel FROM modelInfo WHERE model = '%s' and endTime > %s and validity = 1",
+
+    sl_business_info = " SELECT returnType,bonusType,allowExchange,shareInfo,userBonusMax, " ..
+                            " businessBonusMax,bonusReturnTarget,bonusReturnMonth FROM businessInfo WHERE businessID = '%s'",
+    sl_car_machine = "SELECT imei FROM carMachineInfo WHERE deviceID = '%s' AND model = '%s' AND validity = 1 ",
+    sl_mirrtalk = " SELECT imei,nCheck FROM mirrtalkInfo WHERE isOccupy = 0 and model = '%s' " ..
+                    " AND status = '%s' and endTime > '%s' and validity = 1 limit 1",
+    ins_mirrtalk_history = " INSERT INTO mirrtalkHistory SET imei = '%s', movement = '%s', " .. 
+                                " originalStatus = '%s', endStatus = '%s', updateTime= '%s', remarks = '%s' ",
+    upd_mirrtalk = " UPDATE mirrtalkInfo  SET status= '%s' , updateTime = '%s' , isOccupy = 1  " ..
+                        " WHERE isOccupy = 0 and imei = '%s' ",
+    ins_car_machine = " INSERT INTO carMachineInfo SET appKey = '%s', deviceID = '%s', "  .. 
+                         " model = '%s', imei = '%s', createTime = '%s' ",
+    sl_mirrtalk_deposit_info = " SELECT depositType FROM mirrtalkDepositInfo WHERE imei = '%s' ",
+    sl_deposit_type = " SELECT depositAmount FROM depositTypeInfo WHERE depositType = '%s' ", 
+}
+
+
+local url_info = { 
+    type_name = 'system',
+    app_key = nil,
+    client_host = nil,
+    client_body = nil,
+}
+
+-->> return parameters
+local data = {
+    imei = '',
+    businessID = '',
+    depositType = '',
+    depositAmount = '',
+    returnType = '',
+    allowExchange = '',
+    bonusType = '',
+    shareInfo = '',
+    userBonusMax = '',
+    businessBonusMax = '',
+    bonusReturnTarget = '',
+    bonusReturnMonth = '',
+}
+local function check_parameter(body)
+
+    local res = utils.parse_url(body)
+    if not res or type(res) ~= "table" then
+    gosay.go_false(url_info,msg["MSG_ERROR_REQ_BAD_JSON"])
+    end
+
+    -->> check appKey
+    if not res['appKey'] or (#res['appKey'] > 10) then
+        only.log('D',res['appKey'])
+        gosay.go_false(url_info,msg["MSG_ERROR_REQ_FAILED_GET_SECRET"])
+    end
+    url_info['app_key'] = res['appKey']
+
+    -->> check deviceID
+    if (not utils.is_word(res["deviceID"])) or (#res["deviceID"] > 64) then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "deviceID")
+    end
+    -->> check model
+    if ( not utils.is_word(res["model"])) or (#res["model"] ~= 5 ) then
+        gosay.go_false(url_info,msg["MSG_ERROR_REQ_ARG"], "model" )
+    end
+
+    -->> check sign
+    safe.sign_check(res, url_info)
+
+    return res
+end
+
+
+
+function change_imei_status(depositType,imei,depositAmount,appKey)
+
+    local  tab = {
+        appKey = appKey,
+        IMEI   =  imei,
+        depositType = depositType,
+        depositAmount = depositAmount,
+    }
+    tab['sign'] = app_utils.gen_sign(tab)
+    local body = utils.table_to_kv(tab)
+    only.log('D',"appKey=%s", appKey )
+    local post_data = 'POST /rewardapi/v2/payUserDeposit HTTP/1.0\r\n' ..
+          'Host:%s:%s\r\n' ..
+          'Content-Length:%d\r\n' ..
+          'Content-Type:application/x-www-form-urlencoded\r\n\r\n%s'
+    if not chg_status then
+        only.log('E',"chg_status is %s!" , chg_status)
+        gosay.go_false(url_info,msg['MSG_ERROR_REQ_ARG'], 'chg_status')
+    end
+    local data_t = string.format(post_data, chg_status['host'], chg_status['port'], #body, body)
+    
+    local ret = http_api.http(chg_status, data_t, true)
+    if not ret then 
+        only.log('E',"payUserDeposit failed!")
+        gosay.go_false(url_info,msg['MSG_ERROR_REQ_ARG'], 'payUserDeposit')
+    end
+
+ end 
+
+
+function handle()
+
+    local ip = ngx.var.remote_addr
+    local body = ngx.req.get_body_data()
+    
+    if not body  then
+        gosay.go_false(url_info, msg['MSG_ERROR_REQ_NO_BODY'])
+    end
+
+    url_info['client_host'] = ip
+    url_info['client_body'] = body
+    local sql,ret,imei
+
+    -->> check parameters
+    local res = check_parameter(body)
+
+    appKey  = res["appKey"]
+    local device_id  = res["deviceID"]
+    local model      = res["model"]
+
+    local time = os.time()
+    local status = '10a'
+    local endStatus = '10r'
+    local movement = 38
+
+
+    -->> check model whether register in mirrtalk company 
+    local sql = string.format( G.sl_model, model, time )
+    local ok,res = mysql_pool_api.cmd( 'app_ident___ident','SELECT',sql)
+    only.log('D' ,string.format("sl_model.sql= %s", sql ))
+    if not ok then
+        only.log('E',string.format("check model failed %s ", sql ) )
+        gosay.go_false(url_info,msg["MSG_DO_MYSQL_FAILED"])
+    end
+
+    if #res == 0 then
+        only.log('E',string.format("get model not exist  %s", model ) )
+        gosay.go_false(url_info,msg["MSG_ERROR_REQ_ARG"], "model")
+    end
+
+    if #res > 1 then
+        only.log('E',string.format("get model too much  %s", model ) )
+        gosay.go_false(url_info,msg["SYSTEM_ERROR"])
+    end
+  
+    if not res[1]['businessID'] then
+        only.log('E',string.format("businessID is error" ) )
+        gosay.go_false(url_info,msg["MSG_ERROR_REQ_ARG"],"businessID")
+    end
+    businessID = res[1]['businessID']
+    
+    local isThirdModel = res[1]['isThirdModel']
+
+    only.log('D', string.format("isThirdModel= %s, businessID= %s ", isThirdModel, businessID) )
+    
+    -->>check model is wheher mirrtalk company internal using
+    if( tonumber(isThirdModel) == 0 ) then
+        only.log('D', string.format(" cur model %s  is not isThirdModel ",  model ) )
+         gosay.go_false(url_info,msg["MSG_ERROR_REQ_ARG"],"model") 
+    end 
+
+    if ( tonumber(businessID) <= 0 ) then
+        only.log('E', string.format(" cur model %s  is not exist businessID ",  model ) )
+        gosay.go_false(url_info,msg["SYSTEM_ERROR"])
+    end
+
+    sql = string.format( G.sl_business_info,businessID )
+    
+    only.log('D' ,string.format("sl_business_info.sql= %s", sql ))
+    local ok,res = mysql_pool_api.cmd( 'app_crowd___crowd', 'SELECT', sql )
+    if not ok then
+        only.log('E',string.format(" get sl_business_info failed, %s", sql ))
+        gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+    end
+    if #res ~= 1 then
+        only.log('E' ,string.format("1#res=%s", #res ))
+        gosay.go_false(url_info,msg["SYSTEM_ERROR"])
+    end 
+
+    local returnType = res[1]['returnType']
+    local bonusType = res[1]['bonusType']
+    local allowExchange = res[1]['allowExchange']
+    local userBonusMax = res[1]['userBonusMax']
+    local shareInfo = res[1]['shareInfo']
+    local businessBonusMax = res[1]['businessBonusMax']
+    local bonusReturnTarget = res[1]['bonusReturnTarget']
+    local bonusReturnMonth = res[1]['bonusReturnMonth']
+    
+    -->> check car_device whether exist
+    sql = string.format( G.sl_car_machine, device_id,model )
+   
+    only.log('D' ,string.format("sl_car_machine.sql= %s", sql ))
+    local ok, res = mysql_pool_api.cmd('app_ident___ident', 'SELECT', sql)
+    if not ok then
+        only.log('E',string.format(" get sl_car_machine failed, %s", sql ))
+        gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+    end
+
+    if #res > 1 then
+        only.log('E',string.format(" get mirrtalk multi rows, %s", sql ))
+        gosay.go_false(url_info,msg["SYSTEM_ERROR"])
+    end
+
+    if #res == 1 then 
+        if res[1]['imei'] ~= 0 then   
+            data['imei'] = res[1]['imei']
+        end
+    else
+        -->> select one imei from coreIdentification.mirrtalkInfo
+        sql = string.format( G.sl_mirrtalk, model,status,time )
+       
+        only.log('D' ,string.format("sl_mirrtalk.sql= %s", sql ))
+        local ok, res = mysql_pool_api.cmd('app_ident___ident', 'SELECT', sql)
+        if not ok then
+            only.log('E',string.format(" get mirrtalk info failed, %s", sql ))
+            gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+        end
+        
+        if #res == 0 then
+            only.log('E',string.format(" get mirrtalk info not exist, %s", sql ))
+            gosay.go_false(url_info, msg["MSG_ERROR_IMEI_NOT_EXIST"])
+        end
+
+        local imei = res[1]['imei'] .. res[1]['nCheck']
+        local imei_14 = res[1]['imei']
+        local remarks = "车机绑定imei号码"
+        -->> insert mirrtalkHistory,update mirrtalk and insert carMachineInfo ,and
+        --all of this three database action is a affairs
+        local sql_tab = {}
+        sql = string.format(G.ins_mirrtalk_history, imei,movement,status,endStatus,time,remarks)
+        table.insert(sql_tab, sql)
+        sql = string.format(G.upd_mirrtalk, endStatus,time,imei_14)
+        table.insert(sql_tab, sql)
+        sql = string.format(G.ins_car_machine, appKey,device_id, model, imei, time)
+        table.insert(sql_tab, sql)
+        local ok, res = mysql_pool_api.cmd('app_ident___ident', 'affairs', sql_tab)
+        if not ok then
+            only.log('E',string.format("[affairs] failed , %s", table.concat( sql_tab, "\r\n" ) ))
+            gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+        end
+
+    
+        -->> select depositType from mirrtalkDepositInfo 
+        -- sql = string.format( G.sl_mirrtalk_deposit_info, imei )  
+     
+        -- only.log('D' ,string.format("sl_mirrtalk_deposit_info.sql= %s", sql ))
+        -- local ok,res = mysql_pool_api.cmd( 'app_crowd___crowd','SELECT', sql )
+        -- if not ok then
+        --        gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+        -- end
+        -- if #res ~= 1 then
+        --        only.log('E' ,string.format("2#res=%s", #res ))
+        --        gosay.go_false(url_info,msg["SYSTEM_ERROR"])
+        -- end
+
+        -- depositType = res[1]['depositType']
+
+        --押金类型(depositType)为 2 表示买断机器
+        depositType = 2
+        --> select depositAmount from depositTypeInfo  
+        sql = string.format( G.sl_deposit_type, depositType )
+        only.log('D' ,string.format("sl_deposit_type.sql=%s", sql ))
+        local ok,res = mysql_pool_api.cmd( 'app_crowd___crowd','SELECT', sql )
+        if not ok then
+            gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+        end
+
+        if #res ~= 1 then
+            only.log('E' ,string.format("3#res= %s", #res ))
+            gosay.go_false(url_info,msg["SYSTEM_ERROR"])
+        end
+        depositAmount = res[1]['depositAmount']
+    
+        data["imei"]  = imei
+        
+    end
+
+    change_imei_status(depositType,data["imei"],depositAmount,appKey)
+
+    data["businessID"] = businessID
+    data["depositType"] = depositType
+    data["depositAmount"] = depositAmount
+    data["returnType"] = returnType
+    data["bonusType"] = bonusType
+    data["allowExchange"] = allowExchange
+    data["shareInfo"] = shareInfo
+    data["userBonusMax"] = userBonusMax
+    data["businessBonusMax"] = businessBonusMax
+    data["bonusReturnTarget"] = bonusReturnTarget
+    data["bonusReturnMonth"] = bonusReturnMonth
+
+    local ok,return_data = utils.json_encode(data)
+    -->> return imei
+    gosay.go_success(url_info, msg["MSG_SUCCESS_WITH_RESULT"], return_data)
+
+end
+
+safe.main_call( handle )

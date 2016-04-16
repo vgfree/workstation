@@ -1,0 +1,175 @@
+module(..., package.seeall)
+
+OWN_POOL = {
+    redis = {
+        public = {
+            host = '192.168.1.11',
+            port = 6349,
+        },
+        private = {
+            host = '192.168.1.11',
+            port = 6319,
+        },
+        statistic = {
+            host = '192.168.1.11',
+            port = 6339,
+        },
+        ---- 使用1%的网格数据,运维请注意*** 2014-06-18 jiang z.s. 
+        mapGridOnePercent = { 
+            host = '192.168.1.10',
+            port = 5071,
+        }, 
+
+    },
+    mysql = {
+
+        app_usercenter___usercenter = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'userCenter',
+            user = 'app_user',
+            password ='DKuser751',
+        },
+        app_daokeme___daokeme = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'daokeme',
+            user = 'app_daokeme',
+            password = '861MTdaokeme',
+        },
+        app_weibo___weibo = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'app_weibo',
+            user = 'app_weibo',
+            password ='258MTweibo',
+        },
+        app_cli___cli = {
+            host= '192.168.1.6',
+            port= 3306,
+            database = 'client_mirrtalk',
+            user = 'app_Cmirrtalk',
+            password = 'DK156client',
+        },
+        app_ident___ident = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'coreIdentification',
+            user = 'app_identify',
+            password ='coreDK357',
+        },
+
+        app_mirrtalk___config = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'config',
+            user = 'app_mirrtalk',
+            password ='102cfgDK',
+        },
+
+        app_crowd___crowd = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'crowdRewards',
+            user = 'app_crowd',
+            password ='appcrabc123',
+        },
+
+        app_auth___auth = {
+            host = '192.168.1.3',
+            port = 3306,
+            database = 'userAuthorization',
+            user = 'app_uauth',
+            password ='appuaDK102',
+        },
+
+        app_mirrtalk___config_gc = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 'config_gc',
+            user = 'app_mirrtalk',
+            password ='102cfgDK',
+        },
+--------------只有在工程模式下启用一下内容---------
+--------------------------------------------------
+        app_sendBinaryStatus___s9test_gc = {
+            host = '192.168.1.6',
+            port = 3306,
+            database = 's9test_gc',
+            user = 'app_sbs',
+            password ='m1t3d3K',
+        },
+
+	app_testvoice___feedback_gc = {
+	    host = '192.168.1.6',
+	    port = '3306',
+	    database = 'feedback_gc',
+	    user = 'observer',
+	    password = 'abc123',
+	},
+    },
+}
+
+
+OWN_DIED = {
+    redis = {
+    },
+    mysql = {
+
+    },
+    http = {
+
+        -- lua account api
+        fixUserInfo = {
+            host = '127.0.0.1',
+            port = 8080,
+        },
+
+        sendEmail = {
+            host = '192.168.1.6',
+            port = 9090,
+        },
+        -- sendSMS = {
+        --    host = 'api.daoke.io',
+        --    port = 80,
+        --  },
+
+		sendSMS = {
+            host = '127.0.0.1',
+            port = 80,
+		},
+        rewardapi = {
+            host = "127.0.0.1",
+            port = 80,
+        },
+
+        --修改昵称之后,需要转为音频,存储url链接
+        --2014-09-09
+        txt2voice = {
+            host = "192.168.1.207",
+            port = 80,
+        },
+
+        addCustomAccount  = { 
+            host = '127.0.0.1',
+            port = 80 ,
+        },
+
+        payUserDeposit  = { 
+            host = '127.0.0.1',
+            port = 80 ,
+        },
+
+        sendSmsPHP = {
+            host  = "172.16.21.107",
+            port  = 80,
+        },
+	
+	addDepositInfo  = { 
+            host = '192.168.1.207',
+            port = 80 ,
+        },
+    }
+}
+
+setmetatable(_M, { __index = _M })

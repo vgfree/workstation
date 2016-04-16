@@ -1,0 +1,563 @@
+
+local ngx   = require('ngx')
+local utils = require('utils')
+local app_utils = require('app_utils')
+local only  = require('only')
+local msg   = require('msg')
+local gosay = require('gosay')
+local safe  = require('safe')
+local link  = require('link')
+
+local redis_pool_api = require('redis_pool_api')
+local mysql_pool_api = require('mysql_pool_api')
+local http_api       = require('http_short_api')
+
+---- add by jiang z.s. 2014-09-09 set nickname
+local account_utils  = require('account_utils')
+
+local user_info_srv = link["OWN_DIED"]["http"]["fixUserInfo"]
+local reward_srv    = link["OWN_DIED"]["http"]["rewardapi"]
+
+local sql_fmt = {
+
+    query_accountid = "SELECT accountID FROM loginType WHERE account= '%s' AND loginType = %d AND userStatus in (1,3) AND accountSourceType=1",
+    update_account_info = "UPDATE loginType SET token='%s',refreshToken='%s',accessToken='%s',accessTokenExpiration='%s' WHERE account='%s' AND loginType = %d AND userStatus in (1,3) AND accountSourceType=1",
+    has_account = "SELECT 1 FROM userRegisterInfo WHERE accountID='%s'",
+    -- 2015-06-11 zhouzhe 
+    -- insert_userRegisterInfo = " INSERT INTO userRegisterInfo SET accountID='%s', createTime=%d, username = '%s', validity=1 ",
+    get_registTime = "SELECT updateTime FROM userListHistory WHERE accountID='%s' ORDER BY updateTime DESC limit 1",
+
+    get_loginTime = "SELECT lastLoginTime FROM loginLog WHERE account = '%s'",
+
+    check_accountid = "SELECT id FROM userList WHERE accountID = '%s'",
+
+    user_info_add_record = "INSERT INTO userInfo SET accountID='%s', status=1,nickname='%s', createTime=%d, updateTime=%d",
+
+    user_list_add_record = "INSERT INTO userList SET accountID = '%s', userStatus = 4, updateTime = %d, createTime=%d",
+    user_list_history_add_record = "INSERT INTO userListHistory SET accountID = '%s', userStatus = 4, updateTime = %d",
+    login_type_add_record = "INSERT INTO loginType SET accountID = '%s', loginType = %d, createTime = %d, account = '%s', userStatus = 1,accountSourceType=1,token='%s',refreshToken='%s',accessToken='%s',accessTokenExpiration='%s'",
+    --2015-06-11 zhouzhe
+    -- third_user_info_add_record = "INSERT INTO thirdUserInfo SET accountID = '%s', username = '%s', daokePassword = '%s', createTime = %d ",
+    update_user_info = "UPDATE userInfo SET status=2,updateTime=%d WHERE accountID = '%s'",
+    --2015/4/20 zhouzhe checkout 'userGroupInfo' 
+    -- insert_weibo_user = "INSERT INTO userGroupInfo (accountID,groupID,validity) VALUES ('%s','mirrtalkAll',1)",
+    -- update_weibo_user = "UPDATE userGroupInfo SET validity=0 WHERE accountID='%s' AND groupID='mirrtalkAll'",
+    --增加accountID= '' 2015-05-30zhouzhe
+    select_wecode = "SELECT WECode FROM WECodeInfo WHERE accountID = '' AND WECodeStatus=0 AND rewardsType=%s AND amountType=%s AND disabledTime>%d LIMIT %d",
+}
+
+local url_info = {
+    type_name = 'system',
+    app_key = nil,
+    client_host = nil,
+    client_body = nil,
+}
+
+local function write_client_mirrtalk(account_id, nickname)
+
+    local cur_time = os.time()
+    local sql = string.format(sql_fmt.user_info_add_record, account_id, nickname or "" , cur_time, cur_time)
+    
+    local ok, result = mysql_pool_api.cmd('app_cli___cli', 'insert', sql)
+    --2015/4/20 zhouzhe
+    -- if ok then
+    --     --sql = string.format(sql_fmt.insert_weibo_user, account_id)
+    --     --only.log('D', sql)
+    --     ok, result = mysql_pool_api.cmd('app_weibo___weibo', 'insert', sql)
+    -- end
+    if ok and result then
+        return true
+    else
+        only.log('E', sql)
+        return false
+    end
+end
+
+local function update_user_info_status(account_id)
+
+    local cur_time = os.time()
+    local sql = string.format(sql_fmt.update_user_info, cur_time, account_id)
+    only.log('D', sql)
+    local ok, result = mysql_pool_api.cmd('app_cli___cli', 'update', sql)
+    --2015/4/20 zhouzhe
+    -- if ok then
+    --     --sql = string.format(sql_fmt.update_weibo_user, account_id)
+    --     --only.log('D', sql)
+    --     ok, result = mysql_pool_api.cmd('app_weibo___weibo', 'update', sql)
+    -- end
+    if ok and result then
+        return true
+    else
+        return false
+    end
+end
+
+local function gen_account_id()
+    local account_id, sql, ret
+    while true do
+        account_id = utils.random_string(10)
+        sql = string.format(sql_fmt.check_accountid, account_id)
+        only.log('D', sql)
+        local ok, result = mysql_pool_api.cmd('app_usercenter___usercenter', 'select', sql)
+        if ok and #result==0 then
+            break
+        end
+    end
+    return account_id
+end
+
+local function update_user_list(account_id, jo)
+
+    local cur_time = os.time()
+    local username = jo['username'] 
+    local password = jo['daokePassword'] 
+
+    sql_tab = {}
+    --2015-06-11 zhouzhe
+    -- if username or password then
+    sql_tab = {
+        [1] = string.format(sql_fmt.user_list_add_record, account_id, cur_time, cur_time),
+        [2] = string.format(sql_fmt.user_list_history_add_record, account_id, cur_time),
+        [3] = string.format(sql_fmt.login_type_add_record, account_id, jo['loginType'], cur_time, jo['account'], jo["token"] or "", jo["refreshToken"] or "", jo["accessToken"] or "", jo["accessTokenExpiration"] or ""),
+        -- [4] = string.format(sql_fmt.third_user_info_add_record, account_id, username, password, cur_time),
+        -- [5] = string.format(sql_fmt.insert_userRegisterInfo, account_id, cur_time, jo['account'] ),
+    }
+    -- else
+    --     sql_tab = {
+    --         [1] = string.format(sql_fmt.user_list_add_record, account_id, cur_time, cur_time),
+    --         [2] = string.format(sql_fmt.user_list_history_add_record, account_id, cur_time),
+    --         [3] = string.format(sql_fmt.login_type_add_record, account_id, jo['loginType'], cur_time, jo['account'], jo["token"] or "", jo["refreshToken"] or "", jo["accessToken"] or "", jo["accessTokenExpiration"] or ""),
+    --     }
+    -- end
+
+    local ok, result = mysql_pool_api.cmd('app_usercenter___usercenter', 'affairs', sql_tab)
+    if ok and result then
+        return true
+    else
+        only.log("E", "mysql affairs is error")
+        for i=1, #sql_tab  do
+            only.log('E', sql_tab[i])
+        end
+        return false
+    end
+end
+
+local function touch_redis(account_id, nick_name)
+    --write nickname to redis--
+    if nick_name then
+        -- redis_pool_api.cmd("private", "set", account_id .. ':nickname', nick_name)
+        -- modify by jiang z.s. 2014-09-09 set nickname succ then save the url to redis
+        account_utils.set_nickname(account_id, nick_name)
+    end
+
+end
+
+local function get_nick_name(account_id)
+    --get nickname from redis--
+    local ok, nickname = redis_pool_api.cmd("private", "get", account_id .. ":nickname")
+    return nickname or ""
+end
+
+local function check_has_account( account_id )
+    local sql = string.format(sql_fmt.has_account, account_id)
+    
+    local ok, result = mysql_pool_api.cmd('app_usercenter___usercenter', 'select', sql)
+
+    if ok and #result >= 1 then
+        return 1
+    else
+        only.log('E', sql)
+        return 0
+    end
+end
+
+local function get_register_time( account_id )
+
+    local sql = string.format(sql_fmt.get_registTime, account_id)
+    
+    local ok, result = mysql_pool_api.cmd('app_usercenter___usercenter', 'select', sql)
+
+    local time
+    if ok and #result~=0 then
+        time = result[1]["updateTime"] or ""
+    else
+        only.log('E', sql)
+        time = ""
+    end
+
+    return time
+end
+
+local function get_login_time( account )
+
+    local sql = string.format(sql_fmt.get_loginTime, account)
+    only.log('D', sql)
+    local ok, result = mysql_pool_api.cmd('app_daokeme___daokeme', 'select', sql)
+
+    local cur_time = os.time()
+    local time
+    if ok and #result~=0 then
+        time = result[1]['lastLoginTime'] or ""
+        -- sql = string.format(sql_fmt.update_loginTime, url_info['client_host'], cur_time, account)
+        -- only.log('D', sql)
+        -- mysql_pool_api.cmd('app_daokeme___daokeme', 'update', sql)
+
+    else
+        time = ""
+        -- sql = string.format(sql_fmt.insert_loginTime, account, url_info['client_host'], cur_time)
+        -- only.log('D', sql)
+        -- mysql_pool_api.cmd('app_daokeme___daokeme', 'insert', sql)
+    end
+    return time
+end
+
+local function check_account( jo )
+    if not jo or type(jo) ~= "table" then
+        gosay.go_false(url_info, msg['MSG_ERROR_REQ_ARG'],'parameter')
+    end
+    if not jo["account"] then
+        gosay.go_false(url_info, msg['MSG_ERROR_REQ_ARG'],'account')
+    end
+    if not jo["loginType"] then
+        gosay.go_false(url_info, msg['MSG_ERROR_REQ_ARG'],'loginType')
+    end
+
+    local sql = string.format(sql_fmt.query_accountid, jo["account"], jo["loginType"])
+    -- only.log('D', sql)
+    local ok, result = mysql_pool_api.cmd('app_usercenter___usercenter', 'select', sql)
+
+    if not ok then
+        only.log('E', "query_accountid is failed : %s ", sql)
+        gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+    end
+
+    if #result == 0 then
+        return true
+    end
+
+    if jo["token"]  then
+        sql = string.format(sql_fmt.update_account_info, jo["token"], jo["refreshToken"] or "", jo["accessToken"], jo["accessTokenExpiration"], jo["account"], jo["loginType"])
+        -- only.log('D', sql)
+        local ok = mysql_pool_api.cmd('app_usercenter___usercenter', 'update', sql)
+        if not ok then
+            only.log('E', "mysql is error! update_account_info, %s ", sql)
+            gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+        end
+    end
+    if result[1]["accountID"] then
+        account_id = result[1]["accountID"]
+    else
+        gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+    end
+    if jo["nickname"] then
+        if not account_id then
+            gosay.go_false(url_info, msg['MSG_ERROR_USER_NAME_EXIST'])
+        end
+        local old_nickname = get_nick_name( account_id )
+        if not old_nickname then
+            local body = string.format('accountID=%s&nickname=%s', account_id, jo['nickname'])
+            local post_body = utils.post_data('/accountapi/v2/fixUserInfo', user_info_srv, body)
+
+            if not post_body then
+                only.log('D', "post_data fixUserInfo failed")
+                gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+            end
+
+            local ret_body = http_api.http(user_info_srv, post_body, true)
+            if not ret_body then
+                only.log('D', "http_api fixUserInfo failed")
+                gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+            end
+        end
+    end
+    local result_body = {
+            ["accountID"] = account_id,
+            ["isNew"] = 0,
+            ["isHasDaokeAccount"] = check_has_account( account_id ),
+            ["registerTime"] = get_register_time( account_id ),
+            ["lastLoginTime"] = get_login_time( jo["account"] ),
+            ["token"] = jo["token"],
+            ["refreshToken"] = jo["refreshToken"],
+            ["accessToken"] = jo["accessToken"],
+            ["accessTokenExpiration"] = jo["accessTokenExpiration"],
+            ["nickname"] = get_nick_name( account_id ),
+        }
+
+    local ok,data = utils.json_encode(result_body)
+    gosay.go_success(url_info, msg['MSG_SUCCESS_WITH_RESULT'], data)
+end
+
+-- 2015/4/20 zhouzhe 去掉锁
+-- local function check_lock()
+--     --check Lock
+--     local ok,ret = redis_pool_api.cmd('private','get','daokeAccountLock')
+--     if not ok then
+--         --only.log('E', string.format('get daokeAccountLock failed!'))
+--         gosay.go_false(url_info, msg['SYSTEM_ERROR'])
+--     end
+--     if ret then                                      -- have Lock
+--         --    only.log('E', string.format('There is daokeAccountLock!'))
+--             gosay.go_false(url_info, msg['MSG_ERROR_SYSTEM_BUSY'])
+--     end
+--     --no Lock ,then make Lock
+--     local daokeAccountLock 
+--     redis_pool_api.cmd('private','set','daokeAccountLock',"1")
+--     --make Lock validity is 1 second
+--     redis_pool_api.cmd('private','expire','daokeAccountLock',1)
+--     --only.log('E', string.format('Add  daokeAccountLock sucess!'))
+
+-- end
+local function create_wecode(cur_time, reward_type)
+
+    local cur_time = os.time()
+    local cur_year = os.date('%Y', cur_time)
+    local cur_month = os.date('%m', cur_time)
+    local cur_day = os.date('%d', cur_time)
+    local next_time = os.time( { year=cur_year+1, month=cur_month, day=cur_day } )
+
+    local tab = {
+            appKey = url_info['app_key'],
+            rewardsType = reward_type,
+            disabledTime = next_time,
+            createCount = 100,
+        }
+
+    local ok, secret = redis_pool_api.cmd("public", "hget", tab["appKey"] .. ':appKeyInfo', 'secret')
+    if not ok or not secret then
+        return false
+    end
+
+    local sign = app_utils.gen_sign(tab, secret)
+
+    local body = string.format('appKey=%s&sign=%s&rewardsType=%s&disabledTime=%s&createCount=%s', tab['appKey'], sign, tab['rewardsType'], next_time, tab['createCount'])
+
+    local post_body = utils.post_data('rewardapi/v2/createWECode', reward_srv, body)
+    if not post_body then
+        only.log('D', "post_data createWECode failed")
+        gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+    end
+
+    local ret_body = http_api.http(reward_srv, post_body, true)
+    if not ret_body then
+        only.log('E', "http_api createWECode failed! post_body: %s", post_body)
+        gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+    end
+end
+
+local function bind_wecode(account_id, wecode)
+
+    local tab = {
+        appKey = url_info['app_key'],
+        accountID = account_id,
+        WECode = wecode,
+    }
+
+    local secret = app_utils.get_secret(tab["appKey"])
+    if not secret  then
+        only.log('E','get secret failed from redis!')
+        gosay.go_false(url_info, msg['MSG_DO_REDIS_FAILED'])
+    end
+    -- local ok, secret = redis_pool_api.cmd("public", "get", tab["appKey"] .. ':secret')
+    -- if not ok or secret == nil then
+    --     gosay.go_false(url_info, msg['MSG_DO_REDIS_FAILED'])
+    -- end
+    local sign = app_utils.gen_sign(tab, secret)
+    if not( wecode or tab['appKey']or sign or account_id) then
+        gosay.go_false(url_info, msg['MSG_ERROR_REQ_ARG'],"parameter")
+    end
+    local body = string.format('WECode=%s&appKey=%s&sign=%s&accountID=%s', wecode, tab['appKey'], sign, account_id)
+
+    local post_body = utils.post_data('rewardapi/v2/bindUserWECode', reward_srv, body)
+    if not post_body then
+        only.log('D', "post_data bindUserWECode failed")
+        gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+    end
+    local ret = http_api.http(reward_srv, post_body, true)
+    if not ret then
+        only.log('E',string.format(" bindUserWECode request failed %s", post_body ))
+        gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+    end
+
+    local body = string.match(ret,'{.*}')
+    if not body then
+        only.log('E'," bindUserWECode request succ, get result failed " )
+        gosay.go_false(url_info, msg['MSG_DO_HTTP_FAILED'])
+    end
+
+    local ok,res_body = utils.json_decode(body)
+    if not ok  then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_BAD_JSON"])
+    end
+    
+    if tonumber(res_body['ERRORCODE']) ~=  0  then             --如果调用bindUserWECode API 不成功,打印错误日志
+        only.log('E',string.format('Call bindUserWECode API error,ERRORCODE:%s', res_body['ERRORCODE']))
+        only.log('E',string.format('res_body = %s',res_body))
+        return res_body
+    end
+    return res_body
+end
+
+local function parse_body(str)
+    local res = utils.parse_url(str)
+
+    if not res or type(res) ~= "table" then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_BAD_JSON"])
+    end
+
+    if not res['appKey'] then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_CODE"],"appKey is not exist!")
+    end
+
+    url_info['app_key'] = res['appKey']
+
+    ---check loginType---
+    res['loginType']= tonumber(res['loginType'])
+    ----2015/4/20 zhouzhe 添加信任第三方(7)
+    if res['loginType']~=5 and res['loginType']~=6 and res['loginType']~=7 then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "loginType")
+    end
+
+    ---check account---
+    if (not res['account'] or #res['account']==0 or #res['account'] >= 64) then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "account")
+    end
+    -- 2015-06-02zhouzhe
+    local str_res = string.find(res['account'],"'")
+    local str_tmp = string.find(res['account'],"%%")
+    if str_res or str_tmp then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "account")
+    end
+
+    --- these arguments is bound together ---
+    if not ( ((not res["token"]) and (not res["accessToken"]) and (not res["accessTokenExpiration"])) or (res["token"] and res["accessToken"] and res["accessTokenExpiration"]) ) then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "token")
+    end
+
+    ---nickname is selectable---
+    if res['nickname'] then
+        local str_f = string.find(res['nickname'],"'")
+        if str_f then
+            gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "nickname")
+        end
+        res['nickname'] = utils.url_decode(res['nickname'])
+    end
+    safe.sign_check(res, url_info)
+
+    return res
+end
+
+local function handle()
+    local body = ngx.req.get_body_data()
+    local ip = ngx.var.remote_addr
+
+    url_info['client_host'] = ip
+    url_info['client_body'] = body
+
+    if not body then 
+        gosay.go_false(url_info, msg['MSG_ERROR_REQ_NO_BODY'])
+    end
+
+    local handle_body = parse_body(body)
+    if not handle_body then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "handle_body")
+    end
+    -->> check accout
+    check_account( handle_body )
+
+    -->check Lock       --此处于2014.11.03日更新，在redis上添加一把锁，以解决多个用户同时添加账户绑定微码的问题，此处是与下面2014.10.28的更新一起来解决这个多进程问题。
+    -- 2015/4/20 zhouzhe 去掉锁
+    --check_lock()
+
+    local account_id = gen_account_id()
+
+    local result = write_client_mirrtalk(account_id, handle_body['nickname'])
+
+    if not result then
+        gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+    end
+
+    result = update_user_list(account_id, handle_body)
+
+    if not result then
+        -- 更新错误状态码到userInfo
+        update_user_info_status(account_id)
+
+        gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+    end
+
+    touch_redis(account_id, handle_body['nickname'])
+
+    local types = {
+        [2] = { 4 },
+    }
+     -- 以下部分程序于2014.10.28进行了更新，更新后解决了在多线程情况下如果两个或多个用户取到了同一个WECode，而产生绑定冲突的问题，
+     -- 具体解决办法为：根据给定条件同时从数据库中取出5条WECode记录，并放入result表中，然后在绑定时如果出现冲突，就依次从result表中往下取下面的记录                                   
+    local result = {}                --存放WECode记录
+    local selnum = 5                 --要取的WECode记录条数
+    local cur_time = os.time()
+
+    for i, v in pairs(types) do
+        for _, j in ipairs(v) do
+            local sql = string.format(sql_fmt.select_wecode, j, i, cur_time,selnum)
+            --only.log('D',"select_wecode"..sql)
+            local ok, result = mysql_pool_api.cmd('app_crowd___crowd', 'select', sql)
+            if not ok then
+                only.log('E',"select_wecode is error : %s",sql)
+                gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+            end
+            --only.log('D', string.format('==select_wecode_result1==:%s',result[1]['WECode'])) 
+            --only.log('D', string.format('==select_wecode_result2==:%s',result[2]['WECode'])) 
+
+            -- if #result != 5 then
+            if #result ~= selnum then            --如果取出的条数不够5条，就去创建
+                -- create wecode
+                create_wecode(cur_time, j)
+                -- only.log('D', sql)
+                ok, result = mysql_pool_api.cmd('app_crowd___crowd', 'select', sql)
+                if not ok then
+                    only.log('E', sql)
+                    gosay.go_false(url_info, msg['MSG_DO_MYSQL_FAILED'])
+                end
+            end
+            -- bind wecode
+            local lastnum = nil
+            for num = 1 ,selnum do
+                local bind_res =  bind_wecode(account_id, result[num]['WECode'])
+                -- if ret__body == nil then
+                --     only.log('E',string.format('Call bind_wecode return nil'))
+                --     break
+                if tonumber(bind_res['ERRORCODE']) == 0 then                      --绑定WECode成功
+                    break
+                elseif bind_res['ERRORCODE'] == 'ME18040' then                     --如果绑定冲突，继续取下面的记录,错误码ME18040为绑定冲突返回的错误码
+                    num = num + 1
+                    lastnum = num
+                end
+            end 
+
+            if lastnum == selnum + 1 then           --循环五次后仍然存在冲突的情况
+                --only.log('E',string.format('bindUserWECode Conflict,ERRORCODE:%s',ret_body['ERRORCODE']))
+                gosay.go_false(url_info, msg['MSG_ERROR_REQ_ARG'], 'bindUserWECode')
+            end
+
+        end
+    end
+
+    local result_body = {
+        ["accountID"] = account_id,
+        ["isNew"] = 1,
+        ["isHasDaokeAccount"] = check_has_account( account_id ),
+        ["registerTime"] = get_register_time( account_id ),
+        ["lastLoginTime"] = get_login_time( handle_body["account"] ),
+        ["token"] = handle_body["token"],
+        ["refreshToken"] = handle_body["refreshToken"],
+        ["accessToken"] = handle_body["accessToken"],
+        ["accessTokenExpiration"] = handle_body["accessTokenExpiration"],
+        ["nickname"] = get_nick_name( account_id ),
+    }
+
+    local ok,data = utils.json_encode(result_body)
+
+    gosay.go_success(url_info, msg['MSG_SUCCESS_WITH_RESULT'], data)
+end
+
+safe.main_call( handle )

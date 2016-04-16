@@ -1,0 +1,201 @@
+-->[ower]: baoxue
+-->[time]: 2013-09-02
+-->accountID与IMEI绑定
+
+local msg       = require('msg')
+local gosay     = require('gosay')
+local utils     = require('utils')
+local only      = require('only')
+local msg       = require('msg')
+local safe      = require('safe')
+local redis_api = require('redis_pool_api')
+local mysql_api = require('mysql_pool_api')
+
+local G = {
+	sl_mirrtalk = "SELECT validity,status FROM mirrtalkInfo WHERE imei='%s' AND nCheck='%s'",
+
+	sl_account = " SELECT accountID FROM userList WHERE imei='%s' limit 1 ",
+
+	sl_status = " SELECT userStatus,daokePassword, imei  FROM userList WHERE accountID='%s' AND userStatus > 2 ",
+
+	upd_user_list = " UPDATE userList SET userStatus=5,updateTime=%s,imei='%s' WHERE accountID='%s' ",
+	ins_history = " INSERT INTO userListHistory SET userStatus=5,updateTime=%s,imei='%s',accountID='%s',daokePassword='%s' ",
+
+	-->> identify
+}
+
+local userlist_dbname =  "app_usercenter___usercenter"
+
+
+local url_info = { 
+    type_name = 'system',
+    app_key = nil,
+    client_host = nil,
+    client_body = nil,
+}
+
+local function check_parameter(body)
+
+	local res = utils.parse_url(body)
+
+	if not res or type(res) ~= "table" then
+		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_ARG'],"args")
+	end
+
+	url_info['app_key'] = res['appKey']
+
+	-->> check imei
+	if (not utils.is_number(res["IMEI"])) or (#res["IMEI"] ~= 15) or ( string.sub(res['IMEI'],1,1) == "0") then
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "IMEI")
+	end
+	-->> check accountID
+	if (not utils.is_word(res["accountID"])) or (#res["accountID"] ~= 10) then
+		gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "accountID")
+	end
+	--accountID--2015/4/11---
+	safe.sign_check(res, url_info, 'accountID', safe.ACCESS_BINDMIRRTALK_INFO)
+
+	return res
+end
+
+local function check_user_is_online( account_id )
+	local ok, ret = redis_api.cmd('statistic', 'sismember', 'onlineUser:set', account_id)
+	return ok and ret
+end
+
+function handle()
+	local ip = ngx.var.remote_addr
+	local body = ngx.req.get_body_data()
+	if not body then
+		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_NO_BODY'])
+	end
+
+	url_info['client_host'] = ip
+	url_info['client_body'] = body
+
+	local sql,ret
+	local res = check_parameter(body)
+
+	local imei = res["IMEI"]
+	local account_id = res["accountID"]
+
+	-->> check imei
+	local sql = string.format(G.sl_mirrtalk, string.sub(imei, 1, -2), string.sub(imei, -1, -1))
+	local ok, res = mysql_api.cmd('app_ident___ident', 'SELECT', sql)
+	if not ok or not res then
+
+		only.log('E', string.format(" check imei failed %s",sql) )
+		gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+	end
+
+	if #res == 0 then
+		gosay.go_false(url_info, msg["MSG_ERROR_IMEI_NOT_EXIST"])
+	end
+
+	if tonumber(res[1]['validity']) == 0 or res[1]['status']~='13g' then
+		-- gosay.go_false(url_info, msg["MSG_ERROR_IMEI_UNUSABLE"],imei)
+		-- 2015-04-10 错误码调整 jiang z.s. 
+		gosay.go_false(url_info, msg["MSG_ERROR_IMEI_INVALIDITY"])
+	end
+
+	-->| STEP 2 |<--
+	-->> check if has imei in userList
+	sql = string.format(G.sl_account, imei)
+	local ok, res = mysql_api.cmd(userlist_dbname, 'SELECT', sql)
+	if not ok or not res then
+		only.log('E',"check imei is bind failed, %s",sql)
+		gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+	end
+
+	if #res~= 0 then
+		if res[1]['accountID'] == account_id then
+			gosay.go_false(url_info, msg['MSG_ERROR_DEVICE_REBIND'])
+		else
+			gosay.go_false(url_info, msg["MSG_ERROR_IMEI_HAS_BIND"])
+		end
+	end
+
+	-->| STEP 3 |<--
+	-->> check if has accountID in userList
+	sql = string.format(G.sl_status, account_id)
+	local ok, res = mysql_api.cmd(userlist_dbname, 'SELECT', sql)
+	if not ok or not res then
+		only.log('E',"check accountID , %s ", sql )
+		gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+	end
+	-->> has no
+	if #res==0 then
+		gosay.go_false(url_info, msg["MSG_ERROR_ACCOUNT_ID_NOT_EXIST"])
+	-->> has more than one
+	elseif #res > 1 then
+		only.log('S', string.format("the record of accountID:%s is more than one, call someone to handle", account_id))
+		gosay.go_false(url_info, msg["MSG_ERROR_MORE_RECORD"], "accountID")
+	end
+
+	-->> has only one
+	local status = tonumber(res[1]["userStatus"])
+	local daoke_password = res[1]["daokePassword"]
+
+	-->| STEP 4 |<--
+	if status == 3 then
+		gosay.go_false(url_info, msg["MSG_ERROR_ACCOUNT_ID_NO_SERVICE"])
+	elseif status == 5 then
+
+		if res[1]['imei'] == imei then
+			gosay.go_false(url_info, msg['MSG_ERROR_DEVICE_REBIND'])
+		else
+			---- 已经绑定
+			gosay.go_false(url_info, msg["MSG_ERROR_ACCOUNT_ID_HAS_BIND"])
+		end
+    elseif status == 4 then
+		---- 未绑定,开始绑定
+		-->| STEP 5 |<--
+		local cur_time = os.time()
+		local sql_tab = {}
+		sql = string.format(G.upd_user_list, cur_time, imei, account_id)
+		table.insert(sql_tab, sql)
+		sql = string.format(G.ins_history, cur_time, imei, account_id, daoke_password)
+		table.insert(sql_tab, sql)
+
+		local ok, res = mysql_api.cmd(userlist_dbname, 'affairs', sql_tab)
+		if not ok then
+			only.log('E',"bind accountid with imei failed , %s ", table.concat( sql_tab, "\r\n" ) )
+			gosay.go_false(url_info, msg["MSG_DO_MYSQL_FAILED"])
+		end
+
+		redis_api.cmd('private', 'set', account_id .. ":IMEI", imei)
+		redis_api.cmd('private', 'set', imei .. ":accountID", account_id)
+
+		if check_user_is_online(imei) then
+
+			---- 从默认的客户频道剔除在线
+			redis_api.cmd('statistic', 'srem', '10086:channelOnlineUser', imei)
+
+			redis_api.cmd('statistic', 'srem', 'onlineUser:set', imei)
+			redis_api.cmd('statistic', 'sadd', 'onlineUser:set', account_id)
+			
+			local ok, ret = redis_api.cmd('statistic','smembers',account_id .. ":userFollowMicroChannel")
+			if ok and ret then
+				for k, idx in pairs(ret) do
+					redis_api.cmd('statistic', 'sadd', idx .. ':channelOnlineuser', account_id)
+					only.log('I',string.format("add channelidx:%s  channelOnlineuser %s" , idx, account_id ))
+				end
+			end
+
+			local ok, ret = redis_api.cmd('private', 'get', imei .. ":cityCode")
+			if ok and ret then
+				redis_api.cmd('statistic', 'srem', ret .. ':cityOnlineUser', imei)
+				redis_api.cmd('statistic', 'sadd', ret .. ':cityOnlineUser', account_id)
+			end
+		end
+		gosay.go_success(url_info, msg["MSG_SUCCESS"])
+    end
+    
+    only.log('E',string.format("SYSTEM_ERROR: accountID: %s  imei:%s  %s", account_id, imei, status) )
+    gosay.go_success(url_info, msg["SYSTEM_ERROR"])
+
+end
+
+
+safe.main_call( handle )
+

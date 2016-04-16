@@ -1,0 +1,154 @@
+--fixed	: chengjian
+--date	: 2014-03-28
+
+local ngx = require('ngx')
+local sha = require('sha1')
+local redis_api = require('redis_pool_api')
+local mysql_pool_api = require('mysql_pool_api')
+local utils = require('utils')
+local only = require('only')
+local msg = require('msg')
+local gosay = require('gosay')
+local safe = require('safe')
+
+local sql_fmt = {
+    get_accountID_by_name = "SELECT accountID FROM userRegisterInfo WHERE username='%s' AND validity=1",
+    get_accountID_by_mobile = "SELECT accountID, checkMobile FROM userRegisterInfo WHERE mobile=%s AND validity=1",
+    get_accountID_by_email = "SELECT accountID, checkUserEmail FROM userRegisterInfo WHERE userEmail='%s' AND validity=1",
+    check_userlist_record = "SELECT accountID, imei, daokePassword FROM userList WHERE accountID='%s' AND userStatus IN(4,5)",
+    sl_user_info = "SELECT accountID, name, nickname FROM userInfo WHERE accountID='%s' AND status=1",
+
+    update_loginLog = "UPDATE loginLog SET clientIP = INET_ATON('%s'), lastLoginTime =%d WHERE account='%s'",
+}
+
+local url_info = {
+    app_key = nil,
+    type_name = 'system',
+    client_host = nil,
+    client_body = nil,
+}
+
+local function check_parameter(body)
+
+    local args = utils.parse_url(body)
+
+    if not args or type(args) ~= "table" then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_NO_BODY"])
+    end 
+
+     if not args['appKey'] then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_CODE"],"appKey is not exist!")
+    end 
+
+    url_info['app_key'] = args['appKey']
+
+    if not args['daokePassword'] then
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], 'daokePassword')
+    end
+
+    if args['clientIP'] then
+        if args['clientIP'] == nil or (string.match(args['clientIP'], '%d+%.%d+%.%d+%.%d+') == nil ) then
+            gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], "clientIP")
+        end
+    end
+
+    -->> safe check
+    safe.sign_check(args, url_info)
+
+    return args
+end
+
+function handle()
+
+    local ip = ngx.var.remote_addr
+    local body = ngx.req.get_body_data()
+    
+    url_info['client_host'] = ip
+    url_info['client_body'] = body
+
+
+    -->> check parameters
+    local args = check_parameter( body )
+
+    local sql
+
+    -- 手机号码为1开头的11位数字
+    if #args['username'] == 11 and utils.is_number(args['username']) and tonumber(string.sub(args['username'], 1, 1)) == 1 then
+        sql = string.format(sql_fmt.get_accountID_by_mobile, args['username'])
+        -- 用户邮箱字段中包含@符号
+    elseif string.match(args['username'], '@') then
+        sql = string.format(sql_fmt.get_accountID_by_email, args['username'])
+
+        -- 用户名是由数字、下划线或字母组成，且首字母为非数字
+    elseif utils.is_word(string.sub(args['username'], 1, 1)) then
+        sql = string.format(sql_fmt.get_accountID_by_name, string.lower(args['username']))
+    else
+        gosay.go_false(url_info, msg["MSG_ERROR_REQ_ARG"], 'username')
+    end
+
+    only.log('D',sql)
+    local ok, result = mysql_pool_api.cmd("app_usercenter___usercenter", 'select', sql)
+
+    if not ok or not result then 
+        only.log('E',sql)                                               
+        gosay.go_false(url_info,msg["MSG_DO_MYSQL_FAILED"])
+    end
+
+    -- 判断该用户名是否存在
+    if #result == 0 then
+        gosay.go_false(url_info, msg["MSG_ERROR_USER_NAME_NOT_EXIST"])
+    elseif #result>1 then
+        only.log('E', string.format('this username:%s has too many record', args['username']))
+        gosay.go_false(url_info, msg["MSG_ERROR_MORE_RECORD"], 'username')
+    end
+
+    local a_id = result[1]['accountID']
+
+    -- 如果输入的是手机或邮箱  验证他们是否有效
+    if (result[1]['checkMobile'] and tonumber(result[1]['checkMobile']) ~= 1) or (result[1]['checkUserEmail'] and tonumber(result[1]['checkUserEmail']) ~= 1) then
+        gosay.go_false(url_info, msg["MSG_ERROR_USER_NAME_UNUSABLE"])
+    end
+
+    -- 判断accountID 和密码是否有效
+    local password = ngx.md5(sha.sha1(args['daokePassword']) .. ngx.crc32_short(args['daokePassword']))
+    sql = string.format(sql_fmt.check_userlist_record, a_id)
+    ok, result = mysql_pool_api.cmd("app_usercenter___usercenter", 'select', sql)
+    if not ok then
+	    only.log('E',string.format("check_userlist_record failed, %s",sql))                                              
+	    gosay.go_false(url_info,msg['MSG_DO_MYSQL_FAILED'])
+    end
+    if #result == 0 then
+        gosay.go_false(url_info, msg["MSG_ERROR_ACCOUNT_ID_NO_SERVICE"])
+    elseif result[1]['daokePassword'] ~= password then
+        gosay.go_false(url_info, msg["MSG_ERROR_PWD_NOT_MATCH"])
+    end
+
+    -- update the daokeme.loginLog
+    if args['clientIP'] then
+        sql = string.format(sql_fmt.update_loginLog, args['clientIP'], os.time(), args['username'])
+        local ok = mysql_pool_api.cmd('app_daokeme___daokeme', 'update', sql)
+        if not ok then
+            only.log('E',string.format("update_loginLog failed, %s",sql))
+        end
+    end
+
+    -- select the user information from client_mirrtalk.userInfo
+    sql = string.format(sql_fmt.sl_user_info, a_id)
+    only.log('D',sql)
+    ok, result = mysql_pool_api.cmd("app_cli___cli", 'select', sql)
+
+    if not ok or not result then
+	    only.log('E',string.format("sl_user_info failed, %s",sql))
+	    gosay.go_false(url_info,msg['MSG_DO_MYSQL_FAILED'])
+    end
+
+    local ok, ret_req = utils.json_encode(result[1])
+    if not ok or not ret_req then
+	    gosay.go_false(url_info,msg['SYSTEM_ERROR'])
+    end
+    
+    gosay.go_success(url_info,msg['MSG_SUCCESS_WITH_RESULT'], ret_req)
+
+end
+
+safe.main_call( handle )
