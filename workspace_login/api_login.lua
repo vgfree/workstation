@@ -1,4 +1,4 @@
--- name   : api_login
+-- api_login
 -- author : louis.tin
 -- date	  : 04-14-2016
 -- 登录接口
@@ -15,7 +15,6 @@ local safe 	= require('safe')
 -- TODO 指定base userInfo 等参数的数据库
 local app_config_db   = { [1] = 'login_config___config', [2] = 'weme_car___car'}
 
--- 用于验证参数
 local url_tab = { 
 	type_name   = 'login',
 	app_key     = '',
@@ -48,7 +47,7 @@ local function ready_execution(appKey)
 	local sql_str = string.format(G.sql_login_info, appKey)
 	only.log('W', "mysql select condfig info is :%s", sql_str)
 
-	-- TODO 指定数据库
+	-- TODO 指定执行目标数据库
 	local ok_status, ok_config = mysql_api.cmd(app_config_db[1], 'SELECT', sql_str)
 	if not ok_status  then
 		only.log('E', 'connect database failed when query sql_openconfig_info, %s ', sql_str)
@@ -64,8 +63,7 @@ local function ready_execution(appKey)
 	end
 
 	---------------------------------------------------------------------------------------------------
-	
-	
+		
 	return true, ok_config[1]['base'], ok_config[1]['roadRank'], ok_config[1]['sicong']
 end
 
@@ -221,7 +219,7 @@ local function handle()
 	local req_method = ngx.var.request_method
 	local args       = ngx.req.get_uri_args()
 	-- 获取head
-	local header	 = ngx.req.get_headers() 
+	local req_header	 = ngx.req.get_headers() 
 	
 	only.log('D', '-----------------------------------------------------------------------------')	
 	only.log('D', "req_head = %s", scan.dump(req_head))
@@ -258,19 +256,17 @@ local function handle()
                 G.body = string.format('GET %s', ngx.encode_args(args) )                                               
         end                    
 
-
-
 	G.imei      	= req_body['imei']
 	G.appKey      	= header['appKey']
 
 	only.log('D', "appkey=%s", header['appKey'])
 	
 	-- 获取请求参数
-	local appKey		= header['appKey']
-	local sign		= header['sign']
-	local accessToken	= header['accessToken']
-	local timestamp		= header['timestamp']
-	local accountID		= header['accountID']
+	local appKey		= req_header['appKey']
+	local sign		= req_header['sign']
+	local accessToken	= req_header['accessToken']
+	local timestamp		= req_header['timestamp']
+	local accountID		= req_header['accountID']
 	local imei		= req_body['imei']
 	local imsi		= req_body['imsi']
 	local modelVer		= req_body['modelVer']
@@ -302,8 +298,6 @@ local function handle()
 	parameter_table.buildVer	= buildVer
 	parameter_table.lcdWidth	= lcdWidth
 	parameter_table.lcdHeight	= lcdHeight
-
-
 
 	-- TODO 将header 和 body 合并
 	-- [[

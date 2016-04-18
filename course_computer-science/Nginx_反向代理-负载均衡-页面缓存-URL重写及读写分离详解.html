@@ -1,0 +1,1974 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<script id="allmobilize" charset="utf-8" src="http://a.yunshipei.com/ac0ecd4968d76dbea889a1a0f28e176f/allmobilize.min.js"></script><meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+<meta http-equiv="Content-Type"	content="text/html;	charset=gb2312">
+<title>Nginx 反向代理、负载均衡、页面缓存、URL重写及读写分离详解 - Share your knowledge … - 51CTO技术博客</title>
+<meta name="description" content="大纲一、前言二、环境准备三、安装与配置Nginx四、Nginx之反向代理五、Nginx之负载均衡六、Nginx之页面缓存七、Nginx之URL重写八、Nginx之读写分离注，操作系统为CentOS6.4x86_64,Nginx是版本是最新版的1.4.2，所..">
+<meta name="keywords" content="读写分离,页面缓存,URL重写,Nginx 反向代理">
+<meta http-equiv="Cache-Control" content="private">
+<base href="http://freeloda.blog.51cto.com/"></base>
+<script src="/js/def.js"></script>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/message.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/user_comment.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/base2.js" type=text/javascript></SCRIPT>
+<SCRIPT language=javascript src="http://blog.51cto.com/js/dialog_utf8.js" type=text/javascript></SCRIPT>
+<link href="/css/skin/34.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="../rss.php?uid=2033581" type="application/rss+xml" title="RSS 2.0">
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="xmlrpc.php?rsd=1" />
+<link href="http://blog.51cto.com/css/header_master_top.css" rel="stylesheet" type="text/css" />
+<link href="http://blog.51cto.com/css/skin/base.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.mainNav li a{display:inline-block}
+</style>
+<script>
+var myid = "";
+function add_flink(){
+	if(myid==""){
+
+        var refurlk = "http://freeloda.blog.51cto.com/2033581/1288553";
+
+				//commentSubmit("",refurlk);
+				location.href="http://home.51cto.com/index.php?reback="+encodeURIComponent(encodeURIComponent(refurlk));
+				
+				return false;
+	}else{
+		var mtk = "4c7db7f6ffdf4226ca2d6eb03b1966e1";
+      		var url='/mod/edit_flink.php?type=addflink&uid=2033581&flink=http://freeloda.blog.51cto.com&mtk='+mtk;
+		var ajax = InitAjax1();
+		ajax.open("GET", url, true);
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				/*if(myid == 5290427){
+					alert(ajax.responseText);
+				}*/
+				if(ajax.responseText==""){
+					alert("添加成功。");
+				}
+				if(ajax.responseText=="1"){
+				alert("链接指向自己。");
+				}
+				if(ajax.responseText=="2"){
+				alert("友情链接已存在。")
+				}
+				if(ajax.responseText=="4"){
+					alert("验证已过期。")
+					}
+			}
+		}
+		ajax.send(null);
+	}
+
+
+
+}
+function sendmessage(){
+
+	var refurlk = "http://freeloda.blog.51cto.com/2033581/1288553";
+
+	if(myid){
+		return true;
+	}else{
+		commentSubmit("",refurlk);
+		return false;
+	}
+}
+function copylink(ourl){
+	if(!ourl){
+		var clipBoardContent = "http://freeloda.blog.51cto.com";
+	}else{
+		var clipBoardContent = ourl;
+	}
+	window.clipboardData.setData("Text",clipBoardContent);
+	alert("复制成功!");
+	return false;
+}
+function correctPNG() {
+if (document.getElementById('blog_touxian'))
+{
+var img = document.getElementById('blog_touxian');
+      var imgName = img.src.toUpperCase()
+      var imgID = (img.id) ? "id='" + img.id + "' " : ""
+      var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+      var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+      var imgStyle = "display:inline-block;" + img.style.cssText
+      if (img.align == "left") imgStyle = "float:left;" + imgStyle
+      if (img.align == "right") imgStyle = "float:right;" + imgStyle
+      if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+      var strNewHTML = "<span " + imgID + imgClass + imgTitle
+         + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+         + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" ;
+      img.outerHTML = strNewHTML;
+}
+}
+//window.attachEvent("onload", correctPNG);
+window.onload=correctPNG;
+
+function copy(){
+var text=document.getElementById("txtUser").value;
+if(copy2Clipboard(text)!=false){ 
+alert("复制成功了！ "); 
+} 
+}
+function copy2Clipboard(txt){ 
+if(window.clipboardData){ 
+window.clipboardData.clearData(); 
+window.clipboardData.setData("Text",txt); 
+}else if(navigator.userAgent.indexOf("Opera")!=-1){ 
+window.location=txt; 
+}else if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+} 
+catch(e){ 
+alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。"); 
+return false; 
+} 
+var clip=Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard); 
+if(!clip)return; 
+var trans=Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable); 
+if(!trans)return; 
+trans.addDataFlavor('text/unicode'); 
+var str=new Object(); 
+var len=new Object(); 
+var str=Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString); 
+var copytext=txt;str.data=copytext; 
+trans.setTransferData("text/unicode",str,copytext.length*2); 
+var clipid=Components.interfaces.nsIClipboard; 
+if(!clip)return false; 
+clip.setData(trans,null,clipid.kGlobalClipboard); 
+return true;
+} 
+}
+
+function mod_close(){
+  document.getElementById('mod_tg').style.display="none";
+}
+
+function match_invite(uid) {
+    var url='/mod/match_invite.php';
+	var ajax = InitAjax();
+    var re = 'uid=' + uid;
+	ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	ajax.send(re);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            if(ajax.responseText == 1){
+                alert("邀请信息已经发送成功。");
+            } else if(ajax.responseText=="-1"){
+                alert("邀请失败，请稍候再试。");
+            } else if(ajax.responseText=="2"){
+                alert("该用户已经报名了。")
+            }
+        }
+    }
+}
+
+</script>
+<style type="text/css">
+/*
+.artContent img {max-width:450px !important;}
+.showContent img{max-width:650px!important;}
+*/
+
+.artContent img{max-width: 450px; width:expression(this.width > 450 ? "450px" : this.width)}
+/*
+.showContent img{max-width: 450px; width:expression(this.width > 650 ? "650px" : this.width)}
+*/
+
+
+</style>
+</head>
+
+<body >
+
+<div id="home_top">
+<div class="top_nav" style="width:990px;">
+<div class="left"  style="margin-top:10px; width:440px;"><a href="http://blog.51cto.com/" target="_blank"><img src="images/head_blog_sibebar_logo.gif" align="absmiddle" style="margin-top:-4px;" /></a><a target="_blank" href="http://www.51cto.com">51CTO首页</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" ><a href="http://blog.51cto.com/" target="_blank">51CTO博客</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" ><a href="http://home.51cto.com?reback=http%253A%252F%252Ffreeloda.blog.51cto.com%252F2033581%252F1288553" >我的博客</a><img height="25" align="absmiddle" width="16" src="http://home.51cto.com/public/themes/blue/images/top_bg_xian.gif" style="margin-top:-4px;" >
+
+<a target="_blank" href="http://blog.51cto.com/search.php">搜索</a>
+<a href="javascript:void(0);" style="color:#FF0000; text-decoration:underline; display:none" id="showMessagerDim">每日博报</a>
+</div>
+
+<div class="right" style="width:550px;">
+<div class="more"><img height="16" align="absmiddle" width="27" src="http://home.51cto.com/public/themes/blue/images/top_shequ.gif"><a target="_blank" style="color:#C00" href="http://gaozhao.51cto.com/">招聘</a><a target="_blank" href="http://edu.51cto.com/">学院</a><a target="_blank" href="http://bbs.51cto.com">论坛</a><a target="_blank" href="http://blog.51cto.com">博客</a><a target="_blank" href="http://down.51cto.com">下载</a><a href="javascript:viod(0);" onmouseout="popupClose()" onmouseover="show(3,this)">更多<img align="absmiddle" style="padding-left: 4px;" src="http://images.51cto.com/images/art/top_images/nav_ico1.gif"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+
+
+
+<div class="subMenu3" id="s3" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://home.51cto.com" target="_blank">家园</a></li>
+<li><a href="http://edu.51cto.com" target="_blank">学院</a></li>
+<li><a href="http://blog.51cto.com" target="_blank">博客</a></li>
+<li><a href="http://bbs.51cto.com" target="_blank">论坛</a></li>
+<li><a href="http://down.51cto.com" target="_blank">下载</a></li>
+
+<li><a href="http://selftest.51cto.com" target="_blank">自测</a></li>
+<li><a href="http://doctor.51cto.com" target="_blank">门诊</a></li>
+<li><a href="http://blog.51cto.com/newsletter/" target="_blank">周刊</a></li>
+<li><a href="http://book.51cto.com" target="_blank">读书</a></li>
+<li><a href="http://t.51cto.com" style="color:red;" target="_blank">题库</a></li>
+<li><a href="http://gaozhao.51cto.com/" target="_blank">招聘</a></li>
+</ul>
+</div>
+<!--简导航end-->
+
+
+
+<div class="headerBox">
+<div class="header">
+<div class="header_l">
+<div class="logo_blogname">
+
+
+<div class="blogLogo">
+<a href="http://blog.51cto.com/blogcommend" target="_blank"><img src="http://blog.51cto.com/image/skin/blogLogo01.png" width="161px;" height="70px;"></a>
+</div>
+
+
+<div class="blogName">
+<a href="http://freeloda.blog.51cto.com"><h1>Share your knowledge …</h1></a>
+</div>
+</div><!--logo_blogname end-->
+<div class="blogLink">
+
+<a href="http://freeloda.blog.51cto.com">http://freeloda.blog.51cto.com</a> <input id="txtUser" type="hidden" size=32 value="http://freeloda.blog.51cto.com" />   <a href="javascript:void(0);" onclick="copy();">【复制】</a> <a href='/rss.php?uid=2033581' target='_blank'><a href='/rss.php?uid=2033581' target='_blank'>【订阅】</a>
+
+</div>
+
+
+
+</div><!--header_l end-->
+<div class="header_r">
+<div class="blogInfo"><span><a href="http://freeloda.blog.51cto.com/2033581/o" title="察看陈明乾所有原创文章">原创</a>:158</span><span><a href="http://freeloda.blog.51cto.com/2033581/t" title="察看陈明乾所有翻译文章">翻译</a>:1</span><span><a href="http://freeloda.blog.51cto.com/2033581/c" title="察看陈明乾所有转载文章">转载</a>:3</span></div>
+<div class="blogNav"><a href="/">博 客</a>|<a href="http://home.51cto.com/apps/photo/index.php?s=/Index/photos/uid/2033581">图库</a>|<a href="/addblog.php">写博文</a>|<a href="http://51ctoblog.blog.51cto.com/all/26414/4" target="_blank">帮 助</a></div>
+</div>
+</div>
+<!--header end-->
+</div><!--headerBox end-->
+<div class="mainNav">
+<span class="mainNavT"></span>
+<ul>
+<li><a href="/">首页</a></li>|<li><a href="/2033581/d-1">Linux基础专题</a></li>|<li><a href="/2033581/d-2">Linux服务专题</a></li>|<li><a href="/2033581/d-3">MySQL数据库专题</a></li>|<li><a href="/2033581/d-4">Linux集群与存储专题</a></li>|<li><a href="/2033581/d-9">Linux性能调优专题</a></li>|<li><a href="/2033581/d-7">Linux工具专题</a></li>|<li><a href="/2033581/d-11">Linux安全专题</a></li>|<li><a href="/2033581/d-12">Linux监控专题</a></li>|<li><a href="/2033581/d-14">Linux系统架构专题</a></li>|<li><a href="/2033581/d-15">HTTP加速及应用服务器专题</a></li>|<li><a href="/2033581/d-17">Linux虚拟化专题</a></li>|<li><a href="/2033581/d-18">Linux自动化运维专题</a></li>|<li><a href="/2033581/d-19">Python 专题</a></li>|<li><a href="/2033581/d-20">Linux日志分析工具专题</a></li>|<li><a href="/2033581/d-21">Linux故障排除专题</a></li>|<li><a href="/2033581/d-22">OpenVPN专题</a></li>|<li><a href="/2033581/d-23">PHP专题</a></li>|<li><a href="/2033581/d-24">Git与GitHub专题</a></li>|<li><a href="/2033581/d-25">代码发布与管理控制专题</a></li>|<li><a href="/2033581/d-13">常用小技巧</a></li>
+</ul>
+<span class="mainNavB"></span>
+</div>
+<!--mainNav end-->
+
+
+<style>
+.wrap_box{width:750px;float:left;}
+.box1{width:368px;background: #fff; border: 0px solid #626262;float:left;height: 162px;}
+.mr10{margin-right:10px;}
+</style>
+<script type="text/javascript" src="http://blog.51cto.com/js/jquery-1.7.1.min.js"></script>
+<!--[if IE 6]>
+  <script type="text/javascript" src="http://images.watchstor.com/newhomes/png.js"></script>
+  <script>
+    DD_belatedPNG.fix('img,input,ul,li, .get-box, div, .add, .sub, .ui-slider-handle, .footer-chopper');
+  </script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/neweditor/editor/css/fck_editorarea.css"></link>
+<script type="text/javascript" charset="gbk" src="/e/u/third-party/SyntaxHighlighter/shCores.js"></script>
+<link rel="stylesheet" type="text/css" href="/e/u/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+<script type="text/javascript" charset="gbk" src="/e/u/uparse.js"></script>
+<script type="text/javascript">
+	uParse('.showContent');
+	$(function(){
+		//SyntaxHighlighter.config.clipboardSwf = 'http://bbs.51cto.com/plugins/syntaxhighlighter/scripts/clipboard.swf'; 
+		//为了在编辑器之外能展示高亮代码
+		SyntaxHighlighter.highlight();
+	}); 
+</script>
+<script type="text/javascript">
+/**
+ * 回复评论需要用的js
+ * 2012-5-14
+ * by:chengtao
+ */
+ jQuery(function(){
+	blogpost.init();//初始化博客回复功能
+ })
+ /**
+  * 处理博文评论功能优化
+  */
+ blogpost={
+	abstruct_list:null,
+	init:function(){
+		blogpost.bind();//绑定一些时间
+		this.abstruct_list=new Array();//初始化保存评论信息的数组
+	},
+	/**
+	 * 博客回复需要绑定的一些事件
+	 */
+	bind:function(){
+		/**
+		 * 点击回复的事件
+		 */
+		jQuery('.repost').live('click',function(){
+			blogpost.repost(jQuery(this).attr('user_name'),jQuery(this).attr('parentid'));
+			return false;
+		});
+		/**
+		 * 点击楼层进行翻页且找到锚点
+		 */
+		jQuery('.anchor_page').live('click',function(){
+			var parentid = $(this).attr('parentid');
+			var tid=$(this).attr('tid');
+			$.get('/comments.php?tid='+tid+'&parentid='+parentid,function(data){
+				$('#artcomment').html(data);
+				window.location.hash=''+parentid;
+			})
+			return false;
+		}),
+		jQuery('.anchor_page').live('mouseover',function(){
+			var parentid = $(this).attr('parentid');
+			if(!blogpost.abstruct_list[parentid]){
+				var this_t = $(this);
+				$.get('/comments.php?cid='+parentid,function(data,textStatus){
+					blogpost.abstruct_list[parentid]=data;
+					this_t.attr('title',this_t.text()+':'+ blogpost.abstruct_list[parentid]);
+				});
+			}else{
+				$(this).attr('title',$(this).text()+':'+blogpost.abstruct_list[parentid]);
+			}
+		})
+	},
+	/**
+	 * @param user_name 用户名
+	 * @param parentid  父评论id
+	 */
+	repost:function(user_name,parentid){
+		window.location.hash='comment';
+		jQuery('#parentid').val(parentid);
+		jQuery('#commentcontent').val('回复 '+user_name+":\n").focus();
+		if(!$.browser.mozilla){
+			var elem = jQuery('#commentcontent')[0];		
+			var caretPos = elem.value.length;
+			if (elem.createTextRange) {
+				var range = elem.createTextRange();
+				range.move('character', caretPos);
+				range.select();
+			}else{
+				elem.setSelectionRange(caretPos, caretPos);	
+			}
+		}
+	},
+	/**
+	 * 发送完毕之后清理表单数据 不是ajax可能用不到
+	 */
+	clean:function(){
+		
+	}
+ }
+</script>
+<script type="text/javascript">
+jQuery(function(){
+	var anchor = document.location.hash;
+	var comment_id=anchor.split('#')[1];
+	if(!isNaN(parseInt(comment_id))){//是整形
+		jQuery.get('/comments.php?tid=1288553&parentid='+comment_id,function(data){
+			jQuery('#artcomment').html(data);
+			window.location.hash=''+comment_id;
+		})
+	}
+});
+</script>
+
+
+
+<script type="text/javascript">
+jQuery(function() {
+	jQuery('#favourdiv').mouseover(function(){
+		if(jQuery(this).attr('className') == 'support01')
+		{
+			jQuery(this).attr('className', "support02");
+			jQuery(this).html('+1人');
+			jQuery(this).attr('title', "赞一个，我支持TA");
+		}
+		else if(jQuery(this).attr('className') == 'support03')
+		{
+			jQuery(this).attr('title', "你已经赞了这篇博文！");
+		}
+		
+	});
+	jQuery('#favourdiv').mouseout(function(){
+		if(jQuery(this).attr('className') == 'support02')
+		{
+			jQuery(this).attr('className', "support01");
+			jQuery(this).html("62人");
+		}
+	});
+	jQuery('.blog_match_yq').click(function(){
+		var wind_uid = '';
+		if(!wind_uid){
+			alert("请先登录！");
+			return false;
+		}
+		jQuery.ajax({
+			   type: "POST",
+			   url:"/contest2012/index.php?mod=sendmsg",
+			   dataType: "html",
+			   data: "vuid=" + 2033581,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("查无此人！");
+						return false;
+					}else if(data == 1){
+						alert("请先登录！");
+						return false;
+					}else if(data == 2){
+						alert("不能邀请自己！");
+						return false;
+					}else if(data == 22){  
+						alert("邀请信息已发出！");
+						return false;
+					}
+			   }
+		  });
+	});
+	jQuery('#favourdiv').click(function(){
+			jQuery.ajax({
+			   type: "POST",
+			   url:"/mod/favour.php",
+			   dataType: "html",
+			   data: "tid=" + 1288553,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("您还未登录或者已过期，请重新登录");
+						location.href = "http://home.51cto.com/index.php?reback=http%253A%252F%252Ffreeloda.blog.51cto.com%252F2033581%252F1288553";
+						return false;
+					}
+					else if(data == '-1')
+					{
+						alert("参数传递错误！");
+						return false;
+					}
+					else if(data == '-2')
+					{
+						alert("该博文已被删除或者不存在！");
+						return false;
+					}
+					else if(data == '-3')
+					{
+						alert("您已经赞过了！");
+						return false;
+					}
+					else if(data == '-4')
+					{
+						alert("赞操作失败！");
+						return false;
+					}
+					else
+					{  
+						//alert("操作成功，你已经赞了这篇博文！");
+						jQuery('#favourdiv').attr('className', "support03");
+
+						var num = 62 + 1 + "人";
+						jQuery('#favourdiv').html(num);
+						jQuery('#favourer').html(data);
+						return false;
+					}
+			   }
+		  });
+	});
+	//Jaydar http://blog.51cto.com/js/header.php?uid=blogdb[uid]&tid=tid
+	jQuery.post('/js/header.php',{uid:2033581,tid:1288553},function(data){
+		jQuery('#readNum').html(data[0]);
+		jQuery('#cmtNum').html(data[1]);
+	},'json');
+	
+
+})
+
+jQuery(function(){
+	jQuery('#darid').bind('click',function(){
+		if(confirm("你确定删除此篇文章？")){
+			jQuery.ajax({
+				'type':'post',
+				'url':'user_index.php?action=delarticle',
+				'data':{'job':'del', 'selid':'1288553', 'mhash':''},
+				'dataType':'html',
+				'success':function(res){
+					if('ok' == res){
+						location.href="http://.blog.51cto.com";
+					}
+				
+				}
+			});
+		}
+	});
+});
+</script>
+
+
+
+
+<style type="text/css">
+.m_sharelinks{ 
+	line-height:30px; 
+	text-align:left; 
+	padding-left:20px; 
+	//background:url(http://img1.51cto.com/images/share/ico_lb.gif) no-repeat left center;
+	float:left; 
+	width:600px; 
+	height:30px;
+}
+.m_sharelinks a{ margin-left:10px;}
+.m_sharebtn{ height:50px; width:726px; margin:0 auto;}
+.m_sharebtn01{width:520px; float:left;}
+.weibo_51cto{ background:url(http://img1.51cto.com/images/share/ico_mweibo.gif) no-repeat center center; display:block; width:33px; height:33px; float:left; margin:3px 3px 0 0;cursor:pointer;}
+.shareMored {
+    line-height: 30px;
+	float:right; 
+	text-align:right; 
+	width:100px; 
+	height:30px;
+}
+
+.showContent {
+	margin:20px 15px 8px;
+}
+.userImage img {
+    text-align: center;
+	border:0;
+	padding:0;
+}
+.photo_links{ line-height:30px; padding-top:5px; font-size:13px;width:170px; margin:0 auto;}
+.photo_links_blue{ text-align:center;}
+.photo_links_blue a:link,.photo_links_blue a:visited,.photo_links_blue a:hover,.photo_links_blue a:active{ color:#015F91; text-decoration: underline;}
+.photo_links_red{ text-align:left;}
+.photo_links_red a:link,.photo_links_red a:visited,.photo_links_red a:hover,.photo_links_red a:active{ color:#fc4343; text-decoration:underline;}
+.photo_links_red02{ text-align:center;}
+
+.vlist{ margin:10px 10px; height:65px;}
+.vlist img{ float:left; margin-right:10px;}
+.vlist dl{ text-align:left;}
+.vlist dl dt{ height:40px;line-height: 20px; overflow:hidden; padding-top:5px;}
+.vlist dl dt,.vlist dl dt a{ color:#262626;}
+.vlist dl dd,.vlist dl dd a{ color:#777;}
+
+.video-icon{
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left:31px;
+    position: absolute;
+    top:22px;
+    width: 25px;
+    z-index: 10;
+}
+
+.ipadFload{ position:fixed; width:136px; height:194px; background:url("http://bbs.51cto.com/images/IPad-bg.png") left top no-repeat #fff; font-family:"微软雅黑"; padding-left:18px;}
+.ipadClose{ text-align:right; font-size:14px; line-height:20px;}
+.ipadImg{ padding-top:38px;}
+.ipadImg img{ width:105px; height:105px;}
+.iPadair2{ font-size:12px;}
+.iPadair2 a{ color:#659b01; text-decoration:none; background:url("http://bbs.51cto.com/images/51CTO-IPAD-BOTTOM.png") right center no-repeat; display:block; line-height:30px;}
+
+</style>
+<div id="add_sys_type_div" style="width:600px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+<div id="add_sys_type_dvs" style="width:550px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+	
+
+
+
+<div class="blogMain">
+<div class="blogLeft">
+
+
+<div class="box moduleUser">
+<div class="title">
+<h2><strong>陈明乾</strong> 的BLOG  </h2>
+</div>
+<div class="modCon">
+
+<div class="userImage" style="margin: 10px auto 5px;text-align: center;width: 130px;border: 1px solid #D4D4D4;">
+	<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td valign="middle" align="center" height="130"><script src="http://blog.51cto.com/mod/userface.php?useruid=2033581"></script></td>
+		</tr>
+	</table>
+</div>
+<div class="photo_links">
+</div>
+
+
+
+
+
+
+
+
+
+<div class="crumbs">
+<a href="http://home.51cto.com/index.php?s=/space/2033581#message" class="writeMessage" target="_blank">写留言</a><a href="http://edu.51cto.com/" class="inCircle" target="_blank">去学院学习</a><a href="http://home.51cto.com/index.php?s=/Notify/write/uid/2033581" class="message"  target="_blank">发消息</a>
+ <a href='/' onclick='add_flink(2033581);return false' class="joinLinks">加友情链接</a><a href="http://home.51cto.com/index.php?s=/space/2033581" class="joinFriends"  target="_blank">进家园 加好友</a>
+</div>
+
+<div style="width:239px;height:64px;display:none;">
+
+
+<div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">2012年度IT博客大赛<br><a target="_blank" href="http://blog.51cto.com/contest2012/#top10000" style="color:#F00; text-decoration:underline;">十大杰出IT博客诞生</a></p></div>
+<div style="float:right;"><a target="_blank" href="http://blog.51cto.com/contest2012/"><img width="57" height="27" src="http://img1.51cto.com/images/blog_match_endlook.jpg" style="margin:23px 20px 0 0;"></a></div>
+<!-- <div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">星光评委正在评选<br><a target="_blank" href="http://blog.51cto.com/contest2012/index.php?mod=userlist_sec" style="color:#F00; text-decoration:underline;">2012年度IT博客大赛50强</a></p></div>
+<div style="float:right;"><img class="blog_match_yq" width="57" height="27" src="http://img1.51cto.com/images/blog_match_invite.jpg" style="margin:23px 20px 0 0;"></div> -->
+
+
+
+<div class="clear"></div>
+</div>
+
+
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+<div class="title">
+<h2>博客统计信息</h2>
+</div>
+<div class="modCon">
+<p>
+<span class="infoListHead"><a href="http://blog.51cto.com/blogcommend" target="_blank" class="operlink"><b>51CTO推荐博客</b></a> <br></span>
+用户名：陈明乾<br />
+文章数：162<br />
+评论数：763<br />
+访问量：697416<br />
+<a href="http://home.51cto.com/index.php?s=/Account/credit" target="_blank">无忧币</a>：9781<br />
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客积分</a>：3272<br />
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客等级</a>：7<br />
+注册日期：2010-08-19<br />
+</p>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+	<div class="title">
+		<h2 class="fl">热门专题</h2>
+		<a target="_blank" class="fr" href="http://blog.51cto.com/zt">更多&gt;&gt;</a>
+	</div>
+	<div class="modCon" style="height: 348px;">
+
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/688" target="_blank"><img width="63" height="63" src="http://s4.51cto.com/wyfs02/M02/76/D5/wKioL1ZdX2GAIQ3gAAAc0cDSZ_w591.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/688" target="_blank" title="Microsoft Dynamics CRM系统自学教程">Microsoft Dynamics CRM系统自学教程</a></dt>
+		<dd>阅读量：24883</dd>
+		</dl>
+		</div>
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/14" target="_blank"><img width="63" height="63" src="http://blog.51cto.com/images/special/1304672337_index.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/14" target="_blank" title="从菜鸟到老鸟-教你玩转Mac操作系统">从菜鸟到老鸟-教你玩转Mac操作系统</a></dt>
+		<dd>阅读量：256627</dd>
+		</dl>
+		</div>
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/20" target="_blank"><img width="63" height="63" src="http://blog.51cto.com/images/special/1306310178_index.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/20" target="_blank" title="QT学习之路：从入门到精通">QT学习之路：从入门到精通</a></dt>
+		<dd>阅读量：995308</dd>
+		</dl>
+		</div>
+	
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/80" target="_blank"><img width="63" height="63" src="http://blog.51cto.com/images/special/1322811762_index.jpg" /></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/80" target="_blank" title="从零开始学 Android 开发">从零开始学 Android 开发</a></dt>
+		<dd>阅读量：147943</dd>
+		</dl>
+		</div>
+		
+		
+	</div>
+	<span class="modBot"></span>
+</div>
+
+
+<div class="hotArt box">
+<div class="title">
+<h2>热门文章</h2>
+</div>
+<div class="modCon">
+<ul>
+<li><a href="/2033581/1288553">Nginx 反向代理、负载均..</a></li>
+<li><a href="/2033581/1245492">CentOS6.4+LAMP+Postfix+..</a></li>
+<li><a href="/2033581/1252067">CentOS6.4+MySQL-5.6.12 ..</a></li>
+<li><a href="/2033581/1306743">SNMP 原理与实战详解</a></li>
+<li><a href="/2033581/1274533">Linux 高可用（HA）集群..</a></li>
+<li><a href="/2033581/1299644">Tomcat系列之服务器的安..</a></li>
+<li><a href="/2033581/1280962">Linux 高可用（HA）集群..</a></li>
+<li><a href="/2033581/1308140">Linux 监控工具之Cacti使..</a></li>
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+<div class="search box">
+<div class="title"><h2>搜索BLOG文章</h2></div>
+<div class="modCon">
+<form method=post action="search.php?" tabindex="99">
+<input type="hidden" name="step" value="2">
+<input type="hidden" name="authorid" value="2033581">
+<input type="hidden" name="sch_area" value="S">
+<input type="text" value="" name="keyword"  class="searchInput" />
+<input type="submit" value="搜 索" class="searchBtn" />
+</form>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="box recentGuests">
+<div class="title">
+<h2>最近访客</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://slayer.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=4845839&size=middle" /></a>
+<p><a href="http://slayer.blog.51cto.com">li540..</a></p>
+
+<li><a href="http://390064.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=380064&size=middle" /></a>
+<p><a href="http://390064.blog.51cto.com">curio..</a></p>
+
+<li><a href="http://11195953.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=11185953&size=middle" /></a>
+<p><a href="http://11195953.blog.51cto.com">gloryzyf</a></p>
+
+<li><a href="http://9528044.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=9518044&size=middle" /></a>
+<p><a href="http://9528044.blog.51cto.com">gujiuyu</a></p>
+
+<li><a href="http://lixiaosong.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=705126&size=middle" /></a>
+<p><a href="http://lixiaosong.blog.51cto.com">hands..</a></p>
+
+<li><a href="http://8044867.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=8034867&size=middle" /></a>
+<p><a href="http://8044867.blog.51cto.com">kkkkj..</a></p>
+
+<li><a href="http://1558387.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=1548387&size=middle" /></a>
+<p><a href="http://1558387.blog.51cto.com">uvstdpov</a></p>
+
+<li><a href="http://253103.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=243103&size=middle" /></a>
+<p><a href="http://253103.blog.51cto.com">akinlau</a></p>
+
+<li><a href="http://6975805.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=6965805&size=middle" /></a>
+<p><a href="http://6975805.blog.51cto.com">51tco..</a></p>
+
+<li><a href="http://11401597.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=11391597&size=middle" /></a>
+<p><a href="http://11401597.blog.51cto.com">yanli..</a></p>
+
+<li><a href="http://6286897.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=6276897&size=middle" /></a>
+<p><a href="http://6286897.blog.51cto.com">weasper</a></p>
+
+<li><a href="http://7297858.blog.51cto.com"><img src="http://ucenter.51cto.com/avatar.php?uid=7287858&size=middle" /></a>
+<p><a href="http://7297858.blog.51cto.com">流星1..</a></p>
+
+</ul>
+<span class="clear"></span>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="newComments box">
+<div class="title">
+<h2>最新评论 
+
+</h2>
+
+
+
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href='http://7499600.blog.51cto.com/' class='operlink' target=_blank><b>csx896973</b></a>：<a href="/2033581/1410562" target=_blank>你好，我安装的是centos7,找不到这..</a></li>
+
+<li><a href='http://maomaochong.blog.51cto.com/' class='operlink' target=_blank><b>NETmaomao</b></a>：<a href="/2033581/1288553" target=_blank>写的很不错。收获很多，如果再加个..</a></li>
+
+<li><a href='http://6495336.blog.51cto.com/' class='operlink' target=_blank><b>Micro_ma</b></a>：<a href="/2033581/1288553" target=_blank>赞！赞！赞！</a></li>
+
+<li><a href='http://zouqingyun.blog.51cto.com/' class='operlink' target=_blank><b>zouqingyun</b></a>：<a href="/2033581/1288553" target=_blank>写的真详细，拜读了，马哥学生么，..</a></li>
+
+<li><a href='http://winchoo.blog.51cto.com/' class='operlink' target=_blank><b>传奇库子</b></a>：<a href="/2033581/1245492" target=_blank>找到了解决方法： 解决： vim /..</a></li>
+
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotBlogArt box">
+<div class="title">
+  <h2 class="fl">51CTO推荐博文</h2>
+  <a href="http://blog.51cto.com/artcommend" class="fr">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+<li><a href="http://anyisalin.blog.51cto.com/10917514/1763551" title="HA专题: Corosync+Pacemaker+drbd实现MySQL高可用" target="_blank">HA专题: Corosync+Pacemaker+drbd..</a></li>
+<li><a href="http://53cto.blog.51cto.com/9899631/1763810" title="NGINX安全防护之基于ngx_lua的web应用防火墙" target="_blank">NGINX安全防护之基于ngx_lua的web..</a></li>
+<li><a href="http://sery.blog.51cto.com/10037/1763192" title="归来吧，haproxy" target="_blank">归来吧，haproxy</a></li>
+<li><a href="http://xinzong.blog.51cto.com/10018904/1763604" title="Centos 7 DNS配置及理论详解" target="_blank">Centos 7 DNS配置及理论详解</a></li>
+<li><a href="http://ckl893.blog.51cto.com/8827818/1682356" title="LVS+keepalived+DRBD+heartbeat+mysql " target="_blank">LVS+keepalived+DRBD+heartbeat+m..</a></li>
+<li><a href="http://11291941.blog.51cto.com/11281941/1760236" title="Linux磁盘管理工具LVM2详解" target="_blank">Linux磁盘管理工具LVM2详解</a></li>
+<li><a href="http://ilanni.blog.51cto.com/526870/1763175" title="烂泥：利用awstats分析nginx日志" target="_blank">烂泥：利用awstats分析nginx日志</a></li>
+<li><a href="http://7424593.blog.51cto.com/7414593/1762432" title="Nginx反向代理后端多个Tomcat、Nginx+PHP服务器（Nginx的代理和负载功能）" target="_blank">Nginx反向代理后端多个Tomcat、Ng..</a></li>
+<li><a href="http://lidongni.blog.51cto.com/2554605/1762748" title="Python2.7 smtplib发送带附件邮件报错STARTTLS解决方法" target="_blank">Python2.7 smtplib发送带附件邮件..</a></li>
+<li><a href="http://fengxiang.blog.51cto.com/531475/1762545" title="Mac远程控制Mac和Windows" target="_blank">Mac远程控制Mac和Windows</a></li>
+<li><a href="http://xpleaf.blog.51cto.com/9315560/1761856" title="在实践中深入理解ARP协议" target="_blank">在实践中深入理解ARP协议</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="friendLink box">
+<div class="title">
+  <h2>友情链接</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://www.178linux.com/" title="马哥教育-运维部落" target="_blank">马哥教育-运维部落</a></li>
+
+<li><a href="http://edu.51cto.com" title="IT精品课程" target="_blank">IT精品课程</a></li>
+
+<li><a href="http://www.magedu.com" title="" target="_blank">linux培训</a></li>
+
+<li><a href="http://hcymysql.blog.51cto.com/" title="" target="_blank">贺总</a></li>
+
+<li><a href="http://gm100861.blog.51cto.com" title="" target="_blank">吖吖個呸</a></li>
+
+<li><a href="http://litaotao.blog.51cto.com/" title="" target="_blank">litaotao</a></li>
+
+<li><a href="http://lustlost.blog.51cto.com/2600869/1285597" title="" target="_blank">俊义</a></li>
+
+<li><a href="http://2844337.blog.51cto.com/" title="" target="_blank">老刘博客</a></li>
+
+<li><a href="http://djy0000.blog.51cto.com/" title="" target="_blank">邓俊阳</a></li>
+
+<li><a href="http://opsmysql.blog.51cto.com/" title="" target="_blank">ops</a></li>
+
+<li><a href="http://grass51.blog.51cto.com/" title="" target="_blank">My Dream</a></li>
+
+<li><a href="http://blog.csdn.net/deansrk" title="" target="_blank">dean</a></li>
+
+<li><a href="http://chrinux.blog.51cto.com/all/6466723/1" title="" target="_blank"> Chris</a></li>
+
+<li><a href="http://jimmyli.blog.51cto.com/" title="" target="_blank">jimmyli</a></li>
+
+<li><a href="http://kerry.blog.51cto.com/" title="" target="_blank">kerry</a></li>
+
+<li><a href="http://mageedu.blog.51cto.com/" title="" target="_blank">马哥教育</a> <img src='http://img1.51cto.com/images/tubiao3.gif' alt='本周内更新'></li>
+
+<li><a href="http://linuxxx.blog.51cto.com/all/1824808/3" title="" target="_blank">寒枫</a></li>
+
+<li><a href="http://sery.blog.51cto.com/10037/40660" title="" target="_blank">sery</a> <img src='http://img1.51cto.com/images/tubiao3.gif' alt='本周内更新'></li>
+
+<li><a href="http://5ydycm.blog.51cto.com/all/115934/1" title="" target="_blank">坏男孩</a></li>
+
+<li><a href="http://dl528888.blog.51cto.com/all/2382721" title="" target="_blank">邓磊</a></li>
+
+<li><a href="http://freeze.blog.51cto.com/1846439/677348" title="" target="_blank">夜的博客</a></li>
+
+<li><a href="http://51ctoblog.blog.51cto.com" title="51CTO博客开发" target="_blank">51CTO博客开发</a></li>
+
+<li><a href="http://gaozhao.51cto.com" title="技术人才招聘" target="_blank">技术人才招聘 </a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+
+</div>
+<!--left end-->
+
+<script type="text/javascript">
+    var favor_url = "http://freeloda.blog.51cto.com/2033581/1288553";
+    var favor_title = "Nginx 反向代理、负载均衡、页面缓存、URL重写及读写分离详解";
+    var favor_fuid = "2033581";
+</script>
+<script type="text/javascript" src="http://home.51cto.com/apps/favorite/Tpl/default/Public/js/favorbox.js"></script>
+
+
+<div class="blogRight" rel="2033581######读写分离 页面缓存 URL重写 Nginx 反向代理" id="article_edu_void">
+<input type="hidden" value="12" id="edu_jia">
+			
+	<p style="clear:both;"  class="edu_insert"></p>
+	<style type="text/css">
+.vlist {
+    float: left;
+    padding: 2px 0 0 10px;
+    width: 218px;
+	
+}
+.vlist img {
+    float: left;
+    margin-right: 10px;
+}
+.vlist dl {
+    float: left;
+    text-align: left;
+    width: 122px;
+}
+.vlist dl dt {
+    height: 44px;
+    overflow: hidden;
+    padding-top: 5px;
+}
+.vlist dl dt, .vlist dl dt a {
+    color: #262626;
+}
+.vlist dl dd, .vlist dl dd a {
+    color: #777777;
+}
+.vbox_tit {
+    border-bottom: 1px solid #B3D0E6;
+    color: #666666;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}
+.video-icon {
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left: 41px;
+    position: absolute;
+    top: 22px;
+    width: 25px;
+    z-index: 10;
+}
+.vbox2 .vlist1{margin:0;}
+.edu-col-a{ float:left;margin-right:6px;}
+.edu-col-b{ float:left;}
+	</style><!--modCon end-->
+	<div class="artShow box" style="margin-top:5px;">
+   	  <div class="share" id="share">
+
+    <div class="shareItem">
+		<div class="m_sharelinks"><a target="_blank" href="" style="color:red;"></a><a target="_blank" href="" style="color:blue;"></a><a target="_blank" href="" style="color:blue;"></a></div>
+		<p class="shareMored"><a href="/all/2033581">博主的更多文章>></a></p>
+	</div>
+      </div>
+       <div class="modCon">
+   	  <div class="showBox" style="margin:0 0 10px;">
+      <div class="line_hd_r"></div>
+      <div class="art_tj">
+
+      <a href="http://blog.51cto.com/artcommend" target="_blank"><img src="http://blog.51cto.com/image/skin/34/tj.png" /></a>
+
+      </div>
+
+ 
+    		<div class="showHead">
+    		  <div class="showTitleBOx" style="text-align:center">
+              <div class="showTitle">
+
+             <img src="http://blog.51cto.com/image/skin/artType01.jpg">
+
+
+    		    Nginx 反向代理、负载均衡、页面缓存、URL重写及读写分离详解
+                </div>
+  		    </div>
+   		    <span class="artTime">2013-09-04 14:45:43</span></div><!--showHead end-->
+    <div class="showTags">标签：<a href="http://blog.51cto.com/tag-读写分离.html" target="_blank" class="operlink">读写分离</a> <a href="http://blog.51cto.com/tag-页面缓存.html" target="_blank" class="operlink">页面缓存</a> <a href="http://blog.51cto.com/tag-URL重写.html" target="_blank" class="operlink">URL重写</a> <a href="http://blog.51cto.com/tag-Nginx 反向代理.html" target="_blank" class="operlink">Nginx 反向代理</a>
+
+	</div>
+
+			<div class="CopyrightStatement lh22">
+            原创作品，允许转载，转载时请务必以超链接形式标明文章 <a href="/2033581/1288553" target="_blank" style="text-decoration:underline">原始出处</a> 、作者信息和本声明。否则将追究法律责任。<a href="/2033581/1288553">http://freeloda.blog.51cto.com/2033581/1288553</a>
+            </div>
+
+
+            <!--正文 begin-->
+    		<div class="showContent">
+    		  <p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;font-size:18px;color:#0070c0;">大纲</span></p><blockquote><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">一、前言</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">二、环境准备</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">三、安装与配置Nginx</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">四、Nginx之反向代理</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">五、Nginx之负载均衡</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">六、Nginx之页面缓存</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">七、Nginx之URL重写 </span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">八、Nginx之读写分离</span></p></blockquote><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，操作系统为 CentOS 6.4 x86_64 , Nginx 是版本是最新版的1.4.2，所以实验用到的软件请点击这里下载：</span><span style="color:#ff0000;font-family:微软雅黑, &#39;microsoft yahei&#39;;"><a target="\&quot;_blank\&quot;" title="http://yunpan.cn/QXIgqMmVmuZrm" href="http://yunpan.cn/QXIgqMmVmuZrm" style="color:#FF0000;text-decoration:underline;"><span style="color:#FF0000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">http://yunpan.cn/QXIgqMmVmuZrm</span></a></span></p><p><br /></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;font-size:18px;color:#0070c0;">一、前言</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;在前面的几篇博文中我们主要讲解了Nginx作为Web服务器知识点，主要的知识点有nginx的理论详解、nginx作为web服务器的操作讲解、nginx作为LNMP架构的讲解，不清楚的博友可以回头看看，在这一篇博客中我们主要讲解， nginx的反向代理、负载均衡、缓存、URL重写以及读写分离详解。好了，下面我们来具体说一说。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;font-size:18px;color:#0070c0;">二、环境准备</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">1. 操作系统</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">CentOS 6.4 x86_64 </span></p></li></ul><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.软件版本</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">Nginx 1.4.2 </span></p></li></ul><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.实验拓扑</span></p><p><span style="color:#ff0000;"><strong><span style="color:#ff0000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，实验拓扑见下文。</span></strong></span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.安装yum源</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+[root@web1 ~]# rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+[root@web2 ~]# rpm -ivh http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.各节点时间同步</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# ntpdate 202.120.2.101
+[root@web1 ~]# ntpdate 202.120.2.101
+[root@web2 ~]# ntpdate 202.120.2.101</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6.关闭防火墙与SELinux</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service iptables stop 
+[root@nginx ~]# chkconfig iptables off  
+[root@nginx ~]# getenforce  
+Disabled
+[root@web1 ~]# service iptables stop 
+[root@web1 ~]# chkconfig iptables off  
+[root@web1 ~]# getenforce  
+Disabled
+[root@web2 ~]# service iptables stop 
+[root@web2 ~]# chkconfig iptables off  
+[root@web2 ~]# getenforce  
+Disabled</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;color:#0070c0;font-size:18px;">三、安装Nginx</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">1.解压 </span></p><pre class="brush:bash;toolbar:false;">[root@nginx src]# tar xf nginx-1.4.2.tar.gz</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.新建nginx用户与组</span></p><pre class="brush:bash;toolbar:false;">[root@nginx src]# groupadd -g 108  -r nginx 
+[root@nginx src]# useradd -u 108 -r -g 108 nginx  
+[root@nginx src]# id nginx  
+uid=108(nginx) gid=108(nginx) 组=108(nginx)</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.准备编译配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx src]# yum install -y pcre-devel openssl-devel
+[root@nginx nginx-1.4.2]# ./configure   --prefix=/usr   --sbin-path=/usr/sbin/nginx   --conf-path=/etc/nginx/nginx.conf   --error-log-path=/var/log/nginx/error.log   --http-log-path=/var/log/nginx/access.log   --pid-path=/var/run/nginx/nginx.pid    --lock-path=/var/lock/nginx.lock   --user=nginx   --group=nginx   --with-http_ssl_module   --with-http_flv_module   --with-http_stub_status_module   --with-http_gzip_static_module   --http-client-body-temp-path=/var/tmp/nginx/client/   --http-proxy-temp-path=/var/tmp/nginx/proxy/   --http-fastcgi-temp-path=/var/tmp/nginx/fcgi/   --http-uwsgi-temp-path=/var/tmp/nginx/uwsgi   --http-scgi-temp-path=/var/tmp/nginx/scgi   --with-pcre</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.编译并安装 </span></p><pre class="brush:bash;toolbar:false;">[root@nginx nginx-1.4.2]# make &amp;&amp; make install</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.为nginx提供SysV init脚本</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# cat /etc/init.d/nginx 
+#!/bin/sh  
+#  
+# nginx - this script starts and stops the nginx daemon  
+#  
+# chkconfig:   - 85 15  
+# description:  Nginx is an HTTP(S) server, HTTP(S) reverse \  
+#               proxy and IMAP/POP3 proxy server  
+# processname: nginx  
+# config:      /etc/nginx/nginx.conf  
+# config:      /etc/sysconfig/nginx  
+# pidfile:     /var/run/nginx.pid  
+# Source function library.  
+. /etc/rc.d/init.d/functions  
+# Source networking configuration.  
+. /etc/sysconfig/network  
+# Check that networking is up.  
+[ "$NETWORKING" = "no" ] &amp;&amp; exit 0  
+nginx="/usr/sbin/nginx"  
+prog=$(basename $nginx)  
+NGINX_CONF_FILE="/etc/nginx/nginx.conf"  
+[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx  
+lockfile=/var/lock/subsys/nginx  
+make_dirs() {  
+   # make required directories  
+   user=`nginx -V 2&gt;&amp;1 | grep "configure arguments:" | sed 's/[^*]*--user=\([^ ]*\).*/\1/g' -`  
+   options=`$nginx -V 2&gt;&amp;1 | grep 'configure arguments:'`  
+   for opt in $options; do  
+       if [ `echo $opt | grep '.*-temp-path'` ]; then  
+           value=`echo $opt | cut -d "=" -f 2`  
+           if [ ! -d "$value" ]; then  
+               # echo "creating" $value  
+               mkdir -p $value &amp;&amp; chown -R $user $value  
+           fi  
+       fi  
+   done  
+}  
+start() {  
+    [ -x $nginx ] || exit 5  
+    [ -f $NGINX_CONF_FILE ] || exit 6  
+    make_dirs  
+    echo -n $"Starting $prog: "  
+    daemon $nginx -c $NGINX_CONF_FILE  
+    retval=$?  
+    echo  
+    [ $retval -eq 0 ] &amp;&amp; touch $lockfile  
+    return $retval  
+}  
+stop() {  
+    echo -n $"Stopping $prog: "  
+    killproc $prog -QUIT  
+    retval=$?  
+    echo  
+    [ $retval -eq 0 ] &amp;&amp; rm -f $lockfile  
+    return $retval  
+}  
+restart() {  
+    configtest || return $?  
+    stop  
+    sleep 1  
+    start  
+}  
+reload() {  
+    configtest || return $?  
+    echo -n $"Reloading $prog: "  
+    killproc $nginx -HUP  
+    RETVAL=$?  
+    echo  
+}  
+force_reload() {  
+    restart  
+}  
+configtest() {  
+  $nginx -t -c $NGINX_CONF_FILE  
+}  
+rh_status() {  
+    status $prog  
+}  
+rh_status_q() {  
+    rh_status &gt;/dev/null 2&gt;&amp;1  
+}  
+case "$1" in  
+    start)  
+        rh_status_q &amp;&amp; exit 0  
+        $1  
+        ;;  
+    stop)  
+        rh_status_q || exit 0  
+        $1  
+        ;;  
+    restart|configtest)  
+        $1  
+        ;;  
+    reload)  
+        rh_status_q || exit 7  
+        $1  
+        ;;  
+    force-reload)  
+        force_reload  
+        ;;  
+    status)  
+        rh_status  
+        ;;  
+    condrestart|try-restart)  
+        rh_status_q || exit 0  
+            ;;  
+    *)  
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}"  
+        exit 2  
+esac</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6.为此脚本赋予执行权限</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# chmod +x /etc/init.d/nginx</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">7.添加至服务管理列表，并让其开机自动启动</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# chkconfig --add nginx 
+[root@nginx ~]# chkconfig nginx on  
+[root@nginx ~]# chkconfig nginx --list  
+nginx              0:关闭    1:关闭    2:启用    3:启用    4:启用    5:启用    6:关闭</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">8.启动nginx</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx start 
+正在启动 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">9.查看一下端口</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# netstat -ntlp | grep :80 
+tcp        0      0 0.0.0.0:80                  0.0.0.0:*                   LISTEN      3889/nginx</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">10.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277128Edo2.png"><img onload="if(this.width>650) this.width=650;" title="t1" style="border-left- 0px;border-right-width:0px;background-image:none;border-bottom-width:0px;border-top-width:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t1" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277128W8iY.png" width="735" height="371" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">好了，Nginx安装与配置就到这里，下面我们来说一说Nginx的反向代理。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;color:#0070c0;font-size:18px;">四、Nginx之反向代理</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">在配置nginx反向代理之间我们得先准备两台测试服务器，Web1与Web2。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">1.安装httpd</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# yum install -y httpd
+[root@web2 ~]# yum install -y httpd</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.提供测试页面</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# echo "&lt;h1&gt;web1.test.com&lt;/h1&gt;" &gt; /var/www/html/index.html
+[root@web2 ~]# echo "&lt;h1&gt;web2.test.com&lt;/h1&gt;" &gt; /var/www/html/index.html</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.启动httpd服务</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# service httpd start 
+正在启动 httpd：                                           [确定]
+[root@web2 ~]# service httpd start 
+正在启动 httpd：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_13782771281xo5.png"><img onload="if(this.width>650) this.width=650;" title="t2" style="border-left- 0px;border-right-width:0px;background-image:none;border-bottom-width:0px;border-top-width:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t2" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277129oCPY.png" width="736" height="171" /></a></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277129GRzO.png"><img onload="if(this.width>650) this.width=650;" title="t3" style="border-left- 0px;border-right-width:0px;background-image:none;border-bottom-width:0px;border-top-width:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t3" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277129zdMr.png" width="739" height="170" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.简单说一下，正向代理与反向代理</span></p><h4><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">(1).正向代理的概念</span></h4><h4><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;正向代理，也就是传说中的代理,他的工作原理就像一个跳板，简单的说，我是一个用户，我访问不了某网站，但是我能访问一个代理服务器，这个代理服务器呢，他能访问那个我不能访问的网站，于是我先连上代理服务器，告诉他我需要那个无法访问网站的内容，代理服务器去取回来，然后返回给我。从网站的角度，只在代理服务器来取内容的时候有一次记录，有时候并不知道是用户的请求，也隐藏了用户的资料，这取决于代理告不告诉网站。</span></h4><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;结论就是，正向代理 是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。</span></p><h4><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">(2).反向代理的概念</span></h4><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">继续举例: &nbsp; &nbsp;<br /> &nbsp; &nbsp; &nbsp; &nbsp;例用户访问 </span><a target="\&quot;_blank\&quot;" href="http://www.test.com/readme" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">http://www.test.com/readme</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">，但</span><a target="\&quot;_blank\&quot;" href="http://www.test.com" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">www.test.com</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">上并不存在readme页面，他是偷偷从另外一台服务器上取回来，然后作为自己的内容返回用户，但用户并不知情。这里所提到的 </span><a target="\&quot;_blank\&quot;" href="http://www.test.com" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">www.test.com</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> 这个域名对应的服务器就设置了反向代理功能。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;结论就是，反向代理正好相反，对于客户端而言它就像是原始服务器，并且客户端不需要进行任何特别的设置。客户端向反向代理的命名空间(name-space)中的内容发送普通请求，接着反向代理将判断向何处(原始服务器)转交请求，并将获得的内容返回给客户端，就像这些内容原本就是它自己的一样。</span></p><h4><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">(3).两者区别</span></h4><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">从</span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">用途</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">上来讲：</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;正向代理的典型用途是为在防火墙内的局域网客户端提供访问Internet的途径。正向代理还可以使用缓冲特性减少网络使用率。反向代理的典型用途是将防火墙后面的服务器提供给Internet用户访问。反向代理还可以为后端的多台服务器提供负载平衡，或为后端较慢的服务器提供缓冲服务。另外，反向代理还可以启用高级URL策略和管理技术，从而使处于不同web服务器系统的web页面同时存在于同一个URL空间下。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">从</span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">安全性</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">来讲：</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;正向代理允许客户端通过它访问任意网站并且隐藏客户端自身，因此你必须采取安全措施以确保仅为经过授权的客户端提供服务。反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6.nginx 代理模块</span></p><p><span style="color:#ff0000;"><strong><span style="color:#ff0000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">http 代理官方中文文档</span></strong></span><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpproxy" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">http://www.howtocn.org/nginx:nginx%E6%A8%A1%</span></a><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpproxy" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpproxy</span></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">说明：代理模块的指令有很多我这里只讲解重要的proxy_pass，想了解更多代理指令请参考官方中文文档。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">这个模块可以转发请求到其他的服务器。</span><a target="\&quot;_blank\&quot;cronym" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:none;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">HTTP/1.0无法使用keepalive（后端服务器将为每个请求创建并且删除连接）。nginx为浏览器发送HTTP/1.1并为后端服务器发送HTTP/1.0，这样浏览器就可以为浏览器处理keepalive。 &nbsp; &nbsp; <br />如下例：</span></a></p><pre class="brush:bash;toolbar:false;">location / {
+  proxy_pass        http://localhost:8000;
+  proxy_set_header  X-Real-IP  $remote_addr;
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注意，当使用http proxy模块（甚至FastCGI），所有的连接请求在发送到后端服务器之前nginx将缓存它们，因此，在测量从后端传送的数据时，它的进度显示可能不正确。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">实验拓扑：</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277129R8hx.png"><img onload="if(this.width>650) this.width=650;" title="nginx4" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="nginx4" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277130kMpI.png" height="461" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">7.配置http反向代理</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# cd /etc/nginx/
+[root@nginx nginx]# cp nginx.conf nginx.conf.bak #备份一个原配置文件
+[root@nginx nginx]# vim nginx.conf
+location / {
+               proxy_pass      http://192.168.18.201;
+       }</pre><p><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">指令说明：</span><a target="\&quot;_blank\&quot;" name="proxy_pass"><span style="font-size:16px;color:#ff0000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">proxy_pass</span></a></p><p><span style="font-size:16px;color:#000000;"><strong><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">：proxy_pass </span><a target="\&quot;_blank\&quot;cronym"><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">URL<br /></span><strong><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">：no &nbsp; &nbsp; &nbsp; <br /></span><strong><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">：location, location中的if字段 &nbsp; &nbsp; &nbsp; <br />这个指令设置被代理服务器的地址和被映射的URI，地址可以使用主机名或IP加端口号的形式，例如：</span></a></span><span style="font-size:16px;"><span style="color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">proxy_pass </span><a target="\&quot;_blank\&quot;" href="http://localhost:8000/uri/"><span style="color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">http://localhost:8000/uri/</span></a><span style="color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">;</span></span><br /></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">8.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">9.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277130FG7E.png"><img onload="if(this.width>650) this.width=650;" title="t4" style="border-left- 0px;border-right-width:0px;background-image:none;border-bottom-width:0px;border-top-width:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t4" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277130d1m6.png" width="738" height="238" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，当我们访问192.168.18.208时，被代理重新定向到Web1上。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">10.查看一下Web服务器日志</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# tail /var/log/httpd/access_log
+192.168.18.208 - - [04/Sep/2013:00:14:20 +0800] "GET /favicon.ico HTTP/1.0" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:14:20 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:14:20 +0800] "GET /favicon.ico HTTP/1.0" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.138 - - [04/Sep/2013:00:14:45 +0800] "GET / HTTP/1.1" 200 23 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.138 - - [04/Sep/2013:00:14:48 +0800] "GET /favicon.ico HTTP/1.1" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:14:55 +0800] "GET /favicon.ico HTTP/1.0" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:15:05 +0800] "GET /favicon.ico HTTP/1.0" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:15:13 +0800] "GET /favicon.ico HTTP/1.0" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:15:16 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"
+192.168.18.208 - - [04/Sep/2013:00:15:16 +0800] "GET /favicon.ico HTTP/1.0" 404 289 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36"</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到我们这里的客户的IP全是，nginx代理服务器的IP，并不是真实客户端的IP。下面我们修改一下，让日志的IP显示真实的客户端的IP。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">11.修改nginx配置文件</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"></span></p><pre class="brush:bash;toolbar:false;">location / {
+        proxy_pass      http://192.168.18.201;
+        proxy_set_header  X-Real-IP  $remote_addr; #加上这一行
+}</pre><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">指令说明</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：</span><a target="\&quot;_blank\&quot;" name="proxy_set_header"><span style="color:#ff0000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">proxy_set_header</span></a><br /><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"></span></p><p><span style="font-size:16px;"><strong><span style="font-size:16px;font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-size:16px;font-family:微软雅黑, &#39;microsoft yahei&#39;;">：proxy_set_header header value <br /></span><strong><span style="font-size:16px;font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-size:16px;font-family:微软雅黑, &#39;microsoft yahei&#39;;">： Host and Connection <br /></span><strong><span style="font-size:16px;font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-size:16px;font-family:微软雅黑, &#39;microsoft yahei&#39;;">：http, server, location <br />这个指令允许将发送到被代理服务器的请求头重新定义或者增加一些字段。这个值可以是一个文本，变量或者它们的组合。proxy_set_header在指定的字段中没有定义时会从它的上级字段继承。</span></span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">12.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">13.测试并查看日志</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# tail /var/log/httpd/access_log
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.208 - - [03/Sep/2013:16:26:18 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到日志记录的还是代理的IP，没有显示真实客户端的IP，为什么呢？我们来看一下httpd的配置文件。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">14.查看并修改httpd配置文件</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">[root@web1 ~]# vim /etc/httpd/conf/httpd.conf </span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277131PzsJ.png"><img onload="if(this.width>650) this.width=650;" title="t5" style="border-left- 0px;border-right-width:0px;background-image:none;border-bottom-width:0px;border-top-width:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t5" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277131UTCv.png" width="800" height="93" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以这里记录日志的参数还是%h，下面我们修改一下参数。</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277131KI4g.png"><img onload="if(this.width>650) this.width=650;" title="t6" style="border-left- 0px;border-right-width:0px;background-image:none;border-bottom-width:0px;border-top-width:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t6" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277131Ug5u.png" width="800" height="93" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，这是修改后的参数，将h%修改为%{X-Real-IP}i，好的下面我们再来测试一下。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">15.重启并测试</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# service httpd restart
+停止 httpd：                                               [确定]
+正在启动 httpd：                                           [确定]
+[root@web1 ~]# tail /var/log/httpd/access_log
+192.168.18.138 - - [03/Sep/2013:17:09:14 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:14 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [03/Sep/2013:17:09:15 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到现在的日志里记录的IP地址就是真实的客户端地址了。好了，到这里Nginx代理后端一台服务器就演示到这里，下面我们继续说。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;color:#0070c0;font-size:18px;">五、Nginx之负载均衡</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，由于我们网站是发展初期，nginx只代理了后端一台服务器，但由于我们网站名气大涨访问的人越来越多一台服务器实在是顶不住，于是我们加了多台服务器，那么多台服务器又怎么配置代理呢，我们这里以两台服务器为案例，为大家做演示。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">1.upstream 负载均衡模块说明 </span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">案例：</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">下面设定负载均衡的服务器列表。</span></p><pre class="brush:bash;toolbar:false;">upstream test.net{
+ip_hash;
+server 192.168.10.13:80;
+server 192.168.10.14:80  down;
+server 192.168.10.15:8009  max_fails=3  fail_timeout=20s;
+server 192.168.10.16:8080;
+}
+server {
+  location / {
+    proxy_pass  http://test.net;
+  }
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;upstream是Nginx的HTTP Upstream模块，这个模块通过一个简单的调度算法来实现客户端IP到后端服务器的负载均衡。在上面的设定中，通过upstream指令指定了一个负载均衡器的名称test.net。这个名称可以任意指定，在后面需要用到的地方直接调用即可。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.upstream 支持的负载均衡算法</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">Nginx的负载均衡模块目前支持4种调度算法，下面进行分别介绍，其中后两项属于第三方调度算法。 &nbsp; </span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">轮询（默认）。每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某台服务器宕机，故障系统被自动剔除，使用户访问不受影响。Weight 指定轮询权值，Weight值越大，分配到的访问机率越高，主要用于后端每个服务器性能不均的情况下。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">ip_hash。每个请求按访问IP的hash结果分配，这样来自同一个IP的访客固定访问一个后端服务器，有效解决了动态网页存在的session共享问题。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">fair。这是比上面两个更加智能的负载均衡算法。此种算法可以依据页面大小和加载时间长短智能地进行负载均衡，也就是根据后端服务器的响应时间来分配请求，响应时间短的优先分配。Nginx本身是不支持fair的，如果需要使用这种调度算法，必须下载Nginx的upstream_fair模块。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">url_hash。此方法按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，可以进一步提高后端缓存服务器的效率。Nginx本身是不支持url_hash的，如果需要使用这种调度算法，必须安装Nginx 的hash软件包。</span></p></li></ul><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.upstream 支持的状态参数</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">在HTTP Upstream模块中，可以通过server指令指定后端服务器的IP地址和端口，同时还可以设定每个后端服务器在负载均衡调度中的状态。常用的状态有： &nbsp; &nbsp; &nbsp;</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">down，表示当前的server暂时不参与负载均衡。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">backup，预留的备份机器。当其他所有的非backup机器出现故障或者忙的时候，才会请求backup机器，因此这台机器的压力最轻。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用。</span></p></li></ul><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;color:#ff0000;">注，当负载调度算法为ip_hash时，后端服务器在负载均衡调度中的状态不能是weight和backup。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.实验拓扑</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_13782771327ebc.png"><img onload="if(this.width>650) this.width=650;" title="nginx3" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="nginx3" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277132ARIU.png" height="442" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.配置nginx负载均衡</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# vim /etc/nginx/nginx.conf
+upstream webservers {
+      server 192.168.18.201 weight=1;
+      server 192.168.18.202 weight=1;
+  }
+  server {
+      listen       80;
+      server_name  localhost;
+      #charset koi8-r;
+      #access_log  logs/host.access.log  main;
+      location / {
+              proxy_pass      http://webservers;
+              proxy_set_header  X-Real-IP  $remote_addr;
+      }
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，upstream是定义在server{ }之外的，不能定义在server{ }内部。定义好upstream之后，用proxy_pass引用一下即可。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">7.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277132Agjr.png"><img onload="if(this.width>650) this.width=650;" title="t7" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t7" src="http://img1.51cto.com/attachment/201309/4/2033581_13782771331DV5.png" height="243" /></a></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277133ASIL.png"><img onload="if(this.width>650) this.width=650;" title="t8" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t8" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277133iCzt.png" height="249" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以不断的刷新浏览的内容，可以发现web1与web2是交替出现的，达到了负载均衡的效果。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">8.查看一下Web访问服务器日志</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">Web1:</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# tail /var/log/httpd/access_log
+192.168.18.138 - - [04/Sep/2013:09:41:58 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:41:58 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:41:59 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:41:59 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:42:00 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:42:00 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:42:00 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:44:21 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:44:22 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:44:22 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">Web2:</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">先修改一下，Web服务器记录日志的格式。</span></p><pre class="brush:bash;toolbar:false;">[root@web2 ~]# vim /etc/httpd/conf/httpd.conf
+LogFormat "%{X-Real-IP}i %l %u %t \"%r\" %&gt;s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+[root@web2 ~]# service httpd restart
+停止 httpd：                                               [确定]
+正在启动 httpd：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">接着，再访问多次，继续查看日志。</span></p><pre class="brush:bash;toolbar:false;">[root@web2 ~]# tail /var/log/httpd/access_log
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:28 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:29 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"
+192.168.18.138 - - [04/Sep/2013:09:50:29 +0800] "GET / HTTP/1.0" 200 23 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)"</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，两台服务器日志都记录是192.168.18.138访问的日志，也说明了负载均衡配置成功。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">9.配置nginx进行健康状态检查</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用，进行健康状态检查。</span></p></li></ul><pre class="brush:bash;toolbar:false;">[root@nginx ~]# vim /etc/nginx/nginx.conf
+upstream webservers {
+        server 192.168.18.201 weight=1 max_fails=2 fail_timeout=2;
+        server 192.168.18.202 weight=1 max_fails=2 fail_timeout=2;
+    }</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">10.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">11.停止服务器并测试</span></p><pre class="brush:bash;toolbar:false;">先停止Web1，进行测试。
+[root@web1 ~]# service httpd stop
+停止 httpd：                                               [确定]</pre><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277134foMO.png"><img onload="if(this.width>650) this.width=650;" title="t8" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t8" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277134jg08.png" height="249" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，现在只能访问Web2，再重新启动Web1，再次访问一下。</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# service httpd start
+正在启动 httpd：                                           [确定]</pre><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277134rE2d.png"><img onload="if(this.width>650) this.width=650;" title="t7" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t7" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277135pRL2.png" height="243" /></a></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_13782771357X8P.png"><img onload="if(this.width>650) this.width=650;" title="t8" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t8" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277135HnX8.png" height="249" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，现在又可以重新访问，说明nginx的健康状态查检配置成功。但大家想一下，如果不幸的是所有服务器都不能提供服务了怎么办，用户打开页面就会出现出错页面，那么会带来用户体验的降低，所以我们能不能像配置LVS是配置sorry_server呢，答案是可以的，但这里不是配置sorry_server而是配置backup。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">12.配置backup服务器</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# vim /etc/nginx/nginx.conf
+server {
+                listen 8080;
+                server_name localhost;
+                root /data/www/errorpage;
+                index index.html;
+        }
+upstream webservers {
+        server 192.168.18.201 weight=1 max_fails=2 fail_timeout=2;
+        server 192.168.18.202 weight=1 max_fails=2 fail_timeout=2;
+        server 127.0.0.1:8080 backup;
+    }
+[root@nginx ~]# mkdir -pv /data/www/errorpage
+[root@nginx errorpage]# cat index.html
+&lt;h1&gt;Sorry......&lt;/h1&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">13.重新加载配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx errorpage]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">14.关闭Web服务器并进行测试</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# service httpd stop
+停止 httpd：                                               [确定]
+[root@web2 ~]# service httpd stop
+停止 httpd：                                               [确定]</pre><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277136O5jD.png"><img onload="if(this.width>650) this.width=650;" title="t9" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t9" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277136aoPm.png" height="243" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，当所有服务器都不能工作时，就会启动备份服务器。好了，backup服务器就配置到这里，下面我们来配置ip_hash负载均衡。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">15.配置ip_hash负载均衡</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">ip_hash，每个请求按访问IP的hash结果分配，这样来自同一个IP的访客固定访问一个后端服务器，有效解决了动态网页存在的session共享问题。（一般电子商务网站用的比较多）</span></p></li></ul><pre class="brush:bash;toolbar:false;">[root@nginx ~]# vim /etc/nginx/nginx.conf
+upstream webservers {
+        ip_hash;
+        server 192.168.18.201 weight=1 max_fails=2 fail_timeout=2;
+        server 192.168.18.202 weight=1 max_fails=2 fail_timeout=2;
+        #server 127.0.0.1:8080 backup;
+    }</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，当负载调度算法为ip_hash时，后端服务器在负载均衡调度中的状态不能有backup。（有人可能会问，为什么呢？大家想啊，如果负载均衡把你分配到backup服务器上，你能访问到页面吗？不能，所以了不能配置backup服务器）</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">16.重新加载一下服务器</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">17.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277136mMbM.png"><img onload="if(this.width>650) this.width=650;" title="t10" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t10" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277137krp2.png" height="240" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到，你不断的刷新页面一直会显示的民Web2，说明ip_hash负载均衡配置成功。下面我们来统计一下Web2的访问连接数。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">18.统计Web2的访问连接数</span></p><pre class="brush:bash;toolbar:false;">[root@web2 ~]# netstat -an | grep :80 | wc -l
+304</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，你不断的刷新，连接数会越来越多。好了，nginx的负载均衡就全部演示到这里下面我们来说一说，页面缓存。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;color:#0070c0;font-size:18px;">六、Nginx之页面缓存</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">1.指令说明 </span></p><h5><a target="\&quot;_blank\&quot;" name="proxy_cache_path"><span style="font-size:18px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">proxy_cache_path</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：proxy_cache_path path [levels=number] keys_zone=zone_name:zone_size [inactive=time] [max_size=size]; &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：None &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：http &nbsp;<br />指令指定缓存的路径和一些其他参数，缓存的数据存储在文件中，并且使用代理url的哈希值作为关键字与文件名。levels参数指定缓存的子目录数，例如：</span></p><pre class="brush:bash;toolbar:false;">proxy_cache_path  /data/nginx/cache  levels=1:2   keys_zone=one:10m;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">文件名类似于：</span></p><pre class="brush:bash;toolbar:false;">/data/nginx/cache/c/29/b7f54b2df7773722d382f4809d65029c</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">levels指定目录结构，可以使用任意的1位或2位数字作为目录结构，如 X, X:X,或X:X:X 例如: “2”, “2:2”, “1:1:2“，但是最多只能是三级目录。 &nbsp;<br />所有活动的key和元数据存储在共享的内存池中，这个区域用keys_zone参数指定。one指的是共享池的名称，10m指的是共享池的大小。 &nbsp;<br />注意每一个定义的内存池必须是不重复的路径，例如：</span></p><pre class="brush:bash;toolbar:false;">proxy_cache_path  /data/nginx/cache/one    levels=1      keys_zone=one:10m;
+proxy_cache_path  /data/nginx/cache/two    levels=2:2    keys_zone=two:100m;
+proxy_cache_path  /data/nginx/cache/three  levels=1:1:2  keys_zone=three:1000m;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">如果在inactive参数指定的时间内缓存的数据没有被请求则被删除，默认inactive为10分钟。一个名为cache manager的进程控制磁盘的缓存大小，它被用来删除不活动的缓存和控制缓存大小，这些都在max_size参数中定义，当目前缓存的值超出max_size指定的值之后，超过其大小后最少使用数据（LRU替换算法）将被删除。内存池的大小按照缓存页面数的比例进行设置，一个页面（文件）的元数据大小按照操作系统来定，如FreeBSD/i386下为64字节，FreeBSD/amd64下为128字节。</span></p><h5><a target="\&quot;_blank\&quot;" name="proxy_cache"><span style="font-size:18px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">proxy_cache</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：proxy_cache zone_name; &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：None &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：http, server, location &nbsp;<br />设置一个缓存区域的名称，一个相同的区域可以在不同的地方使用。 &nbsp;<br />在0.7.48后，缓存遵循后端的”Expires”, “Cache-Control: no-cache”, “Cache-Control: max-age=XXX”头部字段，0.7.66版本以后，”Cache-Control:“private”和”no-store”头同样被遵循。nginx在缓存过程中不会处理”Vary”头，为了确保一些私有数据不被所有的用户看到，后端必须设置 “no-cache”或者”max-age=0”头，或者proxy_cache_key包含用户指定的数据如$cookie_xxx，使用cookie的值作为proxy_cache_key的一部分可以防止缓存私有数据，所以可以在不同的location中分别指定proxy_cache_key的值以便分开私有数据和公有数据。 &nbsp;<br />缓存指令依赖代理缓冲区(buffers)，如果proxy_buffers设置为off，缓存不会生效。</span></p><h5><a target="\&quot;_blank\&quot;" name="proxy_cache_valid"><span style="font-size:18px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">proxy_cache_valid</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：proxy_cache_valid reply_code [reply_code …] time; &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：None &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：http, server, location &nbsp;<br />为不同的应答设置不同的缓存时间，例如：</span></p><pre class="brush:bash;toolbar:false;">proxy_cache_valid  200 302  10m;
+proxy_cache_valid  404      1m;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">为应答代码为200和302的设置缓存时间为10分钟，404代码缓存1分钟。 &nbsp;<br />如果只定义时间：</span></p><pre class="brush:bash;toolbar:false;">proxy_cache_valid 5m;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">那么只对代码为200, 301和302的应答进行缓存。 &nbsp;<br />同样可以使用any参数任何应答。</span></p><pre class="brush:bash;toolbar:false;">proxy_cache_valid  200 302 10m;
+proxy_cache_valid  301 1h;
+proxy_cache_valid  any 1m;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.定义一个简单nginx缓存服务器</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# vim /etc/nginx/nginx.conf
+proxy_cache_path /data/nginx/cache/webserver levels=1:2 keys_zone=webserver:20m max_size=1g;
+   server {
+       listen       80;
+       server_name  localhost;
+       #charset koi8-r;
+       #access_log  logs/host.access.log  main;
+       location / {
+               proxy_pass      http://webservers;
+               proxy_set_header  X-Real-IP  $remote_addr;
+               proxy_cache webserver;
+               proxy_cache_valid 200 10m;
+       }
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.新建缓存目录 </span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# mkdir -pv /data/nginx/cache/webserver</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx webserver]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.下面我们来测试一下（谷歌浏览器）</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277137HA0v.png"><img onload="if(this.width>650) this.width=650;" title="t11" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t11" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277138abuG.png" height="673" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家用谷歌浏览器测试的时候，可以按F12调用开发工具，选择Network选项，我们可以看到，Response Headers，在这里我们可以看到，我们请求的是否是缓存，但现在还看不到，下面我们来配置一下，再来测试。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6. 缓存变量说明 </span></p><h5><a target="\&quot;_blank\&quot;" name="server_addr"><span style="font-size:18px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">$server_addr</span></a></h5><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">服务器地址，在完成一次系统调用后可以确定这个值，如果要绕开系统调用，则必须在listen中指定地址并且使用bind参数。</span></p><h5><a target="\&quot;_blank\&quot;" name="upstream_cache_status"><span style="font-size:18px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">$upstream_cache_status</span></a></h5><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">0.8.3版本中其值可能为：</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">MISS 未命中</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">EXPIRED - expired。请求被传送到后端。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">UPDATING - expired。由于proxy/fastcgi_cache_use_stale正在更新，将使用旧的应答。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">STALE - expired。由于proxy/fastcgi_cache_use_stale，后端将得到过期的应答。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">HIT 命中</span></p></li></ul><pre class="brush:bash;toolbar:false;">[root@nginx ~]# vim /etc/nginx/nginx.conf
+proxy_cache_path /data/nginx/cache/webserver levels=1:2 keys_zone=webserver:20m max_size=1g;
+    server {
+        listen       80;
+        server_name  localhost;
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+       #增加两头部
+        add_header X-Via $server_addr;
+        add_header X-Cache $upstream_cache_status;
+        location / {
+                proxy_pass      http://webservers;
+                proxy_set_header  X-Real-IP  $remote_addr;
+                proxy_cache webserver;
+                proxy_cache_valid 200 10m;
+        }
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">7.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">8.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277138fvON.png"><img onload="if(this.width>650) this.width=650;" title="t12" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t12" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277139SRvW.png" height="677" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，从图中我们可以看到，我们访问的服务器是192.168.18.208，缓存命中。大家可以看到是不是很直观啊。下面我们看一下缓存目录。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">9.查看一下缓存目录</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# cd /data/nginx/cache/webserver/f/63/
+[root@nginx 63]# ls
+681ad4c77694b65d61c9985553a2763f</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，缓存目录里确实有缓存文件。好了，nginx缓存配置就到这边了，更多配置请根据需要看配置文档。下面我们来说一下，URL重写。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;font-size:18px;color:#0070c0;">七、Nginx之URL重写 </span></p><h3><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">1.</span><a target="\&quot;_blank\&quot;" name="url重写模块_rewrite"><span style="font-size:16px;color:#000000;font-family:微软雅黑, &#39;microsoft yahei&#39;;">URL重写模块（Rewrite）</span></a></h3><p><a target="\&quot;_blank\&quot;" name="摘要" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">摘要</span></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">这个模块允许使用正则表达式重写URI（需PCRE库），并且可以根据相关变量重定向和选择不同的配置。如果这个指令在server字段中指定，那么将在被请求的location确定之前执行，如果在指令执行后所选择的location中有其他的重写规则，那么它们也被执行。如果在location中执行这个指令产生了新的URI，那么location又一次确定了新的URI。这样的循环可以最多执行10次，超过以后nginx将返回500错误。</span></p><h4><a target="\&quot;_blank\&quot;" name="指令" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">指令</span></a></h4><h5><a target="\&quot;_blank\&quot;" name="break"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">break</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：break &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：none &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：server, location, if &nbsp;<br />完成当前设置的规则，停止执行其他的重写指令。 &nbsp;<br />示例：</span></p><pre class="brush:bash;toolbar:false;">if ($slow) {
+  limit_rate  10k;
+  break;
+}</pre><h5><a target="\&quot;_blank\&quot;" name="if"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">if</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：if (condition) { … } &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：none &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：server, location &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注意</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：在使用if指令之前请查看</span><a target="\&quot;_blank\&quot;" href="http://wiki.nginx.org/IfIsEvil" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">if is evil page</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">并且尽量考虑用</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#try_files" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">try_files</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">代替。 &nbsp;<br />判断一个条件，如果条件成立，则后面的大括号内的语句将执行，相关配置从上级继承。 &nbsp;<br />可以在判断语句中指定下列值：</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">一个变量的名称；不成立的值为：空字符传”“或者一些用“0”开始的字符串。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">一个使用=或者!=运算符的比较语句。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用符号~*和~模式匹配的正则表达式：</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">~为区分大小写的匹配。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">~*不区分大小写的匹配（firefox匹配FireFox）。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">!~和!~*意为“不匹配的”。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用-f和!-f检查一个文件是否存在。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用-d和!-d检查一个目录是否存在。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用-e和!-e检查一个文件，目录或者软链接是否存在。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用-x和!-x检查一个文件是否为可执行文件。</span></p></li></ul><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">正则表达式的一部分可以用圆括号，方便之后按照顺序用$1-$9来引用。 &nbsp;<br />示例配置：</span></p><pre class="brush:bash;toolbar:false;">if ($http_user_agent ~ MSIE) {
+  rewrite  ^(.*)$  /msie/$1  break;
+}
+                                                                                                                                                       
+if ($http_cookie ~* "id=([^;] +)(?:;|$)" ) {
+  set  $id  $1;
+}
+                                                                                                                                                       
+if ($request_method = POST ) {
+  return 405;
+}
+                                                                                                                                                       
+if (!-f $request_filename) {
+  break;
+  proxy_pass  http://127.0.0.1;
+}
+                                                                                                                                                       
+if ($slow) {
+  limit_rate  10k;
+}
+                                                                                                                                                       
+if ($invalid_referer) {
+  return   403;
+}
+                                                                                                                                                       
+if ($args ~ post=140){
+  rewrite ^ http://example.com/ permanent;
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">内置变量$invalid_referer用指令valid_referers指定。</span></p><h5><a target="\&quot;_blank\&quot;" name="return"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">return</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：return code &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：none &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：server, location, if &nbsp;<br />这个指令结束执行配置语句并为客户端返回状态代码，可以使用下列的值：204，400，402-406，408，410, 411, 413, 416与500-504。此外，非标准代码444将关闭连接并且不发送任何的头部。</span></p><h5><a target="\&quot;_blank\&quot;" name="rewrite"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">rewrite</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：rewrite regex replacement flag &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：none &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：server, location, if &nbsp;<br />按照相关的正则表达式与字符串修改URI，指令按照在配置文件中出现的顺序执行。 &nbsp;<br />可以在重写指令后面添加标记。 &nbsp;<br />如果替换的字符串以http://开头，请求将被重定向，并且不再执行多余的rewrite指令。 &nbsp;<br />尾部的标记(flag)可以是以下的值：</span></p><ul style="list-style-type:disc;" class=" list-paddingleft-2"><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">last - 完成重写指令，之后搜索相应的URI或location。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">break - 完成重写指令。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">redirect - 返回302临时重定向，如果替换字段用http://开头则被使用。</span></p></li><li><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">permanent - 返回301永久重定向。</span></p></li></ul><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注意如果一个重定向是相对的（没有主机名部分），nginx将在重定向的过程中使用匹配server_name指令的“Host”头或者server_name指令指定的第一个名称，如果头不匹配或不存在，如果没有设置server_name，将使用本地主机名，如果你总是想让nginx使用“Host”头，可以在server_name使用“*”通配符（查看http核心模块中的</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#server_name" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">server_name</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">）。例如：</span></p><pre class="brush:bash;toolbar:false;">rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  last;
+rewrite  ^(/download/.*)/audio/(.*)\..*$  $1/mp3/$2.ra   last;
+return   403;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">但是如果我们将其放入一个名为/download/的location中，则需要将last标记改为break，否则nginx将执行10次循环并返回500错误。</span></p><pre class="brush:bash;toolbar:false;">location /download/ {
+  rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  break;
+  rewrite  ^(/download/.*)/audio/(.*)\..*$  $1/mp3/$2.ra   break;
+  return   403;
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">如果替换字段中包含参数，那么其余的请求参数将附加到后面，为了防止附加，可以在最后一个字符后面跟一个问号：</span></p><pre class="brush:bash;toolbar:false;">rewrite  ^/users/(.*)$  /show?user=$1?  last;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注意：大括号（{和}），可以同时用在正则表达式和配置块中，为了防止冲突，正则表达式使用大括号需要用双引号（或者单引号）。例如要重写以下的URL：</span></p><pre class="brush:bash;toolbar:false;">/photos/123456</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">为:</span></p><pre class="brush:bash;toolbar:false;">/path/to/photos/12/1234/123456.png</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">则使用以下正则表达式（注意引号）：</span></p><pre class="brush:bash;toolbar:false;">rewrite  "/photos/([0-9] {2})([0-9] {2})([0-9] {2})" /path/to/photos/$1/$1$2/$1$2$3.png;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">如果指定一个“？”在重写的结尾，Nginx将丢弃请求中的参数，即变量</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#args" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">$args</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">，当使用</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#request_uri" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">$request_uri</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">或</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#uri" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">$uri</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">&amp;</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#args" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">$args</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">时可以在rewrite结尾使用“？”以避免nginx处理两次参数串。 &nbsp;<br />在rewrite中使用$request_uri将www.example.com重写到example.com：</span></p><pre class="brush:bash;toolbar:false;">server {
+   server_name www.example.com;
+   rewrite ^ http://example.com$request_uri? permanent;
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">同样，重写只对路径进行操作，而不是参数，如果要重写一个带参数的URL，可以使用以下代替：</span></p><pre class="brush:bash;toolbar:false;">if ($args ^~ post=100){
+  rewrite ^ http://example.com/new-address.html? permanent;
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注意$args变量不会被编译，与location过程中的URI不同（参考http核心模块中的</span><a target="\&quot;_blank\&quot;" href="http://www.howtocn.org/nginx:nginx%E6%A8%A1%E5%9D%97%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E4%B8%AD%E6%96%87%E7%89%88:standardhttpmodules:httpcore#location" style="font-family:微软雅黑, &#39;microsoft yahei&#39;;text-decoration:underline;"><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">location</span></a><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">）。</span></p><h5><a target="\&quot;_blank\&quot;" name="rewrite_log"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">rewrite_log</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：rewrite_log on | off &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：rewrite_log off &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：server, location, if &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">变量</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：无 &nbsp;<br />启用时将在error log中记录notice 标记的重写日志。</span></p><h5><a target="\&quot;_blank\&quot;" name="set"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">set</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：set variable value &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：none &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：server, location, if &nbsp;<br />指令设置一个变量并为其赋值，其值可以是文本，变量和它们的组合。 &nbsp;<br />你可以使用set定义一个新的变量，但是不能使用set设置$http_xxx头部变量的值。</span></p><h5><a target="\&quot;_blank\&quot;" name="uninitialized_variable_warn"><span style="font-size:16px;font-weight:bold;font-family:微软雅黑, &#39;microsoft yahei&#39;;">uninitialized_variable_warn</span></a></h5><p><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">语法</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：uninitialized_variable_warn on|off &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">默认值</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：uninitialized_variable_warn on &nbsp;<br /></span><strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">使用字段</span></strong><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">：http, server, location, if &nbsp;<br />开启或关闭在未初始化变量中记录警告日志。 &nbsp;<br />事实上，rewrite指令在配置文件加载时已经编译到内部代码中，在解释器产生请求时使用。 &nbsp;<br />这个解释器是一个简单的堆栈虚拟机，如下列指令：</span></p><pre class="brush:bash;toolbar:false;">location /download/ {
+  if ($forbidden) {
+    return   403;
+  }
+  if ($slow) {
+    limit_rate  10k;
+  }
+  rewrite  ^/(download/.*)/media/(.*)\..*$  /$1/mp3/$2.mp3  break;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">将被编译成以下顺序：</span></p><pre class="brush:bash;toolbar:false;">variable $forbidden
+checking to zero
+recovery 403
+completion of entire code
+variable $slow
+checking to zero
+checkings of regular excodession
+copying "/"
+copying $1
+copying "/mp3/"
+copying $2
+copying ".mp3"
+completion of regular excodession
+completion of entire sequence</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注意并没有关于limit_rate的代码，因为它没有提及ngx_http_rewrite_module模块，“if”块可以类似”location”指令在配置文件的相同部分同时存在。 &nbsp;<br />如果$slow为真，对应的if块将生效，在这个配置中limit_rate的值为10k。 &nbsp;<br />指令：</span></p><pre class="brush:bash;toolbar:false;">rewrite  ^/(download/.*)/media/(.*)\..*$  /$1/mp3/$2.mp3  break;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">如果我们将第一个斜杠括入圆括号，则可以减少执行顺序：</span></p><pre class="brush:bash;toolbar:false;">rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  break;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">之后的顺序类似如下：</span></p><pre class="brush:bash;toolbar:false;">checking regular excodession
+copying $1
+copying "/mp3/"
+copying $2
+copying ".mp3"
+completion of regular excodession
+completion of entire code</pre><pre><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.简单案例</span></pre><pre><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，由于配置文件内容较多，为了让大家看着方便，我们备份一下配置文件，打开一个新的配置文件。</span></pre><pre class="brush:bash;toolbar:false;">[root@nginx ~]# cd /etc/nginx/
+[root@nginx nginx]# mv nginx.conf nginx.conf.proxy
+[root@nginx nginx]# cp nginx.conf.bak nginx.conf
+[root@nginx nginx]# vim /etc/nginx/nginx.conf
+server {
+      listen       80;
+      server_name  localhost;
+      #charset koi8-r;
+      #access_log  logs/host.access.log  main;
+      location / {
+          root   html;
+          index  index.html index.htm;
+          rewrite ^/bbs/(.*)$ http://192.168.18.201/forum/$1;
+      }
+}</pre><pre><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">准备forum目录与测试文件</span></pre><pre class="brush:bash;toolbar:false;">[root@web1 ~]# cd /var/www/html/
+[root@web1 html]# ls
+index.html
+[root@web1 html]# mkdir forum
+[root@web1 html]# cd forum/
+[root@web1 forum]# vim index.html
+&lt;h1&gt;forum page!&lt;/h1&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277139Z0NA.png"><img onload="if(this.width>650) this.width=650;" title="t13" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t13" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277140b7uz.png" height="239" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">好了，下面我们来测试一下rewrite重写。</span></p><pre><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.重新加载一下配置文件</span></pre><pre class="brush:bash;toolbar:false;">[root@nginx 63]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277140aPFs.png"><img onload="if(this.width>650) this.width=650;" title="t14" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t14" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277140HxGb.png" height="577" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以从图中看出，status code 302指的是临时重定向，那就说明我们rewrite重写配置成功。大家知道302是临时重定向而301是永久重定向，那么怎么实现永久重定向呢。一般服务器与服务器之间是临时重定向，服务器内部是永久重定向。下面我们来演示一下永久重定向。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.配置永久重定向</span></p><pre class="brush:bash;toolbar:false;">[root@nginx nginx]# vim /etc/nginx/nginx.conf
+server {
+        listen       80;
+        server_name  localhost;
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+        location / {
+            root   html;
+            index  index.html index.htm;
+            rewrite ^/bbs/(.*)$ /forum/$1;
+        }
+}</pre><pre><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">准备forum目录与测试文件</span></pre><pre class="brush:bash;toolbar:false;">[root@nginx ~]# cd /usr/html/
+[root@nginx html]# ls
+50x.html  index.html
+[root@nginx html]# mkdir forum
+[root@nginx html]# cd forum/
+[root@nginx forum]# vim index.html
+&lt;h1&gt;192.168.18.208 forum page&lt;/h1&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">7.测试一下</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277141NTPi.png"><img onload="if(this.width>650) this.width=650;" title="t16" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t16" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277141QQbY.png" height="615" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家从图中可以看到，我们访问bbs/是直接帮我们跳转到forum/下，这种本机的跳转就是永久重定向也叫隐式重定向。好了，rewrite重定向我们就说到这里了，想要查询更多关于重定向的指令请参考官方文档。最后，我们来说一下读写分离。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;color:#0070c0;font-size:18px;">八、Nginx之读写分离</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">1.实验拓扑</span></p><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_1378277142SiBu.png"><img onload="if(this.width>650) this.width=650;" title="nginx3" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="nginx3" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277142c7NS.png" height="442" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;需求分析，前端一台nginx做负载均衡反向代理，后面两台httpd服务器。整个架构是提供BBS(论坛)服务，有一需求得实现读写分离，就是上传附件的功能，我们上传的附件只能上传到Web1，然后在Web1上利用rsync+inotify实现附件同步，大家都知道rsync+inotify只能是主向从同步，不能双向同步。所以Web1可进行写操作，而Web2只能进行读操作，这就带来读写分离的需求，下面我们就来说一下，读写分离怎么实现。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">2.WebDAV功能说明</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"> &nbsp; &nbsp; &nbsp; &nbsp;WebDAV （Web-based Distributed Authoring and Versioning） 一种基于 HTTP 1.1协议的通信协议。它扩展了HTTP 1.1，在GET、POST、HEAD等几个HTTP标准方法以外添加了一些新的方法，使应用程序可直接对Web Server直接读写，并支持写文件锁定(Locking)及解锁(Unlock)，还可以支持文件的版本控制。这样我们就能配置读写分离功能了，下面我们来具体配置一下。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">3.修改配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx nginx]# vim /etc/nginx/nginx.conf
+server {
+        listen       80;
+        server_name  localhost;
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+        location / {
+                proxy_pass http://192.168.18.202;
+                if ($request_method = "PUT"){
+                        proxy_pass http://192.168.18.201;
+                }
+        }
+}</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">4.重新加载一下配置文件</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# service nginx reload
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+重新载入 nginx：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">5.配置httpd的WebDAV功能</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# vim /etc/httpd/conf/httpd.conf</pre><p><a target="\&quot;_blank\&quot;" href="http://img1.51cto.com/attachment/201309/4/2033581_13782771439FlB.png"><img onload="if(this.width>650) this.width=650;" title="t17" style="border-top:0px;border-right:0px;background-image:none;border-bottom:0px;border-left:0px;padding-top:0px;padding-left:0px;padding-right:0px;" border="0" alt="t17" src="http://img1.51cto.com/attachment/201309/4/2033581_1378277143SBSg.png" height="80" /></a></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，在&lt;Directory &quot;/var/www/html&quot;&gt;下启用就行。</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">6.重新启动一下httpd</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# service httpd restart
+停止 httpd：                                               [确定]
+正在启动 httpd：                                           [确定]</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">7.测试一下</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# curl http://192.168.18.201
+&lt;h1&gt;web1.test.com&lt;/h1&gt;
+[root@nginx ~]# curl http://192.168.18.202
+&lt;h1&gt;web2.test.com&lt;/h1&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，web1与web2访问都没问题。</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# curl -T /etc/issue  http://192.168.18.202
+&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+&lt;html&gt;&lt;head&gt;
+&lt;title&gt;405 Method Not Allowed&lt;/title&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;h1&gt;Method Not Allowed&lt;/h1&gt;
+The requested method PUT is not allowed for the URL /issue.
+&lt;hr&gt;
+&lt;address&gt;Apache/2.2.15 (CentOS) Server at 192.168.18.202 Port 80&lt;/address&gt;
+&lt;/body&gt;&lt;/html&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，我们上传文件到，web2上时，因为web2只人读功能，所以没有开户WebDAV功能，所以显示是405 Method Not Allowed。 &nbsp;<br /></span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# curl -T /etc/issue  http://192.168.18.201
+&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+&lt;html&gt;&lt;head&gt;
+&lt;title&gt;403 Forbidden&lt;/title&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;h1&gt;Forbidden&lt;/h1&gt;
+You don't have permission to access /issue
+on this server.
+&lt;hr&gt;
+&lt;address&gt;Apache/2.2.15 (CentOS) Server at 192.168.18.201 Port 80&lt;/address&gt;
+&lt;/body&gt;&lt;/html&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，我们在Web1开启了WebDAV功能，但我们目录是root目录是不允许apache用户上传的，所以显示的是403 Forbidden。下面我们给apache授权，允许上传。</span><br /></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# setfacl -m u:apache:rwx /var/www/html/</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">下面我们再来测试一下，</span></p><pre class="brush:bash;toolbar:false;">[root@nginx ~]# curl -T /etc/issue  http://192.168.18.201
+&lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+&lt;html&gt;&lt;head&gt;
+&lt;title&gt;201 Created&lt;/title&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;h1&gt;Created&lt;/h1&gt;
+Resource /issue has been created.
+&lt;hr /&gt;
+&lt;address&gt;Apache/2.2.15 (CentOS) Server at 192.168.18.201 Port 80&lt;/address&gt;
+&lt;/body&gt;&lt;/html&gt;</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">注，大家可以看到我们成功的上传了文件，说明nginx读写分离功能配置完成。最后，我们来查看一下上传的文件。</span></p><pre class="brush:bash;toolbar:false;">[root@web1 ~]# cd /var/www/html/
+[root@web1 html]# ll
+总用量 12
+drwxr-xr-x 2 root   root   4096 9月   4 13:16 forum
+-rw-r--r-- 1 root   root     23 9月   3 23:37 index.html
+-rw-r--r-- 1 apache apache   47 9月   4 14:06 issue</pre><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;">好了，到这里nginx的反向代理、负载均衡、页面缓存、URL重写及读写分离就全部讲解完成。希望大家有所收获，^_^……</span></p><p><span style="font-family:微软雅黑, &#39;microsoft yahei&#39;;"><br /></span></p><p>本文出自 “<a href='http://freeloda.blog.51cto.com'>Share your knowledge …</a>” 博客，请务必保留此出处<a href='http://freeloda.blog.51cto.com/2033581/1288553'>http://freeloda.blog.51cto.com/2033581/1288553</a></p>
+    		</div><!--正文 end-->
+<script type="text/javascript">
+	var kevent = 'onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onresize|onselect|onsubmit|onunload';
+	var aevent = kevent.split('|');
+
+	jQuery('.showContent img').each(function(){
+		var nimg = this;
+		jQuery.each(aevent, function(i, n){
+			if (n!='onload') {
+				jQuery(nimg).attr(n, '');
+			} else {
+				if (jQuery(nimg).attr(n) != 'if(this.width>650) this.width=650;') {
+					jQuery(nimg).attr(n, '');
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript" charset="utf-8">
+var encodetitle = encodeURI('一篇很棒的博文分享给大家：《Nginx 反向代理、负载均衡、页面缓存、URL重写及读写分离详解》');
+
+function show51share(){
+
+	window.open('http://t.51cto.com/index.php?m=share&url=http://freeloda.blog.51cto.com/2033581/1288553&type=l&count=&relateUid=&appkey=3843950324&title=' + encodetitle);
+}
+</script>		
+<div class="m_sharebtn clear">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td width="11%" height="43" align="center" valign="middle"><img src="http://img1.51cto.com/images/share/ssk.png" alt="分享至"/></td>
+		<td width="77%" align="left" valign="top">
+<!-- 			
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_mshare" data-cmd="mshare" title="分享到一键分享"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_bdysc" data-cmd="bdysc" title="分享到百度云收藏"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+<script>
+var bds_config = {'wbUid':1706976420};
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false, 'bdPic':'http://blog.51cto.com/attachment/201305/173413310.jpg',"bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+ -->
+
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_mshare" data-cmd="mshare" title="分享到一键分享"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_bdysc" data-cmd="bdysc" title="分享到百度云收藏"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{"tsina":"2065779340"},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"http://blog.51cto.com/img/blog_down0731.jpg","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+	<!-- Baidu Button END --></td>
+		<td width="12%" align="right" valign="middle"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！"><img src="http://home.51cto.com/public/themes/blue/images/favorite_add_small.gif" border="0" alt="一键收藏，随时查看，分享好友！" /></a></td>
+	  </tr>
+	</table>
+
+</div>			
+    		<div class="showBottom">
+            <!--<div class="reviews"><span class="fl" style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">Onlyou_Linux、宋宋、huazhixu123</a>
+
+            </span><div id="favourdiv" class="support01">62人</div>
+              <span class="fl">了这篇文章</span></div>-->
+              <table width="720" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td  align="right"><img src="http://phpanddb.blog.51cto.com/image/skin/25/icon01.png" width="15" height="16" /> <span style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">Onlyou_Linux、宋宋、huazhixu123</a></span></td>
+    <td width="70" align="left"><div style="line-height:28px;" id="favourdiv" class="support01">62人</div></td>
+    <td width="60" align="left">了这篇文章</td>
+  </tr>
+</table>
+
+
+
+
+            <div class="showType">类别：<a href="/2033581/d-15" class="operlink">HTTP加速及应用服务器专题</a>┆阅读(<span id="readNum">0</span>)┆评论(<span id='cmtNum' >0</span>)
+
+┆
+<a href="/">返回博主首页</a>┆<a href="http://blog.51cto.com">返回博客首页</a></div>
+            <div class="prevNext">
+
+			上一篇 <a href="/2033581/1286592" class="operlink" title="CentOS6.4+Nginx1.4.2+MySQL5.6.13+PHP5.5.3+xCache3.03(最新LNMP编译安装过程)">CentOS6.4+Nginx1.4.2+MySQL5.6.13+PHP5.5.3+x..</a>
+
+
+			下一篇 <a href="/2033581/1289806" class="operlink" title="Memcache 详解">Memcache 详解</a>
+
+
+            </div>
+
+            </div>
+
+	  </div><!--showBottom end-->
+      </div><!--modCon-->
+    <span class="modBot"></span>
+    </div><!--artShow end-->
+    <span class="blank"></span>
+	
+	<div class="relatedArt box">
+<a href="http://51edu.blog.51cto.com/8899635/1760875" target="_blank"><img src="http://s5.51cto.com/wyfs02/M01/7E/F1/wKiom1cNsc7DeCeyAAEgZaf_wO4721.jpg" /></a>
+</div>
+
+<div class="relatedArt box">
+    <div class="title" name="zhuanti" id="zhuanti"><h2>职位推荐</h2></div>
+    <div class="modCon">
+<ul>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-2551.html" target="_blank">Docker系统工程师（高级讲师）</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-1984.html" target="_blank">运维工程师-晚班-上海</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-616.html" target="_blank">信息安全专员</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-2379.html" target="_blank">网络工程师</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-2652.html" target="_blank">运维工程师</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-982.html" target="_blank">广告设计</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-1037.html" target="_blank">系统工程师 Ops</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-1213.html" target="_blank">高级运维工程师</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-1120.html" target="_blank">运维工程师</a></li>
+
+<li><a href="http://gaozhao.51cto.com/job/view/id-2691.html" target="_blank">Helpdesk 工程师</a></li>
+
+
+</ul>
+
+<span class="blank6"></span>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div><!--相关文章 end-->
+
+
+<div class="artComm box">
+    <div class="title"><a name="replay"></a><h2>文章评论</h2></div>
+    <div class="modCon"  id="artcomment">
+		<div> <a href='' onclick='getcomment(1288553,1);return false'>&nbsp;<<&nbsp;</a>&nbsp;&nbsp;<b>1</b>&nbsp; <a href='' onclick='getcomment(1288553,2);return false'>&nbsp;2&nbsp;</a> <a href='' onclick='getcomment(1288553,3);return false'>&nbsp;3&nbsp;</a> <input type='text' size='2' id='com_top' name='com_top' style='height: 16px; border:1px solid #E5E5E5;' onkeydown="javascript: if(event.keyCode==13) getcomment(1288553,this.value);"> <a href='' onclick='getcomment(1288553,3);return false'>&nbsp;>>&nbsp;</a>&nbsp;&nbsp;页数 ( 1/3 ) &nbsp;</div><a name='585801'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid0'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[1楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://mageedu.blog.51cto.com' class='operlink' ref='nofollow'><b>马哥教育</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='马哥教育' parentid='585801' >回复</a></label></div></div><div align=right>2013-09-10 08:10:25</div><div class='commentcontent'>好一篇大作，没少下功夫总结，赞！</div></div><br><a name='585834'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid1'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[2楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://linuxg.blog.51cto.com' class='operlink' ref='nofollow'><b>xingliguang</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='xingliguang' parentid='585834' >回复</a></label></div></div><div align=right>2013-09-10 10:46:11</div><div class='commentcontent'>写的太精彩了，赞一个！</div></div><br><a name='585874'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid2'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[3楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://litaotao.blog.51cto.com' class='operlink' ref='nofollow'><b>jie783213507</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='jie783213507' parentid='585874' >回复</a></label></div></div><div align=right>2013-09-10 12:34:03</div><div class='commentcontent'>写的很好，学习一下</div></div><br><a name='585880'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid3'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[4楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='585880' >回复</a></label></div></div><div align=right>2013-09-10 12:54:56</div><div class='commentcontent'>回复 马哥教育:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='585801' >[1楼]</a><br><br>谢谢马哥，是马哥教的好，嘿嘿！</div></div><br><a name='585881'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid4'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[5楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='585881' >回复</a></label></div></div><div align=right>2013-09-10 12:55:14</div><div class='commentcontent'>回复 xingliguang:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='585834' >[2楼]</a><br><br>谢谢，共同进步！</div></div><br><a name='585882'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid5'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[6楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='585882' >回复</a></label></div></div><div align=right>2013-09-10 12:55:47</div><div class='commentcontent'>回复 jie783213507:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='585874' >[3楼]</a><br><br>谢谢，共同进步。</div></div><br><a name='600558'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid6'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[7楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://6352209.blog.51cto.com' class='operlink' ref='nofollow'><b>whxiyi100829</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='whxiyi100829' parentid='600558' >回复</a></label></div></div><div align=right>2014-01-03 19:08:59</div><div class='commentcontent'>啥也不说了，一个字，赞！</div></div><br><a name='600561'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid7'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[8楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='600561' >回复</a></label></div></div><div align=right>2014-01-03 19:40:16</div><div class='commentcontent'>回复 whxiyi100829:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='600558' >[7楼]</a><br><br>谢博友，共同进步！</div></div><br><a name='600657'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid8'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[9楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://1012398.blog.51cto.com' class='operlink' ref='nofollow'><b>huzs1622</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='huzs1622' parentid='600657' >回复</a></label></div></div><div align=right>2014-01-05 11:35:21</div><div class='commentcontent'>写的真的很不错，很详细，没有废话。</div></div><br><a name='600660'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid9'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[10楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='600660' >回复</a></label></div></div><div align=right>2014-01-05 12:15:32</div><div class='commentcontent'>回复 huzs1622:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='600657' >[9楼]</a><br><br>谢博友，共同进步！</div></div><br><a name='602879'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid10'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[11楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://2828723.blog.51cto.com' class='operlink' ref='nofollow'><b>hero88</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='hero88' parentid='602879' >回复</a></label></div></div><div align=right>2014-02-03 00:08:52</div><div class='commentcontent'>赞 ！！！</div></div><br><a name='605931'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid11'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[12楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://467754239.blog.51cto.com' class='operlink' ref='nofollow'><b>zys467754239</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='zys467754239' parentid='605931' >回复</a></label></div></div><div align=right>2014-03-07 22:53:44</div><div class='commentcontent'>照着你们去学习，真的很好！谢谢有你们的文章。 学习</div></div><br><a name='606890'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid12'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[13楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://1642546.blog.51cto.com' class='operlink' ref='nofollow'><b>qingshanli1988</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='qingshanli1988' parentid='606890' >回复</a></label></div></div><div align=right>2014-03-17 16:14:43</div><div class='commentcontent'>很厉害，大师风格</div></div><br><a name='610419'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid13'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[14楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='610419' >回复</a></label></div></div><div align=right>2014-04-19 09:37:02</div><div class='commentcontent'>回复 qingshanli1988:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='606890' >[13楼]</a><br><br>谢谢，博友夸奖了，共同进步！</div></div><br><a name='610428'></a><div class='itcomment' style='table-layout: fixed;word-wrap: break-word' id='itcommentid14'><div><div style='width:100%;border-bottom:1px solid #A0A0A0;height:20px'><label style='float:left'>[15楼]<a href="/">楼主</a>&nbsp;&nbsp;&nbsp;&nbsp;<img src='http://img1.51cto.com/image/skin/reply.gif'>&nbsp;&nbsp;<a target='_blank' href='http://freeloda.blog.51cto.com' class='operlink' ref='nofollow'><b>陈明乾</b></a></label><label style='float:right'>&nbsp;<a href='#' class='repost operlink' user_name='陈明乾' parentid='610428' >回复</a></label></div></div><div align=right>2014-04-19 09:45:52</div><div class='commentcontent'>回复 hero88:<a href='#' class='anchor_page' title='加载中.....' style='cursor:pointer' tid='1288553' parentid='602879' >[11楼]</a><br><br>谢谢，共同进步嘛~！</div></div><br><div> <a href='' onclick='getcomment(1288553,1);return false'>&nbsp;<<&nbsp;</a>&nbsp;&nbsp;<b>1</b>&nbsp; <a href='' onclick='getcomment(1288553,2);return false'>&nbsp;2&nbsp;</a> <a href='' onclick='getcomment(1288553,3);return false'>&nbsp;3&nbsp;</a> <input type='text' size='2' style='height: 16px; border:1px solid #E5E5E5;' onkeydown="javascript: if(event.keyCode==13) getcomment(1288553,this.value);"> <a href='' onclick='getcomment(1288553,3);return false'>&nbsp;>>&nbsp;</a>&nbsp;&nbsp;页数 ( 1/3 ) &nbsp;</div>
+    </div><!--modCon-->
+        <span class="modBot"></span>
+</div><!--commBox end-->
+<a href="" id="com_top_top"></a>
+<!--<div class="artComm box" style="750px;height:90px;">
+<script type="text/javascript">
+    var cpro_id = "u2386995";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>--><form action='/comment.php?' method='post' name='form1' id='form1' onSubmit='return commentSubmit(this,"");'>
+<span class="blank1"></span>
+<div class="box writeComm" style="min-height:30px;">
+<a name='comment'></a>
+<input type='hidden' name='action' value='comment'>
+<input  id='commenttid' type='hidden' name='tid' value='1288553'>
+<input type="hidden" name="com_count_ajax" id="com_count_ajax" value="4" />
+
+ <div class="title">
+	<h2 class="fl">发表评论&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+	<span class="fl" id="messageTj"></span>
+	<style type="text/css">
+		a.mred:link{ color:#ff0000; text-decoration:underline;}
+		a.mred:visited{color:#ff0000;}
+		a.mred:hover{color:#ff0000;}
+		a.mred:active{color:#ff0000;}
+	</style>
+</div>
+<div style="display:none" rel='51CTO电子期刊改版意见大征集，提你所需，建你所想！' id="ggBox">
+<script type='text/javascript'><!--//<![CDATA[
+   var m3_u = (location.protocol=='https:'?'https://gg.51cto.com/www/delivery/ajs.php':'http://gg2.51cto.com/www/delivery/ajs.php');
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=460");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+   document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+   if (document.context) document.write ("&context=" + escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script>
+</div>
+<script>
+document.getElementById("messageTj").innerHTML = document.getElementById("ggBox").innerHTML;
+</script>
+ <div class="modCon">
+
+	<p style="margin:10px 10px 15px;">
+  <span>温馨提示：博主拒绝匿名评论，请登录后再发表评论</span>
+  <span><a href='http://home.51cto.com/index.php?reback=http%253A%252F%252Ffreeloda.blog.51cto.com%252F2033581%252F1288553' style='text-decoration:underline' >登录</a>&nbsp;&nbsp;<a href='http://ucenter.51cto.com/reg_01.php?reback=http://blog.51cto.com' target='_blank' style='text-decoration: underline;'>快速注册</a></span>
+	</p>
+
+</div><!--modCon-->
+<span class="modBot"></span>
+</div>
+</form>
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2283d46608159c3b39fc9f1178809c21' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57622524-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</div>
+<iframe id=iframe1 name=iframe1 width=0 height=0></iframe>
+<!--发表评论 end-->
+</div>
+</div>
+<div id="f_close_box" style="width:150px; height:300px; position:fixed; top:42%;left:0; z-index:100; _position:absolute; _margin-top: 0; _top:expression(documentElement.scrollTop+(documentElement.clientHeight-this.offsetHeight)/2+50);">
+
+	<img src="http://s3.51cto.com/wyfs02/M02/6C/56/wKioL1VHFCjRwiyNAAB-jIackwQ674.jpg" border="0" usemap="#Map1" />
+    <map name="Map1" id="Map1">
+      <area shape="rect" coords="124,7,143,25" href="javascript:void(0);" onclick="document.getElementById('f_close_box').style.display='none';" />
+    </map>
+    
+</div>
+<script language="javascript">
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById("secunum").src="/seccode.php?rnum="+randval;
+	}
+	function displaysecunum()
+	{
+		var displaystr = document.getElementById("secunum").style.display;
+		if(displaystr == 'none')
+		{
+			refimg();
+			document.getElementById("clickfont").style.display = 'none';
+			document.getElementById("secunum").style.display = 'inline';
+			document.getElementById("spanfont").style.display = 'inline';
+		}
+	}
+
+	function showMsn(){
+		document.getElementById("c02").style.display = "none";
+		document.getElementById("c01").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+	function showBBS(){
+		document.getElementById("c01").style.display = "none";
+		document.getElementById("c02").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+
+	//资源页面，分享按钮
+	function copyShareUrl(title){
+
+		if (window.clipboardData){
+
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				copy = "推荐：" + title + "http://freeloda.blog.51cto.com/2033581/1288553";
+				var alertText = "复制成功，你可以粘贴到MSN或QQ中发给好友。";
+			}
+			else
+			{
+				copy = "[url=" + "http://freeloda.blog.51cto.com/2033581/1288553" + "][u]" + title + "[/u][/url]";
+				var alertText = "复制成功，你可以粘贴到论坛分享给坛友。";
+			}
+			window.clipboardData.clearData();
+			window.clipboardData.setData("Text", copy);
+			alert(alertText);
+		}
+		else if (window.netscape){
+			alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。");
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				document.getElementById("shareTextQM").value = "推荐：" + title + "http://freeloda.blog.51cto.com/2033581/1288553";
+				document.getElementById("shareTextQM").select();
+			}
+			else
+			{
+				document.getElementById("shareTextBBS").value = "[url=" + "http://freeloda.blog.51cto.com/2033581/1288553" + "][u]" + title + "[/u][/url]";
+                document.getElementById("shareTextBBS").select();
+			}
+		}
+		return false;
+	}
+	function select_login(){
+		document.getElementById('fixed').style.display='';
+	}
+	function commentcheck()
+	{
+		if(document.form1.content.value == "")
+		{
+			alert("评论内容为空!");
+			document.form1.content.focus();
+			return false;
+		}
+	}
+	function changename(){
+
+	var memberid=0;
+	memberid="";
+
+	if(document.getElementById('commentniming').checked){
+		document.getElementById('commentusername').disabled=false;
+		document.getElementById('commentusername').value='';
+		document.getElementById("indexhidden").style.display="none";
+		document.getElementById("commentindex").value='';
+		document.getElementById("commentyanzheng").style.display="";
+	}else{
+		document.getElementById('commentusername').disabled=true;
+		document.getElementById('commentusername').value="";
+		document.getElementById("indexhidden").style.display="";
+		document.getElementById("commentindex").value="http://.blog.51cto.com";
+		if(memberid>8)
+		{
+			document.getElementById("commentyanzheng").style.display="none";
+		}
+	}
+	}
+	function openFavoulist()
+	{
+		window.open ('http://blog.51cto.com/mod/favourlist.php?tid=1288553','newwindow','height=300,width=500,top=400,left=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no,z-look=yes');
+	}
+
+	var e_zti = document.getElementById('zti');//有专题锚点
+	var maodian = window.location.href;//锚点
+	if (e_zti) {
+		//e_zti.href= (/[#]+/.test(maodian)) ? maodian : maodian + "#zhuanti";
+	}
+</script>
+<script src="http://blog.51cto.com/js/jquery-1.7.1.min.js"></script>
+<script src="http://blog.51cto.com/js/jquery.cookie.js"></script>
+<script src="http://blog.51cto.com/js/jquery.top.js"></script>
+<link href="http://blog.51cto.com/css/blog_top/blog_top.css" rel="stylesheet" type="text/css" />
+<!-- <script src="http://blog.51cto.com/js/blog_top_list.php" type="text/javascript" language="javascript"></script> -->
+<script type="text/javascript" src="/js/edu_search.js"></script>
+<div id="message" class="blogpop" style="background-color:#FFFFFF;z-index:100;width:389px;height:196px;position:absolute; display:none; bottom:0; top:'document.documentElement.scrollTop + document.documentElement.clientHeight-196+'px;right:0; overflow:hidden;"><iframe style="width:800px;height:536px;top:0px;left:0px;position:absolute;visibility:inherit;z-index:-1;" frameborder=0 ></iframe>
+<div style="height:36px;background:url(http://blog.51cto.com/image/blog_top/popbgx.jpg) repeat-x; position:relative;width:387px;border-right-color:#2668B7;border-right-width:2px;border-right-style:solid 2px #2668B7;"><span style="right:10px;padding:12px 0 0;position:absolute;top:0"><span style="margin-right:80px;color:#828282;width:190px;padding:10px 0 0 10px;font-size:14px">每日博报 精彩不止一点</span><img title="关闭" id="message_close" src="http://blog.51cto.com/image/blog_top/close.jpg" alt="关闭" /></span><div style="width:387px;height:36px;left:0;overflow:hidden; text-indent:-999em;background:url(http://blog.51cto.com/image/blog_top/hdtit.jpg) no-repeat;border-right:solid 2px #2668B7;"><a style="display: block; height: 36px;width:138px;" target="_blank" href="http://blog.51cto.com"></a>
+</div>
+<div style="clear:both;"></div>
+</div>
+	<div id="message_content" style="border-top:none;font-family:Microsoft YaHei;font-size:12px;width:389px;height:160pxpx;text-align:left;overflow:hidden;">
+	<script type='text/javascript'><!--//<![CDATA[
+	   var m3_u = (location.protocol=='https:'?'https://gg.51cto.com/www/delivery/ajs.php':'http://gg3.51cto.com/www/delivery/ajs.php');
+	   var m3_r = Math.floor(Math.random()*99999999999);
+	   if (!document.MAX_used) document.MAX_used = ',';
+	   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+	   document.write ("?zoneid=454");
+	   document.write ('&amp;cb=' + m3_r);
+	   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+	   document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+	   document.write ("&amp;loc=" + escape(window.location));
+	   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+	   if (document.context) document.write ("&context=" + escape(document.context));
+	   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+	   document.write ("'><\/scr"+"ipt>");
+	//]]>--></script>
+	</div>
+</div>
+<style>
+.backToTop {
+    display: none;
+	WIDTH: 45px;
+	height:45px;
+	BOTTOM: 20px;
+     position: fixed;
+    _position: absolute;
+    right: 140px;
+    bottom: 10px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+	text-indent:-9999px;
+}
+.tops { background:url(/images/tops.jpg) no-repeat center center; }
+</style>
+<script>
+(function() {
+	  $('#showMessagerDim').show();
+	   var _html = $("#addTop").html();
+	  if(get_cookie('blog_top')==''){
+//		 show_pop();
+	     jQuery.messager.showblogtop('', _html);
+	     $("#message").find("#adTop").show();
+	     var date=new Date();
+	     var test = date.getTime();
+	     document.cookie="blog_top=yes;domain=.blog.51cto.com;expires="+date.toGMTString()+";path=/;";
+	     }
+	    $("#showMessagerDim").click(function(){
+	    	jQuery.messager.showblogtop('', _html);
+			$("#message").find("#adTop").show();
+			//removeIframe();
+		});
+		
+		function get_cookie(Name) {
+		    var search = Name + "=";
+		    var returnvalue = "";
+		    if (document.cookie.length > 0) {
+		        offset = document.cookie.indexOf(search);
+		        if (offset != -1) {
+		            offset += search.length;
+
+		            end1 = document.cookie.indexOf(";", offset);
+
+		            if (end1 == -1)
+		            end1 = document.cookie.length;
+		            returnvalue=unescape(document.cookie.substring(offset, end1));
+		        }
+		    }
+		    return returnvalue;
+		}
+	})();
+
+</script>
+<script type="text/javascript">
+(function() {
+    var backToTopTxt = "返回顶部", backToTopEle = $('<div class="backToTop tops"></div>').appendTo($("body"))
+        .text(backToTopTxt).attr("title", backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 520);
+    }), backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? backToTopEle.show(): backToTopEle.hide();    
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            backToTopEle.css("top", st + winh - 60);    
+        }
+    };
+    $(window).bind("scroll", backToTopFun);
+    $(function() { backToTopFun(); });
+})();
+</script>
+
+
+
+
+</div>
+</div>
+<div class="clear"></div>
+<!-- <script>
+jQuery(function(){
+	var html= "<div id=\"sogou_se_tgbar\" style=\"text-align:center;margin:0px auto 2px auto;clear:both;background:url(http://home.51cto.com/public/images/notice/sogou_se_tgbar_bg_final1.gif) repeat-x;width:950px;color:#000;font-size:13px;height:36px;z-index:21474836471\"><div style=\"float:left;cursor:pointer;width:910px;text-align:center;border-left:solid #efbf00 1px;height:32px; line-height:32px;txt-align:center;\"><span style=\"\">	<a href=\"http://51ctoblog.blog.51cto.com/26414/1093282\">【新年祝福征集】51CTO社区年底嘉年华活动正在征集博主祝福语，祝福以红包的形式随机的赠送给访问51CTO的网友 点此送祝福>></a></span></div><div onclick=\"document.getElementById('sogou_se_tgbar').style.display = 'none';\" style=\"float:right;width:20px;cursor:pointer;height:28px;padding:4px 8px 0px 8px;border-right:solid #efbf00 1px\"><img style=\"border:none;margin:4px 0px 0px 0px;\" src=\"http://home.51cto.com/public/images/notice/sogou_se_tgbar_close_final1.gif\"></div></div>"
+	jQuery('body').prepend(html);
+})
+</script> -->
+</div>
+<div id="footer">
+  <div id="innerFooter">
+	<center>
+		<small>
+			Copyright By 51CTO.COM 版权所有<br><br>
+			<a href="http://blog.51cto.com" target="_blank"><img src="http://img1.51cto.com/image/skin/34/copyright.jpg"></a>
+	  </small>
+	</center>
+  </div>
+</div>
+<script src="http://home.51cto.com/index.php?s=/Index/getLoginStatus/reback/http%253A%252F%252Ffreeloda.blog.51cto.com%252F2033581%252F1288553" charset='utf-8'></script>
+<div style="display:none">
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+<div style="display:none">
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F2283d46608159c3b39fc9f1178809c21' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57622524-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</div>
+<iframe frameborder="0" scrolling="no" width="0" height="0" src="http://log.51cto.com/pageview.php?frompos=blog_art"></iframe>
+</div>
+<div style="display:none;"><script src="http://s24.cnzz.com/stat.php?id=4274540&web_id=4274540&show=pic" language="JavaScript"></script><div>
+<script src="http://blog.51cto.com/js/poptop.js"></script>
+
+</body>
+</html>
