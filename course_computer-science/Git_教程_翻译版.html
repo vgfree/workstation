@@ -1,0 +1,1307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Git教程【译】 - zhangjing230 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=8F6jO9aWZhOryqKsIFGUkSbXpyPVKDwgWwvpie3eJis1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/SimpleClear/bundle-SimpleClear.css?v=EVOKy_9d-0OzsDt7Iaw0OHSiRqKJoQVRFQeK_xCGZ6c1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/zhangjing230/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/zhangjing230/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/zhangjing230/wlwmanifest.xml"/>
+<script src="http://common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'zhangjing230', cb_enable_mathjax=false;</script>
+<script src="/bundles/blog-common.js?v=ceHMEpeJXcR_f7TCJnXeZQRG1UsC0_cpwDJRs_oVInY1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="main">
+<div id="header">
+<h1><a id="Header1_HeaderTitle" href="http://www.cnblogs.com/zhangjing230/">技术博客</a></h1>
+<p id="tagline"></p></div>
+
+<div id="post_detail">
+<div class="post">
+    <h2 class="postTitle"><a id="cb_post_title_url" href="http://www.cnblogs.com/zhangjing230/archive/2012/05/09/2489745.html">Git教程【译】</a></h2>
+    <div class="postText"><div id="cnblogs_post_body"><p>&nbsp;</p>
+<p>原文出处：<a href="http://www.vogella.com/articles/Git/article.html">http://www.vogella.com/articles/Git/article.html</a></p>
+<p>翻译说明：个人出于兴趣爱好翻译这篇Git教程（google 搜索git tutorial排名第一的文章）。学习git最初的原因是为了了解GitHub，译者水平有限，有不足之处欢迎指正。希望这边译文对你能有帮助。转载请链接出处。</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><span style="font-size: 14pt;"><strong>Git教程</strong></span></p>
+<p class="title">本教程通过命令行来阐述分布版本控制系统Git的使用。演示系统选取的是Linux（Ubuntu），但是在其他系统上也能功能，例如Windows系统。</p>
+<p><strong>内容索引</strong></p>
+<dl><dt><span class="section"><a href="#git">1. Git </a></span></dt><dd><dl><dt><span class="section"><a href="#gitdefintion">1.1. Git是何方神圣?</a></span></dt><dt><span class="section"><a href="#gitterminology">1.2.&nbsp;重要的术语 </a></span></dt><dt><span class="section"><a href="#git_stagingindex">1.3.&nbsp;索引（stage）</a></span></dt></dl></dd><dt><span class="section"><a href="#installation">2. 安装</a></span></dt><dt><span class="section"><a href="#setup">3. 配置</a></span></dt><dd><dl><dt><span class="section"><a href="#setup_user">3.1. 用户信息</a></span></dt><dt><span class="section"><a href="#setup_highlighting">3.2. 高亮显示</a></span></dt><dt><span class="section"><a href="#setup_ignore">3.3. 忽略特定的文件</a></span></dt><dt><span class="section"><a href="#setup_gitkeep">3.4. 使用.gitkeep来追踪空的文件夹</a></span></dt></dl></dd><dt><span class="section"><a href="#firstgit">4. 开始操作Git</a></span></dt><dd><dl><dt><span class="section"><a href="#firstgit_content">4.1. 创建内容</a></span></dt><dt><span class="section"><a href="#firstgit_repo">4.2. 创建仓库、添加文件和提交更改</a></span></dt><dt><span class="section"><a href="#firstgit_changes">4.3. diff命令和commit修改</a></span></dt><dt><span class="section"><a href="#gitcommands_status">4.4. Status, Diff和Commit Log</a></span></dt><dt><span class="section"><a href="#firstgit_amend">4.5.&nbsp;更正提交的信息 - git amend </a></span></dt><dt><span class="section"><a href="#firstgit_deletefile">4.6. 删除文件</a></span></dt></dl></dd><dt><span class="section"><a href="#remotes">5.&nbsp;远端仓库（remote repositories） </a></span></dt><dd><dl><dt><span class="section"><a href="#remotes_setup">5.1. 设置一个远端的Git仓库 </a></span></dt><dt><span class="section"><a href="#remotes_push">5.2. 推送修改到其他的仓库 </a></span></dt><dt><span class="section"><a href="#remotes_remoteadd">5.3. 添加远端仓库 </a></span></dt><dt><span class="section"><a href="#remotes_showremote">5.4. 显示已有的远端仓库</a></span></dt><dt><span class="section"><a href="#remotes_clone">5.5. 克隆仓库 </a></span></dt><dt><span class="section"><a href="#remotes_pull">5.6. 拉取（Pull）修改</a></span></dt></dl></dd><dt><span class="section"><a href="#undochanges">6. 还原更改 </a></span></dt><dt><span class="section"><a href="#tagging">7. 标记</a></span></dt><dt><span class="section"><a href="#gitbranchmerge">8. 分支和合并</a></span></dt><dd><dl><dt><span class="section"><a href="#gitbranch">8.1. 分支</a></span></dt><dt><span class="section"><a href="#gitmerge">8.2. 合并</a></span></dt><dt><span class="section"><a href="#gitdeletebrach">8.3. 删除分支</a></span></dt><dt><span class="section"><a href="#gitpushbranch">8.4. 推送（Push）一个分支到远端仓库</a></span></dt></dl></dd><dt><span class="section"><a href="#mergeconflict">9. 解决合并冲突</a></span></dt><dt><span class="section"><a href="#rebase">10. 变基（Rebase）</a>&nbsp;</span></dt><dd><dl><dt><span class="section"><a href="#rebase_commits">10.1. 在同一分支中应用Rebase Commit</a></span></dt><dt><span class="section"><a href="#rebase_branches">10.2. Rebasing 多个分支</a></span></dt><dt><span class="section"><a href="#rebase_bestpractise">10.3. Rebase最佳实践</a></span></dt></dl></dd><dt><span class="section"><a href="#gitpatch">11. 创建和应用补丁</a></span></dt><dt><span class="section"><a href="#alias">12. 定义同名命令 </a></span></dt><dt><span class="section"><a href="#untrack">13. 放弃跟踪文件 </a></span></dt><dt><span class="section"><a href="#useful">14. 其他有用的命令</a></span></dt><dt><span class="section"><a href="#gitserver">15. 安装Git服务</a></span></dt><dt><span class="section"><a href="#remote">16. 在线的远端仓库</a></span></dt><dd><dl><dt><span class="section"><a href="#remote_clone">16.1. 克隆远端仓库</a></span></dt><dt><span class="section"><a href="#remote_add">16.2. 添加远端仓库</a></span></dt><dt><span class="section"><a href="#remote_proxy">16.3. 通过http和代理服务器进行远端操作</a></span></dt></dl></dd><dt><span class="section"><a href="#hosting">17. Git服务提供商</a></span></dt><dd><dl><dt><span class="section"><a href="#hosting_github">17.1. GitHub</a></span></dt><dt><span class="section"><a href="#hosting_bickbucket">17.2. Bitbucket</a></span></dt></dl></dd><dt><span class="section"><a href="#uis">18. Git的图形接口</a></span></dt><dt><span class="section"><a href="#kindle">19. Kindle版本教程</a></span></dt><dt><span class="section"><a href="#questions">20. 问题与讨论</a></span></dt><dt><span class="section"><a href="#resources">21. 链接和文章</a></span></dt><dt></dt><dt></dt></dl>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="git"></a>1. Git</h2>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitdefintion"></a>1.1. Git是何方神圣?</h3>
+</div>
+</div>
+</div>
+<p>Git是用C语言开发的分布版本控制系统。版本控制系统可以保留一个文件集合的历史记录，并能回滚文件集合到另一个状态（历史记录状态）。另一个状态可以是不同的文件，也可以是不同的文件内容。举个例子，你可以将文件集合转换到两天之前的状态，或者你可以在生产代码和实验性质的代码之间进行切换。文件集合往往被称作是&ldquo;源代码&rdquo;。在一个分布版本控制系统中，每个人都有一份完整的源代码（包括源代码所有的历史记录信息），而且可以对这个本地的数据进行操作。分布版本控制系统不需要一个集中式的代码仓库。</p>
+<p>当你对本地的源代码进行了修改，你可以标注他们跟下一个版本相关（将他们加到index中），然后提交到仓库中来（commit）。Git保存了所有的版本信息，所以你可以转换你的源代码到任何的历史版本。你可以对本地的仓库进行代码的提交，然后与其他的仓库进行同步。你可以使用Git来进行仓库的克隆（clone）操作，完整的复制一个已有的仓库。仓库的所有者可以通过push操作（推送变更到别处的仓库）或者Pull操作（从别处的仓库拉取变更）来同步变更。</p>
+<p>Git支持分支功能（branch）。如果你想开发一个新的产品功能，你可以建立一个分支，对这个分支的进行修改，而不至于会影响到主支上的代码。</p>
+<p>Git提供了命令行工具；这个教程会使用命令行。你也可以找到图形工具，譬如与Eclipse配套的EGit工具，但是这些都不会在这个教程中进行描述。</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitterminology"></a>1.2. 重要的术语</h3>
+</div>
+</div>
+</div>
+<div class="table"><a name="d12682e93"></a>
+<p class="title"><strong>表&nbsp;1. Git 术语</strong></p>
+<div class="table-contents">
+<table summary="Git Terminology" border="1"><colgroup> <col class="c1" align="left" /> <col class="c2" align="left" /></colgroup>
+<thead>
+<tr><th align="left">术语</th><th align="left">定义</th></tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">
+<p>仓库（Repository）</p>
+</td>
+<td align="left">一个仓库包括了所有的版本信息、所有的分支和标记信息。在Git中仓库的每份拷贝都是完整的。仓库让你可以从中取得你的工作副本。</td>
+</tr>
+<tr>
+<td align="left">分支（Branches）</td>
+<td align="left">一个分支意味着一个独立的、拥有自己历史信息的代码线（code line）。你可以从已有的代码中生成一个新的分支，这个分支与剩余的分支完全独立。默认的分支往往是叫master。用户可以选择一个分支，选择一个分支叫做checkout.</td>
+</tr>
+<tr>
+<td align="left">
+<p>标记（Tags）</p>
+</td>
+<td align="left">一个标记指的是某个分支某个特定时间点的状态。通过标记，可以很方便的切换到标记时的状态，例如2009年1月25号在testing分支上的代码状态</td>
+</tr>
+<tr>
+<td align="left">
+<p>提交（Commit）</p>
+</td>
+<td align="left">提交代码后，仓库会创建一个新的版本。这个版本可以在后续被重新获得。每次提交都包括作者和提交者，作者和提交者可以是不同的人</td>
+</tr>
+<tr>
+<td align="left">URL</td>
+<td align="left">URl用来标识一个仓库的位置</td>
+</tr>
+<tr>
+<td align="left">
+<p>修订（Revision）</p>
+</td>
+<td align="left">用来表示代码的一个版本状态。Git通过用SHA1 hash算法表示的id来标识不同的版本。每一个 SHA1 id都是160位长，16进制标识的字符串.。最新的版本可以通过HEAD来获取。之前的版本可以通过"HEAD~1"来获取，以此类推。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="git_stagingindex"></a>1.3. 索引</h3>
+</div>
+</div>
+</div>
+<p>Git 需要将代码的变化显示的与下一次提交进行关联。举个例子，如果你对一个文件继续了修改，然后想将这些修改提交到下一次提交中，你必须将这个文件提交到索引中，通过git add file命令。这样索引可以保存所有变化的快照。</p>
+<p>新增的文件总是要显示的添加到索引中来。对于那些之前已经提交过的文件，可以在commit命令中使用-a 选项达到提交到索引的目的。</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="installation"></a>2. 安装</h2>
+</div>
+</div>
+</div>
+<p>在Ubuntu上，你可以通过apt来安装git命令行工具</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">sudo</span> apt-get <span style="color: #0000ff;">install</span> git-core</pre>
+</div>
+<p>对于其他的Linux版本，请查看相关的软件包安装工具使用方法</p>
+<p>msysgit项目提供了Windows版本的Git，地址是<a href="http://code.google.com/p/msysgit/">http://code.google.com/p/msysgit/</a></p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="setup"></a>3. 配置</h2>
+</div>
+</div>
+</div>
+<p>你可以在.gitconfig文件中防止git的全局配置。文件位于用户的home目录。 上述已经提到每次提交都会保存作者和提交者的信息，这些信息都可以保存在全局配置中。</p>
+<p>后续将会介绍配置用户信息、高亮显示和忽略特定的文件</p>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="setup_user"></a>3.1.&nbsp;用户信息</h3>
+</div>
+</div>
+</div>
+<p>通过如下命令来配置用户名和Email&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Configure the user <span style="color: #0000ff;">which</span><span style="color: #000000;"> will be used by git
+# Of course you should use your name
+git config </span>--global user.name <span style="color: #800000;">"</span><span style="color: #800000;">Example Surname</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Same </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> the email address
+git config </span>--global user.email <span style="color: #800000;">"</span><span style="color: #800000;">your.email@gmail.com</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Set default so that all changes are always pushed to the repository
+git config </span>--global push.default <span style="color: #800000;">"</span><span style="color: #800000;">matching</span><span style="color: #800000;">"</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>获取Git配置信息，执行以下命令：</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>git config --list</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="setup_highlighting"></a>3.2.&nbsp;高亮显示</h3>
+</div>
+</div>
+</div>
+<p>以下命令会为终端配置高亮</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>git config --<span style="color: #000000;">global color.status auto
+git config </span>--global color.branch auto</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="setup_ignore"></a>3.3. 忽略特定的文件</h3>
+</div>
+</div>
+</div>
+<p>可以配置Git忽略特定的文件或者是文件夹。这些配置都放在.gitignore文件中。这个文件可以存在于不同的文件夹中，可以包含不同的文件匹配模式。为了让Git忽略bin文件夹，在主目录下放置.gitignore文件，其中内容为bin。&nbsp;</p>
+<p>&nbsp;同时Git也提供了全局的配置，<code class="code">core.excludesfile<span style="font-family: Verdana;">。</span></code></p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="setup_gitkeep"></a>3.4. 使用.gitkeep来追踪空的文件夹</h3>
+</div>
+</div>
+</div>
+<p>Git会忽略空的文件夹。如果你想版本控制包括空文件夹，根据惯例会在空文件夹下放置.gitkeep文件。其实对文件名没有特定的要求。一旦一个空文件夹下有文件后，这个文件夹就会在版本控制范围内。</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="firstgit"></a>4.&nbsp;开始操作Git</h2>
+</div>
+</div>
+</div>
+<p>后续将通过一个典型的Git工作流来学习。在这个过程中，你会创建一些文件、创建一个本地的Git仓库、提交你的文件到这个仓库中。这之后，你会克隆一个仓库、在仓库之间通过pull和push操作来交换代码的修改。注释（以#开头）解释了命令的具体含义</p>
+<p>让我们打开命令行开始操作吧</p>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="firstgit_content"></a>4.1. 创建内容</h3>
+</div>
+</div>
+</div>
+<p>下面创建一些文件，它们会被放到版本控制之中</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">#Switch to home
+cd </span>~/<span style="color: #000000;">
+# Create a directory
+</span><span style="color: #0000ff;">mkdir</span> ~/<span style="color: #000000;">repo01
+# Switch into it
+cd repo01
+# Create a new directory
+</span><span style="color: #0000ff;">mkdir</span><span style="color: #000000;"> datafiles
+# Create a few files
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> test01
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> test02
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> test03
+</span><span style="color: #0000ff;">touch</span> datafiles/<span style="color: #000000;">data.txt
+# Put a little text into the first </span><span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">ls</span> &gt;test01</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="firstgit_repo"></a>4.2. 创建仓库、添加文件和提交更改</h3>
+</div>
+</div>
+</div>
+<p>每个Git仓库都是放置在.git文件夹下.这个目录包含了仓库的所有历史记录，.git/config文件包含了仓库的本地配置。</p>
+<p>以下将会创建一个Git仓库，添加文件倒仓库的索引中，提交更改。</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Initialize the local Git repository
+git init
+# Add all (files and directories) to the Git repository
+git add .
+# Make a commit of your </span><span style="color: #0000ff;">file</span><span style="color: #000000;"> to the local repository
+git commit </span>-m <span style="color: #800000;">"</span><span style="color: #800000;">Initial commit</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Show the log </span><span style="color: #0000ff;">file</span><span style="color: #000000;">
+git log</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="firstgit_changes"></a>4.3. diff命令与commit更改</h3>
+</div>
+</div>
+</div>
+<p>通过git diff命令，用户可以查看更改。通过改变一个文件的内容，看看git diff命令输出什么，然后提交这个更改到仓库中</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Make some changes to the <span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">This is a change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">and this is another change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test02
+
+# Check the changes via the </span><span style="color: #0000ff;">diff</span><span style="color: #000000;"> command 
+git </span><span style="color: #0000ff;">diff</span><span style="color: #000000;">
+
+# Commit the changes, </span>-a will commit changes <span style="color: #0000ff;">for</span><span style="color: #000000;"> modified files
+# but will not add automatically new files
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">These are new changes</span><span style="color: #800000;">"</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitcommands_status"></a>4.4. Status, Diff&nbsp;和 Commit Log</h3>
+</div>
+</div>
+</div>
+<p>下面会向你展示仓库现有的状态以及过往的提交历史</p>
+<div class="cnblogs_code">
+<pre># Make some changes <span style="color: #0000ff;">in</span> the <span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">This is a new change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">and this is another new change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test02
+
+
+# See the current status of your repository 
+# (</span><span style="color: #0000ff;">which</span> files are changed / new /<span style="color: #000000;"> deleted)
+git status
+# Show the differences between the uncommitted files 
+# and the </span><span style="color: #0000ff;">last</span> commit <span style="color: #0000ff;">in</span><span style="color: #000000;"> the current branch
+git </span><span style="color: #0000ff;">diff</span><span style="color: #000000;">
+
+# Add the changes to the index and commit
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">More chaanges - typo in the commit message</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Show the history of commits </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> the current branch
+git log
+# This starts a </span><span style="color: #0000ff;">nice</span><span style="color: #000000;"> graphical view of the changes
+gitk </span>--all</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="firstgit_amend"></a>4.5. 更正提交的信息 - git amend</h3>
+</div>
+</div>
+</div>
+<p>通过git amend命令，我们可以修改最后提交的的信息</p>
+<p>上述的提交信息中存在错误，下面会修改这个错误</p>
+<div class="cnblogs_code">
+<pre>git commit --amend -m <span style="color: #800000;">"</span><span style="color: #800000;">More changes - now correct</span><span style="color: #800000;">"</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="firstgit_deletefile"></a>4.6. 删除文件</h3>
+</div>
+</div>
+</div>
+<p>如果你删除了一个在版本控制之下的文件，那么使用git add .不会在索引中删除这个文件。需要通过带-a选项的git commit命令和-A选项的git add命令来完成</p>
+<div class="cnblogs_code">
+<pre># Create a <span style="color: #0000ff;">file</span><span style="color: #000000;"> and put it under version control
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> nonsense.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">a new file has been created</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Remove the </span><span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">rm</span><span style="color: #000000;"> nonsense.txt
+# Try standard way of committing </span>-&gt;<span style="color: #000000;"> will not work 
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">a new file has been created</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Now commit with the </span>-<span style="color: #000000;">a flag
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">File nonsense.txt is now removed</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Alternatively you could add deleted files to the staging index via
+git add </span>-<span style="color: #000000;">A . 
+git commit </span>-m <span style="color: #800000;">"</span><span style="color: #800000;">File nonsense.txt is now removed</span><span style="color: #800000;">"</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="remotes"></a>5.&nbsp;远端仓库（remote repositories）</h2>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remotes_setup"></a>5.1. 设置一个远端的Git仓库</h3>
+</div>
+</div>
+</div>
+<p>我们将创建一个远端的Git仓库。这个仓库可以存储在本地或者是网络上。</p>
+<p>远端Git仓库和标准的Git仓库有如下差别：一个标准的Git仓库包括了源代码和历史信息记录。我们可以直接在这个基础上修改代码，因为它已经包含了一个工作副本。但是远端仓库没有包括工作副本，只包括了历史信息。可以使用--bare选项来创建一个这样的仓库。</p>
+<p>为了方便起见，示例中的仓库创建在本地文件系统上&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Switch to the first repository
+cd </span>~/<span style="color: #000000;">repo01
+# 
+git clone </span>--bare . ../remote-<span style="color: #000000;">repository.git
+
+# Check the content, it is identical to the .git directory </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> repo01
+</span><span style="color: #0000ff;">ls</span> ~/remote-repository.git</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remotes_push"></a>5.2. 推送更改到其他的仓库</h3>
+</div>
+</div>
+</div>
+<p>做一些更改，然后将这些更改从你的第一个仓库推送到一个远端仓库&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Make some changes <span style="color: #0000ff;">in</span><span style="color: #000000;"> the first repository
+cd </span>~/<span style="color: #000000;">repo01
+
+# Make some changes </span><span style="color: #0000ff;">in</span> the <span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">Hello, hello. Turn your radio on</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">Bye, bye. Turn your radio off</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test02
+
+# Commit the changes, </span>-a will commit changes <span style="color: #0000ff;">for</span><span style="color: #000000;"> modified files
+# but will not add automatically new files
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">Some changes</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Push the changes
+git push ..</span>/remote-repository.git</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remotes_remoteadd"></a>5.3. 添加远端仓库</h3>
+</div>
+</div>
+</div>
+<p>除了通过完整的URL来访问Git仓库外，还可以通过git remote add命令为仓库添加一个短名称。当你克隆了一个仓库以后，origin表示所克隆的原始仓库。即使我们从零开始，这个名称也存在。&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Add ../remote-<span style="color: #000000;">repository.git with the name origin
+git remote add origin ..</span>/remote-<span style="color: #000000;">repository.git 
+
+# Again some changes
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">I added a remote repo</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test02
+# Commit
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">This is a test for the new remote origin</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# If you </span><span style="color: #0000ff;">do</span><span style="color: #000000;"> not label a repository it will push to origin
+git push origin</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remotes_showremote"></a>5.4. 显示已有的远端仓库</h3>
+</div>
+</div>
+</div>
+<p>通过以下命令查看已经存在的远端仓库&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Show the existing defined remote repositories
+git remote</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remotes_clone"></a>5.5. 克隆仓库</h3>
+</div>
+</div>
+</div>
+<p>通过以下命令在新的目录下创建一个新的仓库&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Switch to home
+cd </span>~<span style="color: #000000;">
+# Make new directory
+</span><span style="color: #0000ff;">mkdir</span><span style="color: #000000;"> repo02
+
+# Switch to new directory
+
+cd </span>~/<span style="color: #000000;">repo02
+# Clone
+git clone ..</span>/remote-repository.git .</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remotes_pull"></a>5.6. 拉取（Pull）更改</h3>
+</div>
+</div>
+</div>
+<p>通过拉取，可以从其他的仓库中获取最新的更改。在第二个仓库中，做一些更改，然后将更改推送到远端的仓库中。然后第一个仓库拉取这些更改&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Switch to home
+cd </span>~<span style="color: #000000;">
+
+# Switch to second directory
+cd </span>~/<span style="color: #000000;">repo02
+# Make changes
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">A change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+# Commit
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">A change</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Push changes to remote repository
+# Origin is automatically maintained as we cloned from this repository
+git push origin
+# Switch to the first repository and pull </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> the changes
+cd </span>~/<span style="color: #000000;">repo01
+git pull ..</span>/remote-repository.git/<span style="color: #000000;">
+# Check the changes
+</span><span style="color: #0000ff;">less</span> test01</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="undochanges"></a>6. 还原更改</h2>
+</div>
+</div>
+</div>
+<p>如果在你的工作副本中，你创建了不想被提交的文件，你可以丢弃它。&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Create a new <span style="color: #0000ff;">file</span><span style="color: #000000;"> with content
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> test04
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">this is trash</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test04
+
+# Make a dry</span>-<span style="color: #000000;">run to see what would happen
+# </span>-n is the same as --dry-<span style="color: #000000;">run 
+git clean </span>-<span style="color: #000000;">n
+
+# Now delete
+git clean </span>-f</pre>
+</div>
+<p>&nbsp;</p>
+<p>你可以提取老版本的代码，通过提交的ID。git log命令可以查看提交ID&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Switch to home
+cd </span>~/<span style="color: #000000;">repo01
+# Get the log
+git log
+
+# Copy one of the older commits and checkout the older revision via  译者注：checkout 后加commit id就是把commit的内容复制到index和工作副本中 
+git checkout commit_name</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>如果你还未把更改加入到索引中，你也可以直接还原所有的更改&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">#Some nonsense change
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">nonsense change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+# Not added to the staging index. Therefore we can 
+# just checkout the old version
+#译者注：checkout后如果没有commit id号，就是从index中拷贝数据到工作副本，不涉及commit部分的改变<br />git checkout test01
+# Check the result
+</span><span style="color: #0000ff;">cat</span><span style="color: #000000;"> test01
+# Another nonsense change
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">another nonsense change</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+# We add the </span><span style="color: #0000ff;">file</span><span style="color: #000000;"> to the staging index
+git add test01
+# Restore the </span><span style="color: #0000ff;">file</span> <span style="color: #0000ff;">in</span><span style="color: #000000;"> the staging index
+#译者注：复制HEAD所指commit的test01文件到index中<br />git reset HEAD test01
+# Get the old version from the staging index<br />#译者注：复制index中test01到工作副本中
+git checkout test01<br />#译者注，以上两条命令可以合并为git checkout HEAD test01</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>也可以通过revert命令进行还原操作&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Revert a commit
+git revert commit_name</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>即使你删除了一个未添加到索引和提交的文件，你也可以还原出这个文件</p>
+<div class="cnblogs_code">
+<pre># Delete a <span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">rm</span><span style="color: #000000;"> test01
+# Revert the deletion
+git checkout test01</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>如果你已经添加一个文件到索引中，但是未提交。可以通过<code class="code">git reset file</code> 命令将这个文件从索引中删除&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> Create a file</span>
+<span style="color: #0000ff;">touch</span><span style="color: #000000;"> incorrect.txt
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Accidently add it to the index</span>
+<span style="color: #000000;">git add .
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Remove it from the index</span>
+<span style="color: #000000;">git reset incorrect.txt
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Delete the file</span>
+<span style="color: #0000ff;">rm</span> incorrect.txt</pre>
+</div>
+<p>&nbsp;</p>
+<p>如果你删除了文件夹且尚未提交，可以通过以下命令来恢复这个文件夹&nbsp;。译者注：即使已经提交，也可以还原</p>
+<div class="cnblogs_code">
+<pre>git checkout HEAD -- your_dir_to_restore</pre>
+</div>
+<p>&nbsp;译者注：checkout和reset这两个命令的含义是不同的，可以参阅这篇文章<a href="http://marklodato.github.com/visual-git-guide/index-en.html">http://marklodato.github.com/visual-git-guide/index-en.html</a></p>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="tagging"></a>7. 标记</h2>
+</div>
+</div>
+</div>
+<p>Git可以使用对历史记录中的任一版本进行标记。这样在后续的版本中就能轻松的找到。一般来说，被用来标记某个发行的版本</p>
+<p>可以通过git tag命令列出所有的标记，通过如下命令来创建一个标记和恢复到一个标记</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>git tag version1.<span style="color: #800080;">6</span> -m <span style="color: #800000;">'</span><span style="color: #800000;">version 1.6</span><span style="color: #800000;">'</span><span style="color: #000000;">      
+git checkout </span>&lt;tag_name&gt;</pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="gitbranchmerge"></a>8. 分支、合并</h2>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitbranch"></a>8.1. 分支</h3>
+</div>
+</div>
+</div>
+<p>通过分支，可以创造独立的代码副本。默认的分支叫master。Git消耗很少的资源就能创建分支。Git鼓励开发人员多使用分支</p>
+<p>下面的命令列出了所有的本地分支，当前所在的分支前带有*号</p>
+<div class="cnblogs_code">
+<pre>git branch </pre>
+</div>
+<p>&nbsp;</p>
+<p>如果你还想看到远端仓库的分支，可以使用下面的命令</p>
+<div class="cnblogs_code">
+<pre>git branch -a</pre>
+</div>
+<p>&nbsp;</p>
+<p>可以通过下面的命令来创建一个新的分支</p>
+<div class="cnblogs_code">
+<pre># Syntax: git branch &lt;name&gt; &lt;hash&gt;<span style="color: #000000;">
+# </span>&lt;hash&gt; <span style="color: #0000ff;">in</span><span style="color: #000000;"> the above is optional 
+# </span><span style="color: #0000ff;">if</span> not specified the <span style="color: #0000ff;">last</span><span style="color: #000000;"> commit will be used
+# If specified the corresponding commit will be used
+git branch testing
+# Switch to your new branch
+git checkout testing
+# Some changes
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">Cool new feature in this branch</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">new feature</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Switch to the master branch
+git checkout master
+# Check that the content of test01 is the old one
+</span><span style="color: #0000ff;">cat</span> test01</pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitmerge"></a>8.2. 合并</h3>
+</div>
+</div>
+</div>
+<p>通过Merge我们可以合并两个不同分支的结果。Merge通过所谓的三路合并来完成。分别来自两个分支的最新commit和两个分支的最新公共commit</p>
+<p>可以通过如下的命令进行合并&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Syntax: git merge &lt;branch-name&gt;<span style="color: #000000;">
+git merge testing</span></pre>
+</div>
+<p>一旦合并发生了冲突，Git会标志出来，开发人员需要手工的去解决这些冲突。解决冲突以后，就可以将文件添加到索引中，然后提交更改</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitdeletebrach"></a>8.3. 删除分支</h3>
+</div>
+</div>
+</div>
+<p>删除分支的命令如下：&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">#Delete branch testing
+git branch </span>-<span style="color: #000000;">d testing
+# Check </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> branch has been deleted
+git branch</span></pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="gitpushbranch"></a>8.4. 推送（push）一个分支到远端仓库</h3>
+</div>
+</div>
+</div>
+<p>默认的，Git只会推送匹配的分支的远端仓库。这意味在使用git push命令默认推送你的分支之前，需要手工的推送一次这个分支。&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Push testing branch to remote repository
+git push origin testing
+
+# Switch to the testing branch
+git checkout testing
+
+# Some changes
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">News for you</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">new feature in branch</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Push all including branch
+git push</span></pre>
+</div>
+<p>通过这种方式，你可以确定哪些分支对于其他仓库是可见的，而哪些只是本地的分支&nbsp;&nbsp;</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="mergeconflict"></a>9. 解决合并冲突</h2>
+</div>
+</div>
+</div>
+<p>如果两个不同的开发人员对同一个文件进行了修改，那么合并冲突就会发生。而Git没有智能到自动解决合并两个修改</p>
+<p>在这一节中，我们会首先制造一个合并冲突，然后解决它，并应用到Git仓库中</p>
+<p>下面会产生一个合并冲突&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Switch to the first directory
+cd </span>~/<span style="color: #000000;">repo01
+# Make changes
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> mergeconflict.txt
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">Change in the first repository</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> mergeconflict.txt
+# Stage and commit
+git add . </span>&amp;&amp; git commit -a -m <span style="color: #800000;">"</span><span style="color: #800000;">Will create merge conflict 1</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Switch to the second directory
+cd </span>~/<span style="color: #000000;">repo02
+# Make changes
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> mergeconflict.txt
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">Change in the second repository</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> mergeconflict.txt
+# Stage and commit
+git add . </span>&amp;&amp; git commit -a -m <span style="color: #800000;">"</span><span style="color: #800000;">Will create merge conflict 2</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Push to the master repository
+git push
+
+# Now try to push from the first directory
+# Switch to the first directory
+cd </span>~/<span style="color: #000000;">repo01
+# Try to push </span>--&gt;<span style="color: #000000;"> you will get an error message
+git push
+# Get the changes
+git pull origin master</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>Git将冲突放在收到影响的文件中，文件内容如下：&nbsp;</p>
+<div class="cnblogs_code">
+<pre>&lt;&lt;&lt;&lt;&lt;&lt;&lt;<span style="color: #000000;"> HEAD
+Change </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> the first repository
+</span>=======<span style="color: #000000;">
+Change </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> the second repository
+</span>&gt;&gt;&gt;&gt;&gt;&gt;&gt; b29196692f5ebfd10d8a9ca1911c8b08127c85f8</pre>
+</div>
+<p>上面部分是你的本地仓库，下面部分是远端仓库。现在编辑这个文件，然后commit更改。另外的，你可以使用git mergetool命令</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre># Either edit the <span style="color: #0000ff;">file</span><span style="color: #000000;"> manually or use 
+git mergetool
+# You will be prompted to </span><span style="color: #0000ff;">select</span> <span style="color: #0000ff;">which</span><span style="color: #000000;"> merge tool you want to use
+# For example on Ubuntu you can use the tool </span><span style="color: #800000;">"</span><span style="color: #800000;">meld</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# After  merging the changes manually, commit them
+git commit </span>-m <span style="color: #800000;">"</span><span style="color: #800000;">merged changes</span><span style="color: #800000;">"</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="rebase"></a>10. 变基（Rebase）</h2>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="rebase_commits"></a>10.1. 在同一分支中应用Rebase Commit</h3>
+</div>
+</div>
+</div>
+<p>通过rebase命令可以合并多个commit为一个。这样用户push更改到远端仓库的时候就可以先修改commit历史</p>
+<p>接下来我们将创建多个commit，然后再将它们rebase成一个commit</p>
+<div class="cnblogs_code">
+<pre># Create a new <span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">touch</span><span style="color: #000000;"> rebase.txt
+
+# Add it to git
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">rebase.txt added to index</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Do some silly changes and commit
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">content</span><span style="color: #800000;">"</span> &gt;&gt;<span style="color: #000000;"> rebase.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">added content</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;"> more content</span><span style="color: #800000;">"</span> &gt;&gt;<span style="color: #000000;"> rebase.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">added more content</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;"> more content</span><span style="color: #800000;">"</span> &gt;&gt;<span style="color: #000000;"> rebase.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">added more content</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;"> more content</span><span style="color: #800000;">"</span> &gt;&gt;<span style="color: #000000;"> rebase.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">added more content</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;"> more content</span><span style="color: #800000;">"</span> &gt;&gt;<span style="color: #000000;"> rebase.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">added more content</span><span style="color: #800000;">"</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;"> more content</span><span style="color: #800000;">"</span> &gt;&gt;<span style="color: #000000;"> rebase.txt
+git add . </span>&amp;&amp; git commit -m <span style="color: #800000;">"</span><span style="color: #800000;">added more content</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Check the git log message
+git log</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>我们合并最后的七个commit。你可以通过如下的命令交互的完成</p>
+<div class="cnblogs_code">
+<pre>git rebase -i HEAD~<span style="color: #800080;">7</span></pre>
+</div>
+<p>&nbsp;这个命令会打开编辑器让你修改commit的信息或者&nbsp;<code class="code">squash</code>/ <code class="code">fixup</code>最后一个信息</p>
+<p>Squash会合并commit信息而fixup会忽略commit信息（待理解）</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="rebase_branches"></a>10.2. Rebasing多个分支</h3>
+</div>
+</div>
+</div>
+<p>你也可以对两个分支进行rebase操作。如下所述，merge命令合并两个分支的更改。rebase命令为一个分支的更改生成一个补丁，然后应用这个补丁到另一分支中</p>
+<p>使用merge和rebase，最后的源代码是一样的，但是使用rebase产生的commit历史更加的少，而且历史记录看上去更加的线性</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Create new branch 
+git branch testing
+# Checkout the branch
+git checkout testing
+# Make some changes
+</span><span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">This will be rebased to master</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;"> test01
+# Commit into testing branch
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">New feature in branch</span><span style="color: #800000;">"</span><span style="color: #000000;">
+# Rebase the master
+git rebase master</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="rebase_bestpractise"></a>10.3.Rebase最佳实践</h3>
+</div>
+</div>
+</div>
+<p>在push更改到其他的Git仓库之前，我们需要仔细检查本地分支的commit历史</p>
+<p>在Git中，你可以使用本地的commit。开发人员可以利用这个功能方便的回滚本地的开发历史。但是在push之前，需要观察你的本地分支历史，是否其中有些commit历史对其他用户来说是无关的</p>
+<p>如果所有的commit历史都跟同一个功能有关，很多情况下，你需要rebase这些commit历史为一个commit历史。</p>
+<p>交互性的rebase主要就是做重写commit历史的任务。这样做是安全的，因为commit还没有被push到其它的仓库。这意味着commit历史只有在被push之前被修改</p>
+<p>如果你修改然后push了一个已经在目标仓库中存在的commit历史，这看起来就像是你实现了一些别人已经实现的功能</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="gitpatch"></a>11. 创建和应用补丁</h2>
+</div>
+</div>
+</div>
+<p>一个补丁指的是一个包含对源代码进行修改的文本文件。你可以将这个文件发送给某人，然后他就可以应用这个补丁到他的本地仓库</p>
+<p>下面会创建一个分支，对这个分支所一些修改，然后创建一个补丁，并应用这个补丁到master分支&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Create a new branch
+git branch mybranch
+# Use this new branch
+git checkout mybranch
+# Make some changes
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> test05
+# Change some content </span><span style="color: #0000ff;">in</span> an existing <span style="color: #0000ff;">file</span>
+<span style="color: #0000ff;">echo</span> <span style="color: #800000;">"</span><span style="color: #800000;">New content for test01</span><span style="color: #800000;">"</span> &gt;<span style="color: #000000;">test01
+# Commit this to the branch
+git add .
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">First commit in the branch</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Create a </span><span style="color: #0000ff;">patch</span> --&gt; git format-<span style="color: #0000ff;">patch</span><span style="color: #000000;"> master
+git format</span>-<span style="color: #0000ff;">patch</span> origin/<span style="color: #000000;">master
+# This created </span><span style="color: #0000ff;">patch</span> <span style="color: #800080;">0001</span>-First-commit-<span style="color: #0000ff;">in</span>-the-branch.<span style="color: #0000ff;">patch</span><span style="color: #000000;">
+
+# Switch to the master
+git checkout master
+
+# Apply the </span><span style="color: #0000ff;">patch</span><span style="color: #000000;">
+git apply </span><span style="color: #800080;">0001</span>-First-commit-<span style="color: #0000ff;">in</span>-the-branch.<span style="color: #0000ff;">patch</span><span style="color: #000000;">
+# Do your normal commit </span><span style="color: #0000ff;">in</span><span style="color: #000000;"> the master 
+git add .
+git commit </span>-a -m <span style="color: #800000;">"</span><span style="color: #800000;">Applied patch</span><span style="color: #800000;">"</span><span style="color: #000000;">
+
+# Delete the </span><span style="color: #0000ff;">patch</span> 
+<span style="color: #0000ff;">rm</span> <span style="color: #800080;">0001</span>-First-commit-<span style="color: #0000ff;">in</span>-the-branch.<span style="color: #0000ff;">patch</span></pre>
+</div>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="alias"></a>12. 定义同名命令</h2>
+</div>
+</div>
+</div>
+<p>Git允许你设定你自己的Git命令。你可以给你自己常用的命令起一个缩写命令，或者合并几条命令道一个命令上来。</p>
+<p>下面的例子中，定义了<code class="code">git add-commit&nbsp;命令，这个命令合并了<code class="code">git add . -A</code>&nbsp;和<code class="code">git commit -m</code></code>&nbsp;命令。定义这个命令后，就可以使用<code class="code">git add-commit -m "message" 了</code>.</p>
+<div class="cnblogs_code">
+<pre>git config --global alias.add-commit <span style="color: #800000;">'</span><span style="color: #800000;">!git add . -A &amp;&amp; git commit</span><span style="color: #800000;">'</span></pre>
+</div>
+<p>但是非常不幸，截止写这篇文章之前，定义同名命令在msysGit中还没有支持。同名命令不能以！开始。</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="untrack"></a>13. 放弃跟踪文件</h2>
+</div>
+</div>
+</div>
+<p>有时候，你不希望某些文件或者文件夹被包含在Git仓库中。但是如果你把它们加到.gitignore文件中以后，Git会停止跟踪这个文件。但是它不会将这个文件从仓库中删除。这导致了文件或者文件夹的最后一个版本还是存在于仓库中。为了取消跟踪这些文件或者文件夹，你可以使用如下的命令</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Remove directory .metadata from git repo
+git </span><span style="color: #0000ff;">rm</span> -r --<span style="color: #000000;">cached .metadata
+# Remove </span><span style="color: #0000ff;">file</span><span style="color: #000000;"> test.txt from repo
+git </span><span style="color: #0000ff;">rm</span> --cached test.txt</pre>
+</div>
+<p>这样做不会将这些文件从commit历史中去掉。如果你想将这些文件从commit历史中去掉，可以参考<code class="code">git filter-branch</code>命令</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="useful"></a>14. 其他有用的命令</h2>
+</div>
+</div>
+</div>
+<p>下面列出了在日常工作中非常有用的Git命令</p>
+<div class="table"><a name="d12682e738"></a>
+<p class="title"><strong>Table 2.&nbsp;有用的Git命令</strong></p>
+<div class="table-contents">
+<table summary="Useful Git Commands" border="1"><colgroup> <col class="c1" align="left" /> <col class="c2" align="left" /></colgroup>
+<thead>
+<tr><th align="left">命令</th><th align="left">描述</th></tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code class="code">git blame filename</code></td>
+<td align="left">谁创建了或者是修改了这个文件</td>
+</tr>
+<tr>
+<td align="left"><code class="code">git checkout -b mybranch master~1</code></td>
+<td align="left">以上上个commit信息为起点，创建一条新的分支</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="gitserver"></a>15. 安装Git服务</h2>
+</div>
+</div>
+</div>
+<p>如上所述，我们的操作不需要Git服务。我可以只使用文件系统或者是Git仓库的提供者，像Github或Bitbucket。但是，有时候，拥有一个自己的服务是比较方便的，在ubuntu下安装一个服务相对来说是比较容易的</p>
+<p>确定你已经安装了ssh</p>
+<div class="cnblogs_code">
+<pre>apt-get <span style="color: #0000ff;">install</span> <span style="color: #0000ff;">ssh</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>如果你还没有安装Git服务，安装它&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">sudo</span> apt-get <span style="color: #0000ff;">install</span> git-core</pre>
+</div>
+<p>&nbsp;</p>
+<p>添加一个名为git的用户</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">sudo</span> adduser git</pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+<p>然后使用git用户进行登陆，创建一个空的仓库</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Login to server
+# to test use localhost
+</span><span style="color: #0000ff;">ssh</span><span style="color: #000000;"> git@IP_ADDRESS_OF_SERVER
+
+# Create repository
+git init </span>--bare example.git</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>现在你就可以向远端的仓库提交变更了</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">mkdir</span><span style="color: #000000;"> gitexample
+cd gitexample
+git init
+</span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> README
+git add README
+git commit </span>-m <span style="color: #800000;">'</span><span style="color: #800000;">first commit</span><span style="color: #800000;">'</span><span style="color: #000000;">
+git remote add origin git@IP_ADDRESS_OF_SERVER:example.git
+git push origin master</span></pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="remote"></a>16. 在线的远端仓库</h2>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remote_clone"></a>16.1. 克隆远端仓库</h3>
+</div>
+</div>
+</div>
+<p>Git支持远端的操作。Git支持多种的传输类型，Git自带的协议就叫做git。下面的的命令通过git协议从克隆一个仓库&nbsp;</p>
+<div class="cnblogs_code">
+<pre>git clone git@github.com:vogella/gitbook.git</pre>
+</div>
+<p>&nbsp;同样的，你可以通过http协议来克隆仓库&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># The following will clone via HTTP 
+git clone http:</span><span style="color: #008000;">//</span><span style="color: #008000;">vogella@github.com/vogella/gitbook.git</span></pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remote_add"></a>16.2. 添加远端仓库</h3>
+</div>
+</div>
+</div>
+<p>如果你克隆了一个远端仓库，那么原先的仓库就叫做origin</p>
+<p>你可以push修改到origin中，通过 <code class="code">git push origin 命令</code>. 当然，push到一个远端的仓库需要对仓库的写权限</p>
+<p>你可以通过<code class="code">git remote add name gitrepo </code>命令添加多个仓库。例如，你可以通过http协议再次添加之前clone过来的仓库:</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> Add the https protocol </span>
+git remote add githttp https:<span style="color: #008000;">//</span><span style="color: #008000;">vogella@github.com/vogella/gitbook.git</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="remote_proxy"></a>16.3. 通过http和代理服务器进行远端操作</h3>
+</div>
+</div>
+</div>
+<p>如果你的防火墙屏蔽了出http以外的所有协议，那么使用http协议来获取仓库是非常好的方法。.</p>
+<p>Git同样支持通过代理服务器使用http协议。下面的Git命令会展示这一点。你可以为所有的程序设置代理服务器或者只是为Git服务提供。</p>
+<p>下面的例子用到了环境变量</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;"># Linux
+export http_proxy</span>=http:<span style="color: #008000;">//</span><span style="color: #008000;">proxy:8080</span>
+<span style="color: #000000;"># On Windows
+# Set http_proxy</span>=http:<span style="color: #008000;">//</span><span style="color: #008000;">proxy:8080 </span>
+git clone http:<span style="color: #008000;">//</span><span style="color: #008000;">dev.eclipse.org/git/org.eclipse.jface/org.eclipse.jface.snippets.git</span>
+<span style="color: #000000;"># Push back to the origin using http
+git push origin</span></pre>
+</div>
+<p>&nbsp;&nbsp;</p>
+<p>下面的例子只是用到了Git的配置</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> Set proxy for git globally</span>
+ git config --global http.proxy http:<span style="color: #008000;">//</span><span style="color: #008000;">proxy:8080
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> To check the proxy settings</span>
+git config --<span style="color: #000000;">get http.proxy
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Just in case you need to you can also revoke the proxy settings</span>
+git config --global --unset http.proxy</pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="hosting"></a>17. Git服务提供商</h2>
+</div>
+</div>
+</div>
+<p>除了假设自己的服务，你也可以使用Git服务提供商提供的服务。最流行的Git服务提供网站是GitHub和Bitbucket。它们都提供了有限制的免费服务</p>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="hosting_github"></a>17.1. GitHub</h3>
+</div>
+</div>
+</div>
+<p>可以通过&nbsp;<a href="https://github.com/">https://github.com/</a> 访问GitHub. GitHub上所有的公开仓库都是免费的。如果你想在上面使用私有的仓库，那么就需要付费给GitHub</p>
+<p>GitHub需要你创建ssh的公钥私钥。生成一份Ubuntu的公钥私钥可以访问&nbsp;<a class="ulink" href="http://help.github.com/linux-set-up-git/" target="_top">ssh key creation in Ubuntu </a> ，Windows环境可以访问<a class="ulink" href="http://help.github.com/msysgit-key-setup/" target="_top">msysgit ssh key generation </a>.</p>
+<p>在GitHub上创建一个账户和一个仓库以后。你会收到如何将你的项目上传到GitHUb的指南，其中的命令大致如下：&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">Global setup:
+ Set up git
+  git config </span>--global user.name <span style="color: #800000;">"</span><span style="color: #800000;">Your Name</span><span style="color: #800000;">"</span><span style="color: #000000;">
+  git config </span>--<span style="color: #000000;">global user.email your.email@gmail.com
+      
+Next steps:
+  </span><span style="color: #0000ff;">mkdir</span><span style="color: #000000;"> gitbook 
+  cd gitbook
+  git init
+  </span><span style="color: #0000ff;">touch</span><span style="color: #000000;"> README
+  git add README
+  git commit </span>-m <span style="color: #800000;">'</span><span style="color: #800000;">first commit</span><span style="color: #800000;">'</span><span style="color: #000000;">
+  git remote add origin git@github.com:vogella</span>/<span style="color: #000000;">gitbook.git
+  git push </span>-<span style="color: #000000;">u origin master
+      
+Existing Git Repo</span>?<span style="color: #000000;">
+  cd existing_git_repo
+  git remote add origin git@github.com:vogella</span>/<span style="color: #000000;">gitbook.git
+  git push </span>-<span style="color: #000000;">u origin master
+  </span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title"><a name="hosting_bickbucket"></a>17.2. Bitbucket</h3>
+</div>
+</div>
+</div>
+<p>&nbsp;可以通过 <a href="https://bitbucket.org/">https://bitbucket.org/</a> 访问Bitbucket. Bitbucket 提供了无限制了公共仓库和只能有五个人访问的私有仓库。如果你需要超过五个人访问私有仓库，就需要付费给Bitbucket</p>
+</div>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="uis"></a>18. Git的图形接口</h2>
+</div>
+</div>
+</div>
+<p>这个教程主要说明Git命令行的使用。完成了这个教程以后，你可能想要找到一个Git的图形工具</p>
+<p>Git提供了两个图形工具。 gitk能够展示仓库的历史信息、git gui 让你可以通过编辑器来完成Git操作</p>
+<p>Eclipse EGit 项目提供了Git与Eclipse的集成，在最新的Eclipse版本中可以找到</p>
+<p>&nbsp;</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="kindle"></a>19. Kindle版本教程</h2>
+</div>
+</div>
+</div>
+<p>这个教程提供了Kindle版本</p>
+<a href="http://www.amazon.com/dp/B0067QNR56"><img src="http://www.cnblogs.com/zhangjing230/admin/images/150x200xgitbook.png.pagespeed.ic.NwUlAmTyZ1.png" alt="Kindle Edition" width="150" height="200" /> </a></div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="questions"></a>20. 问题与讨论</h2>
+</div>
+</div>
+</div>
+<p>在提出问题之前，请先查看 <a class="ulink" href="http://www.cnblogs.com/faq.html" target="_top">vogella FAQ</a>. 如果你有任何的问题或者是从文章中找到错误，那么可以使用<a class="ulink" href="http://groups.google.com/group/vogella" target="_top">www.vogella.com Google Group</a>.&nbsp; 我自己写了一个简短的列表 <a class="ulink" href="http://www.cnblogs.com/blog/2010/03/09/asking-community-questions/" target="_top">how to create good questions </a>&nbsp;可能会对你有用.</p>
+</div>
+<div class="section">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both;"><a name="resources"></a>21.&nbsp;链接和文章</h2>
+</div>
+</div>
+</div>
+<p><a class="ulink" href="http://git-scm.com/" target="_top">Git homepage </a></p>
+<p><a class="ulink" href="http://www.cnblogs.com/articles/EGit/article.html" target="_top">EGit - Teamprovider for Eclipse </a></p>
+<p><a class="ulink" href="http://www.youtube.com/watch?v=4XpnKHJAok8" target="_top">Video with Linus Torwalds on Git </a></p>
+<p><a class="ulink" href="http://progit.org/" target="_top">Progit book - Free Git book </a></p>
+<p><a class="ulink" href="http://www.gitcasts.com/" target="_top">Video casts about Git </a></p>
+<p><a class="ulink" href="http://code.google.com/p/msysgit/" target="_top">http://code.google.com/p/msysgit/ </a>Git on Windows</p>
+<p><a class="ulink" href="http://github.com/guides/git-cheat-sheet" target="_top">http://github.com/guides/git-cheat-sheet </a>Git Cheat Sheets</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+</div>
+    <p class="postfoot">posted on <span id="post-date">2012-05-09 18:32</span> <a href='http://www.cnblogs.com/zhangjing230/'>zhangjing230</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="http://i.cnblogs.com/EditPosts.aspx?postid=2489745" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2489745);return false;">收藏</a></p>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=115718,cb_entryId=2489745,cb_blogApp=currentBlogApp,cb_blogUserGuid='be67b70d-3e8d-e111-aa3f-842b2b196315',cb_entryCreatedDate='2012/5/9 18:32:00';loadViewCount(cb_entryId);</script>
+
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='ad_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='ad_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+$(function () {
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);    
+});
+</script>
+</div>
+
+
+</div>
+<div id="rightmenu">
+	
+		
+<div id="my_links">
+<h3>导航</h3>
+<ul>
+<li><a id="MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="MyLinks1_MyHomeLink" href="http://www.cnblogs.com/zhangjing230/">首页</a></li>
+<!--<li><a id="MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>-->
+<li><a id="MyLinks1_ContactLink" rel="nofollow" href="http://msg.cnblogs.com/send/zhangjing230">联系</a></li>
+<li><a id="MyLinks1_Syndication" href="http://www.cnblogs.com/zhangjing230/rss">订阅</a></li><!--<a id="MyLinks1_XMLLink" href="http://www.cnblogs.com/zhangjing230/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>-->
+<li><a id="MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+</div>
+		<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		
+<h3>公告</h3>
+<div class="newsItem">
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>		
+		
+<div id="blog_stats">
+<h3>统计</h3>
+<ul>
+<li>随笔 - 4
+<li>文章 - 0
+<li>评论 - 34
+<!--<li>引用 - 0-->
+</li>
+</ul>
+</div>
+		<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+        
+		
+<div id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br />
+	Copyright &copy; zhangjing230
+</div>
+	
+</div>			
+			
+	
+
+</body>
+</html>
