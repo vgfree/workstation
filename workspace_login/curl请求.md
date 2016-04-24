@@ -4,6 +4,8 @@ curl -v -H "appkey:zMm6mlT7jM" -H "accountid:e8O1W0ytqy" -H "accessToken:1472583
 
 curl -v -H "appKey:zMm6mlT7jM" -H "accountId:jwlE3wYHYz" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"nickName": "樊少皇","cityName": "上海","cityCode": "600012","sex": 1,"birthday": "1990-03-15","headPic": "http://roadrank.daoke.me/ro%ad/img/11736.jpg", "incroduction":"呵呵呵", "carBrand":"1", "carModel":"30", "carNumber":"asdfgh"}' http://127.0.0.1/club/accountInfo/updateInfoByID
 
-curl -H "appkey:bcYtC65Gc89" -H "accountid:PdL1eoEl7P" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"imei":"147258369015935","imsi":"460011234453214","modeVer":"sony","androidVer":"5.1","baseBandVer":"","kernelVer":"","buildVer":"","lcdwidth":1080,"lcdHeight":1920}' -v http://192.168.1.207/login
+curl -H "appkey:bcYtC65Gc89" -H "accountid:e8O1W0ytqy" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"imei":"147258369015935","imsi":"460011234453214","modeVer":"sony","androidVer":"5.1","baseBandVer":"","kernelVer":"","buildVer":"","lcdwidth":1080,"lcdHeight":1920}' -v http://192.168.1.207/login
 
 curl -H "appkey:1858017065" -H "accountid:lW3B5D0mtj" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -v http://192.168.1.207/club/accountInfo/queryInfoByID
+
+curl -H "appkey:1858017065" -H "refreshtoken:sdfsdfsdf23423423" -H "sign:45456asdfserwerwefasdfsdf" -v http://192.168.1.207/refreshTrustAccesstoken
