@@ -15,8 +15,6 @@ local safe      = require('safe')
 local app_utils = require('app_utils')                                          
 local msg	= require('msg')
 
-
-
 local app_config_db	= { [1] = 'login_config___config', [2] = 'weme_car___car' }
 
 local url_tab = {                                                               
@@ -24,6 +22,11 @@ local url_tab = {
 	app_Key		= '',                                                       
 	client_host	= '',                                                       
 	client_body	= '',                                                       
+}
+
+local G = {
+	sql_login_info = "SELECT base,roadRank,sicong FROM loginConfig WHERE appKey='%s'",
+        sql_login_userInfo = "SELECT gender as sex,nickname as nickName,headName as headerUrl,activeCity as cityName FROM userInfo WHERE accountID='%s'"
 }
 
 local function ready_execution(appKey)                                          
@@ -69,11 +72,7 @@ local function ready_execution_userInfo(accountID)
 	-- 将sex值转化为number
 	ok_config[1]['sex'] = tonumber(ok_config[1]['sex'])                                                            
 
-	user_info = cjson.encode(ok_config[1])                                  
-		
-	ret = string.sub(user_info, 2, -2) 
-
-	return true, ret                                                  
+	return true, ok_config[1]                                                  
 end    
 
 
@@ -83,14 +82,12 @@ local function check_parameter(parameter_table)
 	if not app_utils.check_accountID(parameter_table['accountID']) then                    
 		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_ARG'], 'accountID')         
 	end
-	--[[
-	
-	local tmp = appKey                                                      
-	if not tmp or  #tmp > 11 then                                           
-		only.log('E','[CHECK_FAILED]imei: appKey=%s must be less 10 number',appKey)
+
+	local tmp = parameter_tab['appKey']                                                  
+	if not tmp or  #tmp > 1 then                                           
+		only.log('E','[CHECK_FAILED]imei: appKey=%s must be less 10 number', tmp)
 		return false                                                    
 	end  
-	--]]
 end
 
 -------------------------------------------------------------------------------
@@ -182,27 +179,23 @@ function random_string(nub)
 end      
 -------------------------------------------------------------------------------
 
-
-
 local function go_exit()                                                        
 	local ret_str = '{"ERRORCODE":"ME01002", "RESULT":"appKey error"}'      
 	only.log('E','appKey error')                                            
-	gosay.respond_to_json_str(url_tab,ret_str)                              
+	gosay.respond_to_json_str(url_tab, ret_str)                              
 end        
-
-
 
 local function handle()
 	local req_header	= ngx.req.get_headers()
 	local req_body		= ngx.req.get_body_data()
 	local req_ip		= ngx.var.remote_addr
 
-	only.log('D', 'req_header = %s', req_header)
+	only.log('D', 'req_header = %s', scan.dump(req_header))
 	only.log('D', 'req_body = %s', req_body)
 
 	-- 获取请求参数
 	-- 将header和body中的参数组装到一个table中,方便后续check和使用
-	local parameter_tab = {}
+	local parameter_tab		= {}
 	parameter_tab['appKey']		= req_header['appkey'] 
 	parameter_tab['sign']           = req_header['sign']                            
 	parameter_tab['accessToken']	= req_header['accessToken']                     
@@ -221,7 +214,7 @@ local function handle()
 	url_tab['app_Key']      = parameter_tab['appKey']                                        
 	url_tab['client_host']  = req_ip                                        
 	url_tab['client_body']  = req_body
-	
+
 	only.log('D', 'parameter_table = %s', scan.dump(parameter_tab))
 	-- 参数检查
 	local ok_check	= check_parameter(parameter_tab)                       
@@ -236,12 +229,39 @@ local function handle()
 	if ok_status == false then                                      
 		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_FAILED_GET_SECRET'], 'appKey')
 	end      
+	
+	ok_ret_base	= cjson.decode(ok_ret_base)
+	ok_ret_roadRank = cjson.decode(ok_ret_roadRank)
+	ok_ret_sicong	= cjson.decode(ok_ret_sicong)
+	
+	ok_ret_base['msgServer']	= (ok_ret_base['msgServer'] == nil and "") or ok_ret_base['msgServer']       
+	ok_ret_base['msgPort']		= (ok_ret_base['msgPort'] == nil and 0) or tonumber(ok_ret_base['msgPort'])    
+	ok_ret_base['heart']		= (ok_ret_base['heart'] == nil and 0) or tonumber(ok_ret_base['heart'])  
+	ok_ret_base['fileUrl']		= (ok_ret_base['fileUrl'] == nil and "") or ok_ret_base['fileUrl']     
+
+	ok_ret_roadRank['rrIoUrl']	= (ok_ret_roadRank['rrIoUrl'] == nil and "") or ok_ret_roadRank['rrIoUrl']
+	ok_ret_roadRank['normalRoad']	= (ok_ret_roadRank['normalRoad'] == nil and 0) or tonumber(ok_ret_roadRank['normalRoad'])
+	ok_ret_roadRank['highRoad']	= (ok_ret_roadRank['highRoad'] == nil and 0) or tonumber(ok_ret_roadRank['highRoad'])
+	ok_ret_roadRank['askTime']	= (ok_ret_roadRank['askTime'] == nil and 0) or tonumber(ok_ret_roadRank['askTime'])
+
+	ok_ret_sicong['serverType']	= (ok_ret_sicong['serverType'] == nil and 0) or tonumber(ok_ret_sicong['serverType'])
+	
+	ok_ret_base	= cjson.encode(ok_ret_base)
+	ok_ret_roadRank = cjson.encode(ok_ret_roadRank)
+	ok_ret_sicong	= cjson.encode(ok_ret_sicong)
 
 	-- 从mysql中获取 userInfo 参数                                          
 	local ok_status, ok_ret_userInfo = ready_execution_userInfo(parameter_tab['accountID'])  
 	if ok_status == false then                                              
 		gosay.go_false(url_tab, msg['MSG_ERROR_ACCOUNT_ID_NO_MONEY'], 'accountID')
 	end                  
+
+	ok_ret_userInfo['sex']		= (ok_ret_userInfo['sex'] == nil and 0) or tonumber(ok_ret_userInfo['sex'])    
+	ok_ret_userInfo['nickName']	= (ok_ret_userInfo['nickName'] == nil and "") or ok_ret_userInfo['nickName']
+	ok_ret_userInfo['headerUrl']	= (ok_ret_userInfo['headerUrl'] == nil and "") or ok_ret_userInfo['headerUrl']
+	ok_ret_userInfo['cityName']	= (ok_ret_userInfo['cityName'] == nil and "") or ok_ret_userInfo['cityName']
+
+	ok_ret_userInfo = cjson.encode(ok_ret_userInfo)
 
 	only.log('D', 'ok_ret_base = %s', ok_ret_base)                         
 	only.log('D', 'ok_ret_roadRank = %s', ok_ret_roadRank)                         
@@ -258,7 +278,7 @@ local function handle()
 	"0",                                                                   
 	(token == nil and "") or token,                                         
 	(msgToken == nil and "") or msgToken,                                   
-	(accountID == nil and "") or accountID,                                 
+	(parameter_tab['accountID'] == nil and "") or parameter_tab['accountID'],                                 
 	(ok_ret_base == nil and "{}") or ok_ret_base,                             
 	(ok_ret_roadRank == nil and "{}") or ok_ret_roadRank,                     
 	(ok_ret_sicong == nil and "{}") or ok_ret_sicong,                         
@@ -269,4 +289,16 @@ local function handle()
 	gosay.respond_to_json_str(url_tab, ret_str) 
 end
 
-handle()
+safe.main_call(handle)
+
+
+--[[
+1. 通过http head和body传入参数
+2. 将传入参数重组为一个新的table
+3. 参数检查 
+4. 从mysql中取出base Roadrank sicong userInfo数据
+5. 生成token msgtoken
+6. 组装返回信息,返回数据
+--]]
+
+
