@@ -60,3 +60,8 @@ root  36+;UX,5ZzfBl/3e0kK]
 			
 abcd@1234
 ```
+
+VPN新密码	
+2wsx#EDC
+
+

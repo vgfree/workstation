@@ -1,11 +1,25 @@
 curl -v -F "filename=@/home/louis/Pictures/test.jpg" -F "length=115339" -F "isStorage=true" -F "cacheTime=200" -H "appkey:1858017065" -H "sign:1545678adsfaf234234234wf" http://192.168.71.84:2223/dfsapi/v2/saveImage
 
-curl -v -H "appkey:zMm6mlT7jM" -H "accountid:e8O1W0ytqy" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"nickName": "樊少皇","cityName": "上海","cityCode": "600012","sex": 1,"birthday": "1990-03-15","headPic": "http://roadrank.daoke.me/road/img/11736.jpg"}' http://192.168.1.207/club/accountInfo/updateInfoByID
+curl -v -H "appkey:1153802590" -H "accountid:e8O1W0ytqy" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"nickName": "樊少皇","cityName": "上海","cityCode": "600012","sex": 1,"birthday": "1990-03-15","headPic": "http://roadrank.daoke.me/road/img/11736.jpg"}' http://192.168.1.207/club/accountInfo/updateInfoByID
 
-curl -v -H "appKey:zMm6mlT7jM" -H "accountId:jwlE3wYHYz" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"nickName": "樊少皇","cityName": "上海","cityCode": "600012","sex": 1,"birthday": "1990-03-15","headPic": "http://roadrank.daoke.me/ro%ad/img/11736.jpg", "incroduction":"呵呵呵", "carBrand":"1", "carModel":"30", "carNumber":"asdfgh"}' http://127.0.0.1/club/accountInfo/updateInfoByID
+curl -v -H "appKey:1165189169" -H "accountId:5AAiloDNgm" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"nickName": "樊少皇","cityName": "上海","cityCode": "600012","sex": 1,"birthday": "1990-03-15","headPic": "http://roadrank.daoke.me/ro%ad/img/11736.jpg", "introduction":"呵呵呵", "carBrand":"1", "carModel":"30", "carNumber":"asdfgh"}' http://127.0.0.1/club/accountInfo/updateInfoByID
 
-curl -H "appkey:bcYtC65Gc89" -H "accountid:e8O1W0ytqy" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"imei":"147258369015935","imsi":"460011234453214","modeVer":"sony","androidVer":"5.1","baseBandVer":"","kernelVer":"","buildVer":"","lcdwidth":1080,"lcdHeight":1920}' -v http://192.168.1.207/login
+curl -H "appkey:3055426974" -H "accountid:e8O1W0ytqy" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"imei":"147258369015935","imsi":"460011234453214","modeVer":"sony","androidVer":"5.1","baseBandVer":"","kernelVer":"","buildVer":"","lcdwidth":1080,"lcdHeight":1920}' -v http://192.168.1.207/login
 
 curl -H "appkey:1858017065" -H "accountid:lW3B5D0mtj" -H "accessToken:1472583690" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -v http://192.168.1.207/club/accountInfo/queryInfoByID
 
-curl -H "appkey:1858017065" -H "refreshtoken:sdfsdfsdf23423423" -H "sign:45456asdfserwerwefasdfsdf" -v http://192.168.1.207/refreshTrustAccesstoken
+curl -H "appkey:984810830" -H "refreshtoken:sdfsdfsdf23423423" -H "sign:45456asdfserwerwefasdfsdf" -v http://192.168.1.207/refreshTrustAccesstoken
+
+curl -v -H "appkey:1255603831" -H "accountid:fuz1mli7Tl" -H "token:71e87e49e78e83c007dff96918f27098" -H "timestamp:1461760461" -H "sign:71e87e49e78e83c007dff96918f27098" -d '{"nickName": "樊少皇","cityName": "上海","cityCode": "600012","sex": 1,"birthday": "1990-03-15","headPic": "http://roadrank.daoke.me/ro%ad/img/11736.jpg", "introduction":"呵呵呵", "carBrand":"1", "carModel":"30", "carNumber":"asdfgh"}' http://192.168.1.207/club/accountInfo/updateInfoByID
+
+
+
+
+
+local ok, app_key_info = redis_api.cmd("public", "hmget", parameter_tab['appKey'] .. ':appKeyInfo', 'secret', 'level', (tostring(parameter_tab['accountID']) or '') .. ':accessToken')
+        parameter_tab['sign']           = app_utils.gen_sign(parameter_tab, app_key_info[1])
+
+
+
+
+curl -H "appkey:984810830" -H "refreshtoken:957197a4e93afc7e447e40f59d91c7b1" -H "sign:45456asdfserwerwefasdfsdf" -v http://192.168.1.207/refreshTrustAccesstoken
