@@ -1,0 +1,2389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="sixapart-standard">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="Movable Type  5.2.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="http://www.ruanyifeng.com/blog/styles.css" type="text/css" />
+<link rel="start" href="http://www.ruanyifeng.com/blog/" title="Home" />
+<link rel="alternate" type="application/atom+xml" title="Recent Entries" href="http://feeds.feedburner.com/ruanyifeng" />
+<script type="text/javascript" src="http://www.ruanyifeng.com/blog/mt.js"></script>
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="http://www.ruanyifeng.com/blog/2007/01/2007_web_20_companies_i_couldnt_live_without.html">
+<dc:title>生活中必不可少的15个Web2.0网站</dc:title>
+<dc:description>TechCrunch的编辑列出了一张清单，上面是2007年生活中必不可少的15个web2.0网站。我建议大家每一个都打开看一下，它们很大程度上代表了未来10年中人类生活的发展方向。...</dc:description>
+<dc:creator>阮一峰</dc:creator>
+<dc:date>2007-01-03T16:13:15+08:00</dc:date>
+<license rdf:resource="http://creativecommons.org/licenses/by-nc-nd/3.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+</License>
+</rdf:RDF>
+-->
+
+
+    
+    <link rel="prev" href="http://www.ruanyifeng.com/blog/2009/06/why_working_in_a_big_company_is_so_boring.html" title="为什么在大公司工作，总是很无聊？" />
+    <link rel="next" href="http://www.ruanyifeng.com/blog/2009/06/an_honourable_death_is_better_than_a_disgraceful_life.html" title="宁为玉碎，不为瓦全" />
+    
+    <title>关于Unix哲学 - 阮一峰的网络日志</title>
+</head>
+<body id="scrapbook" class="mt-entry-archive one-column">
+<script>
+if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) document.body.classList.add('mobile');
+</script>
+    <div id="container">
+        <div id="container-inner">
+
+            <div id="header">
+    <div id="header-inner">
+        <div id="header-content">
+
+
+            <div id="header-name">阮一峰的网络日志 <span id="site_location"> » <a href="http://www.ruanyifeng.com/blog/" accesskey="1">首页</a></span><span id="site_archive"> » <a href="http://www.ruanyifeng.com/blog/archives.html">档案</a></span>
+</div>
+
+<div id="google_search">
+<!-- SiteSearch Google -->
+<form action="http://www.ruanyifeng.com/blog/search.html" id="cse-search-box">
+      <div>
+        <input type="hidden" name="cx" value="016304377626642577906:b_e9skaywzq" />
+    <input type="hidden" name="cof" value="FORID:11" />
+    <input type="hidden" name="ie" value="UTF-8" />
+        <input type="text" name="q" size="20" class="searchbox" id="sbi" value=""/>
+        <input type="image" src="/static/themes/theme_scrapbook/images/top_search_submit.gif" class="searchbox_submit" value="" alt="搜索" name="sa"/>
+      </div>
+    </form>
+<!-- SiteSearch Google -->
+</div>
+<div id="feed_icon">
+<a href="/feed.html" title="订阅Feed">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAUzSURBVHjavFdbbFRVFF3nPjoz7dTWTittaW0jUDRAUqaNojyqREnEQKgfUj9MqqAmhqRt/OCD4CuY+Kckoh+aiGKC+gMJbdHoRysJ8dkhhmJLNdDKtJU+6GMK87j3Hs85d2Z6HzNtMYWb3Dn3NWftvfba+5xNYDl+e6Fkj6yqb/oDRbWq14vlPBLRKCITkxf0ROLt+hNjp1PPSRK4kA3vF1dXNRcWlyA2OQU9eos9opAkAiKxD+XkKO6t15aRWO7J/MgmAZU8MEgexgZHMX518Dh72sYMmVKShnxWuWHdHtxKIDIYTgMuDzgfmSOIQkYMpdUF8OY92Hytt4/jvkg47czzU16iQovM3QFwmNck+Yyduu7D6NA0Z6JR4THntFs9V4tWQg6Ui3s6MwKDncsFTnXKLJhDSeUK3AgPtyhccDzmVs999buRt/1Vm4i0od+hX7+MRG87jPGB/w1u8FPj9xEw7McVrnYuOCvtpjTth3J/nTg99c8LRhKhr6D3dTB5R24bXFwbMXBsyZzeoXaycEpJ95TB09AGX/NpqLVNtw8urnVzLvHjFNxiFqRy2OOHuqUVnue+ACkoWzo4O6lGzTmuHq6nPvY2m9rVqjrIK2rMEKxqyG5NPAKt+wjo0LklgfNxJkZMA3KJvqRUk3z5UFY3QH14P0h+WUY79HPvgv7VuSg4ZRGY1YgZgqXmORccF17sy2ehnf9AeO085K2HQFbtXBScj0LcpgF2cN+WV+DZ/LJQu6gD4R7oV7pBJwbSgtMvfiPoVp56DySwxm7EtkMs1WdAB7qzggsDJKQYsHucSkOudrkiCPWR/fA2nYCn8SNIK4NptSMyAu3sAdDRkIsJdfth0LzSrODUoPNZ4KI9SxJI5UHk7D4GdQfz2us31c7CoHMjRkKuDPHseCMrONVhNcDJwMJpKFVvg9L4OaTiNWm1x789KCqkrXhVBiEz0WYCT2nAzQAD1/vaETv1GrRfP4Vx5cfMNcDPwvP0h0DhanPym7OIf/+O67vcJ1/PCJ4KgdzaUP6Wz+dU+5yIL6fV+PsHGAOdwlPpvvUOyeeAVGyCdqkDNB6DPjsBSrnndfOGevOh3RhGItxvA+fX1CtbGFhgYUFkFMZPR6F1HnClHq8HyubWtJexX06CRmdt33hrd7nA7SFY4qoGpnYuOKcRykPPgDCBcsHx9Iv+fNL2PueBehCWUfYQIIMGLOCcOmXDXsh1+yCt35tUPfvzGFuSvzvoinXOxqa02qOhM6733nVP2MAdaej2XN11DPKjLZCD+yBvahGCo7JfTKAN9UD7s8Oe9zUNIhz8fWI8DG2k38WCFdxugANcXrvTVd1IEbuv3Jour7Hzn7jLMBNfKs7R3i67gRVrbeCOEDhinmWhAatsqdquM2XzHZINhK2cqTjHr/XZdVJUbgN3MWAVXKbSyg9jesRW2xP9di+lwrL5ojM3m2H/kG9hwcIA37c71W6wJdW2J2S5nrjYbq/t1AHAhJsKQeyfPvf6IMJgghPJhFZ4x0KlfLFvt22du45Au/A1SOlGc0P672XXwhLtOcM0kTTEMMd0qkVmMNXxMd/tsedUjInr4SQDgOfeXMSiN0FCL5WHah4L1qqYXPJOJlttd+a5M+YpcG5poLYKQ5f+6JJ4r8bbJYP47hq4r7QAs9PjYNhHJd4o8l5taiwuOpa7AS4XKqI/5NjJbTnaWK92nLdLuhQAJayRNMiygXPBeQN+Qbvu0zDc3y+aUzhbkGR73sI7ljvUnndx2q3t+X8CDAD66FtrIL864AAAAABJRU5ErkJggg==" alt="" style="border: 0pt none;" />
+</a></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="content">
+                <div id="content-inner">
+
+
+                    <div id="alpha">
+                        <div id="alpha-inner">
+
+
+                            <div id="entry-1247" class="entry-asset asset hentry">
+                                <div class="asset-header">
+<div class="asset-nav entry-nav">
+
+<div class="entry-location">
+<ul>
+<li>上一篇：<a href="http://www.ruanyifeng.com/blog/2009/06/why_working_in_a_big_company_is_so_boring.html" title="为什么在大公司工作，总是很无聊？">为什么在大公司工作，总</a></li>
+<li>下一篇：<a href="http://www.ruanyifeng.com/blog/2009/06/an_honourable_death_is_better_than_a_disgraceful_life.html" title="宁为玉碎，不为瓦全">宁为玉碎，不为瓦全&nbsp;&nbsp;</a></li>
+</ul>
+</div>
+
+
+    
+                                    <div class="entry-categories">
+                                        <p>分类<span class="delimiter">：</span></p>
+                                        <ul>
+                                            <li><a href="http://www.ruanyifeng.com/blog/computer/" rel="tag">理解计算机</a></li>
+                                        </ul>
+                                    </div>
+    
+
+
+                                            
+</div>
+                                </div>
+<article class="hentry">
+                                    <h1 id="page-title" class="asset-name entry-title">关于Unix哲学</h1>
+                                            <div id="share_button" style="float:right;padding-right:2em;padding-top:1em;"></div>
+                                    <div class="asset-meta">
+                                        
+
+                                            <p class="vcard author">作者： <a class="fn url" href="http://www.ruanyifeng.com">阮一峰</a></p>
+                                    <p>日期： <a href="http://www.ruanyifeng.com/blog/2009/06/"><abbr class="published" title="2009-06-18T21:45:29+08:00">2009年6月18日</abbr></a></p>
+
+
+                                    </div>
+                                
+                                <div class="asset-content entry-content" id="main-content">
+
+                                    <!-- div class="asset-body" -->
+                                        <p>先讲两个很老的小故事。</p>
+                                    <!-- /div -->
+
+
+                                    <!-- div id="more" class="asset-more" -->
+                                        <p>第一个故事。</p>
+
+<p>有一家日本最大的化妆品公司，收到了用户的投诉。用户抱怨买来的肥皂盒是空的。这家公司为了防止再发生这样的事故，很辛苦地发明了一台X光检查器，能够透视每一个出货的肥皂盒。</p>
+
+<p>同样的事故，发生在一家小公司。他们的解决方法是买一台强力的工业电扇，对着肥皂盒猛吹，被吹走的就是空肥皂盒。</p>
+
+<p>第二个故事。</p>
+
+<p>美国太空总署（NASA）发现在太空失重状态下，航天员无法用墨水笔写字。于是，他们花了大量经费，研发出了一种可以在失重状态下写字的太空笔。猜猜看，俄国人是怎么解决的？（答案在本文结尾处。）</p>
+
+<p>=====================</p>
+
+<p>这几天，我在看Unix，发现很多人在谈"Unix哲学"，也就是开发Unix系统的指导思想。</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Unix_philosophy#cite_note-0" target="_blank">Wikipedia</a>上列出了好几个版本，不同的人有不同的总结。发明管道命令的Doug McIlroy总结了三条，而Eric S. Raymond则在<em>The Art of Unix Programming</em>一书中，一口气总结了17条（<a href="http://www.faqs.org/docs/artu/ch01s06.html" target="_blank">英文版</a>，<a href="http://book.csdn.net/bookfiles/34/10034992.shtml" target="_blank">中文版</a>）。</p>
+
+<p>但是我发现，所有人都同意，<strong>"简单原则"----尽量用简单的方法解决问题----是"Unix哲学"的根本原则</strong>。这也就是著名的KISS（keep it simple, stupid），意思是"保持简单和笨拙"。</p>
+
+<p><img src="http://lh3.ggpht.com/_6p3hNkUNWrQ/SjpEiMoM3TI/AAAAAAAABdE/9lkeDQLzXUY/s800/bg2009061801.gif" /></p>
+
+<p>下面就是我对"简单原则"的笔记。如果你想最简单地完成一项编程任务，我认为可以从四个方面入手：</p>
+
+<p><strong>1. 清晰原则。</strong></p>
+
+<p>代码要写得尽量清晰，避免晦涩难懂。清晰的代码不容易崩溃，而且容易理解和维护。重视注释。不为了性能的一丁点提升，而大幅增加技术的复杂性，因为复杂的技术会使得日后的阅读和维护更加艰难。</p>
+
+<p><strong>2. 模块原则。</strong></p>
+
+<p>每个程序只做一件事，不要试图在单个程序中完成多个任务。在程序的内部，面向用户的界面（前端）应该与运算机制（后端）分离，因为前端的变化往往快于后端。</p>
+
+<p><strong>3. 组合原则。</strong></p>
+
+<p>不同的程序之间通过接口相连。接口之间用文本格式进行通信，因为文本格式是最容易处理、最通用的格式。这就意味着尽量不要使用二进制数据进行通信，不要把二进制内容作为输出和输入。</p>
+
+<p><strong>4. 优化原则。</strong></p>
+
+<p>在功能实现之前，不要考虑对它优化。最重要的是让一切先能够运行，其次才是效率。"先求运行，再求正确，最后求快。"（Make it run, then make it right, then make it fast.）90%的功能现在能实现，比100%的功能永远实现不了强。先做出原型，然后找出哪些功能不必实现，那些不用写的代码显然无需优化。目前，最强大的优化工具恐怕是Delete键。</p>
+
+<p>==================</p>
+
+<p>答案是，俄国人用铅笔。</p>
+
+<p>（完）</p>
+                                    <!-- /div -->
+
+                                </div>
+    <script type="text/javascript" src="/newwindow.js"></script>
+                                <div class="asset-footer">
+
+<h3>文档信息</h3>
+<ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">创意共享3.0许可证</a>）</li>
+<li>发表日期： <abbr class="published" title="2009-06-18T21:45:29+08:00">2009年6月18日</abbr></li>
+<li>更多内容： <a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank"> 档案</a>  » 
+<a href="http://www.ruanyifeng.com/blog/computer/"> 理解计算机</a> 
+</li>
+<li>购买文集：<a href="http://www.ruanyifeng.com/blog/2014/12/my-blog-book.html" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> 《如何变得有思想》</a></li>
+<li>社交媒体：<a href="https://twitter.com/ruanyf" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAk1JREFUeNqsVc9rE0EU/mZ3dhPNJl2bVIk/Km09aFBE8GLvnrwJXvwLxIsgCP4Fnit6E8Gb0IMHwUsL9SSNgiAoooJIpE1Joo1h82uT7IxvxmRN3Q32kAdvdrI773vfe+/bDTu9WioDcDAda3Ja8piepQ1avCkCeny0Y+R9KenKwOmHHLvPaKn7AtVOoO8dOWDCMpg+41gMQv5FNEJACgoE8MsPNLDBhgfoutMOsJDmWLmU037C4TApciljwQ/kHoohQxV06+wMXNvE7WINuaSpvdYVKLgWnl3O4zAxU3Z1IYVGT+B5qYWV9z2kbQaT/cOwTsxOUUYF+mB5Dkmi8HG3h2q9hxsFNwRTdvQgxxnXRrMvIdkEhllis/qtiWuLDm4WZnBlPoWnXz28LHdw0uGR7m9Wu3j0qYGEubfn4UlBfXO4gTZltRNMg9w9f0i7kNFxllsBlS0x75gYfxyWTBUjT2W5CSMSPBrQuG21+hiMDS8CeCzF8eSLp13uQ3Ab1IqMFZN8tFHPmgOBF99bYP8Be1Xp6t7OJszJgKpPSiZvaj7uf2hguz2IBQuozDvFH6RDBjuK9wdQDvt0nMpW+8efGyh5UcAeZb2+UcHbnz5Jx4wdlp4yJYU3kLiQtfBwOYeLc8nIwfXtNu69q2Oz4mMxbemYOOOjKarhvq51KUjg3GwiFPIuvcNF6pnSnWK0lOEabNLgQh1aJFAhlGB9rG110B2+oyRNPc0sZbRNFltmLKDKqj4Qrm1ojzOxDz2pyPQ0P7CK4c40/wJ+CzAAGYrXsvfFXR4AAAAASUVORK5CYII=" style="border:0;"> twitter</a>，<a href="http://weibo.com/ruanyf" target="_blank"><img src="data:image/png;base64,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" style="border:0;" /> weibo</a></li>
+<li>Feed订阅： <a href="/feed.html" target="_blank"><img src="data:image/gif;base64,R0lGODlhFAAUANU2APV1GfmrePZ8IeR5VPq2ieNkLf7p3NpFJveCJ/NoFfibVPR1IexiJfvdzuZrNfXGuOhUEueTevaFOfzIpNxDGeZZJNU6IOubifiVTfOnid1aLuZpLOFSJf/28vJtIvGcefaLSd5kNu9iFv/z6//48//t4uFfLfNkCeJNGuGNc/rCof/+/PVxEeldI/V5KeKMbu9nIvB2OvzQtNxMKfOPXP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADYALAAAAAAUABQAAAb/QJstEjKZCsjCZsl0pIS2QWXaYsA8noVWIEAgFoNhhWNyMESi7Jbr/aZCFdRnZJAFJCwAt+vlOkwtEBk1hDUkExJ6bQJaGyYMLTQTDSOFHQF8jAseSFYiJwkuAQ2FE1xaHjBIMDAgARguJwABJIQTLJswDEgeIgSEJQQILAqVNQEiui1HHgkBhTUGCiwYtR0xLS0VJhtaEgoEBoQkGCfPNSoQY9xaCwAsCBPALgmkJA4cZN0CAAgY/PJqEIDwgVAECjM0bOAnwcAKGQJclKhRgoGDDjUeUDigkN8vQiBOfByAglSDAxw3IBCgYEU0FyJoEPpA4UGNDjMsaHDQR8EdPVYOMmQYQGHAhQgHLIRIsWAlgASsGMRBMWMGBQtYZ7yIsoBRKkhjOMxAiXJGGCEpHGxIYsSIhrcaQmy1EQQAOw==" style="border:0;" /></a></li>
+
+</ul>
+                                </div>
+</article>
+                            </div>
+
+   <div id="gegz1">
+   <p style="text-align:center;"><a href="http://www.zhufengpeixun.cn/jscourse/new/js/index.html?ref=ruanyifeng.com" target="_blank"><img alt="珠峰培训" src="http://www.ruanyifeng.com/blog/images/sup_zhufeng_page.png" width="600" height="160" style="border:none;"/></a></p>
+   <p style="text-align:center;"><a href="https://h5.jianxun.io/20160321-qianlima?utm_source=event&utm_medium=blog_ad&utm_campaign=qianlima&utm_content=ruanyifeng&utm_term=wangzhan" target="_blank"><img alt="简寻" src="https://www.jianxun.io/ad/20151101/ruanyifeng-bottombanner.png" width="600" height="160" style="border:none;"/></a></p>
+   </div>
+
+<div id="related_entries">
+<h2>相关文章</h2>
+<ul>
+
+<li><strong>2015.09.28: <a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">为什么主引导记录的内存地址是0x7C00？</a></strong>
+
+                           <div class="entry-body">
+                              《计算机原理》课本说，启动时，主引导记录会存入内存地址0x7C00。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2015.07.16: <a href="http://www.ruanyifeng.com/blog/2015/07/monad.html">图解 Monad</a></strong>
+
+                           <div class="entry-body">
+                              函数式编程有一个重要概念，叫做Monad。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.11.11: <a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html">编译器的工作过程</a></strong>
+
+                           <div class="entry-body">
+                              源码要运行，必须先转成二进制的机器码。这是编译器的任务。
+
+                           </div>
+
+</li>
+
+ 
+<li><strong>2014.09.07: <a href="http://www.ruanyifeng.com/blog/2014/09/information-entropy.html">数据压缩与信息熵</a></strong>
+
+                           <div class="entry-body">
+                              1992年，美国佐治亚州的WEB Technology公司，宣布做出了重大的技术突破。
+
+                           </div>
+
+</li>
+
+ 
+</ul>
+</div>
+
+
+<div id="gd1">
+<h2>广告<a href="/support.html">（购买广告位）</a></h2>
+<div id="gd1-inner">
+<div id="gd1-left">
+<a href="http://a.maka.im/pcviewer/BA7L1P6B?utm_source=ruanyifeng.com" title="一灯学堂" target="_blank"><image alt="一灯学堂" src="http://www.ruanyifeng.com/blog/images/sup_yideng.png" style="border:none;" /></a>
+<br />
+<a href="http://www.zhinengshe.com/?utm_source=ruanyifeng.com" title="智能社" target="_blank"><image alt="智能社" src="http://www.ruanyifeng.com/blog/images/sup_zhinengshe.jpg" style="border:none;" /></a>
+</div>
+<div id="gd1-right">
+
+<a href="http://100offer.com/join/ruanyifeng?utm_source=ruanyifeng&utm_medium=dis&utm_campaign=ruanyifeng" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_1000ffer_2.jpg" style="border:none;" /></a><br />
+<a href="http://www.ruanyifeng.com/support.html" target="_blank"><image src="http://www.ruanyifeng.com/blog/images/sup_sale_s.png" style="border:none;" /></a>
+
+</div>
+</div>
+</div>
+                    
+
+                    <div id="comments" class="comments">
+
+
+    
+    
+        
+    <h2 class="comments-header">留言（53条）</h2>
+
+    <div id="comments-content" class="comments-content" style="clear: left;">
+        
+        <div id="comment-184861" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">blackgun</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184861">
+            <p>不可能是用铅笔的，铅笔如果断裂的话有很大的危险。具体去看新语丝那里有一篇专门的科普文章。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:07 PM">2009年6月18日 22:07</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184861">#</a>
+ | <a href="#comment-text" title="引用blackgun的这条留言" onclick="return CommentQuote('comment-quote-184861','blackgun');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184863" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">huaxlee</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184863">
+            <blockquote>
+<pre>引用blackgun的发言：</pre>
+
+<p> 不可能是用铅笔的，铅笔如果断裂的话有很大的危险。具体去看新语丝那里有一篇专门的科普文章。</p>
+
+</blockquote>
+
+<p>而且铅笔书写之后会有导电的粉尘，估计太空仓那个环境不允许。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:10 PM">2009年6月18日 22:10</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184863">#</a>
+ | <a href="#comment-text" title="引用huaxlee的这条留言" onclick="return CommentQuote('comment-quote-184863','huaxlee');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184864" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">s7evenz</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184864">
+            <p><a href="http://www.scientificamerican.com/article.cfm?id=fact-or-fiction-nasa-spen" rel="nofollow">http://www.scientificamerican.com/article.cfm?id=fact-or-fiction-nasa-spen</a></p>
+
+<p>在太空中使用铅笔是很危险的，外面包的木头易燃，石墨及其细粉导电。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:14 PM">2009年6月18日 22:14</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184864">#</a>
+ | <a href="#comment-text" title="引用s7evenz的这条留言" onclick="return CommentQuote('comment-quote-184864','s7evenz');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184865" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">深海</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184865">
+            <blockquote>
+<pre>引用s7evenz的发言：</pre>
+
+<p> <a href="http://www.scientificamerican.com/article.cfm?id=fact-or-fiction-nasa-spen" rel="nofollow">http://www.scientificamerican.com/article.cfm?id=fact-or-fiction-nasa-spen</a></p>
+
+<p>在太空中使用铅笔是很危险的，外面包的木头易燃，石墨及其细粉导电。</p>
+
+</blockquote>
+
+<p>我真鄙视你的IQ，太空怎么个燃烧啊。还是您提供了助燃剂</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:33 PM">2009年6月18日 22:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184865">#</a>
+ | <a href="#comment-text" title="引用深海的这条留言" onclick="return CommentQuote('comment-quote-184865','深海');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184867" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ipang.net" href="http://ipang.net" target="_blank" rel="nofollow">伍岭</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184867">
+            <p>阮兄，你火星了。</p>
+
+<p>這兩個故事都已被證明是編的有窮多年了。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:35 PM">2009年6月18日 22:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184867">#</a>
+ | <a href="#comment-text" title="引用伍岭的这条留言" onclick="return CommentQuote('comment-quote-184867','伍岭');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184868" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">哎呀</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184868">
+            <p>哈哈哈，大家还是看UNIX部分吧，不过我很惊喜，有发现一个<br />
+伪科来</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:36 PM">2009年6月18日 22:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184868">#</a>
+ | <a href="#comment-text" title="引用哎呀的这条留言" onclick="return CommentQuote('comment-quote-184868','哎呀');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184869" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://ipang.net" href="http://ipang.net" target="_blank" rel="nofollow">伍岭</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184869">
+            <blockquote>
+<pre>引用深海的发言：</pre>
+
+<p>我真鄙视你的IQ，太空怎么个燃烧啊。还是您提供了助燃剂</p>
+
+</blockquote>
+
+<p>拜托，有道理讲道理，不要道理还没讲，就BS别人。</p>
+
+<p>太空是没法子烧，太空舱呢！你见过谁谁谁出舱后揣根铅笔吗？</p>
+
+<p>再说，即使你想说某人智商低——拜托，“你BS他”能说明什么问题？你是不是想变相的证明自己是个天才？</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:39 PM">2009年6月18日 22:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184869">#</a>
+ | <a href="#comment-text" title="引用伍岭的这条留言" onclick="return CommentQuote('comment-quote-184869','伍岭');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184871" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yabo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184871">
+            <p>关于两个小故事就不说了，多Google几下就知道了。<br />
+关于编程的原则，实际上考虑下背后的原因，只有一条：成本。<br />
+由于代码大部分的时间是在被读，简单容易被理解，所以这是最好的减少成本的手段。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:44 PM">2009年6月18日 22:44</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184871">#</a>
+ | <a href="#comment-text" title="引用yabo的这条留言" onclick="return CommentQuote('comment-quote-184871','yabo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184872" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">mjo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184872">
+            <p><br />
+　　早期的宇航员都使用铅笔，并不是因为接受了小学生的建议，而是因为钢笔、圆珠笔在失重条件下都无法使用，铅笔是惟一的选择。但是铅笔笔芯有时候会断，在失重的环境中飘浮，会飘进鼻子、眼睛中，或飘进电器中引起短路，成了危险品。此外，铅笔的笔芯和木头在纯氧的环境中还会快速燃烧。 </p>
+
+<p>　　因发明了圆珠笔通用笔芯而发了大财的保罗·费舍尔，意识到宇航员使用安全、可靠的书写工具的迫切性，自掏腰包进行研制，花了两年时间和两百万元费用后，于1965年研制成了能在太空环境下使用的圆珠笔———太空笔。其原理很简单，采用密封式气压笔芯，上部充有氮气，靠气体压力把油墨推向笔尖。经过严格的测试后，太空笔被美国宇航局采用。1967年12月，费舍尔以每枝2.95美元的价格把400枝太空笔卖给美国宇航局。 </p>
+
+<p>　　1969年7月20日，太空笔跟随阿姆斯特朗和奥尔德林上了月球，并救了他们的命。阿姆斯特朗和奥尔德林在月球表面完成历史性漫步，回到登月舱准备离开时，发现发动机的塑料手动开关被宇航服的背囊碰断，无法启动发动机向地面指挥中心求援。他们需要拨动开关中一个细小的金属条，为了减轻重量，他们已抛弃了所有的工具。地面指挥中心的一名工程师灵机一动，建议他们用太空笔试试。奥尔德林掏出太空笔，缩回笔芯，用笔的中空尾端拨动了开关，成功地启动了登月舱的发动机。 </p>
+
+<p>　　太空笔是全天候的圆珠笔，除了太空环境，还可在其他各种极端恶劣(如寒冷的高山上和深海底)的条件下使用，如油污、潮湿、粗糙、光滑的表面，并适用于各种角度书写，使用寿命长达几十年，深受登山运动员、户外活动者、技工、士兵、警察的欢迎。目前在美国市场上8美元即可买到一枝最简单的费舍尔太空笔。 <br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:51 PM">2009年6月18日 22:51</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184872">#</a>
+ | <a href="#comment-text" title="引用mjo的这条留言" onclick="return CommentQuote('comment-quote-184872','mjo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184873" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">SeToNe</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184873">
+            <p>顺便给出这篇太空笔文章的链接吧，犯过这个错误的人还不少。<br />
+<a href="http://www.xys.org/xys/netters/Fang-Zhouzi/sohu/spacepen.txt" rel="nofollow">http://www.xys.org/xys/netters/Fang-Zhouzi/sohu/spacepen.txt</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:56 PM">2009年6月18日 22:56</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184873">#</a>
+ | <a href="#comment-text" title="引用SeToNe的这条留言" onclick="return CommentQuote('comment-quote-184873','SeToNe');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184874" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Lin</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184874">
+            <blockquote>
+<pre>引用s7evenz的发言：</pre>
+
+<p> <a href="http://www.scientificamerican.com/article.cfm?id=fact-or-fiction-nasa-spen" rel="nofollow">http://www.scientificamerican.com/article.cfm?id=fact-or-fiction-nasa-spen</a></p>
+
+<p>在太空中使用铅笔是很危险的，外面包的木头易燃，石墨及其细粉导电。</p>
+
+</blockquote>
+
+<p>发现这里竟然有看SciAm的朋友，哈哈。</p>
+
+<p>阮兄文中语：（Make it run, the make it right, then make it fast.）<br />
+中的the是否应为then?</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 10:58 PM">2009年6月18日 22:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184874">#</a>
+ | <a href="#comment-text" title="引用Lin的这条留言" onclick="return CommentQuote('comment-quote-184874','Lin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184876" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">sbno1</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184876">
+            <p>风扇那个太假了,商业应用不可能使用这种低可靠性,低控制性的方案.特别是流水线上.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 18, 2009 11:33 PM">2009年6月18日 23:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184876">#</a>
+ | <a href="#comment-text" title="引用sbno1的这条留言" onclick="return CommentQuote('comment-quote-184876','sbno1');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184879" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ruan YiFeng</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184879">
+            <blockquote>
+<pre>引用伍岭的发言：</pre>
+
+<p> 阮兄，你火星了。</p>
+
+<p>這兩個故事都已被證明是編的有窮多年了。</p>
+
+</blockquote>
+
+<p>谢谢大家的批评，真惭愧啊。</p>
+
+<p>我承认故事不科学，我本人也不够严谨，以后一定吸取教训。</p>
+
+<p>如果这些故事不是错的，倒真的是证明这篇文章的主旨“Keep it simple, stupid”的好材料。</p>
+
+<blockquote>
+<pre>引用Lin的发言：</pre>
+
+<p>阮兄文中语：（Make it run, the make it right, then make it fast.）<br />
+中的the是否应为then?</p>
+
+</blockquote>
+
+<p>谢谢指出，已经更正了。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 12:06 AM">2009年6月19日 00:06</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184879">#</a>
+ | <a href="#comment-text" title="引用Ruan YiFeng的这条留言" onclick="return CommentQuote('comment-quote-184879','Ruan YiFeng');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184881" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://liuchuan.org" href="http://liuchuan.org" target="_blank" rel="nofollow">chuan</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184881">
+            <p>"Keep it simple, stupid"似乎也翻译错了。我理解的意思是：保持简单，笨蛋。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  1:33 AM">2009年6月19日 01:33</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184881">#</a>
+ | <a href="#comment-text" title="引用chuan的这条留言" onclick="return CommentQuote('comment-quote-184881','chuan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184883" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">mjo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184883">
+            <blockquote>
+<pre>引用chuan的发言：</pre>
+
+<p> "Keep it simple, stupid"似乎也翻译错了。我理解的意思是：保持简单，笨蛋。</p>
+
+</blockquote>
+我的理解，stupid应该是类似傻瓜相机的那种意思，简单的傻瓜都能弄懂.
+“笨拙”总觉得有点那个，unix可谈不上笨拙，相反是很灵巧的说
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  2:15 AM">2009年6月19日 02:15</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184883">#</a>
+ | <a href="#comment-text" title="引用mjo的这条留言" onclick="return CommentQuote('comment-quote-184883','mjo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184884" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">liam</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184884">
+            <p>关于之前的小故事，我的看法可能比较不一致。<br />
+实际上，这个是没有高下之分的。<br />
+不同的人解决问题的思路和方法都不同<br />
+但是过度宣传小聪明是不可取的。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  2:43 AM">2009年6月19日 02:43</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184884">#</a>
+ | <a href="#comment-text" title="引用liam的这条留言" onclick="return CommentQuote('comment-quote-184884','liam');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184888" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.niubaobao.org" href="http://www.niubaobao.org" target="_blank" rel="nofollow">张昭</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184888">
+            <p>KISS is what I learned from Microsoft</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  6:30 AM">2009年6月19日 06:30</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184888">#</a>
+ | <a href="#comment-text" title="引用张昭的这条留言" onclick="return CommentQuote('comment-quote-184888','张昭');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184889" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.niubaobao.org" href="http://www.niubaobao.org" target="_blank" rel="nofollow">张昭</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184889">
+            <p>KISS is keep it short and simple.<br />
+keep requriment short and simple, keep coding short and simple<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  6:32 AM">2009年6月19日 06:32</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184889">#</a>
+ | <a href="#comment-text" title="引用张昭的这条留言" onclick="return CommentQuote('comment-quote-184889','张昭');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184897" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">blackgun</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184897">
+            <blockquote>
+<pre>引用深海的发言：</pre>
+
+<p> </p>
+
+<p>我真鄙视你的IQ，太空怎么个燃烧啊。还是您提供了助燃剂</p>
+
+</blockquote>
+你该不会认为他们是太空漫步的时候用铅笔吧？去翻翻宇航员在太空中的图片，在太空舱里是有氧气的。
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  7:19 AM">2009年6月19日 07:19</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184897">#</a>
+ | <a href="#comment-text" title="引用blackgun的这条留言" onclick="return CommentQuote('comment-quote-184897','blackgun');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184900" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">若昔难得</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184900">
+            <p>KISS的全称有很多不同的写法，Keep it simple and short是很常见的一种，意义上也最完整。</p>
+
+<p>而keep it simple，stupid是一个比较戏虐的说法了。你看，并不是keep it simple and stupid，所以，阮一峰的翻译并不对。</p>
+
+<p>另外，这几乎是现代所有软件设计的principle，并非UNIX所独有。不过什么是simple and short，显然微软，苹果,UNIX各有不同的理解，这主要还是由于各自营造的生态系统不同。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  8:00 AM">2009年6月19日 08:00</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184900">#</a>
+ | <a href="#comment-text" title="引用若昔难得的这条留言" onclick="return CommentQuote('comment-quote-184900','若昔难得');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184901" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Jerry Chou</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184901">
+            <blockquote>
+先求运行，再求正确，最后求快。”（Make it run, then make it right, then make it fast.）
+</blockquote>
+
+<p>这也就是敏捷先驱Kent Beck的TDD（测试驱动开发）中提到的节奏。更好术语化一点就是：不可运行->可运行->重构。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  8:16 AM">2009年6月19日 08:16</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184901">#</a>
+ | <a href="#comment-text" title="引用Jerry Chou的这条留言" onclick="return CommentQuote('comment-quote-184901','Jerry Chou');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184906" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">daryl</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184906">
+            <p>1.故事不足为信，用之前简单google一下就能得到很多提示。尤其写这种“有教育意义”的博文的时候，还是战战兢兢一点好。<br />
+2.故事即使是真的，也不足以拿来讲道理。这是中国式思维方式的毒瘤，哪跟哪啊，你证明了他们足以类比吗？非常反感这样的思维/论证方式。中国几千年没有出现科学绝不是偶然的。必须彻底认识这种强盗式思维/论证方式的弊病。</p>
+
+<p>下面是我对Unix Phiosophy的看法。和博主讨论一下。我的观点基本上是相反的。<br />
+我认为Unix并不指导用户怎么去解决问题，这不是OS应该关注的。<br />
+如果OS希望指导用户怎么去解决问题，是对用户的不尊重--一如Windows。Windows的逻辑是"我发明一个功能，你看多好啊，（感激我吧！），来让我教教你怎么用，先点这个，再点那个，找出这个菜单，点出那个对话框，找到Tab，选项的意思是。。。   看看，我们的新功能给你带来了多大的好处啊。。。（比如你点击20次后终于可以把垃圾箱从桌面上去掉了）“这是WIndows的逻辑：发明功能，教育用户.</p>
+
+<p>The.UNIX.Philosophy一书对Unix哲学有一些总结，最根本的一条是”small is beautiful".<br />
+其实这后边的思路是“free the user",给用户自由。我认为包括方法论上面的自由。</p>
+
+<p>博主讲的其实另一方面，不是UNix的哲学，而是Unix实现的哲学。当然对于在UNIX上开发的程序员来说，最好也遵循UNIX开发中带来的哲学，但不绝对。更多的恐怕是博主自己的倾向.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  9:05 AM">2009年6月19日 09:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184906">#</a>
+ | <a href="#comment-text" title="引用daryl的这条留言" onclick="return CommentQuote('comment-quote-184906','daryl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184908" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">杆儿</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184908">
+            <p>这两个故事   在博客园狠狠的活了一把</p>
+
+<p><br />
+说这个是 博士 于 小工 谁有用的问题。 呵呵。。。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  9:22 AM">2009年6月19日 09:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184908">#</a>
+ | <a href="#comment-text" title="引用杆儿的这条留言" onclick="return CommentQuote('comment-quote-184908','杆儿');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184909" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://hi.baidu.com/li_qun" href="http://hi.baidu.com/li_qun" target="_blank" rel="nofollow">mounton</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184909">
+            <p>同意 daryl 的说法。</p>
+
+<p>Unix 是站在研发者的角度实现的系统，从使用者角度上手还是复杂了些。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  9:28 AM">2009年6月19日 09:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184909">#</a>
+ | <a href="#comment-text" title="引用mounton的这条留言" onclick="return CommentQuote('comment-quote-184909','mounton');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184911" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://uface.org" href="http://uface.org" target="_blank" rel="nofollow">阿三</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184911">
+            <p>必须彻底认识这种强盗式思维/论证方式的弊病。</p>
+
+<p>这种思维比较认同。这犹如是读者改头换面的思维方式。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 10:04 AM">2009年6月19日 10:04</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184911">#</a>
+ | <a href="#comment-text" title="引用阿三的这条留言" onclick="return CommentQuote('comment-quote-184911','阿三');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184913" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yucca</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184913">
+            <blockquote>
+<pre>引用yabo的发言：</pre>
+
+<p> <br />
+关于编程的原则，实际上考虑下背后的原因，只有一条：成本。<br />
+由于代码大部分的时间是在被读，简单容易被理解，所以这是最好的减少成本的手段。</p>
+
+</blockquote>
+代码大部分的时间是在被读,先不说开不开源,就现在程序员和用户差异愈来愈大,难道你指望用户打来投诉电话的时候告诉他去看源代码.
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 10:28 AM">2009年6月19日 10:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184913">#</a>
+ | <a href="#comment-text" title="引用yucca的这条留言" onclick="return CommentQuote('comment-quote-184913','yucca');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184918" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.seesnow.net" href="http://www.seesnow.net" target="_blank" rel="nofollow">雪人</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184918">
+            <blockquote>
+<pre>引用daryl的发言：</pre>
+……
+如果OS希望指导用户怎么去解决问题，是对用户的不尊重--一如Windows。
+……
+这是WIndows的逻辑：发明功能，教育用户.
+</blockquote>
+不认同。
+
+<p>OS控制硬件是本分，能指导引导用户尽快上手、体验友好是进步。</p>
+
+<p>商场餐馆里的服务生与导购的热情服务，体现的是对客户的尊重。<br />
+倒是很多部门和单位的公务员大爷们，冷冰冰的爱答不理，体现了对纳税人的不尊重。</p>
+
+<p>---故而，普通用户早就把命令行抛弃了，迷恋命令行的思维只适合为技术人员服务，对普通用户来说，开句玩笑：用户就是爷，爷用OS是为爷服务的，不是爷为OS服务的，爷不舒服，就不买单。</p>
+
+<p>ps: windows server2008时就已经有命令行shell安装方式了：“Windows Server 2008 Core”</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 11:41 AM">2009年6月19日 11:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184918">#</a>
+ | <a href="#comment-text" title="引用雪人的这条留言" onclick="return CommentQuote('comment-quote-184918','雪人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184919" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://blog.yypig.net" href="http://blog.yypig.net" target="_blank" rel="nofollow">歪歪猪</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184919">
+            <p>还有一个故事，是我喜欢讲给程序员听的：</p>
+
+<p>美国和苏联分别是如何设计太空舱的空调的，美国人的设计：1、数字式仪表版显示温度，2、两个按钮，加温和降温，3、通过复杂的电路控制冷气和暖气的平衡达到控温目的。苏联人的思路：1、指针式机械温度计，2、两个阀门，一个控制冷气大小，一个控制暖气大小，3、发现温度过高，关小暖气，开大冷气，发现温度过低，关小冷气，开大暖气。</p>
+
+<p>从舒适性来说，第一种好，从可靠性和节省成本，降低重量来说，第二种好。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 11:48 AM">2009年6月19日 11:48</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184919">#</a>
+ | <a href="#comment-text" title="引用歪歪猪的这条留言" onclick="return CommentQuote('comment-quote-184919','歪歪猪');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184920" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.seesnow.net" href="http://www.seesnow.net" target="_blank" rel="nofollow">雪人</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184920">
+            <p>个人觉得博主最后说的4条是没有问题的，实际上现在已经不再那么重视细节上的技巧带来的效率了，相对的是，可读性的地位越来越高，原因主要是两方面：</p>
+
+<p>1 硬件性能和编译器优化技术的提高，甚至有的情况下现在写“简单”代码编译器更容易优化。</p>
+
+<p>2 软件工程越来越大，牺牲可读性带来的效率提升给工程带来的负面风险和隐性成本过大。</p>
+
+<p>面向对象理论、Java/C#等中间代码的提出和实现，本身就是以牺牲性能来提升模块化和可读性的例子。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 11:52 AM">2009年6月19日 11:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184920">#</a>
+ | <a href="#comment-text" title="引用雪人的这条留言" onclick="return CommentQuote('comment-quote-184920','雪人');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184926" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">fseraph</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184926">
+            <p>KISS在wikipedia上的解释比较靠谱，不应该是简单和笨拙，简单肯定是对的，但是为什么要笨拙？<br />
+<a href="http://en.wikipedia.org/wiki/KISS_principle" rel="nofollow">http://en.wikipedia.org/wiki/KISS_principle</a><br />
+Keep it simple,stupid！前面一个simple是指it，也就是做的事情，后面一个stupid，大概是骂不能保持事情简单的人是笨蛋吧，哈哈</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  1:01 PM">2009年6月19日 13:01</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184926">#</a>
+ | <a href="#comment-text" title="引用fseraph的这条留言" onclick="return CommentQuote('comment-quote-184926','fseraph');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184928" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.niubaobao.org" href="http://www.niubaobao.org" target="_blank" rel="nofollow">张昭</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184928">
+            <p>我想说明一下，keep it short & simple 并非要求少写代码，而是要求你的代码简单易懂。 </p>
+
+<p>比如，这三种写法，哪种是 KISS 呢？</p>
+
+<p>1) if (a>b) return true; else return false;</p>
+
+<p>2) return a>b? true: false;</p>
+
+<p>3) return a>b;</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  2:34 PM">2009年6月19日 14:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184928">#</a>
+ | <a href="#comment-text" title="引用张昭的这条留言" onclick="return CommentQuote('comment-quote-184928','张昭');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184936" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dylanklc</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184936">
+            <p>可读性和性能并不冲突.<br />
+翻阅无数经典C code 你会发现 这并不相悖的.<br />
+只是一般的程序员很难做到.至少在中国能把注<br />
+释写到代码里就算不错的了.</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  6:02 PM">2009年6月19日 18:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184936">#</a>
+ | <a href="#comment-text" title="引用dylanklc的这条留言" onclick="return CommentQuote('comment-quote-184936','dylanklc');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184937" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">dylanklc</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184937">
+            <blockquote>
+<pre>引用雪人的发言：</pre>
+
+<p>普通用户早就把命令行抛弃了，迷恋命令行的思维只适合为技术人员服务，对普通用户来说，开句玩笑：用户就是爷，爷用OS是为爷服务的，不是爷为OS服务的，爷不舒服，就不买单。</p>
+
+</blockquote>
+请勿YY
+用户永远是 案板上的肉.
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  6:05 PM">2009年6月19日 18:05</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184937">#</a>
+ | <a href="#comment-text" title="引用dylanklc的这条留言" onclick="return CommentQuote('comment-quote-184937','dylanklc');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184940" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">daryl</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184940">
+            <p>Windows vs. UNIX/Linux 永远不会有结果的，喜欢Windows的和喜欢UNIX的根本有不同的思维方式。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009  8:41 PM">2009年6月19日 20:41</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184940">#</a>
+ | <a href="#comment-text" title="引用daryl的这条留言" onclick="return CommentQuote('comment-quote-184940','daryl');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184967" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">mjo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184967">
+            <blockquote>
+<pre>引用雪人的发言：</pre>
+
+<p>---故而，普通用户早就把命令行抛弃了，迷恋命令行的思维只适合为技术人员服务，对普通用户来说，开句玩笑：用户就是爷，爷用OS是为爷服务的，不是爷为OS服务的，爷不舒服，就不买单。</p>
+
+<p>ps: windows server2008时就已经有命令行shell安装方式了：“Windows Server 2008 Core”</p>
+
+</blockquote>
+
+<p>主要是用户的定义问题，普通家庭用户谁用unix看电影，而unix的普通用户就是技术人员，用命令行要比GUI效率高，不然微软干嘛发明PowerShell</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 11:28 PM">2009年6月19日 23:28</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184967">#</a>
+ | <a href="#comment-text" title="引用mjo的这条留言" onclick="return CommentQuote('comment-quote-184967','mjo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-184968" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">yabo</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-184968">
+            <blockquote>
+<pre>引用yucca的发言：</pre>
+
+<p> <br />
+代码大部分的时间是在被读,先不说开不开源,就现在程序员和用户差异愈来愈大,难道你指望用户打来投诉电话的时候告诉他去看源代码.</p>
+
+</blockquote>
+我会回来看评论，自己也没想到，或许今天比较空。
+yucca会这么说，大概是自己没改过代码吧。别人的代码，或者自己以前写的 代码，修改之前要干什么？不要告诉我不需要读代码；不要告诉我读代码的时间可以忽略不计。如果这些都需要讨论的话，你和写代码的人沟通是极不流畅的。说到底，程序是思维的产物，代码是程序员思维的表达，写给机器只要能运行就行了，写给人看却要以方便看懂为第一重点。
+关于我的观点就解释至此。
+yucca会有这样的疑问，老实说不大好理解，请问是在做客服工作吗？任何思维作品都注定是给某一部分人看的。我想这很好理解——没有人会认为数学论文必须让小学生看懂，芯片设计要让画家觉得美。代码是写给程序员看的，需要让客户看懂的，叫用户手册。
+想想并没有什么回复的理由，但当成训练脾气也就心平气和了。
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 19, 2009 11:38 PM">2009年6月19日 23:38</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-184968">#</a>
+ | <a href="#comment-text" title="引用yabo的这条留言" onclick="return CommentQuote('comment-quote-184968','yabo');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-185032" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Zhangjingyu</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-185032">
+            <p><br />
+阮。</p>
+
+<p>我是个高中生、学习美术，<br />
+有一次搜索“梵高”的资料时，来到你的博客。</p>
+
+<p>你知识面、真的很广。<br />
+有些都是我不能理解的。</p>
+
+<p>但是、我还是愿意待着这，一点点翻阅着。</p>
+
+<p>关于摄影、电影、文学、美术。</p>
+
+<p>我很喜欢。</p>
+
+<p>谢谢你给我的平台。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 20, 2009 12:12 PM">2009年6月20日 12:12</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-185032">#</a>
+ | <a href="#comment-text" title="引用Zhangjingyu的这条留言" onclick="return CommentQuote('comment-quote-185032','Zhangjingyu');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-185041" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">订阅者</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-185041">
+            <p>为什么要用铅笔呢。我觉得用复写纸就可以了。根本不需要考虑用什么笔。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 20, 2009  1:20 PM">2009年6月20日 13:20</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-185041">#</a>
+ | <a href="#comment-text" title="引用订阅者的这条留言" onclick="return CommentQuote('comment-quote-185041','订阅者');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-185053" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Denmark</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-185053">
+            <blockquote>
+<pre>引用张昭的发言：</pre>
+
+<p> 我想说明一下，keep it short &amp; simple 并非要求少写代码，而是要求你的代码简单易懂。 </p>
+
+<p>比如，这三种写法，哪种是 KISS 呢？</p>
+
+<p>1) if (a&gt;b) return true; else return false;</p>
+
+<p>2) return a&gt;b? true: false;</p>
+
+<p>3) return a&gt;b;</p>
+
+</blockquote>
+
+<p>呃...莫非张昭的答案不是3?</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 20, 2009  3:34 PM">2009年6月20日 15:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-185053">#</a>
+ | <a href="#comment-text" title="引用Denmark的这条留言" onclick="return CommentQuote('comment-quote-185053','Denmark');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-185076" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">zissan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-185076">
+            <blockquote>
+<pre>引用张昭的发言：</pre>
+
+<p> 我想说明一下，keep it short &amp; simple 并非要求少写代码，而是要求你的代码简单易懂。 </p>
+
+<p>比如，这三种写法，哪种是 KISS 呢？</p>
+
+<p>1) if (a&gt;b) return true; else return false;</p>
+
+<p>2) return a&gt;b? true: false;</p>
+
+<p>3) return a&gt;b;</p>
+
+</blockquote>
+在我看来这些都是简单的.
+我想KISS指的是整体架构上的清晰明了,而不是少打几次键盘这样的琐碎细节.
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 21, 2009 11:57 AM">2009年6月21日 11:57</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-185076">#</a>
+ | <a href="#comment-text" title="引用zissan的这条留言" onclick="return CommentQuote('comment-quote-185076','zissan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-185077" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://chariot.blogoutdoor.com" href="http://chariot.blogoutdoor.com" target="_blank" rel="nofollow">小车</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-185077">
+            <p>不幸的是，文中举得两个例子都是假的。<br />
+现实世界实际上需要越来越复杂的技术来支撑。<br />
+我过去时KISS的疯狂信奉者，现在已经不是了。<br />
+实际上“必要的”复杂，远比简单更适合这个世界。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 21, 2009 12:02 PM">2009年6月21日 12:02</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-185077">#</a>
+ | <a href="#comment-text" title="引用小车的这条留言" onclick="return CommentQuote('comment-quote-185077','小车');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-185092" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.wangyutang.com" href="http://www.wangyutang.com" target="_blank" rel="nofollow">米店老板</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-185092">
+            <p>To 小车：<br />
+你说的很有道理。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="June 21, 2009  7:39 PM">2009年6月21日 19:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-185092">#</a>
+ | <a href="#comment-text" title="引用米店老板的这条留言" onclick="return CommentQuote('comment-quote-185092','米店老板');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-186932" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wwj</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-186932">
+            <blockquote>
+<pre>引用yucca的发言：</pre>
+
+<p> <br />
+代码大部分的时间是在被读,先不说开不开源,就现在程序员和用户差异愈来愈大,难道你指望用户打来投诉电话的时候告诉他去看源代码.</p>
+
+</blockquote>
+设想"MS Word",启动时间比如说用10秒，即使你连续10000秒（大约不到3小时）使用它处理文档，但程序99.9％的时间是在等待你的命令，最终程序只运行了20秒。
+
+<p>MS从八十年代至今用了20年左右的时间开发"MS Office"<br />
+我估计每年至少投入200人以上，每年干200天，每天干6小时<br />
+20＊200＊200＊6＊3600＝17280000000秒</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 19, 2009  3:35 PM">2009年7月19日 15:35</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-186932">#</a>
+ | <a href="#comment-text" title="引用wwj的这条留言" onclick="return CommentQuote('comment-quote-186932','wwj');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-186938" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wwj</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-186938">
+            <p>雪人说<br />
+   “OS控制硬件是本分，能指导引导用户尽快上手、体验友好是进步”</p>
+
+<p>不同意</p>
+
+<p>设想TCP/IP协议棧合四为一，上至远程文件传送方式，下至连线端口电气特性，如今有几个人还敢进行网络编程。</p>
+
+<p>我认为OS的设计目标类似于硬件“稳定、高效”，OS只需要考虑程序员友好，不要今天"win16",明天"win32",后天".net",否则用户友好就是无源之水、无本之木。<br />
+</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 19, 2009  4:11 PM">2009年7月19日 16:11</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-186938">#</a>
+ | <a href="#comment-text" title="引用wwj的这条留言" onclick="return CommentQuote('comment-quote-186938','wwj');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-186940" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">wwj</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-186940">
+            <p>还没说够</p>
+
+<p>用户友好涉及心理学、行为学、领域专业知识，甚至还包括用户素质、企业文化等等方面，根本不是一个系统专家有暇顾及的，甚至也不是一个程序员能全面掌握的，需要一大批专业人士的通力合作，那种大包大揽的做法最终只能是闭门造车、纸上谈兵。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 19, 2009  4:31 PM">2009年7月19日 16:31</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-186940">#</a>
+ | <a href="#comment-text" title="引用wwj的这条留言" onclick="return CommentQuote('comment-quote-186940','wwj');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-187121" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://yskin.net" href="http://yskin.net" target="_blank" rel="nofollow">yskin</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-187121">
+            <p>很多人总是以大众的名义，象个大爷一样，说你们搞技术的做出来的任何东西都要以我们普通人是否觉得好用来作为判断标准。这样的想法很奇怪的。</p>
+
+<p>现代人类社会是分工协作的，而且分工很细致，所有人只对上面一级负责。所以OS需要对上层的程序负责，，提供很多基础函数，使得在OS上开发程序比较方便。当然OS也有界面，是被用户直接使用的，界面部分要对用户负责。</p>
+
+<p>人都是懒的，但是人会分析事情，当发现对自己有用的时候就愿意花费时间去学习。电脑键盘有104个键，当你教一个人用电脑时，他会嫌麻烦，但是当你让他聊一会QQ，保证他2小时学会打字。我周围的很多同事，不会用Word，当他要一个标题，就直接设置大字体居中，而不会设置“标题1”样式；不会用多台打印机，打印只会按打印按钮，如果要选择一台非默认打印机就不会了；不会用共享文件夹，拷文件一律要登录QQ传文件。前两天我还发现，他们不会输入键盘上1234……上面的那些!@#$...符号。</p>
+
+<p>如果所有公司的产品都必须对最终用户负责，那么IBM为啥要把PC业务卖掉？IBM不怎么为大众所知，但是IBM服务器、Lotus、为PS3做的芯片，哪样不赚钱？</p>
+
+<p>如果我要做个产品卖给你，OK，我要考虑你是否会用的问题。但是，我为了让自己或者别的程序员工作更方便点而写了个小Python脚本，你却来指责说这个东西对普通用户没用，然后说程序员就喜欢玩专业，显摆，不贴近大众。拜托，我写这个脚本是给你们这些大众用的吗？</p>
+
+<p>最近在看《走出软件作坊》，里面有一章讲的是，客户总是变更需求，导致开发成本很高，怎么办？解决的方法写了很多，但是有一点作者是绝对反对的，就是一味迎合客户，客户说要怎么改就怎么改，总把客户当老板。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="July 22, 2009 10:36 AM">2009年7月22日 10:36</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-187121">#</a>
+ | <a href="#comment-text" title="引用yskin的这条留言" onclick="return CommentQuote('comment-quote-187121','yskin');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-190422" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://shuqun.com/" href="http://shuqun.com/" target="_blank" rel="nofollow">Sutra</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-190422">
+            <p>太空笔的故事是讹传，详见：</p>
+
+<p><a href="https://www.google.com/reader/item/tag:google.com,2005:reader/item/49d6701dee83771e" rel="nofollow">https://www.google.com/reader/item/tag:google.com,2005:reader/item/49d6701dee83771e</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September  9, 2009  6:22 PM">2009年9月 9日 18:22</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-190422">#</a>
+ | <a href="#comment-text" title="引用Sutra的这条留言" onclick="return CommentQuote('comment-quote-190422','Sutra');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-191051" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.quxizang.com" href="http://www.quxizang.com" target="_blank" rel="nofollow">小皮</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-191051">
+            <p>单纯比较Linux、windows没啥可比性。Linux、windows也均有针对不同用户的版本。</p>
+
+<p>关于编程的原则也基本认可。曾经看过一个不错的网站，年利润在千万以上，很多页面是用dw的模板功能实现的。整个网站的功能也非常简单。我觉得需求分析和实现的步骤战略也非常重要，和一峰说的第四条原则有类似之处。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="September 18, 2009  5:58 PM">2009年9月18日 17:58</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-191051">#</a>
+ | <a href="#comment-text" title="引用小皮的这条留言" onclick="return CommentQuote('comment-quote-191051','小皮');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-254232" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">justan</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-254232">
+            <p>阮兄的两个小故事又被外国人吐槽了:<br />
+<a href="http://pixelstech.net/article/index.php?id=1336304966" rel="nofollow">http://pixelstech.net/article/index.php?id=1336304966</a></p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="May  7, 2012  8:13 PM">2012年5月 7日 20:13</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-254232">#</a>
+ | <a href="#comment-text" title="引用justan的这条留言" onclick="return CommentQuote('comment-quote-254232','justan');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-267613" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://weibo.com/varsog" href="http://weibo.com/varsog" target="_blank" rel="nofollow">Varsog</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-267613">
+            <p>太空中的铅笔粉尘会造成灾难，苏联宇航员用铅笔只是一个段子。</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="January  6, 2013  2:34 PM">2013年1月 6日 14:34</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-267613">#</a>
+ | <a href="#comment-text" title="引用Varsog的这条留言" onclick="return CommentQuote('comment-quote-267613','Varsog');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-294840" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">KG</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-294840">
+            <p>四个要点写的很好！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="December 27, 2013  3:52 PM">2013年12月27日 15:52</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-294840">#</a>
+ | <a href="#comment-text" title="引用KG的这条留言" onclick="return CommentQuote('comment-quote-294840','KG');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-342606" class="comment">
+    <div  class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author"><a title="http://www.yd631.com" href="http://www.yd631.com" target="_blank" rel="nofollow">Alice</a></span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-342606">
+            <p>The Art of Unix Programming <a href="http://book.csdn.net/bookfiles/34/10034992.shtml" rel="nofollow">中文版</a>链接已失效！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="November  4, 2014  7:39 PM">2014年11月 4日 19:39</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-342606">#</a>
+ | <a href="#comment-text" title="引用Alice的这条留言" onclick="return CommentQuote('comment-quote-342606','Alice');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    
+        
+        <div id="comment-355705" class="comment">
+    <div id="comment-last" class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<p>
+                <span class="byline">
+                    
+
+                    <span class="vcard author">Ken</span>
+
+ 说：
+                </span>
+</p>
+            </div>
+        </div>
+        <div class="comment-content" id="comment-quote-355705">
+            <p>学习了，多谢！</p>
+        </div>
+<div class="comment-footer">
+<div class="comment-footer-inner">
+<p>
+                   <abbr class="published" title="April 16, 2016  5:59 PM">2016年4月16日 17:59</abbr>
+ | <a href="http://www.ruanyifeng.com/blog/2009/06/unix_philosophy.html#comment-355705">#</a>
+ | <a href="#comment-text" title="引用Ken的这条留言" onclick="return CommentQuote('comment-quote-355705','Ken');">引用</a>
+</p>
+</div>
+</div>
+    </div>
+</div>
+        
+    </div>
+        
+    
+
+
+    
+    
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+        
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1247" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">           
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+    
+
+
+</div>
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <script type="text/javascript" src="http://www.ruanyifeng.com/blog/js/prism.js"></script>
+
+            <div id="footer">
+    <div id="footer-inner">
+        <div id="footer-content">
+<p><a href="/contact.html">联系方式</a> | ruanyifeng.com 2003 - 2016
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46829782-1', 'ruanyifeng.com');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+<!-- Site Meter -->
+<a href="http://sm3.sitemeter.com/stats.asp?site=sm3bomoocom" target="_top">
+<img src="http://sm3.sitemeter.com/meter.asp?site=sm3bomoocom" alt="Site Meter" border="0"/></a>
+
+<!-- Copyright (c)2009 Site Meter -->
+
+</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="share_button_proto" style="display:none;">
+<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+
+
+
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=15e016b4-0028-44f1-a40d-a3c9d9c13c28&style=10&bgcolor=#fff&bp=facebook,twitter,sinaminiblog,weixin,gplus,qqmb,qzone,douban,qqim,fanfou,instapaper,xueqiu&ssc=false"></script>
+<script type="text/javascript" charset="utf-8">
+bShare.addEntry({
+    title: document.getElementById("page-title").innerHTML,
+url:window.location.href
+});
+</script>
+</div>
+
+<script>
+document.getElementById("share_button").innerHTML=document.getElementById("share_button_proto").innerHTML;
+</script>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>
