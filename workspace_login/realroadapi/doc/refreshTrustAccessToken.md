@@ -67,3 +67,5 @@ refreshtoken:sdfsdfsdf23423423
         }
   }
 ```
+### 测试接口
+* http://192.168.1.207/refreshTrustAccesstoken
