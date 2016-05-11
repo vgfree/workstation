@@ -1,6 +1,6 @@
 
 set nocompatible
-set backspace=2
+set backspace=indent,eol,start	"退格键分别可删除缩进，上一行结束，insert之前的字
 
 syntax enable
 syntax on
@@ -13,6 +13,9 @@ let g:solarized_termcolors=256
 set cursorline
 hi CursorLine   cterm=NONE ctermbg=darkblue ctermfg=white guibg=darkred guifg=white
 
+" 显示行尾空白字符,可以自定义颜色                                               
+highlight WhitespaceEOL ctermbg=gray guibg=white                                
+match WhitespaceEOL /\s\+$/ 
 
 " 搜索和匹配
 set showmatch			" 高亮匹配的括号
@@ -32,9 +35,21 @@ set shiftwidth=8
 "set noexpandtab 		" 不要用空格代替制表符
 "set nowrap 			" 不要换行
 set fileencodings=utf-8,gbk
-	
+set nobackup			" 设置不备份
+set nowritebackup		" 不写入备份文
+set noswapfile			" 关闭交换文件
+set showcmd			" 显示输入命令
+set laststatus=2		" 总是显示状态栏
+set shortmess=atI		" 关闭欢迎页面
+set virtualedit=onemore		" 光标可以移到当行最后一个字符之后
+"set confirm			" 退出前验证
+set linespace=0			" 行之间没有多余的空格
+set wildmenu			" 自动补全时的文件菜单
+set whichwrap=b,s,h,l,<,>,[,]	" 行尾可右移到下行，行首左移到上行,b：退格，s：空格，hl：左右，<>：n/v模式下的左右，[]：i/r模式下的左右
+set textwidth=80		" 内容宽度
+set cc=80			" 显示80列的竖线
 
-
+"
 "——-------------------------------------------------------------------------------------
 " vundle 设置
 
@@ -61,10 +76,10 @@ call vundle#rc()
 	Plugin 'vim-airline/vim-airline'                                                                                               
 	Plugin 'vim-airline/vim-airline-themes' 
 	Plugin 'powerline/fonts'
-	" 自动查错
+	" 语法检查
 	Plugin 'scrooloose/syntastic'
 	" supertab 补全
-	Plugin 'ervandew/supertab'
+	"Plugin 'ervandew/supertab'
 	" markdown 插件
 	Plugin 'tpope/vim-markdown'  
 	" 补全
@@ -79,6 +94,8 @@ call vundle#rc()
 	Plugin 'nathanaelkane/vim-indent-guides' 
 	" 索引建立
 	Plugin 'majutsushi/tagbar'
+	" 显示缩进
+	Bundle "Yggdroot/indentLine"
 
 	" The following are examples of different formats supported.
 	" Keep Plugin commands between here and filetype plugin indent on.
@@ -111,16 +128,17 @@ call vundle#rc()
 	" see :h vundle for more details or wiki for FAQ
 	" NOTE: comments after Plugin commands are not allowed.
 	" Put your stuff after this line
-	"-------------------------------------------------------------------------------------------------------
 
-	"neocomplete 配置
+"-------------------------------------------------------------------------------------------------------
+"neocomplete 配置
+
 	"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 	" Disable AutoComplPop.
 	let g:acp_enableAtStartup = 0
 	" Use neocomplete.
 	let g:neocomplete#enable_at_startup = 1
 	" Use smartcase.
-	let g:neocomplete#enable_smart_case = 1
+	let g:neocomplete#enable_smart_case = 1			" 打开vim时自动打开
 	" Set minimum syntax keyword length.
 	let g:neocomplete#sources#syntax#min_keyword_length = 3
 	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
@@ -140,7 +158,7 @@ call vundle#rc()
 
 	" Plugin key-mappings.
 	inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+	inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 	" Recommended key-mappings.
 	" <CR>: close popup and save indent.
@@ -151,12 +169,13 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 	"return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 	endfunction
 	" <TAB>: completion.
-	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<Tab>"
+
 	" <C-h>, <BS>: close popup and delete backword char.
 	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 	inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
+	inoremap <expr><C-e>  neocomplete#cancel_popup()
 	" Close popup by <Space>.
 	"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
@@ -180,11 +199,11 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 	" Enable omni completion.
-	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+	"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 	" Enable heavy omni completion.
 	if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -201,6 +220,7 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "-----------------------------------------------------------------------------------------------------------
 " vim-airline 配置
 	let g:airline_theme='luna'
+	set guifont=Liberation\ Mono\ for\ Powerline\ 10 
 
 	"这个是安装字体后 必须设置此项" 
 	let g:airline_powerline_fonts = 1   
@@ -217,42 +237,35 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 	" 关闭状态显示空白符号计数,这个对我用处不大"
 	let g:airline#extensions#whitespace#enabled = 0
 	let g:airline#extensions#whitespace#symbol = '!'
-	
-	let g:airline#extensions#tabline#enabled = 1
-	let g:airline_powerline_fonts = 1
+
+	" 设置最上面的一栏
+	"let g:airline#extensions#tabline#enabled = 1
 	
 	set laststatus=2
 
-
-" air-line
-let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
 " unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = '|'
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = '|'
+let g:airline_symbols.linenr = '+'
+let g:airline_symbols.branch = '|'
+let g:airline_symbols.paste = '|'
+let g:airline_symbols.whitespace = '|'
 
 " airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+"let g:airline_left_sep = ''
+"let g:airline_left_alt_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_right_alt_sep = ''
+"let g:airline_symbols.branch = ''
+"let g:airline_symbols.readonly = ''
+"let g:airline_symbols.linenr = ''
 
 
 "-----------------------------------------------------------------------------------------------------------
@@ -265,6 +278,7 @@ let g:airline_symbols.linenr = ''
 
 "-----------------------------------------------------------------------------------------------------------
 " supertab 配置
+"	let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
 
 "-----------------------------------------------------------------------------------------------------------
 " markdown 配置
@@ -321,3 +335,11 @@ let g:airline_symbols.linenr = ''
 		endif
 		" }
 
+"-------------------------------------------------------------------------------------------------------------
+" 快速注释
+autocmd FileType python,shell set commentstring=#\ %s                 " 设置Python注释字符
+autocmd FileType mako set cms=##\ %s"
+
+"-------------------------------------------------------------------------------------------------------------
+" 显示缩进
+map <leader>il :IndentLinesToggle<CR>
