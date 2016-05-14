@@ -1,9 +1,9 @@
 -- ngx_newstatus.lua
--- auth: jiang z.s 
+-- auth: jiang z.s
 -- 2015-06-03
 -- 补充功能
--- 2015-05-10 lru cache  
--- 2015-06-03 adtalk 
+-- 2015-05-10 lru cache
+-- 2015-06-03 adtalk
 
 local utils     = require('utils')
 local app_utils = require('app_utils')
@@ -39,12 +39,12 @@ local weibo_redis_new = "weiboNew"
 local read_private = "read_private"
 
 
-local url_tab = { 
+local url_tab = {
 	type_name   = 'transit',
 	app_key     = '',
 	client_host = '',
 	client_body = '',
-}   
+}
 
 local MAX_TIME_UPDATE = 10800  ---最大补传时间为1个小时
 local TIME_DIFF = 28800    -- 8*60*60
@@ -70,10 +70,10 @@ local G = {
 
 
 	sql_save_adtalk_info = " insert into readAdTalkInfo_%s (appKey,senderAccountID,receiverAccountID,releaseTime," ..
-	" releaseLongitude,releaseLatitude,level,content,longitude,latitude," .. 
-	" tokenCode,bizid,adtalkID,readStatus,readTime,readLongitude,readLatitude) " .. 
-	" values (%s,'%s','%s',%s," .. 
-	" %s, %s , %s , '%s', %s, %s , " .. 
+	" releaseLongitude,releaseLatitude,level,content,longitude,latitude," ..
+	" tokenCode,bizid,adtalkID,readStatus,readTime,readLongitude,readLatitude) " ..
+	" values (%s,'%s','%s',%s," ..
+	" %s, %s , %s , '%s', %s, %s , " ..
 	" '%s', '%s', %s , %s , %s , %s , %s ) " ,
 
 	sql_update_adtalk_info = " update readAdTalkInfo_%s set readStatus = 1 ,readTime = %s ,readLongitude =%s ,readLatitude = %s " ..
@@ -278,7 +278,7 @@ local function parse_data(data)
 end
 
 local function lg(name, value)
-	only.log('E',  ' %s = %s is error data!', name, tostring(value) ) 
+	only.log('E',  ' %s = %s is error data!', name, tostring(value) )
 end
 
 local function gmttime_to_time(gmttime)
@@ -290,7 +290,7 @@ local function append_multimedia_file(binary_first, binary_second)
 	local ok_first, length_first = app_utils.check_is_amr(binary_first, #binary_first )
 	local ok_second, length_second  = app_utils.check_is_amr(binary_second, #binary_second)
 	if ok_first and ok_second then
-		return  binary_first  .. binary_second 
+		return  binary_first  .. binary_second
 	end
 	if ok_first then
 		return binary_first
@@ -305,14 +305,14 @@ local function parse_gps_data( gps_table )
 
 	---- 可能出现,,,-1,的数据 2014-09-26
 	if #gps_table[1] < 1 or #gps_table[2] < 1  or #gps_table[3] < 1  or #gps_table[4] < 1  or #gps_table[5] < 1  or #gps_table[6] < 1 then
-		only.log('E', "gps data is Exp: %s",table.concat(gps_table,",")) 
+		only.log('E', "gps data is Exp: %s",table.concat(gps_table,","))
 		return false
-	end 
+	end
 
 	local char_long = string.sub(gps_table[2],-1)
 	---- 2014-10-22 需要考虑异常情况
 	if not EW_NUMBER[ char_long ] then
-		only.log('E', "longitude: %s  char_longis error",gps_table[2]  ) 
+		only.log('E', "longitude: %s  char_longis error",gps_table[2]  )
 		return false
 	end
 
@@ -334,7 +334,7 @@ local function parse_gps_data( gps_table )
 
 	----经纬度转换失败的情况 2014-10-13
 	if not raw_long or not raw_lat then
-		only.log('E',  "longitude: %s  latitude: %s is error",gps_table[2], gps_table[3] ) 
+		only.log('E',  "longitude: %s  latitude: %s is error",gps_table[2], gps_table[3] )
 		return false
 	end
 
@@ -365,7 +365,7 @@ local function parse_gps_data( gps_table )
 	else
 
 		-- save_info["collectTime"] = ngx.time()
-		only.log('E',  " %s GMTtime is ERROR data:%s===", G.imei, GMTtime) 
+		only.log('E',  " %s GMTtime is ERROR data:%s===", G.imei, GMTtime)
 		return false
 	end
 
@@ -458,10 +458,10 @@ end
 ---- gps_table 最基本的数据
 ---- accountid 用户帐号
 ---- imei
----- imsi 
----- token_code 
+---- imsi
+---- token_code
 ---- tab_gpsinfo   当前解析成功返回的数据
----- is_extragps 当前是否为补传gps数据,默认为false 
+---- is_extragps 当前是否为补传gps数据,默认为false
 
 local function get_gps_sql( gps_table, accountid, imei,  imsi , token_code ,  is_extragps , ret_gpsinfo_tab  )
 	if not gps_table then return false end
@@ -470,7 +470,7 @@ local function get_gps_sql( gps_table, accountid, imei,  imsi , token_code ,  is
 	local tb_gps_sql = {}
 
 	ret_gpsinfo_tab['imei']      = imei
-	ret_gpsinfo_tab['count']     = 0	
+	ret_gpsinfo_tab['count']     = 0
 	ret_gpsinfo_tab['accountID'] = accountid
 	ret_gpsinfo_tab['list']      = {}
 
@@ -515,12 +515,12 @@ local function get_gps_sql( gps_table, accountid, imei,  imsi , token_code ,  is
 				local sqlgps = string.format("('%s', '%s', '%s' , %d , %s, '%s', %s%s, %s%s, %s, %s, %s, '%s')",
 				accountid, imei, imsi,
 				create_time, save_info["collectTime"], t_GMTTime , save_info["longdir"],
-				MATH_FLOOR(save_info["longitude"] * dk_utils.gps_point_unit ), 
+				MATH_FLOOR(save_info["longitude"] * dk_utils.gps_point_unit ),
 				save_info["latdir"],
 				MATH_FLOOR(save_info["latitude"] * dk_utils.gps_point_unit ),
-				save_info["direction"], 
-				save_info["speed"], 
-				save_info["altitude"], 
+				save_info["direction"],
+				save_info["speed"],
+				save_info["altitude"],
 				token_code)
 				table.insert(tb_gps_sql, 1, sqlgps)
 			end
@@ -530,17 +530,17 @@ local function get_gps_sql( gps_table, accountid, imei,  imsi , token_code ,  is
 			---- value: 600*12@ ${collectTime}|${createTime}|${imei}|${accountID}|${imsi}|${GMTTime}|${longitude}|${latitude}|${altitude}|${direction}|${speed}|${tokenCode}|...
 			---- 存储至redis
 			table.insert(ret_gpsinfo_tab.list,string.format("%s||||||%s|%s|%s|%s|%s|%s",
-			save_info['collectTime'], 
-			--create_time, imei, accountid or "", 
+			save_info['collectTime'],
+			--create_time, imei, accountid or "",
 			--imsi,  t_GMTTime,
 			MATH_FLOOR(save_info["longitude"] * dk_utils.gps_point_unit ),
-			MATH_FLOOR(save_info["latitude"] * dk_utils.gps_point_unit ), 
-			save_info["altitude"], 
-			save_info['direction'], 
-			save_info['speed'], 
+			MATH_FLOOR(save_info["latitude"] * dk_utils.gps_point_unit ),
+			save_info["altitude"],
+			save_info['direction'],
+			save_info['speed'],
 			token_code))
 
-			ret_gpsinfo_tab.count = ret_gpsinfo_tab.count + 1 
+			ret_gpsinfo_tab.count = ret_gpsinfo_tab.count + 1
 
 		end
 	end
@@ -548,15 +548,15 @@ local function get_gps_sql( gps_table, accountid, imei,  imsi , token_code ,  is
 	if ret_gpsinfo_tab.count < 1 then return false end
 
 	---- 直接返回
-	if tonumber(dk_utils.DK_WRITE_MYSQL_WITH_GPS) ~= 0 then 
-		return string.format(G.sql_save_gps_info, G.cur_month , table.concat(tb_gps_sql, ",")) 
+	if tonumber(dk_utils.DK_WRITE_MYSQL_WITH_GPS) ~= 0 then
+		return string.format(G.sql_save_gps_info, G.cur_month , table.concat(tb_gps_sql, ","))
 	end
 
 end
 
 ------ 判断微博是否过期
 ------ true  del
------- false ok --->---send msg to user 
+------ false ok --->---send msg to user
 local function weibo_expired_new(weibo_endtime)
 	if not weibo_endtime then return true end
 	if type(weibo_endtime) ~= "string" then return true end
@@ -588,11 +588,11 @@ local function save_read_bizid_to_newstatus_info( accountid, args, read_bizid )
 	local cur_time = math.floor(cur_time/10)
 
 	local redis_value = string.format("%s|%s|%s|%s|%s",
-	accountid or '', 
-	args["imei"], 
+	accountid or '',
+	args["imei"],
 	args["imsi"],
-	os.time(), 
-	args["tokencode"] 
+	os.time(),
+	args["tokencode"]
 	)
 	for k,v in pairs (read_bizid) do
 		local redis_key  = string.format("newstatusInfo:%s:%s",v,cur_time)
@@ -600,13 +600,13 @@ local function save_read_bizid_to_newstatus_info( accountid, args, read_bizid )
 
 		if not ok then
 			only.log('E', string.format("save read newstatus info failed! key:%s,value:%s ",redis_key,redis_value ))
-		end	
+		end
 	end
 
 end
 ---- 转发读取微博bizid给其他业务
 local function save_read_bizid_to_read_info_new( accountid, args, read_bizid )
-	local read_info = { 
+	local read_info = {
 		curAccountID = accountid,
 		curIMEI = args['imei'],
 		curIMSI = args['imsi'],
@@ -627,7 +627,7 @@ local function save_read_bizid_to_read_info_new( accountid, args, read_bizid )
 end
 local function save_read_bizid_to_message_redis(accountid ,args ,read_bizid)
 	--> update read bizid
-	local longitude, latitude = 0 , 0 
+	local longitude, latitude = 0 , 0
 	local cur_time = os.date("%Y%m%d%H%M")
 	local cur_time = math.floor(cur_time/10)
 
@@ -638,7 +638,7 @@ local function save_read_bizid_to_message_redis(accountid ,args ,read_bizid)
 	end
 
 	if not read_bizid then
-		only.log('E', "get read_bizid failed! %s" , read_bizid) 
+		only.log('E', "get read_bizid failed! %s" , read_bizid)
 		return
 	end
 
@@ -648,32 +648,32 @@ local function save_read_bizid_to_message_redis(accountid ,args ,read_bizid)
 	latitude * dk_utils.gps_point_unit
 	)
 	--保存已经读的信息
-	for _,tmp_bizid in ipairs(bizid_tab) do 
+	for _,tmp_bizid in ipairs(bizid_tab) do
 
 		local redis_key = string.format("readMessage:%s",cur_time)
 		local value = string.format("%s",accountid)
 		local ok  = redis_api.hash_cmd("message_hash",accountid,'SADD',redis_key ,value)
 
-		if not ok then 
+		if not ok then
 			only.log('E',"save read bizid to message redis failed! key :%s,value:%s",redis_key,value)
 		end
 
 		local redis_key = string.format("readMessage:%s:%s",accountid ,cur_time)
 		local value = string.format("%s|%s",os.time(),tmp_bizid)
 		local ok  = redis_api.hash_cmd("message_hash",accountid,'SADD',redis_key ,value)
-		if not ok then 
+		if not ok then
 			only.log('E',"save read bizid to message redis failed! key :%s,value:%s",redis_key,value)
 		end
 
 		local redis_key = string.format("readMessageInfo:%s:%s",tmp_bizid,cur_time)
 		local ok  = redis_api.hash_cmd("message_hash",tmp_bizid,'SADD',redis_key , redis_value )
-		if not ok then 
+		if not ok then
 			only.log('E',"save read bizid to message redis failed! key :%s,value:%s",redis_key,redis_value)
 		end
 	end
 
 end
----- 保存已经读取的bizid微博 
+---- 保存已经读取的bizid微博
 local function save_read_bizid_to_read_info_pre( accountid, args, read_bizid )
 	local sql_tab = {
 		a1 = 'readGroupTTSWeibo',
@@ -685,7 +685,7 @@ local function save_read_bizid_to_read_info_pre( accountid, args, read_bizid )
 	}
 
 	--> update read bizid
-	local longitude, latitude = 0 , 0 
+	local longitude, latitude = 0 , 0
 
 	---- 设置最新经度
 	if tab_longitude[1] and tab_latitude[1] then
@@ -694,7 +694,7 @@ local function save_read_bizid_to_read_info_pre( accountid, args, read_bizid )
 	end
 
 	if not read_bizid then
-		only.log('E', "get read_bizid failed! %s" , read_bizid) 
+		only.log('E', "get read_bizid failed! %s" , read_bizid)
 		return
 	end
 
@@ -731,7 +731,7 @@ local function save_read_bizid_to_read_info_pre( accountid, args, read_bizid )
 
 		local sql_str = nil
 		if begin_bizid == 'a1' or begin_bizid == 'a2' then
-			---- a1 集团 TTS 
+			---- a1 集团 TTS
 			---- a2 集团 语音
 			sql_str = string.format(G.sql_upate_read_group_weibo,
 			sql_tab[begin_bizid],
@@ -742,7 +742,7 @@ local function save_read_bizid_to_read_info_pre( accountid, args, read_bizid )
 			G.cur_accountid,
 			tmp_bizid)
 		elseif begin_bizid == 'a3' or begin_bizid == 'a4' then
-			---- a3 个人 TTS 
+			---- a3 个人 TTS
 			---- a4 个人 语音
 			sql_str = string.format(G.sql_upate_read_personal_weibo,
 			sql_tab[begin_bizid],
@@ -752,7 +752,7 @@ local function save_read_bizid_to_read_info_pre( accountid, args, read_bizid )
 			latitude * dk_utils.gps_point_unit ,
 			tmp_bizid)
 		elseif begin_bizid == 'a5' or begin_bizid == 'a6' then
-			---- a5 区域 TTS 
+			---- a5 区域 TTS
 			---- a6 区域 语音
 			sql_str = string.format(G.sql_upate_read_personal_weibo,
 			sql_tab[begin_bizid],
@@ -842,9 +842,9 @@ local function fetch_weibo_pre(user, user_type)
 		end
 	else
 		---- 统计微博读取信息情况
-		---- 
+		----
 		local ok,ret = redis_api.cmd(weibo_redis_pre,'get', bizid .. ':senderInfo')
-		if ok and ret  then 
+		if ok and ret  then
 			only.log('D',string.format("bizid:%s  senderInfo %s", bizid, ret))
 			local ok_json,ret_json = pcall(cjson.decode, ret)
 			if ok_json and ret_json then
@@ -914,7 +914,7 @@ end
 
 ---- 根据dfsurl获取文件内容下发
 local function get_dfs_data_by_http(dfsurl)
-	if not dfsurl then return false,'' end 
+	if not dfsurl then return false,'' end
 
 	--当url匹配到redis：时，语音文件从redis里取
 	--fastDFS 存储压力大,将语音文件存到redis里
@@ -928,29 +928,29 @@ local function get_dfs_data_by_http(dfsurl)
 
 		if not ok or not file_data then
 			only.log('E','get redis date from amrBinary redis failed!')
-			return false,'' 
+			return false,''
 		end
 
 		if not app_utils.check_is_amr(file_data,#file_data) then
-			only.log('E',  "redis voice file is invalid: %s", dfsurl) 
+			only.log('E',  "redis voice file is invalid: %s", dfsurl)
 			return false, ''
 		end
 
 		return true,file_type, file_data
-	end 
+	end
 
 	local tmp_domain = nil
 	local is_no_people = nil
 	local is_local_file = nil
-	local old_dfsapi = nil	
+	local old_dfsapi = nil
 
 
 	is_no_people = string.match(dfsurl,"daokeFilePath=")
 
-	is_local_file = string.match(dfsurl,"productList")	
+	is_local_file = string.match(dfsurl,"productList")
 
 	-->兼容老版本
-	old_dfsapi = string.match(dfsurl,"tweet.daoke.me")	
+	old_dfsapi = string.match(dfsurl,"tweet.daoke.me")
 
 	if is_no_people then
 		tmp_domain = string.match(dfsurl,'(http://[%w%.]+.*?group=.*file=.*.%a%a.)%?')
@@ -966,7 +966,7 @@ local function get_dfs_data_by_http(dfsurl)
 		tmp_domain = string.match(dfsurl,'http://[%w%.]+:?%d*/')
 	end
 
-	if not tmp_domain then return false,'' end 
+	if not tmp_domain then return false,'' end
 	local domain = string.match(tmp_domain,'http://([%w%.]+:?%d*)/')
 
 	local parstring = nil
@@ -997,7 +997,7 @@ local function get_dfs_data_by_http(dfsurl)
 	end
 
 	local filey_tpe = string.sub(dfsurl,-4,-1)
-	if not filey_tpe then 
+	if not filey_tpe then
 		filey_tpe = 'amr'
 	else
 		filey_tpe = string.match(filey_tpe,'%.(%w+)')
@@ -1013,16 +1013,16 @@ local function get_dfs_data_by_http(dfsurl)
 		local file_full_path = string.format("%s%s",tmp_path,urlpath)
 
 		local f = io.open(file_full_path , 'r')
-		if not f then 
+		if not f then
 			only.log('E',string.format("open file failed! %s", file_full_path))
-			return false ,'','' 
+			return false ,'',''
 		end
 
 		local file_data = f:read("*all")
 		f:close()
 
 		if not app_utils.check_is_amr(file_data,#file_data) then
-			only.log('E',  "local voice file is invalid: %s", dfsurl) 
+			only.log('E',  "local voice file is invalid: %s", dfsurl)
 			return false, '', ''
 		end
 		return true,filey_tpe, file_data
@@ -1031,7 +1031,7 @@ local function get_dfs_data_by_http(dfsurl)
 	local ok,ret = cutils.http(host,port,req,#req)
 	if not ok then
 		only.log('E','get dfs data when send get request failed!')
-		return false,'','' 
+		return false,'',''
 	end
 
 	local split = string.find(ret,'\r\n\r\n')
@@ -1042,7 +1042,7 @@ local function get_dfs_data_by_http(dfsurl)
 	if not app_utils.check_is_amr(file_data,#file_data) then
 		-- only.log('E',string.format("data length:%s",#file_data))
 		-- only.log('E',string.format("data header:%s",string.sub(file_data,1,20)))
-		only.log('E',  "voice file is invalid: %s", dfsurl) 
+		only.log('E',  "voice file is invalid: %s", dfsurl)
 		return false, '', ''
 	end
 
@@ -1052,7 +1052,7 @@ local function get_dfs_data_by_http(dfsurl)
 			if (string.find(par_tab['daokeFilePath'] , "productList")) == 1 and ( par_tab['position'] == "1" or par_tab['position'] == "2" ) then
 				local daoke_file_path = string.format("./transit/amr/%s",par_tab['daokeFilePath'])
 				local f = io.open(daoke_file_path,'r')
-				if f then 
+				if f then
 					local append_data = f:read("*all")
 					f:close()
 					if  append_data and app_utils.check_is_amr(append_data,#append_data) and  (#append_data +  #file_data) <= dk_utils.MAX_NEWSTATUS_FILE_LENGTH then
@@ -1066,7 +1066,7 @@ local function get_dfs_data_by_http(dfsurl)
 						end
 					end
 				else
-					only.log('E',  "daoke file get failed  %s" , par_tab['daokeFilePath'] ) 
+					only.log('E',  "daoke file get failed  %s" , par_tab['daokeFilePath'] )
 				end
 			end
 		end
@@ -1083,35 +1083,35 @@ local function save_read_adtalk_to_message_redis(weibo, accountid, cur_appkey )
 	local redis_key = string.format("releaseAdTalk:%s:%s:%s",accountid,cur_appkey,cur_time)
 	local redis_value = string.format("%s|%s",os.time(),weibo['bizid'])
 	local ok  = redis_api.hash_cmd("message_hash",weibo["bizid"],"SADD",redis_key , redis_value)
-	if not ok then 
+	if not ok then
 		only.log("E","save release adtalk message failed !key:%s,value:%s",redis_key , redis_value)
 	end
 
 	local redis_key = string.format("releaseAdTalk:%s",cur_time)
 	local redis_value = string.format("%s:%s",accountid,cur_appkey)
 	local ok = redis_api.hash_cmd("message_hash",weibo["bizid"],"SADD",redis_key, redis_value)
-	if not ok then 
+	if not ok then
 		only.log("E","save release adtalk message failed !key:%s,value:%s",redis_key , redis_value)
 	end
 
 	-- local redis_key = string.format("releaseAdTalkID:%s",cur_time)
 	-- local redis_value = string.format("%s",adtalk_id)
 	-- local ok  = redis_api.cmd(redis_name,"SADD",redis_key , redis_value)
-	-- if not ok then 
+	-- if not ok then
 	-- 	only.log("E","save release adtalk message failed !key:%s,value:%s",redis_key , redis_value)
 	-- end
 
 	-- local redis_key = string.format("releaseAdTalkID:%s:%s",adtalk_id,cur_time)
 	-- local redis_value = string.format("%s|%s|%s",accountid,weibo['bizid'])
 	-- local ok  = redis_api.cmd(redis_name,"SADD",redis_key , redis_value)
-	-- if not ok then 
+	-- if not ok then
 	-- 	only.log("E","save release adtalk message failed !key:%s,value:%s",redis_key , redis_value)
 	-- end
-	return true	
+	return true
 end
 ----保存数据至mysql里面
 local function save_read_adtalk_info( weibo, accountid, args , adtalk_id , cur_appkey , cur_senderAccountID , cur_longitude, cur_latitude  )
-	local sql_str = string.format(G.sql_save_adtalk_info,G.cur_month, cur_appkey, 
+	local sql_str = string.format(G.sql_save_adtalk_info,G.cur_month, cur_appkey,
 	cur_senderAccountID, accountid, G.cur_time,
 	cur_longitude * dk_utils.gps_point_unit ,cur_latitude * dk_utils.gps_point_unit ,weibo['level'],weibo['content'] or '',
 	(tonumber(weibo['longitude']) or 0)  *  dk_utils.gps_point_unit ,
@@ -1124,9 +1124,9 @@ local function save_read_adtalk_info( weibo, accountid, args , adtalk_id , cur_a
 end
 
 local function update_read_adtalk_info( accountid, bizid , cur_longitude, cur_latitude  )
-	local sql_str = string.format(G.sql_update_adtalk_info,G.cur_month,  G.cur_time , 
-	cur_longitude * dk_utils.gps_point_unit , 
-	cur_latitude * dk_utils.gps_point_unit , 
+	local sql_str = string.format(G.sql_update_adtalk_info,G.cur_month,  G.cur_time ,
+	cur_longitude * dk_utils.gps_point_unit ,
+	cur_latitude * dk_utils.gps_point_unit ,
 	accountid , table.concat(bizid,"','" ))
 	local ok_status,ok_ret = mysql_api.cmd(app_adtalk_db,'UPDATE',sql_str)
 	if not ok_status then
@@ -1144,14 +1144,14 @@ local function save_read_weibo_info(weibo,accountID,args , appKey , adtalk_id )
 	local redis_key = string.format("releaseMessage:%s:%s:%s",accountID,appKey,cur_time)
 	local redis_value = string.format("%s|%s",os.time(),weibo['bizid'])
 	local ok  = redis_api.hash_cmd("message_hash",accountID,"SADD",redis_key , redis_value)
-	if not ok then 
+	if not ok then
 		only.log("E","save release message failed !key:%s,value:%s",redis_key , redis_value)
 	end
 
 	local redis_key = string.format("releaseMessage:%s",cur_time)
 	local redis_value = string.format("%s:%s",accountID,appKey)
 	local ok  = redis_api.hash_cmd("message_hash",accountID,"SADD",redis_key , redis_value)
-	if not ok then 
+	if not ok then
 		only.log("E","save release message failed !key:%s,value:%s",redis_key , redis_value)
 	end
 
@@ -1161,11 +1161,11 @@ local function save_read_weibo_info(weibo,accountID,args , appKey , adtalk_id )
 	os.time(),
 	(tonumber(tab_longitude[1]) or 0)  * dk_utils.gps_point_unit,
 	(tonumber(tab_latitude[1]) or 0)  * dk_utils.gps_point_unit,
-	adtalk_id	
+	adtalk_id
 	)
 
 	local ok  = redis_api.hash_cmd("message_hash",weibo["bizid"],"SADD",redis_key , redis_value)
-	if not ok then 
+	if not ok then
 		only.log("E","save release message info failed !key:%s,value:%s",redis_key , redis_value)
 	end
 
@@ -1218,7 +1218,7 @@ end
 --		direction_str = string.format("[%s]",table.concat(weibo['direction'],","))
 --	end
 --
---	local sql_str =  string.format("insert into %s set senderAccountID = '%s', sourceID = '%s' , bizid  = '%s'  , releaseTime = %s " .. 
+--	local sql_str =  string.format("insert into %s set senderAccountID = '%s', sourceID = '%s' , bizid  = '%s'  , releaseTime = %s " ..
 --									" , readStatus = 0 , releaseLongitude = %s , releaseLatitude = %s  " ..
 --									" , level = %s , content = '%s' , callbackURL = '%s' " ..
 --									" , speed = '%s'  , longitude = %s , latitude = %s  , distance = %s , direction = '%s' , tokenCode = '%s' "  ..
@@ -1240,7 +1240,7 @@ end
 --									adtalk_id)
 --
 --	if tb_type == 'a1' or tb_type == 'a2' then
---		sql_str = sql_str .. string.format("  , receiverAccountID = '%s' , groupID = '%s', multimediaURL = '%s'   " , 
+--		sql_str = sql_str .. string.format("  , receiverAccountID = '%s' , groupID = '%s', multimediaURL = '%s'   " ,
 --											G.cur_accountid,
 --											weibo['groupID'],
 --											weibo['multimediaFileURL'] or '' )
@@ -1258,7 +1258,7 @@ end
 --  					multimediaFile_type = string.sub(tmp_url,find_dot+1,#multimediaFile_url)
 --  				end
 --  			end
---  			sql_str = sql_str .. string.format(" , multimediaURL = '%s' , fileType = '%s'   " , 
+--  			sql_str = sql_str .. string.format(" , multimediaURL = '%s' , fileType = '%s'   " ,
 -- 									multimediaFile_url,
 --  									multimediaFile_type )
 --  		end
@@ -1275,15 +1275,15 @@ end
 --  					multimediaFile_type = string.sub(tmp_url,find_dot+1,#multimediaFile_url)
 --  				end
 --  			end
---  			sql_str = sql_str .. string.format(" , multimediaURL = '%s' , fileType = '%s'   " , 
+--  			sql_str = sql_str .. string.format(" , multimediaURL = '%s' , fileType = '%s'   " ,
 -- 									multimediaFile_url,
 --  									multimediaFile_type )
 --  		end
 --  	end
 --
 --  	local ok_status,ok_ret = mysql_api.cmd(app_weiboread_db,'INSERT',sql_str)
---  	if not ok_status then 
---  		only.log('E',   'save read weibo failed!  %s  ', sql_str ) 
+--  	if not ok_status then
+--  		only.log('E',   'save read weibo failed!  %s  ', sql_str )
 --  		return false
 --  	end
 --  	return true
@@ -1299,12 +1299,12 @@ local function get_current_group_msg_type( channel_id, accountid )
 
 	local group_val = dk_utils.lru_cache_get_userinfo( accountid, "groupVoiceChannelID")
 	if tostring(group_val) == tostring(channel_id) then
-		return w_type 
+		return w_type
 	end
 
 	local voice_val = dk_utils.lru_cache_get_userinfo( accountid, "voiceCommandChannelID")
 	if tostring(voice_val) == tostring(channel_id) then
-		w_type = 2 
+		w_type = 2
 	end
 	return w_type
 end
@@ -1317,11 +1317,11 @@ local function do_get_pre_sender_microchannel_name( groupid )
 
 	---- 稍后再优化至lrucache内部2015-06-05
 	--local ok,url = redis_api.cmd('private','get',groupid .. ':channelNameUrl')
-	local url = dk_utils.lru_cache_get_channel_info(groupid , "channelNameUrl") 
+	local url = dk_utils.lru_cache_get_channel_info(groupid , "channelNameUrl")
 	if url then
 		local file_ok,file_type, file_data = get_dfs_data_by_http(url)
 		if file_ok and file_data then
-			only.log('D', "%s add channelNameUrl is url:%s ", groupid, url ) 
+			only.log('D', "%s add channelNameUrl is url:%s ", groupid, url )
 			return true,file_data
 		end
 	end
@@ -1337,7 +1337,7 @@ local function do_get_pre_sender_nickname( account_id )
 		if url then
 			local file_ok,file_type, file_data = get_dfs_data_by_http(url)
 			if file_ok and file_data then
-				-- only.log('D', "%s add pre nickname is url:%s ", account_id, url ) 
+				-- only.log('D', "%s add pre nickname is url:%s ", account_id, url )
 				return file_ok,file_data
 			end
 		end
@@ -1361,7 +1361,7 @@ local function do_get_pre_sender_nickname( account_id )
 			if app_utils.check_is_amr(file_data,#file_data) then
 				return true,file_data
 			else
-				only.log('E', "%s.amr-->--invalid amr file!", imei ) 
+				only.log('E', "%s.amr-->--invalid amr file!", imei )
 			end
 		end
 		only.log('E', "%s get imei suffix:%s --- failed ,file:%s ", account_id, imei , cur_imeifile )
@@ -1369,7 +1369,7 @@ local function do_get_pre_sender_nickname( account_id )
 	end
 end
 
--- 判断用户是否添加前缀 
+-- 判断用户是否添加前缀
 -- 没有分大类的情况下,则直接判断1,33,x
 -- 默认为关闭状态
 function check_add_prefix_nickname( account_id , app_type )
@@ -1377,9 +1377,9 @@ function check_add_prefix_nickname( account_id , app_type )
 
 	-- local ok_val = dk_utils.lru_cache_get_userinfo( account_id , "userMsgSubscribed" )
 	-- if not ok_val or #ok_val < app_type then return  true end
-	-- if app_type < 32 then 
+	-- if app_type < 32 then
 	-- 	only.log('E',string.format("[weibo]weibo_type is error:%s ", app_type ) )
-	-- 	return false 
+	-- 	return false
 	-- end
 
 	-- if tostring(string.sub(ok_val,1,1)) == "1" 						---- 系统总开关
@@ -1408,12 +1408,12 @@ function split_data_with_gps( accountid, gps , imei, imsi, tokencode  )
 	local gps_table = parse_data( gps )
 	if type(gps_table) == "table" then
 		local sql_gps = get_gps_sql(gps_table, accountid or '', imei , imsi , tokencode , false, tab_gpsinfo )
-		-- gps是否写mysql 2014-09-16 
+		-- gps是否写mysql 2014-09-16
 		if tonumber(dk_utils.DK_WRITE_MYSQL_WITH_GPS) ~= 0 then
 			if sql_gps then
 				local ok,ret = mysql_api.cmd(app_newstatus_db, "insert", sql_gps)
 				if not ok then
-					only.log('E',  'save gps data failed  %s ', sql_gps ) 
+					only.log('E',  'save gps data failed  %s ', sql_gps )
 				end
 			else
 				only.log('D', "gps is error data!  %s ", gps )
@@ -1423,7 +1423,7 @@ function split_data_with_gps( accountid, gps , imei, imsi, tokencode  )
 			dk_utils.set_gpsinfo(tab_gpsinfo,G.cur_time)
 		end
 	else
-		only.log('E', "gps split failed! %s ", gps ) 
+		only.log('E', "gps split failed! %s ", gps )
 	end
 end
 
@@ -1436,11 +1436,11 @@ local function split_data_with_extragps( accountid, extragps, imei, imsi, tokenc
 		get_gps_sql(gps_table, accountid or '', imei , imsi , tokencode , true, tab_extragpsinfo )
 		if tab_extragpsinfo then
 			--
-			--only.log('E', "set extragps is %s",scan.dump(tab_extragpsinfo) ) 
+			--only.log('E', "set extragps is %s",scan.dump(tab_extragpsinfo) )
 			--dk_utils.set_extragpsinfo(tab_extragpsinfo )
 		end
 	else
-		only.log('E', "extragps split failed! %s", extragps ) 
+		only.log('E', "extragps split failed! %s", extragps )
 	end
 end
 
@@ -1452,7 +1452,7 @@ local function split_data_with_other( args, accountid )
 
 	for i,val in pairs(tmp_tab) do
 		if val and (string.find(tostring(val),"extragps:")) == 1  then
-			----gps补传 
+			----gps补传
 			local tmp_other_str = string.sub(val,10,#val)
 			split_data_with_extragps(accountid, tmp_other_str, args["imei"], args['imsi'] , args['tokencode'] )
 		else
@@ -1462,10 +1462,10 @@ local function split_data_with_other( args, accountid )
 end
 
 ---- get_adtalk_info 2015-06-03
----- return 
+---- return
 ---- 1 bool succed / failed
----- 2 append type 
----- 3 append binary 
+---- 2 append type
+---- 3 append binary
 
 local function get_adtalk_info( cur_longitude, cur_latitude, cur_appkey  )
 
@@ -1481,17 +1481,17 @@ local function get_adtalk_info( cur_longitude, cur_latitude, cur_appkey  )
 	local cur_time = tonumber(os.date("%H"))
 	local cur_slot = 1
 	if cur_time >= 3 and cur_time < 9 then
-		cur_slot = 1 
+		cur_slot = 1
 	elseif cur_time >= 9 and cur_time < 14 then
-		cur_slot = 2 
+		cur_slot = 2
 	elseif cur_time >= 14 and cur_time < 20 then
-		cur_slot = 3 
+		cur_slot = 3
 	elseif cur_time >= 20 or cur_time < 3 then
-		cur_slot = 4 
+		cur_slot = 4
 	end
 
 
-	only.log('D',"********cur_longitude:%s,cur_latitude:%s************** ", cur_longitude, cur_latitude) 
+	only.log('D',"********cur_longitude:%s,cur_latitude:%s************** ", cur_longitude, cur_latitude)
 	local cur_longitude = string.format("%.2f",math.floor(tonumber(cur_longitude)*100)/100)
 	local cur_latitude= string.format("%.2f",math.floor(tonumber(cur_latitude)*100)/100)
 
@@ -1504,7 +1504,7 @@ local function get_adtalk_info( cur_longitude, cur_latitude, cur_appkey  )
 
 	local ok, ret = redis_api.cmd('adTalkServer','SRANDMEMBER',cur_adtalk_key,'1')
 
-	only.log('D',"adtalk redis-key %s " , cur_adtalk_key ) 
+	only.log('D',"adtalk redis-key %s " , cur_adtalk_key )
 
 	if ok and ret and type(ret) == "table" and #ret == 1 then
 		local adtalk_id = ret[1]
@@ -1513,7 +1513,7 @@ local function get_adtalk_info( cur_longitude, cur_latitude, cur_appkey  )
 
 		local ok , info = redis_api.cmd('adTalkServer','hgetall', adtalk_id )
 		if ok and info then
-			-- 192.168.1.13:6379> hgetall 166:ADDetail 
+			-- 192.168.1.13:6379> hgetall 166:ADDetail
 			-- 1) "remainNumber"
 			-- 2) "1000"
 			-- 3) "type"
@@ -1540,7 +1540,7 @@ local function get_adtalk_info( cur_longitude, cur_latitude, cur_appkey  )
 
 			only.log('W',"adtalk_info get status:%s adtalk_id:%s adtalk_url:%s " , tostring(cur_append_status) ,adtalk_id , cur_append_url )
 
-			return cur_append_status, cur_append_type , cur_append_binary , cur_append_url , adtalk_id 
+			return cur_append_status, cur_append_type , cur_append_binary , cur_append_url , adtalk_id
 		elseif ok and not info then
 			redis_api.cmd('adTalkServer', 'srem', cur_adtalk_key,adtalk_id)
 			redis_api.cmd('adTalkServer', 'del', adtalk_id)
@@ -1657,7 +1657,7 @@ local function handle()
 	local cur_longitude = nil
 	local cur_latitude = nil
 
-	----  数据转发 
+	----  数据转发
 	if tab_GPSTime and #tab_GPSTime > 0 then
 
 		if #tab_longitude > 0 then
@@ -1675,7 +1675,7 @@ local function handle()
 		tab_jo["speed"]		= tab_speed
 		tab_jo["altitude"]	= tab_altitude
 		if (other_GPSTime and #other_GPSTime > 0 ) then
-			---- gps补传 2015-04-27 
+			---- gps补传 2015-04-27
 			tab_jo['extragps'] = {}
 			tab_jo['extragps']["GPSTime"]   = other_GPSTime
 			tab_jo['extragps']["longitude"] = other_longitude
@@ -1699,17 +1699,17 @@ local function handle()
 	end
 
 	---- 增加静音判断
-	---- mt=17936 
+	---- mt=17936
 	if args['mt'] then
 		if (tonumber(args['mt']) or 0 ) < 4095  then
-			---- 用户当前是静音状态.不发音频文件 
-			only.log('D', " %s volume is 0 , mt:%s ---->----return 555 " , G.cur_accountid , args['mt']  ) 
+			---- 用户当前是静音状态.不发音频文件
+			only.log('D', " %s volume is 0 , mt:%s ---->----return 555 " , G.cur_accountid , args['mt']  )
 			redis_api.hash_cmd('weibo_hash', G.cur_accountid,'del', G.cur_accountid .. ':weiboPriority')
 			go_empty()
 		end
 	end
 
-	----cur_weibo_version 当前微博类型 
+	----cur_weibo_version 当前微博类型
 	---- 1 之前的老微博
 	---- 2 为新微博
 	local cur_weibo_version = nil
@@ -1761,10 +1761,10 @@ local function handle()
 		end
 		new_weibo_tab['curTokenCode'] = args['tokencode']
 		new_weibo_tab['curTime'] = G.cur_time
-		cur_weibo_version = 2 
+		cur_weibo_version = 2
 		w_type = tonumber(weibo['messageType'])
 	else
-		cur_weibo_version = 1 
+		cur_weibo_version = 1
 		w_type = tonumber(weibo['type'])
 	end
 
@@ -1785,13 +1785,13 @@ local function handle()
 	end
 
 	if dfs_data_isok == false or not dfs_data_binary then
-		only.log('E', " %s get dfsurl %s data failed---->----return 555 " , G.cur_accountid , dfsurl ) 
+		only.log('E', " %s get dfsurl %s data failed---->----return 555 " , G.cur_accountid , dfsurl )
 		go_empty()
 	end
 
-	---- 二进制文件小于300字节, 大于20K,不下发给终端 2014-11-26 
+	---- 二进制文件小于300字节, 大于20K,不下发给终端 2014-11-26
 	if #dfs_data_binary < dk_utils.FILE_MIN_SIZE or #dfs_data_binary >= dk_utils.MAX_NEWSTATUS_FILE_LENGTH then
-		only.log('W', " %s get dfsurl %s data succed but file length :%s [ERROR]" , G.cur_accountid , dfsurl ,#dfs_data_binary ) 
+		only.log('W', " %s get dfsurl %s data succed but file length :%s [ERROR]" , G.cur_accountid , dfsurl ,#dfs_data_binary )
 		go_empty()
 	end
 
@@ -1827,7 +1827,7 @@ local function handle()
 	end
 
 	---- 添加发送着的前缀
-	---- 164为添加前缀 
+	---- 164为添加前缀
 	---- 内部过滤 kxl1QuHKCD,OwQH5wZflD
 	if weibo['sender_info'] and check_add_prefix_nickname(G.cur_accountid, 164 ) then
 		local sender_info = weibo['sender_info']
@@ -1851,14 +1851,14 @@ local function handle()
 	local cur_appkey = nil
 	local cur_senderAccountID = ''
 
-	-----添加获取广告内容 2015-06-03 
+	-----添加获取广告内容 2015-06-03
 	if cur_longitude and cur_latitude then
 		if weibo['sender_info'] then
 			cur_appkey = weibo['sender_info']['appKey'] or ''
 			cur_senderAccountID = weibo['sender_info']['senderAccountID'] or ''
 		end
 		---- feedbackapi, 2290837278
-		---- 主播频道 , 1027395982 
+		---- 主播频道 , 1027395982
 		if cur_appkey and not (string.find("2290837278,1027395982", cur_appkey ) ) then
 			local ok, append_type , append_binary, append_url, adtalk_id = get_adtalk_info( cur_longitude , cur_latitude ,cur_appkey )
 			if ok and append_binary then
@@ -1900,9 +1900,9 @@ local function handle()
 	end
 
 
-	---- 二进制文件小于300字节, 大于20K,不下发给终端 
+	---- 二进制文件小于300字节, 大于20K,不下发给终端
 	if #dfs_data_binary < dk_utils.FILE_MIN_SIZE or #dfs_data_binary >= dk_utils.MAX_NEWSTATUS_FILE_LENGTH then
-		only.log('W', " %s get dfsurl %s data failed---->----return 555 file length:%s" , G.cur_accountid , dfsurl ,#dfs_data_binary ) 
+		only.log('W', " %s get dfsurl %s data failed---->----return 555 file length:%s" , G.cur_accountid , dfsurl ,#dfs_data_binary )
 		go_empty()
 	end
 
@@ -1970,7 +1970,7 @@ local function handle()
 	if weibo['autoReply'] then
 		result_tab['autoReply'] = weibo['autoReply']
 	end
-	if weibo['intervalDis'] then	--in new version weibo the intervalDis willed fixed to invalidDis  
+	if weibo['intervalDis'] then	--in new version weibo the intervalDis willed fixed to invalidDis
 		result_tab['invalidDis'] = weibo['intervalDis']
 	end
 
@@ -1984,7 +1984,7 @@ local function handle()
 	-- 		result_tab['tipType'] = "0"
 	-- 	end
 
-	-- 	---- 2014-11-14  针对特殊IMEI,发送微博之后自动回复 
+	-- 	---- 2014-11-14  针对特殊IMEI,发送微博之后自动回复
 	-- 	if (string.find("785209117984706",tostring(G.imei))) then
 	-- 		result_tab['autoReply'] = "1"
 	-- 	end
@@ -2014,7 +2014,7 @@ local function handle()
 	--local key  = string.format("%s:amrFileLength",args['imei'])
 
 	--local ok, ret = redis_api.cmd("private","eval", string.format(G.redis_eval_file_length, key, result_tab['content']['mmfilelength'] ,cur_time, key ,front_time),0)
-	--if not ok or not ret then 
+	--if not ok or not ret then
 	--	only.log('E',"save release amr file length filed! redis_eval :%s", G.redis_eval_file_length)
 	--end
 
@@ -2023,7 +2023,7 @@ local function handle()
 		go_exit()
 	end
 
-	---- 统计已读取微博 2014-09-23 
+	---- 统计已读取微博 2014-09-23
 	---- 区分个人微博与群组微博 2014-10-20
 	if weibo['groupID'] and #tostring(weibo['groupID']) > 3  then
 		redis_api.cmd('statistic','HINCRBY',string.format('%s:readGroupIDWeiboTotalInfo',cur_today),string.format("%s:totalNum",weibo['groupID']),1)

@@ -37,11 +37,11 @@ local app_config_db   = { [1] = 'app_mirrtalk___config', [2] = 'app_mirrtalk___c
 local app_identify_db = 'app_identify___coreIdentification'
 
 
-local url_tab = { 
-		type_name   = 'transit',
-		app_key     = '',
-		client_host = '',
-		client_body = '',
+local url_tab = {
+	type_name   = 'transit',
+	app_key     = '',
+	client_host = '',
+	client_body = '',
 }
 
 
@@ -51,7 +51,7 @@ local G = {
 	req_ip    = '',
 	body      = '',
 	err_desc  = '',
-	
+
 	cur_month = nil,
 	cur_date  = nil,		----
 	cur_type  = 1,		----- 1生产数据,2工程测试数据
@@ -59,19 +59,19 @@ local G = {
 	cur_time  = 0,
 	accountid = nil,
 	tokencode = nil,
-	
+
 	redis_get_channel_number = "local channel_num = redis.call('get','%s:deviceInitChannelInfo') if channel_num then return channel_num end  local channel_num = redis.call('get','%s:deviceInitChannelInfo')"				   .." if channel_num then return channel_num else return nil end ",
 	sql_save_urllog = "insert into urlLog_%s(createTime,url,clientip,returnValue) values( %s , '%s' , inet_aton('%s') , '%s' )",
 	sql_check_imei = "select status from mirrtalkInfo where imei = %d and nCheck = %d and model = '%s' and validity = 1 and %s <= endTime limit 1 ",
 	sql_check_mod  = "select version from modelInfo   where validity = 1 and model = '%s' and  %s <= endTime limit 1 ",
 	sql_config_info =  " select  '' tokencode, accountID,call1,call2,domain,port,customArgs as customargs from configInfo where accountID = '%s' and model= '%s' limit 1 " ..
-					" union all select '' tokencode,   accountID,call1,call2,domain,port,customArgs as customargs from configInfo where accountID = '' and model='%s' limit 1 ",
+	" union all select '' tokencode,   accountID,call1,call2,domain,port,customArgs as customargs from configInfo where accountID = '' and model='%s' limit 1 ",
 
 
 	sql_config_info_is_io_2 = " select  '' tokencode, call1,call2,fetchdataHost,fetchdataPort, domain as newstatusHost,port as newstatusPort,feedbackHost,feedbackPort," ..
-					 "  customArgs as customargs from configInfo where accountID = '%s'  and model= '%s'  limit 1 " ..
-					 " union all select '' tokencode,  call1,call2,fetchdataHost,fetchdataPort, domain as newstatusHost, port as newstatusPort,feedbackHost,feedbackPort, " .. 
-					 "  customArgs as customargs from configInfo where accountID = '' and model='%s' limit 1 ",
+	"  customArgs as customargs from configInfo where accountID = '%s'  and model= '%s'  limit 1 " ..
+	" union all select '' tokencode,  call1,call2,fetchdataHost,fetchdataPort, domain as newstatusHost, port as newstatusPort,feedbackHost,feedbackPort, " ..
+	"  customArgs as customargs from configInfo where accountID = '' and model='%s' limit 1 ",
 
 	sql_user_poweron = "INSERT INTO userPowerOnInfo_%s(createTime, accountID, imei,imsi,model, tokenCode, tokenCodeEndTime,travelID,version,androidVer,modelVer,kernelVer,basebandVer,buildVer,appID) values(%s, '%s', %s, %s, '%s' , '%s' , %s ,%s , '%s','%s','%s','%s','%s','%s','%s')",
 }
@@ -101,7 +101,7 @@ end
 ----第一个: false超过使用限制,或者程序出错
 ----        true
 local function check_configindex(imei)
-	----判断IMEI当天请求次数是否 > x 
+	----判断IMEI当天请求次数是否 > x
 	local configkey = string.format("%s:%s:configIndex",G.cur_date,imei)
 	local ok_status,ok_config = redis_api.cmd(private,'INCR', configkey)
 	--only.log('D', string.format('xxxxxxxxx configIndex is %s,value is %s  ',configkey,ok_config))
@@ -111,12 +111,12 @@ local function check_configindex(imei)
 	end
 	local ok = redis_api.cmd(private,'EXPIRE', configkey,'86400')
 
-	local iIndex = 0 
+	local iIndex = 0
 	if ok_config then
 		iIndex = ok_config
 		if (tonumber(iIndex) or 0 ) > dk_utils.MAX_CONFIG_INDEX then
 			only.log('E',string.format("[CHECK_FAILED] %s  more then %s, error", configkey, dk_utils.MAX_CONFIG_INDEX ))
-			return false	
+			return false
 		end
 	end
 
@@ -144,7 +144,7 @@ local function get_accountid(imei)
 		is_exist = false
 	else
 		is_exist = true
-	end 
+	end
 	return true,is_exist,accountID
 end
 
@@ -165,10 +165,10 @@ local function save_poweron_to_table( args,token_code )
 	G.travel_id = travel_id
 
 	local sql_str = string.format(G.sql_user_poweron,G.cur_month,G.cur_time  ,(G.accountid or ''), args['imei'],args['imsi'],args['mod'],token_code, (G.cur_time + 48*60*60) ,travel_id,args['verno'],args['androidver'],args['modelver'],args['kernelver'],args['basebandver'],args['buildver'],args['appid'])
-	--only.log('D','user poweron sql is, %s  ', sql_str) 
+	--only.log('D','user poweron sql is, %s  ', sql_str)
 	local ok_status,ok_ret = mysql_api.cmd(app_config_db[G.cur_type],'INSERT',sql_str)
 	if not ok_status then
-		only.log('E','connect database failed when insert sql_user_poweron, %s  ', sql_str) 
+		only.log('E','connect database failed when insert sql_user_poweron, %s  ', sql_str)
 		return false
 	end
 	return true
@@ -179,7 +179,7 @@ end
 local function get_default_channel_idx(channel_num )
 	local ok, idx = redis_api.cmd(read_private, 'get', channel_num .. ':channelID')
 	if ok and idx then
-		return idx 
+		return idx
 	end
 	return nil
 end
@@ -190,7 +190,7 @@ end
 -----2.部分车机机器默认同一个频道
 
 local function get_model_default_channel(model,imei)
-	only.log('W',"******model:%s,imei is :%s*****************",model , imei)	
+	only.log('W',"******model:%s,imei is :%s*****************",model , imei)
 	local ok, res= redis_api.cmd(read_private, 'eval',string.format(G.redis_get_channel_number,imei, model),0)
 	if ok and res then
 		return res
@@ -208,7 +208,7 @@ local function update_channel_info_to_redis(accountid, imei, model, voiceCommand
 	---- 所有在线用户
 	redis_api.cmd('statistic', 'sadd', 'allOnlineUser:set', accountid )
 
-	---- 2015-10-29 jiang z.s. 
+	---- 2015-10-29 jiang z.s.
 	if G.model_version == '2' then
 		---- 当前是IO 2.0协议
 		---- 不初始化 频道信息
@@ -222,9 +222,9 @@ local function update_channel_info_to_redis(accountid, imei, model, voiceCommand
 	if #accountid == 15 then
 		---- 设置++按键,没有默认值直接加到10086
 		--local default_channel = "10086"
-		local default_channel = get_model_default_channel(model,accountid)		
-		only.log('W',"**********default_channel is %s**************",default_channel)		
-		default_channel = default_channel or "10086" 
+		local default_channel = get_model_default_channel(model,accountid)
+		only.log('W',"**********default_channel is %s**************",default_channel)
+		default_channel = default_channel or "10086"
 		local ok_channel =  get_default_channel_idx(default_channel)
 		if ok_channel and #tostring(ok_channel) >= 9 then
 			---- 2015-08-26 判断群聊频道用户状态
@@ -278,16 +278,16 @@ local function update_channel_info_to_redis(accountid, imei, model, voiceCommand
 end
 
 local function device_power_init_redis( args )
-	
-	---- imei 相关的信息 2015-08-14 hou.y.q. 
+
+	---- imei 相关的信息 2015-08-14 hou.y.q.
 	--imei 与 imsi 对应关系用于流量查询使用
 	--model 与 imei对应关系用于异常关机使用
 	--poweronTime 开机时间
-	redis_api.cmd('private','mset', args['imei'] .. ":IMSIInfo", args['imsi'], 
-				        args['imsi'] .. ":IMEIInfo", args['imei'],
-					args['imei'] .. ":modelInfo",args['mod'],
-					args['imei'] .. ":poweronTime",os.time()
-		     )
+	redis_api.cmd('private','mset', args['imei'] .. ":IMSIInfo", args['imsi'],
+	args['imsi'] .. ":IMEIInfo", args['imei'],
+	args['imei'] .. ":modelInfo",args['mod'],
+	args['imei'] .. ":poweronTime",os.time()
+	)
 
 end
 
@@ -308,7 +308,7 @@ local function ready_execution(args)
 	----查询accountID对应的相关信息
 	local sql_str = string.format(G.sql_config_info,tmp_accid,mod,mod)
 	if G.model_version == '2' then
-		------ 临时使用,使用IO 2.0 
+		------ 临时使用,使用IO 2.0
 		sql_str = string.format(G.sql_config_info_is_io_2,tmp_accid,mod,mod)
 	end
 
@@ -343,7 +343,7 @@ local function ready_execution(args)
 		return false,nil
 	end
 	------- save currentInfo --------------------------------------------------
-	
+
 	local currentInfo_valua = string.format("%s|%s|%s|%s|%s|%s|%s",G.cur_time,imei,mod,imsi,G.tokencode,G.travel_id,verno)
 	local ok,ret = redis_api.cmd(redis_args, 'set', imei..':currentInfo', currentInfo_valua)
 
@@ -351,7 +351,7 @@ local function ready_execution(args)
 	local ok_status , custom_tab = pcall(cjson.decode,custom_str)
 	if ok_status and custom_tab then
 		local ok_status,ok_voice_type = redis_api.cmd(read_private,'get',tmp_accid .. ':voiceCommandCustomType')
-		if ok_status and ok_voice_type then 
+		if ok_status and ok_voice_type then
 			custom_tab['voiceCommand'] = true
 			-- ok_status , custom_str = pcall(cjson.encode,custom_tab)
 			-- if ok_status or custom_str then
@@ -374,11 +374,11 @@ local function ready_execution(args)
 	local cur_port  = ok_config[1]['port']
 	if G.cur_type == dk_utils.DK_IMEI_ENGINEERING then
 		---- 工程测试环境
-		return_tab['domain'] = "s9gc.mirrtalk.com" 
+		return_tab['domain'] = "s9gc.mirrtalk.com"
 		return_tab['port'] = "80"
 	end
 
-	---- port is number 2015-11-04 
+	---- port is number 2015-11-04
 	return_tab['port'] = tonumber(return_tab['port'])
 
 	return_tab['tokencode'] = token_code
@@ -391,43 +391,43 @@ end
 ----检查参数
 local function check_parameter(imei,imsi,mod)
 	if not imei or not imsi or not mod then
-		only.log('E','[CHECK_FAILED]params is nil -->imei:%s  imsi:%s, mod:%s ', imei, imsi, mod ) 
+		only.log('E','[CHECK_FAILED]params is nil -->imei:%s  imsi:%s, mod:%s ', imei, imsi, mod )
 		return false
 	end
 
 	if #imei ~= 15 or #imsi ~= 15 or #mod ~= 5   then
 		only.log('E','[CHECK_FAILED] IMEI:%s ,IMSI:%s , mod:%s  params length error',imei, imsi, mod )
-		return false 
+		return false
 	end
 
 	----检测imei是否为15位数字
 	local tmp = string.match(imei,'%d+')
-	if not tmp or  #tmp ~= 15 then 
+	if not tmp or  #tmp ~= 15 then
 		only.log('E','[CHECK_FAILED]imei:%s  must be number',imei)
-		return false 
-	end 
+		return false
+	end
 
 	----检测imsi是否为15位数字
 	local tmp = string.match(imsi,'%d+')
 	if not tmp or #tmp ~= 15 then
 		only.log('E','[CHECK_FAILED]imsi:%s must be number',imei)
-		return false 
+		return false
 	end
 
 	----检测mod是否为大写字符+数字组合
 	local tmp = string.match(mod,'%w+')
 	if not tmp or #tmp ~= 5 then
 		only.log('E','[CHECK_FAILED]imsi:%s mod:%s be number and letter',imsi,mod)
-		return false 
+		return false
 	end
 	if string.upper(tmp) ~= tmp then
 		only.log('E','[CHECK_FAILED]imei:%s mod:%s must be uppercase letters',imei,mod)
-		return false 
+		return false
 	end
 
 	----检查imei数据库中是否存在,且有效
 	-- local sql_str = string.format(G.sql_check_imei,imei,mod)
-	---- IMEI = imei + nCheck 
+	---- IMEI = imei + nCheck
 	---- 拆分为2个字段 2014-09-16
 	local sql_str = string.format(G.sql_check_imei, string.sub(imei,1,14),string.sub(imei,-1) ,mod, G.cur_time  )
 	local ok_check,ret_check = mysql_api.cmd(app_identify_db,'SELECT',sql_str)
@@ -437,7 +437,7 @@ local function check_parameter(imei,imsi,mod)
 	end
 	if #ret_check ~= 1 then
 		only.log('D','[CHECK_FAILED]IMEI:%s query succed but get record is empty',imei)
-		return false 
+		return false
 	end
 
 	----10a、10r和11b三种状态都进入工程模式；13g为正常工作模式；**p不允许使用。注意coreIdentification.mirrtalkInfo表中，validity=0或者endTime小于当前时间都不允许使用
@@ -445,7 +445,7 @@ local function check_parameter(imei,imsi,mod)
 		---- 工程模式
 		G.cur_type = dk_utils.DK_IMEI_ENGINEERING
 	elseif (string.find(ret_check[1]['status'],"p")) then
-		only.log('E',"imsi:%s -->---status is error:%s", imei, ret_check[1]['status'] ) 
+		only.log('E',"imsi:%s -->---status is error:%s", imei, ret_check[1]['status'] )
 		return false
 	end
 
@@ -459,7 +459,7 @@ local function check_parameter(imei,imsi,mod)
 	end
 	if #ret_check ~= 1 then
 		only.log('D','[CHECK_FAILED]mod:%s query succed but get record is empty',mod)
-		return false 
+		return false
 	else
 		G.model_version = ret_check[1]['version']
 	end
@@ -472,11 +472,11 @@ end
 -----数据发送给driview
 local function post_poweron_status_to_data_routing(args)
 	local body_data = string.format('{"powerOn":true,"accountID":"%s","tokenCode":"%s","model":"%s","IMEI":"%s"}',
-					G.accountid or args['imei'],
-					G.tokencode,
-					args['mod'],
-					args['imei'])
-	
+	G.accountid or args['imei'],
+	G.tokencode,
+	args['mod'],
+	args['imei'])
+
 	only.log('D',"post_poweron_status_to_data_routing %s", body_data)
 
 	dk_utils.post_data_to_power_info(args['imei'],body_data)
@@ -484,7 +484,7 @@ local function post_poweron_status_to_data_routing(args)
 end
 
 
----------数据发送给dataCenter 2014-09-26 
+---------数据发送给dataCenter 2014-09-26
 local function post_poweron_status_to_dataCore( imei, accountid ,tokencode, travelid )
 
 	local ok, preTimestamp = redis_api.cmd(read_private, 'get',  string.format("%s:heartbeatTimestamp",(accountid or imei)) )
@@ -495,7 +495,7 @@ local function post_poweron_status_to_dataCore( imei, accountid ,tokencode, trav
 		tokenCode = tokencode ,
 		travelID  = travelid,
 		normal    = 10, 									---- 1正常关机,10正常开机
-		preTimestamp = tonumber(preTimestamp) or 0,		---- 上一次的最后一次心跳包时间 2014-12-16 
+		preTimestamp = tonumber(preTimestamp) or 0,		---- 上一次的最后一次心跳包时间 2014-12-16
 	}
 
 	if #tostring(args['accountID']) ~= 10 then
@@ -508,7 +508,7 @@ local function post_poweron_status_to_dataCore( imei, accountid ,tokencode, trav
 
 	local ok, ret = http_api.http_ex(host_info, data ,false,"DATACORE_SERVER",60)
 	if not ok then
-		only.log('E', " post DataCore failed %s  ", data) 
+		only.log('E', " post DataCore failed %s  ", data)
 		return false
 	end
 
@@ -519,14 +519,14 @@ end
 
 
 
----------数据发送给dataCenter 2014-09-26 
+---------数据发送给dataCenter 2014-09-26
 local function post_poweron_status_to_damServer( imei, accountid ,tokencode, travelid , mod  )
 	local args = {
 		IMEI      = imei,
 		accountID = accountid or '',
 		tokenCode = tokencode ,
 		travelID  = travelid,
-		model     = mod , 
+		model     = mod ,
 	}
 	local data =  utils.json_encode(args)
 	local host_info = link['OWN_DIED']['http']['damServer']
@@ -543,16 +543,16 @@ end
 local function set_config_his(args,ret)
 	----检测imei是否为15位数字
 	local tmp = string.match(args['imei'],'%d+')
-	if not tmp or  #tmp ~= 15 then 
-		return 
-	end 
-	
+	if not tmp or  #tmp ~= 15 then
+		return
+	end
+
 	local db = ssdb:new()
 	local ok, err = db:set_timeout(5000)
 	local ok, err = db:connect(ssdblink['host'], ssdblink['port'])
 	if not ok then
-    		only.log('E',"failed to connect ssdb:%s", err)
-    		return
+		only.log('E',"failed to connect ssdb:%s", err)
+		return
 	end
 	local key = string.format("ACTIVEUSER:%s", G.cur_date)
 	local ok,err = db:hincr(key,args['imei'])
@@ -605,7 +605,7 @@ local function saveinfo(args)
 	local basebandver = args['basebandver']
 	local modelver = args['modelver']
 	local verno = args['verno']
-	
+
 	if buildver then
 		local ok = redis_api.cmd(redis_args,'sadd', buildver .. ':build',imei)
 		if not ok then
@@ -673,14 +673,14 @@ local function handle()
 		----G.body = string.format('GET %s',utils.table_to_kv(args) )
 		G.body = string.format('GET %s', ngx.encode_args(args) )
 	end
-	
+
 	only.log('D', 'args = %s', scan.dump(args))
 
 
 	url_tab['client_body'] = G.body
 
 	G.imei      = args['imei']
-	
+
 	local imei = args['imei']
 	local imsi = args['imsi']
 	local mod  = args['mod']
@@ -699,7 +699,7 @@ local function handle()
 		go_exit_configover50()
 		return
 	end
-	
+
 	--save all args to redis
 	saveinfo(args)
 
@@ -724,7 +724,7 @@ local function handle()
 		---- dataCore
 		post_poweron_status_to_dataCore(imei,G.accountid,G.tokencode ,G.travel_id  )
 
-		---- damServer  属于废弃 2015-08-26 
+		---- damServer  属于废弃 2015-08-26
 		---- post_poweron_status_to_damServer( imei ,G.accountid,G.tokencode ,G.travel_id , mod )
 
 	end
@@ -735,7 +735,7 @@ local function handle()
 	set_config_his(args,'200')
 	save_urllog(ok_ret_str)
 	gosay.respond_to_status(url_tab,true)
-	
+
 end
 
 handle()
