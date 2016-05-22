@@ -1,0 +1,837 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Nginx配置文件nginx.conf中文详解[转] - wangqiaowqo - ITeye技术网站</title>
+    <meta name="description" content="参考 http://www.ha97.com/5194.html     #定义Nginx运行的用户和用户组  user www www;    #nginx进程数，建议设置为等于CPU总核心数。  worker_processes 8;    #全局错误日志� ..." />
+    <meta name="keywords" content=" Nginx配置文件nginx.conf中文详解[转]" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="search" type="application/opensearchdescription+xml" href="/open_search.xml" title="ITeye" />
+    <link href="/rss" rel="alternate" title="wangqiaowqo" type="application/rss+xml" />
+    <link href="http://www.iteye.com/stylesheets/blog.css?1462428996" media="screen" rel="stylesheet" type="text/css" />
+<link href="http://www.iteye.com/stylesheets/themes/blog/green.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+    <script src="http://www.iteye.com/javascripts/application.js?1448702469" type="text/javascript"></script>    
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-535605-1']);
+  _gaq.push(['_setDomainName', 'iteye.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+      <link href="http://www.iteye.com/javascripts/syntaxhighlighter/SyntaxHighlighter.css?1448702469" media="screen" rel="stylesheet" type="text/css" />
+  <script src="http://www.iteye.com/javascripts/syntaxhighlighter/shCoreCommon.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/hotkey.js?1448702469" type="text/javascript"></script>
+  <script src="http://www.iteye.com/javascripts/code_favorites.js?1448702469" type="text/javascript"></script>
+<script src="http://www.iteye.com/javascripts/weiboshare.js?1448702469" type="text/javascript"></script>
+    
+  </head>
+  <body>
+    <div id="header">
+      <div id="blog_site_nav">
+  <a href="http://www.iteye.com/" class="homepage">首页</a>
+  <a href="http://www.iteye.com/news">资讯</a>
+  <a href="http://www.iteye.com/magazines">精华</a>
+  <a href="http://www.iteye.com/forums">论坛</a>
+  <a href="http://www.iteye.com/ask">问答</a>
+  <a href="http://www.iteye.com/blogs">博客</a>
+  <a href="http://www.iteye.com/blogs/subjects">专栏</a>
+  <a href="http://www.iteye.com/groups">群组</a>
+  <a href="#" onclick="return false;" id="msna"><u>更多</u> <small>▼</small></a>
+  <div class="quick_menu" style="display:none;">
+    <a target="_blank" href="http://job.iteye.com/iteye">知识库</a>
+    <a href="http://www.iteye.com/search">搜索</a>
+  </div>
+</div>
+
+      <div id="user_nav">
+      <a href="/login" class="welcome" title="登录">您还未登录 !</a>
+    <a href="/login">登录</a>
+    <a href="/signup" class="nobg">注册</a>
+  </div>
+
+    </div>
+
+    <div id="page">
+      <div id="branding" class="clearfix">
+        <div id="blog_name">
+          <h1><a href="/">wangqiaowqo</a></h1>
+        </div>
+        <div id='fd'></div>
+        <div id="blog_navbar">
+          <ul>
+            <li class='blog_navbar_for'><a href="http://wangqiaowqo.iteye.com"><strong>博客</strong></a></li>
+            <li ><a href="/weibo">微博</a></li>
+            <li ><a href="/album">相册</a></li>
+            <li ><a href="/link">收藏</a></li>
+            <li ><a href="/blog/guest_book">留言</a></li>
+            <li ><a href="/blog/profile">关于我</a></li>
+          </ul>
+    
+          <div class="search">
+            <form action="/blog/search" method="get">
+              <input class="search_text" id="query" name="query" style="margin-left: 10px;width: 110px;" type="text" value="" />
+              <input class="submit_search" type="submit" value="" />
+            </form>
+          </div> 
+          <div id="fd"></div>         
+        </div>
+      </div>
+      
+      <div id="content" class="clearfix">
+        <div id="main">
+          
+
+
+
+          
+
+
+<div class="h-entry" style='display:none'>
+  <a href="http://wangqiaowqo.iteye.com" class="p-author" target="_blank">wangqiaowqo</a>
+</div>
+
+
+<div class="blog_main">
+  <div class="blog_title">
+    <h3>
+      <a href="/blog/2261773">Nginx配置文件nginx.conf中文详解[转]</a>
+      <em class="actions">      </em>
+    </h3>
+    <ul class='blog_categories'><strong>博客分类：</strong> <li><a href="/category/234864">nginx</a></li> </ul>
+        <div class='news_tag'>&nbsp;</div>
+    	  
+    	
+    	
+  		
+      </div>
+
+  <div id="blog_content" class="blog_content">
+    参考<br />http://www.ha97.com/5194.html<br /><br /><pre name="code" class="java">
+
+#定义Nginx运行的用户和用户组
+user www www;
+
+#nginx进程数，建议设置为等于CPU总核心数。
+worker_processes 8;
+
+#全局错误日志定义类型，[ debug | info | notice | warn | error | crit ]
+error_log /var/log/nginx/error.log info;
+
+#进程文件
+pid /var/run/nginx.pid;
+
+#一个nginx进程打开的最多文件描述符数目，理论值应该是最多打开文件数（系统的值ulimit -n）与nginx进程数相除，但是nginx分配请求并不均匀，所以建议与ulimit -n的值保持一致。
+worker_rlimit_nofile 65535;
+
+#工作模式与连接数上限
+events
+{
+#参考事件模型，use [ kqueue | rtsig | epoll | /dev/poll | select | poll ]; epoll模型是Linux 2.6以上版本内核中的高性能网络I/O模型，如果跑在FreeBSD上面，就用kqueue模型。
+use epoll;
+#单个进程最大连接数（最大连接数=连接数*进程数）
+worker_connections 65535;
+}
+
+#设定http服务器
+http
+{
+include mime.types; #文件扩展名与文件类型映射表
+default_type application/octet-stream; #默认文件类型
+#charset utf-8; #默认编码
+server_names_hash_bucket_size 128; #服务器名字的hash表大小
+client_header_buffer_size 32k; #上传文件大小限制
+large_client_header_buffers 4 64k; #设定请求缓
+client_max_body_size 8m; #设定请求缓
+sendfile on; #开启高效文件传输模式，sendfile指令指定nginx是否调用sendfile函数来输出文件，对于普通应用设为 on，如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络I/O处理速度，降低系统的负载。注意：如果图片显示不正常把这个改成off。
+autoindex on; #开启目录列表访问，合适下载服务器，默认关闭。
+tcp_nopush on; #防止网络阻塞
+tcp_nodelay on; #防止网络阻塞
+keepalive_timeout 120; #长连接超时时间，单位是秒
+
+#FastCGI相关参数是为了改善网站的性能：减少资源占用，提高访问速度。下面参数看字面意思都能理解。
+fastcgi_connect_timeout 300;
+fastcgi_send_timeout 300;
+fastcgi_read_timeout 300;
+fastcgi_buffer_size 64k;
+fastcgi_buffers 4 64k;
+fastcgi_busy_buffers_size 128k;
+fastcgi_temp_file_write_size 128k;
+
+#gzip模块设置
+gzip on; #开启gzip压缩输出
+gzip_min_length 1k; #最小压缩文件大小
+gzip_buffers 4 16k; #压缩缓冲区
+gzip_http_version 1.0; #压缩版本（默认1.1，前端如果是squid2.5请使用1.0）
+gzip_comp_level 2; #压缩等级
+gzip_types text/plain application/x-javascript text/css application/xml;
+#压缩类型，默认就已经包含text/html，所以下面就不用再写了，写上去也不会有问题，但是会有一个warn。
+gzip_vary on;
+#limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用
+
+upstream blog.ha97.com {
+#upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。
+server 192.168.80.121:80 weight=3;
+server 192.168.80.122:80 weight=2;
+server 192.168.80.123:80 weight=3;
+}
+
+#虚拟主机的配置
+server
+{
+#监听端口
+listen 80;
+#域名可以有多个，用空格隔开
+server_name www.ha97.com ha97.com;
+index index.html index.htm index.php;
+root /data/www/ha97;
+location ~ .*\.(php|php5)?$
+{
+fastcgi_pass 127.0.0.1:9000;
+fastcgi_index index.php;
+include fastcgi.conf;
+}
+#图片缓存时间设置
+location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+{
+expires 10d;
+}
+#JS和CSS缓存时间设置
+location ~ .*\.(js|css)?$
+{
+expires 1h;
+}
+#日志格式设定
+log_format access '$remote_addr - $remote_user [$time_local] "$request" '
+'$status $body_bytes_sent "$http_referer" '
+'"$http_user_agent" $http_x_forwarded_for';
+#定义本虚拟主机的访问日志
+access_log /var/log/nginx/ha97access.log access;
+
+#对 "/" 启用反向代理
+location / {
+proxy_pass http://127.0.0.1:88;
+proxy_redirect off;
+proxy_set_header X-Real-IP $remote_addr;
+#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#以下是一些反向代理的配置，可选。
+proxy_set_header Host $host;
+client_max_body_size 10m; #允许客户端请求的最大单文件字节数
+client_body_buffer_size 128k; #缓冲区代理缓冲用户端请求的最大字节数，
+proxy_connect_timeout 90; #nginx跟后端服务器连接超时时间(代理连接超时)
+proxy_send_timeout 90; #后端服务器数据回传时间(代理发送超时)
+proxy_read_timeout 90; #连接成功后，后端服务器响应时间(代理接收超时)
+proxy_buffer_size 4k; #设置代理服务器（nginx）保存用户头信息的缓冲区大小
+proxy_buffers 4 32k; #proxy_buffers缓冲区，网页平均在32k以下的设置
+proxy_busy_buffers_size 64k; #高负荷下缓冲大小（proxy_buffers*2）
+proxy_temp_file_write_size 64k;
+#设定缓存文件夹大小，大于这个值，将从upstream服务器传
+}
+
+#设定查看Nginx状态的地址
+location /NginxStatus {
+stub_status on;
+access_log on;
+auth_basic "NginxStatus";
+auth_basic_user_file conf/htpasswd;
+#htpasswd文件的内容可以用apache提供的htpasswd工具来产生。
+}
+
+#本地动静分离反向代理配置
+#所有jsp的页面均交由tomcat或resin处理
+location ~ .(jsp|jspx|do)?$ {
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_pass http://127.0.0.1:8080;
+}
+#所有静态文件由nginx直接读取不经过tomcat或resin
+location ~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$
+{ expires 15d; }
+location ~ .*.(js|css)?$
+{ expires 1h; }
+}
+}
+
+</pre><br /><br />---------------------------------------------<br />Nginx<br />https://moonbingbing.gitbooks.io/openresty-best-practices/content/ngx/nginx_brief.html<br /><br />worker_process&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 表示工作进程的数量，一般设置为cpu的核数<br /><br />worker_connections&nbsp; # 表示每个工作进程的最大连接数<br /><br />server{}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 块定义了虚拟主机<br /><br />&nbsp;&nbsp;&nbsp; listen&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 监听端口<br /><br />&nbsp;&nbsp;&nbsp; server_name&nbsp;&nbsp;&nbsp;&nbsp; # 监听域名<br /><br />&nbsp;&nbsp;&nbsp; location {}&nbsp;&nbsp;&nbsp;&nbsp; # 是用来为匹配的 URI 进行配置，URI 即语法中的“/uri/”<br /><br />&nbsp;&nbsp;&nbsp; location /{}&nbsp;&nbsp;&nbsp; # 匹配任何查询，因为所有请求都以 / 开头<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 指定对应uri的资源查找路径，这里html为相对路径，完整路径为<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # /opt/nginx-1.7.7/html/<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; index&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 指定首页index文件的名称，可以配置多个，以空格分开。如有多<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 个，按配置顺序查找。<br /><br />location 匹配规则<br />语法规则<br /><br />location [=|~|~*|^~] /uri/ { … }<br /><br />符号	含义<br />=	开头表示精确匹配<br />^~	开头表示uri以某个常规字符串开头，理解为匹配 url路径即可。nginx不对url做编码，因此请求为/static/20%/aa，可以被规则^~ /static/ /aa匹配到（注意是空格）<br />~	开头表示区分大小写的正则匹配<br />~*	开头表示不区分大小写的正则匹配<br />!~和!~*	分别为区分大小写不匹配及不区分大小写不匹配 的正则<br />/	通用匹配，任何请求都会匹配到。<br /><pre name="code" class="java">
+location = / {
+   #规则A  访问根目录/， 比如http://localhost/ 将匹配规则A
+}
+location = /login {
+   #规则B  http://localhost/login 将匹配规则B
+}
+location ^~ /static/ {
+   #规则C  http://localhost/static/a.html 将匹配规则C      http://localhost/static/c.png 则优先匹配到规则C
+}
+location ~ \.(gif|jpg|png|js|css)$ {
+   #规则D  http://localhost/a.gif, http://localhost/b.jpg 将匹配规则D和规则E，但是规则D顺序优先，规则E不起作用
+} 
+location ~* \.png$ {
+   #规则E   http://localhost/a.PNG 则匹配规则E,因为规则E不区分大小写
+}
+location !~ \.xhtml$ {
+   #规则F
+}
+location !~* \.xhtml$ {
+   #规则G
+}
+location / {
+   #规则H  http://localhost/register 则匹配规则H
+            http://localhost/category/id/1111 则最终匹配到规则H，因为以上规则都不匹配
+}
+</pre><br /><br /><br />ReWrite语法<br /><br />last – 基本上都用这个Flag<br />break – 中止Rewirte，不在继续匹配<br />redirect – 返回临时重定向的HTTP状态302<br />permanent – 返回永久重定向的HTTP状态301<br /><br />1、下面是可以用来判断的表达式：<br />-f和!-f用来判断是否存在文件<br />-d和!-d用来判断是否存在目录<br />-e和!-e用来判断是否存在文件或目录<br />-x和!-x用来判断文件是否可执行<br /><br />2、下面是可以用作判断的全局变量<br /><pre name="code" class="java">
+例：http://localhost:88/test1/test2/test.php
+$host：localhost
+$server_port：88
+$request_uri：http://localhost:88/test1/test2/test.php
+$document_uri：/test1/test2/test.php
+$document_root：D:\nginx/html
+$request_filename：D:\nginx/html/test1/test2/test.php
+</pre><br /><br /><pre name="code" class="java">
+server {
+    listen 80;
+    server_name start.igrow.cn;
+    index index.html index.php;
+    root html;
+    if ($http_host !~ “^star\.igrow\.cn$&amp;quot {
+        rewrite ^(.*) http://star.igrow.cn$1 redirect;
+    }
+}
+</pre><br /><br /><br />3.5 日志服务<br />Nginx日志主要有两种：access_log(访问日志)、error_log(错误日志)。<br /><br />access_log主要记录客户端访问Nginx的每一个请求，格式可以自定义。通过access_log，你可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息。+<br /><br />log_format指令用于定义日志的格式，语法: log_format name string; 其中name表示格式名称，string表示定义的格式字符串。log_format有一个默认的无需设置的combined日志格式。<br /><br /><pre name="code" class="java">
+log_format combined '$remote_addr - $remote_user  [$time_local]  '
+                    ' "$request"  $status  $body_bytes_sent  '
+                    ' "$http_referer"  "$http_user_agent" ';
+</pre><br /><br />access_log指令用来指定访问日志文件的存放路径（包含日志文件名）、格式和缓存大小，语法：access_log path [format_name [buffer=size | off]]; 其中path表示访问日志存放路径，format_name表示访问日志格式名称，buffer表示缓存大小，off表示关闭访问日志。<br /><br />需要注意的是：log_format配置必须放在http内，否则会出现警告。Nginx进程设置的用户和组必须对日志路径有创建文件的权限，否则，会报错。<br /><br />定义日志使用的字段及其作用：<br /><pre name="code" class="java">
+字段	作用
+$remote_addr与$http_x_forwarded_for	记录客户端IP地址
+$remote_user	记录客户端用户名称
+$request	记录请求的URI和HTTP协议
+$status	记录请求状态
+$body_bytes_sent	发送给客户端的字节数，不包括响应头的大小
+$bytes_sent	发送给客户端的总字节数
+$connection	连接的序列号
+$connection_requests	当前通过一个连接获得的请求数量
+$msec	日志写入时间。单位为秒，精度是毫秒
+$pipe	如果请求是通过HTTP流水线(pipelined)发送，pipe值为“p”，否则为“.”
+$http_referer	记录从哪个页面链接访问过来的
+$http_user_agent	记录客户端浏览器相关信息
+$request_length	请求的长度（包括请求行，请求头和请求正文）
+$request_time	请求处理时间，单位为秒，精度毫秒
+$time_iso8601	ISO8601标准格式下的本地时间
+$time_local	记录访问时间与时区
+</pre><br /><br />error_log(错误日志)<br />error_log主要记录客户端访问Nginx出错时的日志，格式不支持自定义。<br /><br />3.6 反向代理<br />反向代理（Reverse Proxy ）方式是指用代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。<br /><br />客户端向反向代理的命名空间(name-space)中的内容发送普通请求，接着反向代理将判断向何处(原始服务器)转交请求，并将获得的内容返回给客户端，就像这些内容原本就是它自己的一样。<br /><br />加强安全防护。反向代理还可以为后端的多台服务器提供负载均衡，或为后端较慢的服务器提供缓冲服务。<br />反向代理还可以启用高级URL策略和管理技术，从而使处于不同web服务器系统的web页面同时存在于同一个URL空间下。<br />Nginx的其中一个用途是做HTTP反向代理，下面简单介绍Nginx作为反向代理服务器的方法。<br /><br /><pre name="code" class="java">
+worker_processes 1;
+
+pid logs/nginx.pid;
+error_log logs/error.log warn;
+
+events {
+    worker_connections 3000;
+}
+
+http {
+    include mime.types;
+    server_tokens off;
+
+    ##下面配置反向代理的参数
+    server {
+        listen 8866;
+
+        ##1.用户访问http://ip:port，则反向代理到https://github.com
+        location / {
+            proxy_pass  https://github.com;
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        }
+
+        ##2.用户访问http://ip:port/README.md，则反向代理到https://github.com/.../README.md
+        location /README.md {
+            proxy_pass https://github.com/moonbingbing/openresty-best-practices/blob/master/README.md;
+            proxy_set_header  X-Real-IP  $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+</pre><br /><br />proxy_pass后面跟着一个URL，用来将请求反向代理到URL参数指定的服务器上。例如我们上面例子中的proxy_pass https://github.com，则将匹配的请求反向代理到https://github.com。<br /><br />proxy_set_header<br />默认情况下，反向代理不会转发原始请求中的Host头部，如果需要转发，就需要加上这句：proxy_set_header Host $host;<br /><br />3.7 负载均衡<br /><br />upstream 负载均衡模块说明<br /><pre name="code" class="java">
+upstream test.net{
+    ip_hash;
+    server 192.168.10.13:80;
+    server 192.168.10.14:80  down;
+    server 192.168.10.15:8009  max_fails=3  fail_timeout=20s;
+    server 192.168.10.16:8080;
+}
+server {
+  location / {
+    proxy_pass  http://test.net;
+  }
+}
+</pre><br /><br />upstream 是 Nginx 的 HTTP Upstream 模块，这个模块通过一个简单的调度算法来实现客户端 IP 到后端服务器的负载均衡。在上面的设定中，通过 upstream 指令指定了一个负载均衡器的名称 test.net。<br /><br />upstream 支持的负载均衡算法<br /><br />轮询（默认）。每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某台服务器宕机，故障系统被自动剔除，使用户访问不受影响。Weight 指定轮询权值，Weight值越大，分配到的访问机率越高，主要用于后端每个服务器性能不均的情况下。<br />ip_hash。每个请求按访问IP的hash结果分配，这样来自同一个IP的访客固定访问一个后端服务器，有效解决了动态网页存在的session共享问题。<br />fair。这是比上面两个更加智能的负载均衡算法。此种算法可以依据页面大小和加载时间长短智能地进行负载均衡，也就是根据后端服务器的响应时间来分配请求，响应时间短的优先分配。Nginx本身是不支持fair的，如果需要使用这种调度算法，必须下载Nginx的upstream_fair模块。<br />url_hash。此方法按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，可以进一步提高后端缓存服务器的效率。Nginx本身是不支持url_hash的，如果需要使用这种调度算法，必须安装Nginx 的hash软件包。<br />least_conn。最少连接负载均衡算法，简单来说就是每次选择的后端都是当前最少连接的一个server(这个最少连接不是共享的，是每个worker都有自己的一个数组进行记录后端server的连接数)。 *hash。这个hash模块又支持两种模式hash, 一种是普通的hash, 另一种是一致性hash(consistent)。<br /><br />upstream 支持的状态参数<br />down，表示当前的server暂时不参与负载均衡。<br />backup，预留的备份机器。当其他所有的非backup机器出现故障或者忙的时候，才会请求backup机器，因此这台机器的压力最轻。<br />max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。<br />fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用。<br />当负载调度算法为ip_hash时，后端服务器在负载均衡调度中的状态不能是backup。<br /><br /><pre name="code" class="java">
+upstream webservers {
+      server 192.168.18.201 weight=1;
+      server 192.168.18.202 weight=1;
+  }
+  server {
+      listen       80;
+      server_name  localhost;
+      #charset koi8-r;
+      #access_log  logs/host.access.log  main;
+      location / {
+              proxy_pass      http://webservers;
+              proxy_set_header  X-Real-IP  $remote_addr;
+      }
+}
+</pre><br />注，upstream 是定义在 server{ } 之外的，不能定义在 server{ } 内部。定义好 upstream 之后，用 proxy_pass 引用一下即可。<br /><br />max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。<br />fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用，进行健康状态检查。<br /><br /><pre name="code" class="java">
+upstream webservers {
+        server 192.168.18.201 weight=1 max_fails=2 fail_timeout=2;
+        server 192.168.18.202 weight=1 max_fails=2 fail_timeout=2;
+    }
+</pre><br /><br />
+  </div>
+
+  
+
+  <ins data-revive-zoneid="171" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+
+  <div id="bottoms" class="clearfix">
+    
+    <div id="share_weibo">分享到：
+      <a data-type='sina' href="javascript:;" title="分享到新浪微博"><img src="/images/sina.jpg"></a>
+      <a data-type='qq' href="javascript:;" title="分享到腾讯微博"><img src="/images/tec.jpg"></a>
+    </div>
+  </div>
+
+  <div class="blog_nav">
+    <div class="pre_next">
+      <a href="/blog/2262599" class="next" title="OpenResty最佳实践">OpenResty最佳实践</a>
+      |
+      <a href="/blog/2261181" class="pre" title="gradle 文件">gradle 文件</a>
+    </div>
+  </div>
+  <div class="blog_bottom">
+    <ul>
+      <li>2015-12-04 17:16</li>
+      <li>浏览 131</li>
+      <li><a href="#comments">评论(0)</a></li>
+      
+      
+      <li>分类:<a href="http://www.iteye.com/blogs/category/mobile">移动开发</a></li>      
+      <li class='last'><a href="http://www.iteye.com/wiki/blog/2261773" target="_blank" class="more">相关推荐</a></li>
+    </ul>    
+  </div>
+  
+		    
+		
+<div class="boutique-curr-box blog_comment">
+	  <div class="boutique-curr clearfix">
+	    <h5 class="h3titles">参考知识库</h5>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/36"><img src="http://img.knowledge.csdn.net/upload/base/1463455906707_707.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/36" classs="title">PHP知识库</a>
+              <span>
+                 <em>328</em>&nbsp;&nbsp;关注 <i>|</i> <em>289</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/40"><img src="http://img.knowledge.csdn.net/upload/base/1463378338830_830.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/40" classs="title">信息无障碍知识库</a>
+              <span>
+                 <em>48</em>&nbsp;&nbsp;关注 <i>|</i> <em>57</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/37"><img src="http://img.knowledge.csdn.net/upload/base/1463023002983_983.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/37" classs="title">计算机网络知识库</a>
+              <span>
+                 <em>444</em>&nbsp;&nbsp;关注 <i>|</i> <em>2544</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	    <dl class="dlnewlist">
+	    
+          <dd><a target="_blank" href="http://lib.csdn.net/base/25"><img src="http://img.knowledge.csdn.net/upload/base/1462342584443_443.jpg" width="58" height="58" alt=""></a></dd>
+          <dt>
+              <a target="_blank" href="http://lib.csdn.net/base/25" classs="title">C#知识库</a>
+              <span>
+                 <em>501</em>&nbsp;&nbsp;关注 <i>|</i> <em>312</em>&nbsp;&nbsp;收录                  
+              </span>
+          </dt>
+      
+	    </dl>
+	    
+	  </div>
+</div>
+ 		
+      
+  <div class="blog_comment">
+    <h5>评论</h5>
+    <a id="comments" name="comments"></a>
+    
+    
+    
+  </div>
+
+  <div class="blog_comment">
+    <h5>发表评论</h5>
+            <p style="text-align:center; margin-top:30px;margin-bottom:0px;"><a href="/login" style="background-color:white;"> <img src="/images/login_icon.png" style="vertical-align:middle; margin-right: 10px;" /></a><a href="/login">  您还没有登录,请您登录后再发表评论 </a></p>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+  dp.SyntaxHighlighter.HighlightAll('code', true, true);
+
+  $$('#main .blog_content pre[name=code]').each(function(pre, index){ // blog content
+    var post_id = 2261773;
+    var location = window.location;
+    source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+    pre.writeAttribute('codeable_id', post_id);
+    pre.writeAttribute('codeable_type', "Blog");
+    pre.writeAttribute('source_url', source_url);
+    pre.writeAttribute('pre_index', index);
+    pre.writeAttribute('title', 'Nginx配置文件nginx.conf中文详解[转]');
+  });
+
+  fix_image_size($$('div.blog_content img'), 700);
+
+  function processComment() {
+    $$('#main .blog_comment > div').each(function(comment){// comment
+      var post_id = comment.id.substr(2);
+      $$("#"+comment.id+" pre[name=code]").each(function(pre, index){
+        var location = window.location;
+        source_url = location.protocol + "//" + location.host + location.pathname + location.search;
+        source_url += "#" + comment.id;
+        pre.writeAttribute('codeable_id', post_id);
+        pre.writeAttribute('codeable_type', "BlogComment");
+        pre.writeAttribute('source_url', source_url);
+        pre.writeAttribute('pre_index', index);
+        pre.writeAttribute('title', 'Nginx配置文件nginx.conf中文详解[转]');
+      });
+    });
+  }
+
+  function quote_comment(id) {
+    new Ajax.Request('/editor/quote', {
+      parameters: {'id':id, 'type':'BlogComment'},
+      onSuccess:function(response){editor.bbcode_editor.textarea.insertAfterSelection(response.responseText);
+        Element.scrollTo(editor.bbcode_editor.textarea.element);}
+    });
+  }
+
+  code_favorites_init();
+  processComment();
+  new WeiboShare({share_buttons: $('share_weibo'), img_scope: $('blog_content')});
+</script>
+
+
+
+
+        </div>
+
+        <div id="local">
+          <div class="local_top"></div>
+          <div id="blog_owner">
+  <div id="blog_owner_logo"><a href='http://wangqiaowqo.iteye.com'><img alt="wangqiaowqo的博客" class="logo" src="http://www.iteye.com/upload/logo/user/175165/089e1dff-a31d-3238-8c47-291ec4f21eb2.jpg?1259725957" title="wangqiaowqo的博客: wangqiaowqo" width="" /></a></div>
+  <div id="blog_owner_name">wangqiaowqo</div>
+</div>
+
+          <div id="blog_actions">
+            <ul>
+              <li>浏览: 1289893 次</li>
+              <li>性别: <img alt="Icon_minigender_1" src="http://www.iteye.com/images/icon_minigender_1.gif?1448702469" title="男" /></li>
+              <li>来自: 北京</li>
+              <li><img src='/images/status/offline.gif'/></li>
+              
+            </ul>
+          </div>
+          <div id="user_visits" class="clearfix">
+            <h5>最近访客 <span style='font-weight:normal;font-size:12px;padding-left:30px;'><a href="/blog/user_visits">更多访客&gt;&gt;</a></span></h5>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://gavin2lee.iteye.com' target='_blank'><img alt="gavin2lee的博客" class="logo" src="http://www.iteye.com/upload/logo/user/1081465/a4ecba0b-6f45-3b4b-9743-a814ebcc0e3a-thumb.jpg?1430101964" title="gavin2lee的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://gavin2lee.iteye.com' target='_blank' title='gavin2lee'>gavin2lee</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://san-qilang.iteye.com' target='_blank'><img alt="san_qilang的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="san_qilang的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://san-qilang.iteye.com' target='_blank' title='san_qilang'>san_qilang</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://jchenzeke.iteye.com' target='_blank'><img alt="jchenzeke的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="jchenzeke的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://jchenzeke.iteye.com' target='_blank' title='jchenzeke'>jchenzeke</a></div>
+              </div>
+            
+              <div class="user_visit">
+                <div class="logo"><a href='http://shuaishuaijlo.iteye.com' target='_blank'><img alt="shuaishuaijlo的博客" class="logo" src="http://www.iteye.com/images/user-logo-thumb.gif?1448702469" title="shuaishuaijlo的博客: " width="48px" /></a></div>
+                <div class="left"><a href='http://shuaishuaijlo.iteye.com' target='_blank' title='shuaishuaijlo'>shuaishuaijlo</a></div>
+              </div>
+            
+          </div>
+
+          
+
+                      <div id="blog_menu">
+              <h5>文章分类</h5>
+              <ul>
+                <li><a href="/">全部博客 (1190)</a></li>
+                
+                  <li><a href="/category/46931">Java (166)</a></li>
+                
+                  <li><a href="/category/46930">Linux (88)</a></li>
+                
+                  <li><a href="/category/46933">Mysql (63)</a></li>
+                
+                  <li><a href="/category/234868">maven (15)</a></li>
+                
+                  <li><a href="/category/234855">Hadoop (15)</a></li>
+                
+                  <li><a href="/category/46932">解决方案 (46)</a></li>
+                
+                  <li><a href="/category/46934">抛出异常的心情 (11)</a></li>
+                
+                  <li><a href="/category/51545">SQL server (20)</a></li>
+                
+                  <li><a href="/category/82694">Android (12)</a></li>
+                
+                  <li><a href="/category/98180">项目管理 (3)</a></li>
+                
+                  <li><a href="/category/98181">人际关系 (1)</a></li>
+                
+                  <li><a href="/category/99899">Oracle (1)</a></li>
+                
+                  <li><a href="/category/234854">pentaho (1)</a></li>
+                
+                  <li><a href="/category/234856">php (11)</a></li>
+                
+                  <li><a href="/category/234857">achievo (2)</a></li>
+                
+                  <li><a href="/category/234859">infobright (7)</a></li>
+                
+                  <li><a href="/category/234860">Ubuntu (5)</a></li>
+                
+                  <li><a href="/category/234863">python (17)</a></li>
+                
+                  <li><a href="/category/234864">nginx (4)</a></li>
+                
+                  <li><a href="/category/234865">cms (6)</a></li>
+                
+                  <li><a href="/category/234866">svn (10)</a></li>
+                
+                  <li><a href="/category/234869">eclipse (6)</a></li>
+                
+                  <li><a href="/category/234874">CSS (1)</a></li>
+                
+                  <li><a href="/category/346129">zookeeper (2)</a></li>
+                
+                  <li><a href="/category/351104">spark (9)</a></li>
+                
+                  <li><a href="/category/349577">Scala (2)</a></li>
+                
+                  <li><a href="/category/349603">RPC (4)</a></li>
+                
+                  <li><a href="/category/350609">Lua (1)</a></li>
+                
+                  <li><a href="/category/351761">ddshow (3)</a></li>
+                
+                  <li><a href="/category/351762">gradle (4)</a></li>
+                
+                  <li><a href="/category/351763">大数据 (11)</a></li>
+                
+                  <li><a href="/category/351764">avro (2)</a></li>
+                
+                  <li><a href="/category/351765">docker (1)</a></li>
+                
+                  <li><a href="/category/351766">sqoop (2)</a></li>
+                
+                  <li><a href="/category/351774">Hive (12)</a></li>
+                
+                  <li><a href="/category/351767">finagle (1)</a></li>
+                
+                  <li><a href="/category/351768">ProtoBuf (1)</a></li>
+                
+                  <li><a href="/category/351769">excel (1)</a></li>
+                
+                  <li><a href="/category/351770">网络 (13)</a></li>
+                
+                  <li><a href="/category/351771">idea (4)</a></li>
+                
+                  <li><a href="/category/351772">kafka (3)</a></li>
+                
+                  <li><a href="/category/351773">spring (16)</a></li>
+                
+                  <li><a href="/category/351777">jvm (12)</a></li>
+                
+                  <li><a href="/category/351778">Curator (1)</a></li>
+                
+                  <li><a href="/category/351779">概念比较 (3)</a></li>
+                
+                  <li><a href="/category/351780">R语言 (3)</a></li>
+                
+                  <li><a href="/category/351781">kettle (5)</a></li>
+                
+                  <li><a href="/category/351782">git (8)</a></li>
+                
+                  <li><a href="/category/351783">sonar (3)</a></li>
+                
+                  <li><a href="/category/351784">netty (4)</a></li>
+                
+                  <li><a href="/category/351785">wireshark (3)</a></li>
+                
+                  <li><a href="/category/351786">solr (2)</a></li>
+                
+                  <li><a href="/category/351787">windows (5)</a></li>
+                
+                  <li><a href="/category/351788">tomcat (2)</a></li>
+                
+                  <li><a href="/category/351789">activemq (4)</a></li>
+                
+                  <li><a href="/category/351791">storm (7)</a></li>
+                
+                  <li><a href="/category/351790">jmeter (1)</a></li>
+                
+                  <li><a href="/category/351792">Hbase (13)</a></li>
+                
+                  <li><a href="/category/352741">数据结构 (2)</a></li>
+                
+                  <li><a href="/category/352742">工具 (1)</a></li>
+                
+                  <li><a href="/category/352743">lisp (2)</a></li>
+                
+                  <li><a href="/category/352744">cygwin (1)</a></li>
+                
+                  <li><a href="/category/352745">redis (8)</a></li>
+                
+                  <li><a href="/category/353239">thrift (4)</a></li>
+                
+                  <li><a href="/category/353240">tcpdump (1)</a></li>
+                
+                  <li><a href="/category/353241">github (1)</a></li>
+                
+                  <li><a href="/category/355028">Drill (1)</a></li>
+                
+                  <li><a href="/category/355058">tez (1)</a></li>
+                
+              </ul>
+            </div>
+            <div id='month_blogs'>
+              <h5>社区版块</h5>
+              <ul>
+                <li><a href="/blog/news">我的资讯</a> (0)</li>
+                <li>
+                  <a href="/blog/post">我的论坛</a> (34)
+                </li>
+                <li><a href="/blog/answered_problems">我的问答</a> (3)</li>
+              </ul>
+            </div>
+            <div id="month_blogs">
+              <h5>存档分类</h5>
+              <ul>
+                
+                  <li><a href="/blog/monthblog/2016-05">2016-05</a> (7)</li>
+                
+                  <li><a href="/blog/monthblog/2016-04">2016-04</a> (12)</li>
+                
+                  <li><a href="/blog/monthblog/2016-03">2016-03</a> (26)</li>
+                
+                <li><a href="/blog/monthblog_more">更多存档...</a></li>
+              </ul>
+            </div>
+            
+            
+
+            <div id="guest_books">
+              <h5>最新评论</h5>
+              <ul>
+                
+                <li>
+                  <a href='http://springjpa-springmvc.iteye.com' target='_blank' title='springjpa_springmvc'>springjpa_springmvc</a>： 
+                  spring mvc demo教程源代码下载，地址：http: ...<br />
+                  <a href="/blog/1141132#bc2384492">[转]spring 3.0 应用springmvc 构造RESTful URL 详细讲解(一)</a>
+                </li>
+                
+                <li>
+                  <a href='http://kxn308.iteye.com' target='_blank' title='kxn308'>kxn308</a>： 
+                  liuyanginjava 写道你好酷啊 打繁体，你是鬼子吧煞 ...<br />
+                  <a href="/blog/1130545#bc2384413">解決Tomcat 6.0的This is very likely to create a memory leak.的錯誤訊息 </a>
+                </li>
+                
+                <li>
+                  <a href='http://xiaocszn.iteye.com' target='_blank' title='xiaocszn'>xiaocszn</a>： 
+                  好文章，赞！<br />
+                  <a href="/blog/1161412#bc2382247">select into outfile access deny问题</a>
+                </li>
+                
+                <li>
+                  <a href='http://jayant-xu.iteye.com' target='_blank' title='jayant-xu'>jayant-xu</a>： 
+                  [img][list][*][/list][/img]<br />
+                  <a href="/blog/404272#bc2376516">IDEA集成IntelliJad自动反编译class文件</a>
+                </li>
+                
+                <li>
+                  <a href='http://fly-ccy.iteye.com' target='_blank' title='fly_宇光十色'>fly_宇光十色</a>： 
+                  请问在哪里设置  绕过过滤器链 呢 ？<br />
+                  <a href="/blog/1139408#bc2368653">DelegatingFilterProxy【转】</a>
+                </li>
+                
+              </ul>
+            </div>
+
+            <div class="local_bottom"></div>
+          
+        </div>
+      </div>
+
+      <div id="footer" class="clearfix">
+        <div id="copyright">
+          <hr/>
+          声明：ITeye文章版权属于作者，受法律保护。没有作者书面许可不得转载。若作者同意转载，必须以超链接形式标明文章原始出处和作者。<br />
+          &copy; 2003-2016 ITeye.com.   All rights reserved.  [ 京ICP证110151号  京公网安备110105010620 ]
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+  document.write("<img src='http://stat.iteye.com/?url="+ encodeURIComponent(document.location.href) + "&referrer=" + encodeURIComponent(document.referrer) + "&user_id=' width='0' height='0' />");
+</script>
+
+<script src="http://csdnimg.cn/pubfooter/js/tracking.js?version=20130923164150" type="text/javascript"></script>
+
+    
+    
+    <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>
+<script src="http://c.csdnimg.cn/public/common/libs/jquery/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">var $csdn_iteye_jq = jQuery.noConflict();// 解决jq与prototype.js命名空间冲突的问题</script>
+<script src="http://ads.csdn.net/js/tracking.js" type="text/javascript"></script>
+    
+	    
+	    <script src="http://www.iteye.com/javascripts/web-storage-cache.min.js?1461122670" type="text/javascript"></script>
+	    <script src="http://www.iteye.com/javascripts/replace.min.js?1462428995" type="text/javascript"></script>
+    
+    
+  </body>
+</html>

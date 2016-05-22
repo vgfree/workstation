@@ -1,0 +1,1830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='zh-CN' xml:lang='zh-CN' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico?t=1451961935000" />
+  <title>【开源访谈】OpenResty 作者章亦春访谈实录 - 开源中国社区</title>
+      <link rel="stylesheet" href="/css/style2013.css?t=1451961935000" type="text/css" media="screen" />
+  <link rel="stylesheet" href="/css/channel.css?t=1451961935000" type="text/css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="/js/2011/fancybox/jquery.fancybox-1.3.4.css?t=1451961936000" media="screen" />
+  <link rel="alternate" type="application/rss+xml" title="最新开源项目" href="http://www.oschina.net/project/rss" />
+  <link rel="alternate" type="application/rss+xml" title="最新开源资讯" href="http://www.oschina.net/news/rss" />
+  <link rel="alternate" type="application/rss+xml" title="最新问题列表" href="http://www.oschina.net/question/rss" />
+  <link rel="alternate" type="application/rss+xml" title="最新翻译列表" href="http://www.oschina.net/translate/rss" />
+  <link rel="alternate" type="application/rss+xml" title="最新博客列表" href="http://www.oschina.net/blog/rss" />
+  <link rel="alternate" type="application/rss+xml" title="推荐博客列表" href="http://www.oschina.net/blog/rss?show=more" />
+  <link rel="alternate" type="application/rss+xml" title="推荐软件列表" href="http://www.oschina.net/project/rss?show=recomms" />
+  <link rel="alternate" type="application/rss+xml" title="最新代码分享列表" href="http://www.oschina.net/code/rss" />
+  <link rel="alternate" type="application/rss+xml" title="开源中国 - 源码列表" href="http://www.oschina.net/code/source_rss" />
+    <!--添加emoji支持-->
+    <link rel="stylesheet" type="text/css" href="/js/team/grunt/dist/emoji/emoji.min.css?t=1463609975000">
+
+  <script type="text/javascript" src="/js/2012/jquery-1.7.1.min.js?t=1451961936000"></script>
+  <script type="text/javascript" src="/js/2012/jquery.form.js?t=1451961936000"></script>
+  <script type="text/javascript" src="/js/2011/fancybox/jquery.fancybox-fixed.js?t=1451961936000?2014031702"></script>
+    <link rel="stylesheet" href="/js/poshytip/tip-yellowsimple/tip-yellowsimple.css?t=1451961936000" type="text/css" />
+  <script type="text/javascript" src="/js/poshytip/jquery.poshytip.min.js?t=1451961936000"></script>
+  <script type="text/javascript">
+  	g_user = {
+	id:0,
+	name:'',
+	login:false};  </script>
+    <script type="text/javascript" src="/js/2011/oschina.js?t=1451961936000"></script>
+  <script type="text/javascript" src="/js/utils.js?t=1451961937000"></script>
+  <script type="text/javascript" src="/js/channel.js?t=1460585143000?2014022501"></script>
+    <style type="text/css">
+  
+  </style>
+</head>
+<body>
+<div id='OSC_NavTop'>
+	<div class="wp998">
+        <div id="OSC_Channels">
+        	<ul>
+        	<li class="item"><a href="http://www.oschina.net/" class='home'>首页</a></li>        	<li class="item control_select"><a href="http://www.oschina.net/project" class='project'>开源项目</a>
+				<ul class="cs_content">
+					<li><a href='http://www.oschina.net/project/zh'>国产开源项目</a></li>
+					<li><a href='http://www.oschina.net/project/tags'>项目分类</a></li>
+					<li><a href='http://www.oschina.net/project/list?sort=time'>最新收录项目</a></li>
+					<li class='split'></li>
+                	                	<li><a href="http://www.oschina.net/project/lang/19/java">Java 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/194/csharp">C# 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/22/php">PHP 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/21/c">C/C++ 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/26/ruby">Ruby 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/25/python">Python 开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/358/go">Go开源软件</a></li>
+                	<li><a href="http://www.oschina.net/project/lang/28/javascript">JS开源软件</a></li>
+				</ul>
+			</li>
+        	<li class="item control_select">
+				<a href="http://www.oschina.net/question" class='question hl'>问答</a>
+				<ul class="cs_content">
+                	<li><a href="http://www.oschina.net/question?catalog=1"> 技术问答 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=2"> 技术分享 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=3"> IT大杂烩 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=100"> 职业生涯 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/question?catalog=4"> 站务/建议 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/alipay"> 支付宝专区 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/mopaas"> MoPaaS专区 &raquo; </a></li>
+                	<li><a href="http://www.oschina.net/hardware"> 开源硬件专区 &raquo; </a></li>
+				</ul>
+			</li>
+        	<li class="item"><a href="http://www.oschina.net/code/list" class='code'>代码</a></li>
+        	        	<li class="item"><a href="http://www.oschina.net/blog" class='blog'>博客</a></li>
+        	<li class="item"><a href="http://www.oschina.net/translate" class='tran'>翻译</a></li>
+            <li class="item"><a href="http://www.oschina.net/news" class='news'>资讯</a></li>
+        	<li class="item control_select">
+				<a href="http://www.oschina.net/android" class='mobile'>专题</a>
+				<ul class="cs_content cs_mobile">
+        			<li><a href='http://www.oschina.net/events' style='color:#c00'>源创会</a> <a href='/video'>视频</a></li>
+        			<li><a href='http://www.oschina.net/question/tag/%E9%AB%98%E6%89%8B%E9%97%AE%E7%AD%94'>高手问答</a> <a href='http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E8%AE%BF%E8%B0%88'>访谈</a></li>
+        			<li><a href='http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E5%91%A8%E5%88%8A'>周刊</a> <a href='http://my.oschina.net/xxiaobian/blog?catalog=547834'>乱弹</a></li>
+            		<li><a href="http://www.oschina.net/company">公司开源导航页</a></li>
+					<li class='split'></li>
+                	<li class="android_"><a href="http://www.oschina.net/android">Android开发专区</a></li>
+                	<li class="ios_"><a href="http://www.oschina.net/ios/home">iOS开发专区</a></li>
+                	<li class="ios_"><a href="http://www.oschina.net/ios/codingList">iOS代码库</a></li>
+                	<li class="wp7_"><a href="http://www.oschina.net/wp">Windows Phone</a></li>
+					
+				</ul>
+			</li>
+        	        										            <li class="item control_select">
+                <a href="http://city.oschina.net/" id="MyCities" title="城市圈">城市圈</a>
+				<ul class="cs_content">
+				                </ul>
+			</li>
+        	</ul>
+        </div>
+		<div id="OSC_Userbar">
+                		    		当前访客身份：游客 [ <a href="http://www.oschina.net/home/login?goto_page=http%3A%2F%2Fwww.oschina.net%2Fquestion%2F28_60461">登录</a> | <a href="http://www.oschina.net/home/reg">加入开源中国</a> ]
+    				</div>
+		<div class='clear'></div>
+	</div>
+
+</div>
+<div id='OSC_Banner'><div class="wp998"><a href='http://www.oschina.net/' class='Logo' title='OSChina 开源中国'>开源中国</a>
+<h1><a href='/question'>问答</a></h1>
+<dl>
+    <dt>当前位置：</dt>
+    <dd>
+                                    <a href="/question">问答</a>&nbsp;&raquo;
+                <a href="/question?catalog=2">技术分享</a>                                    &raquo;&nbsp;<a href="/p/openresty">OpenResty</a>
+                                        </dd>
+</dl>
+<form action='http://www.oschina.net/search' class='search'>
+    <input type='hidden' name='scope' value='bbs'/>
+    <input id='channel_q' type='text' name='q' value='' placeholder='资讯、软件、分享、代码、博客' class='TXT'/>
+    <button type='submit' class='BTN'>搜 索</button>
+</form>
+<div class='clear'></div></div></div>
+<div id="OSC_Screen">
+	<div id="OSC_Content" class='CenterDiv'>
+<script type="text/javascript" src="/js/scrolltopcontrol.js?t=1451961936000"></script>
+<script type="text/javascript">
+  	scrolltotop.offset(100,120);
+  	scrolltotop.init();
+	$(function(){
+		$('a.ShowUserOutline img.SmallPortrait').poshytip({
+			className: 'tip-yellowsimple',
+			alignTo: 'target',
+			alignX: 'right',
+			alignY: 'inner-top',
+			offsetX: 5,
+			offsetY: 0,
+			fade: false,
+			slide: false,
+			content: function(updateCallback) {
+				ajax_get("/action/ajax/get_user_outline?id="+$(this).attr('user'),false,function(html){
+					updateCallback(html);
+				});
+				return "<div style='height:100px;'>Loading...</div>";
+			}
+		});
+	});
+	function add_to_favorite(pid,concern_it){
+			alert("必须登录后才能收藏");
+		}
+</script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        osc.show_tag_introduce_project();
+        osc.show_tag_introduce_other();
+    });
+</script>
+
+
+
+<div class='Question'>
+    <div class='Body'>
+        <div class="main">
+            <div class='Title'>
+                <a class="jump_answer" href="#tags_nav" title="跳到回复"></a>
+
+                <div class='QTitle'>
+                                        <h1><a href="http://www.oschina.net/question/28_60461" hidefocus="true"
+                                                       name='top'>【开源访谈】OpenResty 作者章亦春访谈实录</a></h1>
+
+                    <div class="array"></div>
+                </div>
+                <div class="clear"></div>
+            
+                <div class='clear'></div>
+            </div>
+                                
+
+            <div class='Content'>
+                <p style="margin:0 0 10px 0;"><a style="color:#A00;font-weight:bold;" href="http://click.aliyun.com/m/4684/" target="_blank">域名＋云解析经典组合，立减58元&gt;&gt;&gt; »</a>&nbsp;&nbsp;<img src="http://my.oschina.net/img/hot3.png" align="absmiddle"></p>                <div class='detail'><p><b>关于开源访谈</b></p> 
+<p>开源访谈是开源中国推出的一系列针对国内优秀开源软件作者的访谈，以文字的方式记录并传播。我们希望开源访谈能全面的展现国内开源软件、开源软件作者的现状，着实推动国内开源软件的应用与发展。</p> 
+<div> 
+ <span style="background-color:#f1f1f1;padding:10px;min-height:180px;_height:180px;margin-bottom:10px;display:inline-block;width:600px;"> <h2><span style="color:#f00;font-size:18px;">【嘉宾简介】</span></h2> <p><span style="float:right;0;padding:0;"><img src="http://static.oschina.net/uploads/space/2012/0709/170111_1SNf_179699.jpg" alt="" /></span></p> <p><span style="margin:0 0 0 8px;padding:0;display:inline-block;width:470px;"> <a target="_blank" href="http://my.oschina.net/agentzh" rel="nofollow">章亦春</a> 现任 CloudFare 系统工程师，主要是 Nginx 和 OpenResty 开发，是一名快乐的程序员，现定居美国旧金山。曾经在北京的时候供职于 Yahoo！中国以及淘宝（阿里巴巴）。<br /> </span></p> </span> 
+</div> 
+<div> 
+ <h2><span style="color:#f00;font-size:18px;">【软件简介】</span></h2> 
+ <p><span style="margin:0 0 0 8px;padding:0;display:inline-block;"><a href="http://www.oschina.net/p/openresty" target="_blank" rel="nofollow"> OpenResty</a> （也称为 ngx_openresty）是一个全功能的 Web 应用服务器。它打包了标准的 Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。</span></p> 
+ <p></p> 
+ <p><span style="margin:0 0 0 8px;padding:0;display:inline-block;">&nbsp;通过众多进行良好设计的 Nginx 模块，OpenResty 有效地把 Nginx 服务器转变为一个强大的 Web 应用服务器，基于它开发人员可以使用 Lua 编程语言对 Nginx 核心以及现有的各种 Nginx C 模块进行脚本编程，构建出可以处理一万以上并发请求的极端高性能的 Web 应用。</span></p> 
+ <p></p> 
+ <p><span style="margin:0 0 0 8px;padding:0;display:inline-block;">&nbsp;OpenResty 致力于将你的服务器端应用完全运行于 Nginx 服务器中，充分利用 Nginx 的事件模型来进行非阻塞 I/O 通信。不仅仅是和 HTTP 客户端间的网络通信是非阻塞的，与MySQL、PostgreSQL、Memcached、以及 Redis 等众多远方后端之间的网络通信也是非阻塞的。</span></p> 
+ <p><span style="margin:0 0 0 8px;padding:0;display:inline-block;">&nbsp;因为 OpenResty 软件包的维护者也是其中打包的许多 Nginx 模块的作者，所以 OpenResty 可以确保所包含的所有组件可以可靠地协同工作。</span></p> 
+</div> 
+<div> 
+ <h2><span style="color:#f00;font-size:18px;">【访谈实录】</span></h2> 
+ <div> 
+  <span style="margin:0 0 0 8px;padding:0;display:inline-block;"> <p> <span style="font-weight:bold;">1.&nbsp;&nbsp;&nbsp; 能否先介绍一下你自己，包括技术背景、工作经历、学习经历等等</span><br /> 我的技术背景有些杂，前端工程师、运维工程师、系统开发工程师都干过。07年我从计算机专业毕业后一直在阿里巴巴集团下的子公司工作，先是在雅虎中国的搜索部门干了两年。然后又在淘宝的数据部门干了近两年的时间。<br /> <br /> <span style="font-weight:bold;">2.&nbsp;&nbsp;&nbsp; 你在阿里巴巴主要是做哪方面的开发？</span><br /> 我开发过 Firefox 插件，然后做过通用 web service 平台，后来又搞基于 Gecko 和WebKit核心的网页视觉识别和自动抽取，再后来重新设计了淘宝量子统计的前端系统，并实现了其中的核心部分，包括客户端 JavaScript 框架。还有服务器端的数据接口平台，以及数据融合中间件。在雅虎时还开发过一些运维工具。<br /> <br /> <span style="font-weight:bold;">3.&nbsp;&nbsp;&nbsp; 那你是什么时候接触Nginx的？</span><br /> 我是09年9月开始正式学习它的源码的，再早前有些零星接触，但不多。<br /> <br /> <span style="font-weight:bold;">4.&nbsp;&nbsp;&nbsp; 是在淘宝的工作需要吗？</span><br /> 准确的讲，是我的openresty项目的需要。只不过正好可以和淘宝数据部门的业务需求结合到一起。我也正是那会儿才加入淘宝数据部门的，之前还在淘宝导购搜索团队。<br /> <br /> <span style="font-weight:bold;">5.&nbsp;&nbsp;&nbsp; 那你为什么会想到要做OpenResty这个项目？</span><br /> OpenResty最早是雅虎中国的一个公司项目，起步于 2007 年 10 月。当时兴起了OpenAPI的热潮，于是老大们也想做一个类似的东西，可以支持各种 web service 的需求。在部门老大们的支持下，最早的OpenResty实现从一开始就开源了。最初的定位是服务于公司外的开发者，像其他的OpenAPI那样，但后来越来越多地是为雅虎中国的搜索产品提供内部服务。这是第一代的OpenResty，当时的想法是，提供一套抽象的 web service，能够让用户利用这些 web service 构造出新的符合他们具体业务需求的 web service 出来，所以有些“meta web servie”的意味，包括数据模型、查询、安全策略都可以通过这种 meta web service 来表达和配置。同时这种 web service 也有意保持 REST 风格。与这种概念相对应的是纯 AJAX 的 web 应用，即 web 应用几乎都使用客户端 JavaScript 来编写，然后完全由 web service 让 web 应用“活”起来。用户把 .html, .js, .css, .jpg 等静态文件下载到 web browser 中，然后js开始运行，跨域请求雅虎提供的经过站长定制过的 web service，然后应用就可以运行起来。不过随着后来的发展，公司外的用户毕竟还是少数，于是应用的重点是为公司内部的其他团队提供 web service，比如雅虎中国的全能搜索产品，及其外围的一些产品。从那以后，开发的重点便放在了性能优化上面。终于在我加入淘宝数据部门的量子团队之后，我决定对OpenResty进行重新设计和彻底重写，并把应用重点放在支持像量子统计这样的 web 产品上面，所以量子统计 3.0 开始也几乎完全是 web service 驱动的纯 AJAX 应用。<br /> <br /> <span style="font-weight:bold;">6.&nbsp;&nbsp;&nbsp; 这是第二代的OpenResty吗？</span><br /> 是的，我一般称之为ngx_openresty，以便和第一代基于 Perl 和 Haskell 实现的OpenResty加以区别。我和我的同事王晓哲一起设计了第二代的OpenResty。在王晓哲的提议下，我们选择基于nginx和lua进行开发。<br /> <br /> <span style="font-weight:bold;">7.&nbsp;&nbsp;&nbsp; 你现在哪里工作呢？</span><br /> 我在过去的一年中没有正式的工作。我把力量都放在了ngx_openresty为主的开源项目上面 :) 在国内外用户的需求推动下保持工作 :)<br /> <br /> <span style="font-weight:bold;">8.&nbsp;&nbsp;&nbsp; 那你做这个事情有收入吗？</span><br /> 在过去的一年中只有来自用户公司和个人的一些捐赠，微薄的捐赠，呵呵。主要想法还是给自己放一个长假 :)集中力量系统地做一些我最想做的事情。<br /> <br /> <span style="font-weight:bold;">9.&nbsp;&nbsp;&nbsp; 那你将来的打算呢？</span><br /> 我一向没有太长远的打算，我是一个随性的人。从这个月底（2012年6月）开始，我将结束 jobless 的状态。因为美国（旧金山）有一家公司愿意让我在他们那里全职做ngx_openresty，他们也是ngx_openresty的应用大户。<br /> <br /> <span style="font-weight:bold;">10.&nbsp;&nbsp;&nbsp; OpenResty刚开始是雅虎的项目，他们是放弃了版权吗？</span><br /> 是雅虎中国，当时已经是阿里巴巴集团的一部分。后来我们重写OpenResty时，放弃了第一代的所有代码。就像我当时重写量子统计前端应用时，放弃了原先的几乎所有代码一样。<br /> <br /> <span style="font-weight:bold;">11.&nbsp;&nbsp;&nbsp; 为什么要取OpenResty这个名字呢？</span><br /> OpenResty最早是顺应OpenAPI的潮流做的，所以 Open 取自“开放”之意，而Resty便是 REST 风格的意思。虽然后来也可以基于ngx_openresty实现任何形式的 web service 或者传统的 web 应用。<br /> <br /> <span style="font-weight:bold;">12.&nbsp;&nbsp;&nbsp; 也就是说Nginx不再是一个简单的静态网页服务器了？</span><br /> 是的，也不再是一个简单的反向代理了。第二代的openresty致力于通过一系列nginx模块，把nginx扩展为全功能的 web 应用服务器。<br /> <br /> <span style="font-weight:bold;">13.&nbsp;&nbsp;&nbsp; 可以运行 Java Web 应用吗？</span><br /> 把 JVM 嵌入nginx绝对不是一个好主意 :)或许未来我们可以把 Java 编译为Lua哈哈！目前我们只支持Lua语言。不过有计划通过把 PHP 等其他语言编译为Lua或者Lua字节码来实现其他语言在ngx_openresty上的直接运行。王晓哲已经工作在 php2lua 项目上了，呵呵。<br /> <br /> <span style="font-weight:bold;">14.&nbsp;&nbsp;&nbsp; 你是怎么让别人知道OpenResty这个项目的？</span><br /> 我没有专门从事ngx_openresty的推广工作，因为我们在淘宝时的工作重点一直是首先支撑淘宝量子统计的业务。因为ngx_openresty在形式上是由一系列相对独立但又可以随意组合起来一起协同工作的nginx模块组成的，所以人们多是通过nginx社区首先了解到我们的一二个模块，直至最后知晓ngx_openresty这整个大项目的。一开始我们的许多用户的反馈也多是直接发给我或者王晓哲，以及发到nginx官方的英文邮件列表。随着网上搜索“OpenResty”的人越来越多，我们才觉得有必要建立一个 openresty.org 首页。于是我们就这么做了。几个月前，在Zoon.Quiet同学的推动下，我们又把 Google Groups 上的openresty邮件组给启用起来了，目前多是中国用户订阅并在那里讨论nginx或者openresty 相关的问题，也有好多位国外的用户在那里用英文交流。<br /> <br /> <span style="font-weight:bold;">15.&nbsp;&nbsp;&nbsp; 也就是说你这个项目，一开始就有很多国外的用户参与？</span><br /> 是的，ngx_openresty是用户驱动的项目，后来也有不少国内用户的参与，从 openresty.org 的点击量分布上看，国内和国外的点击量基本持平。<br /> <br /> <span style="font-weight:bold;">16.&nbsp;&nbsp;&nbsp; 目前开发和维护OpenResty的人员有哪些？</span><br /> 目前主要是我在领导，同时王晓哲仍在做一些基础而核心的开发工作，但只是业余时间。我们有许多比较活跃的贡献者，比如波兰的Nginx黑客PiotrSikora，CloudFlare的系统工程师MatthieuTourne，Turner BroadcastingSystem 的架构师 Brian Akins，一淘量子团队的林青和支家乐，去哪儿网的珣新和郭颖，新浪网的drdrxp（网名），而淘宝核心系统部的静龙（花名）、淘李子（花名）、姚伟斌、Simon Liu等多位工程师今年以来也很活跃。StickyAdsTv公司的 CTO，AntoineBonavita，也为我们的测试工具链做了很多贡献。此外，还有不少贡献者我在这里并没有提及，向他们致歉。<br /> <br /> <span style="font-weight:bold;">17.&nbsp;&nbsp;&nbsp; 也就是说这个项目目前是由你领导的一些纯兴趣爱好者在开发。但是这些开发人员都由各自的公司支持来开发这个项目？</span><br /> 这些贡献者都是其所在的公司的业务需求推动的。我们很少因为“好玩”而去做一件事情。所以我虽然最近一直在家里，却仍被许多公司的业务需求给间接着推动着，呵呵。<br /> <br /> <span style="font-weight:bold;">18.&nbsp;&nbsp;&nbsp; 我觉得这个项目是我见到国人发起的生态环境非常好的一个项目，向你们致敬！</span><br /> 谢谢。相比其他开源作者，我自以为我做得比较好的一个地方是，我总是尝试及时回复用户的各种邮件，即使我还有全职工作的时候。<br /> <br /> <span style="font-weight:bold;">19.&nbsp;&nbsp;&nbsp; 你知道国内除了淘宝以外，还有哪些公司在用OpenResty吗</span><br /> 网易，腾讯，去哪儿网、新浪、天涯、CloudFlare, Reblaze.com、EMS、网龙……<br /> <br /> <span style="font-weight:bold;">20.&nbsp;&nbsp;&nbsp; 那网易、腾讯他们有没有对这个项目有所贡献？</span><br /> 网易和腾讯的工程师给了不少反馈，报告过一些问题，可能也贡献过一些补丁，但我不太能把个人和公司名字联系起来，因为开源世界多是匿名的。我也没有询问英雄出处的习惯。新浪的工程师贡献过一些补丁，去哪儿网有一些雅虎和淘宝的老同事，也是活跃的贡献者。还有一些公司因为特别交待需要保密，所以我也不方便在这里列出它们的名字：）<br /> <br /> <span style="font-weight:bold;">21.&nbsp;&nbsp;&nbsp; 你们平时是通过邮件列表交流吗？</span><br /> 我们平时通过邮件、微博、Gtalk/MSN 等各种方式交流。同时github也是很不错的交流平台。<br /> <br /> <span style="font-weight:bold;">22.&nbsp;&nbsp;&nbsp; 你的美国老板是让你过去全职做OpenResty这个项目吗？你的工作是否会完全开源？</span><br /> 当然。<br /> <br /> <span style="font-weight:bold;">23.&nbsp;&nbsp;&nbsp; 你去年一年都在家做开源项目。你说主要力量放在了ngx_openresty上面，还有其他开源项目吗？</span><br /> 还有 <a target="_blank" href="http://search.cpan.org/perldoc?Test::Nginx" rel="nofollow">Test::Nginx测试模块</a>、<a target="_blank" href="https://github.com/agentzh/mockeagain" rel="nofollow">mockeagain测试工具</a>、<a target="_blank" href="https://github.com/agentzh/opsboy" rel="nofollow">opsboy</a>之类。<br /> <br /> <span style="font-weight:bold;">24.&nbsp;&nbsp;&nbsp; 目前和OpenResty类似的项目有哪些？相比之下OpenResty有和特点和优势？</span><br /> ngx_openresty目前有两大应用目标：<br /> 1. 通用目的的 web 应用服务器。在这个目标下，现有的 web 应用技术都可以算是和OpenResty或多或少有些类似，比如 Nodejs, PHP 等等。ngx_openresty的性能（包括内存使用和 CPU 效率）算是最大的卖点之一。<br /> 2. Nginx的脚本扩展编程，用于构建灵活的 Web 应用网关和 Web 应用防火墙。有些类似的是NetScaler. 其优势在于 Lua编程带来的巨大灵活性。<br /> <br /> <span style="font-weight:bold;">25.&nbsp;&nbsp;&nbsp; OpenResty将来的发展方向？是不是还是由公司的需求推动？</span><br /> ngx_openresty从一开始就是公司实际的业务需求的产物。在过去的几年中的大部分开发工作也是由国内外许多公司和个人的实际业务需求驱动的。这种模型在实践中工作得非常好，可以确保我们做的就是大家最迫切需要的。在此过程中，慢慢形成了ngx_openresty的两大应用方向，也就是前面提到的那两大方向。是我们的用户帮助我们确认了这两个方向，事实上，这并不等同于第一代OpenResty的方向，而是变得更加底层和更加通用了。<br /> <br /> <span style="font-weight:bold;">26.&nbsp;&nbsp;&nbsp; 你也应该知道国内基本上没有太流行的开源项目，而国外却有很多。能否谈谈你对开源的理解以及对国内外差距的看法？</span><br /> 开源精神的核心是分享而非追求流行。毕竟开源界不是娱乐圈，也不是时尚圈。如果我们的开源项目有越来越多的人开始使用，只是一个“happy accident”，我们自然会很高兴，但这并不是我们真正追求的。<br /> 开放源码只是开源项目生命周期中的“万里长征第一步”，国内的许多开源项目止步于开放源码，而没有后续投入长期的时间和精力去跟进响应用户的各种需求和反馈，但不免夭折。这种现象在国外的不少开源项目中也很常见。<br /> 国外成功的开源项目比较多，或许跟许多发达国家的程序员们的精神状态有关系。比如我认识的一些国外的黑客都非常心思单纯，热情似火。他们在精神上的束缚非常少，做起事来多是不拘一格。有的人即便长期没有工作单纯靠抵押和捐赠过活，也会不遗余力地投身于开源项目。而我接触到的国内许多程序员的精神负担一般比较重，经济上的压力也比较大，自然难有“玩开源”的心思。<br /> 不过，国内也是有一些程序员拥有国外优秀黑客的素质的，而且他们通过网络和全球的黑客紧密联系在一起，所以我们完全可以期待他们未来有挎奋人心的产出。<br /> 在互联网时代的今天，或许按国界的划分来讨论这样的问题会变得越来越不合时宜。<br /> <br /> <span style="font-weight:bold;">27.&nbsp;&nbsp;&nbsp; 你有没有什么建议给编程的初学者？以及对于新手创建自己的开源项目，你是什么看法？</span><br /> 对于编程的初学者，我最主要的建议就是打开门去看世界，多通过 IRC、邮件列表等途径和世界各国（自然也包括国内）的黑客联结到一起。和他们多沟通多交流，尽可能地多和他们一起通过网络远程协作，比如参与一些有趣的开源项目。为了做到这一点，也需要把英语学好。语言是交流和学习的前提。在此过程中，把自己的功利心放下，以真诚单纯的心为开源世界乃至整个计算世界多贡献。<br /> 对于创建开源项目的新手，我建议一定要及时响应用户以及其他开发者的反馈，千万不要止步于开放源代码。同时多参与和关注其他的开源项目，观察那些比较成功的开源项目具体是如何运作的。<br /> <br /> <span style="font-weight:bold;">28.&nbsp;&nbsp;&nbsp; 能否给开源中国提些意见或者建议？</span><br /> 希望开源中国能不断致力于开源文化和开源精神在中国的普及，包括在业界的普及以及在各高校的计算机相关专业内的普及。我觉得这才是开源的精髓。而开放源代码的行为本身以及一个个具体开源项目的文档和源码包都只不过是形式罢了。 <br /> <br /> </p> </span> 
+ </div> 
+</div>                    <div class='clear'></div><div class='EditLogs'>
+	<span class="question_resupply_list">
+		</span>
+</div></div>
+                                <div class="Asker special">
+                    <div class="info" title="虫虫">
+					<span class="ainfo">
+						<a href="http://my.oschina.net/zhlmmc" class="ShowUserOutline" target="_blank"
+                           title="虫虫"><img src="http://static.oschina.net/uploads/user/0/28_50.jpg?t=1355825992000" align="absmiddle" alt="虫虫" title="虫虫" class="SmallPortrait" user="28"/></a>
+					</span>
+					<span class="pinfo">
+		    			<a href="http://my.oschina.net/zhlmmc" class="Asker-Name"
+                           target="_blank">虫虫</a><br/>
+		    			<span class="pub_time">发帖于&nbsp;4年前</span><br/>
+		    			<span><a href='#answers' class='answer_count'>25</a>回/51714阅</span>
+					</span>
+                    </div>
+                    <div class='clear'></div>
+                </div>
+                <div class="tags_toolbars">
+                    <div class='Tags' id="tags_nav">
+                        <strong>标签：</strong>
+                                                                            <a href='http://www.oschina.net/question/tag/openresty' class='tag project image' data-id='19035' title='Web应用服务器 OpenResty'><img src='/img/logo/openresty.png?t=1451961935000' height='18' class='prj_logo_18'>OpenResty</a> <a href='http://www.oschina.net/question/tag/nginx' class='tag project image' data-id='390' title='高性能Web服务器 Nginx'><img src='/img/logo/nginx.png?t=1451961935000' height='18' class='prj_logo_18'>Nginx</a> <a href='http://www.oschina.net/question/tag/lua' class='tag project image' data-id='5721' title='脚本编程语言 Lua'><img src='/img/logo/lua.gif?t=1451961935000' height='18' class='prj_logo_18'>Lua</a> <a href='http://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E8%AE%BF%E8%B0%88' class='tag other' data-id='4628' title=''>开源访谈</a>                                                                     </div>
+                                            <div class='SameQuestions'>
+			<span class="q_toolbar">
+				<ul>
+                                        <li> <a href="javascript:report('http://www.oschina.net/question/28_60461',60461,2)">举报&nbsp;</a></li>
+                    <li id="Share">
+                        <a class="Ask_Share_Tencent" title="分享到腾讯微博"
+                           href="javascript:(function(){window.open('http://v.t.qq.com/share/share.php?url='+encodeURIComponent(document.location)+'&amp;appkey=96f54f97c4de46e393c4835a266207f4&amp;site=&amp;title='+encodeURIComponent(document.title)+encodeURIComponent(': 关于开源访谈 开源访谈是开源中国推出的一系列针对国内优秀开源软件作者的访谈，以文字的方式记录并传播。我们希望开源访谈能全面的展现国内开源软件、开源软件作者的现...'),'', 'width=450, height=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, location=yes, resizable=no, status=no');}())"></a>
+                        <a class="Ask_Share_Sina" title="分享到新浪微博"
+                           href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=858381728',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','【开源访谈】OpenResty 作者章亦春访谈实录: 关于开源访谈 开源访谈是开源中国推出的一系列针对国内优秀开源软件作者的访谈，以文字的方式记录并传播。我们希望开源访谈能全面的展现国内开源软件、开源软件作者的现...','','utf-8'));"></a>
+                        |<a href="javascript:function(0);">&nbsp;分享到</a>
+                    </li>
+                </ul>
+			</span>
+
+                            <div class="clear"></div>
+                        </div>
+                                    </div>
+            </div>
+            <div class='Vote' id='Vote'>
+                                                <a id="vote_up" class="vote-up-off" href="#" title="顶：这问题很有用或者提问清晰明了"></a>
+                                <span class="q_vote_num">2</span>
+                                    <a id="vote_down" class="vote-down-off" href="#" title="踩：这问题不知道在问什么，或者没什么用"></a>
+                                <span class="store">
+    		<a title="收藏此话题"
+               class="Tool-Store-Off" id="favor_trigger" href="javascript:;">收藏(0)</a>
+    		</span>
+            </div>
+        </div>
+        <style type='text/css'>
+            #TagsSwitcher { color : #A00; }
+
+            #RecTags, #MyTags { margin : 5px 0; }
+
+            #RecTags a.tag { line-height : 24px; }
+
+            #favor_form p:first-child { margin : 5px 0; }
+
+            #favor_form { width : 200px; }
+
+            #favor_form p { color : #666; }
+
+            #favor_form form { width : 200px; }
+
+            #favor_form form ._favor_input { display : block; margin : 2px 0; width : 199px; }
+
+            #favor_form form ._favor_button { float : left; padding : 2px 5px; }
+
+            .favor_ok { text-align : center; font-size : 10.5pt; width : 199px; height : 60px; margin-top : 10px; }
+
+            #TagsSwitcher { cursor : pointer; float : right; margin-top : 10px; }
+
+            #MyTags { display : none; width : 199px; }
+
+            #MyTags a.tag { float : left; background-color : #E0EAF1; border-bottom : 1px solid #3E6D8E; border-right : 1px solid #7F9FB6; color : #3E6D8E; font-size : 8pt; line-height : 16px; margin : 2px 2px 2px 0; padding : 2px 4px; text-decoration : none; white-space : nowrap; }
+
+            #MyTags a.tag:hover { background-color : #3E6D8E; color : #FFF; }
+
+            .osc_promotion { position : relative; display : inline-block; padding : 10px; margin : 10px 0; border : 1px solid #ccc; }
+
+            .osc_promotion .c { position : absolute; right : -1px; top : -1px; }
+
+            .ask_toolbar { float : right; list-style : none; font-size : 12px; color : #333; height : 28px; _padding-top : 5px; overflow : hidden; margin : 20px 0 10px 0; }
+
+            .ask_toolbar div { float : left; margin-left : 5px; background : url("/img/ask-icon.gif") no-repeat; padding : 6px 0 6px 15px; padding-left : 15px; height : 16px; }
+
+            .ask_toolbar a { height : 16px; color : #333; text-decoration : none; display : inline-block; zoom : 1; vertical-align : middle; }
+
+            .ask_share { width : 89px; vertical-align : bottom; line-height : 15px; _line-height : 14px; }
+
+            .ask_share a { background : url("/img/ask-icon.gif"); width : 16px; }
+
+            a.ask_share_sina { background : url("/img/ask-icon.gif") 0 -40px no-repeat; margin-left : 5px; }
+
+            a.ask_share_tencent { background-position : 0 -70px; margin-left : 5px; }
+
+            .ask_toolbar em { height : 28px; line-height : 28px; width : 14px; display : inline-block; float : left; background : url("/img/ask-icon.gif") top right; }
+
+            .ask_collect a, .ask_report a, .ask_vote a, .ask_collected a { padding-left : 20px; line-height : 15px; }
+
+            .ask_collect a { background : url("/img/ask-icon.gif") 0 -131px no-repeat; }
+
+            .ask_collected a { background : url("/img/ask-icon.gif") 0 -100px no-repeat; }
+
+            div.ask_collect_count { background : url("/img/ask-icon.gif") 0 -309px no-repeat; font-weight : bold; font-size : 14px; margin-left : 0; height : 16px; line-height : 16px; }
+
+            .ask_report a { background : url("/img/ask-icon.gif") 0 -160px no-repeat; }
+
+            em.ask_collect_count_r { background-position : 59px -309px; }
+
+            .ask_vote a { background : url("/img/ask-icon.gif"); }
+                        a.ask_vote_up { background-position : 3px -190px; }
+
+            a.ask_vote_down { background-position : 0 -280px; }
+
+            a.ask_vote_uped { background-position : 3px -190px; }
+                        a.ask_vote_downed { background-position : 0 -280px; }
+
+            .ask_vote span { display : inline-block; margin : 0 10px; font-weight : bold; font-size : 14px; vertical-align : middle; margin-bottom : 2px; line-height : 16px; }
+        </style>
+        <div class='clear'></div>
+    
+    	        <div class='clear'></div>
+                        <div class='QuestionReplies'>
+            <h2>
+				<span class='sort'>
+					<a href="http://www.oschina.net/question/28_60461#answers" class='current'>按默认排序</a>&nbsp;
+					<a href="?sort=time#answers">显示最新评论</a>&nbsp;&nbsp;
+				</span>
+                <a name='answers'></a>共有<em class='answer_count'>25</em>个评论
+                <a href="?sort=time#answers"
+                                           class="last_reply">(最后回答: 2周前
+                    )</a>            </h2>
+                        <ul class='list'><span class="hr unvisible"></span><div class="Vote" id="vote_253858">
+        <a href="javascript:vote_answer(253858,true,true)" id='a_post_voteup_253858'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253858">0</span>
+    <a href="javascript:vote_answer(253858,false,true)" id='a_post_votedown_253858'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253858'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/jack230230" class="ShowUserOutline" name="AnchorAnswer253858"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/41/82993_50.png?t=1402714881000" align="absmiddle" alt="王振威" title="王振威" class="SmallPortrait" user="82993"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/jack230230" title="王振威"
+               target="_blank">王振威</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>给力啊，啥事侯俺也能这么nb</div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253858'><div class='clear'></div>
+<strong>--- 共有 2 条评论 --- </strong>
+<ul>
+		<li id='PostReply_254956'>
+				<a href="http://my.oschina.net/u/570106" class='p' name='AnchorAnswer254956'>我在KY8011上见到你</a>
+		<span class='b'>
+		<span class='c'>回复 <a href='http://my.oschina.net/u/272411' class='referer' target='_blank'>@刘越洋</a>  : ！！鸡皮疙瘩落了一地</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253858,570106)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+		<li id='PostReply_253923'>
+				<a href="http://my.oschina.net/liuxiaoyang" class='p' name='AnchorAnswer253923'>刘小羊</a>
+		<span class='b'>
+		<span class='c'>亲爱的，只要一直都有梦想在，就不怕不会成功。恁在俺心里一直很牛b的，俺会一直支持恁滴。。。么么</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253858,272411)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+	</ul>	
+<div class='PagerLinks'>
+</div>
+</div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253858, 0)">评论(2)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253858">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253858',253858,17)">举报</a>
+            
+            (2012-07-09 20:10)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253862">
+        <a href="javascript:vote_answer(253862,true,true)" id='a_post_voteup_253862'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253862">0</span>
+    <a href="javascript:vote_answer(253862,false,true)" id='a_post_votedown_253862'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253862'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/u/557781" class="ShowUserOutline" name="AnchorAnswer253862"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/278/557781_50.jpg" align="absmiddle" alt="OrionBox" title="OrionBox" class="SmallPortrait" user="557781"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/u/557781" title="OrionBox"
+               target="_blank">OrionBox</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>现定居美国旧金山。曾经在北京的时候供职于 Yahoo！中国以及淘宝（阿里巴巴）。看了下，我不明白开源怎么做到定居美国旧金山的？？这资金哪来的？？</div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253862'><div class='clear'></div>
+<strong>--- 共有 4 条评论 --- </strong>
+<ul>
+		<li id='PostReply_254280'>
+				<a href="http://my.oschina.net/stevensinclair" class='p' name='AnchorAnswer254280'>stevensinclair</a>
+		<span class='b'>
+		<span class='c'>你是没有持续关注过agentzh同学.hah.</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253862,575877)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+		<li id='PostReply_253977'>
+				<a href="http://my.oschina.net/liu-xuewei" class='p' name='AnchorAnswer253977'>刘学炜</a>
+		<span class='b'>
+		<span class='c'>回复 <a href='http://my.oschina.net/junwuwei' class='referer' target='_blank'>@君无畏</a>  : 美国（旧金山）有一家公司愿意让他在他们那里全职做ngx_openresty</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253862,188162)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+		<li id='PostReply_253875'>
+				<a href="http://my.oschina.net/junwuwei" class='p' name='AnchorAnswer253875'>君无畏</a>
+		<span class='b'>
+		<span class='c'>捐赠？？</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253862,99867)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+		<li id='PostReply_253869'>
+				<a href="http://my.oschina.net/zhlmmc" class='p' name='AnchorAnswer253869'>虫虫</a>
+		<span class='b'>
+		<span class='c'>你没有仔细看访谈</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253862,28)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+	</ul>	
+<div class='PagerLinks'>
+</div>
+</div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253862, 0)">评论(4)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253862">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253862',253862,17)">举报</a>
+            
+            (2012-07-09 20:13)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253871">
+        <a href="javascript:vote_answer(253871,true,true)" id='a_post_voteup_253871'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253871">0</span>
+    <a href="javascript:vote_answer(253871,false,true)" id='a_post_votedown_253871'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253871'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/lymegg" class="ShowUserOutline" name="AnchorAnswer253871"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/51/102306_50.jpg" align="absmiddle" alt="笨蛋EGG" title="笨蛋EGG" class="SmallPortrait" user="102306"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/lymegg" title="笨蛋EGG"
+               target="_blank">笨蛋EGG</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'><p>一年不工作也有钱吃饭?!牛人果然不一样```````啥时候我也可以这样````做自己想做的事``</p> 
+<p>&nbsp;</p></div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253871'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253871, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253871">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253871',253871,17)">举报</a>
+            
+            (2012-07-09 20:21)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253873">
+        <a href="javascript:vote_answer(253873,true,true)" id='a_post_voteup_253873'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253873">0</span>
+    <a href="javascript:vote_answer(253873,false,true)" id='a_post_votedown_253873'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253873'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/zzeric" class="ShowUserOutline" name="AnchorAnswer253873"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/32/64952_50.jpg" align="absmiddle" alt="zzeric" title="zzeric" class="SmallPortrait" user="64952"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/zzeric" title="zzeric"
+               target="_blank">zzeric</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>openresty非常好用，推荐一下</div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253873'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253873, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253873">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253873',253873,17)">举报</a>
+            
+            (2012-07-09 20:24)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253885">
+        <a href="javascript:vote_answer(253885,true,true)" id='a_post_voteup_253885'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253885">0</span>
+    <a href="javascript:vote_answer(253885,false,true)" id='a_post_votedown_253885'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253885'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/23424242" class="ShowUserOutline" name="AnchorAnswer253885"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/48/97243_50.jpg" align="absmiddle" alt="树相马" title="树相马" class="SmallPortrait" user="97243"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/23424242" title="树相马"
+               target="_blank">树相马</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>米有完整的中文说明么？</div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253885'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253885, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253885">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253885',253885,17)">举报</a>
+            
+            (2012-07-09 20:51)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253894">
+        <a href="javascript:vote_answer(253894,true,true)" id='a_post_voteup_253894'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253894">0</span>
+    <a href="javascript:vote_answer(253894,false,true)" id='a_post_votedown_253894'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253894'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/hasszhao" class="ShowUserOutline" name="AnchorAnswer253894"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/64/129101_50.jpg?t=1384877238000" align="absmiddle" alt="ChrisDev" title="ChrisDev" class="SmallPortrait" user="129101"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/hasszhao" title="ChrisDev"
+               target="_blank">ChrisDev</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'><div class="ref"><h4>引用来自“OrionBox”的答案</h4><div class=ref_body>现定居美国旧金山。曾经在北京的时候供职于 Yahoo！中国以及淘宝（阿里巴巴）。看了下，我不明白开源怎么做到定居美国旧金山的？？这资金哪来的？？</div></div><div class=a_body>心照不宣，大家懂的。</div></div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253894'><div class='clear'></div>
+<strong>--- 共有 1 条评论 --- </strong>
+<ul>
+		<li id='PostReply_253971'>
+				<a href="http://my.oschina.net/mfkwfc" class='p' name='AnchorAnswer253971'>th小米粥</a>
+		<span class='b'>
+		<span class='c'>这样不会被跨省.</span>
+		<span class='t'>
+				(4年前)&nbsp&nbsp;
+				<span class='opts'><a href="javascript:reply_to_post(253894,149820)">回复</a></span>
+		</span>
+		</span>
+		<div class='clear'></div>
+	</li>
+	</ul>	
+<div class='PagerLinks'>
+</div>
+</div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253894, 0)">评论(1)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253894">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253894',253894,17)">举报</a>
+            
+            (2012-07-09 21:09)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253896">
+        <a href="javascript:vote_answer(253896,true,true)" id='a_post_voteup_253896'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253896">0</span>
+    <a href="javascript:vote_answer(253896,false,true)" id='a_post_votedown_253896'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253896'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/u/226557" class="ShowUserOutline" name="AnchorAnswer253896"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/113/226557_50.jpg" align="absmiddle" alt="Esnce" title="Esnce" class="SmallPortrait" user="226557"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/u/226557" title="Esnce"
+               target="_blank">Esnce</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>围观，偶滴偶像啊</div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253896'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253896, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253896">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253896',253896,17)">举报</a>
+            
+            (2012-07-09 21:10)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253898">
+        <a href="javascript:vote_answer(253898,true,true)" id='a_post_voteup_253898'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253898">0</span>
+    <a href="javascript:vote_answer(253898,false,true)" id='a_post_votedown_253898'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253898'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/u/586526" class="ShowUserOutline" name="AnchorAnswer253898"
+                                  target="_blank"><img src="/img/portrait.gif?t=1451961935000" align="absmiddle" alt="s3" title="s3" class="SmallPortrait" user="586526"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/u/586526" title="s3"
+               target="_blank">s3</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'><p>一直关注，支持下章老师。</p> 
+<p>我以前以为你工作好多年了。</p></div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253898'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253898, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253898">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253898',253898,17)">举报</a>
+            
+            (2012-07-09 21:17)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253905">
+        <a href="javascript:vote_answer(253905,true,true)" id='a_post_voteup_253905'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253905">0</span>
+    <a href="javascript:vote_answer(253905,false,true)" id='a_post_votedown_253905'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253905'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/longniao" class="ShowUserOutline" name="AnchorAnswer253905"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/119/239303_50.jpg?t=1371449360000" align="absmiddle" alt="龙鸟" title="龙鸟" class="SmallPortrait" user="239303"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/longniao" title="龙鸟"
+               target="_blank">龙鸟</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>为了移民，努力写代码， 
+<img src="http://www.oschina.net/js/ke/plugins/emoticons/30.gif" alt="" /></div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253905'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253905, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253905">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253905',253905,17)">举报</a>
+            
+            (2012-07-09 21:26)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script><div class="Vote" id="vote_253910">
+        <a href="javascript:vote_answer(253910,true,true)" id='a_post_voteup_253910'
+       class=" vote-up-off "
+       title=" 投支持票 "></a>
+    <span class="a_vote_num" id="a_vote_num_253910">0</span>
+    <a href="javascript:vote_answer(253910,false,true)" id='a_post_votedown_253910'
+       class=" vote-down-off "
+       title=" 投反对票 "></a>
+                </div>
+<li class='Answer '
+    id='answer_253910'>
+    <div class='user'>
+        <span class="user_img"><a href="http://my.oschina.net/suigege" class="ShowUserOutline" name="AnchorAnswer253910"
+                                  target="_blank"><img src="http://static.oschina.net/uploads/user/85/170073_50.jpg?t=1392769661000" align="absmiddle" alt="周凌翔" title="周凌翔" class="SmallPortrait" user="170073"/></a></span>
+		<span class="user_info">
+			<a href="http://my.oschina.net/suigege" title="周凌翔"
+               target="_blank">周凌翔</a>
+			<span class="reply-time">4年前</span>
+		</span>
+
+        <div class="clear"></div>
+    </div>
+    <div class='body'>
+                                            <div class='clear'></div>
+        <div class='detail'>這位老兄目前的生活貌似是所有天朝碼農的最高追求或者之一了…… 碼農活了大半輩子不就是這種追求嗎。。。 
+<br /></div>
+    </div>
+    <div class='clear'></div>
+    <div class='replies' id='PostReplies_253910'></div>
+
+    <div class='votes'>
+                <span class="a_toolbar">
+		<a href="javascript:reply_to_post(253910, 0)">评论(0)</a>|
+            <a href="/question/answer?question=60461&amp;answer=253910">引用此评论</a>|                                        <a href="javascript:report('http://www.oschina.net/question/28_60461#AnchorAnswer253910',253910,17)">举报</a>
+            
+            (2012-07-09 21:44)
+		</span>
+    </div>
+</li>
+<span class="hr"></span>
+<script>
+                $('li.Answer').bind('mouseenter', function () {
+            var anwserId = $(this).attr('id');
+        }).bind('mouseleave', function () {
+            var anwserId = $(this).attr('id');
+        });
+        $('.Vote').bind('mouseenter', function () {
+            $(this).find('a.accept-off').show();
+            $(this).find('a.accept-on').show();
+            $(this).next('li.Answer').find('.hover-show').show();
+        }).bind('mouseleave', function () {
+            $(this).find('a.accept-off').hide();
+            $(this).next('li.Answer').find('.hover-show').hide();
+        });
+        </script>            </ul>
+                                                                                                <ul class="pager">
+                        <li class='page current'><a href="?sort=default&p=1">1</a></li>            <li class='page'><a href="?sort=default&p=2#answers">2</a></li>            <li class='page'><a href="?sort=default&p=3#answers">3</a></li>            <li class='page next'><a href="?sort=default&p=2#answers">&gt;</a></li>        </ul>
+                    </div>
+        <div class="recruitment recruitment-question">
+	<div class="recruit-heading">
+		<div class="title">
+			最新热门职位
+		</div>
+		<div class="more">
+			更多开发者职位上
+			<a href="http://job.oschina.net/" target="_blank" class="link">开源中国·招聘</a>
+		</div>
+	</div>
+	<div class="recruit-body">
+		<ul>
+									<li>
+				<div class="logo-img">
+					<a href="http://job.oschina.net/position/10920_2763692_25400" target="_blank">
+										<img src="http://static.oschina.net/uploads/company/logo/201605/19101613_cnbw2763692.png">
+										</a>
+				</div>
+				<div class="info-list">
+					<div>
+						<a href="http://job.oschina.net/position/10920_2763692_25400" target="_blank">	CDN高级运维工程师
+</a>
+						<a href="http://job.oschina.net/company/2763692_10920" target="_blank">
+							<small>帝联科技
+</small>
+						</a>
+					</div>
+					<h5>
+						月薪：
+						<span class="font-red">20-30K</span>
+					</h5>
+				</div>
+			</li>
+												<li>
+				<div class="logo-img">
+					<a href="http://job.oschina.net/position/2358_1163907_24729" target="_blank">
+										<span>M
+</span>
+										</a>
+				</div>
+				<div class="info-list">
+					<div>
+						<a href="http://job.oschina.net/position/2358_1163907_24729" target="_blank">	高级运维工程师
+</a>
+						<a href="http://job.oschina.net/company/1163907_2358" target="_blank">
+							<small>MyChoice
+</small>
+						</a>
+					</div>
+					<h5>
+						月薪：
+						<span class="font-red">25-35K</span>
+					</h5>
+				</div>
+			</li>
+								</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<style>
+	/*招聘广告位--样式*/
+	.clear{
+		clear:both;
+		font-size:1px;
+		line-height: 0;
+	}
+	.recruitment{
+		background:#fff;
+		font-size: 14px;
+		color: #333;
+		padding-bottom: 10px;
+	}
+	.recruitment a{
+		text-decoration: none;
+		color: #333;
+	}
+	.recruitment a:hover{
+		text-decoration: none;
+		color: #459120;
+	}
+	.recruitment ul,.recruitment li{
+		list-style-type: none;
+		padding:0;
+		margin:0;
+	}
+	.recruitment h5{
+		font-weight: 400;
+		font-size: 12px;
+		color: #999;
+		margin:0;
+	}
+	.recruitment .recruit-heading{
+		height: 34px;
+		line-height: 34px;
+		border-bottom:1px solid #ddd;
+		margin-bottom: 10px;
+	}
+	.recruitment .recruit-heading .title{
+		float:left;
+	}
+	.recruitment .recruit-heading .more{
+		float:right;
+	}
+	.recruitment .recruit-heading .link{
+		color:#3AA904;
+		font-size: 12px;
+		font-weight: bold;
+	}
+	.recruitment .recruit-body{
+	}
+	.recruitment .recruit-body li{
+		outline: 0;
+		padding:10px 0;
+		width: 50%;
+		height: 50px;
+		margin:0;
+		float: left;
+	}
+	.recruitment .recruit-body li .logo-img{
+		float: left;
+		width: 44px;
+		height: 44px;
+		display: inline-block;
+		padding: 2px;
+		border:1px solid #ccc;
+	}
+	.recruitment .recruit-body li .logo-img img{
+		width: 44px;
+		height: 44px;
+	}
+	.recruitment .recruit-body li .logo-img span{
+		display: block;
+		font-weight: 700;
+		height: 44px;
+		line-height: 44px;
+		font-size: 20px;
+		text-align: center;
+		border-radius: 5px;
+	}
+	.recruitment .recruit-body li .info-list{
+		margin-left:60px;
+	}
+	.recruitment .recruit-body li .info-list div{
+		line-height: 30px;
+	}
+	.recruitment .recruit-body li .info-list div a{
+		margin-right:10px;
+	}
+	.recruitment .recruit-body li .info-list small{
+		color: #666;
+	}
+	.recruitment .font-red{
+		color: #EB6000 !important;
+	}
+	.recruitment-question{
+		border-bottom: 1px solid #ddd;
+	}
+	.recruitment-question .recruit-heading{
+		padding-top:10px;
+		margin:0 !important;
+		border: 0 !important;
+	}
+	.recruitment-question .recruit-heading .title{
+		font-size:16px;
+	}
+
+	.recruitment .recruit-heading .more{
+		font-size:12px;
+	}
+</style>
+        <div class='AnswerForm'>
+                    <form id='form_answer' action="/action/question/answer?question=60461" method="post">
+                <input type='hidden' name='user' value=''/>
+                <textarea id='txt_answner' name='body'
+                          style='width:650px;height:160px;'></textarea>
+                <input type='submit' value=' 发表评论 ' id="FormSubmitButton"
+                       class='rndbutton'/>
+                <span id='form_msg' style='display:none;'></span>
+                <br/><br/>
+                <a href="#answers">回评论顶部</a>&nbsp;|&nbsp;<a href="#top">回页面顶部</a>
+            </form>
+            <div class='clear'></div>
+            <script>
+                $('#form_answer').ajaxForm({
+                    dataType: 'json',
+                    beforeSerialize: function ($form, options) {
+                        editor.sync();
+                    },
+                    beforeSubmit: function () {
+                        $('#FormSubmitButton').attr('disabled', 'disabled');
+                        $('#form_msg').html("<span class='ajax_processing'>正在提交评论，请稍候...</span>");
+                        $('#form_msg').show();
+                    },
+                    success: function (json) {
+                        $('#FormSubmitButton').removeAttr('disabled');
+                        if (json.msg) {
+                            $('#form_msg').html("<span class='error_msg'>" + json.msg + "</span>");
+                            $('#form_msg').show();
+                        }
+                        else if (json.id) {
+                            ajax_get("/question/show_answer?_answer_id=" + json.id, true, function (data) {
+                                                                    $('.QuestionReplies ul.list').append(data);
+                                                                editor.html('');
+                                $('.answer_count').html(json.answer_count);
+                            });
+                            $('#form_msg').hide();
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    
+<script type="text/javascript" src="/js/sh309/scripts/xregexp-min.js?t=1451961936000"></script>
+<script type="text/javascript" src="/js/sh309/scripts/shCore.min.js?t=1451961936000"></script>
+<script type="text/javascript" src="/js/sh309/scripts/shAutoloader.js?t=1451961936000"></script>
+<link type="text/css" rel="stylesheet" href="/js/sh309/styles/shCore.css?t=1451961936000"/>
+<link type="text/css" rel="Stylesheet" href="/js/sh309/styles/shThemeDefault.css?t=1451961936000"/>
+
+<script type="text/javascript">
+    SyntaxHighlighter.autoloader(
+            'applescript			/js/sh309/scripts/shBrushAppleScript.js?t=1451961936000',
+            'actionscript3 as3		/js/sh309/scripts/shBrushAS3.js?t=1451961936000',
+            'bash shell				/js/sh309/scripts/shBrushBash.js?t=1451961936000',
+            'coldfusion cf			/js/sh309/scripts/shBrushColdFusion.js?t=1451961936000',
+            'cpp c					/js/sh309/scripts/shBrushCpp.js?t=1451961936000',
+            'obj-c objc				/js/sh309/scripts/shBrushObjC.js?t=1451961936000',
+            'c# c-sharp csharp		/js/sh309/scripts/shBrushCSharp.js?t=1451961936000',
+            'css					/js/sh309/scripts/shBrushCss.js?t=1451961936000',
+            'delphi pascal			/js/sh309/scripts/shBrushDelphi.js?t=1451961936000',
+            'diff patch pas			/js/sh309/scripts/shBrushDiff.js?t=1451961936000',
+            'erl erlang				/js/sh309/scripts/shBrushErlang.js?t=1451961936000',
+            'groovy					/js/sh309/scripts/shBrushGroovy.js?t=1451961936000',
+            'haxe hx				/js/sh309/scripts/shBrushHaxe.js?t=1451961936000',
+            'java					/js/sh309/scripts/shBrushJava.js?t=1451961936000',
+            'jfx javafx				/js/sh309/scripts/shBrushJavaFX.js?t=1451961936000',
+            'js jscript javascript	/js/sh309/scripts/shBrushJScript.js?t=1451961936000',
+            'perl pl				/js/sh309/scripts/shBrushPerl.js?t=1451961936000',
+            'php					/js/sh309/scripts/shBrushPhp.js?t=1451961936000',
+            'text plain				/js/sh309/scripts/shBrushPlain.js?t=1451961936000',
+            'py python				/js/sh309/scripts/shBrushPython.js?t=1451961936000',
+            'ruby rails ror rb		/js/sh309/scripts/shBrushRuby.js?t=1451961936000',
+            'scala					/js/sh309/scripts/shBrushScala.js?t=1451961936000',
+            'sql					/js/sh309/scripts/shBrushSql.js?t=1451961936000',
+            'vb vbnet				/js/sh309/scripts/shBrushVb.js?t=1451961936000',
+            'xml xhtml xslt html	/js/sh309/scripts/shBrushXml.js?t=1451961936000'
+    );
+    SyntaxHighlighter.all();
+</script>
+    <div class='QuestionRelations'>
+        <div id='QuestionWizard'>
+            有什么技术问题吗？
+            <a href='/question/ask' class='rndbutton'><span>我要提问</span></a>
+
+            <div class='clear'></div>
+        </div>
+            					<div style='text-align:center;margin-bottom:10px;'>
+		<a name="question_banner_one"/>
+		<a href="http://netease.im/?&hmsr=os5&hmpl=2&from=os5" target="_blank" title="网易云信">
+			<img src="http://static.oschina.net/uploads/cooperation/question_banner_one_AGhwg.jpg" width="250" height="250">
+		</a>
+		 </div>
+	                    <div class="AskerCard">
+                                        <div id='OtherQuestionsOfUser' class='Qlist'>
+                    <strong><a href="http://my.oschina.net/zhlmmc/?ft=bbs&scope=2&showme=1"
+                               class="more">全部(315
+                        )</a>虫虫的其它问题</strong>
+                    <ul>
+                                                                                    <li><a href="http://www.oschina.net/question/28_131906"
+                                       title="JetBrains 超级优惠活动再度来袭！五折，全场五折！">JetBrains 超级优惠活动再度来袭！五折，全场五折！</a><span
+                                        class='date'>(98回/17465
+                                    阅,3年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/28_125131"
+                                       title="笔记本的触摸屏在设备管理里面是哪个设备？">笔记本的触摸屏在设备管理里面是哪个设备？</a><span
+                                        class='date'>(3回/1013
+                                    阅,3年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/28_122025"
+                                       title="如何反击“未知号码”响一声就挂骚扰">如何反击“未知号码”响一声就挂骚扰</a><span
+                                        class='date'>(28回/11427
+                                    阅,3年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/28_114019"
+                                       title="【成都】开源中国 OSC 源创会第18期">【成都】开源中国 OSC 源创会第18期</a><span
+                                        class='date'>(4回/798
+                                    阅,3年前)</span></li>                                                                                    <li><a href="http://www.oschina.net/question/28_110820"
+                                       title="软硬兼施 - 开源硬件 Kiwiboard 首发！">软硬兼施 - 开源硬件 Kiwiboard 首发！</a><span
+                                        class='date'>(96回/18642
+                                    阅,3年前)</span></li>                                            </ul>
+                </div>
+                    </div>
+        					<div style='text-align:center;margin-top:20px;'>
+		<a name="question_banner_two"/>
+		<a href="http://ad.doubleclick.net/ddm/trackclk/N5840.2025702OSCHINA/B9641689.130851276;dc_trk_aid=303617658;dc_trk_cid=70108950?http://item.jd.com/2624384.html" target="_blank" title="PHD 惠普">
+			<img src="http://static.oschina.net/uploads/cooperation/question_banner_two_qfXLg.jpg" width="250" height="250">
+		</a>
+		 </div>
+	
+                    
+        <div id='Similarity' class='Qlist'>
+                                </div>
+    </div>
+    <div class='clear'></div>
+</div>
+<script type='text/javascript' src='/js/ke/kindeditor-min.js?t=1451961936000' charset='utf-8'></script>
+<script type='text/javascript'>
+    <!--
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('#txt_answner', {
+            themeType: 'oschina',
+            resizeType: 1,
+            urlType: 'domain',
+            shadowMode: false,
+            allowPreviewEmoticons: false,
+            allowImageUpload: true,
+            allowFlashUpload: false,
+            cssPath: '/css/ke-oschina.css?t=1451961935000',
+            uploadJson: '/action/blog/upload_img',
+            afterCreate: function () {
+                /*
+                K.ctrl(this.edit.iframe.get(0).contentWindow.document, 13, function() {
+                    $("#txt_answner
+
+
+
+                                                                ").parent().submit();
+                                                                            });
+                                                                            */
+                $(this.edit.iframe.get(0).contentWindow.document).keydown(function (e) {
+                    if ((e.ctrlKey || e.metaKey) && e.which == 13 && !e.shiftKey && !e.altKey) {
+                        $("#txt_answner").parent().submit();
+                    }
+                });
+            },
+            afterChange: function () {
+                this.sync();
+            },
+            items: ['bold', 'italic', 'underline', 'strikethrough', 'removeformat', '|', 'insertorderedlist', 'insertunorderedlist',
+                'forecolor', 'hilitecolor', 'fontname', 'fontsize', '|', 'link', 'unlink', 'emoticons',
+                'shcode', 'image', 'flash', 'quote', '|', 'source', 'about'],
+            htmlTags: {
+                script: ['src'],
+                font: ['color', 'size', 'face', '.background-color'],
+                span: [
+                    '.color', '.background-color', '.font-size', '.font-family', '.background',
+                    '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.line-height'
+                ],
+                div: [
+                    'class', 'align', '.border', '.margin', '.padding', '.text-align', '.color',
+                    '.background-color', '.font-size', '.font-family', '.font-weight', '.background',
+                    '.font-style', '.text-decoration', '.vertical-align', '.margin-left'
+                ],
+                table: [
+                    'border', 'cellspacing', 'cellpadding', 'width', 'height', 'align', 'bordercolor',
+                    '.padding', '.margin', '.border', 'bgcolor', '.text-align', '.color', '.background-color',
+                    '.font-size', '.font-family', '.font-weight', '.font-style', '.text-decoration', '.background',
+                    '.width', '.height', '.border-collapse'
+                ],
+                'td,th': [
+                    'align', 'valign', 'width', 'height', 'colspan', 'rowspan', 'bgcolor',
+                    '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.font-weight',
+                    '.font-style', '.text-decoration', '.vertical-align', '.background', '.border'
+                ],
+                a: ['href', 'target', 'name'],
+                embed: ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
+                img: ['src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
+                'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6': [
+                    'align', '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.background',
+                    '.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
+                ],
+                pre: ['class'],
+                hr: ['class', '.page-break-after'],
+                'br,tbody,tr,strong,b,sub,sup,em,i,u,strike,s,del': []
+            }
+        });
+    });
+    //-->
+</script>
+<!--[if lt IE 7]>
+<script type="text/javascript" src="/js/minmax.js?t=1451961936000  </script>
+<![endif]-->
+<script type="text/javascript" src="/action/visit/question?id=60461"></script>
+<script type='text/javascript'>
+    <!--
+    $(document).ready(function () {
+        $.ajax({
+            url: "/action/favorite/attentionUsersCount",
+            type: "get",
+            data: "id="+60461+"&type="+2,
+            success: function (msg) {
+                $("#favor_trigger").html("收藏(" + msg + ")");
+            }
+        });
+        $('.Answer .replies li').hover(
+                function () {
+                    $(this).addClass('hover');
+                },
+                function () {
+                    $(this).removeClass('hover');
+                }
+        );
+
+        $('.detail img').css('cursor', 'pointer');
+        jQuery.each($('.detail img'), function (idx, v) {
+            if (!$(v).parent().is("a")) {
+                $(v).wrap("<a href='" + $(this).attr('src') + "' target='_blank'></a>");
+            }
+        });
+
+        $('#c').bind('mouseover mouseout', function () {
+            $('#c_on').toggle();
+            $('#c_off').toggle();
+        });
+
+        $('#favor_trigger').click(function () {
+                            add_to_favor(60461,2);
+                    });
+    });
+    function ask_too(qid, ask) {
+        ajax_post("/action/question/ask_too?id=" + qid + "&ask=" + ask, "", function (html) {
+            json = eval('(' + html + ')');
+            if (json.asker_count >= 0) {
+                $('#c_asker_count').html(json.asker_count);
+                if (json.ask_mode)
+                    $('#RQuestionAction').html("<span class='rect'>已问同一问题 | <a href='javascript:ask_too(60461,false)'>取消？</a></span>");
+                else
+                    $('#RQuestionAction').html("<a href='javascript:ask_too(60461,true)' class='rndbutton'><span>我想问同样的问题</span></a>");
+            }
+            else {
+                $('#RQuestionAction').poshytip({
+                    className: 'tip-yellowsimple',
+                    content: json.msg,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 6
+                });
+                $('#RQuestionAction').poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#RQuestionAction').poshytip('destroy');
+                }, 4000);
+            }
+        });
+    }
+    function delete_q(qid) {
+        if (!confirm("您确认要删除此问题吗，删除的数据不可恢复？"))
+            return;
+                ajax_post("/action/question/delete?id=" + qid + "&hash=813119952" +"&user_code=", "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else {
+                location.href = "/question";
+            }
+        });
+    }
+    function edit_answer(aid) {
+        location.href = "/question/edit_answer?id=" + aid +"&user_code=" ;
+    }
+    function delete_answer(aid, hash) {
+        if (!confirm("您确认要删除此答案吗，删除的数据不可恢复？"))
+            return;
+        ajax_post("/action/question/delete_answer?id=" + aid + "&hash=" + hash +"&user_code=", "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else {
+                $('#answer_' + aid).fadeOut();
+                $('#vote_' + aid).fadeOut();
+                $('#answer_' + aid).next('.hr').fadeOut();
+            }
+        });
+    }
+    function delete_post_reply(aid, hash) {
+        if (!confirm("您确认要删除此评论吗，删除的数据不可恢复？"))
+            return;
+        ajax_post("/action/question/delete_answer?id=" + aid + "&hash=" + hash+"&user_code=", "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else {
+                $('#PostReply_' + aid).fadeOut();
+            }
+        });
+    }
+    function delete_q_rpl(qid, rid) {
+        if (!confirm("删除补充说明会被扣威望值，是否继续？"))
+            return;
+        ajax_post("/action/question/delete_detail?id=" + rid+"&user_code=", "", function (html) {
+            if (html.length > 0)
+                alert(html);
+            else
+                $("#q_reply_" + rid).fadeOut();
+        });
+    }
+    function close_tip(tid) {
+        $('#' + tid).poshytip('destroy');
+    }
+    //答案投票
+    function vote_answer(qid, vote_up, need_confirm) {
+        if (need_confirm && !vote_up) {
+            if (!$('#a_post_votedown_' + qid).hasClass('bold')) {
+                var vote_down_confirm_msg = "<p>此操作将会扣掉你1个积分，是否继续？</p><p style='margin-top:10px;'><a href='javascript:vote_answer(" + qid + ",false,false)' class='rbtn' style='margin:0 10px 0 50px;'><span>确定</span></a><a href=\"javascript:close_tip('a_post_votedown_" + qid + "')\" class='rbtn'><span>取消</span></a></p>";
+                $('#a_post_votedown_' + qid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: vote_down_confirm_msg,
+                    showOn: 'none',
+                    slide: false,
+                    fade: false,
+                    alignTo: 'target',
+                    alignX: 'center',
+                    offsetY: 8
+                });
+                $('#a_post_votedown_' + qid).poshytip('show');
+                return;
+            }
+        }
+        if (!need_confirm) {
+            $('#a_post_votedown_' + qid).poshytip('destroy');
+        }
+        ajax_post("/action/question/vote_answer?id=" + qid + "&vote=" + vote_up + "&user=" +"&user_code=", "", function (data) {
+            json = eval('(' + data + ')');
+            if (json.msg) {
+                var aid = vote_up ? "a_post_voteup_" : "a_post_votedown_";
+                aid += qid;
+                $('#' + aid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: json.msg,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 6
+                });
+                $('#' + aid).poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#' + aid).poshytip('destroy');
+                }, 2000);
+                //jQuery.fancybox("<div class='error_box'>"+json.msg+"</div>");
+            }
+            else {
+                if (vote_up) {
+                    $('#post_voteup_' + qid).html('(' + json.vote + ')');
+                    var a_post_voteup = $('#a_post_voteup_' + qid);
+                    if (a_post_voteup.attr('class').indexOf("vote-up-off") != -1) {
+                        $('#a_post_voteup_' + qid).attr('class', 'vote-up-on');
+                        $('#a_post_voteup_' + qid).attr('title', '取消支持票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) + 1);
+                    } else {
+                        $('#a_post_voteup_' + qid).attr('class', 'vote-up-off');
+                        $('#a_post_voteup_' + qid).attr('title', '投支持票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) - 1);
+                    }
+                } else {
+                    $('#post_votedown_' + qid).html('(' + json.vote + ')');
+                    var a_post_votedown = $('#a_post_votedown_' + qid);
+                    if (a_post_votedown.attr('class').indexOf("vote-down-off") != -1) {
+                        a_post_votedown.attr('class', 'vote-down-on').attr('title', '取消反对票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) - 1);
+                    } else {
+                        a_post_votedown.attr('class', 'vote-down-off');
+                        a_post_votedown.attr('title', '投反对票');
+                        $('#a_vote_num_' + qid).html(parseInt($('#a_vote_num_' + qid).html()) + 1);
+                    }
+                }
+            }
+        });
+    }
+    //问题投票
+    $('#vote_up').click(function () {
+        if (this.clickTimeout) {
+            // 双击
+            clearTimeout(this.clickTimeout);
+            this.clickTimeout = null;
+            alert("不用那么费劲啦，点击一下就够了:)");
+        }
+        else {
+            // 单击
+            var elem = this;
+            this.clickTimeout = setTimeout(function () {
+                // 执行点击动作
+                elem.clickTimeout = null;
+                vote_question(60461, true, true);
+            }, 250);
+        }
+        //阻止链接onclick时的默认行为
+        return false;
+    });
+    $('#vote_down').click(function () {
+        vote_question(60461, false, true);
+        /*
+        if(this.clickTimeout){
+            // 双击
+            clearTimeout(this.clickTimeout);
+            this.clickTimeout = null;
+            alert("不用那么费劲啦，点击一下就够了:)");
+        }
+        else{
+            // 单击
+            var elem = this;
+            this.clickTimeout = setTimeout(function(){
+                // 执行点击动作
+                elem.clickTimeout = null;
+                vote_question(60461,false, true);
+        }, 250);
+    }
+    //阻止链接onclick时的默认行为
+	*/
+        return false;
+    });
+    function vote_question(qid, vote_up, need_confirm) {
+        if (need_confirm && !vote_up) {
+            if ($('#Vote #vote_down').hasClass('ask_vote_down')) {
+                var vote_down_confirm_msg = "<p>踩问题将会扣掉你1个积分，是否继续？</p><p style='margin-top:10px;'><a href='javascript:vote_question(60461,false,false)' class='rbtn' style='margin-right:10px;'><span>确定</span></a><a href=\"javascript:close_tip('vote_down')\" class='rbtn'><span>取消</span></a></p>";
+                $('#Vote #vote_down').poshytip({
+                    className: 'tip-yellowsimple',
+                    content: vote_down_confirm_msg,
+                    slide: false,
+                    fade: false,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'inner-right',
+                    alignY: 'bottom',
+                    offsetX: -35,
+                    offsetY: 5
+                });
+                $('#Vote #vote_down').poshytip('show');
+                return;
+            }
+        }
+        if (!need_confirm) {
+            $('#Vote #vote_down').poshytip('destroy');
+        }
+        ajax_post("/action/question/vote?user=&id=" + qid + "&vote=" + vote_up, "", function (data) {
+            json = eval('(' + data + ')');
+            if (json.msg) {
+                var aid = vote_up ? "vote_up" : "vote_down";
+                $('#' + aid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: json.msg,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'inner-right',
+                    alignY: 'bottom',
+                    offsetX: 5,
+                    offsetX: -35
+                });
+                $('#' + aid).poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#' + aid).poshytip('destroy');
+                }, 2000);
+            }
+            else {
+                            if (vote_up) {
+                    $('#Vote .vote-up-count').html(json.vote_up);
+                    if ($('#vote_up').attr('class').indexOf("vote-up-off") != -1) {
+                        $('#vote_up').attr('class', 'vote-up-on');
+                        $('#vote_up').attr('title', '取消顶');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) + 1);
+                    } else {
+                        $('#vote_up').attr('class', 'vote-up-off');
+                        $('#vote_up').attr('title', '顶：这问题很有用或者很提问清晰明了');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) - 1);
+                    }
+                }
+                else {
+                    $('#Vote .vote-down-count').html(json.vote_down);
+                    if ($('#vote_down').attr('class').indexOf("vote-down-off") != -1) {
+                        $('#vote_down').attr('class', 'vote-down-on');
+                        $('#vote_down').attr('title', '取消踩');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) - 1);
+                    } else {
+                        $('#vote_down').attr('class', 'vote-down-off');
+                        $('#vote_down').attr('title', '踩：这问题不知道在问什么，或者没什么用');
+                        $('.q_vote_num').html(parseInt($('.q_vote_num').html()) + 1);
+                    }
+                }
+            }
+        });
+    }
+    //评论答案
+    function reply_to_post(postid, uid) {
+            url = "/action/ajax/reply_to_post?id=" + postid + "&refer=" + uid
+        ajax_post(url, "", function (data) {
+            $.fancybox({
+                content: data,
+                onComplete: function () {
+                    $input = $('#ta_body');
+                        $input.focus();
+                    pos = $input.val()?$input.val().length: 0;
+                    if (document.selection) {
+                        range = $input[0].createTextRange();
+                        range.move("character", pos);
+                        range.select();
+                    } else {
+                        if ($input[0])
+                            $input[0].setSelectionRange(pos, pos);
+                    }
+                }
+            });
+        });
+    }
+
+    function show_rp_next(postid, current, total) {
+        if (current < total) {
+            var next_page = current + 1;
+            var url = "/question/post_replies?answer=" + postid + "&rp=" + next_page;
+            ajax_post(url, "", function (html) {
+                $('#PostReplies_' + postid).html(html);
+                addRepliesHoverEvent();
+            });
+        }
+    }
+
+    function addRepliesHoverEvent() {
+        $("li [id ^= 'PostReply']").hover(function () {
+            $(this).addClass("hover");
+        }, function () {
+            $(this).removeClass("hover");
+        });
+    }
+
+    function show_rp_prev(postid, current, total) {
+        if (current > 1) {
+            var next_page = current - 1;
+            var url = "/question/post_replies?answer=" + postid + "&rp=" + next_page;
+            ajax_post(url, "", function (html) {
+                $('#PostReplies_' + postid).html(html);
+                addRepliesHoverEvent();
+            });
+        }
+    }
+    function mark_as_top(qid, as_top) {
+        var args = "id=" + qid + "&top=" + as_top+"&user_code=";
+        ajax_post("/action/question/mark_as_top", args, function (html) {
+            alert(html);
+        });
+    }
+    function mark_as_best(postid, is_best) {
+        var args = "id=" + postid + "&best=" + (is_best ? 1 : 0)+"&user_code=";
+        ajax_post("/action/question/mark_as_best", args, function (html) {
+            if (html.length > 0) {
+                $('#best_answer_' + postid).poshytip({
+                    className: 'tip-yellowsimple',
+                    content: html,
+                    showOn: 'none',
+                    alignTo: 'target',
+                    alignX: 'center',
+                    alignY: 'top',
+                    offsetY: 6
+                });
+                $('#best_answer_' + postid).poshytip('show');
+                var t = setTimeout(function () {
+                    clearTimeout(t);
+                    $('#best_answer_' + postid).poshytip('destroy');
+                }, 2000);
+            }
+            else {
+                if (is_best) {
+                    $('#answer_' + postid).addClass('Best');
+                    $('#best_answer_' + postid).attr('class', 'accept-on')
+                            .attr('href', 'javascript:mark_as_best(' + postid + ',false)')
+                            .attr('title', '取消标记为最佳答案');
+                } else {
+                    $('#answer_' + postid).removeClass('Best');
+                    $('#best_answer_' + postid).attr('class', 'accept-off')
+                            .attr('href', 'javascript:mark_as_best(' + postid + ',true)')
+                            .attr('title', '标记为最佳答案');
+                }
+            }
+        });
+    }
+    function edit_tags(qid) {
+        popup("/question/edit_tags?question=" + qid);
+    }
+    function edit_catalogs(qid) {
+        popup("/admin/catalog/set-catalogs?parent=1&type=2&id=" + qid);
+    }
+    function event_apply(event_id) {
+        popup("/action/ajax/event_apply", "id=" + event_id);
+    }
+    function cancel_apply(event_id) {
+        if (confirm("您确认要取消参加此次活动吗？")) {
+            ajax_post("/action/event/cancel", "event=" + event_id, function (html) {
+                if (html.length > 0)
+                    alert(html);
+                else
+                    alert('已取消参加此次活动，感谢您的支持:)');
+            });
+        }
+    }
+
+    var favor_ok = "<p class='favor_ok'>已成功添加到收藏夹<br/><br/> <a href='null/favorites?type=$DAISY_OBJ_TYPE'>我的收藏夹</a> | <a href='javascript:close_favor()'>关闭</a></p>";
+    function delete_favor(obi_id, obj_type) {
+        if (!confirm('确定取消收藏？')) return;
+        $.post("/action/favorite/cancel?type=" + obj_type + "&id=" + obi_id + "&user=", function (html) {
+            $('#favor_trigger').parent('div').removeClass('ask_collected').addClass('ask_collect');
+            $('#favor_trigger').attr('title', '添加到收藏');
+            $('#p_favor_count').html(html);
+            $('#favor_trigger').unbind('click');
+            $('#favor_trigger').click(function () {
+                add_to_favor(60461,2);
+            });
+        });
+    }
+    function add_to_favor(obj_id, obj_type) {
+                    if (confirm('必须登录后才能收藏，是否现在登录？')) {
+                location.href = "http://www.oschina.net/home/login?goto_page=" + location.href;
+            }
+            }
+    function close_favor(elem_id) {
+        $('#favor_trigger').poshytip('destroy');
+    }
+    function setTag(tv) {
+        var t = $("._favor_input");
+        var value = t.val();
+        var tags = value.replace(/，/ig, ',').split(',');
+        var exist = false;
+        value = $.map(tags, function (v, i) {
+            if ($.trim(tv) == $.trim(v)) {
+                exist = true;
+                return undefined;
+            }
+            return v;
+        }).join(',');
+        if (exist) {
+            t.val(value);
+            return;
+        }
+        if (value != "")
+            t.val(value + "," + tv);
+        else
+            t.val(tv)
+    }
+    //-->
+</script><div class='clear'></div></div>
+	<div id="OSC_Footer" class='CenterDiv'><style>
+.oscapp {text-align:left; width:220px;}
+.oscapp span {float:left;width:140px;}
+.oscapp a {float:left;text-indent:-9999em;width:16px;margin-left:8px;}
+.oscapp a.android {background:url('/img/android.gif') no-repeat left center;}
+.oscapp a.iphone {background:url('/img/iphone.gif') no-repeat left center;}
+.oscapp a.wp7 {background:url('/img/wp7.gif') no-repeat left center;}
+</style>
+<table width='100%'><tr>
+<td align='left'>&copy; 开源中国(OSChina.NET) | <a href="http://www.oschina.net/home/aboutosc">关于我们</a> | <a href="mailto:market@oschina.cn">广告联系</a> | <a href="http://weibo.com/oschina2010" target="_blank">@新浪微博</a> | <a href="http://m.oschina.net/">开源中国手机版</a> | <a href='http://www.miitbeian.gov.cn/' target='_blank' style='color:#737573;text-decoration:none;'>粤ICP备12009483号-3</a></td>
+<td class='oscapp'>
+	<span>开源中国手机客户端：</span>
+	<a href="http://www.oschina.net/app" class='android' title='Android客户端'>Android</a>
+	<a href="http://www.oschina.net/app" class='iphone' title='iPhone 客户端'>iPhone</a>
+	<a href="http://www.oschina.net/app" class='wp7' title='Windows Phone 客户端'>WP7</a>
+</td>
+</tr>
+<tr>
+<td colspan='2' align='left'>开源中国社区(OSChina.net)是工信部 <a href='http://www.copu.org.cn/' target='_blank'>开源软件推进联盟</a> 指定的官方社区</td>
+</tr>
+</table>
+<script type='text/javascript'>
+<!--
+if (top.location != self.location)top.location=self.location;
+//-->
+</script></div>
+</div>
+</body>
+</html>
+<!-- Generated by OsChina.NET (init:1[ms],page:80[ms],ip:124.160.69.226) -->
