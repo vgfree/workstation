@@ -1,7 +1,7 @@
 -- CopyRight	: DT+
 -- Author	: louis.tin
 -- Date		: 05-21-2016
--- Description	: Modify channel information
+-- Description	: Dissolve channel
 
 
 local ngx       = require('ngx')
@@ -91,3 +91,6 @@ local function handle()
 		gosay.go_false(url_tab, msg['SYSTEM_ERROR'])
 	end
 end
+
+handle()
+

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>OpenResty - ChangeLog 1.0.4</title>
+	<link href="fonts.css" tppabs="https://openresty.org/css/fonts.css" rel='stylesheet' type='text/css'>
+	<!--
+	If you ever wanted to use LESS instead of CSS...
+	<link rel="stylesheet" type="text/less" href="/css/main.less">
+	<script src="/js/less.js"></script>
+	-->
+	<link rel="stylesheet" type="text/css" href="main.css" tppabs="http://openresty.org/css/main.css">
+</head>
+<body>
+
+<header role="header">
+        <p class="site-name left">
+                <a href="javascript:if(confirm(%27http://openresty.org/en/.  \n\nThis file was not retrieved by Teleport Ultra, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?%27))window.location=%27http://openresty.org/en/.%27" tppabs="http://openresty.org/en/.">OpenResty</a>
+                <small>Scalable Web Platform by Extending NGINX with Lua</small>
+        </p><!-- / site-name -->
+
+        <form action="http://openresty.org/en/search.html" class="right">
+                <fieldset>
+                        <input type="search" name="query" id="search"
+                               placeholder="Search OpenResty.org" required>
+                </fieldset>
+        </form>
+</header>
+
+
+	<div id="wrapper">
+		<div class="sidebar sleft">
+			<nav id="nav">
+<ul>
+<li><a href="getting-started.html" tppabs="http://openresty.org/en/getting-started.html">Getting Started</a></li>
+<li><a href="download.html" tppabs="http://openresty.org/en/download.html">Download</a></li>
+<li><a href="installation.html" tppabs="http://openresty.org/en/installation.html">Installation</a></li>
+<li><a href="upgrading.html" tppabs="http://openresty.org/en/upgrading.html">Upgrading</a></li>
+<li><a href="changes.html" tppabs="http://openresty.org/en/changes.html">Changes</a></li>
+<li><a href="components.html" tppabs="http://openresty.org/en/components.html">Components</a></li>
+<li><a href="community.html" tppabs="http://openresty.org/en/community.html">Community</a></li>
+<li><a href="benchmark.html" tppabs="http://openresty.org/en/benchmark.html">Benchmark</a></li>
+<li><a href="contact-us.html" tppabs="http://openresty.org/en/contact-us.html">Contact us</a></li>
+<li><a href="debugging.html" tppabs="http://openresty.org/en/debugging.html">Debugging</a></li>
+<li><a href="donate-online.html" tppabs="http://openresty.org/en/donate-online.html">Donate Online</a></li>
+<li><a href="donors.html" tppabs="http://openresty.org/en/donors.html">Donors</a></li>
+<li><a href="ebooks.html" tppabs="http://openresty.org/en/ebooks.html">eBooks</a></li>
+<li><a href="faq.html" tppabs="http://openresty.org/en/faq.html">FAQ</a></li>
+<li><a href="getting-involved.html" tppabs="http://openresty.org/en/getting-involved.html">Getting Involved</a></li>
+<li><a href="presentations.html" tppabs="http://openresty.org/en/presentations.html">Presentations</a></li>
+<li><a href="profiling.html" tppabs="http://openresty.org/en/profiling.html">Profiling</a></li>
+<li><a href="quality-assurance.html" tppabs="http://openresty.org/en/quality-assurance.html">Quality Assurance</a></li>
+<li><a href="resources.html" tppabs="http://openresty.org/en/resources.html">Resources</a></li>
+<li><a href="samples.html" tppabs="http://openresty.org/en/samples.html">Samples</a></li>
+<li><a href="javascript:if(confirm(%27https://openresty.org/survey/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://openresty.org/survey/%27" tppabs="https://openresty.org/survey/">User Survey</a></li>
+<li><a href="about.html" tppabs="http://openresty.org/en/about.html">About</a></li>
+<li><a href="javascript:if(confirm(%27http://openresty.org/cn/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://openresty.org/cn/%27" tppabs="http://openresty.org/cn/">中文站</a></li>
+</ul>
+
+			</nav><!-- / nav -->
+
+<ul class="buttons">
+    <!-- <li><a href="#" class="btn rss">RSS Feed</a></li> -->
+    <li>
+        <!-- <a href="#" class="btn paypal">Donate with PayPal</a> -->
+        <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="agentzh@gmail.com">
+        <input type="hidden" name="item_name" value="OpenResty Donation (in USD)">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="amount" value="">
+        <input type="image" src="donate_paypal.gif" tppabs="http://openresty.org/images/donate_paypal.gif" border="0" name="submit" alt="Donate with PayPal">
+        </form>
+    </li>
+</ul>
+
+
+		</div><!-- / sidebar left -->
+		
+		<section id="main">
+<div class="item">
+        <header>
+                <h2>ChangeLog 1.0.4</h2>
+                <small>
+                    <a href="yichun-zhang.html" tppabs="http://openresty.org/en/yichun-zhang.html">
+                    Yichun Zhang
+                    </a>,
+                    02 Sep 2011 (created 08 Jul 2011)</small>
+                <div class="options">
+                        <!--
+                        <a href="#" class="trigger">Show Options</a>
+                        <ul class="first-level">
+                                <li><a href="#">close</a></li>
+                                <li><a href="#">close others</a></li>
+                                <li><a href="#">view</a></li>
+                                <li><a href="#">fields</a></li>
+                                <li><a href="#">syncing</a></li>
+                                <li><a href="#">permalink</a></li>
+                                <li><a href="#">references</a></li>
+                                <li>
+                                        <a href="#">jump</a>
+                                        <ul class="second-level">
+                                                <li><a href="#">Benchmark</a></li>
+                                                <li><a href="#">Presentations</a></li>
+                                                <li><a href="#">eBooks</a></li>
+                                        </ul>
+                                </li>
+                        </ul>
+                        -->
+                </div><!-- / options -->
+        </header>
+        <div class="body">
+<h1 id="stable-release-1.0.4.2---9-august-2011">Stable Release 1.0.4.2 - 9 August 2011</h1>
+<p>This release is the same as 1.0.4.2rc13.</p>
+<p>The following components are bundled by this release:</p>
+<ul>
+<li>LuaJIT-2.0.0-beta8</li>
+<li>array-var-nginx-module-0.03rc1</li>
+<li>auth-request-nginx-module-0.2</li>
+<li>drizzle-nginx-module-0.1.1rc3</li>
+<li>echo-nginx-module-0.37rc1</li>
+<li>encrypted-session-nginx-module-0.01</li>
+<li>form-input-nginx-module-0.07rc5</li>
+<li>headers-more-nginx-module-0.15</li>
+<li>iconv-nginx-module-0.10rc4</li>
+<li>lua-5.1.4</li>
+<li>memc-nginx-module-0.12</li>
+<li>nginx-1.0.4</li>
+<li>ngx_devel_kit-0.2.17</li>
+<li>ngx_lua-0.2.1rc4</li>
+<li>ngx_postgres-0.9rc1</li>
+<li>rds-json-nginx-module-0.12rc1</li>
+<li>redis2-nginx-module-0.07</li>
+<li>set-misc-nginx-module-0.22rc2</li>
+<li>srcache-nginx-module-0.12</li>
+<li>upstream-keepalive-nginx-module-0.3</li>
+<li>xss-nginx-module-0.03rc3</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc13---8-august-2011">Mainline Version 1.0.4.2rc13 - 8 August 2011</h1>
+<ul>
+<li>now we bundle a Perl 5 script to serve as the <code>install</code> script for <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a> 2.0 on Solaris. now <a href="index.htm" tppabs="http://openresty.org/en/openresty.html">OpenResty</a> builds successfully on Solaris 11 with <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a> enabled!</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc12---8-august-2011">Mainline Version 1.0.4.2rc12 - 8 August 2011</h1>
+<ul>
+<li>bundled <code>gcc</code>'s <code>unwind-generic.h</code> for BSD because <code>unwind.h</code> is missing at least on FreeBSD.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc11---8-august-2011">Mainline Version 1.0.4.2rc11 - 8 August 2011</h1>
+<ul>
+<li>use absoluate paths in Makefile to prevent <code>-jN</code> errors when using bsdmake on FreeBSD.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc10---7-august-2011">Mainline Version 1.0.4.2rc10 - 7 August 2011</h1>
+<ul>
+<li>upgraded ngx_lua to v0.2.1rc4.
+<ul>
+<li>worked-around the &quot;stack overflow&quot; issue while using luarocks.loader and disabling <code>lua_code_cache</code>, as described as <a href="javascript:if(confirm(%27https://github.com/openresty/lua-nginx-module/issues/27  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/openresty/lua-nginx-module/issues/27%27" tppabs="https://github.com/openresty/lua-nginx-module/issues/27">github issue #27</a>. thanks Patrick Crosby.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc9---7-august-2011">Mainline Version 1.0.4.2rc9 - 7 August 2011</h1>
+<ul>
+<li>now we use <code>gmake</code> if it is available in <code>PATH</code> during <code>./configure</code>; also added the <code>--with-make=PATH</code> option to allow the user to specify a custom <code>make</code> utility.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc8---6-august-2011">Mainline Version 1.0.4.2rc8 - 6 August 2011</h1>
+<ul>
+<li>fixed a regression that we should use the <code>CC</code> variable instead of <code>HOST_CC</code> while passing the <code>--with-cc</code> option to the <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a> 2.0 build system. thanks @姜大炮 for reporting this issue.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc7---5-august-2011">Mainline Version 1.0.4.2rc7 - 5 August 2011</h1>
+<ul>
+<li>upgraded ngx_lua to v0.2.1rc3.
+<ul>
+<li>fixed the <code>zero size buf in output</code> alert while combining <code>lua_need_request_body on</code> + <code>access_by_lua/rewrite_by_lua</code> + <code>proxy_pass/fastcgi_pass</code>. thanks 万珣新.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc6---5-august-2011">Mainline Version 1.0.4.2rc6 - 5 August 2011</h1>
+<ul>
+<li>added the <code>--with-pg_config</code> option to the <code>./configure</code> script as per 罗翼's request.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc5---5-august-2011">Mainline Version 1.0.4.2rc5 - 5 August 2011</h1>
+<ul>
+<li>added the <code>--with-no-pool-patch</code> option to the <code>./configure</code> script, to allow enabling the no-pool patch for debugging memory issues with valgrind, for example.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc4---4-august-2011">Mainline Version 1.0.4.2rc4 - 4 August 2011</h1>
+<ul>
+<li>added the <code>--with-libpq=DIR</code> option to the <code>./configure</code> script. thanks 郭颖 for suggesting this.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc3---4-august-2011">Mainline Version 1.0.4.2rc3 - 4 August 2011</h1>
+<ul>
+<li>upgraded ngx_drizzle to v0.1.1rc3.
+<ul>
+<li>fixed segmentation faults on Linux i386. thanks @魏世江 and @stefanli for reporting this issue.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc2---4-august-2011">Mainline Version 1.0.4.2rc2 - 4 August 2011</h1>
+<ul>
+<li>fixed a regression while specifying <code>--with-http_iconv_module</code> during <code>./configure</code>. thanks 冯新国 for reporting this issue.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.2rc1---30-july-2011">Mainline Version 1.0.4.2rc1 - 30 July 2011</h1>
+<ul>
+<li>upgraded ngx_set_misc to 0.22rc2.
+<ul>
+<li>added the set_misc_base32_padding directive.</li>
+</ul></li>
+</ul>
+<h1 id="stable-release-1.0.4.1---30-july-2011">Stable Release 1.0.4.1 - 30 July 2011</h1>
+<p>This release is the same as 1.0.4.1rc6.</p>
+<p>The following components are bundled by this release:</p>
+<ul>
+<li>LuaJIT-2.0.0-beta8</li>
+<li>array-var-nginx-module-0.03rc1</li>
+<li>auth-request-nginx-module-0.2</li>
+<li>drizzle-nginx-module-0.1.1rc2</li>
+<li>echo-nginx-module-0.37rc1</li>
+<li>encrypted-session-nginx-module-0.01</li>
+<li>form-input-nginx-module-0.07rc5</li>
+<li>headers-more-nginx-module-0.15</li>
+<li>iconv-nginx-module-0.10rc4</li>
+<li>lua-5.1.4</li>
+<li>memc-nginx-module-0.12</li>
+<li>nginx-1.0.4</li>
+<li>ngx_devel_kit-0.2.17</li>
+<li>ngx_lua-0.2.1rc2</li>
+<li>ngx_postgres-0.9rc1</li>
+<li>rds-json-nginx-module-0.12rc1</li>
+<li>redis2-nginx-module-0.07</li>
+<li>set-misc-nginx-module-0.22rc1</li>
+<li>srcache-nginx-module-0.12</li>
+<li>upstream-keepalive-nginx-module-0.3</li>
+<li>xss-nginx-module-0.03rc3</li>
+</ul>
+<h1 id="mainline-version-1.0.4.1rc6---28-july-2011">Mainline Version 1.0.4.1rc6 - 28 July 2011</h1>
+<ul>
+<li>fixed a regression in <code>./configure</code> when enabling luajit in 1.0.4.1rc5. thanks @Lance.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.1rc5---26-july-2011">Mainline Version 1.0.4.1rc5 - 26 July 2011</h1>
+<ul>
+<li>upgraded ngx_iconv to 0.10rc3, ngx_form_input to 0.07rc5, ngx_array_var to 0.03rc1, and ngx_set_misc to 0.22rc1.</li>
+<li>now <code>--with-debug</code> option also enables the <code>gcc -g</code> compilation option for <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a>.</li>
+<li>disabled target stripping in <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a>.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.1rc4---25-july-2011">Mainline Version 1.0.4.1rc4 - 25 July 2011</h1>
+<ul>
+<li>applied the official hotfix #1 patch for <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a> 2.0.0 beta8.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.1rc3---23-july-2011">Mainline Version 1.0.4.1rc3 - 23 July 2011</h1>
+<ul>
+<li>now the <code>--with-cc</code> option of <code>./configure</code> also controls the C compiler used by Lua and <a href="luajit.html" tppabs="http://openresty.org/en/luajit.html">LuaJIT</a>. thanks @姜大炮 for reporting the issue.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.1rc2---23-july-2011">Mainline Version 1.0.4.1rc2 - 23 July 2011</h1>
+<ul>
+<li>upgraded ngx_lua to v0.2.1rc2 and ngx_redis2 to v0.07.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.1rc1---14-july-2011">Mainline Version 1.0.4.1rc1 - 14 July 2011</h1>
+<ul>
+<li>upgraded ngx_rds_json to v0.12rc1, ngx_drizzle to v0.1.1rc2, ngx_lua to v0.2.1rc1, ngx_postgres to v0.9rc1, ngx_redis2 to v0.07rc6.</li>
+<li>now we no longer enable <code>gcc -O2</code> by default, because it's bad for debugging issues.</li>
+<li>fixed linking issues when doing <code>./configure --with-cc-opt=-fast</code> on Mac OS X. thanks @姜大炮.</li>
+</ul>
+<h1 id="stable-release-1.0.4.0---12-july-2011">Stable Release 1.0.4.0 - 12 July 2011</h1>
+<p>This release is the same as 1.0.4.0rc5.</p>
+<p>The following components are bundled by this release:</p>
+<ul>
+<li>LuaJIT-2.0.0-beta8</li>
+<li>array-var-nginx-module-0.02</li>
+<li>auth-request-nginx-module-0.2</li>
+<li>drizzle-nginx-module-0.1.1rc1</li>
+<li>echo-nginx-module-0.37rc1</li>
+<li>encrypted-session-nginx-module-0.01</li>
+<li>form-input-nginx-module-0.07rc4</li>
+<li>headers-more-nginx-module-0.15</li>
+<li>iconv-nginx-module-0.10rc3</li>
+<li>lua-5.1.4</li>
+<li>memc-nginx-module-0.12</li>
+<li>nginx-1.0.4</li>
+<li>ngx_devel_kit-0.2.17</li>
+<li>ngx_lua-0.2.0</li>
+<li>ngx_postgres-0.8</li>
+<li>rds-json-nginx-module-0.11</li>
+<li>redis2-nginx-module-0.07rc5</li>
+<li>set-misc-nginx-module-0.21</li>
+<li>srcache-nginx-module-0.12</li>
+<li>upstream-keepalive-nginx-module-0.3</li>
+<li>xss-nginx-module-0.03rc3</li>
+</ul>
+<h1 id="mainline-version-1.0.4.0rc5---12-july-2011">Mainline Version 1.0.4.0rc5 - 12 July 2011</h1>
+<ul>
+<li>upgraded ngx_drizzle to v0.1.1rc1.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.0rc4---11-july-2011">Mainline Version 1.0.4.0rc4 - 11 July 2011</h1>
+<ul>
+<li>upgraded ngx_echo to v0.37rc1.</li>
+<li>we no longer require ExtUtils::MakeMaker and Config because they're not standard packages and are missing on a default CentOS 6 build. thanks Lance for reporting it.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.0rc2---11-july-2011">Mainline Version 1.0.4.0rc2 - 11 July 2011</h1>
+<ul>
+<li>upgraded ngx_srcache to v0.12.</li>
+</ul>
+<h1 id="mainline-version-1.0.4.0rc1---8-july-2011">Mainline Version 1.0.4.0rc1 - 8 July 2011</h1>
+<ul>
+<li>based on ngx_openresty 0.8.54.9, but with nginx core upgraded to nginx 1.0.4.</li>
+</ul>
+<p>See <a href="changelog-8054.html" tppabs="http://openresty.org/en/changelog-8054.html">ChangeLog8054</a> for change log for ngx_openresty 0.8.54.x.</p>
+
+        </div><!-- / body -->
+</div><!-- / item -->
+
+		</section><!-- / main -->
+
+<div class="sidebar sright">
+        <div class="options">
+                <!--
+                <ul class="first">
+                        <li><a href="#" class="close-all">close all</a></li>
+                        <li><a href="#" class="permaview">permaview</a></li>
+                        <li><a href="#" class="more-options">options</a></li>
+                </ul> --><!-- / first -->
+        </div><!-- options -->
+
+        <div class="tabs">
+                <ul class="navigation">
+                        <!--
+                        <li><a href="#" class="current">Timeline</a></li>
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">Tags</a></li>
+                        <li><a href="#">More</a></li>
+                        -->
+                        <li><span>Timeline</span></li>
+                </ul><!-- / navigation -->
+                <div class="panes">
+                        <div class="pane" id="timeline">
+                                <ul>
+                                    <li>
+                                            <h3>26 May 2016</h3>
+                                            <ul>
+                                                <li><a href="donors.html" tppabs="http://openresty.org/en/donors.html">Donors</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>11 Apr 2016</h3>
+                                            <ul>
+                                                <li><a href="using-luarocks.html" tppabs="http://openresty.org/en/using-luarocks.html">Using LuaRocks</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>31 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="lua-nginx-module.html" tppabs="http://openresty.org/en/lua-nginx-module.html">Lua Nginx Module</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>25 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="installation.html" tppabs="http://openresty.org/en/installation.html">Installation</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>23 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="index.htm" tppabs="http://openresty.org/en/openresty.html">OpenResty</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>20 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="lua-cjson-library.html" tppabs="http://openresty.org/en/lua-cjson-library.html">Lua Cjson Library</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>17 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="download.html" tppabs="http://openresty.org/en/download.html">Download</a></li>
+                                                <li><a href="changelog-1009007.html" tppabs="http://openresty.org/en/changelog-1009007.html">ChangeLog 1.9.7</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>08 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="presentations.html" tppabs="http://openresty.org/en/presentations.html">Presentations</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>29 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="contact-us.html" tppabs="http://openresty.org/en/contact-us.html">Contact Us</a></li>
+                                                <li><a href="donate-online.html" tppabs="http://openresty.org/en/donate-online.html">Donate Online</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>27 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="resources.html" tppabs="http://openresty.org/en/resources.html">Resources</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>21 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="main-menu.html" tppabs="http://openresty.org/en/main-menu.html">Main Menu</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>20 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="changes.html" tppabs="http://openresty.org/en/changes.html">Changes</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>23 Nov 2015</h3>
+                                            <ul>
+                                                <li><a href="components.html" tppabs="http://openresty.org/en/components.html">Components</a></li>
+                                                <li><a href="changelog-1009003.html" tppabs="http://openresty.org/en/changelog-1009003.html">ChangeLog 1.9.3</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>31 Jul 2015</h3>
+                                            <ul>
+                                                <li><a href="faq.html" tppabs="http://openresty.org/en/faq.html">Frequently Asked Questions</a></li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                        </div><!-- / pane -->
+                </div><!-- / panes -->
+        </div><!-- / tabs -->
+</div><!-- / sidebar right -->
+
+	</div><!-- / wrapper -->
+
+<div class="content-footer">
+<hr class="footer-sep"/>
+<div class="footer">
+  <p>Copyright © 2016 Yichun Zhang (agentzh)</p>
+  <p>100% Powered by OpenResty and PostgreSQL
+     (<a href="javascript:if(confirm(%27https://github.com/openresty/openresty.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/openresty/openresty.org/%27" tppabs="https://github.com/openresty/openresty.org/">
+     view the source code of this site</a>)</p>
+  <br/>
+  <p>京ICP备16021991号</p>
+</div>
+</div>
+
+<script src="jquery.min.js" tppabs="http://openresty.org/js/jquery.min.js"></script>
+<script src="main.js" tppabs="http://openresty.org/js/main.js"></script>
+
+<!-- Google analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24724965-1']);
+  //_gaq.push(['_setDomainName', 'http://openresty.org/en/openresty.org']);
+  _gaq.push(['_trackPageview']);
+
+  var ga_f = function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www/') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  };
+  setTimeout(ga_f, 0);
+
+</script>
+
+
+</body>
+</html>

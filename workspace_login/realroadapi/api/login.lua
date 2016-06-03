@@ -1,6 +1,6 @@
 -- name   :	login.lua
 -- author :	louis.tin
--- data	  :	05-05-2016
+-- data	  :	04-23-2016
 -- 登录接口
 
 local ngx	= require('ngx')
@@ -14,6 +14,8 @@ local scan      = require('scan')
 local safe      = require('safe')
 local app_utils = require('app_utils')
 local msg	= require('msg')
+local redis_api	= require('redis_pool_api')
+
 
 local app_config_db	= { [1] = 'login_config___config', [2] = 'weme_car___car' }
 
@@ -29,8 +31,8 @@ local G = {
 	sql_login_userInfo 	= "SELECT gender as sex,nickname as nickName,headName as headerUrl,activeCity as cityName FROM userInfo WHERE accountID='%s'"
 }
 
-local function ready_execution(appkey)
-	local sql_str = string.format(G.sql_login_info, appkey)
+local function ready_execution(appKey)
+	local sql_str = string.format(G.sql_login_info, appKey)
 	only.log('W', "mysql select condfig info is :%s", sql_str)
 
 	local ok_status, ok_config = mysql_api.cmd(app_config_db[1], 'SELECT', sql_str)
@@ -71,18 +73,18 @@ local function check_parameter(parameter_table)
 		gosay.go_false(url_tab, msg["MSG_ERROR_REQ_BAD_JSON"])
 	end
 
-	if not parameter_tab['appkey'] or #parameter_tab['appkey'] > 10 then
+	if not parameter_tab['appKey'] or #parameter_tab['appKey'] > 10 then
 		only.log("E", "appKey is error")
-		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_ARG'], 'appkey')
+		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_ARG'], 'appKey')
 	end
-	url_tab['app_Key'] = parameter_tab['appkey']
+	url_tab['app_Key'] = parameter_tab['appKey']
 
-	if (not app_utils.check_accountID(parameter_tab['accountid'])) then
+	if (not app_utils.check_accountID(parameter_tab['accountID'])) then
 		only.log("E", "accountID is error")
-		gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], "accountid")
+		gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], "accountID")
 	end
 
-	safe.sign_check(parameter_tab, url_tab, 'accountid', safe.ACCESS_USER_INFO)
+	safe.sign_check(parameter_tab, url_tab, 'accountID', safe.ACCESS_USER_INFO)
 end
 
 local function go_exit()
@@ -96,20 +98,17 @@ local function handle()
 	local req_body		= ngx.req.get_body_data()
 	local req_ip		= ngx.var.remote_addr
 
-	only.log('D', 'req_header = %s', scan.dump(req_header))
-	only.log('D', 'req_body = %s', req_body)
-
 	url_tab['client_body']  = req_body
 	req_body		= cjson.decode(req_body)
 
 	-- 获取请求参数
 	-- 将header和body中的参数组装到一个table中,方便后续check和使用
 	parameter_tab			= {}
-	parameter_tab['appkey']		= req_header['appkey']
+	parameter_tab['appKey']		= req_header['appKey']
 	parameter_tab['sign']           = req_header['sign']
-	parameter_tab['accesstoken']	= req_header['accesstoken']
+	parameter_tab['accessToken']	= req_header['accessToken']
 	parameter_tab['timestamp']	= req_header['timestamp']
-	parameter_tab['accountid']	= req_header['accountid']
+	parameter_tab['accountID']	= req_header['accountID']
 	parameter_tab['imei']           = req_body['imei']
 	parameter_tab['imsi']           = req_body['imsi']
 	parameter_tab['modelVer']      	= req_body['modelVer']
@@ -120,7 +119,7 @@ local function handle()
 	parameter_tab['lcdWidth']       = req_body['lcdWidth']
 	parameter_tab['lcdHeight']      = req_body['lcdHeight']
 
-	url_tab['app_Key']      = parameter_tab['appkey']
+	url_tab['app_Key']      = parameter_tab['appKey']
 	url_tab['client_host']  = req_ip
 
 	only.log('D', 'parameter_tab = %s', scan.dump(parameter_tab))
@@ -130,9 +129,9 @@ local function handle()
 	check_parameter(parameter_tab)
 
 	-- 从mysql中获取base roadRank sicong 参数
-	local ok_status, ok_ok_ret_base, ok_ok_ret_roadRank, ok_ok_ret_sicong = ready_execution(parameter_tab['appkey'])
+	local ok_status, ok_ok_ret_base, ok_ok_ret_roadRank, ok_ok_ret_sicong = ready_execution(parameter_tab['appKey'])
 	if ok_status == false then
-		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_FAILED_GET_SECRET'], 'appkey')
+		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_FAILED_GET_SECRET'], 'appKey')
 	end
 
 	local ok_ret_base, ret_base, base = {}, {}, {}
@@ -152,11 +151,11 @@ local function handle()
 		roadRank = "{}"
 	else
 		ok_ret_roadRank			= cjson.decode(ok_ok_ret_roadRank)
-		ret_roadRank['rrIoUrl']		= (ok_ret_roadRank['rrIoUrl'] == nil and "") or ok_ret_roadRank['rrIoUrl']
+		ret_roadRank['rrIoUrl']	= (ok_ret_roadRank['rrIoUrl'] == nil and "") or ok_ret_roadRank['rrIoUrl']
 		ret_roadRank['normalRoad']	= (ok_ret_roadRank['normalRoad'] == nil and 0) or tonumber(ok_ret_roadRank['normalRoad'])
 		ret_roadRank['highRoad']	= (ok_ret_roadRank['highRoad'] == nil and 0) or tonumber(ok_ret_roadRank['highRoad'])
-		ret_roadRank['askTime']		= (ok_ret_roadRank['askTime'] == nil and 0) or tonumber(ok_ret_roadRank['askTime'])
-		roadRank			= cjson.encode(ret_roadRank)
+		ret_roadRank['askTime']	= (ok_ret_roadRank['askTime'] == nil and 0) or tonumber(ok_ret_roadRank['askTime'])
+		roadRank 		= cjson.encode(ret_roadRank)
 	end
 
 	local ok_ret_sicong, ret_sicong, sicong = {}, {}, {}
@@ -164,15 +163,15 @@ local function handle()
 		sicong   = "{}"
 	else
 		ok_ret_sicong			= cjson.decode(ok_ok_ret_sicong)
-		ret_sicong['serverType']	= (ok_ret_sicong['serverType'] == nil and 0) or tonumber(ok_ret_sicong['serverType'])
+		ret_sicong['serverType']     = (ok_ret_sicong['serverType'] == nil and 0) or tonumber(ok_ret_sicong['serverType'])
 		sicong  		 	= cjson.encode(ret_sicong)
 	end
 
 	-- 从mysql中获取 userInfo 参数
-	local ok_status, ok_ret_userInfo = ready_execution_userInfo(parameter_tab['accountid'])
+	local ok_status, ok_ret_userInfo = ready_execution_userInfo(parameter_tab['accountID'])
 	local ret_userInfo, userInfo = {}, {}
 	if ok_status == false then
-		gosay.go_false(url_tab, msg['MSG_ERROR_ACCOUNT_ID_NO_MONEY'], 'accountid')
+		gosay.go_false(url_tab, msg['MSG_ERROR_ACCOUNT_ID_NO_MONEY'], 'accountID')
 	end
 
 	if ok_ret_userInfo == nil then
@@ -182,7 +181,7 @@ local function handle()
 		ret_userInfo['nickName']	= (ok_ret_userInfo['nickName'] == nil and "") or ok_ret_userInfo['nickName']
 		ret_userInfo['headerUrl']	= (ok_ret_userInfo['headerUrl'] == nil and "") or ok_ret_userInfo['headerUrl']
 		ret_userInfo['cityName']	= (ok_ret_userInfo['cityName'] == nil and "") or ok_ret_userInfo['cityName']
-		userInfo			= cjson.encode(ret_userInfo)
+		userInfo 		= cjson.encode(ret_userInfo)
 	end
 
 
@@ -191,23 +190,27 @@ local function handle()
 	only.log('D', 'ok_ret_sicong = %s', sicong)
 	only.log('D', 'ok_ret_userInfo = %s', userInfo)
 
-	-- 生成token
-	local token      = utils.random_string(10)
+	-- 生成token, 并存储到redis中
+	local tokenCode = utils.random_string(10)
+	local ok_status, ok_ret = redis_api.cmd('realroad', 'SET', parameter_tab['accountID'] .. ':tokenCode', tokenCode)
+        if not (ok_status and ok_ret) then
+        	gosay.go_false(url_tab, msg["MSG_ERROR_ACCESS_TOKEN_NO_AUTH"])
+        end
 
 	-- 生成msgToken
 	post_data = ""
 	local ok_status, ret = pcall(cjson.encode, post_data)
         if not ok_status then
-		only.log('E', 'pcall cjson encode args failed!')
+                only.log('E', 'pcall cjson encode args failed!')
         end
 	ret = string.sub(ret, 2, -2)
 
         only.log('D', '\n ret : ' .. ret)
 
 	local data_fmt  = 'POST %s HTTP/1.0\r\n' ..
-			'Host:%s:%s\r\n' ..
-			'Content-Length:%d\r\n' ..
-			'Content-Type:application/x-www-form-urlencoded\r\n\r\n%s'
+                          'Host:%s:%s\r\n' ..
+                          'Content-Length:%d\r\n' ..
+                          'Content-Type:application/x-www-form-urlencoded\r\n\r\n%s'
 
         local app_uri   = '/index.php/User/addgetRandChar'
         local host_info = link['OWN_DIED']['http']['addgetRandChar']
@@ -223,11 +226,11 @@ local function handle()
 	only.log('D', 'msgToken = %s', msgToken)
 
 	-- 组装返回信息
-	local ret_str = string.format('{"ERRORCODE":"%s", "RESULT":{"token":"%s", "msgToken":"%s", "accountID":"%s", "base":%s, "roadRank":%s, "sicong":%s, "userInfo":%s}}',
+	local ret_str = string.format('{"ERRORCODE":"%s", "RESULT":{"tokenCode":"%s", "msgToken":"%s", "accountID":"%s", "base":%s, "roadRank":%s, "sicong":%s, "userInfo":%s}}',
 	"0",
-	(token == nil and "") or token,
+	(tokenCode == nil and "") or tokenCode,
 	(msgToken == nil and "") or msgToken,
-	(parameter_tab['accountid'] == nil and "") or parameter_tab['accountid'],
+	(parameter_tab['accountID'] == nil and "") or parameter_tab['accountID'],
 	base,
 	roadRank,
 	sicong,

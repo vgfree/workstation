@@ -3,7 +3,7 @@
 -- time: 05-05-2016
 -- 信任的第三方开发者通过刷新令牌获取访问令牌
 
-local ngx		= require ('ngx')
+local ngx		= require('ngx')
 local sha		= require('sha1')
 local redis_pool_api	= require('redis_pool_api')
 local mysql_pool_api	= require('mysql_pool_api')
@@ -26,34 +26,26 @@ local url_tab = {
 }
 
 local function check_parameter(parameter_tab)
-	only.log('D', 'appkey = %s', parameter_tab['appkey'])	
-	only.log('D', utils.is_number(parameter_tab['appkey']))	
-	only.log('D', 'length = %s', string.len(parameter_tab['appkey']))	
 
-	if parameter_tab['appkey'] == nil or (not utils.is_number(parameter_tab['appkey'])) or (string.len(parameter_tab['appkey']) > 10) then
-        	gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], 'appkey')
+	if parameter_tab['appKey'] == nil or (not utils.is_number(parameter_tab['appKey'])) or (string.len(parameter_tab['appKey']) > 10) then
+        	gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], 'appKey')
     	end
 
-	only.log('D', '运行到这里')
-	
-	only.log('D', 'refreshToken = %s', parameter_tab['refreshToken'])	
-	only.log('D', utils.is_word(parameter_tab['refreshToken']))	
-	only.log('D', 'length = %s', string.len(parameter_tab['refreshToken']))	
-    	if parameter_tab['refreshToken'] == nil or (not utils.is_word(parameter_tab['refreshToken'])) or (string.len(parameter_tab['refreshToken']) ~= 32) then
+	url_tab['app_Key']      = parameter_tab['appKey']
+
+	if parameter_tab['refreshToken'] == nil or (not utils.is_word(parameter_tab['refreshToken'])) or (string.len(parameter_tab['refreshToken']) ~= 32) then
         	gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], 'refreshToken')
     	end
-	
-	only.log('D', '运行到这里')
-	safe.sign_check(parameter_tab, url_tab, 'accountid', safe.ACCESS_USER_INFO)	
-	--safe.sign_check(parameter_tab, url_tab)
+
+	safe.sign_check(parameter_tab, url_tab)
 end
 
 local function ready_execution(ret_tab)
 
 	post_data = string.format('appKey=%s&refreshToken=%s&sign=%s&grantType=%s', ret_tab['appKey'], ret_tab['refreshToken'],ret_tab['sign'], ret_tab['grantType'])
-        
-	only.log('D', "post_data = %s", post_data) 
-	
+
+	only.log('D', "post_data = %s", post_data)
+
 	local data_fmt  = 'POST %s HTTP/1.0\r\n' ..
 	'Host:%s:%s\r\n' ..
 	'Content-Length:%d\r\n' ..
@@ -71,9 +63,6 @@ local function ready_execution(ret_tab)
 		only.log('E', 'configInfo return is nil when connect http')
 		return false, nil
 	end
-	
-	only.log('D', 'data = %s', data)
-	only.log('D', 'ok_ret = %s', ok_ret)
 
 	ret_tab = cjson.decode(string.sub(ok_ret, string.find(ok_ret, "{.+}")))
 	only.log('D', 'ret_tab = %s', scan.dump(ret_tab))
@@ -86,17 +75,13 @@ local function handle()
 	local req_ip            = ngx.var.remote_addr
 	local req_body          = ngx.req.get_body_data()
 
-	only.log('D', "req_header = \r\n %s\r\n", scan.dump(req_header))
-	
-	url_tab['client_body']  = req_body
 	body 	= cjson.decode(req_body)
 
 	parameter_tab			= {}
-	parameter_tab['appkey']       	= req_header['appkey']
+	parameter_tab['appKey']       	= req_header['appKey']
 	parameter_tab['sign']          	= req_header['sign']
 	parameter_tab['refreshToken']  	= body['refreshToken']
 
-	url_tab['app_Key']      = parameter_tab['appkey']
 	url_tab['client_host']  = req_ip
 
 	only.log('D', 'parameter_tab = %s', scan.dump(parameter_tab))
@@ -104,12 +89,12 @@ local function handle()
 
 	-- 参数校验
 	check_parameter(parameter_tab)
-	
+
 	-- 生成新的sign 发送到第三方
-	ret_tab 		= {}	
-	ret_tab['appKey'] 	=  parameter_tab['appkey']
+	ret_tab 		= {}
+	ret_tab['appKey'] 	=  parameter_tab['appKey']
 	ret_tab['refreshToken']	=  parameter_tab['refreshToken']
-	ret_tab['grantType'] 	= 'refreshToken' 
+	ret_tab['grantType'] 	= 'refreshToken'
         ret_tab['sign'] 	= app_utils.gen_sign_appKey(ret_tab)
 
 	only.log('D', 'ret_tab = %s', scan.dump(ret_tab))
@@ -121,8 +106,8 @@ local function handle()
 	end
 
 	only.log('D', 'ok_ret = %s', scan.dump(ok_ret))
-	
-	if ok_ret['ERRORCODE'] == '0' then	
+
+	if ok_ret['ERRORCODE'] == '0' then
 		-- 防止返回nil
 		ret_str = string.format('{"accountID":"%s","accessTokenExpiration":"%s","refreshToken":"%s","accessToken":"%s","refreshTokenExpiration":"%s"}',
 		(ok_ret['RESULT']['accountID'] == nil and "") or ok_ret['RESULT']['accountID'],
@@ -134,10 +119,10 @@ local function handle()
 		only.log('D', 'ret_str = %s', ret_str)
 
 	elseif ok_ret['ERRORCODE']== 'ME18073' then
-		gosay.go_false(url_tab, msg['MSG_ERROR_REFRESH_TOKEN_EXPIRE'], 'appkey')
+		gosay.go_false(url_tab, msg['MSG_ERROR_REFRESH_TOKEN_EXPIRE'], 'appKey')
 --]]
 	else
-		gosay.go_false(url_tab, msg['MSG_ERROR_REFRESH_TOKEN_NOT_EXIST'], 'appkey')
+		gosay.go_false(url_tab, msg['MSG_ERROR_REFRESH_TOKEN_NOT_EXIST'], 'appKey')
 	end
 
 	gosay.go_success(url_tab, msg['MSG_SUCCESS_WITH_RESULT'], ret_str)

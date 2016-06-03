@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Ansi Terminal Colors</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="main.css" tppabs="http://lua-users.org/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=AnsiTerminalColors&body=1  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=AnsiTerminalColors&body=1%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=search&string=AnsiTerminalColors&body=1" title="List pages referring to AnsiTerminalColors">Ansi Terminal Colors</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="javascript:if(confirm(%27http://lua-users.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/%27" tppabs="http://lua-users.org/">
+            <img src="nav-logo.png" tppabs="http://lua-users.org/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="nav-elbow.png" tppabs="http://lua-users.org/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="index.htm" tppabs="http://lua-users.org/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+Someone on IRC asked how to do colors on a console one morning in 2009, so Rob Hoelz decided to whip up a quick module for ANSI terminal color manipulation <a href="javascript:if(confirm(%27http://github.com/hoelzro/ansicolors  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://github.com/hoelzro/ansicolors%27" tppabs="http://github.com/hoelzro/ansicolors">[1]</a>. The version from 2011 by Enrique García (<code>luarocks install ansicolors</code>), while based on the code below, has different background names and a different user interface (<code>luarocks doc ansicolors</code>).<p>
+Here is Rob's original version:<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="keyword">local</span> <span class="library">pairs</span> = <span class="library">pairs</span>
+<span class="keyword">local</span> <span class="library">tostring</span> = <span class="library">tostring</span>
+<span class="keyword">local</span> <span class="library">setmetatable</span> = <span class="library">setmetatable</span>
+<span class="keyword">local</span> schar = <span class="library">string.char</span>
+
+<span class="library">module</span> <span class="string">'ansicolors'</span>
+
+<span class="keyword">local</span> colormt = {}
+
+<span class="keyword">function</span> colormt:__tostring()
+    <span class="keyword">return</span> self.value
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> colormt:__concat(other)
+    <span class="keyword">return</span> <span class="library">tostring</span>(self) .. <span class="library">tostring</span>(other)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> colormt:__call(s)
+    <span class="keyword">return</span> self .. s .. _M.reset
+<span class="keyword">end</span>
+
+colormt.__metatable = {}
+
+<span class="keyword">local</span> <span class="keyword">function</span> makecolor(value)
+    <span class="keyword">return</span> <span class="library">setmetatable</span>({ value = schar(27) .. <span class="string">'['</span> .. <span class="library">tostring</span>(value) .. <span class="string">'m'</span> }, colormt)
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> colors = {
+    <span class="comment">-- attributes</span>
+    reset = 0,
+    clear = 0,
+    bright = 1,
+    dim = 2,
+    underscore = 4,
+    blink = 5,
+    reverse = 7,
+    hidden = 8,
+
+    <span class="comment">-- foreground</span>
+    black = 30,
+    red = 31,
+    green = 32,
+    yellow = 33,
+    blue = 34,
+    magenta = 35,
+    cyan = 36,
+    white = 37,
+
+    <span class="comment">-- background</span>
+    onblack = 40,
+    onred = 41,
+    ongreen = 42,
+    onyellow = 43,
+    onblue = 44,
+    onmagenta = 45,
+    oncyan = 46,
+    onwhite = 47,
+}
+
+<span class="keyword">for</span> c, v <span class="keyword">in</span> <span class="library">pairs</span>(colors) <span class="keyword">do</span>
+    _M[c] = makecolor(v)
+<span class="keyword">end</span>
+</pre>
+</DL>
+<p>
+And here's some ways you can use it:<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="library">require</span> <span class="string">"ansicolors"</span>
+
+<span class="library">print</span>(ansicolors.red .. <span class="string">'hello from the Red world!'</span> .. ansicolors.reset)
+<span class="library">print</span>(ansicolors.blue .. <span class="string">'go blue!'</span> .. ansicolors.clear) <span class="comment">-- clear is a synonym for reset</span>
+<span class="library">print</span>(ansicolors.underscore .. colors.yellow .. colors.onblue .. <span class="string">'crazy stuff'</span> .. ansicolors.reset)
+<span class="library">print</span>(ansicolors.red <span class="string">'no need to worry about resetting here!'</span>) <span class="comment">-- functional interface</span>
+</pre>
+</DL>
+<p>
+<hr>
+<a href="RecentChanges.htm" tppabs="http://lua-users.org/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=AnsiTerminalColors  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=AnsiTerminalColors%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=AnsiTerminalColors" >edit</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=AnsiTerminalColors  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=AnsiTerminalColors%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=history&id=AnsiTerminalColors" >history</a><br>Last edited April 29, 2015 5:25 am GMT <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=AnsiTerminalColors  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=AnsiTerminalColors%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=AnsiTerminalColors" >(diff)</a>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Week Number In Year</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="/cgi-bin/wiki.pl?action=search&amp;string=WeekNumberInYear&amp;body=1" title="List pages referring to WeekNumberInYear">Week Number In Year</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="/">
+            <img src="/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+Example of code that get week number according to ISO8601.<p>
+Normally you can call <pre class="code">
+<span class="library">print</span>(<span class="string">"W"</span>..<span class="library">os.date</span>( <span class="string">"%V"</span>))
+</pre>
+<p>
+but in my Lua 5.1 that was not working. So I wrote my code using <p>
+os.date("*t",tm) -- to get table<p>
+os.date("%j",tm) -- to get year day<p>
+os.date("%w",tm) -- to get week day<p>
+<pre class="code">
+<span class="comment">-- Get day of a week at year beginning </span>
+<span class="comment">--(tm can be any date and will be forced to 1st of january same year)</span>
+<span class="comment">-- return 1=mon 7=sun</span>
+<span class="keyword">function</span> getYearBeginDayOfWeek(tm)
+  yearBegin = <span class="library">os.time</span>{year=<span class="library">os.date</span>(<span class="string">"*t"</span>,tm).year,month=1,day=1}
+  yearBeginDayOfWeek = <span class="library">tonumber</span>(<span class="library">os.date</span>(<span class="string">"%w"</span>,yearBegin))
+  <span class="comment">-- sunday correct from 0 -&gt; 7</span>
+  <span class="keyword">if</span>(yearBeginDayOfWeek == 0) <span class="keyword">then</span> yearBeginDayOfWeek = 7 <span class="keyword">end</span>
+  <span class="keyword">return</span> yearBeginDayOfWeek
+<span class="keyword">end</span>
+
+<span class="comment">-- tm: date (as retruned fro os.time)</span>
+<span class="comment">-- returns basic correction to be add for counting number of week</span>
+<span class="comment">--  weekNum = math.floor((dayOfYear + returnedNumber) / 7) + 1 </span>
+<span class="comment">-- (does not consider correctin at begin and end of year) </span>
+<span class="keyword">function</span> getDayAdd(tm)
+  yearBeginDayOfWeek = getYearBeginDayOfWeek(tm)
+  <span class="keyword">if</span>(yearBeginDayOfWeek &lt; 5 ) <span class="keyword">then</span>
+    <span class="comment">-- first day is week 1</span>
+    dayAdd = (yearBeginDayOfWeek - 2)
+  <span class="keyword">else</span> 
+    <span class="comment">-- first day is week 52 or 53</span>
+    dayAdd = (yearBeginDayOfWeek - 9)
+  <span class="keyword">end</span>  
+  <span class="keyword">return</span> dayAdd
+<span class="keyword">end</span>
+<span class="comment">-- tm is date as returned from os.time()</span>
+<span class="comment">-- return week number in year based on ISO8601 </span>
+<span class="comment">-- (week with 1st thursday since Jan 1st (including) is considered as Week 1)</span>
+<span class="comment">-- (if Jan 1st is Fri,Sat,Sun then it is part of week number from last year -&gt; 52 or 53)</span>
+<span class="keyword">function</span> getWeekNumberOfYear(tm)
+  dayOfYear = <span class="library">os.date</span>(<span class="string">"%j"</span>,tm)
+  dayAdd = getDayAdd(tm)
+  dayOfYearCorrected = dayOfYear + dayAdd
+  <span class="keyword">if</span>(dayOfYearCorrected &lt; 0) <span class="keyword">then</span>
+    <span class="comment">-- week of last year - decide if 52 or 53</span>
+    lastYearBegin = <span class="library">os.time</span>{year=<span class="library">os.date</span>(<span class="string">"*t"</span>,tm).year-1,month=1,day=1}
+    lastYearEnd = <span class="library">os.time</span>{year=<span class="library">os.date</span>(<span class="string">"*t"</span>,tm).year-1,month=12,day=31}
+    dayAdd = getDayAdd(lastYearBegin)
+    dayOfYear = dayOfYear + <span class="library">os.date</span>(<span class="string">"%j"</span>,lastYearEnd)
+    dayOfYearCorrected = dayOfYear + dayAdd
+  <span class="keyword">end</span>  
+  weekNum = <span class="library">math.floor</span>((dayOfYearCorrected) / 7) + 1
+  <span class="keyword">if</span>( (dayOfYearCorrected &gt; 0) <span class="keyword">and</span> weekNum == 53) <span class="keyword">then</span>
+    <span class="comment">-- check if it is not considered as part of week 1 of next year</span>
+    nextYearBegin = <span class="library">os.time</span>{year=<span class="library">os.date</span>(<span class="string">"*t"</span>,tm).year+1,month=1,day=1}
+    yearBeginDayOfWeek = getYearBeginDayOfWeek(nextYearBegin)
+    <span class="keyword">if</span>(yearBeginDayOfWeek &lt; 5 ) <span class="keyword">then</span>
+      weekNum = 1
+    <span class="keyword">end</span>  
+  <span class="keyword">end</span>  
+  <span class="keyword">return</span> weekNum
+<span class="keyword">end</span>  
+
+useDate = <span class="library">os.time</span>{year=2015,month=9,day=30}
+weekNum = getWeekNumberOfYear(useDate)
+str = <span class="library">os.date</span>(<span class="string">"%Y/%m/%d"</span>,useDate)..<span class="string">": week number:"</span>..<span class="library">tostring</span>(weekNum)
+<span class="library">print</span>(str)
+</pre>
+<p>
+<p>
+It was cross checked with following python code:<pre class="code">
+import datetime
+dt = datetime.date(1970, 1, 1)
+dtAdd = datetime.timedelta(hours=24)
+
+f = open(<span class="string">'pyDate.txt'</span>,<span class="string">'w'</span>)
+<span class="keyword">for</span> i <span class="keyword">in</span> range(0,365*200+1):
+  txt = str(dt.strftime(<span class="string">"%Y/%m/%d"</span>))+<span class="string">":W"</span>+str(dt.isocalendar()[1])  
+  #<span class="library">print</span>(txt)
+  f.write(txt+<span class="string">"\n"</span>)
+  dt += dtAdd
+f.close() 
+</pre>
+ <p>
+<p>
+<p>
+<hr>
+<a href="/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="/cgi-bin/wiki.pl?action=edit&amp;id=WeekNumberInYear" >edit</a> &middot; <a href="/cgi-bin/wiki.pl?action=history&amp;id=WeekNumberInYear" >history</a><br>Last edited September 30, 2015 10:48 pm GMT <a href="/cgi-bin/wiki.pl?action=browse&amp;diff=1&amp;id=WeekNumberInYear" >(diff)</a>
+</body>
+</html>

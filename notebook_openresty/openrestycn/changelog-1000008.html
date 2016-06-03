@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>OpenResty - ChangeLog 1.0.8</title>
+	<link href="fonts.css" tppabs="https://openresty.org/css/fonts.css" rel='stylesheet' type='text/css'>
+	<!--
+	If you ever wanted to use LESS instead of CSS...
+	<link rel="stylesheet" type="text/less" href="/css/main.less">
+	<script src="/js/less.js"></script>
+	-->
+	<link rel="stylesheet" type="text/css" href="main.css" tppabs="http://openresty.org/css/main.css">
+</head>
+<body>
+
+<header role="header">
+        <p class="site-name left">
+                <a href="javascript:if(confirm(%27http://openresty.org/cn/.  \n\nThis file was not retrieved by Teleport Ultra, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?%27))window.location=%27http://openresty.org/cn/.%27" tppabs="http://openresty.org/cn/.">OpenResty</a>
+                <small>通过扩展 NGINX 和 Lua 实现的可伸缩的 Web 平台</small>
+        </p><!-- / site-name -->
+
+        <form action="http://openresty.org/cn/search.html" class="right">
+                <fieldset>
+                        <input type="search" name="query" id="search"
+                               placeholder="搜索 OpenResty.org 中文站" required>
+                </fieldset>
+        </form>
+</header>
+
+
+	<div id="wrapper">
+		<div class="sidebar sleft">
+			<nav id="nav">
+<ul>
+<li><a href="index.htm" tppabs="http://openresty.org/cn/openresty.html">概览</a></li>
+<li><a href="components.html" tppabs="http://openresty.org/cn/components.html">组件</a></li>
+<li><a href="getting-started.html" tppabs="http://openresty.org/cn/getting-started.html">新手上路</a></li>
+<li><a href="samples.html" tppabs="http://openresty.org/cn/samples.html">样例</a></li>
+<li><a href="benchmark.html" tppabs="http://openresty.org/cn/benchmark.html">性能评测</a></li>
+<li><a href="presentations.html" tppabs="http://openresty.org/cn/presentations.html">幻灯片</a></li>
+<li><a href="ebooks.html" tppabs="http://openresty.org/cn/ebooks.html">电子图书</a></li>
+<li><a href="resources.html" tppabs="http://openresty.org/cn/resources.html">资源</a></li>
+<li><a href="download.html" tppabs="http://openresty.org/cn/download.html">下载</a></li>
+<li><a href="installation.html" tppabs="http://openresty.org/cn/installation.html">安装</a></li>
+<li><a href="changes.html" tppabs="http://openresty.org/cn/changes.html">变更历史</a></li>
+<li><a href="quality-assurance.html" tppabs="http://openresty.org/cn/quality-assurance.html">测试</a></li>
+<li><a href="contact-us.html" tppabs="http://openresty.org/cn/contact-us.html">联系我们</a></li>
+<li><a href="javascript:if(confirm(%27https://openresty.org/survey/cn  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://openresty.org/survey/cn%27" tppabs="https://openresty.org/survey/cn">用户问卷调查</a></li>
+<li><a href="donate-online.html" tppabs="http://openresty.org/cn/donate-online.html">捐助</a></li>
+<li><a href="donors.html" tppabs="http://openresty.org/cn/donors.html">捐款者</a></li>
+<li><a href="about.html" tppabs="http://openresty.org/cn/about.html">关于</a></li>
+<li><a href="javascript:if(confirm(%27http://openresty.org/en/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://openresty.org/en/%27" tppabs="http://openresty.org/en/">English Site</a></li>
+</ul>
+
+			</nav><!-- / nav -->
+
+<ul class="buttons">
+    <!-- <li><a href="#" class="btn rss">RSS Feed</a></li> -->
+    <li>
+        <!-- <a href="#" class="btn paypal">Donate with PayPal</a> -->
+        <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="agentzh@gmail.com">
+        <input type="hidden" name="item_name" value="OpenResty Donation (in USD)">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="amount" value="">
+        <input type="image" src="donate_paypal.gif" tppabs="http://openresty.org/images/donate_paypal.gif" border="0" name="submit" alt="Donate with PayPal">
+        </form>
+    </li>
+</ul>
+
+
+		</div><!-- / sidebar left -->
+		
+		<section id="main">
+<div class="item">
+        <header>
+                <h2>ChangeLog 1.0.8</h2>
+                <small>
+                    <a href="yichun-zhang.html" tppabs="http://openresty.org/cn/yichun-zhang.html">
+                    Yichun Zhang
+                    </a>,
+                    03 Nov 2011 (created 10 Oct 2011)</small>
+                <div class="options">
+                        <!--
+                        <a href="#" class="trigger">Show Options</a>
+                        <ul class="first-level">
+                                <li><a href="#">close</a></li>
+                                <li><a href="#">close others</a></li>
+                                <li><a href="#">view</a></li>
+                                <li><a href="#">fields</a></li>
+                                <li><a href="#">syncing</a></li>
+                                <li><a href="#">permalink</a></li>
+                                <li><a href="#">references</a></li>
+                                <li>
+                                        <a href="#">jump</a>
+                                        <ul class="second-level">
+                                                <li><a href="#">Benchmark</a></li>
+                                                <li><a href="#">Presentations</a></li>
+                                                <li><a href="#">eBooks</a></li>
+                                        </ul>
+                                </li>
+                        </ul>
+                        -->
+                </div><!-- / options -->
+        </header>
+        <div class="body">
+<h1 id="stable-release-1.0.8.26---3-november-2011">Stable Release 1.0.8.26 - 3 November 2011</h1>
+<ul>
+<li>now we require <code>gmake</code> (<code>Gnu make</code>) for <code>*BSD</code> systems even if <a href="luajit.html" tppabs="http://openresty.org/cn/luajit.html">LuaJIT</a> is not enabled. thanks <a href="javascript:if(confirm(%27http://weibo.com/lhmwzy  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://weibo.com/lhmwzy%27" tppabs="http://weibo.com/lhmwzy">@lhmwzy</a>.</li>
+<li>upgraded the official <a href="javascript:if(confirm(%27http://www.lua.org/ftp/patch-lua-5.1.4-4  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.lua.org/ftp/patch-lua-5.1.4-4%27" tppabs="http://www.lua.org/ftp/patch-lua-5.1.4-4">hotfix patch #4</a> for the standard Lua 5.1.4 interpreter. <a href="components.html" tppabs="http://openresty.org/cn/components.html">Components</a> bundled in this release:</li>
+<li>LuaJIT-2.0.0-beta8</li>
+<li>array-var-nginx-module-0.03rc1</li>
+<li>auth-request-nginx-module-0.2</li>
+<li>drizzle-nginx-module-0.1.2rc2</li>
+<li>echo-nginx-module-0.37rc7</li>
+<li>encrypted-session-nginx-module-0.01</li>
+<li>form-input-nginx-module-0.07rc5</li>
+<li>headers-more-nginx-module-0.16rc3</li>
+<li>iconv-nginx-module-0.10rc5</li>
+<li>lua-5.1.4</li>
+<li>lua-cjson-1.0.3</li>
+<li>lua-rds-parser-0.03</li>
+<li>lua-redis-parser-0.09rc5</li>
+<li>memc-nginx-module-0.13rc1</li>
+<li>nginx-1.0.8</li>
+<li>ngx_devel_kit-0.2.17</li>
+<li>ngx_lua-0.3.1rc23</li>
+<li>ngx_postgres-0.9rc1</li>
+<li>rds-csv-nginx-module-0.04</li>
+<li>rds-json-nginx-module-0.12rc6</li>
+<li>redis2-nginx-module-0.08rc1</li>
+<li>set-misc-nginx-module-0.22rc3</li>
+<li>srcache-nginx-module-0.13rc2</li>
+<li>upstream-keepalive-nginx-module-0.3</li>
+<li>xss-nginx-module-0.03rc3</li>
+</ul>
+<h1 id="mainline-version-1.0.8.25---27-october-2011">Mainline Version 1.0.8.25 - 27 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc23.
+<ul>
+<li>bugfix: <code>ndk.set_var.DIRECTIVE</code> had a memory issue and might pass empty argument values to the directive being called. thanks dannynoonan.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.23---27-october-2011">Mainline Version 1.0.8.23 - 27 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc22.
+<ul>
+<li>feature: implemented new methods <code>add</code>, <code>replace</code>, <code>incr</code>, and <code>delete</code> for <code>ngx.shared.DICT</code>.</li>
+<li>bugfix: made the <code>set</code> method of <code>ngx.shared.DICT</code> return 3 values: <code>success</code>, <code>err</code>, and <code>forcible</code>.</li>
+<li>bugfix: fixed spots of <code>-Werror=unused-but-set-variable</code> warning issued by gcc 4.6.0.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.21---26-october-2011">Mainline Version 1.0.8.21 - 26 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc21.
+<ul>
+<li>feature: added new directive <code>lua_shared_dict</code>: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#lua_shared_dict%27" tppabs="http://wiki.nginx.org/HttpLuaModule#lua_shared_dict" class="uri">http://wiki.nginx.org/HttpLuaModule#lua_shared_dict</a></li>
+<li>feature: added Lua API for the shm-based dictionary: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.shared.DICT%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.shared.DICT" class="uri">http://wiki.nginx.org/HttpLuaModule#ngx.shared.DICT</a></li>
+</ul></li>
+<li>upgraded <a href="echo-nginx-module.html" tppabs="http://openresty.org/cn/echo-nginx-module.html">Echo Nginx Module</a> to 0.37rc7.
+<ul>
+<li>bugfix: fixed a memory issue in both <code>echo_sleep</code> and <code>echo_blocking_sleep</code>: we should not pass <code>ngx_str_t</code> strings to <code>atof()</code> which expects C strings.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.19---24-october-2011">Mainline Version 1.0.8.19 - 24 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc20.
+<ul>
+<li>bugfix: no longer free request body buffers that are not allocated by ourselves.</li>
+<li>bugfix: now we allow setting <code>ngx.var.VARIABLE</code> to <code>nil</code>.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.17---22-october-2011">Mainline Version 1.0.8.17 - 22 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc19.
+<ul>
+<li>feature: now we apply the patch to the nginx core so as to allow main request body modifications: <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.0.8-allow_request_body_updating.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.0.8-allow_request_body_updating.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.0.8-allow_request_body_updating.patch" class="uri">https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.0.8-allow_request_body_updating.patch</a></li>
+<li>feature: added new Lua API <code>ngx.req.set_body_file()</code>: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.set_body_file%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.set_body_file" class="uri">http://wiki.nginx.org/HttpLuaModule#ngx.req.set_body_file</a></li>
+<li>feature: added new Lua API <code>ngx.req.set_body_data()</code>: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.set_body_data%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.set_body_data" class="uri">http://wiki.nginx.org/HttpLuaModule#ngx.req.set_body_data</a></li>
+<li>bugfix: <code>lua_need_request_body</code> should not skip requests with methods other than <code>POST</code> and <code>PUT</code>. thanks <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> User.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.15---19-october-2011">Mainline Version 1.0.8.15 - 19 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc17.
+<ul>
+<li>feature: added new Lua functions <code>ngx.req.read_body()</code>, <code>ngx.req.discard_body()</code>, <code>ngx.req.get_body_data()</code>, and <code>ngx.req.get_body_file()</code>. see the docs here: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.read_body%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.read_body" class="uri">http://wiki.nginx.org/HttpLuaModule#ngx.req.read_body</a></li>
+<li>bugfix: fixed hanging issues when using <code>ngx.exec()</code> within <code>rewrite_by_lua</code> and <code>access_by_lua</code>. thanks <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> User for reporting it.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.13---16-october-2011">Mainline Version 1.0.8.13 - 16 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc16.
+<ul>
+<li>fixed compilation failures when <code>--with-debug</code> is turned off.</li>
+<li>now we prohibit use of <code>true</code> jump argument in <code>ngx.req.set_uri()</code> in contexts other than <code>rewrite_by_lua</code> and <code>rewrite_by_lua_file</code>. a lua exception will be thrown if the context is incorrect.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.11---16-october-2011">Mainline Version 1.0.8.11 - 16 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc14.
+<ul>
+<li>now we change the <code>ngx.req.set_uri()</code> API a bit by changing the optional argument <code>break_cycle</code> to <code>jump</code>. so now it will not trigger location jump by default (because the <code>jump</code> argument is false by default) and in case <code>jump</code> is given true, the function will re-search locations and jump to the new location and never return.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.9---16-october-2011">Mainline Version 1.0.8.9 - 16 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc13.
+<ul>
+<li>now we implemented <code>ngx.req.set_uri()</code> and <code>ngx.req.set_uri_args()</code> to emulate <code>ngx_rewrite</code>'s <code>rewrite</code> directive (without <code>redirect</code> or <code>permanent</code> modifiers). thanks Vladimir Protasov (utros) and <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> User.</li>
+<li>now we skip rewrite phase Lua handlers altogether if <code>ngx_rewrite</code>'s <code>rewrite</code> directive issue a location re-lookup by changing URIs (but not including rewrite ... break). thanks <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> User.</li>
+<li>added constant <code>ngx.HTTP_METHOD_NOT_IMPLEMENTED</code> (501). thanks <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> User.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.7---15-october-2011">Mainline Version 1.0.8.7 - 15 October 2011</h1>
+<ul>
+<li>upgraded <a href="srcache-nginx-module.html" tppabs="http://openresty.org/cn/srcache-nginx-module.html">Srcache Nginx Module</a> to 0.13rc2.
+<ul>
+<li>bugfix: we now only cache 200, 301, and 302 responses by default.</li>
+<li>feature: implemented new directive <code>srcache_store_statuses</code> to allow the user to specify the response status code list that is to be stored into the cache.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.5---13-october-2011">Mainline Version 1.0.8.5 - 13 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc11.
+<ul>
+<li>bugfix: now we explicitly clear all the modules' contexts before dump to named location with <code>ngx.exec</code>.</li>
+</ul></li>
+<li>upgraded <a href="echo-nginx-module.html" tppabs="http://openresty.org/cn/echo-nginx-module.html">Echo Nginx Module</a> to 0.37rc6.
+<ul>
+<li>bugfix: now we explicitly clear all the modules' contexts before dump to named location with <code>echo_exec</code>.</li>
+<li>bugfix: bugfix: <code>echo_exec</code> may hang when running after <code>echo_sleep</code> (or other I/O interruption calls): we should have called <code>ngx_http_finalize_request</code> on <code>NGX_DONE</code> to decrement <code>r-&gt;main-&gt;count</code> anyway.</li>
+</ul></li>
+<li>applied the patch to the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core that always clears all modules' contexts in <code>ngx_http_named_location</code>.</li>
+</ul>
+<h1 id="mainline-version-1.0.8.3---13-october-2011">Mainline Version 1.0.8.3 - 13 October 2011</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc10.
+<ul>
+<li>bugfix: calling <code>ngx.exec()</code> to jump to a named location did not clear the context object of <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> properly and might cause evil problems. thanks <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> User.</li>
+</ul></li>
+<li>upgraded <a href="iconv-nginx-module.html" tppabs="http://openresty.org/cn/iconv-nginx-module.html">Iconv Nginx Module</a> to 0.10rc5.
+<ul>
+<li>bugfix: fixed <code>-Wset-but-not-used</code> warnings issued by gcc 4.6.0. thanks 支家乐 (Calio).</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.0.8.1---10-october-2011">Mainline Version 1.0.8.1 - 10 October 2011</h1>
+<ul>
+<li>upgraded <a href="echo-nginx-module.html" tppabs="http://openresty.org/cn/echo-nginx-module.html">Echo Nginx Module</a> to 0.37rc5.
+<ul>
+<li>bugfix: now we properly set the <code>Content-Length</code> request header for subrequests.</li>
+</ul></li>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.3.1rc9.
+<ul>
+<li>feature: now for HTTP 1.0 requests, we disable the automatic full buffering mode if the user sets the <code>Content-Length</code> response header before sending out the headers. this allows streaming output for HTTP 1.0 requests if the content length can be calculated beforehand. thanks 李子义.</li>
+<li>bugfix: now we properly support setting the <code>Cache-Control</code> response header via the <code>ngx.header.HEADER</code> interface.</li>
+<li>bugfix: no longer set header hash to 1. use the <code>ngx_hash_key_lc</code> instead.</li>
+</ul></li>
+<li>upgraded <a href="headers-more-nginx-module.html" tppabs="http://openresty.org/cn/headers-more-nginx-module.html">Headers More Nginx Module</a> to 0.16rc3.
+<ul>
+<li>bugfix: we should set header hash using <code>ngx_hash_key_lc</code>, not simply to 1.</li>
+<li>bugfix: fixed setting <code>Cache-Control</code> response headers. we should properly prepare the <code>r-&gt;cache_control</code> array as well.</li>
+</ul></li>
+<li>upgraded <a href="srcache-nginx-module.html" tppabs="http://openresty.org/cn/srcache-nginx-module.html">Srcache Nginx Module</a> to 0.13rc1.
+<ul>
+<li>implemented response status line and general response header caching and added new directives <code>srcache_store_hide_header</code> and <code>srcache_store_pass_header</code> to control which headers to cache and which not.</li>
+<li>added new directive <code>srcache_response_cache_control</code> to control whether honor response headers <code>Cache-Control</code> and <code>Expires</code>, default <code>on</code>.</li>
+<li>we disable <code>srcache_store</code> automatically by default when <code>Cache-Control: max-age=0</code> and <code>Expires: &lt;date no more recently than now&gt;</code> are seen.</li>
+<li>implemented builtin nginx variable <code>$srcache_expire</code> for automatic expiration time calculation based on response headers <code>Cache-Control</code> (<code>max-age</code>) and <code>Expires</code>; also added new directives <code>srcache_max_expire</code> and <code>srcache_default_expire</code>.</li>
+<li>implemented the <code>srcache_store_no_cache</code> directive; now by default, we do not store responses with the header <code>Cache-Control: no-cache</code> into the cache.</li>
+<li>implemented <code>the srcache_store_no_store directive</code> (default <code>off</code>). Now by default, responses with the header <code>Cache-Control: no-store</code> will not be stored into the cache.</li>
+<li>implemented the <code>srcache_store_private</code> directive to control whether to store responses with the header <code>Cache-Control: private</code>.</li>
+<li>implemented the <code>srcache_request_cache_control</code> directive to allow request headers <code>Cache-Control: no-cache</code> or <code>Pragma: no-cache</code> to force bypassing cache lookup. it also honors the request header <code>Cache-Control: no-store</code>. this directive is turned off by default.</li>
+<li>now we check response header <code>Content-Encoding</code> by default and a non-empty header value will <code>skip srcache_store</code>; also introduced a new directive named <code>srcache_ignore_content_encoding</code> to ignore this response header.</li>
+<li>implemented the <code>srcache_methods</code> directive to specify request methods that are cacheable, by default, only <code>GET</code> and <code>HEAD</code> are cacheable.</li>
+<li>bugfix: we no longer set header hash to 1; we use <code>ngx_hash_key_lc</code> instead.</li>
+<li>bugfix: when we skip <code>srcache_fetch</code> by means of <code>srcache_fetch_skip</code>, we should not automatically skip <code>srcache_store</code>.</li>
+<li>bugfix: now we ignore the <code>Content-Length</code> header (if any) of the main request for the subrequests.</li>
+<li>bugfix: there might be a segfault when failing to allocate memory in <code>ngx_http_srcache_add_copy_chain</code>. thanks Shaun savage.</li>
+</ul></li>
+<li>upgraded <a href="rds-json-nginx-module.html" tppabs="http://openresty.org/cn/rds-json-nginx-module.html">Rds Json Nginx Module</a> to 0.12rc6.
+<ul>
+<li>bugfix: fixed compatibility with nginx 1.1.4+.</li>
+</ul></li>
+<li>upgraded <a href="rds-csv-nginx-module.html" tppabs="http://openresty.org/cn/rds-csv-nginx-module.html">Rds Csv Nginx Module</a> to 0.04.
+<ul>
+<li>bugfix: fixed compatibility issues with nginx 1.1.4+.</li>
+<li>optimization: now we only register our filters when <code>rds_csv</code> is actually used in <code>nginx.conf</code>.</li>
+</ul></li>
+<li>upgraded <a href="redis-2-nginx-module.html" tppabs="http://openresty.org/cn/redis-2-nginx-module.html">Redis2 Nginx Module</a> to 0.08rc1.
+<ul>
+<li>bugfix: fixed compatibility with nginx 1.1.4+.</li>
+</ul></li>
+<li>upgraded <a href="drizzle-nginx-module.html" tppabs="http://openresty.org/cn/drizzle-nginx-module.html">Drizzle Nginx Module</a> to 0.1.2rc2.
+<ul>
+<li>bugfix: fixed compatibility with nginx 1.1.4+</li>
+</ul></li>
+<li>upgraded <a href="memc-nginx-module.html" tppabs="http://openresty.org/cn/memc-nginx-module.html">Memc Nginx Module</a> to 0.13rc1.
+<ul>
+<li>bugfix: fixed compatibility with nginx 1.1.4+.</li>
+</ul></li>
+<li>upgraded <a href="set-misc-nginx-module.html" tppabs="http://openresty.org/cn/set-misc-nginx-module.html">Set Misc Nginx Module</a> to v0.22rc3.
+<ul>
+<li>minor code cleanup.</li>
+</ul></li>
+<li>applied the patch for the variable-header-ignore-no-hash issue. see <a href="javascript:if(confirm(%27http://forum.nginx.org/read.php?29,216062  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://forum.nginx.org/read.php?29,216062%27" tppabs="http://forum.nginx.org/read.php?29,216062" class="uri">http://forum.nginx.org/read.php?29,216062</a> for details.</li>
+<li>based on <a href="index.htm" tppabs="http://openresty.org/cn/openresty.html">OpenResty</a> 1.0.6.22 and upgraded the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to 1.0.8.</li>
+</ul>
+<p>See <a href="changelog-1000006.html" tppabs="http://openresty.org/cn/changelog-1000006.html">ChangeLog1000006</a> for change log for ngx_openresty 1.0.6.x.</p>
+
+        </div><!-- / body -->
+</div><!-- / item -->
+
+		</section><!-- / main -->
+
+<div class="sidebar sright">
+        <div class="options">
+                <!--
+                <ul class="first">
+                        <li><a href="#" class="close-all">close all</a></li>
+                        <li><a href="#" class="permaview">permaview</a></li>
+                        <li><a href="#" class="more-options">options</a></li>
+                </ul> --><!-- / first -->
+        </div><!-- options -->
+
+        <div class="tabs">
+                <ul class="navigation">
+                        <!--
+                        <li><a href="#" class="current">Timeline</a></li>
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">Tags</a></li>
+                        <li><a href="#">More</a></li>
+                        -->
+                        <li><span>最近更新</span></li>
+                </ul><!-- / navigation -->
+                <div class="panes">
+                        <div class="pane" id="timeline">
+                                <ul>
+                                    <li>
+                                            <h3>20 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="lua-cjson-library.html" tppabs="http://openresty.org/cn/lua-cjson-library.html">Lua Cjson Library</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>17 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="download.html" tppabs="http://openresty.org/cn/download.html">Download</a></li>
+                                                <li><a href="changelog-1009007.html" tppabs="http://openresty.org/cn/changelog-1009007.html">ChangeLog 1.9.7</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>22 Jan 2016</h3>
+                                            <ul>
+                                                <li><a href="installation.html" tppabs="http://openresty.org/cn/installation.html">Installation</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>05 Jan 2016</h3>
+                                            <ul>
+                                                <li><a href="about.html" tppabs="http://openresty.org/cn/about.html">About</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>30 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="index.htm" tppabs="http://openresty.org/cn/openresty.html">OpenResty</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>25 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="main-menu.html" tppabs="http://openresty.org/cn/main-menu.html">Main Menu</a></li>
+                                                <li><a href="changes.html" tppabs="http://openresty.org/cn/changes.html">Changes</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>23 Nov 2015</h3>
+                                            <ul>
+                                                <li><a href="components.html" tppabs="http://openresty.org/cn/components.html">Components</a></li>
+                                                <li><a href="changelog-1009003.html" tppabs="http://openresty.org/cn/changelog-1009003.html">ChangeLog 1.9.3</a></li>
+                                                <li><a href="resty-cli.html" tppabs="http://openresty.org/cn/resty-cli.html">Resty CLI</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>11 Aug 2015</h3>
+                                            <ul>
+                                                <li><a href="donate-online.html" tppabs="http://openresty.org/cn/donate-online.html">Donate Online</a></li>
+                                                <li><a href="donors.html" tppabs="http://openresty.org/cn/donors.html">Donors</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>03 Jul 2015</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007010.html" tppabs="http://openresty.org/cn/changelog-1007010.html">ChangeLog 1.7.10</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>04 Feb 2015</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007007.html" tppabs="http://openresty.org/cn/changelog-1007007.html">ChangeLog 1.7.7</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>10 Oct 2014</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007004.html" tppabs="http://openresty.org/cn/changelog-1007004.html">ChangeLog 1.7.4</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>13 Jul 2014</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007002.html" tppabs="http://openresty.org/cn/changelog-1007002.html">ChangeLog 1.7.2</a></li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                        </div><!-- / pane -->
+                </div><!-- / panes -->
+        </div><!-- / tabs -->
+</div><!-- / sidebar right -->
+
+	</div><!-- / wrapper -->
+
+<div class="content-footer">
+<hr class="footer-sep"/>
+<div class="footer">
+  <p>版权所有 © 2016 章亦春（agentzh）</p>
+  <p>100% 由 OpenResty 和 PostgreSQL 驱动
+     （<a href="javascript:if(confirm(%27https://github.com/openresty/openresty.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/openresty/openresty.org/%27" tppabs="https://github.com/openresty/openresty.org/">
+     查看本站的源代码</a>）</p>
+  <br/>
+  <p>京ICP备16021991号</p>
+</div>
+</div>
+
+<script src="jquery.min.js" tppabs="http://openresty.org/js/jquery.min.js"></script>
+<script src="main.js" tppabs="http://openresty.org/js/main.js"></script>
+
+<!-- Google analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24724965-1']);
+  //_gaq.push(['_setDomainName', 'http://openresty.org/cn/openresty.org']);
+  _gaq.push(['_trackPageview']);
+
+  var ga_f = function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www/') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  };
+  setTimeout(ga_f, 0);
+
+</script>
+
+
+</body>
+</html>

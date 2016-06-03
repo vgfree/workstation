@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>OpenResty - ChangeLog 1.2.3</title>
+	<link href="fonts.css" tppabs="https://openresty.org/css/fonts.css" rel='stylesheet' type='text/css'>
+	<!--
+	If you ever wanted to use LESS instead of CSS...
+	<link rel="stylesheet" type="text/less" href="/css/main.less">
+	<script src="/js/less.js"></script>
+	-->
+	<link rel="stylesheet" type="text/css" href="main.css" tppabs="http://openresty.org/css/main.css">
+</head>
+<body>
+
+<header role="header">
+        <p class="site-name left">
+                <a href="javascript:if(confirm(%27http://openresty.org/cn/.  \n\nThis file was not retrieved by Teleport Ultra, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?%27))window.location=%27http://openresty.org/cn/.%27" tppabs="http://openresty.org/cn/.">OpenResty</a>
+                <small>通过扩展 NGINX 和 Lua 实现的可伸缩的 Web 平台</small>
+        </p><!-- / site-name -->
+
+        <form action="http://openresty.org/cn/search.html" class="right">
+                <fieldset>
+                        <input type="search" name="query" id="search"
+                               placeholder="搜索 OpenResty.org 中文站" required>
+                </fieldset>
+        </form>
+</header>
+
+
+	<div id="wrapper">
+		<div class="sidebar sleft">
+			<nav id="nav">
+<ul>
+<li><a href="index.htm" tppabs="http://openresty.org/cn/openresty.html">概览</a></li>
+<li><a href="components.html" tppabs="http://openresty.org/cn/components.html">组件</a></li>
+<li><a href="getting-started.html" tppabs="http://openresty.org/cn/getting-started.html">新手上路</a></li>
+<li><a href="samples.html" tppabs="http://openresty.org/cn/samples.html">样例</a></li>
+<li><a href="benchmark.html" tppabs="http://openresty.org/cn/benchmark.html">性能评测</a></li>
+<li><a href="presentations.html" tppabs="http://openresty.org/cn/presentations.html">幻灯片</a></li>
+<li><a href="ebooks.html" tppabs="http://openresty.org/cn/ebooks.html">电子图书</a></li>
+<li><a href="resources.html" tppabs="http://openresty.org/cn/resources.html">资源</a></li>
+<li><a href="download.html" tppabs="http://openresty.org/cn/download.html">下载</a></li>
+<li><a href="installation.html" tppabs="http://openresty.org/cn/installation.html">安装</a></li>
+<li><a href="changes.html" tppabs="http://openresty.org/cn/changes.html">变更历史</a></li>
+<li><a href="quality-assurance.html" tppabs="http://openresty.org/cn/quality-assurance.html">测试</a></li>
+<li><a href="contact-us.html" tppabs="http://openresty.org/cn/contact-us.html">联系我们</a></li>
+<li><a href="javascript:if(confirm(%27https://openresty.org/survey/cn  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://openresty.org/survey/cn%27" tppabs="https://openresty.org/survey/cn">用户问卷调查</a></li>
+<li><a href="donate-online.html" tppabs="http://openresty.org/cn/donate-online.html">捐助</a></li>
+<li><a href="donors.html" tppabs="http://openresty.org/cn/donors.html">捐款者</a></li>
+<li><a href="about.html" tppabs="http://openresty.org/cn/about.html">关于</a></li>
+<li><a href="javascript:if(confirm(%27http://openresty.org/en/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://openresty.org/en/%27" tppabs="http://openresty.org/en/">English Site</a></li>
+</ul>
+
+			</nav><!-- / nav -->
+
+<ul class="buttons">
+    <!-- <li><a href="#" class="btn rss">RSS Feed</a></li> -->
+    <li>
+        <!-- <a href="#" class="btn paypal">Donate with PayPal</a> -->
+        <form name="_xclick" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="agentzh@gmail.com">
+        <input type="hidden" name="item_name" value="OpenResty Donation (in USD)">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="amount" value="">
+        <input type="image" src="donate_paypal.gif" tppabs="http://openresty.org/images/donate_paypal.gif" border="0" name="submit" alt="Donate with PayPal">
+        </form>
+    </li>
+</ul>
+
+
+		</div><!-- / sidebar left -->
+		
+		<section id="main">
+<div class="item">
+        <header>
+                <h2>ChangeLog 1.2.3</h2>
+                <small>
+                    <a href="yichun-zhang.html" tppabs="http://openresty.org/cn/yichun-zhang.html">
+                    Yichun Zhang
+                    </a>,
+                    14 Oct 2012 (created 14 Oct 2012)</small>
+                <div class="options">
+                        <!--
+                        <a href="#" class="trigger">Show Options</a>
+                        <ul class="first-level">
+                                <li><a href="#">close</a></li>
+                                <li><a href="#">close others</a></li>
+                                <li><a href="#">view</a></li>
+                                <li><a href="#">fields</a></li>
+                                <li><a href="#">syncing</a></li>
+                                <li><a href="#">permalink</a></li>
+                                <li><a href="#">references</a></li>
+                                <li>
+                                        <a href="#">jump</a>
+                                        <ul class="second-level">
+                                                <li><a href="#">Benchmark</a></li>
+                                                <li><a href="#">Presentations</a></li>
+                                                <li><a href="#">eBooks</a></li>
+                                        </ul>
+                                </li>
+                        </ul>
+                        -->
+                </div><!-- / options -->
+        </header>
+        <div class="body">
+<h1 id="stable-release-1.2.3.8---8-october-2012">Stable Release 1.2.3.8 - 8 October 2012</h1>
+<p>This release is essentially the same as the development version 1.2.3.7.</p>
+<p>The following components are bundled:</p>
+<ul>
+<li>LuaJIT-2.0.0-beta10</li>
+<li>array-var-nginx-module-0.03rc1</li>
+<li>auth-request-nginx-module-0.2</li>
+<li>drizzle-nginx-module-0.1.4</li>
+<li>echo-nginx-module-0.41</li>
+<li>encrypted-session-nginx-module-0.02</li>
+<li>form-input-nginx-module-0.07rc5</li>
+<li>headers-more-nginx-module-0.18</li>
+<li>iconv-nginx-module-0.10rc7</li>
+<li>lua-5.1.5</li>
+<li>lua-cjson-1.0.3</li>
+<li>lua-rds-parser-0.05</li>
+<li>lua-redis-parser-0.10</li>
+<li>lua-resty-dns-0.08</li>
+<li>lua-resty-memcached-0.08</li>
+<li>lua-resty-mysql-0.10</li>
+<li>lua-resty-redis-0.14</li>
+<li>lua-resty-string-0.06</li>
+<li>lua-resty-upload-0.03</li>
+<li>memc-nginx-module-0.13rc3</li>
+<li>nginx-1.2.3</li>
+<li>ngx_coolkit-0.2rc1</li>
+<li>ngx_devel_kit-0.2.17</li>
+<li>ngx_lua-0.6.10</li>
+<li>ngx_postgres-1.0rc2</li>
+<li>rds-csv-nginx-module-0.05rc2</li>
+<li>rds-json-nginx-module-0.12rc10</li>
+<li>redis-nginx-module-0.3.6</li>
+<li>redis2-nginx-module-0.09</li>
+<li>set-misc-nginx-module-0.22rc8</li>
+<li>srcache-nginx-module-0.16</li>
+<li>xss-nginx-module-0.03rc9</li>
+</ul>
+<h1 id="mainline-version-1.2.3.7---6-october-2012">Mainline Version 1.2.3.7 - 6 October 2012</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.6.10.
+<ul>
+<li>feature: now <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.get_headers%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.get_headers">ngx.req.get_headers()</a> returns a Lua table with keys in the all-lower-case form by default. thanks James Hurst and Matthieu Tourne for the feature request.</li>
+<li>feature: now <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.get_headers%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.get_headers">ngx.req.get_headers()</a> adds an <code>__index</code> metamethod to the resulting Lua table by default, which will automatically normalize the lookup key by converting upper-case letters and underscores in case of a lookup miss. thanks James Hurst and Matthieu Tourne for suggesting this feature.</li>
+<li>feature: now <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.get_headers%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.get_headers">ngx.req.get_headers()</a> accepts a second (optional) argument, <code>raw</code>, for controlling whether to return the original form of the header names (that is, the original letter-case).</li>
+<li>feature: added public C API functions <code>ngx_http_shared_dict_get</code> and <code>ngx_http_lua_find_zone</code> to allow other <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> C modules or a patched <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to directly access the <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#lua_shared_dict%27" tppabs="http://wiki.nginx.org/HttpLuaModule#lua_shared_dict">shared memory dictionaries</a> created by <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a>. thanks Piotr Sikora for requesting this feature.</li>
+<li>bugfix: fixed a compilation warning in the TCP/stream cosocket codebase when using (at least) gcc 3.4.6 for MIPS. thanks Dirk Feytons for reporting this as <a href="javascript:if(confirm(%27https://github.com/chaoslawful/lua-nginx-module/issues/162  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/chaoslawful/lua-nginx-module/issues/162%27" tppabs="https://github.com/chaoslawful/lua-nginx-module/issues/162">GitHub issue #162</a>.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.2.3.5---1-october-2012">Mainline Version 1.2.3.5 - 1 October 2012</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.6.8.
+<ul>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.re.gmatch%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.re.gmatch">ngx.re.gmatch</a> might loop infinitely when the pattern matches an empty string. thanks Lance Li and xingxing for tracking this issue down.</li>
+<li>bugfix: pattern matching an empty substring in <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.re.gmatch%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.re.gmatch">ngx.re.gmatch</a> did not match at the end of the subject string.</li>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.re.gsub%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.re.gsub">ngx.re.gsub</a> might enter infinite loops because it could not handle patterns matching empty strings properly.</li>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.re.gsub%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.re.gsub">ngx.re.gsub</a> incorrectly skipped matching altogether when the subject string was empty.</li>
+</ul></li>
+</ul>
+<h1 id="mainline-version-1.2.3.3---26-september-2012">Mainline Version 1.2.3.3 - 26 September 2012</h1>
+<ul>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.6.7.
+<ul>
+<li>feature: implemented the <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.shared.DICT.flush_expired%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.shared.DICT.flush_expired">shdict:flush_expired(max_count?)</a> method for flushing out and removing expired items up to <code>max_count</code> (or unlimited when <code>max_count == 0</code>). thanks Brian Akins for the patch.</li>
+<li>optimize: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#tcpsock:send%27" tppabs="http://wiki.nginx.org/HttpLuaModule#tcpsock:send">tcpsock:send()</a> now calls <code>c-&gt;send()</code> instead of <code>ngx_output_chain()</code>, which gives about 4% ~ 5% performance boost for a simple test case accessing Redis for several times.</li>
+<li>optimize: we now skip processing in the default write event handler when the write event is not ready.</li>
+<li>refactor: the I/O scheduler has been rewritten to keep track of the coroutine associated with each (non-blocking) I/O operation automatically, which paves a way to the upcoming <code>ngx.thread</code> API (aka the &quot;lightweight thread&quot; API).</li>
+<li>refactor: now we use a new <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> subrequest model that bypasses <code>ngx_http_postpone_filter_module</code> completely, which paves a way for arbitrary order of outputting among subrequests and their parents when the <code>ngx.thread API</code> lands in the near future.</li>
+<li>bugfix: the &quot;http finalize non-active request&quot; alerts might happen when subrequests were used. thanks Lance Li for reporting this issue.</li>
+<li>bugfix: reset the subrequest status code when the <code>ngx_http_upstream</code> request in the subrequest fails due to timeout errors or premature connection close and etc. this fix also requires the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch">nonbuffered-upstream-truncation patch</a> for the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to cancel a limitation in <code>ngx_http_upstream</code>.</li>
+<li>bugfix: fixed the gcc error <code>-Werror=strict-aliasing</code> in the Lua/<a href="luajit.html" tppabs="http://openresty.org/cn/luajit.html">LuaJIT</a> bytecode loader when <code>-O2</code> or above is used. thanks jinglong for the patch.</li>
+<li>bugfix: the main request might be prematurely terminated if a subrequest issued by <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.location.capture%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.location.capture">ngx.location.capture</a> (or its friends) was finalized with error codes.</li>
+<li>bugfix: the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> built-in resolver might not be destroyed in time when it was used by <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.socket.tcp%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.socket.tcp">ngx.socket.tcp</a> and <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.socket.udp%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.socket.udp">ngx.socket.udp</a>.</li>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#coroutine.status%27" tppabs="http://wiki.nginx.org/HttpLuaModule#coroutine.status">coroutine.status()</a> returned <code>suspended</code> for <code>normal</code> coroutines.</li>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#coroutine.resume%27" tppabs="http://wiki.nginx.org/HttpLuaModule#coroutine.resume">coroutine.resume()</a> did not return an error immediately when operating on <code>normal</code> coroutines.</li>
+<li>bugfix: when the entry coroutine was yielded by <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#coroutine.yield%27" tppabs="http://wiki.nginx.org/HttpLuaModule#coroutine.yield">coroutine.yield()</a> then after it was resumed automatically its status would still be <code>suspended</code>.</li>
+<li>bugfix: the write event timer might not be removed in time in <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.flush%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.flush">ngx.flush(true)</a> when <code>ngx_handle_write_event</code> failed.</li>
+<li>bugfix: always remove the read event timer during downstream cosocket finalization if it is not removed yet.</li>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.flush%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.flush">ngx.flush(true)</a> might not return immediately when it should.</li>
+<li>bugfix: the <code>resume_handler</code> field of the subrequest <code>ctx</code> was not properly initialized.</li>
+<li>feature: added new dtrace static probes <code>http-lua-user-coroutine-yield</code> and <code>http-lua-entry-coroutine-yield</code>.</li>
+<li>docs: fixed the documentation for <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.req.set_header%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.req.set_header">ngx.req.set_header</a> and made it clear that the modified request headers will be inherited by the subrequests by default. thanks James Hurst for reporting this issue.</li>
+<li>docs: documented the trick for doing background asynchronous jobs by using <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#ngx.eof%27" tppabs="http://wiki.nginx.org/HttpLuaModule#ngx.eof">ngx.eof()</a> + <code>keepalive_timeout 0</code>. thanks Lance Li for the suggestion.</li>
+</ul></li>
+<li>upgraded <a href="lua-redis-parser-library.html" tppabs="http://openresty.org/cn/lua-redis-parser-library.html">Lua Redis Parser Library</a> to 0.10.
+<ul>
+<li>bugfix: Lua stack overflow would happen when too many Redis arguments were passed into the <a href="javascript:if(confirm(%27http://wiki.nginx.org/LuaRedisParser  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/LuaRedisParser#build_query%27" tppabs="http://wiki.nginx.org/LuaRedisParser#build_query">build_query</a> method. thanks Guo Yin for reporting this issue.</li>
+</ul></li>
+<li>upgraded <a href="lua-resty-dns-library.html" tppabs="http://openresty.org/cn/lua-resty-dns-library.html">Lua Resty DNS Library</a> to 0.08.
+<ul>
+<li>feature: added new method <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-dns  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-dns#tcp_query%27" tppabs="https://github.com/agentzh/lua-resty-dns#tcp_query">tcp_query</a> to enforce pure TCP transportation for the DNS queries.</li>
+<li>feature: added support for TCP retries when the UDP reply gets truncated.</li>
+<li>feature: added support for <code>PTR</code> queries and records.</li>
+<li>feature: added support for <code>TXT</code> queries and records.</li>
+<li>feature: added support for <code>NS</code> queries and records.</li>
+<li>bugfix: the udp resolver did not discard DNS replies with unmatched IDs for 128 times as originally designed.</li>
+</ul></li>
+<li>upgraded <a href="lua-resty-redis-library.html" tppabs="http://openresty.org/cn/lua-resty-redis-library.html">Lua Resty Redis Library</a> to 0.14.
+<ul>
+<li>optimize: now we do the string concatenation for Redis queries on the Lua land instead of on the C land, which gives 6% ~ 7% over-all performance boost when using <a href="luajit.html" tppabs="http://openresty.org/cn/luajit.html">LuaJIT</a> 2.0 beta10.</li>
+<li>docs: fixed a typo in the sample code. thanks xingxing for reporting it.</li>
+</ul></li>
+<li>upgraded <a href="lua-resty-memcached-library.html" tppabs="http://openresty.org/cn/lua-resty-memcached-library.html">Lua Resty Memcached Library</a> to 0.08.
+<ul>
+<li>feature: added new option <code>key_transform</code> to the <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-memcached  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-memcached#new%27" tppabs="https://github.com/agentzh/lua-resty-memcached#new">new method</a> to allow the user to override the default escaping and unescaping methods for Memcached keys. thanks Matthieu Tourne for the patch.</li>
+<li>bugfix: now the <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-memcached  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-memcached#new%27" tppabs="https://github.com/agentzh/lua-resty-memcached#new">new method</a> will return a string describing the error as the second return value in case of failures.</li>
+<li>docs: added more documentation for the <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-memcached  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-memcached#set_keepalive%27" tppabs="https://github.com/agentzh/lua-resty-memcached#set_keepalive">set_keepalive</a> method.</li>
+<li>docs: documented that this library cannot be used in those contexts where the <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> cosocket API is unavailable.</li>
+<li>docs: documented that storing the object instance into Lua module-level variables will result in failures for concurrent requests.</li>
+</ul></li>
+<li>upgraded <a href="srcache-nginx-module.html" tppabs="http://openresty.org/cn/srcache-nginx-module.html">Srcache Nginx Module</a> to 0.16.
+<ul>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpSRCacheModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpSRCacheModule#srcache_fetch%27" tppabs="http://wiki.nginx.org/HttpSRCacheModule#srcache_fetch">srcache_fetch</a> would use truncated responses from <a href="memc-nginx-module.html" tppabs="http://openresty.org/cn/memc-nginx-module.html">Memc Nginx Module</a> or other upstream modules. this usually happened when the upstream read timer was expired or the upstream prematurely closed the connection. this fix also requires the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch">nonbuffered-upsteram-truncation patch</a> to cancel a limitation in the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core. thanks Bryan Alger for reporting the issue.</li>
+<li>bugfix: the main request response was not discarded by <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpSRCacheModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpSRCacheModule#srcache_store%27" tppabs="http://wiki.nginx.org/HttpSRCacheModule#srcache_store">srcache_store</a> when there was an error in the last minute (like a read-timeout error or premature connection close happens when <code>ngx_http_upstream</code> reads the upstream response body). this fix also requires the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch">nonbuffered-upstream-truncation patch</a> for the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to cancel a limitation in <code>ngx_http_upstream</code>.</li>
+<li>bugfix: the main request might prematurely terminate if the <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpSRCacheModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpSRCacheModule#srcache_store%27" tppabs="http://wiki.nginx.org/HttpSRCacheModule#srcache_store">srcache_store</a> subrequest was finalized with error codes.</li>
+</ul></li>
+<li>upgraded <a href="redis-2-nginx-module.html" tppabs="http://openresty.org/cn/redis-2-nginx-module.html">Redis2 Nginx Module</a> to 0.09.
+<ul>
+<li>bugfix: directives <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpRedis2Module  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpRedis2Module#redis2_query%27" tppabs="http://wiki.nginx.org/HttpRedis2Module#redis2_query">redis2_query</a>, <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpRedis2Module  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpRedis2Module#redis2_literal_raw_query%27" tppabs="http://wiki.nginx.org/HttpRedis2Module#redis2_literal_raw_query">redis2_literal_raw_query</a>, and <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpRedis2Module  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpRedis2Module#redis2_raw_queries%27" tppabs="http://wiki.nginx.org/HttpRedis2Module#redis2_raw_queries">redis2_raw_queries</a> could not be inherited automatically by the <code>location if</code> blocks, resulting in the &quot;no redis2 query specified or the query is empty&quot; error. thanks Tomasz Prus for the patch.</li>
+</ul></li>
+<li>feature: updated the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-dtrace.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-dtrace.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-dtrace.patch">dtrace patch</a> to add new static probe <code>create-pool-done</code>.</li>
+<li>feature: updated the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-dtrace.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-dtrace.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-dtrace.patch">dtrace patch</a> to include new tapset functions <code>ngx_indent</code>, <code>ngx_http_subreq_depth</code>, and <code>ngx_http_req_parent</code>.</li>
+<li>bugfix: added the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-nonbuffered-upstream-truncation.patch">nonbuffered-upstream-truncation patch</a> for the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to make <code>ngx_http_upstream</code> provide a way in the context of a subrequest to signal the parent of errors when upstream data truncation happens. thanks Bryan Alger for reporting this issue. (This is a temporary solution and I'll work on a new patch as per Maxim Dounin's suggestions.)</li>
+<li>bugfix: applied the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-channel-uninit-params.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-channel-uninit-params.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-channel-uninit-params.patch">channel-uninit-params patch</a> for the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to fix Valgrind/Memcheck warnings about unitialized bytes in the parameters of <code>sendmsg</code>.</li>
+<li>feature: updated the <a href="javascript:if(confirm(%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-allow_request_body_updating.patch  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-allow_request_body_updating.patch%27" tppabs="https://github.com/agentzh/ngx_openresty/blob/master/patches/nginx-1.2.3-allow_request_body_updating.patch">allow_request_body_updating patch</a> to define the <code>HAVE_ALLOW_REQUEST_BODY_UPDATING_PATCH</code> macro.</li>
+</ul>
+<h1 id="mainline-version-1.2.3.1---22-august-2012">Mainline Version 1.2.3.1 - 22 August 2012</h1>
+<ul>
+<li>upgraded the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core to 1.2.3.
+<ul>
+<li>see <a href="javascript:if(confirm(%27http://nginx.org/en/CHANGES-1.2  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://nginx.org/en/CHANGES-1.2%27" tppabs="http://nginx.org/en/CHANGES-1.2" class="uri">http://nginx.org/en/CHANGES-1.2</a> for changes.</li>
+</ul></li>
+<li>upgraded <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a> to 0.6.2.
+<ul>
+<li>feature: (re)implemented the standard Lua <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#coroutine.create%27" tppabs="http://wiki.nginx.org/HttpLuaModule#coroutine.create">coroutine API</a>, which means that the user is now free to create and run their own coroutines within the boilerplate coroutine created automatically by <a href="lua-nginx-module.html" tppabs="http://openresty.org/cn/lua-nginx-module.html">Lua Nginx Module</a>. thanks chaoslawful and jinglong for the design and implementation.</li>
+<li>feature: added new dtrace static probes for the user coroutine mechanism: <code>http-lua-coroutine-create</code> and <code>http-lua-coroutine-resume</code>.</li>
+<li>feature: added new dtrace static probes for the cosocket mechanism: <code>http-lua-socket-tcp-send-start</code>, <code>http-lua-socket-tcp-receive-done</code>, and <code>http-lua-socket-tcp-setkeepalive-buf-unread</code>.</li>
+<li>bugfix: the send timeout timer for downstream output was not deleted in time in our write event handler, which might result in request abortion for long running requests. thanks Demiao Lin (ldmiao) for reporting this issue.</li>
+<li>bugfix: <a href="javascript:if(confirm(%27http://wiki.nginx.org/HttpLuaModule  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://wiki.nginx.org/HttpLuaModule#tcpsock:send%27" tppabs="http://wiki.nginx.org/HttpLuaModule#tcpsock:send">tcpsock:send()</a> might send garbage if it was not the first call: we did not properly initialize the chain writer ctx for every <code>send()</code> call. thanks Zhu Dejiang for reporting this issue.</li>
+<li>bugfix: the <code>ngx_http_lua_probe.h</code> header file was not listed in the <code>NGX_ADDON_DEPS</code> list in the <code>config</code> file.</li>
+<li>optimize: removed unnecessary code that was for the old coroutine abortion mechanism based on Lua exceptions. we no longer need that at all because we have switched to using coroutine yield to abort the current coroutine for <code>ngx.exec</code>, <code>ngx.exit</code>, <code>ngx.redirect</code>, and <code>ngx.req.set_uri(uri, true)</code>.</li>
+</ul></li>
+<li>upgraded <a href="lua-resty-dns-library.html" tppabs="http://openresty.org/cn/lua-resty-dns-library.html">Lua Resty DNS Library</a> to 0.06.
+<ul>
+<li>feature: added support for MX type resource records.</li>
+<li>feature: unrecognized types of resource records will return their raw resource data (RDATA) as the <code>rdata</code> Lua table field.</li>
+</ul></li>
+<li>upgraded <a href="lua-resty-redis-library.html" tppabs="http://openresty.org/cn/lua-resty-redis-library.html">Lua Resty Redis Library</a> to 0.13.
+<ul>
+<li>feature: added new method <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-redis  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-redis#read_reply%27" tppabs="https://github.com/agentzh/lua-resty-redis#read_reply">read_reply</a>, mostly for using the <a href="javascript:if(confirm(%27http://redis.io/topics/pubsub/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://redis.io/topics/pubsub/%27" tppabs="http://redis.io/topics/pubsub/">Redis Pub/Sub API</a>.</li>
+<li>feature: added new class method <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-redis  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-redis#add_commands%27" tppabs="https://github.com/agentzh/lua-resty-redis#add_commands">add_commands</a> to allow adding support for new Redis commands on-the-fly. thanks Praveen Saxena for requesting this feature.</li>
+<li>docs: added a code sample for using the <a href="javascript:if(confirm(%27https://github.com/agentzh/lua-resty-redis  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/agentzh/lua-resty-redis#redis-transactions%27" tppabs="https://github.com/agentzh/lua-resty-redis#redis-transactions">Redis transactions</a>.</li>
+</ul></li>
+<li>upgraded <a href="drizzle-nginx-module.html" tppabs="http://openresty.org/cn/drizzle-nginx-module.html">Drizzle Nginx Module</a> to 0.1.4.
+<ul>
+<li>bugfix: the <code>open socket #N left in connection</code> alerts would appear in the nginx error log file when the MySQL/Drizzle connection pool was used and the worker process was shutting down.</li>
+</ul></li>
+<li>upgraded <a href="postgres-nginx-module.html" tppabs="http://openresty.org/cn/postgres-nginx-module.html">Postgres Nginx Module</a> to 1.0rc2.
+<ul>
+<li>bugfix: the <code>open socket #N left in connection</code> alerts would appear in the nginx error log file when the PostgreSQL connection pool was used and the worker process was shutting down.</li>
+<li>bugfix: removed the useless http-cache related code from <code>ngx_postgres_upstream_finalize_request</code> to suppress clang warnings.</li>
+</ul></li>
+<li>added more dtrace static probes to the <a href="nginx.html" tppabs="http://openresty.org/cn/nginx.html">Nginx</a> core: <code>timer-add</code>, <code>timer-del</code>, and <code>timer-expire</code>.</li>
+<li>added more <a href="javascript:if(confirm(%27http://sourceware.org/systemtap/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://sourceware.org/systemtap/%27" tppabs="http://sourceware.org/systemtap/">systemtap</a> tapset functions: <code>ngx_chain_next</code>, <code>ngx_chain_writer_ctx_out</code>, <code>ngx_chain_dump</code>, and <code>ngx_iovec_dump</code>.</li>
+</ul>
+<p>See <a href="changelog-1002001.html" tppabs="http://openresty.org/cn/changelog-1002001.html">ChangeLog 1.2.1</a> for change log for <a href="index.htm" tppabs="http://openresty.org/cn/openresty.html">OpenResty</a> 1.2.1.x.</p>
+
+        </div><!-- / body -->
+</div><!-- / item -->
+
+		</section><!-- / main -->
+
+<div class="sidebar sright">
+        <div class="options">
+                <!--
+                <ul class="first">
+                        <li><a href="#" class="close-all">close all</a></li>
+                        <li><a href="#" class="permaview">permaview</a></li>
+                        <li><a href="#" class="more-options">options</a></li>
+                </ul> --><!-- / first -->
+        </div><!-- options -->
+
+        <div class="tabs">
+                <ul class="navigation">
+                        <!--
+                        <li><a href="#" class="current">Timeline</a></li>
+                        <li><a href="#">All</a></li>
+                        <li><a href="#">Tags</a></li>
+                        <li><a href="#">More</a></li>
+                        -->
+                        <li><span>最近更新</span></li>
+                </ul><!-- / navigation -->
+                <div class="panes">
+                        <div class="pane" id="timeline">
+                                <ul>
+                                    <li>
+                                            <h3>20 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="lua-cjson-library.html" tppabs="http://openresty.org/cn/lua-cjson-library.html">Lua Cjson Library</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>17 Mar 2016</h3>
+                                            <ul>
+                                                <li><a href="download.html" tppabs="http://openresty.org/cn/download.html">Download</a></li>
+                                                <li><a href="changelog-1009007.html" tppabs="http://openresty.org/cn/changelog-1009007.html">ChangeLog 1.9.7</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>22 Jan 2016</h3>
+                                            <ul>
+                                                <li><a href="installation.html" tppabs="http://openresty.org/cn/installation.html">Installation</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>05 Jan 2016</h3>
+                                            <ul>
+                                                <li><a href="about.html" tppabs="http://openresty.org/cn/about.html">About</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>30 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="index.htm" tppabs="http://openresty.org/cn/openresty.html">OpenResty</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>25 Dec 2015</h3>
+                                            <ul>
+                                                <li><a href="main-menu.html" tppabs="http://openresty.org/cn/main-menu.html">Main Menu</a></li>
+                                                <li><a href="changes.html" tppabs="http://openresty.org/cn/changes.html">Changes</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>23 Nov 2015</h3>
+                                            <ul>
+                                                <li><a href="components.html" tppabs="http://openresty.org/cn/components.html">Components</a></li>
+                                                <li><a href="changelog-1009003.html" tppabs="http://openresty.org/cn/changelog-1009003.html">ChangeLog 1.9.3</a></li>
+                                                <li><a href="resty-cli.html" tppabs="http://openresty.org/cn/resty-cli.html">Resty CLI</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>11 Aug 2015</h3>
+                                            <ul>
+                                                <li><a href="donate-online.html" tppabs="http://openresty.org/cn/donate-online.html">Donate Online</a></li>
+                                                <li><a href="donors.html" tppabs="http://openresty.org/cn/donors.html">Donors</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>03 Jul 2015</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007010.html" tppabs="http://openresty.org/cn/changelog-1007010.html">ChangeLog 1.7.10</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>04 Feb 2015</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007007.html" tppabs="http://openresty.org/cn/changelog-1007007.html">ChangeLog 1.7.7</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>10 Oct 2014</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007004.html" tppabs="http://openresty.org/cn/changelog-1007004.html">ChangeLog 1.7.4</a></li>
+                                            </ul>
+                                    </li>
+                                    <li>
+                                            <h3>13 Jul 2014</h3>
+                                            <ul>
+                                                <li><a href="changelog-1007002.html" tppabs="http://openresty.org/cn/changelog-1007002.html">ChangeLog 1.7.2</a></li>
+                                            </ul>
+                                    </li>
+                                </ul>
+                        </div><!-- / pane -->
+                </div><!-- / panes -->
+        </div><!-- / tabs -->
+</div><!-- / sidebar right -->
+
+	</div><!-- / wrapper -->
+
+<div class="content-footer">
+<hr class="footer-sep"/>
+<div class="footer">
+  <p>版权所有 © 2016 章亦春（agentzh）</p>
+  <p>100% 由 OpenResty 和 PostgreSQL 驱动
+     （<a href="javascript:if(confirm(%27https://github.com/openresty/openresty.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27https://github.com/openresty/openresty.org/%27" tppabs="https://github.com/openresty/openresty.org/">
+     查看本站的源代码</a>）</p>
+  <br/>
+  <p>京ICP备16021991号</p>
+</div>
+</div>
+
+<script src="jquery.min.js" tppabs="http://openresty.org/js/jquery.min.js"></script>
+<script src="main.js" tppabs="http://openresty.org/js/main.js"></script>
+
+<!-- Google analytics -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24724965-1']);
+  //_gaq.push(['_setDomainName', 'http://openresty.org/cn/openresty.org']);
+  _gaq.push(['_trackPageview']);
+
+  var ga_f = function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www/') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  };
+  setTimeout(ga_f, 0);
+
+</script>
+
+
+</body>
+</html>

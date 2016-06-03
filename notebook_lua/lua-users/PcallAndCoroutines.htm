@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Pcall And Coroutines</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="main.css" tppabs="http://lua-users.org/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=PcallAndCoroutines&body=1  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=PcallAndCoroutines&body=1%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=search&string=PcallAndCoroutines&body=1" title="List pages referring to PcallAndCoroutines">Pcall And Coroutines</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="javascript:if(confirm(%27http://lua-users.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/%27" tppabs="http://lua-users.org/">
+            <img src="nav-logo.png" tppabs="http://lua-users.org/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="nav-elbow.png" tppabs="http://lua-users.org/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="index.htm" tppabs="http://lua-users.org/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+pcall and coroutines didn't always get along.  <a href="javascript:if(confirm(%27http://coxpcall.luaforge.net/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://coxpcall.luaforge.net/%27" tppabs="http://coxpcall.luaforge.net/">[coxpcall]</a> for Lua 5.1 reimplements pcall/xpcall in terms of coroutines to allows things like yielding across a pcall.  There were also patches like <a href="ResumableVmPatch.htm" tppabs="http://lua-users.org/wiki/ResumableVmPatch" >ResumableVmPatch</a>.  Lua 5.2 (<a href="LuaFiveTwo.htm" tppabs="http://lua-users.org/wiki/LuaFiveTwo" >LuaFiveTwo</a>) implements an approach like <a href="ResumableVmPatch.htm" tppabs="http://lua-users.org/wiki/ResumableVmPatch" >ResumableVmPatch</a> <a href="javascript:if(confirm(%27http://lua-users.org/lists/lua-l/2009-08/msg00540.html  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/lists/lua-l/2009-08/msg00540.html%27" tppabs="http://lua-users.org/lists/lua-l/2009-08/msg00540.html">[1]</a>.<p>
+Below implements <code>pcall/error</code> like functions in terms of coroutines.  The downside is the overhead of the coroutine construction per pcall.  coxpcall is fairly similar but doesn't reimplement <code>error</code> as a <code>coroutine.yield</code>.<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="keyword">local</span> <span class="keyword">function</span> tuple(...)
+  <span class="keyword">return</span> {n=<span class="library">select</span>(<span class="string">'#'</span>, ...), ...}
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> <span class="library">pcall</span>(f, ...)
+  <span class="keyword">local</span> co = <span class="library">coroutine.create</span>(f)
+  <span class="keyword">local</span> res = tuple(<span class="library">coroutine.resume</span>(co, ...))
+  <span class="keyword">if</span> res[1] <span class="keyword">and</span> <span class="library">coroutine.status</span>(co) == <span class="string">"suspended"</span> <span class="keyword">then</span>
+    res[1] = <span class="keyword">false</span>
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> <span class="library">unpack</span>(res, 1, res.n)
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> handlers = <span class="library">setmetatable</span>({}, {__mode=<span class="string">'kv'</span>})
+
+<span class="keyword">function</span> <span class="library">xpcall</span>(f, err, ...)
+  <span class="keyword">local</span> co = <span class="library">coroutine.create</span>(f)
+  handlers[co] = err
+  <span class="keyword">local</span> res = tuple(<span class="library">coroutine.resume</span>(co, ...))
+  <span class="keyword">if</span> res[1] <span class="keyword">and</span> <span class="library">coroutine.status</span>(co) == <span class="string">"suspended"</span> <span class="keyword">then</span>
+    res[1] = <span class="keyword">false</span>
+  <span class="keyword">end</span>
+  <span class="keyword">if</span> <span class="keyword">not</span> res[1] <span class="keyword">and</span> err <span class="keyword">then</span>
+    res[2] = err(co, res[2])
+      <span class="comment">-- note: assumes err can accept coroutine as first argument.</span>
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> <span class="library">unpack</span>(res, 1, res.n)
+<span class="keyword">end</span>
+
+
+<span class="keyword">function</span> <span class="library">error</span>(e, level_) <span class="comment">--FIX:level not handled</span>
+  <span class="library">coroutine.yield</span>(e)
+<span class="keyword">end</span>
+
+
+<span class="comment">-- test</span>
+
+<span class="keyword">local</span> <span class="keyword">function</span> g(x)
+  <span class="keyword">if</span> x == <span class="string">"fail"</span> <span class="keyword">then</span>
+    <span class="library">error</span> <span class="string">"fail"</span>
+  <span class="keyword">elseif</span> x == <span class="string">"fail2"</span> <span class="keyword">then</span>
+    <span class="keyword">local</span> y = <span class="keyword">nil</span> + <span class="keyword">nil</span>  <span class="comment">-- error raised by Lua</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> <span class="keyword">function</span> f(x)
+  <span class="library">print</span>(1)
+  g(x)
+  <span class="library">print</span>(2)
+  <span class="keyword">return</span> 3,4
+<span class="keyword">end</span>
+
+<span class="library">print</span>(<span class="library">pcall</span>(f, <span class="string">"ok"</span>))
+<span class="library">print</span>(<span class="library">pcall</span>(f, <span class="string">"fail"</span>))
+<span class="library">print</span>(<span class="library">pcall</span>(f, <span class="string">"fail2"</span>))
+<span class="library">print</span>(<span class="library">xpcall</span>(f, <span class="library">debug.traceback</span>, <span class="string">"fail"</span>))
+<span class="library">print</span>(<span class="library">xpcall</span>(f, <span class="library">debug.traceback</span>, <span class="string">"fail2"</span>))
+
+</pre>
+<dt><dd>--<a href="DavidManura.htm" tppabs="http://lua-users.org/wiki/DavidManura" >DavidManura</a></DL>
+<p>
+<p>
+<hr>
+<a href="RecentChanges.htm" tppabs="http://lua-users.org/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=PcallAndCoroutines  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=PcallAndCoroutines%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=PcallAndCoroutines" >edit</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=PcallAndCoroutines  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=PcallAndCoroutines%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=history&id=PcallAndCoroutines" >history</a><br>Last edited July 3, 2010 11:27 pm GMT <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=PcallAndCoroutines  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=PcallAndCoroutines%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=PcallAndCoroutines" >(diff)</a>
+</body>
+</html>

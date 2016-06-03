@@ -12,6 +12,7 @@ local safe      = require('safe')
 local mysql_api = require('mysql_pool_api')
 local scan      = require('scan')
 local app_utils = require('app_utils')
+local redis_api = require('redis_pool_api')
 
 local weme_car	= 'weme_car___car'
 
@@ -32,18 +33,28 @@ local function check_parameter (parameter_tab)
 		gosay.go_false(url_tab, msg["MSG_ERROR_REQ_BAD_JSON"])
 	end
 
-	if not parameter_tab['appkey'] or #parameter_tab['appkey'] > 10 then
+	if not parameter_tab['appKey'] or #parameter_tab['appKey'] > 10 then
 		only.log("E", "appKey is error")
-		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_ARG'], 'appkey')
+		gosay.go_false(url_tab, msg['MSG_ERROR_REQ_ARG'], 'appKey')
 	end
-	url_tab['app_Key'] = parameter_tab['appkey']
+	url_tab['app_Key'] = parameter_tab['appKey']
 
-	if (not app_utils.check_accountID(parameter_tab['accountid'])) then
-		only.log("E", "accountid is error")
-		gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], "accountid")
+	if (not app_utils.check_accountID(parameter_tab['accountID'])) then
+		only.log("E", "accountID is error")
+		gosay.go_false(url_tab, msg["MSG_ERROR_REQ_ARG"], "accountID")
 	end
 
-	safe.sign_check(parameter_tab, url_tab, 'accountid', safe.ACCESS_USER_INFO)
+	-- 检查tokenCode
+	local ok_status, ok_ret = redis_api.cmd('realroad', 'GET', parameter_tab['accountID'] .. ':tokenCode')
+        if not (ok_status and ok_ret) then
+                gosay.go_false(url_tab, msg["MSG_DO_REDIS_FAILED"])
+        end
+	only.log('D', 'ok_ret = %s , tokenCode = %s', ok_ret, parameter_tab['tokenCode'])
+	if ok_ret ~= parameter_tab['tokenCode'] then
+		gosay.go_false(url_tab, msg["MSG_ERROR_TOKEN_CODE_NOT_MATCH"], "accountID")
+	end
+
+	safe.sign_check(parameter_tab, url_tab)
 end
 
 local function ready_execution(accountID)
@@ -84,19 +95,21 @@ local function handle ()
 	only.log('D', 'req_header = %s', scan.dump(req_header))
 
 	parameter_tab			= {}
-	parameter_tab['appkey']		= req_header['appkey']
-	parameter_tab['accountid']	= req_header['accountid']
-	parameter_tab['token']		= req_header['token']
+	parameter_tab['appKey']		= req_header['appKey']
+	parameter_tab['accountID']	= req_header['accountID']
+	parameter_tab['tokenCode']	= req_header['tokenCode']
 	parameter_tab['timestamp']	= req_header['timestamp']
 	parameter_tab['sign']		= req_header['sign']
 
 	url_tab['client_host']  = req_ip
 	url_tab['client_body']  = req_body
-	-- 参数校验
+
+	only.log('D', 'parameter_tab = %s', scan.dump(parameter_tab))
+
 	check_parameter(parameter_tab)
 
 	-- 从mysql中获取个人资料
-	local ok_status, ok_ret_userInfo = ready_execution(parameter_tab['accountid'])
+	local ok_status, ok_ret_userInfo = ready_execution(parameter_tab['accountID'])
 	if ok_status == false then
 		go_exit()
 	end
@@ -105,7 +118,7 @@ local function handle ()
 
 	-- 检测nil, 重新组装并返回结果
 	ret_userInfo			= {}
-	ret_userInfo['accountid']	= (ok_ret_userInfo['accountid'] == nil and "") or ok_ret_userInfo['accountid']
+	ret_userInfo['accountID']	= (ok_ret_userInfo['accountID'] == nil and "") or ok_ret_userInfo['accountID']
 	ret_userInfo['nickName']	= (ok_ret_userInfo['nickName'] == nil and "") or ok_ret_userInfo['nickName']
 	ret_userInfo['headPic']		= (ok_ret_userInfo['headPic'] == nil and "") or ok_ret_userInfo['headPic']
 	ret_userInfo['birthday']	= (ok_ret_userInfo['birthday'] == nil and "") or ok_ret_userInfo['birthday']
@@ -119,7 +132,14 @@ local function handle ()
 
 	only.log('D', 'ret_userInfo = %s', scan.dump(ret_userInfo))
 
+	-- 将指定信息以json格式存储到redis中
 	local ok, ret_str = utils.json_encode(ret_userInfo)
+        only.log('D', 'ret_str = %s', ret_str)
+        local ok_status, ok_ret = redis_api.cmd('realroad', 'SET', ret_userInfo['accountID'] .. ':userInfo', ret_str)
+        if not (ok_status and ok_ret) then
+                gosay.go_false(url_tab, msg["MSG_DO_REDIS_FAILED"])
+        end
+
 	gosay.go_success(url_tab, msg['MSG_SUCCESS_WITH_RESULT'], ret_str)
 end
 

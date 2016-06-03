@@ -1,0 +1,434 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Simple Lua Classes</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="main.css" tppabs="http://lua-users.org/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=SimpleLuaClasses&body=1  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=SimpleLuaClasses&body=1%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=search&string=SimpleLuaClasses&body=1" title="List pages referring to SimpleLuaClasses">Simple Lua Classes</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="javascript:if(confirm(%27http://lua-users.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/%27" tppabs="http://lua-users.org/">
+            <img src="nav-logo.png" tppabs="http://lua-users.org/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="nav-elbow.png" tppabs="http://lua-users.org/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="index.htm" tppabs="http://lua-users.org/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+<H3>A Simplified Way to Declare Lua Classes</H3>
+<p>
+Out of the box, Lua does not have a class system, but its powerful metaprogramming facilities makes defining classic objects straightforward.  In fact, there's a number of ways of doing this;  together with the unfamiliar notation, this makes object-orientation in Lua seem a little intimidating at first.<p>
+The method described here is the most common and flexible method, using metatables.  A table's behavior can be customized by giving it a metatable.  For instance, if the metatable has an <code>__index</code> function, then any <em>failed</em> attempt to look up something in the table will be passed to <code>__index</code>. If <code>__index</code> is itself a table, the symbol will be looked up in that table. (Please see the excellent discussion in PiL <a href="javascript:if(confirm(%27http://www.lua.org/pil/16.1.html  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.lua.org/pil/16.1.html%27" tppabs="http://www.lua.org/pil/16.1.html">[1]</a>) Here is the basic idea:<p>
+<DL>
+<dt><dd><pre class="code">
+Account = {}
+Account.__index = Account
+
+<span class="keyword">function</span> Account.create(balance)
+   <span class="keyword">local</span> acnt = {}             <span class="comment">-- our new object</span>
+   <span class="library">setmetatable</span>(acnt,Account)  <span class="comment">-- make Account handle lookup</span>
+   acnt.balance = balance      <span class="comment">-- initialize our object</span>
+   <span class="keyword">return</span> acnt
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> Account:withdraw(amount)
+   self.balance = self.balance - amount
+<span class="keyword">end</span>
+
+<span class="comment">-- create and use an Account</span>
+acc = Account.create(1000)
+acc:withdraw(100)
+</pre>
+</DL>
+<p>
+Here, Account objects are represented by tables, which contain precisely one field, the balance. Lua tries to look up <code>withdraw</code> in acc, and cannot find it.  Because acc has a metatable that defines <code>__index</code>, it will then look up <code>withdraw</code> in that metatable.  So <code>acc:withdraw(100)</code> is actually the call <code>Account.withdraw(acc,100)</code>.  We could have actually put <code>withdraw</code> directly into <code>acc</code>, but this would be wasteful and inflexible - adding a new method would require a change to the <code>create</code> function, etc.<p>
+<H3>A simplified way of creating classes</H3>
+<p>
+I'll define a function <code>class</code> which does all this (and more) transparently.  <p>
+<DL>
+<dt><dd><pre class="code">
+Account = class(<span class="keyword">function</span>(acc,balance)
+              acc.balance = balance
+           <span class="keyword">end</span>)
+
+<span class="keyword">function</span> Account:withdraw(amount)
+   self.balance = self.balance - amount
+<span class="keyword">end</span>
+
+<span class="comment">-- can create an Account using call notation!</span>
+acc = Account(1000)
+acc:withdraw(100)
+</pre>
+</DL>
+<p>
+In this scheme, one supplies an initialization function to the new class, and a 'constructor' is automatically generated. <p>
+Simple inheritance is supported. For example, here a base class <code>Animal</code> is defined, and several specific kinds of animals are declared.  All classes made using <code>class</code> have a <code>is_a</code> method, which you can use to find out the actual class at runtime:<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="comment">-- animal.lua</span>
+
+<span class="library">require</span> <span class="string">'class'</span>
+
+Animal = class(<span class="keyword">function</span>(a,name)
+   a.name = name
+<span class="keyword">end</span>)
+
+<span class="keyword">function</span> Animal:__tostring()
+  <span class="keyword">return</span> self.name..<span class="string">': '</span>..self:speak()
+<span class="keyword">end</span>
+
+Dog = class(Animal)
+
+<span class="keyword">function</span> Dog:speak()
+  <span class="keyword">return</span> <span class="string">'bark'</span>
+<span class="keyword">end</span>
+
+Cat = class(Animal, <span class="keyword">function</span>(c,name,breed)
+         Animal.init(c,name)  <span class="comment">-- must init base!</span>
+         c.breed = breed
+      <span class="keyword">end</span>)
+
+<span class="keyword">function</span> Cat:speak()
+  <span class="keyword">return</span> <span class="string">'meow'</span>
+<span class="keyword">end</span>
+
+Lion = class(Cat)
+
+<span class="keyword">function</span> Lion:speak()
+  <span class="keyword">return</span> <span class="string">'roar'</span>
+<span class="keyword">end</span>
+
+fido = Dog(<span class="string">'Fido'</span>)
+felix = Cat(<span class="string">'Felix'</span>,<span class="string">'Tabby'</span>)
+leo = Lion(<span class="string">'Leo'</span>,<span class="string">'African'</span>)
+</pre>
+</DL>
+<p>
+<DL>
+<dt><dd><pre>
+D:\Downloads\func&gt;lua -i animal.lua
+&gt; = fido,felix,leo
+Fido: bark      Felix: meow     Leo: roar
+&gt; = leo:is_a(Animal)
+true
+&gt; = leo:is_a(Dog)
+false
+&gt; = leo:is_a(Cat)
+true
+</pre></DL>
+<p>
+All <code>Animal</code> does is define <code>__tostring</code>, which Lua will use whenever a string representation is needed of the object. In turn, this relies on <code>speak</code>, which is not defined. So it's what C++ people would call an abstract base class; the specific derived classes like <code>Dog</code> define <code>speak</code>. Please note that if derived classes have their own initialization functions, they must explicitly call <code>init</code> for their base class.<p>
+<H3>Implementation of class()</H3>
+<p>
+<code>class()</code> uses two tricks. It allows you to construct a class using the call notation (like <code>Dog('fido')</code> above) by giving the class itself a metatable which defines <code>__call</code>. It handles inheritance by <em>copying</em> the fields of the base class into the derived class.  This isn't the only way of doing inheritance; we could make <code>__index</code> a function which explicitly tries to look a function up in the base class(es). But this method will give better performance, at a cost of making the class objects somewhat fatter.  Each derived class does keep a field <code>_base</code> that contains the base class, but this is to implement <code>is_a</code>.<p>
+Note that modification of a base class at runtime will not affect its subclasses.<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="comment">-- class.lua</span>
+<span class="comment">-- Compatible with Lua 5.1 (not 5.0).</span>
+<span class="keyword">function</span> class(base, init)
+   <span class="keyword">local</span> c = {}    <span class="comment">-- a new class instance</span>
+   <span class="keyword">if</span> <span class="keyword">not</span> init <span class="keyword">and</span> <span class="library">type</span>(base) == <span class="string">'function'</span> <span class="keyword">then</span>
+      init = base
+      base = <span class="keyword">nil</span>
+   <span class="keyword">elseif</span> <span class="library">type</span>(base) == <span class="string">'table'</span> <span class="keyword">then</span>
+    <span class="comment">-- our new class is a shallow copy of the base class!</span>
+      <span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="library">pairs</span>(base) <span class="keyword">do</span>
+         c[i] = v
+      <span class="keyword">end</span>
+      c._base = base
+   <span class="keyword">end</span>
+   <span class="comment">-- the class will be the metatable for all its objects,</span>
+   <span class="comment">-- and they will look up their methods in it.</span>
+   c.__index = c
+
+   <span class="comment">-- expose a constructor which can be called by &lt;classname&gt;(&lt;args&gt;)</span>
+   <span class="keyword">local</span> mt = {}
+   mt.__call = <span class="keyword">function</span>(class_tbl, ...)
+   <span class="keyword">local</span> obj = {}
+   <span class="library">setmetatable</span>(obj,c)
+   <span class="keyword">if</span> init <span class="keyword">then</span>
+      init(obj,...)
+   <span class="keyword">else</span> 
+      <span class="comment">-- make sure that any stuff from the base class is initialized!</span>
+      <span class="keyword">if</span> base <span class="keyword">and</span> base.init <span class="keyword">then</span>
+      base.init(obj, ...)
+      <span class="keyword">end</span>
+   <span class="keyword">end</span>
+   <span class="keyword">return</span> obj
+   <span class="keyword">end</span>
+   c.init = init
+   c.is_a = <span class="keyword">function</span>(self, klass)
+      <span class="keyword">local</span> m = <span class="library">getmetatable</span>(self)
+      <span class="keyword">while</span> m <span class="keyword">do</span> 
+         <span class="keyword">if</span> m == klass <span class="keyword">then</span> <span class="keyword">return</span> <span class="keyword">true</span> <span class="keyword">end</span>
+         m = m._base
+      <span class="keyword">end</span>
+      <span class="keyword">return</span> <span class="keyword">false</span>
+   <span class="keyword">end</span>
+   <span class="library">setmetatable</span>(c, mt)
+   <span class="keyword">return</span> c
+<span class="keyword">end</span>
+</pre>
+</DL>
+<p>
+<H2>Comments</H2>
+<p>
+<DL>
+<dt><dd>If this change is made:</DL>
+<p>
+<DL>
+<dt><dd><pre>
+--- class_orig.lua      2009-07-24 20:53:25.218750000 -0400
++++ class.lua   2009-07-24 20:53:49.734375000 -0400
+@@ -21,8 +21,8 @@
+   mt.__call = function(class_tbl,...)
+     local obj = {}
+     setmetatable(obj,c)
+-    if ctor then
+-       ctor(obj,...)
++    if class_tbl.init then
++       class_tbl.init(obj,...)
+     else
+     -- make sure that any stuff from the base class is initialized!
+        if base and base.init then
+</pre></DL>
+<p>
+<DL>
+<dt><dd>then we alternately may declare classes in this way:</DL>
+<p>
+<DL>
+<dt><dd><pre class="code">
+A = class()
+<span class="keyword">function</span> A:init(x)
+  self.x = x
+<span class="keyword">end</span>
+<span class="keyword">function</span> A:test()
+  <span class="library">print</span>(self.x)
+<span class="keyword">end</span>
+
+B = class(A)
+<span class="keyword">function</span> B:init(x,y)
+  A.init(self,x)
+  self.y = y
+<span class="keyword">end</span>
+</pre>
+</DL>
+<p>
+<DL>
+<dt><dd>BTW, you may note that class.lua also works for operators:</DL>
+<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="keyword">function</span> A:__add(b)
+  <span class="keyword">return</span> A(self.x + b.x)
+<span class="keyword">end</span>
+</pre>
+</DL>
+<p>
+<DL>
+<dt><dd>"init" may alternately be renamed "__init" since it is a private function like __add and resembling Python's __init__ <a href="javascript:if(confirm(%27http://www.penzilla.net/tutorials/python/classes/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.penzilla.net/tutorials/python/classes/%27" tppabs="http://www.penzilla.net/tutorials/python/classes/">[2]</a>.</DL>
+<p>
+<DL>
+<DL>
+<dt><dd>--<a href="DavidManura.htm" tppabs="http://lua-users.org/wiki/DavidManura" >DavidManura</a></DL>
+</DL>
+<p>
+<DL>
+<dt><dd>In the original version, the argument called 'ctor' is actually the init method, as shown by the (previous) statement <pre>c.init = ctor</pre>. I changed this argument's name to 'init'.  --<a href="DeniSpir.htm" tppabs="http://lua-users.org/wiki/DeniSpir" >DeniSpir</a></DL>
+<p>
+<p>
+<p>
+<p>
+<DL>
+<dt><dd>An alternative class builder (tested with lua 5.3) --<a href="ThaBubble.htm" tppabs="http://lua-users.org/wiki/ThaBubble" >ThaBubble</a><dt><dd><pre class="code">
+<span class="keyword">function</span> class(def)
+    <span class="keyword">local</span> class = {}
+    <span class="keyword">local</span> parents = {}
+    
+    <span class="keyword">local</span> upv
+    <span class="keyword">local</span> env = <span class="library">_G</span>
+    
+    <span class="keyword">local</span> wraps
+    <span class="keyword">local</span> <span class="keyword">function</span> super(parent_class)
+        <span class="keyword">if</span> <span class="keyword">not</span> parent_class <span class="keyword">then</span>
+            parent_class = parents[1]
+        <span class="keyword">end</span>
+        
+        <span class="keyword">local</span> this = this
+        <span class="keyword">local</span> that = {}
+        <span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="library">pairs</span>(parent_class) <span class="keyword">do</span>
+            that[k] = <span class="library">type</span>(v) == <span class="string">'function'</span> <span class="keyword">and</span> wraps(this, v) <span class="keyword">or</span> v
+        <span class="keyword">end</span>
+        
+        <span class="keyword">return</span> <span class="library">setmetatable</span>(that, that)
+    <span class="keyword">end</span>
+    
+    <span class="keyword">function</span> wraps(this, func)
+        <span class="keyword">return</span> <span class="keyword">function</span>(...)
+                <span class="keyword">local</span> t = env.this
+                <span class="keyword">local</span> s = env.super
+                
+                env.this  = this
+                env.super = super
+                
+                <span class="keyword">local</span> ret  = <span class="library">pcall</span>(func, ...)
+
+                env.this  = t
+                env.super = s
+                
+                <span class="keyword">return</span> ret
+            <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    
+    <span class="keyword">function</span> class.__init()<span class="keyword">end</span>
+
+    <span class="keyword">for</span> i=1,<span class="library">math.huge</span> <span class="keyword">do</span>
+        inherit, v = <span class="library">debug.getlocal</span>(def, i)
+        <span class="keyword">if</span> <span class="keyword">not</span> inherit <span class="keyword">then</span> <span class="keyword">break</span> <span class="keyword">end</span>
+        
+        <span class="keyword">local</span> parent_class = <span class="library">_G</span>[inherit]
+        <span class="keyword">for</span> i=1,<span class="library">math.huge</span> <span class="keyword">do</span>
+            <span class="keyword">local</span>  name, pclass = <span class="library">debug.getlocal</span>(2,i,1)
+            <span class="keyword">if</span> <span class="keyword">not</span> name <span class="keyword">then</span> <span class="keyword">break</span>
+            <span class="keyword">elseif</span> name == inherit <span class="keyword">then</span>
+                parent_class  = pclass
+                <span class="keyword">break</span>
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+        <span class="keyword">if</span> parent_class  <span class="keyword">and</span> <span class="library">type</span>(parent_class) == <span class="string">'table'</span> <span class="keyword">then</span>
+            <span class="library">table.insert</span>(parents, parent_class)
+            <span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="library">pairs</span>(parent_class) <span class="keyword">do</span>
+                class[k] = v
+            <span class="keyword">end</span>
+        <span class="keyword">else</span>
+            <span class="library">error</span>(<span class="library">string.format</span>(<span class="string">'Class "%s" not valid.'</span>, name))
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    
+    
+    <span class="keyword">for</span> i=1,<span class="library">math.huge</span> <span class="keyword">do</span>
+        <span class="keyword">local</span>  name, value = <span class="library">debug.getupvalue</span>(def, i)
+        <span class="keyword">if</span> <span class="keyword">not</span> name <span class="keyword">then</span> <span class="keyword">break</span>
+        <span class="keyword">elseif</span> name == <span class="string">'_ENV'</span> <span class="keyword">then</span>
+            env = value
+            upv = i
+            <span class="keyword">break</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    <span class="keyword">local</span> _env = <span class="library">setmetatable</span>({}, {
+        __index= <span class="keyword">function</span>(t, name)
+            <span class="keyword">local</span>  value  = class[name]
+            <span class="keyword">return</span> value ~= <span class="keyword">nil</span> <span class="keyword">and</span> value <span class="keyword">or</span> env[name]
+        <span class="keyword">end</span>,
+        __newindex = <span class="keyword">function</span>(t, name, value)
+                class[name] = value
+            <span class="keyword">end</span>
+    })
+    
+    <span class="keyword">local</span> <span class="keyword">function</span> senv(env)
+        <span class="keyword">if</span> upv <span class="keyword">then</span> <span class="library">debug.setupvalue</span>(def, upv, env)
+        <span class="keyword">else</span> <span class="library">_G</span> = env <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    
+    senv(_env)
+    env.pcall(def, env.table.unpack(parents))
+    senv(env)
+    
+    <span class="keyword">return</span> <span class="library">setmetatable</span>({}, {
+        __ipairs    = <span class="keyword">function</span>()        <span class="keyword">return</span> <span class="library">ipairs</span>(class)              <span class="keyword">end</span>,
+        __pairs     = <span class="keyword">function</span>()        <span class="keyword">return</span>  <span class="library">pairs</span>(class)              <span class="keyword">end</span>,
+        __index     = <span class="keyword">function</span>(t, name) <span class="keyword">return</span>        class[name]         <span class="keyword">end</span>,
+        __index_new = <span class="keyword">function</span>(t, name, value)        class[name] = value <span class="keyword">end</span>,
+        __call      = <span class="keyword">function</span>(...)
+            <span class="keyword">local</span> this = {}
+            <span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="library">pairs</span>(class) <span class="keyword">do</span>
+                this[k] = <span class="library">type</span>(v) == <span class="string">'function'</span> <span class="keyword">and</span> wraps(this, v) <span class="keyword">or</span> v
+            <span class="keyword">end</span>
+            this.__class = class
+            this.__init(...)
+            
+            <span class="keyword">return</span> <span class="library">setmetatable</span>(this, this)
+        <span class="keyword">end</span>
+    })
+<span class="keyword">end</span>
+</pre>
+</DL>
+<p>
+<DL>
+<dt><dd>Example:<dt><dd><pre class="code">
+global  = <span class="keyword">true</span>
+Inherit = class(<span class="keyword">function</span>()
+    this_is_a_property_of_Inherit = <span class="keyword">true</span>
+    
+    <span class="keyword">function</span> __init()
+        <span class="library">print</span>(<span class="string">'Inherit().__init()'</span>)
+        this.init = <span class="keyword">true</span>
+    <span class="keyword">end</span>
+    
+    <span class="keyword">function</span> __call()
+        <span class="library">print</span>(<span class="string">'Yay! You\'re calling for me :) init:'</span>, this.init, <span class="string">'\n'</span>)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>)
+
+Example = class(<span class="keyword">function</span>(Inherit)
+    <span class="library">print</span>(<span class="string">'Inherited property:'</span>, this_is_a_property_of_Inherit)
+    <span class="library">print</span>(<span class="string">'Global variable:   '</span>, global, <span class="string">'\n'</span>)
+    
+    <span class="keyword">function</span> __init()
+        <span class="library">print</span>(<span class="string">'Example().__init()'</span>)
+        super().__init()
+        <span class="library">print</span>(<span class="string">'this.init:'</span>, this.init)
+    <span class="keyword">end</span>
+    
+    <span class="keyword">function</span> test(...)
+        <span class="library">print</span>(..., this.__init, <span class="string">'\n'</span>)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>)
+
+example = Example()
+example.test(<span class="string">'__init:'</span>)
+example()
+
+example.property = <span class="string">'I\'m a property of instance "example"'</span>
+<span class="library">print</span>(<span class="string">'example.property'</span>, example.property)
+<span class="library">print</span>(<span class="string">'Example.property'</span>, Example.property)
+
+<span class="comment">--    Inherited property:	true</span>
+<span class="comment">--    Global variable:   	true	</span>
+
+<span class="comment">--    Example().__init()</span>
+<span class="comment">--    Inherit().__init()</span>
+<span class="comment">--    this.init:	true</span>
+<span class="comment">--    __init:	function: 0x15dd5f0	</span>
+
+<span class="comment">--    Yay! You're calling for me :) init:	true	</span>
+
+<span class="comment">--    example.property	I'm a property of instance "example"</span>
+<span class="comment">--    Example.property	nil</span>
+</pre>
+</DL>
+<p>
+<H2>See Also</H2>
+<p>
+<UL>
+<li> <a href="ObjectOrientedProgramming.htm" tppabs="http://lua-users.org/wiki/ObjectOrientedProgramming" >ObjectOrientedProgramming</a></UL>
+<hr>
+<a href="RecentChanges.htm" tppabs="http://lua-users.org/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=SimpleLuaClasses  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=SimpleLuaClasses%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=SimpleLuaClasses" >edit</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=SimpleLuaClasses  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=SimpleLuaClasses%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=history&id=SimpleLuaClasses" >history</a><br>Last edited May 25, 2015 2:59 pm GMT <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=SimpleLuaClasses  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=SimpleLuaClasses%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=SimpleLuaClasses" >(diff)</a>
+</body>
+</html>

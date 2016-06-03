@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Custom Operators</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="main.css" tppabs="http://lua-users.org/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=CustomOperators&body=1  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=CustomOperators&body=1%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=search&string=CustomOperators&body=1" title="List pages referring to CustomOperators">Custom Operators</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="javascript:if(confirm(%27http://lua-users.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/%27" tppabs="http://lua-users.org/">
+            <img src="nav-logo.png" tppabs="http://lua-users.org/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="nav-elbow.png" tppabs="http://lua-users.org/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="index.htm" tppabs="http://lua-users.org/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+Lua has a predefined set of operators <a href="javascript:if(confirm(%27http://www.lua.org/manual/5.1/manual.html  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.lua.org/manual/5.1/manual.html#2.5%27" tppabs="http://www.lua.org/manual/5.1/manual.html#2.5">[1]</a> with no built-in ability to define custom operators beyond this.  Nevertheless, there are ways to approximate custom operators.  Many of these solutions are not that recommendable.<p>
+<H3>Hack: User-Defined Named Operators #1 (Infix)</H3>
+<p>
+Lua provides a small set of operators and a smaller set that you can override.  The <code>&lt;&lt;</code> operator, commonly used for inserting objects into a output stream in C++, is not one of them.  That doesn't mean we can't try.  The following code shows a scheme in which we can simulate the definition and use of custom operators in Lua.<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="comment">-- Custom operator to evaluate (class)</span>
+<span class="keyword">local</span> CustomOp = {}
+<span class="keyword">function</span> CustomOp:__div(b) <span class="comment">-- eval full operation.</span>
+  <span class="keyword">return</span> <span class="library">getmetatable</span>(self.a)[<span class="string">'__'</span> .. self.op](self.a, b)
+<span class="keyword">end</span>
+<span class="library">setmetatable</span>(CustomOp, {__call =
+  <span class="keyword">function</span>(class, a, op) <span class="comment">-- construct left-half of operation.</span>
+    <span class="keyword">return</span> <span class="library">setmetatable</span>({a = a, op = op}, CustomOp)
+  <span class="keyword">end</span>
+})
+<span class="keyword">function</span> enable_custom_ops(mt) <span class="comment">-- enable custom ops on metatable.</span>
+  <span class="keyword">function</span> mt:__div(op)
+    <span class="keyword">return</span> CustomOp(self, op)
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> mt
+<span class="keyword">end</span>
+
+<span class="comment">-- Output stream (class)</span>
+ostream  = {}
+ostream.__index = ostream
+enable_custom_ops(ostream)
+<span class="keyword">function</span> ostream:write(s)
+  <span class="library">io.write</span>(s)
+<span class="keyword">end</span>
+ostream[<span class="string">'__&lt;&lt;'</span>] = <span class="keyword">function</span>(self, s)  <span class="comment">-- '&lt;&lt;' operator</span>
+  self:write(s)
+  <span class="keyword">return</span> self
+<span class="keyword">end</span>
+<span class="library">setmetatable</span>(ostream, {__call =
+  <span class="keyword">function</span>(class, file) <span class="comment">-- construct output stream</span>
+    file = file <span class="keyword">or</span> <span class="library">io.output</span>()
+    <span class="keyword">return</span> <span class="library">setmetatable</span>({file = file}, ostream)
+  <span class="keyword">end</span>
+})
+cout = ostream()
+endl = <span class="string">"\n"</span>  <span class="comment">-- end of line</span>
+
+<span class="comment">-- example usage</span>
+
+<span class="keyword">local</span> _ = cout /<span class="string">'&lt;&lt;'</span>/ <span class="string">"hello"</span> /<span class="string">'&lt;&lt;'</span>/ endl
+</pre>
+</DL>
+<p>
+--<a href="DavidManura.htm" tppabs="http://lua-users.org/wiki/DavidManura" >DavidManura</a>, 200703<p>
+<H3>Hack: User-Defined Named Operators #2 (Infix)</H3>
+<p>
+This mimicks a similar <a href="javascript:if(confirm(%27http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/384122  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/384122%27" tppabs="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/384122">[Python hack]</a>:<p>
+<pre class="code">
+<span class="keyword">local</span> sm = <span class="library">setmetatable</span>
+<span class="keyword">local</span> <span class="keyword">function</span> infix(f)
+  <span class="keyword">local</span> mt = { __sub = <span class="keyword">function</span>(self, b) <span class="keyword">return</span> f(self[1], b) <span class="keyword">end</span> }
+  <span class="keyword">return</span> sm({}, { __sub = <span class="keyword">function</span>(a, _) <span class="keyword">return</span> sm({ a }, mt) <span class="keyword">end</span> })
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> shl = infix(<span class="keyword">function</span>(a, b) <span class="keyword">return</span> a*(2^b) <span class="keyword">end</span>)
+
+<span class="library">print</span>(5 -shl- 4)
+<span class="comment">--&gt; 80</span>
+</pre>
+<p>
+Cute, huh? Drawback: one table allocation per operation.<p>
+--<a href="MikePall.htm" tppabs="http://lua-users.org/wiki/MikePall" >MikePall</a>, 2007-03-09<p>
+<H3>Hack: User-Defined Named Operators #3</H3>
+<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="keyword">local</span> <span class="keyword">function</span> factorial(n)
+  <span class="keyword">local</span> y = 1
+  <span class="keyword">for</span> i=2,n <span class="keyword">do</span> y = y * i <span class="keyword">end</span>
+  <span class="keyword">return</span> y
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> <span class="keyword">function</span> xor(a,b)
+  <span class="library">assert</span>(a == 3 <span class="keyword">and</span> b == 4) <span class="comment">-- an exercise for the reader!</span>
+  <span class="keyword">return</span> 7                  <span class="comment">-- or see http://lua-users.org/wiki/BitUtils</span>
+<span class="keyword">end</span>
+
+<span class="library">debug.setmetatable</span>(0, {  <span class="comment">-- create metatable for numbers</span>
+  __call = <span class="keyword">function</span>(a, op)
+   <span class="keyword">if</span> op == <span class="string">'!'</span> <span class="keyword">then</span> <span class="keyword">return</span> factorial(a)
+   <span class="keyword">elseif</span> op == <span class="string">'xor'</span> <span class="keyword">then</span> <span class="keyword">return</span> <span class="keyword">function</span>(b) <span class="keyword">return</span> xor(a,b) <span class="keyword">end</span>
+   <span class="keyword">end</span>
+  <span class="keyword">end</span>
+})
+
+<span class="library">print</span>(- (5)<span class="string">'!'</span> + 1, - (3) <span class="string">'xor'</span> (4)) <span class="comment">--&gt; -119    -7</span>
+</pre>
+</DL>
+<p>
+Note the precedence of operators: these are really function calls.<p>
+In the case of the unary postfix operators, there is no memory allocation, but there is for the binary op.  We might improve that as follows (though unfortunately this is probably now relying on undefined behavior):<p>
+<DL>
+<dt><dd><pre class="code">
+<span class="keyword">local</span> savea
+<span class="keyword">local</span> <span class="keyword">function</span> xorhelper(b)
+  <span class="keyword">local</span> a; a, savea = savea, <span class="keyword">nil</span>
+  <span class="keyword">return</span> xor(a,b)
+<span class="keyword">end</span>
+<span class="library">debug.setmetatable</span>(0, {
+  __call = <span class="keyword">function</span>(a, op)
+   <span class="keyword">if</span> op == <span class="string">'!'</span> <span class="keyword">then</span> <span class="keyword">return</span> factorial(a)
+   <span class="keyword">elseif</span> op == <span class="string">'xor'</span> <span class="keyword">then</span> savea = a; <span class="keyword">return</span> xorhelper
+   <span class="keyword">end</span>
+  <span class="keyword">end</span>
+})
+</pre>
+</DL>
+<p>
+--<a href="DavidManura.htm" tppabs="http://lua-users.org/wiki/DavidManura" >DavidManura</a>, 2007-07-14<p>
+<H2>See Also</H2>
+<p>
+<UL>
+<li> This is in <a href="LuaHacks.htm" tppabs="http://lua-users.org/wiki/LuaHacks" >LuaHacks</a><li> "Mutate Operators" in <a href="LuaPowerPatches.htm" tppabs="http://lua-users.org/wiki/LuaPowerPatches" >LuaPowerPatches</a><li> <a href="BitwiseOperators.htm" tppabs="http://lua-users.org/wiki/BitwiseOperators" >BitwiseOperators</a> - bitwise operator support in Lua libraries or language<li> <a href="PointAndComplex.htm" tppabs="http://lua-users.org/wiki/PointAndComplex" >PointAndComplex</a> - when operating overloading is appropriate for points and complex number data types<li> <a href="RiscLua.htm" tppabs="http://lua-users.org/wiki/RiscLua" >RiscLua</a> supports additional built-in operators<li> <a href="SyntaxAddition.htm" tppabs="http://lua-users.org/wiki/SyntaxAddition" >SyntaxAddition</a> - suggestions to make Lua's built-in operators more like other languages<li> <a href="TernaryOperator.htm" tppabs="http://lua-users.org/wiki/TernaryOperator" >TernaryOperator</a> - suggestion to support a ternary conditional operator, like the <code>cond ? expr1 : expr2</code> construct in C<li> <a href="MetaLua.htm" tppabs="http://lua-users.org/wiki/MetaLua" >MetaLua</a> <a href="javascript:if(confirm(%27http://metalua.luaforge.net/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://metalua.luaforge.net/%27" tppabs="http://metalua.luaforge.net/">[2]</a> has an extensible parser that supports adding custom operators in the language</UL>
+<hr>
+<a href="RecentChanges.htm" tppabs="http://lua-users.org/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=CustomOperators  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=CustomOperators%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=CustomOperators" >edit</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=CustomOperators  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=CustomOperators%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=history&id=CustomOperators" >history</a><br>Last edited May 2, 2009 1:26 am GMT <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=CustomOperators  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=CustomOperators%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=CustomOperators" >(diff)</a>
+</body>
+</html>

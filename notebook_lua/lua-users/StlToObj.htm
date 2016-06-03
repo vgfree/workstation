@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Stl To Obj</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="/cgi-bin/wiki.pl?action=search&amp;string=StlToObj&amp;body=1" title="List pages referring to StlToObj">Stl To Obj</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="/">
+            <img src="/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+<H3>STL to OBJ</H3>
+Convert ASCII STL to OBJ (Wavefront) format with optional coloring<p>
+<pre class="code">
+<span class="comment">--[[
+	Convert ASCII STL file to OBJ (wavefront file) with optional coloring
+	V 1.0
+	Date: 2014-09-25
+	Author: Michael Lutz
+	Licensed under the same terms as Lua itself
+--]]</span>
+
+<span class="keyword">local</span> version = <span class="string">"1.0"</span>
+
+<span class="library">print</span>(<span class="string">"Usage:"</span>)
+<span class="library">print</span>(<span class="string">"stl_to_obj.lua &lt;stl_file&gt; [&lt;color&gt;]"</span>)
+<span class="library">print</span>(<span class="string">"-----------"</span>)
+<span class="library">print</span>(<span class="string">"&lt;color&gt;: can be a color: red,green,blue,cyan,magenta,yellow"</span>)
+<span class="library">print</span>(<span class="string">"&lt;color&gt;: can be and RGB value R,G,B: 255,70,80"</span>)
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">-- input stl filename</span>
+<span class="keyword">local</span> stl_filename = arg[1]
+<span class="keyword">local</span> filename = <span class="library">string.sub</span>(stl_filename,1,-5)
+
+<span class="library">print</span>()
+<span class="library">print</span>(<span class="string">"Input file: "</span>..stl_filename)
+
+<span class="keyword">local</span> color_rgb = {
+	[<span class="string">"red"</span>] = {1.0,0,0},
+	[<span class="string">"green"</span>] = {0,1.0,0},
+	[<span class="string">"blue"</span>] = {0,0,1.0},
+	[<span class="string">"cyan"</span>] = {0,1.0,1.0},
+	[<span class="string">"magenta"</span>] = {1.0,0,1.0},
+	[<span class="string">"yellow"</span>] = {1.0,1.0,0},
+}
+
+<span class="keyword">local</span> color = {}
+<span class="keyword">if</span> arg <span class="keyword">and</span> arg[2] <span class="keyword">then</span>
+	<span class="keyword">if</span> color_rgb[arg[2]] <span class="keyword">then</span>
+		color = color_rgb[arg[2]]
+	<span class="keyword">else</span>
+		<span class="keyword">local</span> r,g,b = <span class="library">string.match</span>(arg[2],<span class="string">"(%d+),(%d+),(%d+)"</span>)
+		color = {<span class="library">tonumber</span>(r)/255,<span class="library">tonumber</span>(g)/255,<span class="library">tonumber</span>(b)/255}
+	<span class="keyword">end</span>
+	<span class="library">print</span>(<span class="string">"Input color: "</span>..arg[2])
+<span class="keyword">end</span>
+
+
+
+
+<span class="comment">-- obj filename</span>
+<span class="keyword">local</span> obj_filename = filename..<span class="string">".obj"</span>
+<span class="library">print</span>(<span class="string">"Output file: "</span>..obj_filename)
+
+<span class="keyword">local</span> t_vertices = {}
+<span class="keyword">local</span> t_normals = {}
+<span class="keyword">local</span> t_faces = {}
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">-- parse stl file</span>
+<span class="keyword">local</span> file_stl = <span class="library">io.open</span>(stl_filename, <span class="string">"r"</span>)
+
+<span class="keyword">local</span> cur_face = {}
+<span class="keyword">local</span> count = 0
+<span class="keyword">for</span> line <span class="keyword">in</span> file_stl:lines() <span class="keyword">do</span>
+	<span class="keyword">if</span> <span class="library">string.find</span>(line, <span class="string">"^%s*facet normal"</span>) <span class="keyword">then</span>
+		<span class="keyword">local</span> x,y,z = <span class="library">string.match</span>(line, <span class="string">"(%S+)%s(%S+)%s(%S+)$"</span>)
+		<span class="library">table.insert</span>(cur_face, {<span class="library">tonumber</span>(x),<span class="library">tonumber</span>(y),<span class="library">tonumber</span>(z)})
+	<span class="keyword">end</span>
+	<span class="keyword">if</span> <span class="library">string.find</span>(line, <span class="string">"^%s*vertex"</span>) <span class="keyword">then</span>
+		<span class="keyword">local</span> x,y,z = <span class="library">string.match</span>(line, <span class="string">"(%S+)%s(%S+)%s(%S+)$"</span>)
+		<span class="library">table.insert</span>(cur_face, {<span class="library">tonumber</span>(x),<span class="library">tonumber</span>(y),<span class="library">tonumber</span>(z)})
+		count = count + 1
+		<span class="keyword">if</span> count == 3 <span class="keyword">then</span>
+			<span class="library">table.insert</span>(t_faces,cur_face)
+			cur_face = {}
+			count = 0
+		<span class="keyword">end</span>
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+file_stl:close()
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">-- write mtl</span>
+<span class="keyword">local</span> mtl_filename = filename..<span class="string">".mtl"</span>
+<span class="keyword">if</span> #color ~= 0 <span class="keyword">then</span>
+	<span class="library">print</span>(<span class="string">"Output mtl: "</span>..mtl_filename)
+	<span class="keyword">local</span> file = <span class="library">io.open</span>(mtl_filename, <span class="string">"w"</span>)
+	file:write(
+		<span class="string">"# Color: "</span>..arg[2]..<span class="string">"\n"</span>..
+		<span class="string">"newmtl color_"</span>..arg[2]..<span class="string">"\n"</span>..
+		<span class="string">"Ka "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,color[1])..<span class="string">" "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,color[2])..<span class="string">" "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,color[3])..<span class="string">"\n"</span>..
+		<span class="string">"Kd "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,color[1])..<span class="string">" "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,color[2])..<span class="string">" "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,color[3])..<span class="string">"\n"</span>..
+		<span class="string">"Ks 0.000 0.000 0.000\n"</span>)
+	file:close()
+<span class="keyword">end</span>
+
+<span class="library">print</span>()
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">-- write obj</span>
+<span class="keyword">local</span> file = <span class="library">io.open</span>(obj_filename, <span class="string">"w"</span>)
+
+file:write(<span class="string">"#########################################\n"</span>)
+file:write(<span class="string">"# Wavefront .obj file\n"</span>)
+file:write(<span class="string">"# Created by: stl_to_obj.lua (v "</span>..version..<span class="string">") / Author: Michael Lutz\n"</span>)
+file:write(<span class="string">"# Date: "</span>..<span class="library">os.date</span>()..<span class="string">"\n"</span>)
+file:write(<span class="string">"#########################################\n\n"</span>)
+
+<span class="keyword">if</span> #color ~= 0 <span class="keyword">then</span>
+	file:write(<span class="string">"#########################################\n"</span>)
+	file:write(<span class="string">"# MTL lib:\n\n"</span>)
+	file:write(<span class="string">"mtllib "</span>..mtl_filename..<span class="string">"\n\n"</span>)
+<span class="keyword">end</span>
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">-- # List of Vertices</span>
+file:write(<span class="string">"#########################################\n"</span>)
+file:write(<span class="string">"# List of vertices:\n\n"</span>)
+
+<span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="library">ipairs</span>(t_faces) <span class="keyword">do</span>
+	<span class="keyword">for</span> i2=2,4 <span class="keyword">do</span>
+		file:write(<span class="string">"v "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,v[i2][1])..<span class="string">" "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,v[i2][2])..<span class="string">" "</span>..<span class="library">string.format</span>(<span class="string">"%f"</span>,v[i2][3])..<span class="string">"\n"</span>)
+	<span class="keyword">end</span>
+<span class="keyword">end</span>
+file:write(<span class="string">"\n"</span>)
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">--# Normals in (x,y,z) form; normals might not be unit.</span>
+<span class="comment">-- Normals are not needed since stl saves the triangles in counter clock anyways</span>
+<span class="comment">--file:write("\n# List of Normals\n\n")</span>
+<span class="comment">--for i,v in ipairs(t_faces) do</span>
+<span class="comment">--	file:write("vn "..string.format("%f",v[1][1]).." "..string.format("%f",v[1][2]).." "..string.format("%f",v[1][3]).."\n")</span>
+<span class="comment">--end</span>
+
+<span class="comment">--/////////////////////////////////////////////////////////////////</span>
+<span class="comment">-- # Face Definitions (see below)</span>
+file:write(<span class="string">"#########################################\n"</span>)
+file:write(<span class="string">"# Face definitions:\n\n"</span>)
+
+<span class="keyword">if</span> #color ~= 0 <span class="keyword">then</span>
+	file:write(<span class="string">"usemtl color_"</span>..arg[2]..<span class="string">"\n\n"</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="library">ipairs</span>(t_faces) <span class="keyword">do</span>
+	<span class="keyword">local</span> i2 = (i-1)*3
+	<span class="comment">--file:write("f "..(i2+1).."//"..i.." "..(i2+2).."//"..i.." "..(i2+3).."//"..i.."\n")</span>
+	file:write(<span class="string">"f "</span>..(i2+1)..<span class="string">" "</span>..(i2+2)..<span class="string">" "</span>..(i2+3)..<span class="string">"\n"</span>)
+<span class="keyword">end</span>
+
+file:close()
+</pre>
+<hr>
+<a href="/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="/cgi-bin/wiki.pl?action=edit&amp;id=StlToObj" >edit</a> &middot; <a href="/cgi-bin/wiki.pl?action=history&amp;id=StlToObj" >history</a><br>Last edited September 26, 2014 9:14 am GMT <a href="/cgi-bin/wiki.pl?action=browse&amp;diff=1&amp;id=StlToObj" >(diff)</a>
+</body>
+</html>

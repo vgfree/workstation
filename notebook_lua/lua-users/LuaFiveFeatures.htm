@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>lua-users wiki: Lua Five Features</TITLE>
+<LINK TYPE="text/css" REL="stylesheet" HREF="main.css" tppabs="http://lua-users.org/styles/main.css">
+</HEAD>
+<BODY ><table width="100%" border="0"> <tr><td align=left width="100%"><h1><a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=LuaFiveFeatures&body=1  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=search&string=LuaFiveFeatures&body=1%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=search&string=LuaFiveFeatures&body=1" title="List pages referring to LuaFiveFeatures">Lua Five Features</a></h1></td><td align=right>
+    <table cellpadding="0" cellspacing="0" border="0" width="1%">
+      <tbody>
+        <tr>
+            <td><a href="javascript:if(confirm(%27http://lua-users.org/  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/%27" tppabs="http://lua-users.org/">
+            <img src="nav-logo.png" tppabs="http://lua-users.org/images/nav-logo.png" alt="lua-users home" width="177" height="40" border="0"></a></td>
+        </tr>
+        <tr>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td><img src="nav-elbow.png" tppabs="http://lua-users.org/images/nav-elbow.png" alt="" width="48" height="40"></td>
+                    <td nowrap valign="middle" width="100%">
+                        <a href="index.htm" tppabs="http://lua-users.org/wiki/" class="nav">wiki</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+<form method="post" action="http://lua-users.org/wiki/FindPage" enctype="application/x-www-form-urlencoded" style="display:inline; margin:0;">
+<input type="hidden" name="action" value="search"  /><input type="text" name="string"  size="20" style="" id="search_query1" /><input type="hidden" name="title" value="1"  /><input type="submit" name=".submit" value="Search" /><input type="hidden" name="body" value="on"  /></form></td></tr> </table>
+<br clear=all>
+<H2>Changes from version 4.0 to 5.0</H2>
+<p>
+(from HISTORY file in distribution)<p>
+<H3>Language</H3>
+<p>
+<UL>
+<li>lexical scoping.<li>Lua coroutines.<li>standard libraries now packaged in tables.<li>tags replaced by metatables and tag methods replaced by metamethods, stored in metatables.<li>proper tail calls.<li>each function can have its own global table, which can be shared.<li>new __newindex metamethod, called when we insert a new key into a table.<li>new block comments: --[[ ... ]].<li>new generic for.<li>new weak tables.<li>new boolean type.<li>new syntax "local function".<li>(f()) returns the first value returned by f.<li>{f()} fills a table with all values returned by f.<li>\n ignored in [[\n .<li>fixed and-or priorities.<li>more general syntax for function definition (e.g. function a.x.y:f()...end).<li>more general syntax for function calls (e.g. (print or write)(9)).<li>new functions (time/date, tmpfile, unpack, require, load*, etc.).</UL>
+<p>
+<H3>API</H3>
+<p>
+<UL>
+<li>chunks are loaded by using lua_load; new luaL_loadfile and luaL_loadbuffer.<li>introduced lightweight userdata, a simple "void*" without a metatable.<li>new error handling protocol: the core no longer prints error messages; all errors are reported to the caller on the stack.<li>new lua_atpanic for host cleanup.<li>new, signal-safe, hook scheme.</UL>
+<p>
+<H3>Implementation</H3>
+<p>
+<UL>
+<li>new license: MIT.<li>new, faster, register-based virtual machine.<li>support for external multithreading and coroutines.<li>new and consistent error message format.<li>the core no longer needs "stdio.h" for anything (except for a single use of sprintf to convert numbers to strings).<li>lua.c now runs the environment variable LUA_INIT, if present. It can be "@filename", to run a file, or the chunk itself.<li>support for user extensions in lua.c. Sample implementation given for command line editing.<li>new dynamic loading library, active by default on several platforms.<li>safe garbage-collector metamethods.<li>precompiled bytecodes checked for integrity (secure binary dostring).<li>strings are fully aligned.<li>position capture in string.find.<li>read('*l') can read lines with embedded zeros.</UL>
+<p>
+<hr><a href="LuaFiveAlphaToBeta.htm" tppabs="http://lua-users.org/wiki/LuaFiveAlphaToBeta" >LuaFiveAlphaToBeta</a><hr>
+<a href="RecentChanges.htm" tppabs="http://lua-users.org/wiki/RecentChanges" >RecentChanges</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=editprefs%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=editprefs" >preferences</a><br>
+<a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=LuaFiveFeatures  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=LuaFiveFeatures%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=edit&id=LuaFiveFeatures" >edit</a> &middot; <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=LuaFiveFeatures  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=history&id=LuaFiveFeatures%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=history&id=LuaFiveFeatures" >history</a><br>Last edited January 30, 2004 7:47 am GMT <a href="javascript:if(confirm(%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=LuaFiveFeatures  \n\nThis file was not retrieved by Teleport Ultra, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Ultra\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=LuaFiveFeatures%27" tppabs="http://lua-users.org/cgi-bin/wiki.pl?action=browse&diff=1&id=LuaFiveFeatures" >(diff)</a>
+</body>
+</html>
