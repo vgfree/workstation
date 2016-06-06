@@ -1,0 +1,67 @@
+测试服务器:192.168.1.213	密码:123456
+
+###luajit的安装和配置
+	#git clone http://luajit.org/git/luajit-2.0.git
+	#make && make install
+
+###nginx的安装和配置
+	http://nginx.org/en/download.html下载安装包
+	#tar zxvf nginx-1.4.1.tar.gz
+	下载第三方模块
+	lua-nginx-module 				#git clone https://github.com/chaoslawful/lua-nginx-module.git
+	echo-nginx-module				#git clone https://github.com/agentzh/echo-nginx-module.git
+	ngx_devel_kit					#git clone https://github.com/simpl/ngx_devel_kit.git
+
+	#tar xzvf pcre-8.33.tar.gz
+	#./configure
+	#make && make install
+	
+	#tar xzvf zlib-1.2.8.tar.gz
+	#./configure
+	#make && make install
+
+	
+	#./configure --prefix=/data/nginx \
+		--add-module=../nginx-module/lua-nginx-module \
+		--add-module=../nginx-module/echo-nginx-module \
+		--add-module=../nginx-module/ngx_devel_kit \
+                --with-pcre=../pcre-8.33 \
+                --with-zlib=../zlib-1.2.8
+
+	#make && make install
+
+	# ./sbin/nginx 
+		./sbin/nginx: error while loading shared libraries: libluajit-5.1.so.2: cannot open shared object file: No such file or directory
+
+	# ldd ../sbin/nginx
+		libluajit-5.1.so.2 => not found
+
+	#whereis libluajit-5.1.so.2
+		libluajit-5.1.so: /usr/local/lib/libluajit-5.1.so /usr/local/lib/libluajit-5.1.so.2
+	
+	因为安装在缺省路径，所以LuaJIT对应的lib，include均在/usr/local目录里,但nginx默认查找/usr/lib和/usr/include/lib,做以下操作即可
+	#ln -s /usr/local/lib/libluajit-5.1.so.2 /usr/lib/libluajit-5.1.so.2
+	#ln -s /usr/local/lib/libluajit-5.1.so.2.0.2 /usr/lib/libluajit-5.1.so.2.0.2
+	#ldconfig
+	#ldd ./sbin/nginx
+	#./sbin/nginx
+		替换掉./conf/nginx.conf文件
+	#./sbin/nginx  -s reload
+	如果还是报require找不到文件***.lua，请在***.lua所在的工作目录下启动nginx
+
+
+###安装luasocks
+	#tar xzvf luarocks-2.0.9.tar.gz
+	#./configure --with-lua-include=/usr/local/include/luajit-2.0/
+	#make && make install
+
+	#luarocks install luasocket
+
+###安装lualpeg
+	#luarocks install lpeg 0.10.2
+
+
+
+
+
+

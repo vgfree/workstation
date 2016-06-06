@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+	<link media="all" type="text/css" rel="stylesheet" href="http://oauth.daoke.me//css/frozen.css">
+		<link media="all" type="text/css" rel="stylesheet" href="http://oauth.daoke.me/css/style.css">
+		<title>登录成功,正在为您跳转</title>
+	</head>
+	<body>
+    <header class="ui-header ui-header-stable ui-border-b">
+		    <h1>道客账号登录</h1>
+		</header>
+      <div class="content">
+        <div class="ui-whitespace loginHint">
+            <a id="linkShop" style="color:red">正在为您连接跳转...</a>
+        </div>
+
+      </div>
+
+      <script type="text/javascript">
+
+		  window.onload= function (){
+			  setTimeout(oauthLogin,3000);
+		  }
+		  function oauthLogin(){
+			  if(typeof oauthLoginSuccess ==='function'){
+				  setTimeout(iosOauthLogin,3000);
+			  }else{
+				  setTimeout(androidOauthLogin,3000);
+			  }
+		  }
+		  function iosOauthLogin(){
+			  var result =window.location.search.split('?')[1];
+			  oauthLoginSuccess( '{"'+result.replace(/=/g,'":"').replace(/&/g,'","')+'"}' );
+		  }
+		  function androidOauthLogin(){
+			  var result =window.location.search.split('?')[1];
+			  obj.oauthLoginSuccess( '{"'+result.replace(/=/g,'":"').replace(/&/g,'","')+'"}' );
+		  }      
+		</script>
+  </body>
+</html>

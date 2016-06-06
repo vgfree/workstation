@@ -27,3 +27,14 @@ curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"鬼吹灯", "chType":1, "chIntro":"探险", "aIntro":"天下霸唱", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"人点烛,鬼吹灯"}' -v http://192.168.130.76/channelapi/createChannel
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10004"}' -v http://192.168.130.76/channelapi/getUserList
+
+
+
+
+
+
+
+
+
+
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"tianlo", "chType":2, "chIntro":"ewqewfergwer武侠"}' -v http://192.168.130.76/channelapi/createChannel
