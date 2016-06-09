@@ -28,13 +28,21 @@ curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10004"}' -v http://192.168.130.76/channelapi/getUserList
 
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -H "mirrtalkID:12345678901234567890123456789012" -v https://dc.daoke.me/getMsgToken
+
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10004"}' -v http://192.168.130.76/channelapi/getUserList
 
 
 
+curl -H "appKey:1858017065" -H "time:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"content":["text":"一小时帮忙拉","url":"http://g4.tweet.daoke.me/group4/M06/33/5F/rBBHBVaN1UiAZ09VAAAGGHISzSk095.amr","urlType":"amr","isRepeat":"1", "es":"",],"typ":"1", "cburl":"http://g4.tweet.daoke.me/group4/M06/33/5F/rBBHBVaN1UiAZ09VAAAGGHISzSk095.amr", "citycode":"301100", "lng":121.4434, "lat":31.22, "diff":"1"}' -v http://192.168.71.94:9009/abcube_set
 
 
+curl -H "appKey":"1858017065" -H "sign":"45456asdfserwerwefasdfsdf" -d '{"content":["text":"一小时帮忙拉","url":"http://g4.tweet.daoke.me/group4/M06/33/5F/rBBHBVaN1UiAZ09VAAAGGHISzSk095.amr","urlType":"amr","isRepeat":"1", "es":""], "adtime":"07:00-0759", "typ":"1", "citycode":"301100", "cburl":"http://g4.tweet.daoke.me/group4/M06/33/5F/rBBHBVaN1UiAZ09VAAAGGHISzSk095.amr"}' -v http://192.168.71.94:9009/adcube_set
 
 
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "time":"1458266656" -H "cid":"PdL1eoEl7P"  -d '{"typ":"2", "lng":121.4434, "lat":31.22, "speed":22, "dir":76}' -v http://192.168.71.94:9009/adcube_get
+
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "time":"1458266656" -H "cid":"PdL1eoEl7P"  -d '{"aid":"2", "mid":"jhsdhdfkha832489023490", "report":["token":"93518a2eddfe9a3d","status":"2","fileurl":"","filetype":"","lng":121.8754,"lat":31.22324,"speed":23,"dir":128,"vol":2]}' -v http://192.168.71.94:9009/adcube_cb
 
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"tianlo", "chType":2, "chIntro":"ewqewfergwer武侠"}' -v http://192.168.130.76/channelapi/createChannel
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "aid":"PdL1eoEl7P" -v http://192.168.71.94:9009/adcube_del
