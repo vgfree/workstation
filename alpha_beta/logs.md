@@ -10,3 +10,5 @@ CREATE TABLE TABLE_1 ( ID INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT, //
 		ID列为无符号整型，该列值不可以为空，并不可以重复，而且自增。
 		NAME VARCHAR(5) NOT NULL  ) AUTO_INCREMENT = 10000;（ID列从10000开始自增）
 ```
+
+`ssh -o serveraliveinterval=60 root@192.168.71.85` 防止掉线

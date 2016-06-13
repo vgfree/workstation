@@ -23,5 +23,11 @@ archive
 `kill -HUP 1234 >killout 2>killerr`
 `kill -1 1234 >killouterr 2>&1`
 
+输出重定向, 已存在则覆盖
+`ls -l > lsoutput.md`
+附加到文件后
+`ls -l >> lsoutput.md`
+
+
 
 
