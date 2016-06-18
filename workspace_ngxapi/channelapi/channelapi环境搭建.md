@@ -5,46 +5,32 @@
    mysql : 192.168.71.85:3306
    user :
 
-```lua
-sql_set_channel_list_verify_finished = "UPDATE tbl_channelList SET verify = 1 WHERE channelID = '%s'",
-
-local ok_status = set_channel_list_verify_finished(args['chID'])                        
-if not ok_status then                                                   
-      gosay.go_false(url_tab, msg["MSG_DO_MYSQL_FAILED"])             
-end
-
-local function set_channel_list_verify_finished(channelID)                                                                            
-        local sql_str = string.format(G.sql_set_channel_list_verify_finished, channelID)              
-        only.log('D', 'sql_str = %s', sql_str)                                  
-
-        local ok_status, ret_tab = mysql_api.cmd(app_config_db[1], 'select', sql_str)
-        if not ok_status or not ret_tab then                                    
-                only.log('E', "sql_set_channel_list_verify_finished failed %s ", sql_str )    
-                gosay.go_false(url_tab, msg['MSG_DO_MYSQL_FAILED'])             
-        end                                                                     
-
-        return true                                                             
-end
-```
 ```js
-sql_set_channel_list_verify_unfinish = "UPDATE tbl_channelList SET verify = 0 WHERE channelID = '%s'",
+local luasql    = require('luasql.mysql')
 
-local ok_status = set_channel_list_verify_unfinish(args['chID'])                        
-if not ok_status then                                                   
-      gosay.go_false(url_tab, msg["MSG_DO_MYSQL_FAILED"])             
+env = assert(luasql.mysql())                                                    
+conn = assert(env:connect(link.OWN_POOL.mysql.channel_info___info.database, link.OWN_POOL.mysql.channel_info___info.user, link.OWN_POOL.mysql.channel_info___info.password, link.OWN_POOL.mysql.channel_info___info.host, link.OWN_POOL.mysql.channel_info___info.port))
+
+sql_start_transaction = "START TRANSACTION",                            
+sql_commit = "COMMIT",                                                  
+sql_rollback = "ROLLBACK",
+
+-- mysql 事务开始                                                       
+conn:execute(G.sql_start_transaction)
+
+local ok_status = save_info_to_redis(args['accountID'], channelID, ok_ret_channel)
+
+if ok_status then                                                       
+      conn:execute(G.sql_commit)                                      
+else                                                                    
+      conn:execute(G.sql_rollback)                                    
+      gosay.go_false(url_tab, msg["MSG_DO_REDIS_FAILED"])             
 end
 
-local function set_channel_list_verify_unfinish(channelID)                                                                            
-        local sql_str = string.format(G.sql_set_channel_list_verify_unfinish, channelID)              
-        only.log('D', 'sql_str = %s', sql_str)                                  
+local cursor, errorString = conn:execute(sql_str)                     
 
-        local ok_status, ret_tab = mysql_api.cmd(app_config_db[1], 'select', sql_str)
-        if not ok_status or not ret_tab then                                    
-                only.log('E', "set_channel_list_verify_unfinish failed %s ", sql_str )    
-                gosay.go_false(url_tab, msg['MSG_DO_MYSQL_FAILED'])             
-        end                                                                     
-
-        return true                                                             
+if not cursor then                                              
+      return false, nil                                       
 end
 ```
 
@@ -52,7 +38,7 @@ end
 ```bash
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"tianlongbabu", "chType":2, "reType":0, "chIntro":"武侠", "aIntro":"金庸", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"众生皆苦,求而不得"}' -v http://192.168.130.76/channelapi/createChannel
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009", "reType":1, "chName":"ludingji", "chIntro":"都是我老婆", "aIntro":"金庸", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"找老婆,做大官"}' -v http://192.168.130.76/channelapi/modifyChannel
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10001", "reType":1, "chName":"ludingji", "chIntro":"都是我老婆", "aIntro":"金庸", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"找老婆,做大官"}' -v http://192.168.130.76/channelapi/modifyChannel
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10014"}' -v http://192.168.130.76/channelapi/dissolveChannel
 
