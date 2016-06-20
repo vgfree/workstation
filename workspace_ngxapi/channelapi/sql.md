@@ -12,7 +12,6 @@ CREATE TABLE `tbl_channelInfo` (
   `updateTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
   `channelStatus` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '频道状态,1正常 2解散状态',
   `keyWords` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '关键字',
-
   PRIMARY KEY (`id`),
   UNIQUE KEY `channelID` (`channelID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='群聊频道表'
