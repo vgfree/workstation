@@ -8,8 +8,8 @@
 ```js
 local luasql    = require('luasql.mysql')
 
-env = assert(luasql.mysql())                                                    
-conn = assert(env:connect(link.OWN_POOL.mysql.channel_info___info.database, link.OWN_POOL.mysql.channel_info___info.user, link.OWN_POOL.mysql.channel_info___info.password, link.OWN_POOL.mysql.channel_info___info.host, link.OWN_POOL.mysql.channel_info___info.port))
+local env = assert(luasql.mysql())                                                    
+local conn = assert(env:connect(link.OWN_POOL.mysql.channel_info___info.database, link.OWN_POOL.mysql.channel_info___info.user, link.OWN_POOL.mysql.channel_info___info.password, link.OWN_POOL.mysql.channel_info___info.host, link.OWN_POOL.mysql.channel_info___info.port))
 
 sql_start_transaction = "START TRANSACTION",                            
 sql_commit = "COMMIT",                                                  
@@ -29,7 +29,8 @@ end
 
 local cursor, errorString = conn:execute(sql_str)                     
 
-if not cursor then                                              
+if not cursor then  
+      conn:execute(G.sql_rollback)                                            
       return false, nil                                       
 end
 ```
@@ -42,23 +43,23 @@ curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10014"}' -v http://192.168.130.76/channelapi/dissolveChannel
 
-curl -H "appKey:1858017065" -H "accountID:1234567891" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009"}' -v http://192.168.130.76/channelapi/quitChannel
+curl -H "appKey:1858017065" -H "accountID:1234567890" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000"}' -v http://192.168.130.76/channelapi/quitChannel
 
-curl -H "appKey:1858017065" -H "accountID:1234567891" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10011", "remark":"炎发灼眼"}' -v http://192.168.130.76/channelapi/joinChannel
+curl -H "appKey:1858017065" -H "accountID:1234567893" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000", "remark":"炎发灼眼"}' -v http://192.168.130.76/channelapi/joinChannel
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009"}' -v http://192.168.130.76/channelapi/getChannelInfo
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000"}' -v http://192.168.130.76/channelapi/getChannelInfo
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":["10001", "10002", "10009"]}' -v http://192.168.130.76/channelapi/subscribeChannel
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009", "blkID":["1234567890", "1234567891"], "setType":1}' -v http://192.168.130.76/channelapi/setChannelBlackList
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000", "blkID":["1234567890", "1234567892"], "setType":1}' -v http://192.168.130.76/channelapi/setChannelBlackList
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009"}' -v http://192.168.130.76/channelapi/getChannelUserList
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000"}' -v http://192.168.130.76/channelapi/getChannelUserList
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"UID":"e8O1W0ytqy"}' -v http://192.168.130.76/channelapi/getChannelList
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009", "UID":"e8O1W0ytqy", "setType":1}' -v http://192.168.130.76/channelapi/adminReview
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000", "UID":"1234567894", "setType":1}' -v http://192.168.130.76/channelapi/adminReview
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10009"}' -v http://192.168.130.76/channelapi/getChannelBlackList
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000"}' -v http://192.168.130.76/channelapi/getChannelBlackList
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10011", "jockeyList":["e8O1W0ytqy"]}' -v http://192.168.130.76/channelapi/setJockeyList
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chID":"10000", "jockeyList":["1234567893", "1234567894"]}' -v http://192.168.130.76/channelapi/setJockeyList
 ```
