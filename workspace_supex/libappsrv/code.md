@@ -1,3 +1,37 @@
+192.168.71.141
+/root/work/supex/lib/libappsrv/test/test
+功能: 接收coreexchange 发送的数据, 并根据解析结果下发数据
+
+netstat -anlp | grep tcp
+cd /root/work/supex/lib/libappsrv/test/
+./test
+cd messageGateway/
+./messageGateway
+cd lib/libappsrv/test/
+./test
+
+192.168.71.142
+cd CoreExchangeNode/
+./core_exchange_node
+/root/work/supex/programs/CoreExchangeNode/test
+./test 1 192.168.71.142
+
+192.168.71.143
+netstat -anlp | grep tcp
+cd lib/libcomm/
+make lib
+cd utils/
+make lib
+cd loginServer/
+./loginServer
+cd settingServer/
+./settingServer
+cd UserInfoApi/
+./UserInfoApi &
+
+
+
+
 ```C++
 struct app_msg
 {
