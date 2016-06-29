@@ -92,3 +92,79 @@ struct adopt_task_node
   "msgTime":""
 }
 ```
+```json
+上行:
+{
+    "action":"chatGroup",
+    "chatToken":"abcdefghij",
+    "timestamp":"1458266656",
+    "content":
+    {
+        "fromAccountID":"15618873958",
+        "fromTimestamp":"1458266656",
+        "fromLat":35.12345,
+        "fromLon":121.12345,
+        "chatGroupID":"15618873958cg001",
+        "fileType":1,
+        "fileServer":0,
+    }
+}
+下行:
+{
+    "action":"chatGroup",
+    "chatToken":"abcdefghij",
+    "timestamp":"1458266656",
+    "content":
+    {
+        "fromAccountID":"15618873958",
+        "fromTimestamp":"1458266656",
+        "fromLat":35.12345,
+        "fromLon":121.12345,
+        "chatGroupID":"15618873958cg001",
+         "chatID":"156to136_160628141414",
+         "onLine":1,
+        "fileType":1,
+        "fileServer":0,
+    }
+}
+```
+
+```json
+{
+    "action":"chat",
+    "chatToken":"abcdefghij",
+    "timestamp":"1458266656",
+    "imei": "147258369015935",
+    "imsi": "460011234453214",
+    "content":
+    {
+        "fromAccountID"："15618873958",
+        "fromTimestamp":"1458266656",
+        "fromLat":35.12345,
+        "fromLon":121.12345,
+        "toAccountID":"13661683669",
+        "fileType":1,
+        "fileServer":0,
+    }
+}
+
+{
+    "action":"chat",
+    "chatToken":"abcdefghij",
+    "timestamp":"1458266656",
+    "content":
+    {
+        "fromAccountID"："15618873958",
+        "fromTimestamp":"1458266656",
+        "fromLat":35.12345,
+        "fromLon":121.12345,
+        "toAccountID":"13661683669",
+        "chatID":"156to136_160628141414"
+        "onLine":0,
+        "fileType":1,
+        "fileServer":0,
+        "fileUrl":"https://pc.foryou.com/chat/156to145_160628121212.amr"
+    }
+}
+
+```
