@@ -75,18 +75,20 @@ struct adopt_task_node
 
 
 ```c++
+第一帧:
+"bind"
+第二帧:
 {
-  "opt":"bind",
   "CID":""
   "msgTime":"",
-  "msgID":"",
 }
 
+第一帧:
+"bind"
+第二帧:
 {
-  "opt":"bind",
   "CID":"",
   "UID":"",
-  "msgTime":"",
-  "msgID":""
+  "msgTime":""
 }
 ```
