@@ -18,18 +18,19 @@ int main()
 
 	server_address.sin_family = AF_INET;
 	server_address.sin_addr.s_addr = inet_addr("127.0.0.1");
-	server_address.sin_port = 8080;
+	server_address.sin_port = htons(50000);
 	server_len = sizeof(server_address);
 
-	bind(server_sockfd, (struct sockaddr *)&server_address, server_len);
-
-	listen(server_sockfd, 5);
+	int i = bind(server_sockfd, (struct sockaddr *)&server_address, server_len);
+	printf("i = %d\n", i);
+	listen(server_sockfd, 1);
 
 	//	char *msg = "HTTP/1.1 200 OK\r\nContent-Length:107\r\nContent-Type:text/html\r\n\r\n<html><head></head><body>hello</body></html>";
 
 	char *msg = "HTTP/1.1 200 OK \r\n" \
 		     "Content-Type: text/html\r\n" \
 		     "Content-Length: 24\r\n" \
+		     "Connetcion: close" \
 		     "\r\n" \
 		     "<h1>Hello World!</h1>";
 
