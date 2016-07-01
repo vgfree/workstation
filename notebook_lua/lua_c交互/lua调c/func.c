@@ -3,7 +3,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-#if 0
+#if 1
 static int isquare(lua_State *L) {
 	float rtrn = lua_tonumber(L, -1);
 	printf("Top of square(), nbr = %f\n", rtrn);
@@ -31,6 +31,8 @@ int luaopen_power(lua_State *L) {
 	return 0;
 }
 #endif
+
+#if 0
 
 # define luaL_newlib(L,l) (lua_newtable(L), luaL_register(L,NULL,l))
 
@@ -75,3 +77,5 @@ int luaopen_power(lua_State *L) {
 
 	return 1;
 }
+
+#endif
