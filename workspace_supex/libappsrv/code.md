@@ -199,5 +199,61 @@ struct adopt_task_node
  * 1 CID                                                                        
  * 2 [bind]                                                                     
  * 3 {UID}                                                                      
- */ 
+ */
+```
+
+```C++
+#include <lua.h>
+#include <lauxlib.h>
+#include <stdlib.h>
+#include <stdio.h>
+int main(void){
+	int status, result, i;
+	double sum;
+	lua_State *L;
+	L = luaL_newstate();
+	luaL_openlibs(L);
+	/* 把lua程序搞进来*/    
+	status = luaL_loadfile(L, "script.lua");
+	if (status) {
+		printf(stderr, "bad, bad file\n");        
+		exit(1);
+	}
+	//正式开始。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。    
+	/*     *首先我们必须准备好Lua的虚拟堆栈。     * 然后传递数据到这个堆栈里.     */     
+	lua_newtable(L);    /* 堆栈里建立个table*/    
+	/*
+  *********************************************************     * 要把数据放入lua的堆栈。 首先放入index, 然后是数据，接着根据table在堆栈的位置（－3）     * *调用lua_rawset().     * 为什么table在堆栈的位置是－3：－3是堆栈顶往下的第3个      *      *     * <- [stack bottom] -- table, index, value [top]     *     *******************************************************
+  */    
+	for (i = 1; i <= 5; i++) {        
+		lua_pushnumber(L, i);   /* 压入table 索引 */        
+		lua_pushnumber(L, i*2); /* 压入值 */        
+		lua_rawset(L, -3);      /* 保存这一双于table中 */
+	}    /* lua代码中table的名字是foo */   
+	lua_setglobal(L, "foo");    
+	result = lua_pcall(L, 0, LUA_MULTRET, 0);    
+	if (result) {        
+		fprintf(stdout, "bad, bad script\n");
+		exit(1);
+	}    /* 获得堆栈顶的值*/      
+	sum = lua_tonumber(L, lua_gettop(L));    
+	if (!sum) {        
+		fprintf(stdout, "lua_tonumber() failed!\n");        
+		exit(1);
+	}    
+	fprintf(stdout, "Script returned: %.0f\n", sum);
+	lua_pop(L, 1);  /* 把返回的值弹出堆栈，既清掉这个值*/    
+	lua_close(L);      
+	return 0;
+}
+```
+```
+-- script.lua
+x = 0
+for i = 1, #foo
+do  print(i, foo[i])  
+x = x + foo[i]
+end
+return x
+
 ```
