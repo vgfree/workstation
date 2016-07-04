@@ -255,5 +255,4 @@ do  print(i, foo[i])
 x = x + foo[i]
 end
 return x
-
 ```
