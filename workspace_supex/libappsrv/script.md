@@ -7,4 +7,6 @@ programs/RTAP/src/smart_evcoro_lua_api.c
 error = luaL_dofile(L, "lua/core/init.lua"); 通过这个函数加载open库中的文件
 
 error = luaL_dofile(L, "lua/core/start.lua");
- app_call_by_msg();
+app_call_by_msg();
+
+可调用redis mysql
