@@ -1,6 +1,6 @@
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"tianlongbabu", "chType":1, "reType":0, "chIntro":"武侠", "aIntro":"金庸", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"众生皆苦,求而不得"}' -v http://192.168.130.76/channelapi/createChannel
 
-curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"sanguoyanyi", "chType":2, "chIntro":"发家致富", "aIntro":"施耐庵", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"三国鼎立,杀杀杀"}' -v http://192.168.130.76/channelapi/createChannel
+curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"sanguoyanyi", "chType":2, "chIntro":"发家致富", "aIntro":"施耐庵", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"三国鼎立,杀杀杀"}' -v http://127.0.0.1/channelapi/createChannel
 
 curl -H "appKey:1858017065" -H "accountID:e8O1W0ytqy" -H "tokenCode:71e87e49e78e83c007dff96918f27098" -H "timestamp:1458266656" -H "sign:45456asdfserwerwefasdfsdf" -d '{"chName":"shuihuzhuan", "chType":2, "chIntro":"上梁山", "aIntro":"施耐庵", "chLogo":"http://img1.mydrivers.com/img/20160519/2e6338af76364039aeadd114e121feb1.jpg", "keyWords":"大块吃肉,大碗喝酒"}' -v http://192.168.130.76/channelapi/createChannel
 
@@ -46,3 +46,40 @@ curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "time":"
 
 
 curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "aid":"PdL1eoEl7P" -v http://192.168.71.94:9009/adcube_del
+
+
+curl -H "appKey":"1858017065" -H "sign":"6981D496DD5DE6523A47B4559AAB6800CF2EB509" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"type":1, "lon":121.424428, "lat":31.354628, "isHorizontal":false, "width":768, "height":1024, "mac":"127.0.0.1"}' -v  https://rtr.daoke.me/adGet
+
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "aid":"PdL1eoEl7P" -d '{"adtime":"0|1|5|7", "typ":"1", "citycode":"230900|469000|460200|301000|", "cburl":"http://ww2.sinaimg.cn/mw690/78d4c24cgw1f5livnor7ij21kw147dz7.jpg", "content":{"url":"http://s1.dwstatic.com/group1/M00/5F/9F/4aa6375b38194b32a304b1d30bfd72f0.jpg","text":"哈哈哈","bgColor":"1234","isRepeat":"3","logoUrl":"http://image.mmfile.daoke.me/dfsapi/v2/gainImage?isStorage=true%26group=dfsdb_1%26file=1463399617%3Ad35556ee1b5c11e6aab100505681e231.jpg"}}' -v https://rtr.daoke.me/adSet
+
+HMSET A1 isOpen true isSelf true imgURL http://img1.gamersky.com/image2014/10/20141021lr_1/gamersky_13origin_25_201410301722C42.jpg reportURL http://ww2.sinaimg.cn/mw690/78d4c24cgw1f5livnor7ij21kw147dz7.jpg
+
+HMSET A2 isOpen true isSelf true imgURL http://s1.dwstatic.com/group1/M00/5F/9F/4aa6375b38194b32a304b1d30bfd72f0.jpg reportURL http://s1.dwstatic.com/group1/M00/91/3C/79d400a4cf73739d2d2df10281664768.jpg
+
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"aid":"A1", "lon":121.4434, "lat":31.22,  "mac":"127.0.0.1"}' -v http://192.168.130.76/adReport
+
+
+
+
+
+
+
+
+
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"adtime":"0|1|5|7", "typ":"1", "citycode":"230900|469000|460200|301000|", "cburl":"http://ww2.sinaimg.cn/mw690/78d4c24cgw1f5livnor7ij21kw147dz7.jpg"}' -v http://192.168.130.76/adSet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+curl  -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"adtime":"0|1|5|7", "typ":"1", "citycode":"230900|469000|460200|301000|", "cburl":"http://ww2.sinaimg.cn/mw690/78d4c24cgw1f5livnor7ij21kw147dz7.jpg", "content":{"url":"http://s1.dwstatic.com/group1/M00/5F/9F/4aa6375b38194b32a304b1d30bfd72f0.jpg","text":"哈哈哈","bgColor":"1234","isRepeat":"3","logoUrl":"http://image.mmfile.daoke.me/dfsapi/v2/gainImage?isStorage=true%26group=dfsdb_1%26file=1463399617%3Ad35556ee1b5c11e6aab100505681e231.jpg"}}' -v  http://192.168.130.76/adSet
