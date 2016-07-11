@@ -33,3 +33,98 @@ else {
 存在就直接用, 不存在就要init了
 init内容也很多lua_vm_init 也要初始化redis mysql
 OK, 准备工作做完了, 后面就是轻车熟路了
+
+********************************************************************************
+上行
+0 upstream
+1 CID
+2 {content}
+
+bind
+{"uid":"UID"}
+
+聊天时
+
+0 status
+1 conneted/closed
+2 CID
+
+下行
+0 setting
+1 status/uidmap/gidmap
+2 CID
+3 closed/uid/gid
+
+0 downstream
+1 cid/uid/gid
+2 CID/UID/GID
+3 {content}  (包含CID)
+
+单聊
+{
+    "action":"chat",
+    "chatToken":"abcdefghij",
+    "timestamp":"1458266656",
+    "content":
+    {
+        "fromAccountID"："15618873958",
+        "fromTimestamp":"1458266656",
+        "fromLat":35.12345,
+        "fromLon":121.12345,
+        "toAccountID":"13661683669",
+        "chatID"："136616836691366168366913661683669",
+        "fileType":0,
+        "duration":5,
+        "isBytes":1,
+        "fileServer":0,
+        "fileUrl":""
+    }
+}
+群聊
+{
+    "action":"chatGroup",
+    "chatToken":"abcdefghij",
+    "timestamp":"1458266656",
+    "content":
+    {
+        "fromAccountID"："15618873958",
+        "fromTimestamp":"1458266656",
+        "fromLat":35.12345,
+        "fromLon":121.12345,
+        "chatGroupID":"15618873958cg001",
+        "chatID"："136616836691366168366913661683669",
+        "duration":5,
+        "isBytes":1,
+        "fileType":1,
+        "fileServer":0,
+        "fileUrl":""
+    }
+}
+
+```js
+local zmq_api = require('zmq_api')                                              
+
+module('settings', package.seeall)                                              
+
+
+local function power_on_settings()                                              
+        local tag = cjson.encode(                                               
+        {                                                                       
+                ["powerOn"] = {                                                 
+                        [1] = supex.get_our_body_table()["IMEI"]                
+                }                                                               
+        }                                                                       
+        )                                                                       
+        local result_tab = {                                                    
+                [1] = tag,                                                      
+                [2] = supex.get_our_body_data()                                 
+        }                                                                       
+        local ok = zmq_api.cmd("damR", "send_table", result_tab)    
+				// damR 下发服务iqi, 需要在link.lua中配置
+				// send_table 调用的zmq下发函数
+				// result_tab 需要下发的table
+				// 那么我需要首先配置gateway 和 login 两个服务器ip point
+				// 然后在lua中封装调用发送的数据table             
+end
+
+```
