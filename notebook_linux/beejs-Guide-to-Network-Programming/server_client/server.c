@@ -11,8 +11,21 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-#define PORT "3490"
+#define PORT "3940"
 #define BACKLOG 10
+
+void sigchld_handler(int s)
+{
+	while(waitpid(-1, NULL, WNOHANG) > 0);
+}
+
+void *get_in_addr(struct sockaddr *sa)
+{
+	if (sa->sa_family == AF_INET) {
+		return &(((struct sockaddr_in *)sa)->sin_addr);
+	}
+	return &(((struct sockaddr_in6 *)sa)->sin6_addr);
+}
 
 int main()
 {
@@ -40,7 +53,7 @@ int main()
 			perror("server: socket");
 			continue;
 		}
-		if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int) == -1)) {
+		if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
 			perror("setsockopt");
 			exit(1);
 		}
@@ -64,7 +77,7 @@ int main()
 		 exit(1);
 	}
 
-	sa.sa_handler = sigchldHandler;
+	sa.sa_handler = sigchld_handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 
