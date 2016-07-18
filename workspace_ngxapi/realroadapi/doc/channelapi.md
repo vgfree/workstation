@@ -81,3 +81,14 @@ curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timesta
 curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d
 
 curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"type":2, "lon":121.443400, "lat":31.220000, "isHorizontal":false, "width":768, "height":1024, "mac":"127.0.0.1"}' -v https://rtr.daoke.me/adGet
+
+
+
+
+
+
+
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"type":1, "citycode":"000000", "cbURL":"http://s1.dwstatic.com/cb","adtime":"24", "content":{"ot":"m","isOpen":"false", "isSelf":"true","reportURL":"http://pic1.win4000.com/pic/c/86/59d71086605.jpg", "imgURL":"http://cloud.rechaos.com/8/b/9/a/d/c/4/6/d/e/3.jpg"}}' -v http://192.168.130.76/adSet
+
+
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -v http://192.168.130.76/adList
