@@ -74,13 +74,13 @@ curl  -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timest
 
 
 
-curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"aid":"A_4"}' -v http://rtr.daoke.me/adDel
+curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"aid":"A_1"}' -v http://rtr.daoke.me/adDel
 
 curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"type":1, "citycode":"000000", "cbURL":"http://s1.dwstatic.com/cb","adtime":"24", "content":{ "imgPlatform":"m","isOpen":"false", "isSelf":"true","reportURL":"http://pic1.win4000.com/pic/c/86/59d71086605.jpg", "imgURL":"http://image.mmfile.daoke.me/dfsapi/v2/gainImage?isStorage=true%26group=dfsdb_1%26file=1463399617%3Ad35556ee1b5c11e6aab100505681e231.jpg"}}' -v https://rtr.daoke.me/adSet
 
 curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d
 
-curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"type":2, "lon":121.443400, "lat":31.220000, "isHorizontal":false, "width":768, "height":1024, "mac":"127.0.0.1"}' -v https://rtr.daoke.me/adGet
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469080461" -d '{"type":2, "lon":121.443400, "lat":31.220000, "isHorizontal":false, "width":768, "height":1024, "mac":"127.0.0.1"}' -v https://rtr.daoke.me/adGet
 
 
 
@@ -88,7 +88,28 @@ curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timesta
 
 
 
-curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -d '{"type":1, "citycode":"000000", "cbURL":"http://s1.dwstatic.com/cb","adtime":"24", "content":{"ot":"m","isOpen":"false", "isSelf":"true","reportURL":"http://pic1.win4000.com/pic/c/86/59d71086605.jpg", "imgURL":"http://cloud.rechaos.com/8/b/9/a/d/c/4/6/d/e/3.jpg"}}' -v http://192.168.130.76/adSet
+
+
+
+
+
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469167261"  -d '{"aid":"A1", "lon":121.4434, "lat":31.22,  "mac":"127.0.0.1"}' -v https://rtr.daoke.me/adReport
+
+
+
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469167261" -d '{"type":2, "lon":121.443400, "lat":31.220000, "isHorizontal":false, "width":768, "height":1024, "mac":"127.0.0.1"}' -v http://192.168.130.76/adGet
+
+
+
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469080461" -d '{"type":1, "lon":121.2354, "lat":31.2311, "isHorizontal":false, "width":768, "height":1024, "mac":"127.0.0.1"}' -v https://rtr.daoke.me/adGet
+
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469080461" -v https://rtr.daoke.me/adList
+
+
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469080461"  -d '{"aid":"A_5"}' -v https://rtr.daoke.me/adDel
+
+
+curl -H "appKey":"1062780684" -H "sign":"0F6294CCC30D33E0BA0BD1FAAC7D8C96B44F0B97" -H "timestamp":"1469167261" -d '{"type":1, "citycode":"000000", "cbURL":"http://search.daoke.tv","adtime":"11|12|13|14|15|16|17", "content":{"imgPlatform":"a","isOpen":"false", "isSelf":"true","reportURL":"http://search.daoke.tv", "imgURL":"http://daokepic.img-cn-shanghai.aliyuncs.com/640x420.png"}}' -v http://192.168.130.76/adSet
 
 
 curl -H "appKey":"bcYtC65Gc89" -H "sign":"45456asdfserwerwefasdfsdf" -H "timestamp":"1467876519" -H "accountID":"PdL1eoEl7P" -v http://192.168.130.76/adList
